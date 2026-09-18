@@ -1,8 +1,8 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { ARMS, deskTasks, provenance, readRepoFile, REPO } from "@/lib/data";
+import { ARMS, deskTasks, provenance, readRepoFile, scorer, REPO } from "@/lib/data";
 import { renderMarkdown } from "@/lib/markdown";
-const desk = deskTasks(), prov = provenance();
+const desk = deskTasks(), prov = provenance(), sc = scorer();
 const checkCounts: Record<string, number> = {};
 for (const t of desk) for (const c of t.checks) checkCounts[c.type] = (checkCounts[c.type] ?? 0) + 1;
 // pull the check-type table out of docs/task-format.md so the definitions stay single-sourced
@@ -29,12 +29,13 @@ const desc = "How Business Harness Bench runs and scores agents: the agent bound
     <h2 id="desk">Desk protocol</h2>
     <ul>
       <li>Fresh workspace per repetition; three repetitions per task; single turn.</li>
-      <li>Time budget from the task, 1,200 seconds by default. The campaign used 2 CPUs and 6 GB per attempt, concurrency five for API cells and two for Codex.</li>
+      <li>Time budget from the task, 1,200 seconds by default, with 2 CPUs and 6 GB per attempt.</li>
       <li>A complete arm has exactly one record per task and repetition. Missing records are a runner error, not a silent gap.</li>
       <li>Execution status (exit code, timeout) is recorded separately from the artifact verdict.</li>
     </ul>
 
     <h2 id="grading">Desk grading</h2>
+    <p>Two verdicts exist for every released attempt. The <strong>raw</strong> verdict is what the runner's grader recorded at run time. The <strong>frozen</strong> verdict, the primary score, comes from the immutable <code>conservative-v7</code> package under <a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">{sc.dir}</a>: its own copy of the base grader and task definitions, plus equivalence graders for {sc.equivalenceTasks.length} tasks whose deliverables have more than one valid layout. Each frozen verdict is bound by a receipt to the original result hash, the output-file hashes, and the scorer manifest ({sc.fileCount} hashed files). Run it on any workspace with <code>python scoring/frozen-v7/scorer.py TASK_ID WORKSPACE</code>.</p>
     <p>An attempt passes when every required check passes. Checks are declared in <code>task.yaml</code> and evaluated by <a href={`${REPO}/blob/main/bench/grade.py`} rel="noopener">bench/grade.py</a>; tasks with rules the built-in types cannot express add a <code>check.py</code>. Workbooks are graded after stripping cached values and recalculating natively in LibreOffice, so a formula that only looks right in the file's cache does not pass. Text checks work at sentence level where scattered phrase matches could pass on the wrong sentence or on a negation.</p>
     <h3 id="checks">Check types in use</h3>
     <div class="tbl-wrap"><table class="tbl">
@@ -61,14 +62,14 @@ const desc = "How Business Harness Bench runs and scores agents: the agent bound
       <li><strong>Build measures:</strong> accepted baseline items, core delivery criteria, new change requirements, regressions, time and cost across the sequence.</li>
     </ul>
 
-    <h2 id="cells">Cells in release full-1</h2>
+    <h2 id="cells">Cells in the complete desk comparison</h2>
   </div>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Cell</th><th>Harness</th><th>Model</th><th>Route</th><th>Effort and budget</th></tr></thead>
-    <tbody>{ARMS.map((a) => <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i><code>{a.id}</code></span></td><td>{a.harness}</td><td class="mono">{a.model}</td><td>{a.route}</td><td>{prov.launch_configuration.reasoning_effort}; {a.id === "codex-sol" ? "Codex sandbox bypassed inside the container" : "150 iterations, 65,536 max tokens per request"}; 1,200 s</td></tr>)}</tbody>
+    <thead><tr><th>Cell</th><th>Harness</th><th>Model and route</th><th>Recorded configuration</th><th>Source cohorts</th></tr></thead>
+    <tbody>{ARMS.map((a) => <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i><code>{a.id}</code></span></td><td>{a.harness}</td><td><span class="mono">{a.model}</span><div class="dim" style="font-size:12px">{a.route}</div></td><td>{Object.entries(prov.configurations[a.id]).map(([k, v]) => <span class="pill" style="margin:0 6px 4px 0">{k}: {String(v)}</span>)}</td><td class="mono" style="font-size:12px">{(prov.source_cohorts[a.id] as string[]).join("; ")}</td></tr>)}</tbody>
   </table></div>
   <div class="prose">
-    <p>Proto cells use builtin skills only and a per-run copy of a bare home, so memory and skills never leak between attempts. The Codex cell uses a benchmark-owned <code>CODEX_HOME</code> and a fake <code>HOME</code> that hides personal skills. The release does not assert that a bare login reproduces the campaign's full skill environment; see <a href="/results#provenance">provenance</a>.</p>
-    <p>Additional adapters ship for cells that were not part of the complete arms, including Proto on GPT-5.6 tiers through a subscription route and Proto with access to the ERP.AI application platform. None of those has a published result; a platform-backed cell is a declared experimental condition, not an invisible advantage, and will be reported as its own labeled campaign.</p>
+    <p>Proto cells use builtin skills only and a per-run copy of a bare home, so memory and skills never leak between attempts. The Codex cell uses a benchmark-owned <code>CODEX_HOME</code> and a fake <code>HOME</code> that hides personal skills. The two cohorts were not run at the same time and their sampling controls differ; the comparison is between configured systems, not between models or harnesses in isolation.</p>
+    <p>Further adapters ship without published results in this release: Proto on GLM-5.3 Flash and Qwen 3.8 Flash (recorded in an earlier snapshot in the repository history under the original grader), Proto on GPT-5.6 tiers through a subscription route, and Proto with access to the ERP.AI application platform. A platform-backed cell is a declared experimental condition, not an invisible advantage, and will be reported as its own labeled campaign.</p>
   </div>
 </Base>

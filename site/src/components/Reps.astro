@@ -1,9 +1,10 @@
 ---
 import type { Attempt } from "@/lib/data";
-interface Props { runs: Attempt[] }
-const { runs } = Astro.props;
-const label = runs.map((r) => (r.passed ? "pass" : "fail") + (r.timed_out ? " (timed out)" : "")).join(", ");
+interface Props { runs: Attempt[]; raw?: boolean }
+const { runs, raw = false } = Astro.props;
+const verdict = (r: Attempt) => (raw ? r.raw_passed : r.passed);
+const label = runs.map((r) => `rep ${r.run}: ${verdict(r) ? "pass" : "fail"}${!raw && r.passed && !r.raw_passed ? " (frozen scorer only)" : ""}${r.timed_out ? " (timed out)" : ""}`).join(", ");
 ---
 <span class="reps" role="img" aria-label={label} title={label}>
-  {runs.map((r) => <i class={`rep ${r.passed ? "p" : "f"}${r.timed_out ? " t" : ""}`}></i>)}
+  {runs.map((r) => <i class={`rep ${verdict(r) ? "p" : "f"}${!raw && r.passed && !r.raw_passed ? " eq" : ""}${r.timed_out ? " t" : ""}`}></i>)}
 </span>

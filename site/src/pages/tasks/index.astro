@@ -2,6 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import { ARMS, CATEGORIES, deskTasks, buildTasks, matrix, REPO } from "@/lib/data";
 const desk = deskTasks(), build = buildTasks(), m = matrix();
+const total = ARMS.length * 3;
 const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
 const desc = "All 187 desk tasks and 20 application-build tasks of Business Harness Bench, with the owner's ask, deliverables, and recorded pass counts.";
 ---
@@ -12,12 +13,12 @@ const desc = "All 187 desk tasks and 20 application-build tasks of Business Harn
   <div class="callout"><p>This is an exposed task set, not a sealed holdout. Each generator takes a seed, so a re-rolled variant with different names and amounts can be produced for a private evaluation. See the <a href="/audit#contamination">contamination note</a>.</p></div>
 
   <h2 id="desk">Desk track</h2>
-  <p class="muted">"Passes / 12" is the number of passing attempts across four systems × three repetitions in release full-1.</p>
+  <p class="muted">"Passes" counts frozen-scorer passes across {ARMS.length} systems × three repetitions in the complete desk comparison.</p>
   {CATEGORIES.map((c) => { const rows = desk.filter((t) => t.category === c.id); return (
     <section>
       <h3 id={c.id}>{c.label} <span class="dim" style="font-weight:400">· {rows.length} tasks · {c.deliverable.toLowerCase()}</span></h3>
       <div class="tbl-wrap"><table class="tbl">
-        <thead><tr><th style="width:44%">Task</th><th>Deliverables</th><th class="n">Checks</th><th class="n">Passes / 12</th></tr></thead>
+        <thead><tr><th style="width:44%">Task</th><th>Deliverables</th><th class="n">Checks</th><th class="n">Passes / {total}</th></tr></thead>
         <tbody>{rows.map((t) => (
           <tr><td><a href={`/tasks/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
             <td class="mono" style="font-size:13px">{t.deliverables.join(", ")}</td>

@@ -2,115 +2,137 @@
 import Base from "@/layouts/Base.astro";
 import Bar from "@/components/Bar.astro";
 import Reps from "@/components/Reps.astro";
-import { ARMS, CATEGORIES, CATEGORY_LABEL, deskTasks, summary, attempts, matrix, provenance, prices, REPO } from "@/lib/data";
-const desk = deskTasks(), sums = summary(), led = attempts(), m = matrix(), prov = provenance(), price = prices();
-const byArm = Object.fromEntries(sums.map((s) => [s.harness, s]));
-const catN = (c: string) => desk.filter((t) => t.category === c).length * 3;
+import { ARMS, SUMMARY_BY_ID, CATEGORIES, CATEGORY_LABEL, deskTasks, attempts, matrix, provenance, prices, scorer, scorerDelta, fmt, REPO } from "@/lib/data";
+const desk = deskTasks(), led = attempts(), m = matrix(), prov = provenance(), price = prices(), sc = scorer();
+const reps = prov.repetitions as number, total = ARMS.length * reps;
 const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
+const rawN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.raw_passed).length, 0);
 const noneTasks = desk.filter((t) => passN(t.id) === 0);
-const allTasks = desk.filter((t) => passN(t.id) === 12);
-// most-failed required check types per arm, from the ledger
+const allTasks = desk.filter((t) => passN(t.id) === total);
+const delta = Object.fromEntries(ARMS.map((a) => [a.id, scorerDelta(a.id)]));
 const failTypes = Object.fromEntries(ARMS.map((a) => {
   const c: Record<string, number> = {};
   for (const r of led) if (r.harness === a.id && !r.passed) for (const k of r.checks) if (k.required && !k.passed) c[k.type] = (c[k.type] ?? 0) + 1;
   return [a.id, Object.entries(c).sort((x, y) => y[1] - x[1]).slice(0, 3)];
 }));
-const desc = "Recorded desk-track results of Business Harness Bench release full-1: 2,244 attempts, four systems, per-task pass matrix, execution accounting, and estimated cost.";
+const bs = prov.paired_task_bootstrap;
+const eqSet = new Set(sc.equivalenceTasks);
+const desc = "Complete desk comparison of Business Harness Bench: 1,122 attempts, two systems, one frozen scorer with raw verdicts retained, per-task matrix, resource use, and provenance.";
 ---
 <Base title="Results" description={desc} path="/results">
-  <p class="kicker">Desk track · campaign full-1 · exported {prov.exported_utc.slice(0, 10)}</p>
+  <p class="kicker">Desk track · {prov.campaign} · snapshot {prov.scorecard_snapshot_utc.slice(0, 10)}</p>
   <h1>Results</h1>
-  <p class="lede">The four complete arms of the latest full campaign. Each arm covers all 187 tasks three times. Every scheduled attempt is in the denominator, including timeouts, nonzero exits, and grader errors. The numbers below are recomputed at build time from the released attempt ledger.</p>
+  <p class="lede">All 187 desk tasks, {reps} repetitions per system, one shared frozen scorer. Every scheduled attempt is in the denominator. The numbers below are recomputed at build time from the released attempt ledger; raw verdicts from the runner's original grader are shown beside the frozen ones throughout.</p>
 
   <div class="callout">
-    <p><strong>What this table is.</strong> A recorded scoring snapshot, not a rescored or independently certified leaderboard. Cells differ in model, provider route, and price tier, so a gap between rows is a difference between configured systems, not an isolated harness or model effect. Original result records carry no per-attempt scorer digest; see <a href="#provenance">provenance</a>.</p>
+    <p><strong>What this table is.</strong> An end-to-end comparison of two configured systems on a development task set. They use different models and sampling controls, and their cohorts were not run at the same time. The Codex cohort is the same three repetitions recorded in the earlier four-system snapshot; the Proto cohort is a later runtime revision. Neither difference is a harness or model effect on its own. See <a href="#scorer">scorer</a> and <a href="#provenance">provenance</a>.</p>
   </div>
 
-  <h2 id="headline">Recorded artifact scores</h2>
+  <h2 id="headline">Frozen and raw scores</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th style="width:34%">Pass rate</th><th class="n">Passed / 561</th><th class="n">All 3 / 187</th><th class="n">Median minutes</th><th class="n">Mean cost (USD)</th></tr></thead>
-    <tbody>{ARMS.map((a) => { const s = byArm[a.id]; return (
+    <thead><tr><th>System</th><th style="width:30%">Frozen pass rate</th><th class="n">Frozen / 561</th><th class="n">Raw / 561</th><th class="n">All {reps} / 187</th><th class="n">Median min</th><th class="n">p90 min</th><th class="n">Mean cost (USD)</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; return (
       <tr id={a.id}>
         <td><span class="sys"><i class={`swatch s-${a.slot}`}></i><span>{a.system}</span></span><div class="dim" style="font-size:12px;margin-left:20px">{a.harness} · {a.route}</div></td>
         <td><Bar value={s.pass_rate} series={a.slot} digits={2} /></td>
-        <td class="n">{s.passed}</td><td class="n">{s.all_three_pass}</td>
-        <td class="n">{(s.median_wall_s / 60).toFixed(2)}</td><td class="n">{s.estimated_cost_mean_usd.toFixed(4)}</td>
+        <td class="n">{s.passed}</td><td class="n">{s.raw_passed}</td><td class="n">{s.all_three_pass}</td>
+        <td class="n">{(s.median_wall_s / 60).toFixed(2)}</td><td class="n">{(s.p90_wall_s / 60).toFixed(2)}</td><td class="n">{s.estimated_cost_mean_usd.toFixed(4)}</td>
       </tr>); })}</tbody>
   </table></div>
-  <p class="muted">"All 3 / 187" is observed repeated-task consistency within three repetitions, not a confidence interval. Median minutes is elapsed wall time per attempt including the runner's shutdown grace interval.</p>
+  <p class="muted">The lead is {bs.difference_percentage_points.toFixed(2)} percentage points under the frozen scorer. A paired, task-clustered bootstrap ({fmt.int(bs.samples)} resamples, seed {bs.seed}, each task's {reps} repetitions kept together) gives a descriptive 95% interval of +{bs.bootstrap_95_percent_interval_pp[0].toFixed(2)} to +{bs.bootstrap_95_percent_interval_pp[1].toFixed(2)} points. That is uncertainty over these task families, not evidence about unseen tasks.</p>
+
+  <h2 id="repetitions">By repetition</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th>{Array.from({ length: reps }, (_, i) => <th class="n">Rep {i + 1} frozen</th>)}{Array.from({ length: reps }, (_, i) => <th class="n">Rep {i + 1} raw</th>)}</tr></thead>
+    <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; return (
+      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td>
+        {Array.from({ length: reps }, (_, i) => <td class="n">{s.by_repetition[String(i + 1)]} / 187</td>)}
+        {Array.from({ length: reps }, (_, i) => <td class="n">{s.raw_by_repetition[String(i + 1)]} / 187</td>)}</tr>); })}</tbody>
+  </table></div>
+  <p class="muted">An aggregate above 90% is not 90% in every repetition; the per-repetition rows are the reliability claim, not the total.</p>
 
   <h2 id="categories">By category</h2>
-  <p class="muted">Passed attempts out of tasks × 3 in each category. Bars share one scale.</p>
+  <p class="muted">Frozen passes out of tasks × {reps} per category. Bars share one scale.</p>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Category</th><th class="n">Attempts</th>{ARMS.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system.split(" / ")[1]}</span></th>)}</tr></thead>
+    <thead><tr><th>Category</th><th class="n">Attempts</th>{ARMS.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></th>)}</tr></thead>
     <tbody>{CATEGORIES.map((c) => (
       <tr>
-        <td><a href={`/tasks#${c.id}`}>{c.label}</a></td><td class="n">{catN(c.id)}</td>
-        {ARMS.map((a) => { const b = byArm[a.id].by_category[c.id]; return <td><Bar value={b.passed / b.attempts} series={a.slot} label={`${b.passed} / ${b.attempts}`} /></td>; })}
+        <td><a href={`/tasks#${c.id}`}>{c.label}</a></td><td class="n">{desk.filter((t) => t.category === c.id).length * reps}</td>
+        {ARMS.map((a) => { const b = SUMMARY_BY_ID[a.id].by_category[c.id]; return <td><Bar value={b.passed / b.attempts} series={a.slot} label={`${b.passed} / ${b.attempts}`} /></td>; })}
       </tr>))}</tbody>
   </table></div>
 
-  <h2 id="execution">Repetition and execution accounting</h2>
+  <h2 id="scorer">What the frozen scorer changed</h2>
+  <p>Every attempt was scored twice: once by the runner's grader at run time (the raw verdict) and once by the frozen <code>conservative-v7</code> package released under <a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">{sc.dir}</a> (the primary verdict). The frozen package carries its own copy of the task definitions and base grader, plus task-specific equivalence graders for {sc.equivalenceTasks.length} tasks that accept alternative valid representations (a rate written as a fraction or a percentage, a schedule laid out as a table or as cards). Its manifest digest is <code class="mono" style="word-break:break-all">{sc.manifestSha}</code> and every receipt in the ledger points to it.</p>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th class="n">Rep 1 / 187</th><th class="n">Rep 2 / 187</th><th class="n">Rep 3 / 187</th><th class="n">Timed out</th><th class="n">Nonzero exit</th><th class="n">Passing, abnormal exit</th><th class="n">Grader-error attempts</th><th class="n">Missing usage</th></tr></thead>
-    <tbody>{ARMS.map((a) => { const s = byArm[a.id]; return (
-      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td>
-        <td class="n">{s.by_repetition["1"]}</td><td class="n">{s.by_repetition["2"]}</td><td class="n">{s.by_repetition["3"]}</td>
-        <td class="n">{s.timed_out}</td><td class="n">{s.nonzero_exit}</td><td class="n">{s.passing_abnormal_exit}</td><td class="n">{s.grader_error_attempts}</td><td class="n">{s.usage_missing}</td></tr>); })}</tbody>
+    <thead><tr><th>System</th><th class="n">Raw passes</th><th class="n">Frozen passes</th><th class="n">Fail → pass</th><th class="n">Pass → fail</th><th class="n">Of which on equivalence tasks</th><th>Fail → pass by category</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id], d = delta[a.id]; return (
+      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{s.raw_passed}</td><td class="n">{s.passed}</td><td class="n">+{d.up}</td><td class="n">−{d.down}</td><td class="n">{d.upEq}</td>
+        <td>{Object.entries(d.byCat).sort((x, y) => y[1] - x[1]).map(([k, n]) => <span class="pill" style="margin-right:6px">{CATEGORY_LABEL[k]} {n}</span>)}</td></tr>); })}</tbody>
   </table></div>
-  <p class="muted">Timeout and nonzero-exit columns overlap. An artifact pass is the stored grader verdict on the files left behind, independent of how the process ended: an agent can leave a passing file and then time out. The desk time budget was 1,200 seconds per attempt with 2 CPUs and 6 GB. The Proto cells' termination rates are large enough that their scores should be read as a budget-constrained operating point, not a ceiling; see the <a href="/audit#elicitation">self-audit</a>.</p>
+  <p class="muted">The scorer raised both systems. It raised the leader more, so the gap under the frozen scorer is larger than under the original grader. The equivalence tasks are {sc.equivalenceTasks.map((t, i) => <><a href={`/tasks/${t}`}><code>{t}</code></a>{i < sc.equivalenceTasks.length - 1 ? ", " : ""}</>)}. Both verdicts are in <code>attempts.jsonl</code> as <code>raw_passed</code> and <code>passed</code>; the original grader had {ARMS.map((a) => `${SUMMARY_BY_ID[a.id].raw_grader_error_attempts} (${a.short})`).join(" and ")} grader-error attempts, the frozen scorer none.</p>
+
+  <h2 id="execution">Execution accounting</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Timed out</th><th class="n">Nonzero exit</th><th class="n">Passing, abnormal exit</th><th class="n">Raw grader errors</th><th class="n">Frozen grader errors</th><th class="n">Missing usage</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; return (
+      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td>
+        <td class="n">{s.timed_out}</td><td class="n">{s.nonzero_exit}</td><td class="n">{s.passing_abnormal_exit}</td><td class="n">{s.raw_grader_error_attempts}</td><td class="n">{s.grader_error_attempts}</td><td class="n">{s.usage_missing}</td></tr>); })}</tbody>
+  </table></div>
+  <p class="muted">Every frozen pass also completed normally. The desk budget was 1,200 seconds per attempt.</p>
 
   <h3>Most-failed required check types</h3>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th>Failed check types among failed attempts (count)</th></tr></thead>
+    <thead><tr><th>System</th><th>Failed check types among frozen failures (count)</th></tr></thead>
     <tbody>{ARMS.map((a) => <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td>{failTypes[a.id].map(([k, n]) => <span class="pill" style="margin-right:6px"><code>{k}</code> {n}</span>)}</td></tr>)}</tbody>
   </table></div>
-  <p class="muted">Check types are documented under <a href="/methods#checks">methods</a>. A workbook value check fails when no recalculated cell equals the expected figure within tolerance; it is the dominant failure everywhere because spreadsheet and bookkeeping tasks are the largest categories.</p>
 
-  <h2 id="cost">Estimated model cost</h2>
+  <h2 id="resources">Resource use</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th class="n">Observations / 561</th><th class="n">Mean USD</th><th class="n">Sum USD, observed</th><th>Price basis (USD per 1M tokens: in / cached / out)</th></tr></thead>
-    <tbody>{ARMS.map((a) => { const s = byArm[a.id]; const p = price[a.model] ?? price["openai/" + a.model]; return (
-      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{s.cost_observations}</td><td class="n">{s.estimated_cost_mean_usd.toFixed(4)}</td><td class="n">{s.estimated_cost_sum_usd.toFixed(2)}</td><td class="mono">{p ? `${p.input} / ${p.cached_input} / ${p.output}` : "n/a"}</td></tr>); })}</tbody>
+    <thead><tr><th>System</th><th class="n">Input tokens</th><th class="n">Cached input</th><th class="n">Uncached input</th><th class="n">Output tokens</th><th class="n">Est. cost, sum USD</th><th class="n">Summed task time (h)</th><th>Price basis, USD / 1M (in / cached / out)</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; const p = price[a.model] ?? price["openai/" + a.model]; return (
+      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{fmt.m(s.usage.input)}</td><td class="n">{fmt.m(s.usage.cached_input)}</td><td class="n">{fmt.m(s.usage.uncached_input)}</td><td class="n">{fmt.m(s.usage.output)}</td><td class="n">{s.estimated_cost_sum_usd.toFixed(2)}</td><td class="n">{(s.sum_wall_s / 3600).toFixed(1)}</td><td class="mono">{p ? `${p.input} / ${p.cached_input} / ${p.output}` : "n/a"}</td></tr>); })}</tbody>
   </table></div>
-  <p class="muted">Recorded estimates under the historical price table in <a href={`${REPO}/blob/main/bench/prices.json`} rel="noopener">bench/prices.json</a>, not invoices. Means exclude missing observations; sums are observed sums. Codex ran through a subscription and is priced at API list price like every other cell.</p>
+  <p class="muted">Costs are captured-usage estimates under <a href={`${REPO}/blob/main/bench/prices.json`} rel="noopener">bench/prices.json</a>, not invoices. Codex ran through a subscription and is priced at API list price. The cheaper system did far more token work; lower cost is not lower resource use. Summed task time is not elapsed campaign time.</p>
 
   <h2 id="matrix">Per-task matrix</h2>
-  <p class="muted">Three squares per cell, one per repetition: filled green is a pass, grey is a fail, a hollow centre marks a timeout. {noneTasks.length} tasks passed nowhere; {allTasks.length} passed everywhere.</p>
-  <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> fail, timed out</span><span><i class="rep p t"></i> pass, timed out</span></div>
+  <p class="muted">{reps} squares per cell, one per repetition. Green is a frozen pass; a green square with a hollow centre passed under the frozen scorer but failed under the original grader; grey is a fail; a hollow grey centre is a timeout. {noneTasks.length === 1 ? "One task" : `${noneTasks.length} tasks`} passed nowhere; {allTasks.length} passed everywhere.</p>
+  <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep p eq"></i> pass, frozen scorer only</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> fail, timed out</span></div>
   <div class="filters" role="group" aria-label="Filter by category" data-filter="matrix">
     <button aria-pressed="true" data-cat="all">All {desk.length}</button>
     {CATEGORIES.map((c) => <button aria-pressed="false" data-cat={c.id}>{c.label} {desk.filter((t) => t.category === c.id).length}</button>)}
-    <button aria-pressed="false" data-cat="none">Passed nowhere {noneTasks.length}</button>
+    <button aria-pressed="false" data-cat="flip">Changed by scorer {desk.filter((t) => passN(t.id) !== rawN(t.id)).length}</button>
+    <button aria-pressed="false" data-cat="eq">Equivalence tasks {sc.equivalenceTasks.length}</button>
   </div>
   <div class="tbl-wrap"><table class="tbl" id="matrix-table">
-    <thead><tr><th>Task</th><th>Category</th>{ARMS.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system.split(" / ")[1]}</span></th>)}<th class="n">Total / 12</th></tr></thead>
+    <thead><tr><th>Task</th><th>Category</th>{ARMS.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></th>)}<th class="n">Frozen / {total}</th><th class="n">Raw / {total}</th></tr></thead>
     <tbody>{desk.map((t) => (
-      <tr data-cat={t.category} data-none={passN(t.id) === 0 ? "1" : "0"}>
+      <tr data-cat={t.category} data-flip={passN(t.id) !== rawN(t.id) ? "1" : "0"} data-eq={eqSet.has(t.id) ? "1" : "0"}>
         <td><a href={`/tasks/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
         <td class="muted">{CATEGORY_LABEL[t.category]}</td>
         {ARMS.map((a) => <td><Reps runs={m[t.id][a.id]} /></td>)}
-        <td class="n">{passN(t.id)}</td>
+        <td class="n">{passN(t.id)}</td><td class="n">{rawN(t.id)}</td>
       </tr>))}</tbody>
   </table></div>
 
   <h2 id="provenance">Provenance</h2>
   <div class="tbl-wrap"><table class="tbl">
     <tbody>
-      <tr><td>Campaign</td><td><code>{prov.campaign}</code>, {prov.release_kind}</td></tr>
+      <tr><td>Campaign</td><td><code>{prov.campaign}</code></td></tr>
       <tr><td>Ledger SHA-256</td><td class="mono" style="word-break:break-all">{prov.ledger_sha256}</td></tr>
-      <tr><td>Agent image</td><td><code>{prov.launch_configuration.image_tag}</code>, runtime revision <code>{prov.launch_configuration.runtime_revision_recorded_by_launcher}</code> (launcher metadata, not an image digest)</td></tr>
-      <tr><td>Codex CLI</td><td>{prov.launch_configuration.codex_cli_version_in_image_recipe}</td></tr>
-      <tr><td>Reasoning effort</td><td>{prov.launch_configuration.reasoning_effort}</td></tr>
-      <tr><td>Concurrency</td><td>API arms {prov.launch_configuration.api_arm_parallelism}, Codex {prov.launch_configuration.codex_parallelism}; {prov.launch_configuration.cpus_per_attempt} CPUs and {prov.launch_configuration.memory_per_attempt} per attempt</td></tr>
-      <tr><td>Recalculation</td><td><code>{prov.launch_configuration.recalculation_image}</code> (LibreOffice, native)</td></tr>
-      <tr><td>Scorer</td><td>{prov.scorer_provenance}</td></tr>
-      <tr><td>Runtime</td><td>{prov.runtime_provenance}</td></tr>
+      <tr><td>Scorer manifest SHA-256</td><td class="mono" style="word-break:break-all">{prov.scorer_manifest_sha256}</td></tr>
+      <tr><td>Original scorecard SHA-256</td><td class="mono" style="word-break:break-all">{prov.original_scorecard_sha256}</td></tr>
+      {ARMS.map((a) => { const c = prov.configurations[a.id]; return <tr><td>Configuration: {a.short}</td><td>{Object.entries(c).map(([k, v]) => <span class="pill" style="margin:0 6px 4px 0">{k}: {String(v)}</span>)}</td></tr>; })}
+      {ARMS.map((a) => <tr><td>Source cohorts: {a.short}</td><td class="mono" style="font-size:13px">{(prov.source_cohorts[a.id] as string[]).join("; ")}</td></tr>)}
+      <tr><td>Evidence verification</td><td>{prov.evidence_verification}</td></tr>
+      <tr><td>Scorer note</td><td>{prov.scorer_note}</td></tr>
+      <tr><td>Cost note</td><td>{prov.cost_note}</td></tr>
+      <tr><td>Limitations</td><td>{prov.limitations}</td></tr>
       <tr><td>Build track</td><td>{prov.build_status}</td></tr>
       <tr><td>Excluded</td><td>{prov.exclusions}</td></tr>
     </tbody>
   </table></div>
-  <p>Recompute this page's tables with <code>python bench/export_campaign.py --verify</code> against <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">results/latest/attempts.jsonl</a>. The check verifies matrix completeness and arithmetic, not the correctness of the original artifacts.</p>
+  <p>Recompute this page with <code>python bench/export_campaign.py --verify</code>, which checks matrix completeness, score arithmetic, the ledger hash, and every file in the frozen scorer package against <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">results/latest/attempts.jsonl</a>. It does not re-grade the original artifacts, which remain private; their hashes are in the ledger.</p>
 
   <script>
     for (const group of document.querySelectorAll<HTMLElement>("[data-filter]")) {
@@ -120,7 +142,7 @@ const desc = "Recorded desk-track results of Business Harness Bench release full
         for (const x of group.querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
         const cat = b.dataset.cat;
         for (const tr of table.querySelectorAll<HTMLElement>("tbody tr")) {
-          const show = cat === "all" || (cat === "none" ? tr.dataset.none === "1" : tr.dataset.cat === cat);
+          const show = cat === "all" || (cat === "flip" ? tr.dataset.flip === "1" : cat === "eq" ? tr.dataset.eq === "1" : tr.dataset.cat === cat);
           tr.style.display = show ? "" : "none";
         }
       });

@@ -1,10 +1,12 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Reps from "@/components/Reps.astro";
-import { ARMS, CATEGORY_LABEL, deskTasks, matrix, REPO, type DeskTask } from "@/lib/data";
+import { ARMS, CATEGORY_LABEL, deskTasks, matrix, scorer, REPO, type DeskTask } from "@/lib/data";
 export async function getStaticPaths() { return deskTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
 const { task } = Astro.props as { task: DeskTask };
 const runs = matrix()[task.id];
+const isEq = scorer().equivalenceTasks.includes(task.id);
+const total = ARMS.length * 3;
 const failCounts: Record<string, number> = {};
 for (const a of ARMS) for (const r of runs[a.id]) for (const c of r.checks) if (c.required && !c.passed) failCounts[c.name] = (failCounts[c.name] ?? 0) + 1;
 const med = (xs: number[]) => { const s = xs.filter((x) => x != null).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
@@ -35,17 +37,18 @@ const desc = `${task.title}. A ${CATEGORY_LABEL[task.category].toLowerCase()} ta
   <h2>Checks</h2>
   <p class="muted">The task passes only when every required check passes. Reference answers, tolerances, and the planted traps are in the repository, not here.</p>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Check</th><th>Type</th><th>Required</th><th class="n">Failed in full-1 / 12</th></tr></thead>
+    <thead><tr><th>Check</th><th>Type</th><th>Required</th><th class="n">Failed (frozen) / {total}</th></tr></thead>
     <tbody>{task.checks.map((c) => <tr><td>{c.name}</td><td><code>{c.type}</code></td><td>{c.required ? "yes" : "diagnostic"}</td><td class="n">{failCounts[c.name] ?? 0}</td></tr>)}</tbody>
   </table></div>
 
-  <h2>Recorded results, release full-1</h2>
-  <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> timed out</span></div>
+  <h2>Recorded results, complete desk comparison</h2>
+  {isEq && <div class="callout"><p>This is one of the {scorer().equivalenceTasks.length} tasks with a task-specific equivalence grader in the frozen scorer, which accepts alternative valid representations the original checks rejected. Raw and frozen verdicts can therefore differ here by design; see <a href="/results#scorer">what the frozen scorer changed</a>.</p></div>}
+  <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep p eq"></i> pass, frozen scorer only</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> timed out</span></div>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th>Repetitions</th><th class="n">Passed / 3</th><th class="n">Median minutes</th><th class="n">Mean cost (USD)</th></tr></thead>
+    <thead><tr><th>System</th><th>Repetitions</th><th class="n">Frozen / 3</th><th class="n">Raw / 3</th><th class="n">Median minutes</th><th class="n">Mean cost (USD)</th></tr></thead>
     <tbody>{ARMS.map((a) => { const rs = runs[a.id]; const w = med(rs.map((r) => r.wall_s as number)); const c = mean(rs.map((r) => r.cost_usd)); return (
       <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td><Reps runs={rs} /></td>
-        <td class="n">{rs.filter((r) => r.passed).length}</td><td class="n">{w != null ? (w / 60).toFixed(1) : "n/a"}</td><td class="n">{c != null ? c.toFixed(4) : "n/a"}</td></tr>); })}</tbody>
+        <td class="n">{rs.filter((r) => r.passed).length}</td><td class="n">{rs.filter((r) => r.raw_passed).length}</td><td class="n">{w != null ? (w / 60).toFixed(1) : "n/a"}</td><td class="n">{c != null ? c.toFixed(4) : "n/a"}</td></tr>); })}</tbody>
   </table></div>
-  <p class="muted">Per-attempt check verdicts, usage, and source hashes for this task are in <code>results/latest/attempts.jsonl</code> under <code>"task": "{task.id}"</code>.</p>
+  <p class="muted">Per-attempt check verdicts, raw and frozen verdicts, usage, receipt and artifact hashes for this task are in <code>results/latest/attempts.jsonl</code> under <code>"task": "{task.id}"</code>.</p>
 </Base>

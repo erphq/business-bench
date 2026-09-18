@@ -130,6 +130,7 @@ main.wrap { padding-top: 48px; padding-bottom: 96px; }
 .rep.p { background: var(--good); }
 .rep.f { background: var(--line-2); }
 .rep.t::after { content: ""; position: absolute; inset: 3px; border-radius: 1px; background: var(--bg); }
+.rep.eq::after { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: var(--bg); }
 .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--ink-2); margin: 8px 0 16px; align-items: center; }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 

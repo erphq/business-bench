@@ -1,12 +1,14 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Bar from "@/components/Bar.astro";
-import { ARMS, CATEGORIES, deskTasks, buildTasks, summary, attempts, matrix, fmt, REPO } from "@/lib/data";
-const desk = deskTasks(), build = buildTasks(), sums = summary(), led = attempts(), m = matrix();
-const byArm = Object.fromEntries(sums.map((s) => [s.harness, s]));
+import { ARMS, SUMMARY_BY_ID, CATEGORIES, deskTasks, buildTasks, attempts, matrix, provenance, fmt, REPO } from "@/lib/data";
+const desk = deskTasks(), build = buildTasks(), led = attempts(), m = matrix(), prov = provenance();
 const noneTasks = desk.filter((t) => ARMS.every((a) => m[t.id][a.id].every((r) => !r.passed)));
 const allTasks = desk.filter((t) => ARMS.every((a) => m[t.id][a.id].every((r) => r.passed)));
-const desc = "Does the agent deliver business work an owner can actually use? 187 desk tasks and 20 app-build tasks with executable checks, 2,244 recorded attempts across four agent systems.";
+const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
+const gap = SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed;
+const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed;
+const desc = "Does the agent deliver business work an owner can actually use? 187 desk tasks and 20 app-build tasks with executable checks, and a complete two-system desk comparison of 1,122 attempts.";
 ---
 <Base title="Business Harness Bench" description={desc} path="/">
   <p class="kicker">A benchmark for agents that do business work</p>
@@ -21,30 +23,30 @@ const desc = "Does the agent deliver business work an owner can actually use? 18
   <div class="grid c4" style="margin-top:40px">
     <div class="stat"><div class="num">{desk.length}</div><div class="lbl">desk tasks, seven categories, each with a reference solution</div></div>
     <div class="stat"><div class="num">{build.length}</div><div class="lbl">app-build tasks, each with seed data, an acceptance checklist, and three change requests</div></div>
-    <div class="stat"><div class="num">{fmt.int(led.length)}</div><div class="lbl">recorded attempts in release full-1: 187 tasks × 3 repetitions × 4 systems</div></div>
-    <div class="stat"><div class="num">{ARMS.length}</div><div class="lbl">configured systems scored end to end: harness, model, tools, and substrate</div></div>
+    <div class="stat"><div class="num">{fmt.int(led.length)}</div><div class="lbl">attempts in the complete desk comparison: 187 tasks × {prov.repetitions} repetitions × {ARMS.length} systems</div></div>
+    <div class="stat"><div class="num">1</div><div class="lbl">frozen scorer for every attempt, with raw verdicts retained beside it</div></div>
   </div>
 
-  <h2>Desk track, release full-1</h2>
-  <p class="muted">Attempt pass rate over all 561 scheduled attempts per system. Failures, timeouts, and grader errors stay in the denominator. Cells use different models, so this compares configured systems, not harnesses in isolation.</p>
+  <h2>Complete desk comparison</h2>
+  <p class="muted">Pass rate over all 561 attempts per system under the shared frozen scorer. Failures and timeouts stay in the denominator. The systems use different models and were not run at the same time, so this compares two configured systems, not a harness or a model in isolation.</p>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th style="width:40%">Pass rate</th><th class="n">Passed / 561</th><th class="n">All 3 of 3 / 187</th><th class="n">Timed out</th><th class="n">Mean cost</th></tr></thead>
+    <thead><tr><th>System</th><th style="width:36%">Frozen pass rate</th><th class="n">Passed / 561</th><th class="n">Raw / 561</th><th class="n">All {prov.repetitions} of {prov.repetitions} / 187</th><th class="n">Mean cost</th></tr></thead>
     <tbody>
-      {ARMS.map((a) => { const s = byArm[a.id]; return (
+      {ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; return (
         <tr>
           <td><span class="sys"><i class={`swatch s-${a.slot}`}></i><a href={`/results#${a.id}`}>{a.system}</a></span></td>
           <td><Bar value={s.pass_rate} series={a.slot} /></td>
           <td class="n">{s.passed}</td>
+          <td class="n">{s.raw_passed}</td>
           <td class="n">{s.all_three_pass}</td>
-          <td class="n">{s.timed_out}</td>
           <td class="n">{fmt.usd(s.estimated_cost_mean_usd)}</td>
         </tr>); })}
     </tbody>
   </table></div>
-  <p class="muted">{noneTasks.length} tasks were passed by no system in any repetition; {allTasks.length} were passed by every system every time. The full per-task matrix, category splits, execution accounting, and cost tables are on the <a href="/results">results page</a>.</p>
+  <p class="muted">{lead.short} leads by {gap} attempts under the frozen scorer and by {rawGap} under the original grader. {noneTasks.length === 1 ? "One task" : `${noneTasks.length} tasks`} passed nowhere; {allTasks.length} passed everywhere. Per-task matrix, category splits, resource use, and the scorer's effect on every verdict are on the <a href="/results">results page</a>.</p>
 
   <div class="callout warn">
-    <p><strong>Read before comparing.</strong> These are recorded campaign scores, not a rescored or independently certified leaderboard. The three Proto cells ran flash-tier models and terminated abnormally in a material share of attempts, which is a budget and elicitation effect as much as a capability one. ERP.AI, which publishes this benchmark, also builds Proto. Details and every known gap are in the <a href="/audit">self-audit</a>.</p>
+    <p><strong>Read before comparing.</strong> ERP.AI publishes this benchmark and builds Proto, the leading system. The frozen scorer, including its equivalence rules, was written by the same team, and it raised both systems' scores relative to the original grader. Raw verdicts are published beside frozen ones so the effect is inspectable. An earlier four-system snapshot under the original grader remains in the repository history. All of this is set out on the <a href="/audit">self-audit</a> page.</p>
   </div>
 
   <h2>Two handoffs, one principle</h2>
@@ -67,8 +69,8 @@ const desc = "Does the agent deliver business work an owner can actually use? 18
   <h2>How a task is scored</h2>
   <div class="grid c3">
     <div class="card"><h3>Executable checks, conjunctive</h3><p>A task passes only when every required check passes: exact identifier sets, keyed values, live spreadsheet formulas recalculated in LibreOffice, sentence-level text rules, and task-specific graders. A percentage of checks is not a pass.</p></div>
-    <div class="card"><h3>Positive and negative controls</h3><p>Every task's reference solution passes its own checks and the untouched workspace fails them. Generators are deterministic, and a seed flag re-rolls names and amounts for a sealed variant.</p></div>
+    <div class="card"><h3>One frozen scorer, hashed</h3><p>Every attempt in the release was scored by the same immutable package. Each verdict is bound by a receipt to the original result hash, the output-file hashes, and the scorer manifest, so a rescoring can never be confused with a rerun.</p></div>
     <div class="card"><h3>Reliability beside accuracy</h3><p>Three repetitions per task. The site reports attempt-level pass rate and the share of tasks passed all three times, alongside wall time, token usage, and estimated model cost.</p></div>
   </div>
-  <p style="margin-top:24px">The full specification is on the <a href="/paper">paper page</a>; the protocol and grader are summarised under <a href="/methods">methods</a>; the setup and run commands are under <a href="/reproduce">reproduce</a>.</p>
+  <p style="margin-top:24px">The full paper is on the <a href="/paper">paper page</a>; the protocol and grader are summarised under <a href="/methods">methods</a>; the setup and run commands are under <a href="/reproduce">reproduce</a>.</p>
 </Base>
