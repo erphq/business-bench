@@ -1,0 +1,10 @@
+---
+interface Props { value: number; max?: number; series: number; label?: string; digits?: number }
+const { value, max = 1, series, label, digits = 1 } = Astro.props;
+const pct = Math.max(0, Math.min(100, (value / max) * 100));
+const text = label ?? `${(value * 100).toFixed(digits)}%`;
+---
+<div class={`bar f-${series}`} role="img" aria-label={text}>
+  <div class="track"><div class="fill" style={`width:${pct.toFixed(2)}%`}></div></div>
+  <span class="val">{text}</span>
+</div>

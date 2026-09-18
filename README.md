@@ -2,13 +2,15 @@
 
 **Does the agent deliver business work that an owner can actually use?**
 
+Site: [businessbench.org](https://businessbench.org) (results, task pages, methods, paper, self-audit). License: MIT.
+
 Business Harness Bench tests the handoff, not the agent's confidence: reconciled files, correct imports, source-grounded reports, and applications whose behavior holds up under use and subsequent changes.
 
 - **Desk:** 187 tasks across seven categories, each with inputs, an ask, checks, a generator, and a reference solution.
 - **Build:** 20 business applications, each with seed data, an acceptance checklist, and three change requests.
 - **Latest results:** the four complete desk arms of campaign `full-1`, 187 tasks × 3 repetitions × 4 systems = **2,244 attempts**. All passes and failures are included. These are recorded campaign scores, not a newly rescored or independently certified leaderboard. No incomplete build scores are published.
 
-This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials, tuning experiments, or a development diary. The repository is distributed privately; its task set is exposed to repository readers, not an independent sealed holdout.
+This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials, tuning experiments, or a development diary. The repository is public; its task set is therefore exposed, not an independent sealed holdout. Each generator takes a `--seed` for re-rolled private variants.
 
 ## Read the paper and specification
 
@@ -116,3 +118,7 @@ python docs/render_spec_pdf.py SPEC.md docs/business-harness-bench-spec.pdf
 ```
 
 The premise, technical specification, and current result tables are source-controlled. Generated preview images and QA scratch files are not part of the release.
+
+## Site
+
+The public site under `site/` is generated from this repository: task metadata via `python3 site/scripts/export_tasks.py`, results from `results/latest/`, and the paper from `SPEC.md`. Build with `cd site && bun install && bun run build`; deploy with `bunx wrangler deploy` (Cloudflare account access required). The `Site` workflow checks the export is fresh, runs the site tests, and builds on every push.
