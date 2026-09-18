@@ -1,0 +1,69 @@
+---
+import "@/styles/global.css";
+interface Props { title: string; description: string; path: string; wide?: boolean }
+const { title, description, path } = Astro.props;
+const site = "https://businessbench.org";
+const url = site + (path === "/" ? "/" : path);
+const nav = [
+  ["/results", "Results"], ["/tasks", "Tasks"], ["/methods", "Methods"], ["/paper", "Paper"],
+  ["/reproduce", "Reproduce"], ["/audit", "Audit"],
+];
+const current = (p: string) => (path === p || (p !== "/" && path.startsWith(p + "/"))) ? "page" : undefined;
+const favicon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='#0b0b0b'/><rect x='7' y='17' width='4' height='8' fill='#fcfcfb'/><rect x='14' y='11' width='4' height='14' fill='#2a78d6'/><rect x='21' y='7' width='4' height='18' fill='#fcfcfb'/></svg>`)}`;
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title === "Business Harness Bench" ? title : `${title} · Business Harness Bench`}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={url} />
+<meta property="og:site_name" content="Business Harness Bench" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta property="og:type" content="website" />
+<meta property="og:image" content={site + "/og.png"} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#161615" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href={favicon} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org", "@type": "Dataset", name: "Business Harness Bench",
+  description, url: site, license: "https://github.com/erphq/business-bench/blob/main/LICENSE",
+  creator: { "@type": "Organization", name: "ERP.AI", url: "https://erp.ai" },
+  distribution: [{ "@type": "DataDownload", encodingFormat: "application/jsonl", contentUrl: "https://github.com/erphq/business-bench/blob/main/results/latest/attempts.jsonl" }],
+})} />
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Business Harness Bench home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="currentColor"/><rect x="7" y="17" width="4" height="8" fill="var(--bg)"/><rect x="14" y="11" width="4" height="14" fill="var(--accent)"/><rect x="21" y="7" width="4" height="18" fill="var(--bg)"/></svg>
+      Business Harness Bench
+    </a>
+    <nav class="nav" aria-label="Primary">
+      {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
+      <a href="https://github.com/erphq/business-bench" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <slot />
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <p><strong>Business Harness Bench</strong> v1.0.0 · release <code>full-1</code></p>
+      <p>A benchmark by <a href="https://erp.ai" rel="noopener">ERP.AI</a>. ERP.AI also develops Proto, one of the evaluated harnesses. That conflict of interest is disclosed on every result page and in the <a href="/paper#10-validity-safety-and-release-boundary">paper</a>.</p>
+    </div>
+    <div>
+      <p>Code and tasks: MIT, <a href="https://github.com/erphq/business-bench" rel="noopener">erphq/business-bench</a>.</p>
+      <p>Review requests, errata, task disputes: open an issue on GitHub. Every published number is recomputable from <code>results/latest/attempts.jsonl</code>.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

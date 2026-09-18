@@ -1,0 +1,9 @@
+---
+import type { Attempt } from "@/lib/data";
+interface Props { runs: Attempt[] }
+const { runs } = Astro.props;
+const label = runs.map((r) => (r.passed ? "pass" : "fail") + (r.timed_out ? " (timed out)" : "")).join(", ");
+---
+<span class="reps" role="img" aria-label={label} title={label}>
+  {runs.map((r) => <i class={`rep ${r.passed ? "p" : "f"}${r.timed_out ? " t" : ""}`}></i>)}
+</span>

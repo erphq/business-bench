@@ -1,0 +1,129 @@
+---
+import Base from "@/layouts/Base.astro";
+import Bar from "@/components/Bar.astro";
+import Reps from "@/components/Reps.astro";
+import { ARMS, CATEGORIES, CATEGORY_LABEL, deskTasks, summary, attempts, matrix, provenance, prices, REPO } from "@/lib/data";
+const desk = deskTasks(), sums = summary(), led = attempts(), m = matrix(), prov = provenance(), price = prices();
+const byArm = Object.fromEntries(sums.map((s) => [s.harness, s]));
+const catN = (c: string) => desk.filter((t) => t.category === c).length * 3;
+const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
+const noneTasks = desk.filter((t) => passN(t.id) === 0);
+const allTasks = desk.filter((t) => passN(t.id) === 12);
+// most-failed required check types per arm, from the ledger
+const failTypes = Object.fromEntries(ARMS.map((a) => {
+  const c: Record<string, number> = {};
+  for (const r of led) if (r.harness === a.id && !r.passed) for (const k of r.checks) if (k.required && !k.passed) c[k.type] = (c[k.type] ?? 0) + 1;
+  return [a.id, Object.entries(c).sort((x, y) => y[1] - x[1]).slice(0, 3)];
+}));
+const desc = "Recorded desk-track results of Business Harness Bench release full-1: 2,244 attempts, four systems, per-task pass matrix, execution accounting, and estimated cost.";
+---
+<Base title="Results" description={desc} path="/results">
+  <p class="kicker">Desk track · campaign full-1 · exported {prov.exported_utc.slice(0, 10)}</p>
+  <h1>Results</h1>
+  <p class="lede">The four complete arms of the latest full campaign. Each arm covers all 187 tasks three times. Every scheduled attempt is in the denominator, including timeouts, nonzero exits, and grader errors. The numbers below are recomputed at build time from the released attempt ledger.</p>
+
+  <div class="callout">
+    <p><strong>What this table is.</strong> A recorded scoring snapshot, not a rescored or independently certified leaderboard. Cells differ in model, provider route, and price tier, so a gap between rows is a difference between configured systems, not an isolated harness or model effect. Original result records carry no per-attempt scorer digest; see <a href="#provenance">provenance</a>.</p>
+  </div>
+
+  <h2 id="headline">Recorded artifact scores</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th style="width:34%">Pass rate</th><th class="n">Passed / 561</th><th class="n">All 3 / 187</th><th class="n">Median minutes</th><th class="n">Mean cost (USD)</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const s = byArm[a.id]; return (
+      <tr id={a.id}>
+        <td><span class="sys"><i class={`swatch s-${a.slot}`}></i><span>{a.system}</span></span><div class="dim" style="font-size:12px;margin-left:20px">{a.harness} · {a.route}</div></td>
+        <td><Bar value={s.pass_rate} series={a.slot} digits={2} /></td>
+        <td class="n">{s.passed}</td><td class="n">{s.all_three_pass}</td>
+        <td class="n">{(s.median_wall_s / 60).toFixed(2)}</td><td class="n">{s.estimated_cost_mean_usd.toFixed(4)}</td>
+      </tr>); })}</tbody>
+  </table></div>
+  <p class="muted">"All 3 / 187" is observed repeated-task consistency within three repetitions, not a confidence interval. Median minutes is elapsed wall time per attempt including the runner's shutdown grace interval.</p>
+
+  <h2 id="categories">By category</h2>
+  <p class="muted">Passed attempts out of tasks × 3 in each category. Bars share one scale.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Category</th><th class="n">Attempts</th>{ARMS.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system.split(" / ")[1]}</span></th>)}</tr></thead>
+    <tbody>{CATEGORIES.map((c) => (
+      <tr>
+        <td><a href={`/tasks#${c.id}`}>{c.label}</a></td><td class="n">{catN(c.id)}</td>
+        {ARMS.map((a) => { const b = byArm[a.id].by_category[c.id]; return <td><Bar value={b.passed / b.attempts} series={a.slot} label={`${b.passed} / ${b.attempts}`} /></td>; })}
+      </tr>))}</tbody>
+  </table></div>
+
+  <h2 id="execution">Repetition and execution accounting</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Rep 1 / 187</th><th class="n">Rep 2 / 187</th><th class="n">Rep 3 / 187</th><th class="n">Timed out</th><th class="n">Nonzero exit</th><th class="n">Passing, abnormal exit</th><th class="n">Grader-error attempts</th><th class="n">Missing usage</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const s = byArm[a.id]; return (
+      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td>
+        <td class="n">{s.by_repetition["1"]}</td><td class="n">{s.by_repetition["2"]}</td><td class="n">{s.by_repetition["3"]}</td>
+        <td class="n">{s.timed_out}</td><td class="n">{s.nonzero_exit}</td><td class="n">{s.passing_abnormal_exit}</td><td class="n">{s.grader_error_attempts}</td><td class="n">{s.usage_missing}</td></tr>); })}</tbody>
+  </table></div>
+  <p class="muted">Timeout and nonzero-exit columns overlap. An artifact pass is the stored grader verdict on the files left behind, independent of how the process ended: an agent can leave a passing file and then time out. The desk time budget was 1,200 seconds per attempt with 2 CPUs and 6 GB. The Proto cells' termination rates are large enough that their scores should be read as a budget-constrained operating point, not a ceiling; see the <a href="/audit#elicitation">self-audit</a>.</p>
+
+  <h3>Most-failed required check types</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th>Failed check types among failed attempts (count)</th></tr></thead>
+    <tbody>{ARMS.map((a) => <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td>{failTypes[a.id].map(([k, n]) => <span class="pill" style="margin-right:6px"><code>{k}</code> {n}</span>)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="muted">Check types are documented under <a href="/methods#checks">methods</a>. A workbook value check fails when no recalculated cell equals the expected figure within tolerance; it is the dominant failure everywhere because spreadsheet and bookkeeping tasks are the largest categories.</p>
+
+  <h2 id="cost">Estimated model cost</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Observations / 561</th><th class="n">Mean USD</th><th class="n">Sum USD, observed</th><th>Price basis (USD per 1M tokens: in / cached / out)</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const s = byArm[a.id]; const p = price[a.model] ?? price["openai/" + a.model]; return (
+      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{s.cost_observations}</td><td class="n">{s.estimated_cost_mean_usd.toFixed(4)}</td><td class="n">{s.estimated_cost_sum_usd.toFixed(2)}</td><td class="mono">{p ? `${p.input} / ${p.cached_input} / ${p.output}` : "n/a"}</td></tr>); })}</tbody>
+  </table></div>
+  <p class="muted">Recorded estimates under the historical price table in <a href={`${REPO}/blob/main/bench/prices.json`} rel="noopener">bench/prices.json</a>, not invoices. Means exclude missing observations; sums are observed sums. Codex ran through a subscription and is priced at API list price like every other cell.</p>
+
+  <h2 id="matrix">Per-task matrix</h2>
+  <p class="muted">Three squares per cell, one per repetition: filled green is a pass, grey is a fail, a hollow centre marks a timeout. {noneTasks.length} tasks passed nowhere; {allTasks.length} passed everywhere.</p>
+  <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> fail, timed out</span><span><i class="rep p t"></i> pass, timed out</span></div>
+  <div class="filters" role="group" aria-label="Filter by category" data-filter="matrix">
+    <button aria-pressed="true" data-cat="all">All {desk.length}</button>
+    {CATEGORIES.map((c) => <button aria-pressed="false" data-cat={c.id}>{c.label} {desk.filter((t) => t.category === c.id).length}</button>)}
+    <button aria-pressed="false" data-cat="none">Passed nowhere {noneTasks.length}</button>
+  </div>
+  <div class="tbl-wrap"><table class="tbl" id="matrix-table">
+    <thead><tr><th>Task</th><th>Category</th>{ARMS.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system.split(" / ")[1]}</span></th>)}<th class="n">Total / 12</th></tr></thead>
+    <tbody>{desk.map((t) => (
+      <tr data-cat={t.category} data-none={passN(t.id) === 0 ? "1" : "0"}>
+        <td><a href={`/tasks/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
+        <td class="muted">{CATEGORY_LABEL[t.category]}</td>
+        {ARMS.map((a) => <td><Reps runs={m[t.id][a.id]} /></td>)}
+        <td class="n">{passN(t.id)}</td>
+      </tr>))}</tbody>
+  </table></div>
+
+  <h2 id="provenance">Provenance</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <tbody>
+      <tr><td>Campaign</td><td><code>{prov.campaign}</code>, {prov.release_kind}</td></tr>
+      <tr><td>Ledger SHA-256</td><td class="mono" style="word-break:break-all">{prov.ledger_sha256}</td></tr>
+      <tr><td>Agent image</td><td><code>{prov.launch_configuration.image_tag}</code>, runtime revision <code>{prov.launch_configuration.runtime_revision_recorded_by_launcher}</code> (launcher metadata, not an image digest)</td></tr>
+      <tr><td>Codex CLI</td><td>{prov.launch_configuration.codex_cli_version_in_image_recipe}</td></tr>
+      <tr><td>Reasoning effort</td><td>{prov.launch_configuration.reasoning_effort}</td></tr>
+      <tr><td>Concurrency</td><td>API arms {prov.launch_configuration.api_arm_parallelism}, Codex {prov.launch_configuration.codex_parallelism}; {prov.launch_configuration.cpus_per_attempt} CPUs and {prov.launch_configuration.memory_per_attempt} per attempt</td></tr>
+      <tr><td>Recalculation</td><td><code>{prov.launch_configuration.recalculation_image}</code> (LibreOffice, native)</td></tr>
+      <tr><td>Scorer</td><td>{prov.scorer_provenance}</td></tr>
+      <tr><td>Runtime</td><td>{prov.runtime_provenance}</td></tr>
+      <tr><td>Build track</td><td>{prov.build_status}</td></tr>
+      <tr><td>Excluded</td><td>{prov.exclusions}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Recompute this page's tables with <code>python bench/export_campaign.py --verify</code> against <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">results/latest/attempts.jsonl</a>. The check verifies matrix completeness and arithmetic, not the correctness of the original artifacts.</p>
+
+  <script>
+    for (const group of document.querySelectorAll<HTMLElement>("[data-filter]")) {
+      const table = document.getElementById(group.dataset.filter + "-table");
+      group.addEventListener("click", (e) => {
+        const b = (e.target as HTMLElement).closest("button"); if (!b || !table) return;
+        for (const x of group.querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
+        const cat = b.dataset.cat;
+        for (const tr of table.querySelectorAll<HTMLElement>("tbody tr")) {
+          const show = cat === "all" || (cat === "none" ? tr.dataset.none === "1" : tr.dataset.cat === cat);
+          tr.style.display = show ? "" : "none";
+        }
+      });
+    }
+  </script>
+</Base>

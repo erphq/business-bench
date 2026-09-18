@@ -1,0 +1,38 @@
+---
+import Base from "@/layouts/Base.astro";
+import { ARMS, CATEGORIES, deskTasks, buildTasks, matrix, REPO } from "@/lib/data";
+const desk = deskTasks(), build = buildTasks(), m = matrix();
+const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
+const desc = "All 187 desk tasks and 20 application-build tasks of Business Harness Bench, with the owner's ask, deliverables, and recorded pass counts.";
+---
+<Base title="Tasks" description={desc} path="/tasks">
+  <p class="kicker">Task inventory · {desk.length} desk · {build.length} build</p>
+  <h1>Tasks</h1>
+  <p class="lede">Every task is public in the repository with its generator, workspace, checks, and reference solution. The ask is written the way a non-technical owner would type it; the files are messy on purpose. Author notes and planted traps are kept out of these pages, but they are in the repo.</p>
+  <div class="callout"><p>This is an exposed task set, not a sealed holdout. Each generator takes a seed, so a re-rolled variant with different names and amounts can be produced for a private evaluation. See the <a href="/audit#contamination">contamination note</a>.</p></div>
+
+  <h2 id="desk">Desk track</h2>
+  <p class="muted">"Passes / 12" is the number of passing attempts across four systems × three repetitions in release full-1.</p>
+  {CATEGORIES.map((c) => { const rows = desk.filter((t) => t.category === c.id); return (
+    <section>
+      <h3 id={c.id}>{c.label} <span class="dim" style="font-weight:400">· {rows.length} tasks · {c.deliverable.toLowerCase()}</span></h3>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th style="width:44%">Task</th><th>Deliverables</th><th class="n">Checks</th><th class="n">Passes / 12</th></tr></thead>
+        <tbody>{rows.map((t) => (
+          <tr><td><a href={`/tasks/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
+            <td class="mono" style="font-size:13px">{t.deliverables.join(", ")}</td>
+            <td class="n">{t.checks.length}</td><td class="n">{passN(t.id)}</td></tr>))}</tbody>
+      </table></div>
+    </section>); })}
+
+  <h2 id="build">Build track</h2>
+  <p class="muted">Each pack: an owner's requirement, seed CSV exports to import, a binary acceptance checklist that opens with the 14-item <a href="/methods#build-baseline">enterprise baseline</a>, and three change requests. No build scores are published; the packs are released and validated.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:44%">Application</th><th>Seed files</th><th class="n">Checklist items</th><th class="n">Change items</th></tr></thead>
+    <tbody>{build.map((b) => (
+      <tr><td><a href={`/build/${b.id}`}>{b.title}</a><div class="dim mono" style="font-size:12px">{b.id}</div></td>
+        <td class="mono" style="font-size:13px">{b.seed.join(", ")}</td>
+        <td class="n">{b.checklistItems}</td><td class="n">{b.changes.reduce((n, c) => n + c.items, 0)}</td></tr>))}</tbody>
+  </table></div>
+  <p>Task format and authoring rules: <a href={`${REPO}/blob/main/docs/task-format.md`} rel="noopener">docs/task-format.md</a>, <a href={`${REPO}/blob/main/docs/authoring-guide.md`} rel="noopener">desk authoring guide</a>, <a href={`${REPO}/blob/main/docs/authoring-guide-build.md`} rel="noopener">build authoring guide</a>.</p>
+</Base>

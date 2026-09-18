@@ -1,0 +1,19 @@
+---
+import Base from "@/layouts/Base.astro";
+import { readRepoFile, REPO } from "@/lib/data";
+import { renderMarkdown } from "@/lib/markdown";
+const readme = readRepoFile("README.md");
+const body = readme.slice(readme.indexOf("## Requirements"));
+const { html, toc } = renderMarkdown(body, { linkBase: `${REPO}/blob/main/` });
+const desc = "Install, verify, and run Business Harness Bench: no-model verification, the Codex desk run, optional Proto adapters, the build track, and how to publish a new campaign.";
+---
+<Base title="Reproduce" description={desc} path="/reproduce">
+  <p class="kicker">From the repository README</p>
+  <h1>Reproduce</h1>
+  <p class="lede">Everything below runs without a model until you choose to spend credits. Linux with Docker is required for official runs; local-process mode exists for development and is not an isolation boundary.</p>
+  <div class="callout"><p>Add a cell by writing one adapter script that follows the <a href={`${REPO}/blob/main/harnesses/contract.md`} rel="noopener">harness contract</a>, then run with a fresh label. Report a new configuration as a new cell; do not present it as a reproduction of the historical campaign.</p></div>
+  <div class="two">
+    <nav class="toc" aria-label="Contents">{toc.map((t) => <a href={`#${t.id}`} class={`d${t.depth}`}>{t.text}</a>)}</nav>
+    <article class="prose" set:html={html} />
+  </div>
+</Base>

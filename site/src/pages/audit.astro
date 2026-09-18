@@ -1,0 +1,86 @@
+---
+import Base from "@/layouts/Base.astro";
+import { ARMS, deskTasks, summary, attempts, REPO } from "@/lib/data";
+const desk = deskTasks(), sums = summary(), led = attempts();
+const byArm = Object.fromEntries(sums.map((s) => [s.harness, s]));
+const term = ARMS.map((a) => { const s = byArm[a.id]; const abn = led.filter((r) => r.harness === a.id && (r.timed_out || (r.exit_code ?? 0) !== 0)).length; return { a, s, abn, rate: abn / s.attempts }; });
+const modelAuthored = true;
+const desc = "A self-assessment of Business Harness Bench against the criteria independent reviewers use: reviewability, task correctness, grading validity, consistency, elicitation adequacy, contamination, human baselines, and construct validity.";
+---
+<Base title="Self-audit" description={desc} path="/audit">
+  <p class="kicker">What a reviewer would check</p>
+  <h1>Self-audit</h1>
+  <p class="lede">Benchmarks get audited now, and the ones that survive are the ones that publish their own gaps first. This page rates the release the way an independent review would, using the criteria Epoch AI's Benchmark Reviews programme applies: reviewability, four classes of score-affecting defect, and a set of evaluation-quality expectations. Statuses are ours; the point is that anyone can check them against the repository.</p>
+
+  <h2 id="reviewability">1. Reviewability</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>All tasks inspectable</td><td><span class="pill ok">Full</span></td><td>{desk.length} desk and 20 build tasks with generators, workspaces, checks, references, and traps in <a href={`${REPO}/tree/main/tasks`} rel="noopener">tasks/</a>.</td></tr>
+      <tr><td>Scoring logic inspectable</td><td><span class="pill ok">Full</span></td><td><code>bench/grade.py</code>, 91 task-specific <code>check.py</code> graders, and per-check verdicts for every attempt in the ledger.</td></tr>
+      <tr><td>Harness settings disclosed</td><td><span class="pill ok">Full</span></td><td>One adapter script per cell with model, effort, iteration cap, token cap, and sandbox flags; runner limits in provenance.</td></tr>
+      <tr><td>Historical environment reproducible</td><td><span class="pill warn">Partial</span></td><td>Image tag and short revision are launcher metadata, not digests. The Proto runtime binary and authenticated skill inventories are not distributed.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="task-correctness">2. Task correctness</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Answerable as written</td><td><span class="pill warn">Mechanically checked</span></td><td>Every task's reference solution passes and the untouched workspace fails. This proves solvability, not that the ask is unambiguous to a reader who has not seen the checks.</td></tr>
+      <tr><td>Independent practitioner review</td><td><span class="pill bad">Not done</span></td><td>{modelAuthored ? "Most tasks were authored with model assistance and reviewed by the authors. No sample has been audited by a reviewer outside the authoring loop." : ""} A stratified 50-task audit is the first item on the roadmap.</td></tr>
+      <tr><td>Hidden requirements</td><td><span class="pill warn">Risk in text tasks</span></td><td>Drafting and reports pass at 49% and 50% even for the strongest cell. Sentence-level regex checks are the most likely place for a plausibly correct memo to be rejected; that risk is not yet quantified.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="grading-validity">3. Grading validity</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>False negatives (overly strict)</td><td><span class="pill warn">Unquantified</span></td><td>No failed artifacts from full-1 have been re-read by a human to estimate the rejection rate of valid alternatives. Raw workspaces are retained privately and this is the second roadmap item.</td></tr>
+      <tr><td>False positives (shortcuts)</td><td><span class="pill warn">Partly guarded</span></td><td>The validator rejects value pins that appear verbatim in inputs; workbooks are recalculated natively so cached values cannot pass; no-error and live-formula checks were added after an audit found error cells beside pinned values. No plausible-wrong-answer negative controls exist yet.</td></tr>
+      <tr><td>Grader determinism</td><td><span class="pill ok">Yes</span></td><td>Deterministic checks; the only nondeterminism is LibreOffice recalculation, pinned to a container image.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="consistency">4. Benchmark consistency</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Versioned tasks and scorer</td><td><span class="pill ok">From v1.0.0</span></td><td>Release manifest hashes every task file. Any task, check, or scorer change bumps the version and results are labeled by campaign.</td></tr>
+      <tr><td>Historical results tied to a scorer digest</td><td><span class="pill bad">No</span></td><td>full-1 records lack per-attempt scorer hashes. The snapshot is published as recorded rather than rescored; a rescoring would be a separately named snapshot.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="elicitation">5. Elicitation adequacy</h2>
+  <p>Involuntary termination rates in release full-1 (timed out or nonzero exit, overlapping):</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Abnormal / 561</th><th class="n">Rate</th><th>Reading</th></tr></thead>
+    <tbody>{term.map(({ a, abn, rate }) => <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{abn}</td><td class="n">{(rate * 100).toFixed(1)}%</td><td>{rate > 0.1 ? <span class="pill bad">Budget-limited</span> : rate > 0.03 ? <span class="pill warn">Material</span> : <span class="pill ok">Clean</span>}</td></tr>)}</tbody>
+  </table></div>
+  <p>Independent reviewers have treated involuntary termination above roughly a tenth of trials as a defect. By that standard the Qwen and DeepSeek cells fail and the GLM cell is marginal. The scores are still valid records of what those configurations delivered inside 1,200 seconds; they are not a ceiling for those models. The next campaign fixes the budget before anything else.</p>
+
+  <h2 id="quality">6. Evaluation quality</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Expectation</th><th>Status</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Runs per model for statistics</td><td><span class="pill warn">3</span></td><td>Reviewers ask for five or more. Three repetitions are reported as attempt rate plus all-three consistency, with no interval claimed.</td></tr>
+      <tr id="contamination"><td>Contamination assessment</td><td><span class="pill warn">Exposed set, low prior exposure</span></td><td>Inputs are generated fixtures, not scraped documents, and the repository was private until this release. It is now public, so the set is exposed; each generator takes a seed for sealed variants, and benchmark-driven development by the authors is disclosed rather than relabeled as generalization.</td></tr>
+      <tr><td>Human completability baseline</td><td><span class="pill bad">Not established</span></td><td>No human performance or time baseline exists for a sample.</td></tr>
+      <tr><td>Fair scaffold across models</td><td><span class="pill warn">Different harnesses by design</span></td><td>The unit is the configured system. Matched controls (same model, different harness) are planned, not published.</td></tr>
+      <tr><td>Construct validity</td><td><span class="pill warn">Argued, not demonstrated</span></td><td>The <a href="/paper#1-the-problem-completion-is-a-contract-not-a-conversation">premise</a> argues why artifact contracts are the right target. No study yet links scores to owner acceptance in practice.</td></tr>
+      <tr><td>Conflict of interest</td><td><span class="pill warn">Disclosed</span></td><td>ERP.AI develops Proto. The Codex cell scored highest in this release; the premise does not depend on which system ranks first.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="roadmap">What changes before a review request</h2>
+  <ol>
+    <li>Fix the desk budget for flash-tier cells and rerun the Proto arms as a new labeled campaign.</li>
+    <li>Independent stratified audit of 50 tasks (seven per category) with per-task verdicts committed to the repo.</li>
+    <li>Human re-read of a sample of failed artifacts from full-1 to estimate the false-negative rate, and plausible-wrong-answer negative controls for the check types that need them.</li>
+    <li>Five repetitions per cell and a matched same-model control pair, so a harness effect can be stated.</li>
+    <li>Per-attempt scorer digest and image digest recorded by the runner.</li>
+    <li>A human completability baseline on the audited sample.</li>
+  </ol>
+  <p>Task disputes and grading errata are tracked as GitHub issues on <a href={REPO} rel="noopener">erphq/business-bench</a>. Accepted corrections change the task set version; they are never applied silently to a published snapshot.</p>
+</Base>
