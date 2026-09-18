@@ -1,6 +1,6 @@
 # Research premise
 
-Business Harness Bench asks whether an agent delivers business work an owner can use without repairing it. A correct explanation is insufficient when the required output is a reconciliation, an import file, a source-grounded report, or an application with enforceable permissions.
+Business Bench asks whether an agent delivers business work an owner can use without repairing it. A correct explanation is insufficient when the required output is a reconciliation, an import file, a source-grounded report, or an application with enforceable permissions.
 
 The desk track tests file-delivery contracts; the build track tests application handoff and behavior under successive changes. Evaluation identifies the complete configured agent system and reports correctness, repeated success, execution status, and resource use separately.
 

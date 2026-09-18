@@ -3,10 +3,11 @@
   "bench/audit.py": "481715fb1e6c361bd7908e822894b032c505acb144882ef25132307de21d1ad6",
   "bench/build_grade.py": "9d2b74180cc5cd47df66c4e169048f9056c3c2c5446be59ab9f169782fb9bb22",
   "bench/build_run.py": "989a03189402bd9b4586d29cc366c9d5919ee90958e9e151665c6817351c1825",
+  "bench/check_rules.py": "a757cea580a493430370573b0a507917f0b0b33056a74b2c174d279e006dab60",
   "bench/export_campaign.py": "2963c315912099bfafe5867b3b473483c84701b0eb0d3c14a03d24c5fa57216f",
   "bench/failures.py": "49984e27576fa9807f42760ec8befd5e047ade32c00a97f6db39d2f5827a654e",
   "bench/frozen_release.py": "b3b63a784cef48dff78a2a206edf60cfec48194458000bbf4bbcf23ba220d96a",
-  "bench/grade.py": "0b187631813de7961119475760f13f72cdab4ca7f196a0e139a9038ff451ec72",
+  "bench/grade.py": "1c261d4af4303e2d7ecd15dfb002678d8fbd0f8b0db557ee517d743ddd7907ca",
   "bench/prices.json": "4338ac7d86e3565654c2c4d74f85f592a6eb6a99971b24c40b689da769b3cbeb",
   "bench/recost.py": "b9f8f6dc05b5972f6625275cb91328aa2a54782a08a98661cb7d65f42fe2c920",
   "bench/regrade.py": "64d719ca4f98f1d359ed516d9c52dfcd40347b1672501a3000c8d6aa01c71397",
@@ -18,7 +19,7 @@
   "bench/trace_tools.py": "663673b829ee4e42b08ad56b8dd6adbe4b7a6d60474c2749ea75d60278251082",
   "bench/usage.py": "72dde587d8ab050238f5b6a2dc0a9b871314d47e7d57db0d07a6beb818db6b40",
   "bench/validate_build.py": "5a37fe3caedd29ee1eb627a4d70e20cbf4cd3e6cf7e3c5f670eecf33c403c0b1",
-  "bench/validate_tasks.py": "d510005b906a2303bc407a9b34c28ab49576466899e1118eec3d8a99b8297924",
+  "bench/validate_tasks.py": "f93aa564926ef050bd7194a3f0aa6e7e2b420e1c80316a249376c12e6074d7bf",
   "docker/Dockerfile": "a4cf873363e631f8969b34423fd5cb32dd52e5fbe6bd9f8e2321e9af41118258",
   "docker/Dockerfile.proto": "c2afe081ca46d426274a7cfd04051103c18781e156c438ba32e72c08f25fc227",
   "docker/build.sh": "f34cd4fa8daccdc59fe86c00d7fbeaffa43077faf8d535dd44ae9a35faafeca5",
@@ -2955,5 +2956,8 @@
   "tasks/desk/zendesk-users-import/workspace/zendesk_import_rules.txt": "fc98c9ba873af3deacf41ca6b731bd6898080ba1bfee44b82cdf5a35da036683",
   "tasks/desk/zendesk-users-import/workspace/zendesk_organizations_export.csv": "f1dea6bba3fb3b96d174468297400f7a8dd17223de0b206029c6c28606464ecc",
   "tasks/desk/zendesk-users-import/workspace/zendesk_user_import_template.csv": "7a8f2879b232d211cb7888d2bbe766d6c13b3873dbbf9cdabf44fab1078e031e",
-  "tasks/lib/bizgen/__init__.py": "9015ef1f1f32814aad1db4e7fd5c59447e6f7121fefa1c5ba6f4deac3faa6c50"
+  "tasks/lib/bizgen/__init__.py": "9015ef1f1f32814aad1db4e7fd5c59447e6f7121fefa1c5ba6f4deac3faa6c50",
+  "tasks/lib/bizgen/adversarial.py": "9f7a5a747f2c5e2a934ee048da96051a3dd7219ced25524d0c14528be073d214",
+  "tasks/lib/bizgen/eventlog.py": "c6097cdf48afc615b61bdf5dd772a01737e9f39eefc4d05c2e528eee2c8a2327",
+  "tasks/lib/bizgen/planning.py": "1f9d98b35d79fffbabaaa711fc6e0b914b121b1095a16624550176501464e56f"
 }
