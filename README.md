@@ -1,10 +1,10 @@
-# Business Harness Bench
+# Business Bench
 
 **Does the agent deliver business work that an owner can actually use?**
 
 Site: [businessbench.org](https://businessbench.org) (results, task pages, methods, paper, self-audit). License: MIT.
 
-Business Harness Bench tests the handoff, not the agent's confidence: reconciled files, correct imports, source-grounded reports, and applications whose behavior holds up under use and subsequent changes.
+Business Bench tests the handoff, not the agent's confidence: reconciled files, correct imports, source-grounded reports, and applications whose behavior holds up under use and subsequent changes.
 
 - **Desk:** 187 tasks across seven categories, each with inputs, an ask, checks, a generator, and a reference solution.
 - **Build:** 20 business applications, each with seed data, an acceptance checklist, and three change requests.

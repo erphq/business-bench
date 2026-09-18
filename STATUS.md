@@ -1,6 +1,6 @@
 # Status
 
-Business Harness Bench: a runnable benchmark for agents doing business work.
+Business Bench: a runnable benchmark for agents doing business work.
 Public site: https://businessbench.org. Repo: erphq/business-bench (public from v1.0.0).
 
 ## Current state (2026-09-17)

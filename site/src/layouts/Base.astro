@@ -16,10 +16,10 @@ const favicon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{title === "Business Harness Bench" ? title : `${title} · Business Harness Bench`}</title>
+<title>{title === "Business Bench" ? title : `${title} · Business Bench`}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={url} />
-<meta property="og:site_name" content="Business Harness Bench" />
+<meta property="og:site_name" content="Business Bench" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={url} />
@@ -31,7 +31,7 @@ const favicon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www
 <link rel="icon" href={favicon} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org", "@type": "Dataset", name: "Business Harness Bench",
+  "@context": "https://schema.org", "@type": "Dataset", name: "Business Bench",
   description, url: site, license: "https://github.com/erphq/business-bench/blob/main/LICENSE",
   creator: { "@type": "Organization", name: "ERP.AI", url: "https://erp.ai" },
   distribution: [{ "@type": "DataDownload", encodingFormat: "application/jsonl", contentUrl: "https://github.com/erphq/business-bench/blob/main/results/latest/attempts.jsonl" }],
@@ -40,9 +40,9 @@ const favicon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www
 <body>
 <header class="site-head">
   <div class="wrap">
-    <a class="brand" href="/" aria-label="Business Harness Bench home">
+    <a class="brand" href="/" aria-label="Business Bench home">
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="currentColor"/><rect x="7" y="17" width="4" height="8" fill="var(--bg)"/><rect x="14" y="11" width="4" height="14" fill="var(--accent)"/><rect x="21" y="7" width="4" height="18" fill="var(--bg)"/></svg>
-      Business Harness Bench
+      Business Bench
     </a>
     <nav class="nav" aria-label="Primary">
       {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
@@ -56,7 +56,7 @@ const favicon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www
 <footer class="site-foot">
   <div class="wrap">
     <div>
-      <p><strong>Business Harness Bench</strong> v1.0.0 · release <code>complete-desk-comparison-2026-09-16</code></p>
+      <p><strong>Business Bench</strong> v1.0.0 · release <code>complete-desk-comparison-2026-09-16</code></p>
       <p>A benchmark by <a href="https://erp.ai" rel="noopener">ERP.AI</a>. ERP.AI also develops Proto, one of the evaluated harnesses. That conflict of interest is disclosed on every result page and in the <a href="/paper#5-validity-and-limitations">paper</a>.</p>
     </div>
     <div>
