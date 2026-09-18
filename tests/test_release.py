@@ -15,6 +15,17 @@ import yaml
 
 
 class ReleaseTests(unittest.TestCase):
+    def test_frozen_scorer_and_paper_agree(self):
+        from frozen_release import verify
+        verify()
+        from pypdf import PdfReader
+        text = '\n'.join(page.extract_text() for page in PdfReader(ROOT / 'docs/business-harness-bench-spec.pdf').pages)
+        self.assertIn('90.4%', text)
+        self.assertIn('84.3%', text)
+        self.assertIn('507', text)
+        self.assertIn('473', text)
+        self.assertNotIn('2,244', text)
+
     def test_inventory(self):
         for track, count in [('desk', 187), ('build', 20)]:
             files = list((ROOT / 'tasks' / track).glob('*/task.yaml'))
@@ -37,7 +48,8 @@ class ReleaseTests(unittest.TestCase):
         rows = [json.loads(s) for s in (ROOT / 'results/latest/attempts.jsonl').read_text().splitlines()]
         expected = json.loads((ROOT / 'results/latest/summary.json').read_text())
         self.assertEqual(export_campaign.aggregate(rows), expected)
-        self.assertEqual(len({r['run_id'] for r in rows}), 2244)
+        self.assertEqual(len({r['run_id'] for r in rows}), 1122)
+        self.assertEqual([s['passed'] for s in expected], [507, 473])
         self.assertTrue(all('work_dir' not in r and len(r['source_sha256']) == 64 for r in rows))
 
     def test_incomplete_arm_is_rejected(self):

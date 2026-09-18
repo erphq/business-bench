@@ -1,0 +1,94 @@
+id: credit-notes-apply
+track: desk
+category: bookkeeping
+title: Turn September returns into credit notes and apply them
+ask: |
+  Can you turn September's returns into credit notes and apply them to what customers owe? Our returns policy in the folder has the rules. I need credit_notes.csv and invoice_balances.csv back.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the returns log has no prices; each line is credited at the discounted unit price on the original invoice, and every customer has a 5-15% account discount, so quantity times list price over-credits every note (check: credit and fee per RMA)
+- |-
+  RMA-2609-102 mixes an ordered-in-error or overstock line with a no-fault line; the 15% fee comes off the first line only, and plain restocking-fee lines appear on other notes (check: credit and fee per RMA)
+- |-
+  RMA-2609-110 credits more than its invoice's open balance (the invoice is partly paid); the rest goes to Mudroom Dog Wash's oldest other open invoice, not the newest and not left as a negative balance (checks: applied and unapplied per RMA; invoice balances after credits)
+- |-
+  RMA-2609-113 names an invoice that was paid in full in August, so the whole credit goes to Mountain Mutt Outfitters's open invoices oldest first, reaching more than one (checks: applied and unapplied per RMA; invoice balances after credits)
+- |-
+  Tailwind Pet Market has no open invoices at all, so RMA-2609-122 stays entirely on account as unapplied credit (check: applied and unapplied per RMA)
+- |-
+  The Feed Bin has two RMAs: RMA-2609-137 spills into the oldest invoice, which is the invoice RMA-2609-156 names, so the second note finds less open than the report shows and ends with unapplied credit (checks: applied and unapplied per RMA; invoice balances after credits)
+- |-
+  a rejected line on RMA-2609-130 earns nothing, and RMA-2609-134 is still pending inspection and gets no credit note this month (checks: credit notes issued; credit and fee per RMA)
+- |-
+  the log writes customers upper-cased or with Inc./LLC, gives the invoice with or without its INV- prefix, and carries a preamble line and a BOM (check: credit and fee per RMA)
+checks:
+- type: csv_columns
+  name: credit note columns
+  path: credit_notes.csv
+  columns:
+  - rma
+  - customer
+  - restocking_fee
+  - credit_amount
+  - applied
+  - unapplied
+- type: csv_set_equal
+  name: credit notes issued
+  path: credit_notes.csv
+  column: rma
+  ref: credit_notes.csv
+- type: csv_values_match
+  name: credit and fee per RMA
+  path: credit_notes.csv
+  ref: credit_notes.csv
+  key: rma
+  columns:
+  - restocking_fee
+  - credit_amount
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - RMA-2609-102
+  - RMA-2609-130
+- type: csv_values_match
+  name: applied and unapplied per RMA
+  path: credit_notes.csv
+  ref: credit_notes.csv
+  key: rma
+  columns:
+  - applied
+  - unapplied
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - RMA-2609-110
+  - RMA-2609-113
+  - RMA-2609-122
+  - RMA-2609-137
+  - RMA-2609-156
+- type: csv_set_equal
+  name: every open invoice listed
+  path: invoice_balances.csv
+  column: invoice
+  ref: invoice_balances.csv
+- type: csv_values_match
+  name: invoice balances after credits
+  path: invoice_balances.csv
+  ref: invoice_balances.csv
+  key: invoice
+  columns:
+  - balance
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - INV-30420
+  - INV-30429
+  - INV-30433
+  - INV-30478
+  - INV-30483
+  - INV-30485

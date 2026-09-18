@@ -1,0 +1,40 @@
+{
+  "annual_budget": {
+    "Creative": 78000,
+    "Marketing": 406000,
+    "Operations": 99000,
+    "Production": 238000,
+    "Sales": 123000
+  },
+  "blank_cost_center_lines": 13,
+  "booth_amount": 11248.85,
+  "booth_line": "00059",
+  "excluded_lines": {
+    "march_dated": 7,
+    "rejected_or_draft": 28
+  },
+  "naive_q2": {
+    "blank_dropped": {
+      "Creative": 14062.92,
+      "Marketing": 94859.98,
+      "Operations": 20933.16,
+      "Production": 55166.37,
+      "Sales": 37871.16
+    },
+    "no_booth_move": {
+      "Creative": 14062.92,
+      "Marketing": 106507.18,
+      "Operations": 21177.18,
+      "Production": 63042.48,
+      "Sales": 26735.7
+    }
+  },
+  "over_budget": {
+    "Creative": -5437.08,
+    "Marketing": -6241.67,
+    "Operations": -3572.82,
+    "Production": 3542.48,
+    "Sales": 7234.55
+  },
+  "total": 231525.46
+}

@@ -1,0 +1,46 @@
+id: tip-pooling
+track: desk
+category: bookkeeping
+title: Split last week's tip pool by shift
+ask: |
+  Can you split last week's tips for payroll? The POS export, the cash envelope sheet, the time clock and Hana's tip pool memo are all in the folder. Save it as tip_distribution.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  tips pool per shift (13 of them, no Monday lunch) and a check's shift comes from its close time; pooling by day or by week, or by the server on the check, moves every share (check: tip shares per person per shift)
+- |-
+  19 checks on Friday to Sunday dinner closed after midnight carry the next calendar date and belong to the night before, and two checks closed early Monday belong to the previous week's Sunday and are not in this payout (check: tip shares per person per shift)
+- |-
+  shares are by hours on the shift; dinner punch-outs after midnight read '12:40 AM' with a blank Paid hours cell, so a plain time difference goes negative (check: tip shares per person per shift)
+- |-
+  Margaret Diaz (General Manager) and Patricia Ortiz (Kitchen Manager) clock in on most shifts and must get nothing, while Anthony Gonzalez (Shift Lead) shares (check: managers take nothing)
+- |-
+  David Allen works Saturday lunch straight into dinner on one punch; the hours split at 4:00 PM into both pools (check: tip shares per person per shift)
+- |-
+  cash envelopes are a separate workbook with '$1,250.00' text amounts and add to each shift's pool; three voided checks still show a tip (check: tip shares per person per shift)
+- |-
+  shares are cut down to the cent and the leftover cents go one at a time by largest lost fraction, then hours, then last name; rounding each share half-up leaves several shifts a cent or two off their pool (check: tip shares per person per shift - ties)
+checks:
+- type: csv_columns
+  name: payout sheet columns
+  path: tip_distribution.csv
+  columns:
+  - date
+  - shift
+  - employee
+  - hours
+  - tip_share
+- type: csv_row_count
+  name: one line per person per shift
+  path: tip_distribution.csv
+  equals_ref: tip_distribution.csv
+- type: text_not_contains
+  name: managers take nothing
+  path: tip_distribution.csv
+  phrases:
+  - Diaz
+  - Ortiz
+- type: custom
+  name: tip shares per person per shift
+  module: check.py

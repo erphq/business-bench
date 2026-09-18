@@ -1,0 +1,62 @@
+id: weekly-kpi-dashboard
+track: desk
+category: reports
+title: One-page weekly KPIs from five system exports
+ask: |
+  Kwame wants a one-page weekly KPI sheet for the staff meeting built from the five exports in this folder. Save it as kpi.xlsx with live formulas; his note lists what goes on it.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the scheduling export groups shifts under 'Pay week (Sun-Sat)' while the dashboard weeks run Monday to Sunday; grouping on that column puts each Sunday in the following week, so the week of 2026-08-17 carries the wrong Sunday (checks: staff hours week of 17 Aug; sales per staff hour week of 17 Aug)
+- |-
+  every export starts and stops mid-week (till report from Wednesday 29 Jul, web orders to 15 Sep, shifts from 26 Jul, lab jobs ordered from mid-July); only the six full weeks 3 Aug - 13 Sep belong on the page (check: total sales, six weeks)
+- |-
+  the web store export carries refunded, voided and pending orders that are not sales, including a large refunded order on 26 Aug (check: online sales week of 24 Aug)
+- |-
+  web timestamps carry a -0700 offset; converting them to UTC moves a paid 22:41 order on Sunday 30 Aug into the next week (check: online sales week of 24 Aug)
+- |-
+  glasses jobs count in the week the lab finished them, not the week they were ordered, and jobs waiting on lenses or still in the lab have no finish date (check: glasses jobs finished week of 7 Sep)
+- |-
+  the till report shows Mondays as CLOSED text rows and carries a two-line preamble; the scheduling export has a BOM and CRLF endings (check: total sales, six weeks)
+checks:
+- type: file_exists
+  name: kpi.xlsx exists
+  path: kpi.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: kpi.xlsx
+  min_count: 24
+- type: xlsx_no_errors
+  name: no error cells
+  path: kpi.xlsx
+- type: xlsx_value_present
+  name: staff hours week of 17 Aug (Monday weeks)
+  path: kpi.xlsx
+  expected: 313.0
+  rel_tol: 0.0029
+  near_text: hour
+- type: xlsx_value_present
+  name: sales per staff hour week of 17 Aug
+  path: kpi.xlsx
+  expected: 74.31
+  rel_tol: 0.005
+  near_text: hour
+- type: xlsx_value_present
+  name: online sales week of 24 Aug (paid only)
+  path: kpi.xlsx
+  expected: 4713.92
+  rel_tol: 0.00019
+  near_text: online
+- type: xlsx_value_present
+  name: glasses jobs finished week of 7 Sep
+  path: kpi.xlsx
+  expected: 19
+  rel_tol: 0.0
+  near_text: job
+- type: xlsx_value_present
+  name: total sales, six weeks
+  path: kpi.xlsx
+  expected: 149519.56
+  rel_tol: 6.0e-06
+  near_text: total

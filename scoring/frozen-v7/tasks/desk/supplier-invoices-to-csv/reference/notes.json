@@ -1,0 +1,42 @@
+{
+  "A": {
+    "no": "PPS-55983",
+    "total": 518.56,
+    "vendor": "Pacific Packaging Supply"
+  },
+  "B": {
+    "no": "HE-2026-0814",
+    "total": 480.71,
+    "vendor": "Hollowell Electric"
+  },
+  "C": {
+    "no": "RE-2026-0465",
+    "total": 3368.95,
+    "vendor": "Kaffa Import GmbH"
+  },
+  "D": {
+    "no": "BD776964",
+    "total": 269.66,
+    "vendor": "Bluestem Dairy Co."
+  },
+  "E": {
+    "no": "SOS-INV-39024",
+    "total": 202.48,
+    "vendor": "Summit Office Supply"
+  },
+  "F": {
+    "no": "CM-20539",
+    "total": 107.34,
+    "vendor": "Pacific Packaging Supply"
+  },
+  "G": {
+    "no": "GWS-88522",
+    "total": 439.44,
+    "vendor": "Greenline Waste Services"
+  },
+  "H": {
+    "no": "CCL-26-1146",
+    "total": 368.26,
+    "vendor": "Cascade Cup and Lid"
+  }
+}

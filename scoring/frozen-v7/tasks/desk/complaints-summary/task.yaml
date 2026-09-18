@@ -1,0 +1,68 @@
+id: complaints-summary
+track: desk
+category: reports
+title: First-half complaints by category and month
+ask: |
+  Grace needs the first-half complaints broken down by category and month for the board, plus a short memo on what stands out. The log, the web-form export and her note on how to count are in the folder. Save them as complaints.xlsx and memo.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the log has one row per update and 370 rows for far fewer tickets, plus eight pasted duplicate rows; counting rows makes March look worst because its tickets were escalated repeatedly (checks: complaints in the half; worst month total; memo names the worst month)
+- |-
+  web-form tickets are in a separate CSV with reason codes and are also worked in the log under the same ticket id; some never reach the log (check: complaints in the half)
+- |-
+  categories are hand-typed spellings and web codes that the note maps to six categories; compliments, thank-yous, questions and quote requests are logged too and are not complaints (checks: complaints in the half; Damaged goods total)
+- |-
+  investigation recategorises tickets, mostly late deliveries that were really missed pickups; the most recent entry's category wins, so keeping the first row's category undercounts missed pickups (check: Missed pickup total)
+- |-
+  tickets opened in the last days of a month are resolved in the next; the month is the month opened, not the month of the latest update (check: worst month total)
+- |-
+  about one log date in seven is typed text like "3/31/2026" instead of a real date, and web timestamps are ISO with a T (check: worst month total)
+checks:
+- type: file_exists
+  name: complaints.xlsx exists
+  path: complaints.xlsx
+- type: xlsx_no_errors
+  name: no formula errors
+  path: complaints.xlsx
+- type: xlsx_value_present
+  name: complaints in the half
+  path: complaints.xlsx
+  expected: 210
+  rel_tol: 0.001
+  near_text: total
+- type: xlsx_value_present
+  name: worst month total
+  path: complaints.xlsx
+  expected: 45
+  rel_tol: 0.001
+  near_text: total
+- type: xlsx_value_present
+  name: Missed pickup total
+  path: complaints.xlsx
+  expected: 46
+  rel_tol: 0.001
+  near_text: missed pickup
+- type: xlsx_value_present
+  name: Damaged goods total
+  path: complaints.xlsx
+  expected: 31
+  rel_tol: 0.001
+  near_text: damaged
+- type: text_numbers_present
+  name: memo states the half total and the worst month's count
+  path: memo.md
+  numbers:
+  - 210
+  - 45
+  rel_tol: 0.001
+- type: text_sentence_matches
+  name: memo names the worst month
+  path: memo.md
+  all:
+  - (\bfebruary\b|\b2026-02\b|\b02/2026\b)
+  - |-
+    (\bworst\b|\bmost\b|\bhighest\b|\bpeak\b|\bbusiest\b|\blargest\b|\bbiggest\b|\bmore complaints than\b|\btop month\b)
+  none:
+  - \bnot (the |a )?(worst|highest|peak|busiest)\b

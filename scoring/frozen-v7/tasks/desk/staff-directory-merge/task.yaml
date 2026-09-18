@@ -1,0 +1,83 @@
+id: staff-directory-merge
+track: desk
+category: spreadsheet
+title: One staff directory from HR and IT
+ask: |
+  Colleen needs the staff directory for the new website, put together from the HR export and IT's Google user list. Her note has the rules - save it as directory.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  HR departments are cost-centre names ('105 - Aquatic Therapy'), IT's are old short names and the website wants a third set from the note; IT files the four aquatic therapists under Physio, so mapping from IT's field makes them Physical Therapy (check: department per person)
+- |-
+  two terminated staff still have active Google accounts and three more are suspended; the directory follows HR's status (checks: people in the directory; row count)
+- |-
+  five people have a preferred first name in HR ('Bob' for Robert); IT shows the legal name for some of them, so IT's first name column is wrong for the website (check: name as people go by)
+- |-
+  IT's list has four shared mailboxes (frontdesk@, billing@, fax@, scheduling@) and a contractor who is not in HR (check: people in the directory)
+- |-
+  one person changed their last name; HR's work email still has the old name, so an email join misses them and the Employee ID is the only link (checks: people in the directory; name as people go by)
+- |-
+  one person was rehired and has an old terminated HR record under a different employee number with the same email; joining HR to IT on email picks up both records and the old job title (checks: row count; title and extension)
+- |-
+  three Google accounts have no Employee ID, and a quarter of HR's work emails are upper-case; those people join on the email address, case-insensitively (check: title and extension)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: directory.csv
+  columns:
+  - name
+  - email
+  - department
+  - title
+  - extension
+- type: csv_set_equal
+  name: people in the directory
+  path: directory.csv
+  column: email
+  ref: directory.csv
+- type: csv_row_count
+  name: row count
+  path: directory.csv
+  equals_ref: directory.csv
+- type: csv_values_match
+  name: department per person
+  path: directory.csv
+  ref: directory.csv
+  key: email
+  columns:
+  - department
+  min_accuracy: 1.0
+  must_match_keys:
+  - jacob.rodriguez@riverbendphysio.com
+  - amy.bennett@riverbendphysio.com
+  - fatima.walker@riverbendphysio.com
+  - gary.wilson@riverbendphysio.com
+- type: csv_values_match
+  name: name as people go by
+  path: directory.csv
+  ref: directory.csv
+  key: email
+  columns:
+  - name
+  min_accuracy: 1.0
+  must_match_keys:
+  - maggie.howard@riverbendphysio.com
+  - william.haddad@riverbendphysio.com
+  - hiroshi.rivera@riverbendphysio.com
+  - chris.morris@riverbendphysio.com
+  - kim.ramirez@riverbendphysio.com
+  - donna.campbell@riverbendphysio.com
+- type: csv_values_match
+  name: title and extension
+  path: directory.csv
+  ref: directory.csv
+  key: email
+  columns:
+  - title
+  - extension
+  min_accuracy: 1.0
+  must_match_keys:
+  - joseph.hill@riverbendphysio.com
+  - hiroshi.rivera@riverbendphysio.com
+  - yuki.clark@riverbendphysio.com

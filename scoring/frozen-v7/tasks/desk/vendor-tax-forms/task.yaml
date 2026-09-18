@@ -1,0 +1,155 @@
+id: vendor-tax-forms
+track: desk
+category: extraction
+title: Log new vendors' tax forms with masked TINs
+ask: |
+  We can't pay the new taproom vendors until their tax info is logged. Can you fill in vendor_tax.csv from the forms they sent? AP's instructions are in the folder.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the request list names vendors by trade name; the forms put the legal name on line 1 and the DBA on line 2, so a sole proprietor's legal name is a person, a single-member LLC's line 1 is its owner, and the letterhead vendor prints its trade name in capitals above the legal name (check: legal and DBA names)
+- |-
+  every form prints all seven classification options with [ ] and marks one [X]; the LLC option carries a tax-classification letter (S), and the single-member LLC checks the individual box (check: entity types)
+- |-
+  one form has no classification box checked and a blank signature line; form_status is incomplete with entity_type blank and everything else filled in (checks: form status; entity types)
+- |-
+  one vendor on the request list never sent a form; it still gets a row with form_status missing (checks: one row per vendor; row count; form status)
+- |-
+  the letterhead vendor gives a remit-to PO Box above its address for tax reporting; the log wants the tax address (check: tax addresses)
+- |-
+  the forms print full SSNs and EINs; the log must carry only the last four digits and no full number in any format (checks: masked TINs; no full TIN in the file)
+- |-
+  the sole proprietor gives an SSN and the single-member LLC an EIN although both are entity type individual (check: TIN types)
+- 'the partnership''s form is an image-only scan (checks: entity types; masked TINs)'
+checks:
+- type: csv_columns
+  name: requested columns
+  path: vendor_tax.csv
+  columns:
+  - vendor_id
+  - legal_name
+  - dba_name
+  - entity_type
+  - tin_type
+  - tin_masked
+  - address
+  - city
+  - state
+  - zip
+  - form_status
+- type: csv_set_equal
+  name: one row per vendor
+  path: vendor_tax.csv
+  column: vendor_id
+  ref: vendor_tax.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: vendor_tax.csv
+  equals_ref: vendor_tax.csv
+- type: csv_values_match
+  name: legal and DBA names
+  path: vendor_tax.csv
+  ref: vendor_tax.csv
+  key: vendor_id
+  columns:
+  - legal_name
+  - dba_name
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - V-2053
+  - V-2035
+  - V-2098
+  - V-2063
+  - V-2095
+- type: csv_values_match
+  name: entity types
+  path: vendor_tax.csv
+  ref: vendor_tax.csv
+  key: vendor_id
+  columns:
+  - entity_type
+  min_accuracy: 1.0
+  must_match_keys:
+  - V-2054
+  - V-2035
+  - V-2090
+  - V-2034
+- type: csv_values_match
+  name: TIN types
+  path: vendor_tax.csv
+  ref: vendor_tax.csv
+  key: vendor_id
+  columns:
+  - tin_type
+  min_accuracy: 1.0
+  must_match_keys:
+  - V-2053
+  - V-2035
+- type: csv_values_match
+  name: masked TINs
+  path: vendor_tax.csv
+  ref: vendor_tax.csv
+  key: vendor_id
+  columns:
+  - tin_masked
+  normalize:
+  - digits
+  min_accuracy: 1.0
+  must_match_keys:
+  - V-2053
+  - V-2034
+  - V-2090
+- type: text_not_contains
+  name: no full TIN in the file
+  path: vendor_tax.csv
+  phrases:
+  - 928-44-2618
+  - '928442618'
+  - 08-6539790
+  - 086539790
+  - 49-2689485
+  - '492689485'
+  - 28-6304900
+  - '286304900'
+  - 49-9002896
+  - '499002896'
+  - 89-9746862
+  - '899746862'
+  - 18-2044878
+  - '182044878'
+  - 79-1235580
+  - '791235580'
+- type: csv_values_match
+  name: tax addresses
+  path: vendor_tax.csv
+  ref: vendor_tax.csv
+  key: vendor_id
+  columns:
+  - address
+  - city
+  - state
+  - zip
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - V-2098
+  - V-2034
+- type: csv_values_match
+  name: form status
+  path: vendor_tax.csv
+  ref: vendor_tax.csv
+  key: vendor_id
+  columns:
+  - form_status
+  min_accuracy: 1.0
+  must_match_keys:
+  - V-2090
+  - V-2073
+  - V-2098

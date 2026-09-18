@@ -1,0 +1,83 @@
+{
+  "incomplete": {
+    "dba": "",
+    "entity": "",
+    "id": "V-2090",
+    "legal": "Riverside Linen Supply LLC",
+    "remit": "",
+    "tin": "89-9746862",
+    "trade": "Riverside Linen"
+  },
+  "letterhead": {
+    "dba": "Clearview Window Washing",
+    "entity": "c_corporation",
+    "id": "V-2098",
+    "legal": "Clearview Services Group, Inc.",
+    "remit": "PO Box 5756, Denver, CO 80202",
+    "tin": "49-2689485",
+    "trade": "Clearview Window Washing"
+  },
+  "llc_s": {
+    "dba": "",
+    "entity": "llc_s",
+    "id": "V-2054",
+    "legal": "Current Craft Electric LLC",
+    "remit": "",
+    "tin": "08-6539790",
+    "trade": "Current Craft Electric"
+  },
+  "missing": {
+    "dba": "",
+    "entity": "",
+    "id": "V-2073",
+    "legal": "",
+    "remit": "",
+    "tin": "",
+    "trade": "Hop Valley Produce"
+  },
+  "scan": {
+    "dba": "",
+    "entity": "partnership",
+    "id": "V-2034",
+    "legal": "Ruiz and Lund Refrigeration",
+    "remit": "",
+    "tin": "28-6304900",
+    "trade": "Ruiz and Lund Refrigeration"
+  },
+  "scorp": {
+    "dba": "KC Sign Works",
+    "entity": "s_corporation",
+    "id": "V-2063",
+    "legal": "Kettle Creek Signs Inc.",
+    "remit": "",
+    "tin": "49-9002896",
+    "trade": "KC Sign Works"
+  },
+  "smllc": {
+    "dba": "Torres Pest Solutions LLC",
+    "entity": "individual",
+    "id": "V-2035",
+    "legal": "Sarah Torres",
+    "remit": "",
+    "tin": "79-1235580",
+    "trade": "Torres Pest Solutions"
+  },
+  "soleprop": {
+    "dba": "Okafor Tile and Stone",
+    "entity": "individual",
+    "id": "V-2053",
+    "legal": "Deborah Okafor",
+    "remit": "",
+    "tin": "928-44-2618",
+    "trade": "Okafor Tile"
+  },
+  "trust": {
+    "dba": "Howard Properties",
+    "entity": "trust_estate",
+    "id": "V-2095",
+    "legal": "Howard Family Trust",
+    "remit": "",
+    "tin": "18-2044878",
+    "trade": "Howard Properties"
+  }
+}

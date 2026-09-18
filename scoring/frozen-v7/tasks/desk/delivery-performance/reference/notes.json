@@ -1,0 +1,11 @@
+{
+  "all_hubs_rate": 0.8,
+  "non_delivered_stops": 34,
+  "on_time_rates": {
+    "Austin": 0.8435,
+    "Denver": 0.7315,
+    "Portland": 0.8205
+  },
+  "split_shipments": 26,
+  "stop_rows": 400
+}

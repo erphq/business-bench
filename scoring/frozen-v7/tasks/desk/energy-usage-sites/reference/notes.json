@@ -1,0 +1,22 @@
+{
+  "gap": {
+    "month": "2026-06",
+    "site": "Depot Lane Storage"
+  },
+  "grand_total": 441625.7,
+  "month_totals": {
+    "2026-01": 87878.3,
+    "2026-02": 74312.3,
+    "2026-03": 73733.5,
+    "2026-04": 64576.1,
+    "2026-05": 69339.1,
+    "2026-06": 71786.4
+  },
+  "reading_rows": 43,
+  "swap": {
+    "date": "2026-03-18",
+    "new_meter": "MTR-9317",
+    "site": "Mill Street Lofts"
+  },
+  "two_meter_site": "Riverside Business Park"
+}

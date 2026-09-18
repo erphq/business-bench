@@ -1,0 +1,82 @@
+[
+  {
+    "handle": "mens-ridgeline-jacket",
+    "option1_name": "Color",
+    "option2_name": "Size",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Men's Ridgeline Rain Jacket"
+  },
+  {
+    "handle": "womens-ridgeline-rain-jacket",
+    "option1_name": "Color",
+    "option2_name": "Size",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Women's Ridgeline Rain Jacket"
+  },
+  {
+    "handle": "merino-hike-socks-3pk",
+    "option1_name": "Size",
+    "option2_name": "",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Hike & Bike Merino Socks (3-Pack)"
+  },
+  {
+    "handle": "trail-runner-2-0",
+    "option1_name": "Color",
+    "option2_name": "Size",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Trail Runner 2.0"
+  },
+  {
+    "handle": "enamel-camp-mug",
+    "option1_name": "Title",
+    "option2_name": "",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Caf\u00e9 Enamel Camp Mug"
+  },
+  {
+    "handle": "summit-20l-daypack",
+    "option1_name": "Color",
+    "option2_name": "",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Summit 20L Daypack"
+  },
+  {
+    "handle": "basecamp-4p-tent",
+    "option1_name": "Color",
+    "option2_name": "",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Basecamp 4P Tent"
+  },
+  {
+    "handle": "alpine-down-vest",
+    "option1_name": "Color",
+    "option2_name": "Size",
+    "published": "FALSE",
+    "status": "draft",
+    "title": "Alpine Down Vest"
+  },
+  {
+    "handle": "kids-puddle-boots",
+    "option1_name": "Size",
+    "option2_name": "",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Kids' Puddle Boots"
+  },
+  {
+    "handle": "trekking-poles-pair",
+    "option1_name": "Title",
+    "option2_name": "",
+    "published": "TRUE",
+    "status": "active",
+    "title": "Trekking Poles \u2013 Pair"
+  }
+]

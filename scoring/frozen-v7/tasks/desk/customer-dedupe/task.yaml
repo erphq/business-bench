@@ -1,0 +1,45 @@
+id: customer-dedupe
+track: desk
+category: reformatting
+title: Clean a legacy customer export for HubSpot import
+ask: |
+  Clean up our customer list for HubSpot import using their template. Sarah's email has the rules. Save it as hubspot_import.csv.
+followup: null
+timeout_s: 1200
+traps:
+  - customers.xlsx has a title row and a blank row before the header; the header is on row 3
+  - 32 duplicate rows for 30 people whose emails differ only by case and/or surrounding whitespace (two people appear three times); one row per person, keyed on email
+  - duplicate rows repeat the same phone in a different format; three duplicated people have one row with a blank phone (keep the non-blank one; once the blank is the FIRST row)
+  - phones come in seven formats ((415) 555-0142, 415.555.0142, +1 415 555 0142, 415-555-0142, 4155550142, 1-415-555-0142, +1 (415) 555-0142); grader accepts 10 digits or 11 with a leading 1
+  - 12 rows have no usable email (blank, "n/a" or "-"); three of them are name-duplicates of emailed people; all must be dropped
+  - names carry trailing/leading spaces, ALL CAPS, a few all-lowercase, some middle initials; first/last split is part of the deliverable but not graded
+  - vip.txt has a heading line, then 15 emails; 6 are in a different case than the sheet and 2 have trailing whitespace; 4 VIPs are duplicated people in the sheet
+  - lifecycle stage is "lead" for everyone except vip.txt people, who are "customer" (rule lives only in Sarah's email)
+  - output must use HubSpot's six template columns in order
+checks:
+  - type: csv_columns
+    name: HubSpot template columns, exact order
+    path: hubspot_import.csv
+    columns: [First Name, Last Name, Email, Phone Number, Company Name, Lifecycle Stage]
+    exact: true
+  - type: csv_set_equal
+    name: one row per emailed person
+    path: hubspot_import.csv
+    column: Email
+    ref: hubspot_import.csv
+    normalize: [strip, lower]
+  - type: csv_values_match
+    name: lifecycle stage (vip = customer, everyone else = lead)
+    path: hubspot_import.csv
+    ref: hubspot_import.csv
+    key: Email
+    columns: [Lifecycle Stage]
+    min_accuracy: 1.0
+    must_match_keys: [amy.n@juniperstreet.cafe, anthony_patel@gmail.com, jacobrodriguez50@gmail.com, jgray@everline.com, kevin_cooper@gmail.com]  # seed-dependent; gen.py rewrites this line
+  - type: custom
+    name: phone numbers carried over
+    module: check.py
+  - type: csv_row_count
+    name: row count equals distinct emailed people
+    path: hubspot_import.csv
+    equals_ref: hubspot_import.csv

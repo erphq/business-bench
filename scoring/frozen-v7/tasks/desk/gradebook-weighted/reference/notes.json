@@ -1,0 +1,148 @@
+{
+  "students": {
+    "4410140": {
+      "final": 80.8,
+      "first": "Amara",
+      "last": "Hall",
+      "letter": "B-"
+    },
+    "4410357": {
+      "final": 96.55,
+      "first": "Gary",
+      "last": "Jackson",
+      "letter": "A"
+    },
+    "4410951": {
+      "final": 71.0,
+      "first": "Cynthia",
+      "last": "Mitchell",
+      "letter": "C-"
+    },
+    "4411301": {
+      "final": 75.6,
+      "first": "Susan",
+      "last": "Rodriguez",
+      "letter": "C"
+    },
+    "4411439": {
+      "final": 91.4,
+      "first": "Carol",
+      "last": "Wright",
+      "letter": "A-"
+    },
+    "4411749": {
+      "final": 91.362,
+      "first": "Sofia",
+      "last": "Myers",
+      "letter": "A-"
+    },
+    "4411913": {
+      "final": 88.25,
+      "first": "Marcus",
+      "last": "Nelson",
+      "letter": "B+"
+    },
+    "4413361": {
+      "final": 86.1,
+      "first": "Jennifer",
+      "last": "Cox",
+      "letter": "B"
+    },
+    "4413509": {
+      "final": 58.25,
+      "first": "Thomas",
+      "last": "Collins",
+      "letter": "F"
+    },
+    "4413918": {
+      "final": 62.35,
+      "first": "Hiroshi",
+      "last": "Phillips",
+      "letter": "D"
+    },
+    "4414034": {
+      "final": 83.9,
+      "first": "Omar",
+      "last": "Cook",
+      "letter": "B"
+    },
+    "4414231": {
+      "final": 81.2,
+      "first": "Jonathan",
+      "last": "Ruiz",
+      "letter": "B-"
+    },
+    "4414263": {
+      "final": 89.55,
+      "first": "Ashley",
+      "last": "Johnson",
+      "letter": "B+"
+    },
+    "4414816": {
+      "final": 84.85,
+      "first": "Jacob",
+      "last": "Wilson",
+      "letter": "B"
+    },
+    "4414825": {
+      "final": 90.5,
+      "first": "Chloe",
+      "last": "Perez",
+      "letter": "A-"
+    },
+    "4414943": {
+      "final": 66.7,
+      "first": "George",
+      "last": "Price",
+      "letter": "D"
+    },
+    "4415108": {
+      "final": 91.9,
+      "first": "William",
+      "last": "Ortiz",
+      "letter": "A-"
+    },
+    "4416602": {
+      "final": 69.6,
+      "first": "Jason",
+      "last": "Foster",
+      "letter": "D"
+    },
+    "4417008": {
+      "final": 59.1,
+      "first": "Yuki",
+      "last": "Turner",
+      "letter": "F"
+    },
+    "4418572": {
+      "final": 89.1,
+      "first": "Mark",
+      "last": "Ward",
+      "letter": "B+"
+    },
+    "4418612": {
+      "final": 61.3,
+      "first": "Steven",
+      "last": "Anderson",
+      "letter": "D"
+    },
+    "4419857": {
+      "final": 94.2,
+      "first": "Michelle",
+      "last": "Stewart",
+      "letter": "A"
+    }
+  },
+  "traps": {
+    "dropped_quiz": "4410951",
+    "excused_by_email": "4416602",
+    "excused_in_gradebook": "4417008",
+    "missing_work": "4411301",
+    "weights_change": "4414943"
+  },
+  "withdrawn": {
+    "first": "Ronald",
+    "id": "4417426",
+    "last": "Nguyen"
+  }
+}

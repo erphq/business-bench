@@ -1,0 +1,150 @@
+id: supplier-invoices-to-csv
+track: desk
+category: extraction
+title: Key August supplier bills into the AP import file
+ask: |
+  Can you get all of August's supplier bills into the accounting import file for me? The documents are in the folder and Ines's note says how the template is filled in. Save it as invoice_lines.csv.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the document total sits in a different place on each layout: at the foot, in a box at the top with no totals at the foot (Cascade, which also folds a city tax into it), or at the top with an account balance that adds an older unpaid invoice at the foot (Hollowell) (check: document totals)
+- |-
+  Kaffa Import's invoice is in EUR with German number format ("1.237,50") and a day-first date, and its freight sits under the item table (checks: quantities and prices; line amounts and discounts; dates and currency)
+- |-
+  Bluestem Dairy prints a discount percent on some lines, so the net is not quantity times price; Summit Office Supply prints a loyalty discount and a delivery charge under the table, which the note makes lines of their own (checks: line amounts and discounts; one row per line)
+- |-
+  the Pacific Packaging credit memo CM-20539 prints positive figures and must go in with negative quantity, amount and total (checks: quantities and prices; line amounts and discounts; document totals)
+- |-
+  a Pacific Packaging statement of account in the same folder lists the invoice and the credit memo again; it is not a bill (checks: one row per line; row count)
+- |-
+  the Greenline Waste invoice GWS-88522 is an image-only scan (checks: one row per line; descriptions)
+- |-
+  vendor_id comes from the vendor list, where printed names like PACIFIC PACKAGING SUPPLY CO. are spelled differently (check: document identity)
+checks:
+- type: csv_columns
+  name: template columns
+  path: invoice_lines.csv
+  columns:
+  - line_ref
+  - vendor_id
+  - document_type
+  - document_number
+  - document_date
+  - currency
+  - description
+  - quantity
+  - unit_price
+  - discount_pct
+  - line_amount
+  - document_total
+- type: csv_set_equal
+  name: one row per line
+  path: invoice_lines.csv
+  column: line_ref
+  ref: invoice_lines.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: invoice_lines.csv
+  equals_ref: invoice_lines.csv
+- type: csv_values_match
+  name: document identity
+  path: invoice_lines.csv
+  ref: invoice_lines.csv
+  key: line_ref
+  columns:
+  - vendor_id
+  - document_type
+  - document_number
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: dates and currency
+  path: invoice_lines.csv
+  ref: invoice_lines.csv
+  key: line_ref
+  columns:
+  - document_date
+  - currency
+  min_accuracy: 1.0
+  must_match_keys:
+  - RE-2026-0465-1
+  - RE-2026-0465-2
+  - RE-2026-0465-3
+- type: csv_values_match
+  name: descriptions
+  path: invoice_lines.csv
+  ref: invoice_lines.csv
+  key: line_ref
+  columns:
+  - description
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - GWS-88522-1
+  - GWS-88522-2
+- type: csv_values_match
+  name: quantities and prices
+  path: invoice_lines.csv
+  ref: invoice_lines.csv
+  key: line_ref
+  columns:
+  - quantity
+  - unit_price
+  must_match_keys:
+  - RE-2026-0465-1
+  - RE-2026-0465-2
+  - RE-2026-0465-3
+  - CM-20539-1
+  - CM-20539-2
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: line amounts and discounts
+  path: invoice_lines.csv
+  ref: invoice_lines.csv
+  key: line_ref
+  columns:
+  - discount_pct
+  - line_amount
+  must_match_keys:
+  - RE-2026-0465-1
+  - RE-2026-0465-2
+  - RE-2026-0465-3
+  - BD776964-1
+  - BD776964-2
+  - BD776964-3
+  - BD776964-4
+  - SOS-INV-39024-1
+  - SOS-INV-39024-2
+  - SOS-INV-39024-3
+  - SOS-INV-39024-4
+  - SOS-INV-39024-5
+  - CM-20539-1
+  - CM-20539-2
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: document totals
+  path: invoice_lines.csv
+  ref: invoice_lines.csv
+  key: line_ref
+  columns:
+  - document_total
+  must_match_keys:
+  - HE-2026-0814-1
+  - HE-2026-0814-2
+  - HE-2026-0814-3
+  - CM-20539-1
+  - CM-20539-2
+  - CCL-26-1146-1
+  - CCL-26-1146-2
+  - CCL-26-1146-3
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

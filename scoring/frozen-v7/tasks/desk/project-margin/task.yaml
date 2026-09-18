@@ -1,0 +1,80 @@
+id: project-margin
+track: desk
+category: reports
+title: Margin by job, with the loss-makers flagged
+ask: |
+  Fatima wants to see, job by job, what we have earned against what the job has cost us, with the ones losing money flagged. Save it as margins.xlsx with live formulas and write memo.md with the headline. Her note says what counts as revenue and cost.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  costs are on a second sheet of the workbook keyed by job name (with case and spacing noise) while revenue is keyed by job code, so the two only join through the Jobs sheet (checks: Cedar Point cost; total margin)
+- |-
+  draft and written-off invoices sit in the Revenue sheet and are not revenue; every job has at least one and one job's invoices are all still drafts (checks: Harborview revenue; total margin)
+- |-
+  the unbilled time export is cost the studio has already paid for, at the cost rate on each row (hours x rate); ignoring it lifts every margin and hides a loss-making job (checks: Cedar Point cost; worst job margin; memo names both loss-makers)
+- |-
+  vendor credits are negative cost rows written in brackets; taking the absolute value of the amount column inflates cost (check: Cedar Point cost)
+- |-
+  Umber Ceramics Studio has no invoiced revenue at all, so a report built from the revenue sheet drops it; it is the deepest loss on the list (checks: worst job margin; memo names both loss-makers)
+- |-
+  margin percentage has to survive a job with zero revenue without an error cell (check: no error cells)
+- |-
+  amounts are '$12,345.67' text with bracketed negatives, dates come in three formats, and the two ledger sheets each carry a merged title and an instruction row (check: total margin across all jobs)
+checks:
+- type: file_exists
+  name: margins.xlsx exists
+  path: margins.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: margins.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: margins.xlsx
+- type: xlsx_value_present
+  name: Harborview revenue (invoiced only)
+  path: margins.xlsx
+  expected: 261090.55
+  rel_tol: 1.0e-06
+  near_text: harborview
+- type: xlsx_value_present
+  name: Cedar Point cost (unbilled time in, credits netted)
+  path: margins.xlsx
+  expected: 192994.43
+  rel_tol: 1.0e-06
+  near_text: cedar point
+- type: xlsx_value_present
+  name: worst job margin
+  path: margins.xlsx
+  expected: -46716.33
+  rel_tol: 1.0e-05
+  near_text: umber
+- type: xlsx_value_present
+  name: total margin across all jobs
+  path: margins.xlsx
+  expected: 336631.68
+  rel_tol: 1.0e-06
+  near_text: total
+- type: text_numbers_present
+  name: memo carries the studio totals and the worst margin
+  path: memo.md
+  numbers:
+  - 1626584.22
+  - 1289952.54
+  - -46716.33
+  rel_tol: 0.005
+  # "(46,716.33)" and "a loss of $46,716.33" state the worst margin too; the sign is graded by "worst job margin" in the
+  # workbook and by "memo says the worst job is losing money"
+  sign_insensitive: true
+- type: text_contains_all
+  name: memo names both loss-making jobs
+  path: memo.md
+  phrases:
+  - Umber Ceramics Studio
+  - Quarry Road Nursery
+# the loss may be worded "lost", "loses", "deficit", or given as a signed or bracketed figure, sit in the sentence next
+# to the one naming the job, or head the list the job sits in; see check.py
+- type: custom
+  name: memo says the worst job is losing money
+  module: check.py

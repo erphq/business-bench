@@ -1,0 +1,59 @@
+id: donor-totals-by-year
+track: desk
+category: spreadsheet
+title: Per-donor giving totals for 2024 and 2025
+ask: |
+  Maya wants each donor's total giving for 2024 and 2025 pulled together from the three gift records in this folder, for the appeal list. Save it as donor_totals.csv. Her email has the counting rules.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the same donor is written differently in each source - 'SMITH, ROBERT J' or 'Bob Smith' on a check, a nickname or a personal email online, no email at all in the event app - and has to be matched to the CRM household (checks: 2024 totals; 2025 totals)
+- |-
+  the CRM is by household and spouses give separately (one online, one by check); a row per person splits the household and duplicates its id (checks: one row per household; 2025 totals)
+- |-
+  online refunds sit in a Refunded Amount column, two full refunds in 2024 and partial refunds in both years; summing Amount ignores them (check: 2024 totals)
+- |-
+  Harvest Gala pledges (Payment Status 'Pledged') are not money: two were later paid by check and are already in the check log, and one household's only activity is an unpaid pledge, so it must not appear (checks: donors who gave; 2025 totals)
+- |-
+  'Soft Credit' rows repeat six page gifts under the fundraising page owner; one owner is a volunteer who never gave (checks: donors who gave; 2025 totals)
+- |-
+  five year-end checks are dated in late December and deposited in January; Maya counts them in the year on the check (checks: 2024 totals; 2025 totals)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: donor_totals.csv
+  columns:
+  - donor_id
+  - total_2024
+  - total_2025
+- type: csv_set_equal
+  name: donors who gave
+  path: donor_totals.csv
+  column: donor_id
+  ref: donor_totals.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: one row per household
+  path: donor_totals.csv
+  equals_ref: donor_totals.csv
+- type: csv_values_match
+  name: 2024 totals
+  path: donor_totals.csv
+  ref: donor_totals.csv
+  key: donor_id
+  columns:
+  - total_2024
+  numeric: true
+  tolerance: 0.01
+- type: csv_values_match
+  name: 2025 totals
+  path: donor_totals.csv
+  ref: donor_totals.csv
+  key: donor_id
+  columns:
+  - total_2025
+  numeric: true
+  tolerance: 0.01

@@ -1,0 +1,16 @@
+territory,month,net_sales,note
+Atlantic,2026-04,95522.66,
+Atlantic,2026-05,164415.05,
+Atlantic,2026-06,133507.29,
+Gulf,2026-04,117107.13,
+Gulf,2026-05,131406.37,
+Gulf,2026-06,145410.65,
+Great Lakes,2026-04,116343.42,
+Great Lakes,2026-05,111592.62,
+Great Lakes,2026-06,118884.64,
+Mountain,2026-04,104908.97,
+Mountain,2026-05,,"no rows in the export (gap, not zero sales)"
+Mountain,2026-06,132306.58,
+Pacific,2026-04,116790.86,
+Pacific,2026-05,141789.07,
+Pacific,2026-06,117331.85,

@@ -1,0 +1,81 @@
+id: refund-reconciliation
+track: desk
+category: bookkeeping
+title: Reconcile August refunds to the card processor
+ask: |
+  Can you reconcile August's refunds against Clearpath? The PMS refund log, their export, July's reconciliation and my notes are in the folder. Save it as refund_recon.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  on full refunds such as RF-10445 Clearpath returns its fee, so the net column is smaller than the refund; matching on net calls them amount differs, and the export also holds charges and payouts (checks: status per refund; amounts per refund)
+- |-
+  RF-10466 went back to two cards: two processor lines that only match the PMS refund added together (checks: status per refund; amounts per refund)
+- |-
+  booking LH-24526 has two partial refunds on different days, RF-10468 and RF-10470; keying the reconciliation by booking loses one (checks: one row per refund; row count)
+- |-
+  RF-10469 failed once and succeeded two days later, while RF-10473 failed and was never retried; counting failed lines as refunds doubles one and hides the other (checks: status per refund; variance ties to the unexplained items)
+- |-
+  RF-10481 and another late-August refund went through on 1-2 September (timing), and two July refunds from July's file went through in early August and need prior month timing lines with their July amounts (checks: status per refund; one row per refund)
+- |-
+  two refunds created 2-4 September belong to September's PMS refunds and are not August items, and two PMS refunds were paid by check and never touch the processor (checks: one row per refund; row count)
+- |-
+  RF-10475 was keyed into the terminal with transposed digits, and re_oF3LXDvorLOnTnFt3gwSx44W is a goodwill refund the owner made in the dashboard with no PMS entry (checks: status per refund; variance ties to the unexplained items)
+checks:
+- type: csv_columns
+  name: July's columns
+  path: refund_recon.csv
+  columns:
+  - refund_id
+  - booking_ref
+  - pms_amount
+  - processor_amount
+  - difference
+  - status
+- type: csv_set_equal
+  name: one row per refund
+  path: refund_recon.csv
+  column: refund_id
+  ref: refund_recon.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: refund_recon.csv
+  equals_ref: refund_recon.csv
+- type: csv_values_match
+  name: status per refund
+  path: refund_recon.csv
+  ref: refund_recon.csv
+  key: refund_id
+  columns:
+  - status
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - RF-10445
+  - RF-10466
+  - RF-10469
+  - RF-10473
+  - RF-10475
+  - re_oF3LXDvorLOnTnFt3gwSx44W
+  - RF-10481
+  - RF-10437
+- type: csv_values_match
+  name: amounts per refund
+  path: refund_recon.csv
+  ref: refund_recon.csv
+  key: refund_id
+  columns:
+  - pms_amount
+  - processor_amount
+  - difference
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys: *id001
+- type: custom
+  name: variance ties to the unexplained items
+  module: check.py

@@ -11,7 +11,7 @@ OUT = ROOT / 'release-manifest.json'
 
 def manifest():
     paths = []
-    for folder in ('tasks', 'bench', 'harnesses', 'docker'):
+    for folder in ('tasks', 'bench', 'harnesses', 'docker', 'scoring'):
         paths.extend(p for p in (ROOT / folder).rglob('*')
                      if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc')
     paths.append(ROOT / 'requirements.txt')

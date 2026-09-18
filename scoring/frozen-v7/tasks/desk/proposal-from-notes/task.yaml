@@ -1,0 +1,74 @@
+id: proposal-from-notes
+track: desk
+category: drafting
+title: Write up the warehouse lighting proposal
+ask: |
+  Please write up the lighting retrofit proposal for Zephyr Bike Works from Marcus's site walk and the call notes, priced from our rate card. Save it as proposal.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the high-bay count is 22 on the site walk, 'maybe 24' on the 5 September call and 26 after the 10 September recount; the call log is newest first, so the last count in the file is the stale one (checks: high bay line; disposal line; total)
+- |-
+  the lift is two days on the site walk and three days after the recount (checks: lift line; total)
+- |-
+  disposal is charged per fixture removed across high bays, wall packs and troffers (46), so the recount moves it too (checks: disposal line; total)
+- |-
+  the client wants the occupancy sensors priced as a separate option, one per high bay, and kept out of the total (checks: optional sensors priced separately; total)
+- |-
+  the parking lot pole lights were dropped on the later call; pricing them fails (checks: pole lights dropped; total)
+- |-
+  the rate card's first price column is last year's; every line must use the 2026 column (checks: other lines priced from the 2026 rates; total)
+- |-
+  last year's Ironwood Fabrication proposal sits in the folder as a format example with another client's name and figures (check: no leftovers from the old proposal)
+checks:
+- type: text_sentence_matches
+  name: high bay line
+  path: proposal.md
+  all:
+  - high[\s-]?bay
+  - (?<![\d.,$])26(?!\d|,\d|\.\d)
+  - (?<![\d.,])(7,?670)(\.00)?(?![\d]|\.\d|,\d)
+- type: text_sentence_matches
+  name: disposal line
+  path: proposal.md
+  all:
+  - (dispos|recycl|haul)
+  - (?<![\d.,$])46(?!\d|,\d|\.\d)
+  - (?<![\d.,])(690)(\.00)?(?![\d]|\.\d|,\d)
+- type: text_sentence_matches
+  name: lift line
+  path: proposal.md
+  all:
+  - \blift\b
+  - (?<![\d.,])(1,?290)(\.00)?(?![\d]|\.\d|,\d)
+- type: text_numbers_present
+  name: other lines priced from the 2026 rates
+  path: proposal.md
+  numbers:
+  - 1110.0
+  - 1960.0
+  - 315.0
+  rel_tol: 0.0001
+- type: text_sentence_matches
+  name: total
+  path: proposal.md
+  all:
+  - \btotal\b
+  - (?<![\d.,])(13,?035)(\.00)?(?![\d]|\.\d|,\d)
+- type: text_sentence_matches
+  name: optional sensors priced separately
+  path: proposal.md
+  all:
+  - sensor
+  - (?<![\d.,])(2,?158)(\.00)?(?![\d]|\.\d|,\d)
+- type: custom
+  name: pole lights dropped
+  module: check.py
+- type: text_not_contains
+  name: no leftovers from the old proposal
+  path: proposal.md
+  phrases:
+  - Ironwood
+  - 6,510
+  - 5,680

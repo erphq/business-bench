@@ -1,0 +1,75 @@
+id: class-roster-changes
+track: desk
+category: spreadsheet
+title: Fall to spring enrollment, adds and drops by course
+ask: |
+  Renata needs fall-to-spring enrollment changes for every course for the board packet. Save it as roster_changes.csv; her email explains what she wants counted.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  two students married over the break and appear in spring under new last names (named in Renata's email); matched on the written name they become a drop and an add in every course they continued (checks: added per course; dropped per course)
+- |-
+  a few students hold seats in both sections of ESL-101, GED-110 or CMP-101, and continuing students moved between the morning and evening sections; counting seats or diffing sections inflates enrollment and invents adds and drops (checks: fall enrolled per course; spring enrolled per course)
+- |-
+  withdrawals exist only in the notes column ('W/D', 'Withdrew 01/28', 'withdrawn (refund issued)', 'dropped week 3') on both terms; those rows are not enrollment, and a fall student withdrawn in spring is a drop (checks: fall enrolled per course; spring enrolled per course; dropped per course)
+- |-
+  fall tabs write names 'LAST, First' with stray spaces under a merged title and an instructor line; spring writes 'First Last' with a BOM and CRLF endings (checks: added per course; dropped per course)
+- |-
+  the spring waitlist sits in the folder in the same shape as an enrollment list (check: spring enrolled per course)
+- |-
+  SEW-101 ran only in fall and CMP-150 only in spring; both need a row with zeros where the course did not run (check: one row per course)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: roster_changes.csv
+  columns:
+  - course
+  - fall_enrolled
+  - spring_enrolled
+  - added
+  - dropped
+- type: csv_set_equal
+  name: one row per course
+  path: roster_changes.csv
+  column: course
+  ref: roster_changes.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_values_match
+  name: fall enrolled per course
+  path: roster_changes.csv
+  ref: roster_changes.csv
+  key: course
+  columns:
+  - fall_enrolled
+  numeric: true
+  tolerance: 0.01
+- type: csv_values_match
+  name: spring enrolled per course
+  path: roster_changes.csv
+  ref: roster_changes.csv
+  key: course
+  columns:
+  - spring_enrolled
+  numeric: true
+  tolerance: 0.01
+- type: csv_values_match
+  name: added per course
+  path: roster_changes.csv
+  ref: roster_changes.csv
+  key: course
+  columns:
+  - added
+  numeric: true
+  tolerance: 0.01
+- type: csv_values_match
+  name: dropped per course
+  path: roster_changes.csv
+  ref: roster_changes.csv
+  key: course
+  columns:
+  - dropped
+  numeric: true
+  tolerance: 0.01

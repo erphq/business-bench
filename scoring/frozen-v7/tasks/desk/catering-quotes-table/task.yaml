@@ -1,0 +1,130 @@
+id: catering-quotes-table
+track: desk
+category: extraction
+title: Side-by-side table of the anniversary dinner catering quotes
+ask: |
+  Can you put the four catering quotes for the anniversary dinner side by side in quote_comparison.csv so the partners can compare them? My note in the folder has what to include.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  Saffron and Sage, Blue Ember and Olive Branch price per person while Copper Kettle is a flat package covering up to 75 guests plus a price for each additional guest (checks: pricing basis and guests billed; food and beverage)
+- |-
+  Blue Ember has a 100-guest minimum and bills 100 at 85 attending, while Olive Branch's 60-guest and Saffron's 40-guest minimums do not bind (checks: pricing basis and guests billed; food and beverage)
+- |-
+  every quote prints an estimate for about 80 guests, the count when the quotes were requested, and none of the estimates carries the policy gratuity; the note's 85 changes food, service charge, per-guest rentals and totals (Blue Ember's estimate is already at its minimum) (checks: food and beverage; fees and total)
+- |-
+  Copper Kettle's 22% service charge includes staff gratuity and Olive Branch's price includes it, so both carry gratuity 0; Saffron says gratuity is not included and Blue Ember prints a 'suggested gratuity 15%-20%', and both take the policy 18% (checks: gratuity included; gratuity amount)
+- |-
+  Saffron and Sage lists a plated dinner above the buffet; the event is a buffet (check: food and beverage)
+- |-
+  Olive Branch charges rentals per guest and Blue Ember lists an optional bartender under its delivery fee; the rentals scale with guests and the bartender stays out (check: fees and total)
+- |-
+  the Olive Branch estimate is an image-only scan (checks: one row per quote; fees and total)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: quote_comparison.csv
+  columns:
+  - quote_ref
+  - caterer
+  - pricing_basis
+  - guests_billed
+  - food_beverage
+  - service_charge
+  - gratuity_included
+  - gratuity
+  - fees
+  - total
+- type: csv_set_equal
+  name: one row per quote
+  path: quote_comparison.csv
+  column: quote_ref
+  ref: quote_comparison.csv
+  normalize:
+  - alnum
+- type: csv_row_count
+  name: row count
+  path: quote_comparison.csv
+  equals_ref: quote_comparison.csv
+- type: csv_values_match
+  name: caterers
+  path: quote_comparison.csv
+  ref: quote_comparison.csv
+  key: quote_ref
+  columns:
+  - caterer
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: pricing basis and guests billed
+  path: quote_comparison.csv
+  ref: quote_comparison.csv
+  key: quote_ref
+  columns:
+  - pricing_basis
+  - guests_billed
+  min_accuracy: 1.0
+  must_match_keys:
+  - CKE-26514
+  - BE583-26
+- type: csv_values_match
+  name: food and beverage
+  path: quote_comparison.csv
+  ref: quote_comparison.csv
+  key: quote_ref
+  columns:
+  - food_beverage
+  - service_charge
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - SSC-Q7890
+  - CKE-26514
+  - BE583-26
+  - OBK 1242
+- type: csv_values_match
+  name: gratuity included
+  path: quote_comparison.csv
+  ref: quote_comparison.csv
+  key: quote_ref
+  columns:
+  - gratuity_included
+  min_accuracy: 1.0
+  must_match_keys:
+  - CKE-26514
+  - OBK 1242
+  - BE583-26
+- type: csv_values_match
+  name: gratuity amount
+  path: quote_comparison.csv
+  ref: quote_comparison.csv
+  key: quote_ref
+  columns:
+  - gratuity
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - SSC-Q7890
+  - CKE-26514
+  - BE583-26
+  - OBK 1242
+- type: csv_values_match
+  name: fees and total
+  path: quote_comparison.csv
+  ref: quote_comparison.csv
+  key: quote_ref
+  columns:
+  - fees
+  - total
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - SSC-Q7890
+  - CKE-26514
+  - BE583-26
+  - OBK 1242

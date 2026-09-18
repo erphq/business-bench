@@ -1,0 +1,10 @@
+line_id,report_id,employee,policy_section,amount_disallowed,reason
+EXL-58221,ER-2382,Luis Bennett,5.1,123.72,Same hotel night was already paid on the July report
+EXL-58235,ER-2382,Luis Bennett,2.1,18.00,Per diem claimed at the Tier A rate for a standard-rate city
+EXL-58267,ER-2361,Kwame Foster,2.2,27.29,Meal receipt on a day per diem was claimed
+EXL-58283,ER-2372,Kwame Foster,5.1,258.69,Rental car already claimed on the employee's first August report
+EXL-58287,ER-2372,Kwame Foster,4.1,201.01,No receipt for a line of $75.00 or more
+EXL-58310,ER-2436,Tomasz Nguyen,2.1,79.00,Per diem claimed the day after the approved trip ended
+EXL-58312,ER-2436,Tomasz Nguyen,4.1,75.00,No receipt for a line of $75.00 or more
+EXL-58321,ER-2368,Amara Collins,2.1,61.00,Per diem claimed on a day trip with no overnight stay
+EXL-58332,ER-2368,Amara Collins,3.1,46.07,Lodging above the nightly cap for a standard-rate city

@@ -1,0 +1,117 @@
+{
+  "department_totals": {
+    "Admin": 1734.38,
+    "Finishing": 4529.37,
+    "Install": 4294.06,
+    "Mill Shop": 12066.44,
+    "Showroom": 2688.62
+  },
+  "grand_total": 25312.87,
+  "headcount": {
+    "Admin": 3.5,
+    "Finishing": 5.0,
+    "Install": 9.0,
+    "Mill Shop": 8.5,
+    "Showroom": 3.0
+  },
+  "splits": {
+    "6100 Rent": {
+      "Admin": 834.0,
+      "Finishing": 2502.0,
+      "Install": 2038.67,
+      "Mill Shop": 7042.66,
+      "Showroom": 1482.67
+    },
+    "6120 Property insurance": {
+      "Admin": 67.47,
+      "Finishing": 202.41,
+      "Install": 164.92,
+      "Mill Shop": 569.74,
+      "Showroom": 119.94
+    },
+    "6210 Electric": {
+      "Admin": 190.16,
+      "Finishing": 570.49,
+      "Install": 464.84,
+      "Mill Shop": 1605.82,
+      "Showroom": 338.07
+    },
+    "6220 Gas": {
+      "Admin": 36.52,
+      "Finishing": 109.55,
+      "Install": 89.26,
+      "Mill Shop": 308.36,
+      "Showroom": 64.92
+    },
+    "6230 Water & sewer": {
+      "Admin": 18.24,
+      "Finishing": 54.72,
+      "Install": 44.59,
+      "Mill Shop": 154.04,
+      "Showroom": 32.43
+    },
+    "6300 Janitorial": {
+      "Admin": 78.52,
+      "Finishing": 235.57,
+      "Install": 191.95,
+      "Mill Shop": 663.1,
+      "Showroom": 139.6
+    },
+    "6310 Building repairs": {
+      "Admin": 80.69,
+      "Finishing": 242.07,
+      "Install": 197.24,
+      "Mill Shop": 681.38,
+      "Showroom": 143.45
+    },
+    "6400 IT support": {
+      "Admin": 146.64,
+      "Finishing": 209.48,
+      "Install": 377.06,
+      "Mill Shop": 356.12,
+      "Showroom": 125.69
+    },
+    "6410 Software subscriptions": {
+      "Admin": 88.18,
+      "Finishing": 125.98,
+      "Install": 226.76,
+      "Mill Shop": 214.16,
+      "Showroom": 75.59
+    },
+    "6500 Payroll service": {
+      "Admin": 32.6,
+      "Finishing": 46.58,
+      "Install": 83.83,
+      "Mill Shop": 79.18,
+      "Showroom": 27.95
+    },
+    "6510 HR & benefits platform": {
+      "Admin": 47.61,
+      "Finishing": 68.02,
+      "Install": 122.43,
+      "Mill Shop": 115.63,
+      "Showroom": 40.81
+    },
+    "6600 Phones & internet": {
+      "Admin": 77.52,
+      "Finishing": 110.75,
+      "Install": 199.35,
+      "Mill Shop": 188.27,
+      "Showroom": 66.45
+    },
+    "6700 Office supplies": {
+      "Admin": 36.23,
+      "Finishing": 51.75,
+      "Install": 93.16,
+      "Mill Shop": 87.98,
+      "Showroom": 31.05
+    }
+  },
+  "square_feet": {
+    "Admin": 900,
+    "Finishing": 2700,
+    "Install": 2200,
+    "Mill Shop": 7600,
+    "Showroom": 1600
+  }
+}

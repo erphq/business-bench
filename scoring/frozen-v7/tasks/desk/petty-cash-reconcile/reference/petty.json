@@ -1,0 +1,34 @@
+{
+  "by_account": {
+    "6450": 25.94,
+    "6520": 17.83,
+    "6600": 170.31,
+    "6610": 65.26
+  },
+  "claimed_again": "PC-221",
+  "counted": 94.47,
+  "fund": 400.0,
+  "log_closing_balance": 73.59,
+  "log_error": {
+    "logged": 82.98,
+    "receipt": 28.98,
+    "voucher": "PC-227"
+  },
+  "missing_receipt": {
+    "amount": 19.79,
+    "voucher": "PC-228"
+  },
+  "naive": {
+    "by_cat": {
+      "kitchen": 74.94,
+      "office": 296.55,
+      "postage": 56.38,
+      "waiting": 22.14
+    },
+    "replen": 325.41,
+    "short": 20.88
+  },
+  "replenishment": 305.53,
+  "short": 6.4,
+  "unlogged_receipt": 27.72
+}

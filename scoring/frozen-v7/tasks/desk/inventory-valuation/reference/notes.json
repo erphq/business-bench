@@ -1,0 +1,69 @@
+{
+  "department_values": {
+    "Houseplants": 7734.57,
+    "Perennials": 3081.25,
+    "Pots & Planters": 12514.67,
+    "Shrubs": 9409.21,
+    "Soil & Mulch": 1242.46,
+    "Tools": 4888.22,
+    "Trees": 15562.25
+  },
+  "grand_total": 54432.63,
+  "loosely_typed_skus": [
+    "POT-0323",
+    "POT-0329",
+    "POT-0827",
+    "SOI-0441",
+    "TOL-0816"
+  ],
+  "naive": {
+    "exact_lookup": {
+      "Houseplants": 7734.57,
+      "Perennials": 3081.25,
+      "Pots & Planters": 4776.81,
+      "Shrubs": 9409.21,
+      "Soil & Mulch": 1027.63,
+      "Tools": 3288.0,
+      "Trees": 15562.25
+    },
+    "first_cost": {
+      "Houseplants": 7483.59,
+      "Perennials": 2900.46,
+      "Pots & Planters": 11909.14,
+      "Shrubs": 8875.37,
+      "Soil & Mulch": 1148.11,
+      "Tools": 4584.68,
+      "Trees": 13718.93
+    },
+    "negative": {
+      "Houseplants": 7531.17,
+      "Perennials": 3081.25,
+      "Pots & Planters": 12514.67,
+      "Shrubs": 9024.38,
+      "Soil & Mulch": 1233.02,
+      "Tools": 4888.22,
+      "Trees": 15562.25
+    },
+    "retail_guess": 65999.74
+  },
+  "negative_on_hand": [
+    "HOU-0547",
+    "SHR-0224",
+    "SHR-0331",
+    "SOI-0856"
+  ],
+  "no_cost_detail": {
+    "HOU-0849": "TBD",
+    "PER-0647": "none",
+    "PER-0769": "none",
+    "TOL-0119": "n/a",
+    "TRE-0502": "blank"
+  },
+  "no_cost_skus": [
+    "HOU-0849",
+    "PER-0647",
+    "PER-0769",
+    "TOL-0119",
+    "TRE-0502"
+  ]
+}

@@ -1,0 +1,76 @@
+id: duplicate-payments
+track: desk
+category: bookkeeping
+title: Find supplier payments we made twice
+ask: |
+  A supplier says we paid them twice this year - can you find every payment we have made twice? Hannah's note says how to judge it. Save the list as duplicate_payments.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  Cascade Hardwoods is in the vendor master twice (V1180 as 'Cascade Hardwood Supply Inc', its tax ID written without the dash); PMT-26-0373 pays the same invoice by ACH under the second ID and without the INV- prefix, so matching on vendor ID or invoice text misses it (checks: duplicate payments; original payment)
+- |-
+  PMT-26-0395 pays a stone-top invoice in full after a 50% deposit; only the deposit's worth (4,842.61) was paid too much, not the whole payment (check: amount overpaid)
+- |-
+  PMT-26-0396 pays steel invoice 326 that an earlier wire paid as 000326 (check: duplicate payments)
+- |-
+  a check voided for a wrong address and reissued (PMT-26-0374) and a check stopped in the mail and replaced by ACH (PMT-26-0351) paid their invoices once (check: look-alikes not listed)
+- |-
+  the landlord is paid the same rent by ACH every month and Keller Hinge & Slide sent two genuine orders for the same amount a few days apart; same vendor and amount is not the test (check: look-alikes not listed)
+- |-
+  PMT-26-0364 is the second of two instalments that add up to the invoice (check: look-alikes not listed)
+- |-
+  PMT-26-0378 really did pay a glass invoice twice, but the refunds file shows the supplier sent it back (checks: duplicate payments; row count)
+- |-
+  Anchor Fastener Co and Summit Abrasives share invoice number 67435 and amount days apart; different tax IDs, different invoices (check: look-alikes not listed)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: duplicate_payments.csv
+  columns:
+  - payment_id
+  - original_payment_id
+  - invoice
+  - amount_overpaid
+  - reason
+- type: csv_set_equal
+  name: duplicate payments
+  path: duplicate_payments.csv
+  column: payment_id
+  ref: duplicate_payments.csv
+- type: csv_row_count
+  name: row count
+  path: duplicate_payments.csv
+  equals_ref: duplicate_payments.csv
+- type: csv_values_match
+  name: original payment
+  path: duplicate_payments.csv
+  ref: duplicate_payments.csv
+  key: payment_id
+  columns:
+  - original_payment_id
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: amount overpaid
+  path: duplicate_payments.csv
+  ref: duplicate_payments.csv
+  key: payment_id
+  columns:
+  - amount_overpaid
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - PMT-26-0395
+  - PMT-26-0373
+- type: text_not_contains
+  name: look-alikes not listed
+  path: duplicate_payments.csv
+  phrases:
+  - PMT-26-0374
+  - PMT-26-0351
+  - PMT-26-0416
+  - PMT-26-0364
+  - PMT-26-0378
+  - PMT-26-0343
+  - PMT-26-0413

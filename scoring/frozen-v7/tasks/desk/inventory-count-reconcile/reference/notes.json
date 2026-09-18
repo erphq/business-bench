@@ -1,0 +1,22 @@
+{
+  "a14_item": "NJ-1326",
+  "items_off": 25,
+  "items_total": 40,
+  "negative_stock": [
+    "NJ-1123",
+    "NJ-1110"
+  ],
+  "old_skus_used": {
+    "NJ-509": "NJ-1206",
+    "NJ-585": "NJ-1282",
+    "NJ-594": "NJ-1294",
+    "NJ-599": "NJ-1298",
+    "NJ-676": "NJ-1376"
+  },
+  "uncounted_bins": [
+    "B15",
+    "B08",
+    "A07",
+    "A19"
+  ]
+}

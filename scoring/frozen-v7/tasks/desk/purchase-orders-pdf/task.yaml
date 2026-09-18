@@ -1,0 +1,165 @@
+id: purchase-orders-pdf
+track: desk
+category: extraction
+title: Key this week's customer POs into order entry
+ask: |
+  Please get this week's customer purchase orders into the order entry template so we can import them. Carla's note has the details. Save it as po_lines.csv.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  Westbrook Plumbing's PO 4500018241 has 44 lines running onto a second page with the column header repeated, lines numbered 10, 20, 30 and a different need-by date on each line (checks: one row per PO line; row count; need-by dates)
+- |-
+  Northfield Auto Body prints only the extended amount per line under the heading Amount, so reading it as the unit price overstates every line; the unit price is amount divided by quantity (check: quantities and unit prices)
+- |-
+  Pemberton HVAC's PO PH-7627 arrived twice: revision 1 and, in the file with (1) in its name, revision 2, which changes the quantity on line 2, strikes through line 3 marked CANCELLED and carries a later PO date (checks: one row per PO line; quantities and unit prices; line amounts; PO header fields)
+- |-
+  Pemberton prints the extended price before the unit price, so column position is not a safe guide (check: line amounts)
+- |-
+  the Silverline Logistics PO SL-PO-3498 is a faxed image with the descriptions listed apart from the price lines (checks: one row per PO line; part numbers and descriptions)
+- |-
+  customer names print as Pinnacle Roofing, Inc. and similar and map to ids in the customer list; PO dates come in four formats (check: PO header fields)
+checks:
+- type: csv_columns
+  name: template columns
+  path: po_lines.csv
+  columns:
+  - po_line_ref
+  - customer_id
+  - po_number
+  - po_date
+  - line
+  - part_number
+  - description
+  - quantity
+  - unit_price
+  - line_amount
+  - need_by
+- type: csv_set_equal
+  name: one row per PO line
+  path: po_lines.csv
+  column: po_line_ref
+  ref: po_lines.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: po_lines.csv
+  equals_ref: po_lines.csv
+- type: csv_values_match
+  name: PO header fields
+  path: po_lines.csv
+  ref: po_lines.csv
+  key: po_line_ref
+  columns:
+  - customer_id
+  - po_number
+  - po_date
+  - line
+  min_accuracy: 1.0
+  must_match_keys:
+  - PH-7627-1
+  - PH-7627-2
+  - PH-7627-4
+- type: csv_values_match
+  name: part numbers and descriptions
+  path: po_lines.csv
+  ref: po_lines.csv
+  key: po_line_ref
+  columns:
+  - part_number
+  - description
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - SL-PO-3498-1
+  - SL-PO-3498-2
+  - SL-PO-3498-3
+- type: csv_values_match
+  name: quantities and unit prices
+  path: po_lines.csv
+  ref: po_lines.csv
+  key: po_line_ref
+  columns:
+  - quantity
+  - unit_price
+  must_match_keys:
+  - NAB-0926-1
+  - NAB-0926-2
+  - NAB-0926-3
+  - NAB-0926-4
+  - PH-7627-1
+  - PH-7627-2
+  - PH-7627-4
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: line amounts
+  path: po_lines.csv
+  ref: po_lines.csv
+  key: po_line_ref
+  columns:
+  - line_amount
+  must_match_keys:
+  - PH-7627-1
+  - PH-7627-2
+  - PH-7627-4
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: need-by dates
+  path: po_lines.csv
+  ref: po_lines.csv
+  key: po_line_ref
+  columns:
+  - need_by
+  min_accuracy: 1.0
+  must_match_keys:
+  - 4500018241-10
+  - 4500018241-20
+  - 4500018241-30
+  - 4500018241-40
+  - 4500018241-50
+  - 4500018241-60
+  - 4500018241-70
+  - 4500018241-80
+  - 4500018241-90
+  - 4500018241-100
+  - 4500018241-110
+  - 4500018241-120
+  - 4500018241-130
+  - 4500018241-140
+  - 4500018241-150
+  - 4500018241-160
+  - 4500018241-170
+  - 4500018241-180
+  - 4500018241-190
+  - 4500018241-200
+  - 4500018241-210
+  - 4500018241-220
+  - 4500018241-230
+  - 4500018241-240
+  - 4500018241-250
+  - 4500018241-260
+  - 4500018241-270
+  - 4500018241-280
+  - 4500018241-290
+  - 4500018241-300
+  - 4500018241-310
+  - 4500018241-320
+  - 4500018241-330
+  - 4500018241-340
+  - 4500018241-350
+  - 4500018241-360
+  - 4500018241-370
+  - 4500018241-380
+  - 4500018241-390
+  - 4500018241-400
+  - 4500018241-410
+  - 4500018241-420
+  - 4500018241-430
+  - 4500018241-440

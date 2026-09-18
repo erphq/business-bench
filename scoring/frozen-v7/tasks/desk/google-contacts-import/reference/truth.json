@@ -1,0 +1,503 @@
+{
+  "must_notes": [
+    "Davis",
+    "Foster",
+    "Howard",
+    "Nelson",
+    "Parker",
+    "Patel",
+    "Rogers",
+    "Watson"
+  ],
+  "must_phones": [
+    "Clark",
+    "Cook",
+    "Cooper",
+    "Cox",
+    "Edwards",
+    "Green",
+    "Gutierrez",
+    "Harris",
+    "King",
+    "Lewis",
+    "Lopez",
+    "Morgan",
+    "Morris",
+    "Okafor",
+    "Parker",
+    "Patel",
+    "Phillips",
+    "Richardson",
+    "Rodriguez",
+    "Rogers",
+    "Torres",
+    "Walker",
+    "Ward",
+    "Watson",
+    "White",
+    "Wilson"
+  ],
+  "notes": {
+    "Alvarez": [
+      "Spring cleanup only"
+    ],
+    "Clark": [
+      "Pays by check"
+    ],
+    "Cook": [],
+    "Cooper": [
+      "COD only"
+    ],
+    "Cox": [],
+    "Davis": [
+      "ask for Jim"
+    ],
+    "Edwards": [],
+    "Flores": [],
+    "Foster": [
+      "use side gate",
+      "Aeration + overseed"
+    ],
+    "Garcia": [
+      "Spring cleanup only"
+    ],
+    "Gonzalez": [
+      "Weekly mow Apr-Oct"
+    ],
+    "Green": [
+      "Insurance cert on file"
+    ],
+    "Gutierrez": [],
+    "Harris": [
+      "Pays by check"
+    ],
+    "Hernandez": [
+      "Net 30"
+    ],
+    "Howard": [
+      "Pays by check",
+      "don't call before 9am"
+    ],
+    "Johnson": [
+      "Pays by check"
+    ],
+    "King": [],
+    "Lewis": [
+      "Aeration + overseed"
+    ],
+    "Lopez": [
+      "Delivers Tue/Thu"
+    ],
+    "Mensah": [
+      "Aeration + overseed"
+    ],
+    "Morgan": [
+      "Aeration + overseed"
+    ],
+    "Morris": [
+      "Snow removal contract"
+    ],
+    "Myers": [
+      "Snow removal contract"
+    ],
+    "Nelson": [
+      "Pays by check",
+      "prefers text"
+    ],
+    "Okafor": [],
+    "Parker": [
+      "text first"
+    ],
+    "Patel": [
+      "lives out of state in winter",
+      "Installed patio 2024"
+    ],
+    "Peterson": [
+      "Account #CP-2291"
+    ],
+    "Phillips": [
+      "Aeration + overseed"
+    ],
+    "Richardson": [],
+    "Rodriguez": [],
+    "Rogers": [
+      "gate code 4412"
+    ],
+    "Ruiz": [
+      "Weekly mow Apr-Oct"
+    ],
+    "Stewart": [],
+    "Torres": [],
+    "Walker": [
+      "Net 30"
+    ],
+    "Ward": [
+      "Sprinkler blowout in Oct"
+    ],
+    "Watson": [
+      "HOA approval needed"
+    ],
+    "White": [
+      "Net 30"
+    ],
+    "Wilson": [
+      "Account #CP-2291"
+    ]
+  },
+  "phones": {
+    "Alvarez": [
+      [
+        "Mobile",
+        "5125551140"
+      ]
+    ],
+    "Clark": [
+      [
+        "Home",
+        "9715555280"
+      ],
+      [
+        "Mobile",
+        "4155555561"
+      ],
+      [
+        "Work",
+        "6085558182"
+      ]
+    ],
+    "Cook": [
+      [
+        "Mobile",
+        "9715552036"
+      ],
+      [
+        "Home",
+        "5125553665"
+      ]
+    ],
+    "Cooper": [
+      [
+        "Work",
+        "7205557014"
+      ],
+      [
+        "Mobile",
+        "2065552412"
+      ]
+    ],
+    "Cox": [
+      [
+        "Home",
+        "6175554974"
+      ]
+    ],
+    "Davis": [
+      [
+        "Mobile",
+        "8025551516"
+      ]
+    ],
+    "Edwards": [
+      [
+        "Work",
+        "4155553850"
+      ],
+      [
+        "Mobile",
+        "2065551413"
+      ]
+    ],
+    "Flores": [
+      [
+        "Mobile",
+        "2065555681"
+      ]
+    ],
+    "Foster": [
+      [
+        "Mobile",
+        "5125558850"
+      ]
+    ],
+    "Garcia": [
+      [
+        "Mobile",
+        "3035554791"
+      ]
+    ],
+    "Gonzalez": [
+      [
+        "Mobile",
+        "6085554976"
+      ]
+    ],
+    "Green": [
+      [
+        "Work",
+        "6085552672"
+      ],
+      [
+        "Mobile",
+        "9715553965"
+      ]
+    ],
+    "Gutierrez": [
+      [
+        "Mobile",
+        "8025556749"
+      ],
+      [
+        "Home",
+        "2065551397"
+      ]
+    ],
+    "Harris": [
+      [
+        "Home",
+        "6085558052"
+      ],
+      [
+        "Mobile",
+        "3035555876"
+      ],
+      [
+        "Work",
+        "3035551224"
+      ]
+    ],
+    "Hernandez": [
+      [
+        "Mobile",
+        "9195554225"
+      ]
+    ],
+    "Howard": [
+      [
+        "Mobile",
+        "4155551628"
+      ]
+    ],
+    "Johnson": [
+      [
+        "Mobile",
+        "3035559572"
+      ]
+    ],
+    "King": [
+      [
+        "Work",
+        "6085555241"
+      ],
+      [
+        "Work Fax",
+        "3035556747"
+      ]
+    ],
+    "Lewis": [
+      [
+        "Home",
+        "3035559824"
+      ]
+    ],
+    "Lopez": [
+      [
+        "Work",
+        "6175559085"
+      ],
+      [
+        "Mobile",
+        "3035554469"
+      ]
+    ],
+    "Mensah": [
+      [
+        "Mobile",
+        "9195559365"
+      ]
+    ],
+    "Morgan": [
+      [
+        "Mobile",
+        "2065555826"
+      ],
+      [
+        "Home",
+        "9715559958"
+      ]
+    ],
+    "Morris": [
+      [
+        "Mobile",
+        "6085551713"
+      ],
+      [
+        "Home",
+        "3035557624"
+      ]
+    ],
+    "Myers": [
+      [
+        "Mobile",
+        "2065556574"
+      ]
+    ],
+    "Nelson": [
+      [
+        "Mobile",
+        "9715557643"
+      ]
+    ],
+    "Okafor": [
+      [
+        "Home",
+        "9195557161"
+      ],
+      [
+        "Mobile",
+        "2065552273"
+      ],
+      [
+        "Work",
+        "9715559509"
+      ]
+    ],
+    "Parker": [
+      [
+        "Home",
+        "3035551019"
+      ],
+      [
+        "Mobile",
+        "5125558155"
+      ],
+      [
+        "Work",
+        "4155553453"
+      ]
+    ],
+    "Patel": [
+      [
+        "Home",
+        "7205557946"
+      ]
+    ],
+    "Peterson": [
+      [
+        "Mobile",
+        "6175559928"
+      ]
+    ],
+    "Phillips": [
+      [
+        "Mobile",
+        "8025553150"
+      ],
+      [
+        "Home",
+        "2065556576"
+      ]
+    ],
+    "Richardson": [
+      [
+        "Home",
+        "4155559652"
+      ],
+      [
+        "Mobile",
+        "6175556424"
+      ],
+      [
+        "Work",
+        "3035557117"
+      ]
+    ],
+    "Rodriguez": [
+      [
+        "Work",
+        "6175552277"
+      ],
+      [
+        "Mobile",
+        "3035558167"
+      ]
+    ],
+    "Rogers": [
+      [
+        "Mobile",
+        "2065552992"
+      ],
+      [
+        "Work",
+        "3035555822"
+      ]
+    ],
+    "Ruiz": [
+      [
+        "Mobile",
+        "8025554609"
+      ]
+    ],
+    "Stewart": [
+      [
+        "Mobile",
+        "6175557049"
+      ]
+    ],
+    "Torres": [
+      [
+        "Home",
+        "8025559589"
+      ]
+    ],
+    "Walker": [
+      [
+        "Work",
+        "9195552324"
+      ],
+      [
+        "Mobile",
+        "3035555893"
+      ]
+    ],
+    "Ward": [
+      [
+        "Mobile",
+        "7205558279"
+      ],
+      [
+        "Home",
+        "7205551326"
+      ]
+    ],
+    "Watson": [
+      [
+        "Home",
+        "9195557261"
+      ],
+      [
+        "Work",
+        "7205555690"
+      ]
+    ],
+    "White": [
+      [
+        "Work",
+        "6085552838"
+      ],
+      [
+        "Work Fax",
+        "3035554096"
+      ]
+    ],
+    "Wilson": [
+      [
+        "Work",
+        "2065559669"
+      ],
+      [
+        "Work Fax",
+        "8025558297"
+      ]
+    ]
+  }
+}

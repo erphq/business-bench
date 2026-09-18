@@ -1,0 +1,44 @@
+id: rent-roll-build
+track: desk
+category: spreadsheet
+title: October rent roll for the bank
+ask: |
+  Carol needs a rent roll for the bank from the RentEasy exports in this folder. Save it as rent_roll.xlsx with the total as a formula; her email says what goes on it.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  three units carry both an ended lease and the new lease that replaced it; one row per lease keeps the old tenant on the roll and adds the old rent to the total (checks: total monthly rent; every unit with tenant, rent and renewal flag)
+- |-
+  three tenants are month to month on leases that ended between March and August: they are occupied, they are not renewals, and per Carol's email they pay the lease rent plus the $75 fee RentEasy does not show (checks: month-to-month rent with the fee; every unit with tenant, rent and renewal flag)
+- |-
+  rent is text in five shapes ('$1,250/mo', '1250 / month', '$1,250.00 monthly') and the deposit column beside it is also money (check: total monthly rent)
+- |-
+  three units have no lease in force on October 1 - one never leased, one moved out in August, one signed for October 15 - and a roll built from the lease table drops them (check: every unit with tenant, rent and renewal flag)
+- |-
+  both buildings number units 101 to 205 and the lease export writes the property as 'Alder Ct' / 'ALDER COURT' and the unit as '101', '#101' or 'Apt 101'; joining on the unit number alone crosses the buildings (check: every unit with tenant, rent and renewal flag)
+- |-
+  the renewal window is October 1 to December 31 inclusive: one lease ends on December 31 and one on January 31, and ended leases and month-to-month tenants are not renewals (check: every unit with tenant, rent and renewal flag)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: rent_roll.xlsx
+  min_count: 1
+- type: xlsx_no_errors
+  name: no error cells
+  path: rent_roll.xlsx
+- type: xlsx_value_present
+  name: total monthly rent
+  path: rent_roll.xlsx
+  expected: 32845.0
+  rel_tol: 2.74e-05
+  near_text: total
+- type: xlsx_value_present
+  name: month-to-month rent with the fee
+  path: rent_roll.xlsx
+  expected: 1190.0
+  rel_tol: 0.0005
+  near_text: myers
+- type: custom
+  name: every unit with tenant, rent and renewal flag
+  module: check.py

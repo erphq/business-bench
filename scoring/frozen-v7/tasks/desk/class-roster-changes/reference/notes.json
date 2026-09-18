@@ -1,0 +1,64 @@
+{
+  "naive": {
+    "CIT-100": {
+      "added": 5,
+      "dropped": 4,
+      "fall": 15,
+      "spring": 16
+    },
+    "CMP-101": {
+      "added": 9,
+      "dropped": 9,
+      "fall": 32,
+      "spring": 30
+    },
+    "CMP-150": {
+      "added": 13,
+      "dropped": 0,
+      "fall": 0,
+      "spring": 13
+    },
+    "ESL-101": {
+      "added": 5,
+      "dropped": 11,
+      "fall": 33,
+      "spring": 26
+    },
+    "ESL-201": {
+      "added": 9,
+      "dropped": 7,
+      "fall": 17,
+      "spring": 19
+    },
+    "GED-110": {
+      "added": 7,
+      "dropped": 7,
+      "fall": 25,
+      "spring": 26
+    },
+    "GED-120": {
+      "added": 8,
+      "dropped": 5,
+      "fall": 15,
+      "spring": 18
+    },
+    "SEW-101": {
+      "added": 0,
+      "dropped": 13,
+      "fall": 13,
+      "spring": 0
+    }
+  },
+  "renamed": [
+    {
+      "first": "Deborah",
+      "new_last": "Brennan",
+      "old_last": "Evans"
+    },
+    {
+      "first": "Nancy",
+      "new_last": "Castellano",
+      "old_last": "Foster"
+    }
+  ]
+}

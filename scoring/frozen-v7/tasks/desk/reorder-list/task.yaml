@@ -1,0 +1,56 @@
+id: reorder-list
+track: desk
+category: spreadsheet
+title: This week's reorder list for the bike shop
+ask: |
+  Can you do this week's reorder run? Nadia's note has how she works it out - I need reorder.csv with what to order and how many.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  one item is under its reorder point on the shelf but an open PO already covers it (PAD-RIM); ignoring on-order stock puts it on the list (check: items to reorder)
+- |-
+  a partially received PO (BTL-24) still has only the unreceived remainder on order; counting the full ordered quantity understates the order (check: order quantity)
+- |-
+  a cancelled PO line (TUB-700-32) would lift its item above the reorder point if it were counted (checks: items to reorder; order quantity)
+- |-
+  every order rounds up to the vendor's pack size (tubes by 10, cables by 25, bottles by 12); the raw shortfall is almost never a whole pack (check: order quantity)
+- |-
+  Kestrel Components is being dropped and the 9-speed chain is discontinued, both only in the note and both with items below their reorder points (check: items to reorder)
+- |-
+  stock is exported per location: TUB-26-195 is low on the sales floor but fine with the back room, and PAD-RES needs ordering either way but in a different quantity (checks: items to reorder; order quantity)
+- |-
+  lead times are text: '5 days', '2 weeks', '3 weeks'; reading the number alone shrinks the cover for Orange Seal and Shimano items; the settings export also carries a BOM and CRLF endings (check: order quantity)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: reorder.csv
+  columns:
+  - sku
+  - description
+  - supplier
+  - order_qty
+- type: csv_set_equal
+  name: items to reorder
+  path: reorder.csv
+  column: sku
+  ref: reorder.csv
+- type: csv_row_count
+  name: row count
+  path: reorder.csv
+  equals_ref: reorder.csv
+- type: csv_values_match
+  name: order quantity
+  path: reorder.csv
+  ref: reorder.csv
+  key: sku
+  columns:
+  - order_qty
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+  must_match_keys:
+  - BTL-24
+  - PAD-RES
+  - ROT-160
+  - TUB-700-32

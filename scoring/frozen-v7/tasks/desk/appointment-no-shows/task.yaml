@@ -1,0 +1,45 @@
+id: appointment-no-shows
+track: desk
+category: spreadsheet
+title: Spring no-show rates by tutor under the 24-hour policy
+ask: |
+  Priyanka wants the spring no-show rates for each tutor, month by month, from the booking export. Save it as no_show_rates.csv; her note and the attendance policy are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  a no-show is written 'No-show', 'No Show', 'NS', 'noshow' or 'Absent - no call' and a kept session 'Attended', 'Completed' or 'Present'; matching one spelling undercounts both sides (check: no-shows and rate per tutor and month)
+- |-
+  53 family cancellations came less than 24 hours before the start and are no-shows under policy rule 1; each tutor has one at 23.5 hours, one at 24.75 hours and one after the session began, and the start is written '03/04/2026 4:00 PM' while the cancel time is '2026-03-03 17:12', so a date-only difference gets the boundary wrong (check: no-shows and rate per tutor and month)
+- |-
+  cancellations by the tutor or the center are never no-shows, including the late ones every tutor has (check: no-shows and rate per tutor and month)
+- |-
+  eight sessions were booked twice a minute apart with the same student, tutor, start and status; counting both inflates the book and the no-shows (check: no-shows and rate per tutor and month)
+- |-
+  cancellations with notice come off the book, so the denominator is kept sessions plus no-shows, not every row (check: no-shows and rate per tutor and month)
+- |-
+  the export is sorted by booking time and some April and May sessions were booked or cancelled the month before; the month is the session's own month (check: no-shows and rate per tutor and month)
+checks:
+- type: csv_columns
+  name: winter file columns
+  path: no_show_rates.csv
+  columns:
+  - tutor
+  - month
+  - booked
+  - no_shows
+  - no_show_rate
+- type: csv_set_equal
+  name: every tutor
+  path: no_show_rates.csv
+  column: tutor
+  ref: no_show_rates.csv
+  normalize:
+  - strip
+  - lower
+- type: custom
+  name: one row per tutor and month
+  module: check_rows.py
+- type: custom
+  name: no-shows and rate per tutor and month
+  module: check.py

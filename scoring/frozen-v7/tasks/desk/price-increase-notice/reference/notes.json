@@ -1,0 +1,41 @@
+{
+  "annual": [
+    {
+      "name": "Driftwood Studio",
+      "renewal": "2027-01-31"
+    },
+    {
+      "name": "Yellowtail Seafood",
+      "renewal": "2027-03-31"
+    },
+    {
+      "name": "Tamarack Brewing",
+      "renewal": "2026-12-31"
+    }
+  ],
+  "converted": "Valley Forge Storage",
+  "effective": "2026-11-02",
+  "items": {
+    "counter": {
+      "new": 41.0,
+      "old": 38.0,
+      "pct": 8
+    },
+    "delivery": {
+      "new": 9.25,
+      "old": 8.5,
+      "pct": 9
+    },
+    "lobby": {
+      "new": 72.0,
+      "old": 65.0,
+      "pct": 11
+    },
+    "statement": {
+      "new": 124.0,
+      "old": 115.0,
+      "pct": 8
+    }
+  },
+  "wrong_lobby": 70.0
+}

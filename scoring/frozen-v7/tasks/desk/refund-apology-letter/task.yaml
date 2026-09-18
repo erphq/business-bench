@@ -1,0 +1,45 @@
+id: refund-apology-letter
+track: desk
+category: drafting
+title: Reply to a customer about a cracked skillet
+ask: |
+  Laura Rogers emailed us about a cracked skillet and a late delivery. Please draft my reply to her, sticking to our refund policy, and save it as response.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  her email quotes order #CK-104613, two digits swapped; that number is another customer's order in the export, and her name and email find CK-104631 (checks: correct order number; no promise the policy forbids and no wrong order number)
+- |-
+  the skillet line is quantity 2 with the LABORDAY15 code allocated per line and tax charged per line; one unit's price after the code plus its tax is $51.17, not the $56.00 list price she asks for, the whole line ($102.34) or the price without tax ($47.60) (check: refund amount per policy)
+- |-
+  the export is Shopify style: order-level fields sit only on each order's first line, amounts are text, and it has a BOM and CRLF endings (check: refund amount per policy)
+- |-
+  the July policy processes refunds within 5 business days; the 2025 saved replies still say 7-10 business days (check: processing time)
+- |-
+  she asks for her shipping back and a $25 gift card for the late set; the policy refunds shipping only when every item arrives damaged and offers no credits for late standard deliveries, while the saved replies promise a shipping refund, store credit and a discount code (check: no promise the policy forbids and no wrong order number)
+checks:
+- type: file_exists
+  name: response.md exists
+  path: response.md
+- type: text_contains_all
+  name: correct order number
+  path: response.md
+  phrases:
+  - '104631'
+- type: text_sentence_matches
+  name: refund amount per policy
+  path: response.md
+  all:
+  - refund
+  - (?<![\d.])51\.17(?!\d)
+- type: text_sentence_matches
+  name: processing time
+  path: response.md
+  all:
+  - (\b5\b|\bfive\b)[\s-]*(business|working)[\s-]*days?
+  none:
+  - (\b7\b|\bseven\b)\s*(-|–|to)\s*(\b10\b|\bten\b)
+  - \b(10|ten)\s+(business|working)\s+days
+- type: custom
+  name: no promise the policy forbids and no wrong order number
+  module: check.py

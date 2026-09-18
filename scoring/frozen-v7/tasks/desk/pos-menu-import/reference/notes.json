@@ -1,0 +1,45 @@
+{
+  "groups_unused": [
+    "MG-TARO"
+  ],
+  "items_86": [
+    "T104",
+    "T107",
+    "F203",
+    "K404"
+  ],
+  "options_86": [
+    "TP-POPMG",
+    "DZ-COND"
+  ],
+  "price_pins": [
+    "DZ-NUT",
+    "F202",
+    "F204",
+    "ICE-HOT",
+    "ICE-NO",
+    "K403",
+    "MK-ALM",
+    "MK-LF",
+    "MK-OAT",
+    "S301",
+    "S303",
+    "SC-CHILI",
+    "SC-PLUM",
+    "SW-0",
+    "SW-100",
+    "SW-50",
+    "SW-75",
+    "SZ-LG",
+    "SZ-REG",
+    "T103",
+    "T106",
+    "TP-CRYS",
+    "TP-FOAM",
+    "TP-LYCH",
+    "TP-PEARL",
+    "TP-PUD",
+    "TP-RBEAN"
+  ],
+  "rows": 47
+}

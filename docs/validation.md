@@ -6,7 +6,7 @@
 - All 20 build task packs passed seed regeneration, checklist structure, referenced-file, and expected-number validation. This validates the task packages, **not any agent-built applications**.
 - Unit checks cover inventory completeness, ledger arithmetic, rejection of an incomplete arm, a real subprocess runner smoke, refusal to overwrite an attempt, and a reference/empty grading pair.
 - The Docker agent image built from the release recipe, reported Codex CLI 0.154.0, and passed the five unit/smoke tests inside the clean container. No model login or paid model call was needed for these checks.
-- The ledger contains exactly 2,244 distinct attempts across four full 187-by-three arms. Original result hashes are retained; raw artifacts are not included.
+- The corrected ledger contains exactly 1,122 distinct attempts across two complete 187-by-three cohorts. All original-result hashes and frozen-receipt identities were verified during export. Every receipt points to the same frozen scorer manifest, whose complete file fingerprint is verified locally. The primary totals are 507/561 and 473/561.
 
 ## Fixture regeneration notices
 
@@ -16,4 +16,4 @@ The affected tasks are bank-statement-pdf, business-cards-scanned, card-statemen
 
 ## What was not verified by packaging
 
-This release did not run a new paid model campaign, rescore the original 2,244 output workspaces, establish independent human agreement with the checks, or certify the build acceptance results. Original campaign records lack immutable per-attempt scorer/image receipts. A portable clean installation is not a reconstruction of undistributed historical runtime binaries or authenticated tool/skill inventories. These limitations are stated in the paper and results, not hidden in the work log.
+This correction did not run a new paid campaign or regrade the 1,122 original output workspaces. It exports the completed shared-frozen-scorer comparison and checks its result and receipt hashes. The frozen package is included unchanged. Independent human agreement and completed build acceptance are not established. A portable installation does not reconstruct undistributed historical runtime binaries, authenticated skill inventories, or the private raw artifacts.

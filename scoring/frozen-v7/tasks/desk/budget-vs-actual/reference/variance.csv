@@ -1,0 +1,18 @@
+acct,account,type,annual_budget,ytd_budget,ytd_actual,variance
+4100,Slip rentals,Income,589300.00,206255.00,239808.67,33553.67
+4200,Winter storage,Income,291600.00,163296.00,139164.48,-24131.52
+4300,Launch and haul-out,Income,179300.00,93236.00,99900.12,6664.12
+4400,Service department labor,Income,244000.00,122000.00,110801.97,-11198.03
+5100,Yard crew wages,Expense,418700.00,209350.00,237539.85,-28189.85
+5200,Seasonal dock staff,Expense,154500.00,67980.00,61996.89,5983.11
+5300,Fuel,Expense,58000.00,29000.00,31583.71,-2583.71
+5400,Travel lift and equipment repairs,Expense,37600.00,18800.00,14954.08,3845.92
+5500,Shrink-wrap and blocking supplies,Expense,44700.00,23244.00,26162.95,-2918.95
+6100,Office salaries,Expense,130500.00,65250.00,70218.34,-4968.34
+6200,Harbor lease,Expense,49000.00,24500.00,21208.79,3291.21
+6300,Insurance,Expense,38100.00,19050.00,21176.15,-2126.15
+6400,Vehicle and forklift leases,Expense,70300.00,35150.00,40474.50,-5324.50
+6500,Marketing,Expense,18100.00,9050.00,7916.53,1133.47
+6600,Software and phones,Expense,11900.00,5950.00,5618.81,331.19
+6700,Professional fees,Expense,14500.00,7250.00,6520.67,729.33
+6750,Crane and equipment rental,Expense,0.00,0.00,7394.89,-7394.89

@@ -1,0 +1,53 @@
+id: delivery-performance
+track: desk
+category: reports
+title: On-time delivery by hub, and why the late ones were late
+ask: |
+  I need August's on-time delivery by hub and a breakdown of why the late ones were late. Save it as delivery.xlsx with live formulas. Dispatch's notes explain how the stop file reads.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the promise is a window inside the day (AM, PM, All day, 13:00-15:00), so comparing dates alone marks hours-late deliveries as on time (checks: Portland on time; on-time rates per hub)
+- |-
+  every scan is stamped in UTC while the windows are hub local time (Portland -7, Denver -6, Austin -5 in August); without the offset almost nothing lands inside its window and some scans roll to the next day (checks: Portland on time; on-time rates per hub)
+- |-
+  big items ship on two trucks under one shipment number, so the stop file has more rows than deliveries; the shipment counts once and is on time only if the last piece is inside the window (checks: Denver shipments delivered; total delivered)
+- |-
+  attempted, refused and cancelled stops sit in the same file and are not deliveries (checks: Denver shipments delivered; total delivered)
+- |-
+  late reasons are free text ('WEATHER DELAY', 'heavy rain, weather', 'truck breakdown', 'Customer NH') over the five buckets dispatch reports, and some late stops have no reason at all (check: weather delays)
+- |-
+  the on-time percentage is graded as a fraction or a percentage, but it must be there for every hub (check: on-time rates per hub)
+checks:
+- type: file_exists
+  name: delivery.xlsx exists
+  path: delivery.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: delivery.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: delivery.xlsx
+- type: xlsx_value_present
+  name: Portland on time
+  path: delivery.xlsx
+  expected: 96
+  rel_tol: 0.001
+  near_text: portland
+- type: xlsx_value_present
+  name: Denver shipments delivered
+  path: delivery.xlsx
+  expected: 108
+  rel_tol: 0.001
+  near_text: denver
+- type: xlsx_value_present
+  name: weather delays
+  path: delivery.xlsx
+  expected: 13
+  rel_tol: 0.001
+  near_text: weather
+- type: custom
+  name: on-time rates per hub
+  module: check.py

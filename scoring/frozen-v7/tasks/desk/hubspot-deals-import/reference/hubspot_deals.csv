@@ -1,0 +1,52 @@
+Bid Number,Deal Name,Pipeline,Deal Stage,Amount,Close Date,Company Domain Name
+C-26-001,Parapet and coping repair,Commercial Bids,Proposal Sent,321000.00,2027-03-31,driftwoodstudio.design
+C-26-002,"Tear-off and replace, A wing",Commercial Bids,Proposal Sent,105500.00,2026-11-30,fernbrookmontessori.org
+C-26-003,Metal roof retrofit,Commercial Bids,Negotiation,1150000.00,2026-10-31,cedarpine.co
+C-26-004,Hail damage repair Bldg D,Commercial Bids,Lead In,,2026-10-31,silverlinelogistics.com
+C-26-005,Re-roof Bldg E,Commercial Bids,Closed Won,178000.00,2026-06-17,mossbank.cpa
+C-26-006,Hail damage repair Bldg E,Commercial Bids,Closed Won,155000.00,2026-04-09,larkspuryoga.com
+C-26-007,Parapet and coping repair,Commercial Bids,Negotiation,302500.00,2026-09-30,everline.com
+C-26-008,Roof coating - warehouse,Commercial Bids,Site Walk Scheduled,24500.00,2026-12-01,vantagepointmedia.com
+C-26-009,Gutter + downspout replacement,Commercial Bids,Closed Won,53500.00,2026-07-31,kingfishercharters.com
+C-26-010,TPO roof replacement,Commercial Bids,Closed Won,366000.00,2026-06-10,blueheronconsulting.com
+C-26-011,Hail damage repair Bldg C,Commercial Bids,Proposal Sent,275000.00,2026-09-25,riverbendphysio.com
+C-26-012,Parapet and coping repair,Commercial Bids,Site Walk Scheduled,148500.00,2026-09-23,oakhurstpeds.org
+C-26-013,"Tear-off and replace, A wing",Commercial Bids,Site Walk Scheduled,174000.00,2026-10-23,sunriseridgehoa.org
+C-26-014,"Tear-off and replace, B wing",Commercial Bids,Lead In,,2026-11-11,ironwoodfab.com
+C-26-015,Roof coating - warehouse,Commercial Bids,Closed Lost,414500.00,2026-04-06,uptownfit.com
+C-26-016,TPO roof replacement,Commercial Bids,Negotiation,408500.00,2027-03-31,pembertonhvac.com
+C-26-017,TPO roof replacement,Commercial Bids,Proposal Sent,332500.00,2027-03-31,northfieldauto.com
+C-26-018,Re-roof Bldg A,Commercial Bids,Lead In,,2026-12-31,northfieldautoglass.com
+C-26-019,Re-roof Bldg D,Commercial Bids,Closed Lost,54500.00,2026-02-04,everline.com
+C-26-020,TPO roof replacement,Commercial Bids,Proposal Sent,102500.00,2026-09-30,silverlinelogistics.com
+C-26-021,TPO roof replacement,Commercial Bids,Site Walk Scheduled,286500.00,2026-09-30,silverlinelogistics.com
+C-26-022,Roof coating - warehouse,Commercial Bids,Closed Lost,339000.00,2026-03-27,silverlinelogistics.com
+C-26-023,TPO roof replacement,Commercial Bids,Closed Won,247000.00,2026-04-28,oakhurstpeds.org
+C-26-024,Roof coating - warehouse,Commercial Bids,Negotiation,191500.00,2026-10-31,silverlinelogistics.com
+C-26-025,Roof coating - warehouse,Commercial Bids,Proposal Sent,411500.00,2026-10-31,pembertonhvac.com
+C-26-026,Hail damage repair Bldg C,Commercial Bids,Closed Lost,68000.00,2026-08-17,larkspuryoga.com
+C-26-027,TPO roof replacement,Commercial Bids,Closed Won,356500.00,2026-06-29,uptownfit.com
+C-26-028,Parapet and coping repair,Commercial Bids,Lead In,86500.00,2026-11-26,blueheronconsulting.com
+C-26-029,Re-roof Bldg C,Commercial Bids,Closed Lost,386000.00,2026-03-18,driftwoodstudio.design
+R-26-001,Hail claim - full re-roof,Residential Jobs,New Inquiry,21000.00,2027-03-31,redwoodpm.com
+R-26-002,Cedar shake to composite,Residential Jobs,Closed Lost,8000.00,2026-07-28,
+R-26-003,Cedar shake to composite,Residential Jobs,Closed Won,34500.00,2026-01-27,
+R-26-004,Hail claim - full re-roof,Residential Jobs,Closed Lost,34500.00,2026-03-26,maplegroveliving.com
+R-26-005,Gutters and fascia,Residential Jobs,New Inquiry,37500.00,2026-11-16,
+R-26-006,Asphalt shingle replacement,Residential Jobs,New Inquiry,14000.00,2026-12-31,
+R-26-007,Cedar shake to composite,Residential Jobs,Closed Won,26000.00,2026-07-03,aspencourtcondos.com
+R-26-008,Chimney flashing,Residential Jobs,Inspection Booked,18000.00,2026-12-02,
+R-26-009,Hail claim - full re-roof,Residential Jobs,Closed Lost,12000.00,2026-05-11,
+R-26-010,Asphalt shingle replacement,Residential Jobs,New Inquiry,7000.00,2026-09-17,sunriseridgehoa.org
+R-26-011,Attic ventilation + ridge vent,Residential Jobs,Estimate Sent,28000.00,2026-12-03,
+R-26-012,Attic ventilation + ridge vent,Residential Jobs,Closed Won,19000.00,2026-06-22,
+R-26-013,Leak repair,Residential Jobs,Closed Lost,8500.00,2026-04-10,redwoodpm.com
+R-26-014,Chimney flashing,Residential Jobs,Inspection Booked,29500.00,2026-09-22,
+R-26-015,Gutters and fascia,Residential Jobs,Estimate Sent,15500.00,2026-11-30,
+R-26-016,Attic ventilation + ridge vent,Residential Jobs,Estimate Sent,29500.00,2026-11-30,maplegroveliving.com
+R-26-017,Gutters and fascia,Residential Jobs,Estimate Sent,16000.00,2026-12-31,
+R-26-018,Leak repair,Residential Jobs,Closed Won,24500.00,2026-07-13,
+R-26-019,Hail claim - full re-roof,Residential Jobs,Inspection Booked,9000.00,2027-03-31,aspencourtcondos.com
+R-26-020,Chimney flashing,Residential Jobs,Inspection Booked,27000.00,2026-11-30,
+R-26-021,Asphalt shingle replacement,Residential Jobs,Estimate Sent,27500.00,2026-12-31,
+R-26-022,Asphalt shingle replacement,Residential Jobs,Closed Won,37500.00,2026-08-20,sunriseridgehoa.org

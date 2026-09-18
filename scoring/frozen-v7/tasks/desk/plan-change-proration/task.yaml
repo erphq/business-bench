@@ -1,0 +1,78 @@
+id: plan-change-proration
+track: desk
+category: bookkeeping
+title: Catch-up prorations for February to April plan changes
+ask: |
+  The billing sync never charged or credited any plan changes since February. Work out the prorations for everything in the change log following Jonah's rules and save them as prorations.csv so we can put them on the May invoices.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  months have 28, 31 and 30 days and the day of the change counts: PC-30210 on 11 February prorates 18 of 28 days, so a 30-day month or an exclusive count moves every line (checks: days prorated; proration amounts)
+- |-
+  a proration is the new plan for the remaining days less the unused old plan, so charging the new price alone overbills upgrades and downgrades such as PC-30231 come out negative (check: proration amounts)
+- |-
+  PC-30273 and PC-30280 move one studio up two plans and back 17 minutes later on the same day; neither is a change (checks: which changes; row count)
+- |-
+  the log is UTC and billing days are Pacific: PC-30315 is stamped 2026-04-01 05:40 UTC but was made at 10:40 pm on 31 March, so it prorates one day of March rather than all of April (checks: days prorated; proration amounts)
+- |-
+  PC-30259 and PC-30287 upgrade one studio twice in March; the second change's credit is for the plan the first one put it on, not the plan it started the month on (check: proration amounts)
+- |-
+  nonprofit studios (ACC-4165, ACC-4243) carry 20% off in the accounts export, which applies to both the credit and the charge (check: proration amounts)
+- |-
+  the change log also holds 2 changes on annual-billed studios, which the account team prorates at renewal (checks: which changes; row count)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: prorations.csv
+  columns:
+  - change_id
+  - account_id
+  - effective_date
+  - days
+  - proration
+- type: csv_set_equal
+  name: which changes
+  path: prorations.csv
+  column: change_id
+  ref: prorations.csv
+  normalize:
+  - alnum
+- type: csv_row_count
+  name: row count
+  path: prorations.csv
+  equals_ref: prorations.csv
+- type: csv_values_match
+  name: days prorated
+  path: prorations.csv
+  ref: prorations.csv
+  key: change_id
+  columns:
+  - days
+  numeric: true
+  tolerance: 0.0
+  min_accuracy: 1.0
+  must_match_keys:
+  - PC-30210
+  - PC-30315
+  - PC-30336
+- type: csv_values_match
+  name: proration amounts
+  path: prorations.csv
+  ref: prorations.csv
+  key: change_id
+  columns:
+  - proration
+  numeric: true
+  tolerance: 0.011
+  rounding: day-based proration, charge and credit each rounded to the cent as Jonah's note states
+  min_accuracy: 1.0
+  must_match_keys:
+  - PC-30210
+  - PC-30231
+  - PC-30315
+  - PC-30259
+  - PC-30287
+  - PC-30245
+  - PC-30301
+  - PC-30329

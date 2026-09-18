@@ -1,0 +1,89 @@
+id: sales-tax-liability
+track: desk
+category: bookkeeping
+title: Second-quarter sales tax due by local jurisdiction
+ask: |
+  Hannah needs our Q2 sales tax figures for the return, by jurisdiction, on the upload template. The POS export, the state's rate table, our exemption certificates and her email are in the folder. Save it as tax_liability.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  deliveries are taxed by the delivery ZIP from the rate table, not by the ship-to town: 98013, 98033 and 98060 carry Cedar Falls, Millbrook and Pine Ridge post-office names but are unincorporated Oak County, and pickups are taxed at the yard (checks: gross sales; taxable sales; tax due)
+- |-
+  exemption goes by the certificate on the sale date: Greenway Grounds' certificate expired 15 May and the POS kept flagging its later purchases exempt, Blue Heron never delivered one, and the county parks department is exempt (checks: exempt sales; taxable sales; tax due)
+- |-
+  Millbrook's rate rose from 7.75% to 8.00% on 1 May but the POS kept charging the old rate until 8 May, so the tax collected column is short for that week (check: tax due)
+- |-
+  tax is computed on each jurisdiction's taxable sales and rounded once; adding up the POS's penny-rounded receipts is off by a few cents in several jurisdictions (check: tax due)
+- |-
+  six voided invoices stay in the export with their amounts, and the export has a preamble, a BOM and amounts written '$1,240.00' or '1240.00' (checks: gross sales; taxable sales)
+- |-
+  the rate table lists Stoneleigh, where nothing was sold; the return wants rows only for jurisdictions with sales (check: one row per jurisdiction)
+checks:
+- type: csv_columns
+  name: template columns
+  path: tax_liability.csv
+  columns:
+  - jurisdiction_code
+  - jurisdiction_name
+  - gross_sales
+  - exempt_sales
+  - taxable_sales
+  - tax_due
+  exact: true
+- type: csv_set_equal
+  name: one row per jurisdiction
+  path: tax_liability.csv
+  column: jurisdiction_code
+  ref: tax_liability.csv
+  normalize:
+  - digits
+- type: csv_values_match
+  name: gross sales
+  path: tax_liability.csv
+  ref: tax_liability.csv
+  key: jurisdiction_code
+  columns:
+  - gross_sales
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - '3101'
+  - '3102'
+  - '3205'
+  - '3210'
+  - '3301'
+- type: csv_values_match
+  name: exempt sales
+  path: tax_liability.csv
+  ref: tax_liability.csv
+  key: jurisdiction_code
+  columns:
+  - exempt_sales
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys: *id001
+- type: csv_values_match
+  name: taxable sales
+  path: tax_liability.csv
+  ref: tax_liability.csv
+  key: jurisdiction_code
+  columns:
+  - taxable_sales
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys: *id001
+- type: csv_values_match
+  name: tax due
+  path: tax_liability.csv
+  ref: tax_liability.csv
+  key: jurisdiction_code
+  columns:
+  - tax_due
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys: *id001

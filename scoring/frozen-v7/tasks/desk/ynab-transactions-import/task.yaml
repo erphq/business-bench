@@ -1,0 +1,99 @@
+id: ynab-transactions-import
+track: desk
+category: reformatting
+title: September checking transactions into YNAB
+ask: |
+  The bank sync in YNAB is broken again. Can you turn the checking export into a file I can import and save it as ynab.csv? My notes on how I do it, the payee rules and YNAB's template are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the export has one positive Amount column and a DEBIT/CREDIT Type; YNAB wants DEBIT in Outflow and CREDIT in Inflow with the other side empty, and the Amazon return, the Etsy and Square payouts and the transfer from savings are inflows (check: outflow and inflow)
+- |-
+  payees come from the rename rules in order, first match wins; AMAZON PRIME sits above AMAZON and UPS STORE above UPS, so a loop that lets the last matching rule win names them Amazon and UPS; transfers come out as 'Transfer : Studio Savings' (check: payee)
+- |-
+  YNAB's Memo is the bank Reference kept as text with its leading zeros (000041882); reading the column as a number or copying the bank's Memo column (ELECTRONIC WITHDRAWAL) loses the key (check: one row per transaction)
+- |-
+  card purchases post one to three days after the purchase; Date is the Tran Date, which the export writes as MM/DD/YY, written MM/DD/YYYY; using Post Date shifts most card rows (check: date)
+- |-
+  the export starts Aug 20 and YNAB already has everything with a transaction date through Aug 31; a Talas purchase made Aug 31 posted Sep 1, so filtering on Post Date imports it twice (checks: one row per transaction; row count)
+- |-
+  three pending rows at the end have no Post Date and no Reference and must wait until they post (check: row count, 27 rows)
+checks:
+- type: csv_columns
+  name: YNAB template columns, exact order
+  path: ynab.csv
+  columns:
+  - Date
+  - Payee
+  - Memo
+  - Outflow
+  - Inflow
+  exact: true
+- type: csv_set_equal
+  name: one row per transaction
+  path: ynab.csv
+  column: Memo
+  ref: ynab.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: ynab.csv
+  equals_ref: ynab.csv
+- type: csv_values_match
+  name: date
+  path: ynab.csv
+  ref: ynab.csv
+  key: Memo
+  columns:
+  - Date
+  normalize:
+  - strip
+  min_accuracy: 1.0
+  must_match_keys:
+  - '000005166'
+  - 000011094
+  - '000017104'
+  - 000019835
+  - '000027162'
+  - 000028297
+  - '000042265'
+  - 000049549
+  - 000083671
+  - '535517698'
+  - '647122558'
+  - '904548527'
+- type: csv_values_match
+  name: payee
+  path: ynab.csv
+  ref: ynab.csv
+  key: Memo
+  columns:
+  - Payee
+  min_accuracy: 1.0
+  must_match_keys:
+  - '000017104'
+  - 000028297
+  - 000049549
+  - 000078150
+  - '965402528'
+- type: csv_values_match
+  name: outflow and inflow
+  path: ynab.csv
+  ref: ynab.csv
+  key: Memo
+  columns:
+  - Outflow
+  - Inflow
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - '000013714'
+  - 000028675
+  - 000038585
+  - 000046991
+  - '904548527'
+  - '965402528'

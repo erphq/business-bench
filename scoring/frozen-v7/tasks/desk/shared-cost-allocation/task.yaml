@@ -1,0 +1,68 @@
+id: shared-cost-allocation
+track: desk
+category: bookkeeping
+title: Allocate August overhead to departments
+ask: |
+  Please do the August overhead allocation to the departments. Carla's memo explains the new way she wants it done. Save it as allocation.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  building accounts split by square feet and people accounts by headcount; one base for everything, or July's hand estimates, moves every department (checks: Mill Shop total; Finishing total; Install total; Showroom total; Admin total)
+- |-
+  the floor plan lists the common break room and restrooms and the sublet suite with no department; they stay out of the square-foot base rather than being spread or kept as a sixth column (checks: Mill Shop total; Finishing total)
+- |-
+  headcount is a month-end count with part-timers at a half: Carlos Lewis left in August, Donald Mensah starts in September, Charles Mensah is a 1099 contractor and one part-timer left in July, all still on the roster export (checks: Install total; Showroom total)
+- |-
+  the Summit HVAC spray-booth repair is coded FIN and the Cabinet Vision seats are coded SHOW; both are direct costs and stay out of the allocation (checks: Finishing total; Showroom total; grand total allocated)
+- |-
+  the electric account carries a negative billing-adjustment credit that nets against the bill, and amounts are text with thousands separators under a three-line preamble (check: grand total allocated)
+- |-
+  each department's piece rounds to the cent and the leftover cent or two goes to the department with the largest base for that account (Mill Shop for square feet, Install for headcount); rounding every piece independently leaves several accounts a cent off (check: every account splits to the cent)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: allocation.xlsx
+  min_count: 10
+- type: xlsx_no_errors
+  name: no formula errors
+  path: allocation.xlsx
+- type: custom
+  name: every account splits to the cent
+  module: check.py
+- type: xlsx_value_present
+  name: grand total allocated
+  path: allocation.xlsx
+  expected: 25312.87
+  rel_tol: 1.0e-06
+  near_text: total
+- type: xlsx_value_present
+  name: Mill Shop total
+  path: allocation.xlsx
+  expected: 12066.44
+  rel_tol: 1.0e-06
+  near_text: mill shop
+- type: xlsx_value_present
+  name: Finishing total
+  path: allocation.xlsx
+  expected: 4529.37
+  rel_tol: 1.0e-06
+  near_text: finishing
+- type: xlsx_value_present
+  name: Install total
+  path: allocation.xlsx
+  expected: 4294.06
+  rel_tol: 1.0e-06
+  near_text: install
+- type: xlsx_value_present
+  name: Showroom total
+  path: allocation.xlsx
+  expected: 2688.62
+  rel_tol: 1.0e-06
+  near_text: showroom
+- type: xlsx_value_present
+  name: Admin total
+  path: allocation.xlsx
+  expected: 1734.38
+  rel_tol: 1.0e-06
+  near_text: admin

@@ -1,0 +1,75 @@
+id: donor-annual-figures
+track: desk
+category: reports
+title: FY2026 fundraising figures for the board
+ask: |
+  Nadia needs this year's fundraising figures for the board packet - totals against last year, the top ten donors and donor retention. Put them in annual_figures.xlsx with live formulas and write a cover memo as memo.md. Her email and the gift policy are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the fiscal year runs 1 July - 30 June and is named for the year it ends in; the export starts in January 2024 and a calendar-year reading shifts both years (checks: FY2026 net cash raised; FY2025 net cash raised)
+- |-
+  fully refunded gifts keep their positive amount and only say Status 'Refunded' - including the $35,000 Halvorsen Foundation grant, which would otherwise be the year's biggest gift; the memo has to say it came back (checks: FY2026 net cash raised; memo says the foundation gift was refunded)
+- |-
+  partial refunds and chargebacks are separate negative rows (some written in parentheses) naming the gift they reverse; a $4,487 June 2025 gift charged back in July must come off FY2025, not FY2026 (checks: FY2025 net cash raised; FY2026 net cash raised)
+- |-
+  in-kind gifts carry a fair-market value in the Amount column; the policy leaves them out of totals, donor counts and retention, and five in-kind donors never gave cash; the donated van from Ashgrove Veterinary Partners would top the donor list (checks: FY2026 net cash raised; retained donors; donor retention rate)
+- |-
+  the top donor's gifts are typed three ways ('Thomas Johnson', 'Johnson, Thomas', 'Thomas & Marcus Johnson') under one Donor ID, one of their gifts is partly refunded, and other donors vary in case and initials; grouping by name splits donors (checks: top donor FY2026 total; retained donors)
+- |-
+  an FY2025 donor whose only FY2026 gift was refunded did not give in FY2026 and is not retained (check: retained donors)
+checks:
+- type: file_exists
+  name: annual_figures.xlsx exists
+  path: annual_figures.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: annual_figures.xlsx
+  min_count: 6
+- type: xlsx_no_errors
+  name: no error cells
+  path: annual_figures.xlsx
+- type: xlsx_value_present
+  name: FY2026 net cash raised
+  path: annual_figures.xlsx
+  expected: 207635.0
+  rel_tol: 1.0e-06
+  near_text: fy
+- type: xlsx_value_present
+  name: FY2025 net cash raised
+  path: annual_figures.xlsx
+  expected: 187578.0
+  rel_tol: 1.0e-06
+  near_text: fy
+- type: xlsx_value_present
+  name: top donor FY2026 total
+  path: annual_figures.xlsx
+  expected: 20973.0
+  rel_tol: 1.0e-05
+  near_text: johnson
+- type: xlsx_value_present
+  name: retained donors
+  path: annual_figures.xlsx
+  expected: 94
+  rel_tol: 0.001
+  near_text: retain
+- type: custom
+  name: donor retention rate
+  module: check.py
+- type: text_numbers_present
+  name: memo carries both years' totals
+  path: memo.md
+  numbers:
+  - 207635.0
+  - 187578.0
+  rel_tol: 0.003
+- type: text_sentence_matches
+  name: memo says the foundation gift was refunded
+  path: memo.md
+  all:
+  - \bhalvorsen\b
+  - |-
+    (refund|returned|\breturn\b|revers|charge ?back|cancel|given back|sent back|paid back|withdrawn|clawed back)
+  none:
+  - \b(not|never)\b[^.;]{0,12}\b(refund|returned|revers)

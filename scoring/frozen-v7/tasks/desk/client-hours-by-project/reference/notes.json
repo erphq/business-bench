@@ -1,0 +1,14 @@
+{
+  "clock_style_rows": 30,
+  "desktop_rows": 217,
+  "excluded_client": "Driftwood Studio",
+  "renamed": {
+    "code": "HLM-07",
+    "date": "2026-08-10",
+    "new": "Catalog 2026",
+    "old": "Spring Catalog"
+  },
+  "revisions_ticked_billable": 7,
+  "timer_rows": 91,
+  "timer_rows_outside_q3": 7
+}

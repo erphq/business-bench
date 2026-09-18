@@ -1,0 +1,59 @@
+id: lead-source-rollup
+track: desk
+category: spreadsheet
+title: Q2 leads and won revenue by marketing source
+ask: |
+  Dmitri wants to know where our Q2 leads came from and what they turned into, by marketing source. Use the CRM export and Sofia's code sheet and save lead_sources.csv - her email explains how to count.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the Campaign Code field carries tracking noise ('?utm_source=google&utm_medium=cpc', '&gclid=...', '|utm_medium=video', '%20', padding and lower case); an exact lookup against the sheet sends most leads to Untracked (checks: leads per source; won revenue per source)
+- |-
+  codes that are not on the sheet (GADS-PPL-Q3, FB-DISC-FLY, IG-SUMMER-SOLO, PROMO-FATHERSDAY) carry utm_source tags naming Google, Instagram or the newsletter; the email puts them under Untracked, so assigning them by the tag inflates Google Ads and Instagram (check: leads per source)
+- |-
+  revenue is closed-won only; Proposal Sent and Closed Lost leads carry quoted deal values in the same column (check: won revenue per source)
+- |-
+  the export runs from 20 March to 1 July and includes three staff test submissions on bluemesaflight.com addresses, one of them Closed Won (checks: leads per source; won revenue per source)
+- |-
+  Radio ran until March and has no Q2 leads, but the email wants a line for every source on the sheet plus Untracked (checks: every source plus Untracked; row count)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: lead_sources.csv
+  columns:
+  - source
+  - leads
+  - revenue
+- type: csv_set_equal
+  name: every source plus Untracked
+  path: lead_sources.csv
+  column: source
+  ref: lead_sources.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: lead_sources.csv
+  equals_ref: lead_sources.csv
+- type: csv_values_match
+  name: leads per source
+  path: lead_sources.csv
+  ref: lead_sources.csv
+  key: source
+  columns:
+  - leads
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: won revenue per source
+  path: lead_sources.csv
+  ref: lead_sources.csv
+  key: source
+  columns:
+  - revenue
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

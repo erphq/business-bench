@@ -1,0 +1,18 @@
+{
+  "amended_original": {
+    "end": "2027-06-30",
+    "final": "2027-08-31",
+    "total": 65000
+  },
+  "amended_ref": "WCF-2026990",
+  "declined_ref": "GPF-3263",
+  "multi_year_refs": [
+    "HTCF-2758",
+    "SF/2026/79"
+  ],
+  "requested_vs_awarded": {
+    "ref": "MHF-G15409",
+    "requested": 110000
+  },
+  "scan_ref": "NSCT-26-562"
+}

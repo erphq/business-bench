@@ -1,0 +1,61 @@
+id: tuition-collections
+track: desk
+category: reports
+title: Spring tuition collected and outstanding by program
+ask: |
+  Where do we stand on spring tuition, program by program - what has actually come in and what is still owed? Save it as collections.xlsx with live formulas. Ingrid's note explains the credits and the payment plans.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  most families are on a three or five instalment plan and the bank feed carries the instalments that have not happened yet, marked Scheduled with dates after the cut-off; a plain sum of the amount column books money the school has not received (checks: Primary collected; total collected)
+- |-
+  four ACH payments came back and are still in the feed as Returned (checks: Primary collected; total collected)
+- |-
+  scholarships and sibling discounts are credits against what is owed, not receipts; treating them as payments overstates collections and leaves outstanding wrong (checks: Toddler credits; Lower Elementary outstanding)
+- |-
+  sibling discounts are written as a percentage ('10%') of that child's tuition while scholarships are dollar amounts, in the same Value column (check: Toddler credits)
+- |-
+  six payments arrived with no family id and no invoice in the Applied to column - only 'Ref INV-...' in the bank memo; dropping them understates collections (check: Primary collected)
+- |-
+  the closed autumn term is in the folder and fourteen of its invoices were settled inside the same bank feed window, so the receipts must be matched to spring invoices (checks: total collected; total net due)
+- |-
+  amounts are '$5,400.00' text, dates come in three formats and the exports carry preambles, a BOM and CRLF endings (check: total collected)
+checks:
+- type: file_exists
+  name: collections.xlsx exists
+  path: collections.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: collections.xlsx
+  min_count: 10
+- type: xlsx_no_errors
+  name: no error cells
+  path: collections.xlsx
+- type: xlsx_value_present
+  name: Primary collected
+  path: collections.xlsx
+  expected: 110700.0
+  rel_tol: 1.0e-06
+  near_text: primary
+- type: xlsx_value_present
+  name: Toddler credits (percentage discounts computed)
+  path: collections.xlsx
+  expected: 2880.0
+  rel_tol: 0.0001
+  near_text: toddler
+- type: xlsx_value_present
+  name: Lower Elementary outstanding
+  path: collections.xlsx
+  expected: 25666.6
+  rel_tol: 1.0e-05
+  near_text: elementary
+- type: custom
+  name: total still owed
+  module: check.py
+- type: xlsx_value_present
+  name: total collected
+  path: collections.xlsx
+  expected: 294748.32
+  rel_tol: 1.0e-06
+  near_text: collected

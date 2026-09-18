@@ -1,0 +1,31 @@
+{
+  "files": {
+    "J1": "Juniper_County_041-234-17.pdf",
+    "J2": "Juniper_County_041-234-18.pdf",
+    "J3": "scan_juniper_04123605.pdf",
+    "K1": "KeelCounty_secured_tax_207005800.pdf",
+    "K2": "KeelCounty_secured_tax_207015800.pdf",
+    "NOTICE": "KeelCounty_notice_DQ-26-4578.pdf"
+  },
+  "notice": {
+    "amount": 2018.57,
+    "apn": "207-0058-00",
+    "cost": 33.0,
+    "notice_no": "DQ-26-4578",
+    "penalty": 201.86,
+    "total": 2253.43,
+    "year": "2025-26"
+  },
+  "scan_figures": {
+    "tax_bills_2026-27/scan_juniper_04123605.pdf": [
+      "04123605",
+      "50500",
+      "514.31",
+      "AMOUNT 257.16  DUE 11/01/2026",
+      "AMOUNT 257.15  DUE 02/01/2027",
+      "2ND INSTALLMENT",
+      "1ST INSTALLMENT"
+    ]
+  },
+  "sold_parcel": "041-379-02"
+}

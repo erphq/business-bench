@@ -1,0 +1,41 @@
+id: schedule-change-notices
+track: desk
+category: drafting
+title: Schedule change notices for next week's revised rota
+ask: |
+  WFM put out a revised schedule for the week of 9/21. Please write the change notices for the agents it affects; Renata's email has the rules. Put them in a notices folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the rev2 export is in UTC and the published grid is local time in three zones (Portland Pacific UTC-7, Boise Mountain UTC-6, Raleigh Eastern UTC-4 that week), so comparing the raw times flags all 14 agents (check: notices carry their own changes)
+- |-
+  Karen Allen's Tuesday moves from 7:00 AM to 10:00 AM Pacific; the export shows 14:00Z and 17:00Z, and a notice in UTC fails (check: notices carry their own changes)
+- |-
+  closing shifts start in the evening local time and land on the next UTC date: two unchanged Portland closers look moved by a day, and Joshua Scott's changed late shift (Thursday 5:30 PM to 2:00 AM) appears under Friday in UTC (check: notices carry their own changes)
+- |-
+  the export renames the queue for three agents and repeats one shift row for another; neither is a schedule change and those agents get no file (check: notices carry their own changes)
+- |-
+  Edward Ward swaps Wednesday for Saturday, Stephanie Ramos loses Monday, and Ryan Young finishes 30 minutes later on Monday and gains Sunday; dropped and added shifts count as changes (checks: notice for each affected agent; notices carry their own changes)
+- |-
+  a notice lists only the changed shifts, not the agent's whole week (check: notices carry their own changes)
+- 'each notice names the agent''s time zone (check: notices carry their own changes)'
+checks:
+- type: file_exists
+  name: notice for Karen Allen
+  path: notices/*[kK][aA][rR][eE][nN]*[aA][lL][lL][eE][nN]*
+- type: file_exists
+  name: notice for Joshua Scott
+  path: notices/*[jJ][oO][sS][hH][uU][aA]*[sS][cC][oO][tT][tT]*
+- type: file_exists
+  name: notice for Edward Ward
+  path: notices/*[eE][dD][wW][aA][rR][dD]*[wW][aA][rR][dD]*
+- type: file_exists
+  name: notice for Stephanie Ramos
+  path: notices/*[sS][tT][eE][pP][hH][aA][nN][iI][eE]*[rR][aA][mM][oO][sS]*
+- type: file_exists
+  name: notice for Ryan Young
+  path: notices/*[rR][yY][aA][nN]*[yY][oO][uU][nN][gG]*
+- type: custom
+  name: notices carry their own changes
+  module: check.py

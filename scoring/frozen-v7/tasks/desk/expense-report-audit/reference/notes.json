@@ -1,0 +1,49 @@
+{
+  "flags": {
+    "EXL-58221": {
+      "amount": "123.72",
+      "role": "dup_prior_report",
+      "section": "5.1"
+    },
+    "EXL-58235": {
+      "amount": "18.00",
+      "role": "tier_rate",
+      "section": "2.1"
+    },
+    "EXL-58267": {
+      "amount": "27.29",
+      "role": "meal_on_per_diem",
+      "section": "2.2"
+    },
+    "EXL-58283": {
+      "amount": "258.69",
+      "role": "dup_earlier_august",
+      "section": "5.1"
+    },
+    "EXL-58287": {
+      "amount": "201.01",
+      "role": "no_receipt_big",
+      "section": "4.1"
+    },
+    "EXL-58310": {
+      "amount": "79.00",
+      "role": "per_diem_after_trip",
+      "section": "2.1"
+    },
+    "EXL-58312": {
+      "amount": "75.00",
+      "role": "receipt_exact_75",
+      "section": "4.1"
+    },
+    "EXL-58321": {
+      "amount": "61.00",
+      "role": "day_trip_per_diem",
+      "section": "2.1"
+    },
+    "EXL-58332": {
+      "amount": "46.07",
+      "role": "lodging_over_cap",
+      "section": "3.1"
+    }
+  }
+}

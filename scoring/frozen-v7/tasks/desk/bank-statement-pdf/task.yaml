@@ -1,0 +1,98 @@
+id: bank-statement-pdf
+track: desk
+category: extraction
+title: Key the July and August bank statements into the transactions file
+ask: |
+  Please get July and August off the bank statements and into transactions.csv, set up like the June file. Everything's in the folder, including a note on how I did June.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the Harbor Trust statement prints Debits and Credits in separate columns beside a running Balance, so the sign comes from the column; reading every figure as positive or taking the balance column turns debits into deposits (check: amounts)
+- |-
+  page 1 ends with a 'Balance carried forward' line and page 2 opens with 'Balance brought forward'; they, the beginning and ending balance lines and the account summary are not transactions (checks: one row per transaction; row count)
+- |-
+  the 14 August payroll debit starts at the foot of page 1 with its date, reference and first description line, and its second line, debit and balance print at the top of page 2; it is one transaction with the joined description (checks: amounts; descriptions; running balances)
+- |-
+  page 3 lists the three Harbor checks again under 'Checks paid' next to a daily ending balance table; keying them again duplicates those rows (check: row count)
+- |-
+  the credit union prints a single Amount column with a trailing minus on withdrawals ('412.33-') and dates as 'Jul 07' (checks: amounts; accounts and dates)
+- |-
+  the Northgate savings statement is an image-only scan with signed amounts between opening and closing balance lines (checks: one row per transaction; running balances)
+checks:
+- type: csv_columns
+  name: June file columns
+  path: transactions.csv
+  columns:
+  - txn_ref
+  - account
+  - date
+  - description
+  - amount
+  - balance
+- type: csv_set_equal
+  name: one row per transaction
+  path: transactions.csv
+  column: txn_ref
+  ref: transactions.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: transactions.csv
+  equals_ref: transactions.csv
+- type: csv_values_match
+  name: accounts and dates
+  path: transactions.csv
+  ref: transactions.csv
+  key: txn_ref
+  columns:
+  - account
+  - date
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: descriptions
+  path: transactions.csv
+  ref: transactions.csv
+  key: txn_ref
+  columns:
+  - description
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - '3173476275'
+- type: csv_values_match
+  name: amounts
+  path: transactions.csv
+  ref: transactions.csv
+  key: txn_ref
+  columns:
+  - amount
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - '3173476275'
+  - S-0017
+  - '9577766'
+  - '4664860'
+  - '5728454'
+  - '1003'
+  - '3125644590'
+  - '3132026487'
+  - '1004'
+- type: csv_values_match
+  name: running balances
+  path: transactions.csv
+  ref: transactions.csv
+  key: txn_ref
+  columns:
+  - balance
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - '3173476275'
+  - S-0018

@@ -1,0 +1,88 @@
+id: ap-aging
+track: desk
+category: bookkeeping
+title: Payables aging by vendor for the line of credit review
+ask: |
+  The bank wants our accounts payable aging as of August 31. Wes's note says how to do it and the bills, vendor list and credits are in the folder. Save the aging as ap_aging.xlsx and the write-up as memo.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  bills age from the due date under each vendor's terms from the vendor list, and the export only shows terms where a bill overrides them (a Pacific Corrugated bill on Net 60 is still current); aging from the bill date pushes most of the book a bucket older (checks: current bucket total; 31-60 bucket total)
+- |-
+  Orchard Valley is Net 30 EOM, so its 1 June bill is due 30 July and 32 days late rather than 61, and its 14 July bill only a day late; Cascade Glass's 10 August bill on 2% 10 Net 30 is due 9 September and still current, not 11 days late (checks: current bucket total; 1-30 bucket total; 31-60 bucket total)
+- |-
+  the export has Amount beside Open Balance and partly paid bills age on the open part; the Hopkins Family Pears bill is half paid (checks: total payables; Hopkins Family Pears total)
+- |-
+  credit VC-1182 names an open Cascade Glass bill and comes off it; VC-1190 names no bill and VC-1194 names a Summit Gas bill that is already paid, so both sit in Current as negatives (checks: Northline Freight total; Summit Gas total; current bucket total)
+- |-
+  two Draft bills (Northline Freight and Barrel & Stave) are not approved and are not payables (checks: total payables; Northline Freight total)
+- |-
+  the bill overdue longest is LL-20570 from Label Lab Printing (118 days past due); Barrel & Stave's BSC-20648 has the oldest bill date but Net 60 terms (check: memo names the most overdue bill)
+checks:
+- type: file_exists
+  name: ap_aging.xlsx exists
+  path: ap_aging.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: ap_aging.xlsx
+  min_count: 10
+- type: xlsx_no_errors
+  name: no error cells
+  path: ap_aging.xlsx
+- type: xlsx_value_present
+  name: total payables
+  path: ap_aging.xlsx
+  expected: 97861.01
+  rel_tol: 1.0e-05
+  near_text: total
+- type: xlsx_value_present
+  name: current bucket total
+  path: ap_aging.xlsx
+  expected: 26222.35
+  rel_tol: 1.0e-05
+  near_text: total
+- type: xlsx_value_present
+  name: 1-30 bucket total
+  path: ap_aging.xlsx
+  expected: 33754.91
+  rel_tol: 1.0e-05
+  near_text: total
+- type: xlsx_value_present
+  name: 31-60 bucket total
+  path: ap_aging.xlsx
+  expected: 20777.42
+  rel_tol: 1.0e-05
+  near_text: total
+- type: xlsx_value_present
+  name: Northline Freight total
+  path: ap_aging.xlsx
+  expected: 2370.98
+  rel_tol: 0.0001
+  near_text: northline
+- type: xlsx_value_present
+  name: Summit Gas total
+  path: ap_aging.xlsx
+  expected: 1236.91
+  rel_tol: 0.0001
+  near_text: summit gas
+- type: xlsx_value_present
+  name: Hopkins Family Pears total
+  path: ap_aging.xlsx
+  expected: 4637.17
+  rel_tol: 0.0001
+  near_text: hopkins
+- type: text_numbers_present
+  name: memo carries total and past due
+  path: memo.md
+  numbers:
+  - 97861.01
+  - 71638.66
+  rel_tol: 1.0e-05
+- type: text_sentence_matches
+  name: memo names the most overdue bill
+  path: memo.md
+  all:
+  - \bLL\s*-?\s*20570\b
+  - |-
+    (oldest|longest|most (overdue|past due|late)|furthest|overdue the longest|largest number of days|most days)

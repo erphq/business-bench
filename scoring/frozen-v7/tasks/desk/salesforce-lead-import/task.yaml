@@ -1,0 +1,274 @@
+id: salesforce-lead-import
+track: desk
+category: reformatting
+title: Turn the Q3 leads sheet into a Salesforce lead import
+ask: |
+  Sales is moving to Salesforce and our Q3 leads need to go in. Please turn leads_master_Q3.xlsx into their import file using the template; the consultant's notes and the users export are in the folder. Save it as sf_leads.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the Source column is free text in twenty-odd spellings (booth scan, PPC, Quote request form, carrier referral, Called in, Staff referral - Tomasz) that must land on the admin's restricted Lead Source values by their definitions (check: lead source picklist)
+- |-
+  Status words (New, blank, Left VM, Dead, Unqualified) map onto Salesforce's Lead Status labels (check: lead status picklist)
+- |-
+  countries come as USA / U.S. / United States of America / CAN / UK / England / Deutschland / México or blank beside a US state, and states as codes or full names; the picklists need ISO codes (the UK is GB), state codes only for US and Canada, and Ontario CA is a city in California (check: country and state codes)
+- |-
+  Rep is a first name or initials; Lead Owner is the Salesforce username, which differs from the email for two users, and Luis's leads plus blank reps go to Priya because his user is deactivated (check: lead owner username)
+- |-
+  five leads have no company; Company is required and takes the [not provided] placeholder (check: company placeholder)
+- |-
+  the template carries a sample row and the workbook a second sheet of old picklist ideas that are not the org's values (checks: one row per lead; lead source picklist)
+checks:
+- type: csv_columns
+  name: Salesforce template columns, exact order
+  path: sf_leads.csv
+  columns:
+  - First Name
+  - Last Name
+  - Company
+  - Title
+  - Email
+  - Phone
+  - Lead Source
+  - Lead Status
+  - City
+  - State/Province Code
+  - Country Code
+  - Lead Owner
+  exact: true
+- type: csv_set_equal
+  name: one row per lead
+  path: sf_leads.csv
+  column: Email
+  ref: sf_leads.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: sf_leads.csv
+  equals_ref: sf_leads.csv
+- type: csv_values_match
+  name: lead source picklist
+  path: sf_leads.csv
+  ref: sf_leads.csv
+  key: Email
+  columns:
+  - Lead Source
+  min_accuracy: 1.0
+  must_match_keys:
+  - alvarez.donna@everline.com
+  - anna_edwards@mossbank.cpa
+  - ashley_myers@kingfishercharters.com
+  - atorres@harborlightmarine.com
+  - barbara.hernandez@protonmail.com
+  - bpatel@oakhurstpeds.org
+  - carlos.lewis@foxgloveinteriors.com
+  - carolalvarez91@acmeindustrial.com
+  - chloe.watson@quarryroad.com
+  - david_harris@quarryroad.com
+  - deborah.okafor@copperfieldlaw.com
+  - donaldmensah65@yahoo.com
+  - dorothy.howard@everline.com
+  - dorothyparker7@ivylaneflorist.com
+  - elizabethruiz20@acmeindustrial.com
+  - flores.charles@pembertonhvac.com
+  - garcia.rebecca@protonmail.com
+  - gary_wilson@kingfishercharters.com
+  - gphillips@glassworksoptical.com
+  - jamesward49@meridiantitle.com
+  - jeffrey.gutierrez@thistlethread.com
+  - jlopez@wrensparrowbooks.com
+  - johnson.priya@tamarackbrewing.com
+  - joshua_morris@riverbendphysio.com
+  - joshuapeterson31@kestrelanalytics.io
+  - kennethward52@ellingtonbakes.com
+  - kevin.stewart@foxgloveinteriors.com
+  - kevin_cooper@protonmail.com
+  - kimberly.davis@oakhurstpeds.org
+  - luismensah59@blueheronconsulting.com
+  - mcook@everline.com
+  - mcox@brightwaterdental.com
+  - mensah.anthony@thistlethread.com
+  - mensah.charles@larkspuryoga.com
+  - nelson.amy@riverbendphysio.com
+  - peterson.ingrid@kingfishercharters.com
+  - peterson.jessica@yellowtailseafood.com
+  - priya.morris@zephyrbikes.com
+  - richard_richardson@foxgloveinteriors.com
+  - rmyers@fernbrookmontessori.org
+  - rogers.kenneth@acmeindustrial.com
+  - rogers.kimberly@everline.com
+  - sarah.torres@wrensparrowbooks.com
+  - sfoster@meridiantitle.com
+  - stephanie_alvarez@ellingtonbakes.com
+  - stevenmorgan84@umberceramics.com
+  - wgonzalez@icloud.com
+  - yukiclark61@orchardhilldental.com
+- type: csv_values_match
+  name: lead status picklist
+  path: sf_leads.csv
+  ref: sf_leads.csv
+  key: Email
+  columns:
+  - Lead Status
+  min_accuracy: 1.0
+  must_match_keys:
+  - alvarez.donna@everline.com
+  - anna_edwards@mossbank.cpa
+  - ashley_myers@kingfishercharters.com
+  - atorres@harborlightmarine.com
+  - barbara.hernandez@protonmail.com
+  - bpatel@oakhurstpeds.org
+  - carlos.lewis@foxgloveinteriors.com
+  - carolalvarez91@acmeindustrial.com
+  - chloe.watson@quarryroad.com
+  - david_harris@quarryroad.com
+  - deborah.okafor@copperfieldlaw.com
+  - donaldmensah65@yahoo.com
+  - dorothy.howard@everline.com
+  - dorothyparker7@ivylaneflorist.com
+  - elizabethruiz20@acmeindustrial.com
+  - flores.charles@pembertonhvac.com
+  - garcia.rebecca@protonmail.com
+  - gary_wilson@kingfishercharters.com
+  - gphillips@glassworksoptical.com
+  - jamesward49@meridiantitle.com
+  - jeffrey.gutierrez@thistlethread.com
+  - jlopez@wrensparrowbooks.com
+  - johnson.priya@tamarackbrewing.com
+  - joshua_morris@riverbendphysio.com
+  - joshuapeterson31@kestrelanalytics.io
+  - kennethward52@ellingtonbakes.com
+  - kevin.stewart@foxgloveinteriors.com
+  - kevin_cooper@protonmail.com
+  - kimberly.davis@oakhurstpeds.org
+  - luismensah59@blueheronconsulting.com
+  - mcook@everline.com
+  - mcox@brightwaterdental.com
+  - mensah.anthony@thistlethread.com
+  - mensah.charles@larkspuryoga.com
+  - nelson.amy@riverbendphysio.com
+  - peterson.ingrid@kingfishercharters.com
+  - peterson.jessica@yellowtailseafood.com
+  - priya.morris@zephyrbikes.com
+  - richard_richardson@foxgloveinteriors.com
+  - rmyers@fernbrookmontessori.org
+  - rogers.kenneth@acmeindustrial.com
+  - rogers.kimberly@everline.com
+  - sarah.torres@wrensparrowbooks.com
+  - sfoster@meridiantitle.com
+  - stephanie_alvarez@ellingtonbakes.com
+  - stevenmorgan84@umberceramics.com
+  - wgonzalez@icloud.com
+  - yukiclark61@orchardhilldental.com
+- type: csv_values_match
+  name: country and state codes
+  path: sf_leads.csv
+  ref: sf_leads.csv
+  key: Email
+  columns:
+  - Country Code
+  - State/Province Code
+  min_accuracy: 1.0
+  must_match_keys:
+  - alvarez.donna@everline.com
+  - anna_edwards@mossbank.cpa
+  - ashley_myers@kingfishercharters.com
+  - atorres@harborlightmarine.com
+  - barbara.hernandez@protonmail.com
+  - bpatel@oakhurstpeds.org
+  - carlos.lewis@foxgloveinteriors.com
+  - chloe.watson@quarryroad.com
+  - david_harris@quarryroad.com
+  - deborah.okafor@copperfieldlaw.com
+  - donaldmensah65@yahoo.com
+  - dorothy.howard@everline.com
+  - dorothyparker7@ivylaneflorist.com
+  - elizabethruiz20@acmeindustrial.com
+  - flores.charles@pembertonhvac.com
+  - garcia.rebecca@protonmail.com
+  - gary_wilson@kingfishercharters.com
+  - gphillips@glassworksoptical.com
+  - jamesward49@meridiantitle.com
+  - jeffrey.gutierrez@thistlethread.com
+  - jlopez@wrensparrowbooks.com
+  - johnson.priya@tamarackbrewing.com
+  - joshua_morris@riverbendphysio.com
+  - kennethward52@ellingtonbakes.com
+  - kevin.stewart@foxgloveinteriors.com
+  - kevin_cooper@protonmail.com
+  - kimberly.davis@oakhurstpeds.org
+  - luismensah59@blueheronconsulting.com
+  - mcook@everline.com
+  - mcox@brightwaterdental.com
+  - mensah.anthony@thistlethread.com
+  - mensah.charles@larkspuryoga.com
+  - nelson.amy@riverbendphysio.com
+  - peterson.ingrid@kingfishercharters.com
+  - peterson.jessica@yellowtailseafood.com
+  - priya.morris@zephyrbikes.com
+  - richard_richardson@foxgloveinteriors.com
+  - rmyers@fernbrookmontessori.org
+  - rogers.kenneth@acmeindustrial.com
+  - rogers.kimberly@everline.com
+  - sarah.torres@wrensparrowbooks.com
+  - sfoster@meridiantitle.com
+  - stephanie_alvarez@ellingtonbakes.com
+  - stevenmorgan84@umberceramics.com
+  - wgonzalez@icloud.com
+  - yukiclark61@orchardhilldental.com
+- type: csv_values_match
+  name: lead owner username
+  path: sf_leads.csv
+  ref: sf_leads.csv
+  key: Email
+  columns:
+  - Lead Owner
+  min_accuracy: 1.0
+  must_match_keys:
+  - bpatel@oakhurstpeds.org
+  - carlos.lewis@foxgloveinteriors.com
+  - carolalvarez91@acmeindustrial.com
+  - chloe.watson@quarryroad.com
+  - david_harris@quarryroad.com
+  - deborah.okafor@copperfieldlaw.com
+  - dorothyparker7@ivylaneflorist.com
+  - elizabethruiz20@acmeindustrial.com
+  - flores.charles@pembertonhvac.com
+  - gphillips@glassworksoptical.com
+  - jlopez@wrensparrowbooks.com
+  - johnson.priya@tamarackbrewing.com
+  - joshua_morris@riverbendphysio.com
+  - joshuapeterson31@kestrelanalytics.io
+  - kennethward52@ellingtonbakes.com
+  - kevin.stewart@foxgloveinteriors.com
+  - kimberly.davis@oakhurstpeds.org
+  - mensah.anthony@thistlethread.com
+  - mensah.charles@larkspuryoga.com
+  - nelson.amy@riverbendphysio.com
+  - peterson.ingrid@kingfishercharters.com
+  - priya.morris@zephyrbikes.com
+  - richard_richardson@foxgloveinteriors.com
+  - rmyers@fernbrookmontessori.org
+  - rogers.kenneth@acmeindustrial.com
+  - rogers.kimberly@everline.com
+  - sarah.torres@wrensparrowbooks.com
+  - sfoster@meridiantitle.com
+  - stevenmorgan84@umberceramics.com
+  - yukiclark61@orchardhilldental.com
+- type: csv_values_match
+  name: company placeholder
+  path: sf_leads.csv
+  ref: sf_leads.csv
+  key: Email
+  columns:
+  - Company
+  min_accuracy: 1.0
+  must_match_keys:
+  - barbara.hernandez@protonmail.com
+  - donaldmensah65@yahoo.com
+  - garcia.rebecca@protonmail.com
+  - kevin_cooper@protonmail.com
+  - wgonzalez@icloud.com

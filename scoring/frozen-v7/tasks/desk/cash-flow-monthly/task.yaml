@@ -1,0 +1,78 @@
+id: cash-flow-monthly
+track: desk
+category: reports
+title: Money in and out by month for the bank meeting
+ask: |
+  Jonah is meeting the bank about a line of credit and needs March to August cash flow from our two bank exports. Build cashflow.xlsx with live formulas and a short memo.md - his note says what he wants.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the monthly tax-reserve sweep appears as a debit in checking and a credit in savings (twice across a month end, a day apart), and in June $15,000 came back from savings; counting either side inflates money in and money out (checks: June money in; total money in)
+- |-
+  the 14 August transfer to account 8832 reads like the sweeps but goes to the owner's personal account and is a real outflow (check: August money out)
+- |-
+  the checking export ends with three Pending rows and carries September postings after the August rows (check: August money out)
+- |-
+  June has overdraft, returned-item and analysis fees in checking and an excess-withdrawal fee in savings, several times any other month's; the memo must name the June fee spike (checks: June bank fees; memo names the June fee spike)
+- |-
+  the caterer buys event coffee from NIGHTJAR COFFEE ROASTERS every month, so a substring search for FEE picks up coffee as a bank fee (check: June bank fees)
+- |-
+  the savings export pays the quarterly estimated tax straight to the IRS, uses one signed Amount column with parentheses, a running balance, an opening-balance row, a BOM and CRLF endings, while checking has Debit and Credit columns and a three-line preamble (checks: June money out; total money in)
+checks:
+- type: file_exists
+  name: cashflow.xlsx exists
+  path: cashflow.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: cashflow.xlsx
+  min_count: 18
+- type: xlsx_no_errors
+  name: no error cells
+  path: cashflow.xlsx
+- type: xlsx_value_present
+  name: June money in (transfer from savings left out)
+  path: cashflow.xlsx
+  expected: 69318.73
+  rel_tol: 1.3e-05
+  near_text: in
+- type: xlsx_value_present
+  name: June money out (fees and the IRS payment from savings)
+  path: cashflow.xlsx
+  expected: 67164.69
+  rel_tol: 1.3e-05
+  near_text: out
+- type: xlsx_value_present
+  name: August money out (owner's draw in, pending out)
+  path: cashflow.xlsx
+  expected: 62727.61
+  rel_tol: 1.4e-05
+  near_text: out
+- type: xlsx_value_present
+  name: total money in, March to August
+  path: cashflow.xlsx
+  expected: 358168.96
+  rel_tol: 2.5e-06
+  near_text: in
+- type: xlsx_value_present
+  name: June bank fees
+  path: cashflow.xlsx
+  expected: 370.0
+  rel_tol: 0.0024
+  near_text: fee
+- type: text_numbers_present
+  name: memo carries the June fee total
+  path: memo.md
+  numbers:
+  - 370.0
+  rel_tol: 0.01
+- type: text_sentence_matches
+  name: memo names the June fee spike
+  path: memo.md
+  all:
+  - (\bjune\b|\bjun\b|\b2026-06\b|\b06/2026\b)
+  - (\bfees?\b|\bcharges?\b|\boverdraft|\bnsf\b)
+  - |-
+    (spike|jump|surge|rose|higher|increase|unusual|more than|times|overdraft|nsf|returned|jumped|up from|above|elevated)
+  none:
+  - (no (unusual|spike|jump)|not (unusual|a spike)|normal (fees|level))

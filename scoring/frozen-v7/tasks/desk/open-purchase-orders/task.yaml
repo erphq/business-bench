@@ -1,0 +1,74 @@
+id: open-purchase-orders
+track: desk
+category: spreadsheet
+title: What is still coming on our purchase orders
+ask: |
+  Leila needs to know what is still coming on our open purchase orders. Check the PO report against the dock log and save open_po_lines.csv; her email has the vendor changes and how she wants it.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the PO report orders cartons, lids, cans and glasses in boxes (BX) while the dock log counts eaches; without the item master's units per box a 6-box order looks like it was over-received by the first 250-each delivery (checks: open quantity per line; lines still open)
+- |-
+  one receiver logs some deliveries in boxes ('BX', 'box', 'bx') on the same lines as eaches, so the unit column has to be read row by row (check: open quantity per line)
+- |-
+  most open lines were received in two or three partial deliveries on different days (check: open quantity per line)
+- |-
+  three lines were over-received (an extra box on the pallet, a few extra bags); they stay on the list with open 0 and OVER in the flag, not a negative open quantity (check: over-receipt flag)
+- |-
+  one vendor cancelled a line (never received) and another short-closed a half-delivered line; both are in forwarded emails that name the PO in the vendor's words, and both lines must drop off the list (check: lines still open)
+- |-
+  a return to vendor is logged with a positive quantity and Type=Return; it reopens that quantity instead of adding to what was received (check: open quantity per line)
+- |-
+  the log writes the PO line four ways ('4461-02', 'PO 4461-2', '4461/2', 'PO#4461 ln 2') and still holds receipts for two closed July POs that are not on the report (check: open quantity per line)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: open_po_lines.csv
+  columns:
+  - po_line
+  - item
+  - ordered
+  - received
+  - open
+  - flag
+- type: csv_set_equal
+  name: lines still open
+  path: open_po_lines.csv
+  column: po_line
+  ref: open_po_lines.csv
+- type: csv_row_count
+  name: row count
+  path: open_po_lines.csv
+  equals_ref: open_po_lines.csv
+- type: csv_values_match
+  name: open quantity per line
+  path: open_po_lines.csv
+  ref: open_po_lines.csv
+  key: po_line
+  columns:
+  - ordered
+  - received
+  - open
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+  must_match_keys:
+  - 4463-02
+  - 4466-02
+  - 4466-03
+  - 4472-02
+  - 4463-01
+  - 4473-01
+- type: csv_values_match
+  name: over-receipt flag
+  path: open_po_lines.csv
+  ref: open_po_lines.csv
+  key: po_line
+  columns:
+  - flag
+  min_accuracy: 1.0
+  must_match_keys:
+  - 4461-03
+  - 4463-03
+  - 4471-01

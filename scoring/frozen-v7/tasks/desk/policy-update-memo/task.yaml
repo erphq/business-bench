@@ -1,0 +1,65 @@
+id: policy-update-memo
+track: desk
+category: drafting
+title: Memo to the crews on the 2026 policy changes
+ask: |
+  We've rewritten the crew policies for 2026. Please write the memo that goes to all the crews telling them what changed - both versions are in the folder and Carol's email has the notes. Save it as memo.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  five rules really changed (overtime approval 2 hours to 1 hour, per diem, tips split by hours, mileage rate, damage reported before leaving the home); each must be stated with its new rule (checks: overtime approval; per diem; tip split; mileage; damage reporting)
+- |-
+  the phone-use-while-driving clause moved from section 9 to section 2 with identical wording, so a section-by-section comparison reports it as removed and added (check: moved clause and effective date)
+- |-
+  the 2026 draft v1 in the folder carries unapproved numbers (90 minutes, $55 per diem, $0.67 a mile, two hours for damage reports) (checks: overtime approval; per diem; mileage; damage reporting)
+- |-
+  the final PDF says effective October 1, 2026; the owner's later email moves it to November 1 and says the memo must give November 1 (check: moved clause and effective date)
+- |-
+  every section after the first is renumbered in the 2026 version, so matching by section number pairs unrelated rules (check: moved clause and effective date)
+checks:
+- type: file_exists
+  name: memo.md exists
+  path: memo.md
+- type: text_sentence_matches
+  name: overtime approval
+  path: memo.md
+  all:
+  - overtime|past (the|a) (job'?s )?scheduled end|runs? over|approv
+  - (\b1\b|\bone\b|\ban\b)[\s-]*hours?\b|\b60[\s-]*min
+  none:
+  - \b90[\s-]*min|\b1\.5[\s-]*hours?|hour and a half
+- type: text_sentence_matches
+  name: per diem
+  path: memo.md
+  all:
+  - per[\s-]?diem|overnight|night away|daily allowance
+  - \$\s?60\b
+  none:
+  - \$\s?55\b
+- type: text_sentence_matches
+  name: tip split
+  path: memo.md
+  all:
+  - \btip
+  - hours|proportion|pro[\s-]?rat
+- type: text_sentence_matches
+  name: mileage
+  path: memo.md
+  all:
+  - mile|own (vehicle|car)|personal (vehicle|car)
+  - (\$\s?0?\.70\b|\b70\s*(cents|¢))
+  none:
+  - (0?\.67\b|\b67\s*(cents|¢))
+- type: text_sentence_matches
+  name: damage reporting
+  path: memo.md
+  all:
+  - damage
+  - |-
+    before (you |the crew |crews |we |they |your crew )?(leav|depart|go)|while (you are |the crew is |still )?(at|on site|in the)|on[\s-]?site
+  none:
+  - \b(2|two)\s*hours
+- type: custom
+  name: moved clause and effective date
+  module: check.py

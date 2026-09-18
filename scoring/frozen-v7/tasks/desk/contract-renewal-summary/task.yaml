@@ -1,0 +1,48 @@
+id: contract-renewal-summary
+track: desk
+category: drafting
+title: Renewal summary for the Wi-Fi services contract
+ask: |
+  Timothy wants a renewal summary of our Brightline Wi-Fi contract before we decide whether to go out to bid; the note in the folder says what is needed. Save it as renewal_summary.md.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the initial term runs 36 months from the Service Commencement Date on the go-live certificate (April 1, 2024), not the Effective Date (March 15, 2024), so it ends March 31, 2027 (check: term, notice and the vendor's figures)
+- |-
+  Amendment 2 lengthens the non-renewal notice from 90 to 120 days, so notice is due by December 1, 2026; 90 days gives December 31, 2026 and counting from the Effective Date gives mid-December or mid-November (check: term, notice and the vendor's figures)
+- |-
+  the current annual value is $91,800 ($7,650 a month: Schedule A plus Amendment 1's Driftwood Cottages plus Amendment 2's upgrade); the original schedule gives $71,400, Amendment 1 alone $85,800 (check: current annual value)
+- |-
+  Amendment 3 is an unsigned draft adding IPTV at $650 a month and a 24-month extension; counting it gives $99,600 (checks: current annual value; term, notice and the vendor's figures)
+- |-
+  the account manager's email gives a March 15, 2027 renewal, a December 15, 2026 notice deadline and $71,400 a year; a summary may mention them only as wrong (check: term, notice and the vendor's figures)
+- |-
+  the agreement renews automatically for 12-month terms and renewal fees may rise by up to 4 percent (checks: automatic renewal; renewal price cap)
+checks:
+- type: file_exists
+  name: renewal_summary.md exists
+  path: renewal_summary.md
+- type: text_numbers_present
+  name: current annual value
+  path: renewal_summary.md
+  numbers:
+  - 91800
+  rel_tol: 1.0e-05
+- type: custom
+  name: term, notice and the vendor's figures
+  module: check.py
+- type: text_sentence_matches
+  name: automatic renewal
+  path: renewal_summary.md
+  all:
+  - automatic|auto-?renew|evergreen|renews? (itself )?(on its own|by itself)
+  - \b12\b|twelve|one[- ]year|1[- ]year|annual|yearly
+  none:
+  - \b(not|no|never|won't|doesn't|does not|will not|isn't)\b[^.;]{0,25}\bauto
+- type: text_sentence_matches
+  name: renewal price cap
+  path: renewal_summary.md
+  all:
+  - (?<![\d.])4\s*(%|percent|per cent)|four percent
+  - increas|rais|price|fee|go up|escalat

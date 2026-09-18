@@ -1,0 +1,31 @@
+{
+  "duplicate": {
+    "new_email": "sarah.torres@mail.example",
+    "old_email": "storres@example.com",
+    "old_employer": "Kestrel Analytics",
+    "old_title": "Customer Service Lead"
+  },
+  "gap_emails": [
+    "kimberly.rogers@mail.example",
+    "margaret.cook9@example.com"
+  ],
+  "last_job": {
+    "gary.phillips71@example.org": [
+      "Dispatch Coordinator",
+      "Northfield Auto Body"
+    ]
+  },
+  "naive_years_first_start_to_asof": {
+    "deborah.okafor94@example.org": 10.4,
+    "dorothy.howard@example.net": 9.4,
+    "gary.phillips71@example.org": 12.5,
+    "joshua.morris@example.com": 8.6,
+    "kimberly.rogers@mail.example": 13.5,
+    "margaret.cook9@example.com": 14.0,
+    "rebecca.garcia@example.net": 11.1,
+    "sarah.foster@mail.example": 10.4,
+    "sarah.torres@mail.example": 11.5
+  },
+  "not_employed": "gary.phillips71@example.org",
+  "overlap_email": "rebecca.garcia@example.net"
+}

@@ -1,0 +1,20 @@
+{
+  "check_refunds_excluded": [
+    "RF-10476",
+    "RF-10478"
+  ],
+  "roles": {
+    "diff": "RF-10475",
+    "failed": "RF-10473",
+    "full": "RF-10459",
+    "nopms": "re_oF3LXDvorLOnTnFt3gwSx44W",
+    "partial1": "RF-10468",
+    "partial2": "RF-10470",
+    "plain": "RF-10464",
+    "prior": "RF-10439",
+    "retry": "RF-10469",
+    "timing": "RF-10482",
+    "twocard": "RF-10466"
+  },
+  "variance": "-55.00"
+}

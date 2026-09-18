@@ -1,0 +1,88 @@
+{
+  "bartender": 250.0,
+  "copper": {
+    "at80": {
+      "billed": 80,
+      "fb": 3740.0,
+      "fees": 120.0,
+      "grat": 0.0,
+      "quoted_total": 4682.8,
+      "svc": 822.8,
+      "total": 4682.8
+    },
+    "at85": {
+      "billed": 85,
+      "fb": 3930.0,
+      "fees": 120.0,
+      "grat": 0.0,
+      "quoted_total": 4914.6,
+      "svc": 864.6,
+      "total": 4914.6
+    },
+    "ref": "CKE-26514"
+  },
+  "ember": {
+    "at80": {
+      "billed": 100,
+      "fb": 2850.0,
+      "fees": 110.0,
+      "grat": 513.0,
+      "quoted_total": 3473.0,
+      "svc": 513.0,
+      "total": 3986.0
+    },
+    "at85": {
+      "billed": 100,
+      "fb": 2850.0,
+      "fees": 110.0,
+      "grat": 513.0,
+      "quoted_total": 3473.0,
+      "svc": 513.0,
+      "total": 3986.0
+    },
+    "ref": "BE583-26"
+  },
+  "olive": {
+    "at80": {
+      "billed": 80,
+      "fb": 2880.0,
+      "fees": 360.0,
+      "grat": 0.0,
+      "quoted_total": 3672.0,
+      "svc": 432.0,
+      "total": 3672.0
+    },
+    "at85": {
+      "billed": 85,
+      "fb": 3060.0,
+      "fees": 382.5,
+      "grat": 0.0,
+      "quoted_total": 3901.5,
+      "svc": 459.0,
+      "total": 3901.5
+    },
+    "ref": "OBK 1242"
+  },
+  "plated_price": 56.0,
+  "saffron": {
+    "at80": {
+      "billed": 80,
+      "fb": 3520.0,
+      "fees": 175.0,
+      "grat": 633.6,
+      "quoted_total": 4399.0,
+      "svc": 704.0,
+      "total": 5032.6
+    },
+    "at85": {
+      "billed": 85,
+      "fb": 3740.0,
+      "fees": 175.0,
+      "grat": 673.2,
+      "quoted_total": 4663.0,
+      "svc": 748.0,
+      "total": 5336.2
+    },
+    "ref": "SSC-Q7890"
+  }
+}

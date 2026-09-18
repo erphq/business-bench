@@ -1,0 +1,286 @@
+{
+  "former": [
+    {
+      "display": "Rahul Dunmore",
+      "email": "rdunmore@lanternstreetplayhouse.org",
+      "legal": "Rahul Dunmore"
+    },
+    {
+      "display": "Oscar Alvarez",
+      "email": "oalvarez@lanternstreetplayhouse.org",
+      "legal": "Oscar Alvarez"
+    },
+    {
+      "display": "Marcus Haddad",
+      "email": "mhaddad@lanternstreetplayhouse.org",
+      "legal": "Marcus Haddad"
+    },
+    {
+      "display": "Noor Delacroix",
+      "email": "ndelacroix@lanternstreetplayhouse.org",
+      "legal": "Noor Delacroix"
+    }
+  ],
+  "labels": {
+    "Administration": "\\badministration\\b",
+    "Box Office": "\\bbox office\\b",
+    "Development": "\\bdevelopment\\b",
+    "Education": "\\beducation\\b",
+    "Front of House": "\\bfront of house\\b",
+    "Marketing": "\\bmarketing\\b",
+    "Production": "\\bproduction\\b",
+    "Scene Shop": "\\bscene shop\\b"
+  },
+  "staff": [
+    {
+      "department": "Administration",
+      "display": "Alex Sato",
+      "email": "asato@lanternstreetplayhouse.org",
+      "ext": 2227,
+      "legal": "Alejandro Sato",
+      "legal_first": "Alejandro",
+      "pref_first": "Alex",
+      "title": "Office Coordinator"
+    },
+    {
+      "department": "Administration",
+      "display": "Jon Brooks",
+      "email": "jbrooks@lanternstreetplayhouse.org",
+      "ext": 2207,
+      "legal": "Jonathan Brooks",
+      "legal_first": "Jonathan",
+      "pref_first": "Jon",
+      "title": "Finance Manager"
+    },
+    {
+      "department": "Administration",
+      "display": "Sam Osei",
+      "email": "sosei@lanternstreetplayhouse.org",
+      "ext": 2274,
+      "legal": "Susanna Osei",
+      "legal_first": "Susanna",
+      "pref_first": "Sam",
+      "title": "Managing Director"
+    },
+    {
+      "department": "Administration",
+      "display": "Ted Ibsen",
+      "email": "tibsen@lanternstreetplayhouse.org",
+      "ext": 2367,
+      "legal": "Theodore Ibsen",
+      "legal_first": "Theodore",
+      "pref_first": "Ted",
+      "title": "HR Generalist"
+    },
+    {
+      "department": "Box Office",
+      "display": "Dmitri Ferreira",
+      "email": "dferreira@lanternstreetplayhouse.org",
+      "ext": 2234,
+      "legal": "Dmitri Ferreira",
+      "legal_first": "Dmitri",
+      "pref_first": "Dmitri",
+      "title": "Ticketing Associate"
+    },
+    {
+      "department": "Box Office",
+      "display": "Jamal Marsh",
+      "email": "jmarsh@lanternstreetplayhouse.org",
+      "ext": 2117,
+      "legal": "Jamal Marsh",
+      "legal_first": "Jamal",
+      "pref_first": "Jamal",
+      "title": "Patron Services Lead"
+    },
+    {
+      "department": "Box Office",
+      "display": "Yuki Bennett-Underwood",
+      "email": "ybennett@lanternstreetplayhouse.org",
+      "ext": 2112,
+      "legal": "Yuki Bennett",
+      "legal_first": "Yuki",
+      "pref_first": "Yuki",
+      "title": "Ticketing Associate"
+    },
+    {
+      "department": "Development",
+      "display": "Aisha Kowalski",
+      "email": "akowalski@lanternstreetplayhouse.org",
+      "ext": 2385,
+      "legal": "Aisha Kowalski",
+      "legal_first": "Aisha",
+      "pref_first": "Aisha",
+      "title": "Donor Relations Associate"
+    },
+    {
+      "department": "Development",
+      "display": "Amara Foster",
+      "email": "afoster@lanternstreetplayhouse.org",
+      "ext": 2363,
+      "legal": "Amara Foster",
+      "legal_first": "Amara",
+      "pref_first": "Amara",
+      "title": "Development Director"
+    },
+    {
+      "department": "Development",
+      "display": "Dana Carrow",
+      "email": "dcarrow@lanternstreetplayhouse.org",
+      "ext": 2261,
+      "legal": "Dana Carrow",
+      "legal_first": "Dana",
+      "pref_first": "Dana",
+      "title": "Grants Writer"
+    },
+    {
+      "department": "Education",
+      "display": "Carlos Szabo",
+      "email": "cszabo@lanternstreetplayhouse.org",
+      "ext": 2309,
+      "legal": "Carlos Szabo",
+      "legal_first": "Carlos",
+      "pref_first": "Carlos",
+      "title": "Education Director"
+    },
+    {
+      "department": "Education",
+      "display": "Hiroshi Varga",
+      "email": "hvarga@lanternstreetplayhouse.org",
+      "ext": 2122,
+      "legal": "Hiroshi Varga",
+      "legal_first": "Hiroshi",
+      "pref_first": "Hiroshi",
+      "title": "Teaching Artist"
+    },
+    {
+      "department": "Education",
+      "display": "Mateo Ramos",
+      "email": "mramos@lanternstreetplayhouse.org",
+      "ext": 2144,
+      "legal": "Mateo Ramos",
+      "legal_first": "Mateo",
+      "pref_first": "Mateo",
+      "title": "Youth Program Coordinator"
+    },
+    {
+      "department": "Education",
+      "display": "Zara Quinlan",
+      "email": "zquinlan@lanternstreetplayhouse.org",
+      "ext": 2123,
+      "legal": "Zara Quinlan",
+      "legal_first": "Zara",
+      "pref_first": "Zara",
+      "title": "Teaching Artist"
+    },
+    {
+      "department": "Front of House",
+      "display": "Iris Nguyen",
+      "email": "inguyen@lanternstreetplayhouse.org",
+      "ext": 2332,
+      "legal": "Iris Nguyen",
+      "legal_first": "Iris",
+      "pref_first": "Iris",
+      "title": "House Manager"
+    },
+    {
+      "department": "Front of House",
+      "display": "Leila Okafor",
+      "email": "lokafor@lanternstreetplayhouse.org",
+      "ext": 2228,
+      "legal": "Leila Okafor",
+      "legal_first": "Leila",
+      "pref_first": "Leila",
+      "title": "Concessions Lead"
+    },
+    {
+      "department": "Marketing",
+      "display": "Becca Ellery",
+      "email": "bellery@lanternstreetplayhouse.org",
+      "ext": 2239,
+      "legal": "Rebecca Ellery",
+      "legal_first": "Rebecca",
+      "pref_first": "Becca",
+      "title": "Social Media Coordinator"
+    },
+    {
+      "department": "Marketing",
+      "display": "Emeka Novak",
+      "email": "enovak@lanternstreetplayhouse.org",
+      "ext": 2194,
+      "legal": "Emeka Novak",
+      "legal_first": "Emeka",
+      "pref_first": "Emeka",
+      "title": "Graphic Designer"
+    },
+    {
+      "department": "Marketing",
+      "display": "Grace Castillo",
+      "email": "gcastillo@lanternstreetplayhouse.org",
+      "ext": 2369,
+      "legal": "Grace Castillo",
+      "legal_first": "Grace",
+      "pref_first": "Grace",
+      "title": "Marketing Director"
+    },
+    {
+      "department": "Production",
+      "display": "Liz Abara",
+      "email": "labara@lanternstreetplayhouse.org",
+      "ext": 2116,
+      "legal": "Elizabeth Abara",
+      "legal_first": "Elizabeth",
+      "pref_first": "Liz",
+      "title": "Sound Engineer"
+    },
+    {
+      "department": "Production",
+      "display": "Luis Oyelaran",
+      "email": "loyelaran@lanternstreetplayhouse.org",
+      "ext": 2193,
+      "legal": "Luis Oyelaran",
+      "legal_first": "Luis",
+      "pref_first": "Luis",
+      "title": "Scenic Painter"
+    },
+    {
+      "department": "Production",
+      "display": "Maya Yilmaz",
+      "email": "myilmaz@lanternstreetplayhouse.org",
+      "ext": 2115,
+      "legal": "Maya Yilmaz",
+      "legal_first": "Maya",
+      "pref_first": "Maya",
+      "title": "Technical Director"
+    },
+    {
+      "department": "Production",
+      "display": "Nadia Zelenko",
+      "email": "nzelenko@lanternstreetplayhouse.org",
+      "ext": 2165,
+      "legal": "Nadia Zelenko",
+      "legal_first": "Nadia",
+      "pref_first": "Nadia",
+      "title": "Production Manager"
+    },
+    {
+      "department": "Production",
+      "display": "Peggy Tanaka",
+      "email": "ptanaka@lanternstreetplayhouse.org",
+      "ext": 2154,
+      "legal": "Margaret Tanaka",
+      "legal_first": "Margaret",
+      "pref_first": "Peggy",
+      "title": "Stage Manager"
+    },
+    {
+      "department": "Production",
+      "display": "Tomasz Lindqvist",
+      "email": "tlindqvist@lanternstreetplayhouse.org",
+      "ext": 2226,
+      "legal": "Tomasz Lindqvist",
+      "legal_first": "Tomasz",
+      "pref_first": "Tomasz",
+      "title": "Scenic Carpenter"
+    }
+  ]
+}

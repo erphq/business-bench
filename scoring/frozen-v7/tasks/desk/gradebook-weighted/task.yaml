@@ -1,0 +1,37 @@
+id: gradebook-weighted
+track: desk
+category: spreadsheet
+title: Final weighted grades for the bookkeeping course
+ask: |
+  Final grades for BKP-110 are due to the registrar. Work them out from Dana's gradebook export and save grades.xlsx with the formulas in; her email and the syllabus have the rules.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the syllabus drops each student's lowest quiz; one student bombed Quiz 5, and averaging all six quizzes moves their grade (check: final grade per student)
+- |-
+  EX cells are excused and leave the category; blank cells are missing work and score zero - treating EX as zero or skipping blanks moves those students (check: final grade per student)
+- |-
+  one student's Quiz 4 is blank but the instructor's email excuses it; the same student also missed Quiz 2, so as a zero Quiz 4 is not simply the dropped quiz (check: final grade per student)
+- |-
+  a Points Possible row sits under the header and items are out of 10, 20, 50, 40 and 100 points; averaging raw points or reading that row as a student breaks every grade (check: final grade per student)
+- |-
+  the export's Weights tab has the current split (project 10%, final 30%) and the syllabus still has the old one (15%/25%); a student with a strong project and a weak final shows the difference (check: final grade per student)
+- |-
+  one student withdrew; the row is still in the export with half the work blank and must not get a letter (check: final grade per student)
+- |-
+  the instructor wants to check students by hand, so the grades must be live formulas (check: live formulas)
+checks:
+- type: file_exists
+  name: grades.xlsx exists
+  path: grades.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: grades.xlsx
+  min_count: 22
+- type: xlsx_no_errors
+  name: no error cells
+  path: grades.xlsx
+- type: custom
+  name: final grade per student
+  module: check.py

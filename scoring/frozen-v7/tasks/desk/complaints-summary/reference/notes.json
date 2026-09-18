@@ -1,0 +1,37 @@
+{
+  "log_rows": 370,
+  "naive": {
+    "first_cat": {
+      "Billing": 38,
+      "Damaged goods": 31,
+      "Driver conduct": 17,
+      "Late delivery": 49,
+      "Missed pickup": 34,
+      "Tracking & communication": 41
+    },
+    "last_month": {
+      "1": 32,
+      "2": 44,
+      "3": 37,
+      "4": 32,
+      "5": 30,
+      "6": 33
+    },
+    "log_only": 183,
+    "row_total": 422,
+    "rows_month": {
+      "1": 56,
+      "2": 78,
+      "3": 112,
+      "4": 60,
+      "5": 54,
+      "6": 62
+    },
+    "with_noncomplaints": 236
+  },
+  "tickets": 236,
+  "total": 210,
+  "web_rows": 80,
+  "worst_count": 45,
+  "worst_month": "2026-02"
+}

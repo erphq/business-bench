@@ -6,13 +6,13 @@ Business Harness Bench tests the handoff, not the agent's confidence: reconciled
 
 - **Desk:** 187 tasks across seven categories, each with inputs, an ask, checks, a generator, and a reference solution.
 - **Build:** 20 business applications, each with seed data, an acceptance checklist, and three change requests.
-- **Latest results:** the four complete desk arms of campaign `full-1`, 187 tasks × 3 repetitions × 4 systems = **2,244 attempts**. All passes and failures are included. These are recorded campaign scores, not a newly rescored or independently certified leaderboard. No incomplete build scores are published.
+- **Latest complete comparison:** **Proto + DeepSeek V4.1 Flash: 507/561 (90.4%)**, versus **Codex + GPT-5.6-sol: 473/561 (84.3%)**. All 187 tasks × 3 repetitions × 2 systems = **1,122 attempts**, evaluated by the same frozen conservative-v7 scorer. Every pass and failure is retained. No incomplete build scores are published.
 
 This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials, tuning experiments, or a development diary. The repository is distributed privately; its task set is exposed to repository readers, not an independent sealed holdout.
 
 ## Read the paper and specification
 
-- [Research premise and introduction](paper/premise.md)
+- [Research paper](SPEC.md)
 - [Complete specification](SPEC.md)
 - [Specification PDF](docs/business-harness-bench-spec.pdf)
 - [Latest full-arm results and limitations](results/latest/README.md)
@@ -104,7 +104,9 @@ Grade each turn, complete its tester sheet, and recheck previous requirements af
 
 `results/latest/` is the only result release tracked here. New runs stay ignored. Recompute its summary with `python bench/export_campaign.py --verify`; this checks the complete matrix and arithmetic, **not the original artifacts' correctness**. The release ledger keeps per-check verdicts, original result hashes, resource records, and execution status, without private paths or logs.
 
-For a new official campaign, freeze the repository commit, task manifest, agent image digest, model/provider route, authorized skill inventory, budgets, dependency versions, and scorer before launch. Retain raw artifacts securely so a later scorer can produce a separately named scoring snapshot. Do not mix rescored subsets into the published aggregate. The historical `full-1` records do not contain all these receipts; see the explicit limitations in provenance.
+The release includes the exact [frozen scorer](scoring/frozen-v7/scorer.py) and its fingerprinted task definitions. Run `python scoring/frozen-v7/scorer.py TASK_ID WORKSPACE` with native recalculation configured to score an output workspace. The standard runner's original-grade field and this frozen verdict are distinct; retain both. The verifier checks the full frozen package fingerprint as well as result arithmetic. The original result and receipt hashes were checked against the server records for every exported attempt.
+
+For a new official campaign, freeze the repository commit, task manifest, agent image digest, model/provider route, authorized skill inventory, budgets, dependency versions, and scorer before launch. Retain raw artifacts securely so a later scorer can produce a separately named scoring snapshot. Do not mix rescored subsets into the published aggregate. This completed comparison uses different model/harness configurations and non-contemporaneous cohorts; see provenance for the exact scope.
 
 The optional `bench/audit.py` can prepare a reviewer bundle with `--dry-run`; without that option it sends task and run content to the configured model provider. Use only synthetic/authorized data. The reviewer supplements deterministic checks and cannot turn an incomplete evaluation into a certified result. `regrade.py` and `recost.py` are operator utilities that can change local run records; use them only on a copy, never on the released snapshot.
 

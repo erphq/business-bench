@@ -1,0 +1,13 @@
+student_id,student_name,guardian_name,guardian_phone,form_returned,permission,photo_release,signed,date_signed
+FM-2040,Brian Roberts,Amy Roberts,2065557267,yes,yes,yes,yes,2026-09-14
+FM-2047,Charles Okafor,George Okafor,6175553495,yes,yes,yes,yes,2026-09-15
+FM-2054,Susan Turner,Donald Howard,3035552959,yes,yes,no,yes,2026-09-15
+FM-2061,Joshua Garcia,Sofia Garcia,5125553442,yes,yes,yes,yes,2026-09-16
+FM-2068,Kwame King,Anna King,9195555581,yes,no,no,yes,2026-09-14
+FM-2075,Karen Rogers,Nicholas Rogers,3035554278,yes,no,no,no,
+FM-2082,Melissa Morales,Amara Morales,8025552114,yes,yes,yes,yes,2026-09-18
+FM-2089,Leila Phillips,Donna Ramirez,9195553981,yes,yes,yes,yes,2026-09-16
+FM-2096,William Haddad,Linda Haddad,9195554408,yes,yes,yes,yes,2026-09-21
+FM-2103,Ronald Hill,,,no,no,no,no,
+FM-2110,Carlos Morris,Mary Morris,9195557014,yes,yes,no,yes,2026-09-17
+FM-2117,Dmitri Rivera,Richard Rivera,8025551939,yes,yes,yes,yes,2026-09-15

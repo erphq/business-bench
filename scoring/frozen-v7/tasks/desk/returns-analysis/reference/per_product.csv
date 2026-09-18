@@ -1,0 +1,10 @@
+sku,product,units_sold,units_returned,refund_units,exchange_units,return_rate,refunded_dollars
+TJ-M-BLU,Trail Jacket M,147,12,5,7,0.0816,645.00
+TJ-L-BLU,Trail Jacket L,120,13,4,9,0.1083,516.00
+WS-3PK,Wool Sock 3pk,140,19,12,7,0.1357,288.00
+WB-1L,Water Bottle 1L,125,16,13,3,0.1280,416.00
+HL-300,Headlamp 300lm,112,14,14,0,0.1250,630.00
+CS-01,Summit Stove,136,8,7,1,0.0588,623.00
+TP-PR,Trekking Pole pair,157,25,21,4,0.1592,1659.00
+DB-20,Dry Bag 20L,137,20,8,12,0.1460,232.00
+MC-01,Map Case,121,12,6,6,0.0992,84.00

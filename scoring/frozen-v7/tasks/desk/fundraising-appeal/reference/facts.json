@@ -1,0 +1,22 @@
+{
+  "goal": 525000,
+  "last_year_banned": [
+    "182,400",
+    "240,000",
+    "Carver"
+  ],
+  "match": 50000,
+  "match_end": "2026-11-30",
+  "naive": {
+    "all_rows": 293973.56,
+    "no_pledge_payments": 227048.58,
+    "with_gen": 254595.56,
+    "with_pledges": 278714.58,
+    "with_returned": 242092.58
+  },
+  "notes_match_end": "2026-12-31",
+  "notes_raised": 259000,
+  "old_goal": 450000,
+  "raised": 240714.58,
+  "remaining": 284285.42
+}

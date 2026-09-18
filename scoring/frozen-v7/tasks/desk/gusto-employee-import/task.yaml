@@ -1,0 +1,129 @@
+id: gusto-employee-import
+track: desk
+category: reformatting
+title: Build the Gusto employee upload from the HR roster
+ask: |
+  We're moving payroll to Gusto. Can you turn my HR roster into their employee upload using the template in the folder? Dana forwarded what Gusto told us and added our addresses. Save it as gusto_employees.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the roster's SSN column holds masked last-four values (XXX-XX-1234, ***-**-1234, 1234, xxx-xx-1234); Gusto rejects partial numbers so the column must stay blank (check: SSN left blank)
+- |-
+  salaried pay is written per year, per month or per biweekly paycheck and Gusto wants the annual salary with Payment Unit Year; copying the roster figure leaves four salaries at a paycheck or monthly amount (check: rate)
+- |-
+  Pay Type is blank on four rows where the Per column decides, and salaried staff split into Salary/No overtime or Salary/Eligible for overtime by the OT Exempt column (check: employee type and payment unit)
+- |-
+  two rehires must start on the Rehire Date, and hire dates arrive as real dates plus three text formats that must become MM/DD/YYYY (check: start date)
+- |-
+  Location holds short names; Old Market must use the new Walnut St address, not the inactive one, Office maps to the brewhouse, and the remote sales rep's work address is the home address in Notes (check: work address)
+- |-
+  four terminated staff and three 1099 contractors sit on the same sheet and stay out, while two people on leave stay in; the sheet also has a merged title and a note row above the header (checks: one row per employee; row count)
+checks:
+- type: csv_columns
+  name: Gusto template columns, exact order
+  path: gusto_employees.csv
+  columns:
+  - First Name
+  - Last Name
+  - Personal Email
+  - SSN
+  - Start Date
+  - Work Address
+  - Job Title
+  - Department
+  - Employee Type
+  - Rate
+  - Payment Unit
+  exact: true
+- type: csv_set_equal
+  name: one row per employee
+  path: gusto_employees.csv
+  column: Personal Email
+  ref: gusto_employees.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: gusto_employees.csv
+  equals_ref: gusto_employees.csv
+- type: csv_values_match
+  name: SSN left blank
+  path: gusto_employees.csv
+  ref: gusto_employees.csv
+  key: Personal Email
+  columns:
+  - SSN
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: employee type and payment unit
+  path: gusto_employees.csv
+  ref: gusto_employees.csv
+  key: Personal Email
+  columns:
+  - Employee Type
+  - Payment Unit
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - chloe_watson@hotmail.com
+  - dorothy.howard@outlook.com
+  - foster.sarah@hotmail.com
+  - garyphillips50@icloud.com
+  - gutierrez.jeffrey@me.com
+  - jmorris@gmail.com
+  - kimberlyrogers76@me.com
+  - margaret.cook@protonmail.com
+  - priyamorris10@aol.com
+- type: csv_values_match
+  name: rate
+  path: gusto_employees.csv
+  ref: gusto_employees.csv
+  key: Personal Email
+  columns:
+  - Rate
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys: *id001
+- type: csv_values_match
+  name: start date
+  path: gusto_employees.csv
+  ref: gusto_employees.csv
+  key: Personal Email
+  columns:
+  - Start Date
+  min_accuracy: 1.0
+  must_match_keys:
+  - bpatel@outlook.com
+  - carol_alvarez@aol.com
+  - charlesflores22@protonmail.com
+  - garcia.rebecca@icloud.com
+  - gutierrez.jeffrey@me.com
+  - jmorris@gmail.com
+  - kimberlyrogers76@me.com
+  - marcuscox3@yahoo.com
+  - margaret.cook@protonmail.com
+  - myers.ashley@hotmail.com
+  - rmyers@gmail.com
+  - storres@icloud.com
+  - wei.gonzalez@gmail.com
+- type: csv_values_match
+  name: work address
+  path: gusto_employees.csv
+  ref: gusto_employees.csv
+  key: Personal Email
+  columns:
+  - Work Address
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - chloe_watson@hotmail.com
+  - foster.sarah@hotmail.com
+  - garcia.rebecca@icloud.com
+  - jamesward85@outlook.com
+  - jmorris@gmail.com
+  - kenneth.ward@gmail.com
+  - margaret.cook@protonmail.com
+  - steven_morgan@aol.com

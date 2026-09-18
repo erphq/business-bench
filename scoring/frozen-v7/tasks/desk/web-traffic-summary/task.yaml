@@ -1,0 +1,65 @@
+id: web-traffic-summary
+track: desk
+category: reports
+title: Spring website traffic by month, crawler taken out
+ask: |
+  Mira wants the website traffic for March, April and May as a monthly summary with a total for the three months. Save it as traffic.xlsx with live formulas, and put what she should know in memo.md. Tom's note explains the Google Analytics files.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the SEO agency's crawler ran on 2026-04-21: one Unassigned row that day carries 4,595 sessions with zero engaged sessions and no key events; Tom's note describes the crawler but not the day, so it has to be found and taken out of April (checks: April sessions, crawler removed; sessions, March to May)
+- |-
+  the memo has to name the crawl day and how much traffic was removed (checks: memo names the crawl day; memo carries the crawler sessions and corrected April sessions)
+- |-
+  the spring-sale email on 2026-04-16 is a genuine spike of engaged, converting sessions a few days before the crawl; removing it instead of (or as well as) the crawler moves April (check: April sessions, crawler removed)
+- |-
+  daily Total users cannot be added up - GA4 counts a returning visitor once per day - and Tom's note points to the monthly users export; summing the daily column overstates May by about 40% (check: May users)
+- |-
+  the daily export is GA4's last-100-days download starting 21 February, with an eight-line '#' comment preamble and YYYYMMDD dates; February rows are not spring (check: sessions, March to May)
+- |-
+  a Search Console clicks export sits in the folder; clicks are not sessions (check: sessions, March to May)
+checks:
+- type: file_exists
+  name: traffic.xlsx exists
+  path: traffic.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: traffic.xlsx
+  min_count: 6
+- type: xlsx_no_errors
+  name: no error cells
+  path: traffic.xlsx
+- type: xlsx_value_present
+  name: April sessions, crawler removed
+  path: traffic.xlsx
+  expected: 16851
+  rel_tol: 1.0e-05
+  near_text: sessions
+- type: xlsx_value_present
+  name: sessions, March to May
+  path: traffic.xlsx
+  expected: 49947
+  rel_tol: 1.0e-05
+  near_text: sessions
+- type: xlsx_value_present
+  name: May users (monthly unique, not summed daily)
+  path: traffic.xlsx
+  expected: 11783
+  rel_tol: 1.0e-05
+  near_text: users
+  raw_value_ok: true
+- type: text_sentence_matches
+  name: memo names the crawl day
+  path: memo.md
+  all:
+  - |-
+    (\b21(st|nd|rd|th)?\s+(of\s+)?apr(il)?\b|\bapr(il)?\.?\s+21(st|nd|rd|th)?\b|\b2026-04-21\b|\b0?4/21(/(20)?26)?\b|\b21/0?4(/(20)?26)?\b|\b20260421\b)
+  - (crawl|\bbots?\b|spider|scrap|\bspike\b|headless|automated|non-human|not real|fake|audit)
+- type: text_numbers_present
+  name: memo carries the crawler sessions and corrected April sessions
+  path: memo.md
+  numbers:
+  - 4595
+  - 16851
+  rel_tol: 0.005

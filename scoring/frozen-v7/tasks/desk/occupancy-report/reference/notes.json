@@ -1,0 +1,81 @@
+{
+  "naive": {
+    "cancel": {
+      "aspen_jan": 0.5769,
+      "fox_feb": 0.6957,
+      "total_nights": 296,
+      "total_occ": 0.7031
+    },
+    "cancelled_block": {
+      "aspen_jan": 0.5769,
+      "fox_feb": 0.6957,
+      "total_nights": 247,
+      "total_occ": 0.5923
+    },
+    "checkin": {
+      "aspen_jan": 0.5385,
+      "fox_feb": 0.6957,
+      "total_nights": 240,
+      "total_occ": 0.5701
+    },
+    "inclusive": {
+      "aspen_jan": 0.5769,
+      "fox_feb": 0.7619,
+      "total_nights": 247,
+      "total_occ": 0.5938
+    },
+    "no_blocks": {
+      "aspen_jan": 0.5769,
+      "fox_feb": 0.5714,
+      "total_nights": 247,
+      "total_occ": 0.5614
+    },
+    "owner": {
+      "aspen_jan": 0.6452,
+      "fox_feb": 0.6957,
+      "total_nights": 257,
+      "total_occ": 0.5963
+    }
+  },
+  "rate_pins": [
+    [
+      "Fox Den Cabin",
+      "2026-02",
+      0.6957
+    ],
+    [
+      "Aspen Hollow",
+      "2026-01",
+      0.5769
+    ],
+    [
+      "Cedar Loft",
+      "2026-02",
+      0.75
+    ],
+    [
+      "Aspen Hollow",
+      "2026-03",
+      0.6452
+    ],
+    [
+      "Bear Creek Lodge",
+      "2026-02",
+      0.6522
+    ],
+    [
+      "Fox Den Cabin",
+      "2026-01",
+      0.6154
+    ],
+    [
+      "Summit A-Frame",
+      "2026-01",
+      0.5
+    ]
+  ],
+  "total_available": 421,
+  "total_nights": 247,
+  "total_occupancy": 0.5867,
+  "rate_pins_note": "Per-cabin monthly rates only (the ask: one row per cabin, January to March across). The portfolio quarter pin (total Q1 0.5867) and the Q1 night-count checks were figures nobody asked for; each pin below is a requested rate from reference/occupancy.csv that the traps move: Cedar Loft Feb 21/28 (0.8750 if the STATUS:CANCELLED block is applied, 0.7857 by check-in month); Aspen Hollow Mar 20/31 (0.6129 by check-in month, 0.9355 with cancellations); Bear Creek Lodge Feb 15/23 (0.7143 with the owner stay as occupied, 1.3043 with cancellations, 0.6087 by check-in month); Fox Den Cabin Jan 16/26 (0.5161 without blocks, 0.6923 with cancellations); Summit A-Frame Jan 14/28 (0.5185 with DTEND inclusive, 0.4516 without blocks, 0.6071 with cancellations, 0.4286 by check-in month)."
+}

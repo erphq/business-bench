@@ -1,0 +1,127 @@
+id: square-inventory-import
+track: desk
+category: reformatting
+title: Load the stock count into Square's item import
+ask: |
+  We're switching the till to Square. Can you turn our September stock count into Square's item import? Prices are in the old register export, and Leila's setup notes and Square's template are in the folder. Save it as square_items.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  each size is its own count-sheet row and some descriptions carry the size in brackets; Square needs the bare Item Name repeated per variation, the size as Variation Name and Option Value with Option Name Size, and one-size products as a single Regular variation with blank options (check: item and variation names)
+- |-
+  sizes are typed Small / sm / Med / LG / X-Large / 2XL / OS / n/a and shoe sizes are numbers; the SKU is style-size (TJ4410-M, RB2200-9.5) or the bare style for one-size products, so copying the Size cell breaks the key (checks: one row per variation; item and variation names)
+- |-
+  RegisterOne exports prices in cents per style (12900 is $129.00); copying the column makes every price a hundred times too high (check: price in dollars)
+- |-
+  Dept is written only on the first row of each block, so most rows have a blank department, and HIKE was folded into Accessories (check: category)
+- 'three oversold counts are negative and must import as 0 (check: quantity on hand)'
+- |-
+  the register export lists four retired styles not on the count sheet; joining from the register side adds rows for them, and the template keeps three example rows to delete (checks: one row per variation; row count)
+checks:
+- type: csv_columns
+  name: Square template columns, exact order
+  path: square_items.csv
+  columns:
+  - Token
+  - Item Name
+  - Variation Name
+  - SKU
+  - Description
+  - Category
+  - Price
+  - Option Name 1
+  - Option Value 1
+  - New Quantity Granite Peak Outfitters
+  exact: true
+- type: csv_set_equal
+  name: one row per variation
+  path: square_items.csv
+  column: SKU
+  ref: square_items.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: square_items.csv
+  equals_ref: square_items.csv
+- type: csv_values_match
+  name: item and variation names
+  path: square_items.csv
+  ref: square_items.csv
+  key: SKU
+  columns:
+  - Item Name
+  - Variation Name
+  - Option Name 1
+  - Option Value 1
+  min_accuracy: 1.0
+  must_match_keys:
+  - BN0500
+  - CM2100-8
+  - CS0100
+  - DB0020
+  - DV3150-L
+  - DV3150-M
+  - DV3150-S
+  - DV3150-XL
+  - HL0300
+  - MC1200-L
+  - MC1200-S
+  - MC1200-XL
+  - ML1210-L
+  - ML1210-M
+  - ML1210-S
+  - ML1210-XS
+  - MP0001
+  - RB2200-9.5
+  - RS2090-L
+  - RS2090-M
+  - RS2090-XL
+  - TJ4410-L
+  - TJ4410-M
+  - TJ4410-XL
+  - TJ4411-L
+  - TJ4411-M
+  - TJ4411-S
+  - TK0200
+  - TP0900
+  - WB0010
+  - WS0300
+- type: csv_values_match
+  name: price in dollars
+  path: square_items.csv
+  ref: square_items.csv
+  key: SKU
+  columns:
+  - Price
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: category
+  path: square_items.csv
+  ref: square_items.csv
+  key: SKU
+  columns:
+  - Category
+  min_accuracy: 1.0
+  must_match_keys:
+  - DB0020
+  - MP0001
+  - TK0200
+- type: csv_values_match
+  name: quantity on hand
+  path: square_items.csv
+  ref: square_items.csv
+  key: SKU
+  columns:
+  - New Quantity Granite Peak Outfitters
+  numeric: true
+  tolerance: 0.001
+  min_accuracy: 1.0
+  must_match_keys:
+  - BN0500
+  - HL0300
+  - RB2200-9

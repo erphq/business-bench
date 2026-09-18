@@ -1,0 +1,87 @@
+id: event-attendee-merge
+track: desk
+category: spreadsheet
+title: Door list for the author evening
+ask: |
+  Thursday's author evening needs a final door list from the online tickets, the paper sign-up sheet and the waitlist. Nadia's emails say who is in. Save it as attendees.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the ticketing export is one row per ticket and a two-ticket order repeats the buyer's name and email on both rows; a dedupe on email drops the guest and keeping both rows lists the buyer twice (checks: guests per booking; one line per booking)
+- |-
+  John Murphy bought two one-ticket orders a month apart; it is one booking with one guest (check: guests per booking)
+- |-
+  5 buyers' tickets are Cancelled or Refunded and must be left off, while Matthew Peterson refunded one order and booked again, so dropping every email that ever had a refunded row loses a real attendee (checks: cancelled tickets left off; one line per booking)
+- |-
+  four regulars are on the paper sheet and online, their emails typed in capitals or with stray spaces on paper; they are one booking each (checks: one line per booking; row count)
+- |-
+  two walk-ups left only a phone number; a dedupe on the email column treats the two blanks as one person (checks: walk-ups kept; row count)
+- |-
+  only the four waitlisters Nadia confirmed come in, one written as Deb where the form says Deborah; the one who declined and the five never contacted stay off (checks: unconfirmed waitlist left off; one line per booking)
+- |-
+  guests are written 'just me', '+1', 'me + 1', '2 of us', '3 of us' on paper, as a party size on the waitlist, and as extra ticket rows online (check: guests per booking)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: attendees.csv
+  columns:
+  - name
+  - email
+  - guests
+- type: csv_set_equal
+  name: one line per booking (emails)
+  path: attendees.csv
+  column: email
+  ref: bookings_with_email.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: attendees.csv
+  equals_ref: attendees.csv
+- type: csv_values_match
+  name: guests per booking
+  path: attendees.csv
+  ref: bookings_with_email.csv
+  key: email
+  columns:
+  - guests
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+  must_match_keys:
+  - ascott@me.com
+  - cynthia.roberts@yahoo.com
+  - dhernandez@aol.com
+  - hernandez.aisha@icloud.com
+  - jhernandez@hotmail.com
+  - johnmurphy42@me.com
+  - matthew.peterson@outlook.com
+  - sandra.mensah@outlook.com
+- type: text_contains_all
+  name: walk-ups kept
+  path: attendees.csv
+  phrases:
+  - Richard Stewart
+  - Eric King
+- type: text_not_contains
+  name: cancelled tickets left off
+  path: attendees.csv
+  phrases:
+  - david.lewis@hotmail.com
+  - martin.anna@me.com
+  - ingrid.ruiz@yahoo.com
+  - jessica_morris@protonmail.com
+  - anna.edwards@aol.com
+- type: text_not_contains
+  name: unconfirmed waitlist left off
+  path: attendees.csv
+  phrases:
+  - aisha_hall@me.com
+  - morris.joshua@icloud.com
+  - johnward85@me.com
+  - timothy_howard@yahoo.com
+  - elizabethchavez39@protonmail.com
+  - foster.sarah@hotmail.com

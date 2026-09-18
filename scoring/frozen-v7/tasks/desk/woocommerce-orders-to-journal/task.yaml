@@ -1,0 +1,53 @@
+id: woocommerce-orders-to-journal
+track: desk
+category: reformatting
+title: Turn August web store orders into journal entries
+ask: |
+  Grace needs August's web store sales as journal entries she can import. The WooCommerce export is in the folder along with her rules and import template. Save it as journal.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the export is one row per line item and repeats the order's discount, shipping, tax, total and refund on every item row; adding those per row inflates every multi-item order (checks: journals balance; account amounts per journal)
+- |-
+  only paid orders are booked: completed, processing and refunded yes; three cancelled, three failed, three pending and three on-hold bank transfers no (checks: journal numbers; row count)
+- |-
+  two fully refunded orders keep their sale journal and add a WC-<n>-R journal dated the refund date, two completed orders have partial refunds that need -R journals for the refunded amount only, and one refund dated 2 September stays out of the August file (checks: journal numbers; account amounts per journal; journal dates)
+- |-
+  the cart discount must be a debit to 4900 Sales Discounts with product sales credited at the undiscounted line subtotals; netting the discount into sales moves the account amounts (check: account amounts per journal)
+- |-
+  the clearing account follows the payment method: Stripe 1210, PayPal 1220 and the one bank transfer that was paid 1000 (check: account amounts per journal)
+- |-
+  subscription products carry both a Coffee and a Subscriptions category and must credit 4020, not 4000 (check: account amounts per journal)
+- |-
+  every journal must balance to the cent and total debits must equal total credits; one line per account per journal (checks: journals balance; row count)
+checks:
+- type: csv_columns
+  name: journal template columns, exact order
+  path: journal.csv
+  columns:
+  - Journal No
+  - Journal Date
+  - Account Code
+  - Description
+  - Debit
+  - Credit
+  exact: true
+- type: csv_set_equal
+  name: journal numbers
+  path: journal.csv
+  column: Journal No
+  ref: journal.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count (one line per account per journal)
+  path: journal.csv
+  equals_ref: journal.csv
+- type: custom
+  name: journals balance
+  module: check.py
+- type: custom
+  name: account amounts per journal; journal dates
+  module: check_amounts.py

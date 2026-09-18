@@ -1,0 +1,37 @@
+id: maintenance-notices
+track: desk
+category: drafting
+title: Water shutoff notices for the riser valve work
+ask: |
+  Please write the resident notices for next month's water shutoffs at Meadowbrook Terrace - one for each building, in a notices folder. Margaret's note says what goes in them.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the contractor's later email moves Cypress House from October 20 to October 27 (check: each notice carries its own facts)
+- |-
+  the same email widens Birch House's shutoff to 8:00 AM - 3:00 PM from the scheduled 09:00-13:00 (check: each notice carries its own facts)
+- |-
+  the schedule gives 24-hour text times and the manager wants am/pm; Aspen's water comes back at 12:00, noon (check: each notice carries its own facts)
+- |-
+  Dogwood House has two work days with different hours on separate rows; its notice needs both (check: each notice carries its own facts)
+- |-
+  residents call their own building's superintendent, not the contractor crew lead whose cell is on every schedule row; Birch's super is on vacation that week, so Birch's notice gives the relief super Mateo Myers (check: each notice carries its own facts)
+- |-
+  Elm House is on the schedule with no work and gets no notice (check: each notice carries its own facts)
+checks:
+- type: file_exists
+  name: notice for Aspen House
+  path: notices/*[Aa][Ss][Pp][Ee][Nn]*
+- type: file_exists
+  name: notice for Birch House
+  path: notices/*[Bb][Ii][Rr][Cc][Hh]*
+- type: file_exists
+  name: notice for Cypress House
+  path: notices/*[Cc][Yy][Pp][Rr][Ee][Ss][Ss]*
+- type: file_exists
+  name: notice for Dogwood House
+  path: notices/*[Dd][Oo][Gg][Ww][Oo][Oo][Dd]*
+- type: custom
+  name: each notice carries its own facts
+  module: check.py

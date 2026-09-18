@@ -1,0 +1,4 @@
+vendor,currency,unit_price,qty,equipment_subtotal,setup_fee,freight,quote_total,fx,delivered_total_usd,warranty_months,lead_time,trap_value_if_misread
+Northstar,USD,1255,40,50200,0,635,50835,1.0,50835.00,24,10 business days,discounted=49329.00
+Kestrel GmbH,EUR,1231,40,49240,0,0,49240,1.08,53179.20,12,3-4 weeks,unconverted=49240.00; tier20=55382.40; tier1=57585.60
+Bluepine,USD,1195,40,47800,3300,1070,52170,1.0,52170.00,36,8 weeks,no_setup_fee=48870.00

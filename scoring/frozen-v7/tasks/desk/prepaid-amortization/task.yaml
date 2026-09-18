@@ -1,0 +1,67 @@
+id: prepaid-amortization
+track: desk
+category: bookkeeping
+title: 2026 prepaid expense amortization schedule
+ask: |
+  Graham needs our 2026 prepaid expense schedule to close the year - his email explains the method. Save it as prepaids.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the Keystone auto policy starts 2026-03-19, so March earns only its days of coverage and the policy runs into March 2027; twelve equal months from the payment month overstates 2026 (checks: Keystone auto 2026 expense; expense by month, one line)
+- |-
+  the GL memo dates the Cascadia workers' comp policy from 2026-04-01, but the register (which the email says wins) shows it was bound late and effective 2026-04-11 (check: Cascadia workers' comp 2026 expense)
+- |-
+  the Summit floater was cancelled effective 2026-08-12: expense stops the day before, the 1,445.54 return premium does not arrive until 2026-09-06, and the 255.10 of unused premium it does not cover is expensed in the cancellation month; running the policy all year or dropping the loss is wrong (checks: Summit floater 2026 expense; balance at 31 December)
+- |-
+  the general liability policy and the route software started in 2025 and carry into 2026 with the balances on last year's schedule, which the GL shows only as a beginning balance (checks: expense by month, one line; total 2026 expense)
+- |-
+  a 5,400.00 warehouse lease security deposit was booked to 1450 and is not a prepaid expense (checks: balance at 31 December; total 2026 expense)
+- |-
+  the GL export has a four-line preamble, a beginning-balance row and a total row, CRLF endings and amounts as text; the register's premiums are '$1,234.00' text under a merged title and a note row (check: total 2026 expense)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: prepaids.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: prepaids.xlsx
+- type: custom
+  name: expense by month, one line
+  module: check.py
+- type: xlsx_value_present
+  name: total 2026 expense
+  path: prepaids.xlsx
+  expected: 47590.28
+  rel_tol: 1.051e-06
+  rounding: amortized by days of coverage, rounded to the cent per month
+  near_text: total
+- type: xlsx_value_present
+  name: balance at 31 December
+  path: prepaids.xlsx
+  expected: 10998.26
+  rel_tol: 4.546e-06
+  rounding: amortized by days of coverage, rounded to the cent per month
+  near_text: balance
+- type: xlsx_value_present
+  name: Keystone auto 2026 expense
+  path: prepaids.xlsx
+  expected: 20137.9
+  rel_tol: 2.483e-06
+  rounding: amortized by days of coverage, rounded to the cent per month
+  near_text: keystone
+- type: xlsx_value_present
+  name: Cascadia workers' comp 2026 expense
+  path: prepaids.xlsx
+  expected: 8551.89
+  rel_tol: 5.847e-06
+  rounding: amortized by days of coverage, rounded to the cent per month
+  near_text: cascadia
+- type: xlsx_value_present
+  name: Summit floater 2026 expense
+  path: prepaids.xlsx
+  expected: 2142.46
+  rel_tol: 2.3338e-05
+  rounding: amortized by days of coverage, rounded to the cent per month
+  near_text: summit

@@ -1,0 +1,16 @@
+{
+  "naive": {
+    "ask_total": 95.95,
+    "line_total": 102.34,
+    "list_plus_tax": 60.2,
+    "list_price": 56.0,
+    "unit_no_tax": 47.6,
+    "wrong_order_skillet": 51.6
+  },
+  "order_no": "CK-104631",
+  "refund": 51.17,
+  "shipping": 14.95,
+  "unit_net": 47.6,
+  "unit_tax": 3.57,
+  "wrong_no": "CK-104613"
+}

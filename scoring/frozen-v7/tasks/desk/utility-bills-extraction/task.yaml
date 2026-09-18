@@ -1,0 +1,112 @@
+id: utility-bills-extraction
+track: desk
+category: extraction
+title: Monthly usage and charges from the utility bills
+ask: |
+  Can you pull July and August usage and charges off our electric and water bills into utility_usage.csv? The bills are in the folder and my note has the layout I need for the budget.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  each Northfork summary bill carries two accounts, the main building and the annex, with a summary table, a previous balance, a payment and a total due; each account is its own row and neither the new-charges line nor the total due is an account's charges (checks: one row per account per month; current charges)
+- |-
+  the annex's August current read and the water July current read are coded E, explained only in a footnote; the water August bill's prior read is also coded E, which does not make August estimated (check: read types and units)
+- |-
+  a late payment charge sits inside the annex's July charge table, whose 'Total this account' includes it, and another on the August lighting statement between the past-due balance and the service charges; both go in late_fee and stay out of current_charges (checks: current charges; late fees)
+- |-
+  water consumption is billed in CCF and the note wants gallons, 748 per CCF per the bill's explanation (check: usage)
+- |-
+  the lighting bills are dated 3 August and 2 September for periods ending 27 July and 26 August; filing them by bill date shifts both rows a month (check: one row per account per month)
+- 'the July lighting bill is an image-only scan (checks: usage; current charges)'
+checks:
+- type: csv_columns
+  name: requested columns
+  path: utility_usage.csv
+  columns:
+  - row_id
+  - account_number
+  - utility
+  - service_month
+  - usage
+  - usage_unit
+  - read_type
+  - current_charges
+  - late_fee
+- type: csv_set_equal
+  name: one row per account per month
+  path: utility_usage.csv
+  column: row_id
+  ref: utility_usage.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: utility_usage.csv
+  equals_ref: utility_usage.csv
+- type: csv_values_match
+  name: account, utility and month
+  path: utility_usage.csv
+  ref: utility_usage.csv
+  key: row_id
+  columns:
+  - account_number
+  - utility
+  - service_month
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: usage
+  path: utility_usage.csv
+  ref: utility_usage.csv
+  key: row_id
+  columns:
+  - usage
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - WTR-47961_2026-07
+  - WTR-47961_2026-08
+  - 7705-5242-75_2026-07
+- type: csv_values_match
+  name: read types and units
+  path: utility_usage.csv
+  ref: utility_usage.csv
+  key: row_id
+  columns:
+  - read_type
+  - usage_unit
+  min_accuracy: 1.0
+  must_match_keys:
+  - 3349-7890-02_2026-08
+  - WTR-47961_2026-07
+  - WTR-47961_2026-08
+- type: csv_values_match
+  name: current charges
+  path: utility_usage.csv
+  ref: utility_usage.csv
+  key: row_id
+  columns:
+  - current_charges
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - 3349-7890-01_2026-07
+  - 3349-7890-02_2026-07
+  - 7705-5242-75_2026-07
+  - 7705-5242-75_2026-08
+- type: csv_values_match
+  name: late fees
+  path: utility_usage.csv
+  ref: utility_usage.csv
+  key: row_id
+  columns:
+  - late_fee
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - 3349-7890-02_2026-07
+  - 7705-5242-75_2026-08
+  - 3349-7890-01_2026-07

@@ -1,0 +1,75 @@
+id: incident-report
+track: desk
+category: drafting
+title: Formal incident report for the Line 3 injury
+ask: |
+  Turn last Thursday's Line 3 injury into a formal incident report on our template for the insurer and the file. The notes, statements and logs are all in the folder, and Margaret's emails say how the report has to be done. Save it as incident_report.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  three accounts give three times (notes 'about 2:15', one witness 'around 2:30', the other 'a little after two'); the safety manager makes the Line 3 e-stop in the controller export the clock of record (14:08), and that export also holds a Line 1 jam stop at 14:14 the same afternoon and a Line 3 test stop at 14:11 the day before (check: incident time from the e-stop log)
+- |-
+  the supervisor's notes swap the injured picker (Hiroshi Harris) with the co-worker who pressed the e-stop (Anna Rivera); the first aid log and both witness emails name the picker (check: injured person named)
+- |-
+  the notes say first aid only and no doctor; the first aid log records a referral to urgent care (check: urgent care referral)
+- |-
+  the corrective actions change inside the thread: facilities moves the guard from 2026-09-11 to 2026-09-17, and the safety manager takes the refresher training off Cynthia Miller, the loader named in the notes and in the safety manager's first email (check: corrective actions with owners and due dates)
+- |-
+  the notes call the picker careless and not paying attention; the safety manager forbids fault language and wants the cause reported as under investigation (checks: no fault language; cause under investigation)
+- |-
+  the e-stop export carries a week of unrelated jam and overload events with a two-line preamble, a BOM and CRLF endings; the first aid log has another pick module entry the same morning (check: incident time from the e-stop log)
+checks:
+- type: file_exists
+  name: incident_report.md exists
+  path: incident_report.md
+- type: text_sentence_matches
+  name: incident time from the e-stop log
+  path: incident_report.md
+  all:
+  - (?<![\d:])(14[:.]08|0?2[:.]08(?:[:.]\d\d)?\s*(?:p\.?\s?m\.?)|1408\s*(?:hrs|hours|h\b))
+- type: text_sentence_matches
+  name: injured person named
+  path: incident_report.md
+  all:
+  - \bHarris\b
+  - |-
+    (\binjur|\bhurt\b|\bcaught\b|\bpinched\b|\blaceration|\bcasualty\b|\baffected (employee|person|worker)\b)
+  none:
+  - \bRivera\b[^.;]{0,40}\b(?<!not )(?<!n't )(injur|hurt\b|caught\b|pinched\b|lacerat)
+  - \b(injured|hurt)\b[^.;]{0,25}\bRivera\b
+- type: text_sentence_matches
+  name: urgent care referral
+  path: incident_report.md
+  all:
+  - |-
+    (urgent care|\bclinic\b|\bdoctor\b|\bphysician\b|medical (treatment|evaluation|attention|care))
+  - (\brefer|\bsent\b|\btaken\b|\btransport|\bdrove\b|\bdriven\b|\bescorted\b)
+  none:
+  - \bno\b[^.;]{0,25}\b(doctor|medical|urgent|referral)
+  - \bnot\b[^.;]{0,20}\b(referred|sent|taken|needed|required)\b
+  - first aid only
+- type: text_sentence_matches
+  name: cause under investigation
+  path: incident_report.md
+  all:
+  - \b(cause|causes|why)\b
+  - |-
+    (under investigation|being investigated|investigation (is )?(ongoing|underway|in progress|pending)|not yet (been )?(determined|known|established|identified)|to be determined|pending (the |a )?(investigation|root cause|review|rca))
+  none:
+  - \bno investigation\b
+  - \bnot (under|being) investigat
+- type: text_not_contains
+  name: no fault language
+  path: incident_report.md
+  phrases:
+  - paying attention
+  - careless
+  - inattenti
+  - at fault
+  - was to blame
+  - her fault
+  - his fault
+- type: custom
+  name: corrective actions with owners and due dates
+  module: check.py

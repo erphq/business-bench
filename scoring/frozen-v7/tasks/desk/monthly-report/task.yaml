@@ -1,0 +1,101 @@
+id: monthly-report
+track: desk
+category: reports
+title: Monthly revenue report by region from a messy sales export
+ask: 'Build me a monthly revenue report by region from this export - regions down
+  the side, months across - as an Excel file with live formulas (report.xlsx), plus
+  a short memo.md with the three things I should know.
+
+  '
+followup: null
+timeout_s: 1200
+traps:
+- North has no rows at all in March 2026. It is a gap in the export, not zero sales.
+  The memo must say so (missing / no data / gap), and North's half-year total covers
+  five months. An invented or interpolated March figure changes North's total and
+  fails the North check.
+- 12 rows are exact duplicates (same order_id, date, region, line, amount) scattered
+  through the file; each must count once. At least two per region, and one each inside
+  South/Feb and West/Jun so those checked cells are sensitive to it.
+- 14 refund rows carry negative amounts written in parentheses, e.g. "(1,234.50)",
+  with ids ending in "-R", dated in the same month as the sale; they must be netted
+  (subtracted), not dropped and not added as positives. At least two per region, one
+  each inside South/Feb and West/Jun.
+- order_date mixes 2026-03-04, 03/04/2026 (US month-first; days > 12 in the slash
+  rows disambiguate) and 4 Mar 2026. amount mixes "$1,234.50" strings with the parenthesised
+  negatives.
+- The ask fixes the layout (regions as rows, months as columns) so near_text = region
+  name lands on the row carrying that region's monthly cells and total.
+- The grader recalculates formulas with LibreOffice on a cache-stripped copy, so a
+  formulas-only workbook is scored on computed values. The reference solution also
+  carries a static Snapshot sheet as a human-readable answer key; gen.py --no-snapshot
+  produces the formulas-only workbook.
+- Expected values below are pinned to seed 0 (gen.py prints them for other seeds).
+checks:
+- type: file_exists
+  name: report.xlsx exists
+  path: report.xlsx
+- type: xlsx_has_formulas
+  name: report uses live formulas
+  path: report.xlsx
+  min_count: 6
+- type: xlsx_no_errors
+  name: no formula evaluates to an error
+  path: report.xlsx
+- type: xlsx_value_present
+  name: North half-year total (five months, no invented March)
+  path: report.xlsx
+  expected: 457426.09
+  rel_tol: 0.005
+  near_text: north
+- type: xlsx_value_present
+  name: South half-year total
+  path: report.xlsx
+  expected: 612698.71
+  rel_tol: 0.005
+  near_text: south
+- type: xlsx_value_present
+  name: East half-year total
+  path: report.xlsx
+  expected: 580434.78
+  rel_tol: 0.005
+  near_text: east
+- type: xlsx_value_present
+  name: West half-year total
+  path: report.xlsx
+  expected: 612903.61
+  rel_tol: 0.005
+  near_text: west
+- type: xlsx_value_present
+  name: South February (contains a duplicate and a refund)
+  path: report.xlsx
+  expected: 86893.82
+  rel_tol: 0.005
+  near_text: south
+- type: xlsx_value_present
+  name: West June (contains a duplicate and a refund)
+  path: report.xlsx
+  expected: 108547.63
+  rel_tol: 0.005
+  near_text: west
+- type: text_sentence_matches
+  name: one sentence says North has no March data (a gap, not zero sales)
+  path: memo.md
+  all:
+  - \bnorth\b
+  - (\bmar(ch)?\b|\b2026-03\b|\b03/2026\b|\bmonth 3\b)
+  - "(\\bno\\b[^.;]{0,40}\\b(data|rows|records|transactions|orders|sales|entries)\\b|\\\
+  bmissing\\b|\\bgap\\b|\\babsent\\b|\\bnot (in|present in|included in) the (export|file|data)\\\
+  b|\\bnothing recorded\\b|\\bno sales recorded\\b|\\bnot (present|included|recorded)\\\
+  b|\\bblank\\b|\\bempty\\b|\\bhole\\b)"
+  none:
+  - "(rather than (a |an )?(missing|gap)|\\bnot (a |an )?(missing|gap)\\b|isn't (a |an )?(missing|gap)|no evidence of (a |an )?(missing|gap))"
+- type: text_contains_any
+  name: memo mentions duplicates or refunds
+  path: memo.md
+  phrases:
+  - duplicate
+  - refund
+  - return
+  - reversal
+  - credit

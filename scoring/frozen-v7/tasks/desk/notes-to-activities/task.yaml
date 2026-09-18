@@ -1,0 +1,153 @@
+id: notes-to-activities
+track: desk
+category: reformatting
+title: Split the tracker notes into Pipedrive activities
+ask: |
+  We're moving sales onto Pipedrive. Can you turn the notes in our accounts tracker into their activity import and save it as activities.csv? Jason's notes on how he wants it and the template are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  each Notes cell holds several dated entries separated by a new line, a blank line, ' | ' or ' ; ', and some entries wrap onto an indented second line with no date; splitting on new lines alone both merges and splits activities (checks: row count, 62 activities; activity date and type)
+- |-
+  entry dates are written 3/14, 03/14/26, Mar 14, March 14th, 14 Mar, 'the 14th of March' and 'Tue 3/10', sometimes after the initials; year-less November and December entries are 2025, so a parser that defaults to the current year puts them ten months in the future (check: activity date and type)
+- |-
+  bodies such as 'sent quote, install booked for 10/15' carry a second date that is not an activity; splitting on every date adds rows (checks: row count; activity date and type)
+- |-
+  initials are written JM, jm, J.M., (KT) or left off; left off means the account's Rep, and MB (Maria Bennett, deactivated) maps to Sofia Cruz, including notes on MB accounts with no initials (check: owner)
+- |-
+  Type comes from the keyword table (left vm is a Call, sent quote is an Email, stopped by is a Meeting) (check: activity date and type)
+- |-
+  three accounts have an empty Notes cell and get no activity (check: accounts with activities)
+checks:
+- type: csv_columns
+  name: Pipedrive template columns, exact order
+  path: activities.csv
+  columns:
+  - Account ID
+  - Organization
+  - Activity Date
+  - Type
+  - Owner Email
+  - Note
+  exact: true
+- type: csv_set_equal
+  name: accounts with activities
+  path: activities.csv
+  column: Account ID
+  ref: activities.csv
+- type: csv_row_count
+  name: row count
+  path: activities.csv
+  equals_ref: activities.csv
+- type: csv_values_match
+  name: activity date and type
+  path: activities.csv
+  ref: activities.csv
+  key:
+  - Account ID
+  - Activity Date
+  columns:
+  - Type
+  min_accuracy: 1.0
+  must_match_keys:
+  - NS-1038|2026-01-08
+  - NS-1051|2025-12-04
+  - NS-1051|2026-08-10
+  - NS-1052|2025-11-26
+  - NS-1052|2025-12-13
+  - NS-1052|2026-08-08
+  - NS-1105|2025-12-09
+  - NS-1105|2026-04-06
+  - NS-1105|2026-05-28
+  - NS-1162|2025-11-28
+  - NS-1162|2026-06-30
+  - NS-1170|2026-07-06
+  - NS-1182|2025-11-19
+  - NS-1182|2026-06-03
+  - NS-1227|2025-12-26
+  - NS-1227|2026-01-16
+  - NS-1227|2026-02-12
+  - NS-1227|2026-02-21
+  - NS-1242|2025-12-04
+  - NS-1242|2026-07-18
+  - NS-1245|2025-12-31
+  - NS-1245|2026-05-05
+  - NS-1283|2026-01-21
+  - NS-1287|2025-12-02
+  - NS-1287|2026-01-24
+  - NS-1287|2026-02-15
+  - NS-1313|2025-11-04
+  - NS-1313|2025-12-23
+  - NS-1313|2026-02-08
+  - NS-1313|2026-07-31
+  - NS-1328|2025-11-23
+  - NS-1351|2026-02-23
+  - NS-1351|2026-05-12
+  - NS-1374|2025-12-14
+  - NS-1374|2025-12-19
+  - NS-1374|2026-04-15
+  - NS-1374|2026-06-20
+  - NS-1436|2026-03-24
+  - NS-1436|2026-07-28
+  - NS-1444|2026-01-21
+  - NS-1444|2026-04-02
+  - NS-1444|2026-05-16
+  - NS-1444|2026-08-28
+  - NS-1468|2025-11-24
+  - NS-1468|2026-06-13
+  - NS-1468|2026-06-25
+- type: csv_values_match
+  name: owner
+  path: activities.csv
+  ref: activities.csv
+  key:
+  - Account ID
+  - Activity Date
+  columns:
+  - Owner Email
+  min_accuracy: 1.0
+  must_match_keys:
+  - NS-1038|2026-01-08
+  - NS-1051|2025-12-04
+  - NS-1051|2026-08-10
+  - NS-1052|2025-12-13
+  - NS-1052|2026-08-08
+  - NS-1105|2025-12-09
+  - NS-1105|2026-04-06
+  - NS-1105|2026-05-28
+  - NS-1170|2026-01-05
+  - NS-1170|2026-07-06
+  - NS-1182|2025-11-19
+  - NS-1182|2026-06-03
+  - NS-1227|2025-12-26
+  - NS-1227|2026-01-16
+  - NS-1227|2026-02-12
+  - NS-1227|2026-02-21
+  - NS-1227|2026-06-25
+  - NS-1242|2025-12-04
+  - NS-1242|2026-07-18
+  - NS-1245|2025-12-31
+  - NS-1283|2026-01-27
+  - NS-1283|2026-08-19
+  - NS-1287|2025-12-02
+  - NS-1313|2025-12-23
+  - NS-1313|2026-07-31
+  - NS-1328|2025-11-23
+  - NS-1351|2026-02-23
+  - NS-1351|2026-05-12
+  - NS-1374|2025-12-14
+  - NS-1374|2025-12-19
+  - NS-1374|2026-04-15
+  - NS-1374|2026-08-08
+  - NS-1436|2026-07-28
+  - NS-1436|2026-07-29
+  - NS-1444|2026-01-21
+  - NS-1444|2026-04-02
+  - NS-1444|2026-05-16
+  - NS-1444|2026-08-28
+  - NS-1468|2025-11-24
+  - NS-1468|2026-05-12
+  - NS-1468|2026-06-13
+  - NS-1468|2026-06-25
+  - NS-1468|2026-07-14

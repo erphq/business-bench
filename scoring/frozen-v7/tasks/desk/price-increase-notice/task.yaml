@@ -1,0 +1,86 @@
+id: price-increase-notice
+track: desk
+category: drafting
+title: Draft the standing order price increase notice
+ask: |
+  Please draft the price increase notice for our standing order customers and save it as notice.md. Grace's emails and the new price schedule are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the first email says the new prices take effect October 1; the last one moves the date to Monday, November 2 (check: effective date)
+- |-
+  percent changes round to the nearest whole percent on the current price; for the counter arrangement ($38.00 to $41.00) and the delivery fee ($8.50 to $9.25) truncating or dividing by the new price gives a different whole percent (checks: counter arrangement: new price and rounded percent; delivery fee: new price and rounded percent)
+- |-
+  Grace's last email says the medium lobby arrangement goes to $70; the approved schedule she called final says $72.00 (check: lobby arrangement: new price and rounded percent)
+- |-
+  Grace lists Valley Forge Storage among the annual-contract customers, but the customer list shows it went month-to-month in June, and she leaves out Yellowtail Seafood, which is annual; the mailing note must name the three annual customers with renewal dates and not exclude Valley Forge Storage (check: mailing note names the annual-contract customers)
+- |-
+  last year's notice is in the folder with a September 2025 date and a LOYAL10 discount code; Grace says no code this year (check: no discount code)
+- |-
+  the bud vase set has no new price because it is being discontinued, so the notice must say so rather than price it (check: bud vase sets discontinued)
+checks:
+- type: text_sentence_matches
+  name: effective date
+  path: notice.md
+  all:
+  - |-
+    (effective|take effect|takes effect|start|starting|begin|beginning|from|as of|on and after)
+  - |-
+    (november\s+2(nd)?\b|nov\.?\s+2(nd)?\b|\b11/0?2/(20)?26\b|\b2026-11-02\b|\b2(nd)?\s+(of\s+)?nov(ember)?\b|\bnov\.$)
+  none:
+  - (october\s+1(st)?\b|oct\.?\s+1(st)?\b|\b10/0?1/(20)?26\b|\b2026-10-01\b)
+- type: text_sentence_matches
+  name: 'counter arrangement: new price and rounded percent'
+  path: notice.md
+  all:
+  - \bcounter\b
+  - (?<![\d.,])41(\.00)?(?!\d|,\d|\.\d)
+  - (?<![\d.])8(\.0+)?\s?(%|percent)
+- type: text_sentence_matches
+  name: 'lobby arrangement: new price and rounded percent'
+  path: notice.md
+  all:
+  - \blobby\b
+  - (?<![\d.,])72(\.00)?(?!\d|,\d|\.\d)
+  - (?<![\d.])11(\.0+)?\s?(%|percent)
+  none:
+  - (?<![\d.,])70(\.00)?(?!\d|,\d|\.\d)
+- type: text_sentence_matches
+  name: 'statement arrangement: new price and rounded percent'
+  path: notice.md
+  all:
+  - \bstatement\b
+  - (?<![\d.,])124(\.00)?(?!\d|,\d|\.\d)
+  - (?<![\d.])8(\.0+)?\s?(%|percent)
+- type: text_sentence_matches
+  name: 'delivery fee: new price and rounded percent'
+  path: notice.md
+  all:
+  - \bdelivery\b
+  - (?<![\d.,])9\.25(?!\d|,\d|\.\d)
+  - (?<![\d.])9(\.0+)?\s?(%|percent)
+- type: text_numbers_present
+  name: current prices stated
+  path: notice.md
+  numbers:
+  - 38.0
+  - 65.0
+  - 115.0
+  - 8.5
+  rel_tol: 0.0005
+- type: text_sentence_matches
+  name: bud vase sets discontinued
+  path: notice.md
+  all:
+  - bud\s*vase
+  - |-
+    (discontinu|no longer (be )?(offer|available|carry|provid|sell)|retir|phas(e|ing) out|last (deliver|week))
+- type: text_not_contains
+  name: no discount code
+  path: notice.md
+  phrases:
+  - LOYAL10
+- type: custom
+  name: mailing note names the annual-contract customers
+  module: check.py

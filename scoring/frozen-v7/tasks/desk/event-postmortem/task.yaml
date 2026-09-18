@@ -1,0 +1,86 @@
+id: event-postmortem
+track: desk
+category: reports
+title: Wrap-up numbers for the summit
+ask: |
+  We just wrapped the Cascade Data Summit and the board wants the wrap-up numbers by ticket type. Build me event_summary.xlsx with live formulas and a short memo.md with the headline numbers. Dana's email thread has the rules.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  comp passes (27 of them) pay nothing but are registrations and do attend; dropping them or treating them as zero-revenue non-registrations moves both the comp row and the attendance rate (checks: comp no-shows; memo headline figures)
+- |-
+  the scanner writes one row per entry, so most attendees appear two or three times; attendance is people who scanned at least once (check: full conference attended)
+- |-
+  6 attendees have one scan row with a lower-cased badge id, so a case-sensitive unique count over-counts them (check: full conference attended)
+- |-
+  18 staff scan rows (badges starting STF-) are in the log and are not attendees (check: full conference attended)
+- |-
+  9 cancelled registrations still carry an amount in the export; Dana's email says they were refunded before the event and are out of the counts and the revenue entirely (check: student gross revenue)
+- |-
+  11 refunds were processed after the event in a separate file and must come off revenue; the naive gross total ignores them (checks: net revenue after post-event refunds; memo names the post-event refunds)
+- |-
+  amounts are '$895.00' text with '-' for comps, dates come in four formats, and the registration export carries a two-line preamble, a BOM and CRLF endings (check: student gross revenue)
+checks:
+- type: file_exists
+  name: event_summary.xlsx exists
+  path: event_summary.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: event_summary.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: event_summary.xlsx
+- type: xlsx_value_present
+  name: full conference attended (unique scanners)
+  path: event_summary.xlsx
+  expected: 50
+  rel_tol: 0.001
+  near_text: full conference
+- type: xlsx_value_present
+  name: comp no-shows
+  path: event_summary.xlsx
+  # Dana's email asks for attendance (scanned at least once) and says comps count as attendance, so the comp
+  # row's attended figure (12 of 27) is the requested fact; a no-show figure (27 - 12 = 15) states the same result
+  # and still counts. Comp raw scan rows are 27, so the scan-row shortcut (27 attended, 0 no-shows) fails.
+  expected_any:
+  - 12
+  - 15
+  rel_tol: 0.001
+  near_text: comp
+- type: xlsx_value_present
+  name: student gross revenue (cancellations excluded)
+  path: event_summary.xlsx
+  expected: 6240.0
+  rel_tol: 0.0001
+  near_text: student
+- type: xlsx_value_present
+  name: net revenue after post-event refunds
+  path: event_summary.xlsx
+  expected: 119915.0
+  rel_tol: 1.0e-06
+  near_text: net
+- type: text_numbers_present
+  name: memo headline figures
+  path: memo.md
+  numbers:
+  - 237
+  - 192
+  - 119915.0
+  rel_tol: 0.005
+- type: text_numbers_present
+  name: memo states the attendance rate
+  path: memo.md
+  numbers:
+  - 81.0
+  rel_tol: 0.01
+- type: text_sentence_matches
+  name: memo names the post-event refunds
+  path: memo.md
+  all:
+  - \brefund
+  - (\bafter\b|\bpost[- ]event\b|\bfollowing the (event|summit)\b|\bonce the (event|summit)\b)
+  none:
+  - \bno refunds?\b
+  - \bwere not refunded\b

@@ -1,0 +1,68 @@
+id: depreciation-schedule
+track: desk
+category: bookkeeping
+title: 2026 depreciation schedule from the fixed asset register
+ask: |
+  Pat needs our 2026 depreciation schedule so she can close the year; her email explains how she wants it. Save it as depreciation.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the laminator FA-175 went into service 2026-03-10 and starts depreciating the month after, so it has 9 months in 2026, not 10 (check: partial first year)
+- |-
+  the press FA-128 has a 5,650.00 salvage value that comes off the base; cost over life overstates every month (check: press with salvage)
+- |-
+  the old van FA-146 was sold 2026-08-08 (only in the Notes column); depreciation stops the month before the sale and the gain or loss is proceeds less book value at that point, not a full year of depreciation (checks: sold van; gain on the van sale)
+- |-
+  the prepress server FA-154 went into service 2023-05-31 on a 36-month life and is fully depreciated partway through 2026; running it all year takes it below zero (check: fully depreciated server)
+- |-
+  3 register rows (FA-118, FA-165, FA-139) cost under the $2,500 threshold and must be left off (check: total 2026 depreciation)
+- |-
+  lives are written '10 yrs', '7 years' and '36 months', cost and salvage are text, some in-service dates are text, blank salvage means none, a December 2026 addition earns nothing until 2027, and a 2024 backup of the register sits beside the current one (checks: depreciation, one line per month; total 2026 depreciation)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: depreciation.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no formula errors
+  path: depreciation.xlsx
+- type: custom
+  name: depreciation, one line per month
+  module: check.py
+- type: xlsx_value_present
+  name: total 2026 depreciation
+  path: depreciation.xlsx
+  expected: 33720.77
+  rel_tol: 1.0e-06
+  near_text: total
+- type: xlsx_value_present
+  name: partial first year
+  path: depreciation.xlsx
+  expected: 1174.32
+  rel_tol: 1.0e-06
+  near_text: fa-175
+- type: xlsx_value_present
+  name: press with salvage
+  path: depreciation.xlsx
+  expected: 5367.72
+  rel_tol: 1.0e-06
+  near_text: fa-128
+- type: xlsx_value_present
+  name: sold van
+  path: depreciation.xlsx
+  expected: 2473.94
+  rel_tol: 1.0e-06
+  near_text: fa-146
+- type: xlsx_value_present
+  name: gain on the van sale
+  path: depreciation.xlsx
+  expected: 2505.54
+  rel_tol: 1.0e-06
+  near_text: fa-146
+- type: xlsx_value_present
+  name: fully depreciated server
+  path: depreciation.xlsx
+  expected: 1303.65
+  rel_tol: 1.0e-06
+  near_text: fa-154

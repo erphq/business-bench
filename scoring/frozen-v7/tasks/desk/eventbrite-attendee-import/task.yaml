@@ -1,0 +1,115 @@
+id: eventbrite-attendee-import
+track: desk
+category: reformatting
+title: Load the concert sign-ups into Eventbrite
+ask: |
+  June wants the people who signed up for the winter concert on our Google Form loaded into Eventbrite. Can you make the import file from the form responses and save it as eventbrite_attendees.csv? Her email, the template and the ticket types are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the form's ticket choices are labels with prices ('Adult - $20', 'Kids 12 & under - free', 'I'm a guest of a choir member - $12'); Eventbrite rejects anything but its own names (General Admission, Child (12 and under), Choir Member Guest ...) (check: ticket type)
+- |-
+  'How many?' is free text: 'two', 'a pair', '3 please', '4 tix', 'just me', and blank, which June says is one (check: quantity)
+- |-
+  5 Family Pass responses answered with head counts ('family of 4', '2 adults 3 kids', '5'); a family pass is one ticket, so copying the number oversells the event (check: quantity)
+- |-
+  one person submitted twice three days apart, the second time in capitals with a different ticket type and count and a comment asking to ignore the first; the later response is the order (checks: one order per email; quantity; ticket type)
+- |-
+  June's own test response ('TEST june', 'test - delete') is the first row of the sheet and is not an order (checks: one order per email; row count)
+- |-
+  three names were typed 'Last, First' and some are all lowercase; splitting on the first space puts the comma and surname in First Name (check: first and last name)
+checks:
+- type: csv_columns
+  name: Eventbrite template columns, exact order
+  path: eventbrite_attendees.csv
+  columns:
+  - First Name
+  - Last Name
+  - Email
+  - Ticket Type
+  - Quantity
+  exact: true
+- type: csv_set_equal
+  name: one order per email
+  path: eventbrite_attendees.csv
+  column: Email
+  ref: eventbrite_attendees.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: eventbrite_attendees.csv
+  equals_ref: eventbrite_attendees.csv
+- type: csv_values_match
+  name: ticket type
+  path: eventbrite_attendees.csv
+  ref: eventbrite_attendees.csv
+  key: Email
+  columns:
+  - Ticket Type
+  min_accuracy: 1.0
+  must_match_keys:
+  - jmorris@protonmail.com
+  - kimberly.davis@gmail.com
+  - kstewart@icloud.com
+  - morgan.steven@gmail.com
+  - okafor.deborah@protonmail.com
+  - phillips.gary@protonmail.com
+  - rgarcia@gmail.com
+- type: csv_values_match
+  name: quantity
+  path: eventbrite_attendees.csv
+  ref: eventbrite_attendees.csv
+  key: Email
+  columns:
+  - Quantity
+  numeric: true
+  tolerance: 0.001
+  min_accuracy: 1.0
+  must_match_keys:
+  - anelson@gmail.com
+  - ashley.myers@gmail.com
+  - calvarez@hotmail.com
+  - charles.flores@hotmail.com
+  - charlesmensah88@aol.com
+  - chloe.watson@gmail.com
+  - david.harris@gmail.com
+  - dorothyhoward83@yahoo.com
+  - dparker@gmail.com
+  - elizabeth_ruiz@icloud.com
+  - hernandez.barbara@outlook.com
+  - james_ward@icloud.com
+  - jmorris@protonmail.com
+  - kennethrogers20@aol.com
+  - kennethward66@aol.com
+  - kimberly.rogers@outlook.com
+  - kstewart@icloud.com
+  - margaretcook81@icloud.com
+  - mcox@gmail.com
+  - morgan.steven@gmail.com
+  - okafor.deborah@protonmail.com
+  - patel.barbara@protonmail.com
+  - priyamorris70@outlook.com
+  - rgarcia@gmail.com
+  - rrichardson@yahoo.com
+  - sarahtorres29@outlook.com
+  - sfoster@gmail.com
+  - stephaniealvarez9@outlook.com
+  - wgonzalez@aol.com
+  - wilson.gary@gmail.com
+  - yuki.clark@me.com
+- type: csv_values_match
+  name: first and last name
+  path: eventbrite_attendees.csv
+  ref: eventbrite_attendees.csv
+  key: Email
+  columns:
+  - First Name
+  - Last Name
+  min_accuracy: 1.0
+  must_match_keys:
+  - dparker@gmail.com
+  - mcox@gmail.com
+  - yuki.clark@me.com

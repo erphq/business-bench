@@ -1,0 +1,118 @@
+id: address-standardize
+track: desk
+category: reformatting
+title: Clean the catalog mailing list for the mail house
+ask: |
+  Keystone is mailing our winter catalog. Please clean up the mailing list to their address standard and save it as addresses_clean.csv - Ruth's email, their standards sheet and the template are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  street suffixes, directionals and unit designators are spelled out (Street, Northeast, Apartment), abbreviated with periods (Blvd., N.W., Ste.) or in odd spellings (Str, Av, Pky, Terr); uppercasing and stripping punctuation is not enough (check: delivery address line)
+- |-
+  a direction word that is the street name itself (the word right before the suffix: '3370 North Rd' -> 3370 NORTH RD and '1587 East Street' -> 1587 EAST ST) stays spelled out, while a real directional before or after another name is abbreviated; an abbreviate-every-direction pass gets these wrong (check: delivery address line)
+- |-
+  the unit is on Address Line 2 for about half the apartments and must move to the end of the delivery line; a bare #12 becomes # 12 (check: delivery address line)
+- |-
+  Burlington and Providence ZIPs typed as numbers lost their leading zero (5401), one ZIP+4 came through as the bare number 54011234, and others are 972091234 or '97209 1234'; the output keeps five digits with the zero and ZIP+4 as 12345-6789 (check: city, state and ZIP)
+- |-
+  about a fifth of the states are written out in full (Oregon, North Carolina) and must become the two-letter code (check: city, state and ZIP)
+- |-
+  5 customers repeat an address that is only visibly the same after standardizing (one under a spouse's first name, one where the later row in the file is the earlier customer); the earliest Date Added stays, and two different apartments in one building both stay (checks: one row per mailing address; row count)
+checks:
+- type: csv_columns
+  name: Keystone template columns, exact order
+  path: addresses_clean.csv
+  columns:
+  - Customer ID
+  - Full Name
+  - Delivery Address
+  - City
+  - State
+  - ZIP Code
+  exact: true
+- type: csv_set_equal
+  name: one row per mailing address
+  path: addresses_clean.csv
+  column: Customer ID
+  ref: addresses_clean.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: addresses_clean.csv
+  equals_ref: addresses_clean.csv
+- type: csv_values_match
+  name: delivery address line
+  path: addresses_clean.csv
+  ref: addresses_clean.csv
+  key: Customer ID
+  columns:
+  - Delivery Address
+  normalize:
+  - strip
+  min_accuracy: 1.0
+  must_match_keys:
+  - C10544
+  - C10897
+  - C11156
+  - C11192
+  - C11215
+  - C11388
+  - C11667
+  - C11906
+  - C12173
+  - C12309
+  - C12340
+  - C12671
+  - C12693
+  - C12806
+  - C13268
+  - C13670
+  - C14014
+  - C14307
+  - C14357
+  - C16144
+  - C16852
+  - C18025
+  - C18462
+  - C18627
+  - C18966
+  - C18997
+  - C19058
+  - C19249
+  - C19282
+  - C19348
+- type: csv_values_match
+  name: city, state and ZIP
+  path: addresses_clean.csv
+  ref: addresses_clean.csv
+  key: Customer ID
+  columns:
+  - City
+  - State
+  - ZIP Code
+  normalize:
+  - strip
+  min_accuracy: 1.0
+  must_match_keys:
+  - C10808
+  - C10897
+  - C11388
+  - C11458
+  - C11667
+  - C11906
+  - C12309
+  - C12693
+  - C14307
+  - C14357
+  - C15410
+  - C15905
+  - C15917
+  - C15931
+  - C16487
+  - C16611
+  - C17400
+  - C19249
+  - C19282

@@ -1,0 +1,76 @@
+id: incident-summary
+track: desk
+category: reports
+title: Half-year safety incidents by site and type
+ask: |
+  Aisha needs the first-half safety numbers for the board and the insurer, by site and by type. Save it as incidents.xlsx with live formulas and put the headline in memo.md. Her email says how she counts them.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  each site is written four or five ways across the two sheets and the tablet export (PLANT 2, Plant #2, Plant Two, Fab East); a group-by on the raw site column splits every site and names the wrong worst site (checks: Plant 2 incidents; Plant 1 lacerations; memo names the worst site)
+- |-
+  3 late-entered Q1 incidents are repeated at the top of the Q2 sheet under their original ids; reading both sheets without deduplicating counts them twice (checks: Plant 2 incidents; total incidents)
+- |-
+  the Type column mixes the legend sheet's codes (STF, LAC, CHEM) with free text ('Lac.', 'strain', 'struck by object'), so a raw pivot scatters one type across four columns (check: Plant 1 lacerations)
+- |-
+  5 rows are marked voided or reported in error and are not incidents (check: total incidents)
+- |-
+  near misses are a separate tablet export with no type column; they are reported on their own line and never inside the incident count (checks: total incidents; warehouse near misses)
+- |-
+  the Warehouse had no injuries at all this half but is still one of the four sites and still has near misses, so a group-by over the incident log drops it from the report (check: warehouse near misses)
+- |-
+  dates come in three formats, the workbook sheets carry a merged title and an instruction row, and the tablet export has a two-line preamble and a BOM (check: total incidents, all sites)
+checks:
+- type: file_exists
+  name: incidents.xlsx exists
+  path: incidents.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: incidents.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: incidents.xlsx
+- type: xlsx_value_present
+  name: Plant 2 incidents
+  path: incidents.xlsx
+  expected: 41
+  rel_tol: 0.001
+  near_text: plant 2
+- type: xlsx_value_present
+  name: Plant 1 lacerations
+  path: incidents.xlsx
+  expected: 22
+  rel_tol: 0.001
+  near_text: plant 1
+- type: xlsx_value_present
+  name: total incidents, all sites
+  path: incidents.xlsx
+  expected: 111
+  rel_tol: 0.001
+  near_text: total
+- type: xlsx_value_present
+  name: warehouse near misses (site with no incidents still reported)
+  path: incidents.xlsx
+  expected: 24
+  rel_tol: 0.001
+  near_text: warehouse
+- type: text_numbers_present
+  name: memo carries the incident and near-miss totals
+  path: memo.md
+  numbers:
+  - 111
+  - 46
+  - 68
+  rel_tol: 0.001
+- type: text_sentence_matches
+  name: memo names the site with the most incidents
+  path: memo.md
+  all:
+  - \bplant\s*#?\s*1\b|\bplant one\b
+  - (\bmost\b|\bhighest\b|\bworst\b|\bmore incidents\b|\bled\b|\bleads\b|\btop\b)
+  none:
+  - \bfewest\b
+  - \bleast\b
+  - \bcleanest\b

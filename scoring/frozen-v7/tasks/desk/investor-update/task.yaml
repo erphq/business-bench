@@ -1,0 +1,65 @@
+id: investor-update
+track: desk
+category: drafting
+title: Q2 investor update letter from the KPI tracker
+ask: |
+  Please draft the Q2 investor update from finance's KPI tracker. Marcus's note says what goes in it. Save it as update.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  Priya's email restates May revenue: the tracker still carries a duplicate invoice of $22,600, so the sheet's Q2 total ($403,137) is wrong and the letter must say $380,537 (checks: quarter revenue figures; unrestated Q2 total absent)
+- |-
+  the Q1 letter quoted preliminary Q1 revenue of $338,815; the tracker's closed Q1 is $344,988 (checks: quarter revenue figures; growth over Q1)
+- |-
+  growth is quarter revenue over quarter revenue, 10.3%; using the unrestated May, the preliminary Q1 or June-over-March MRR gives 16.9%, 12.3%, 19.0%, 12.6% (check: growth over Q1)
+- |-
+  the tracker's last column is a July forecast, so ARR, customers and cash at the end of the quarter come from June, not the right-hand column (check: end-of-June ARR, customers and cash)
+- |-
+  net burn is text in parentheses; runway is June cash over the average Q2 burn, 16.7 months, not over June's burn or the six-month average (17.9, 17.6, 15.8) (check: runway)
+- |-
+  Marcus forbids any mention of the Vantage Point Media conversation (check: confidential conversation not mentioned)
+checks:
+- type: file_exists
+  name: update.md exists
+  path: update.md
+- type: text_numbers_present
+  name: quarter revenue figures
+  path: update.md
+  numbers:
+  - 380537
+  - 344988
+  rel_tol: 0.0005
+- type: text_sentence_matches
+  name: growth over Q1
+  path: update.md
+  all:
+  - (?<![\d.])(10|10\.3|10\.30)\s*(%|percent|per cent)
+  - |-
+    (grow|grew|growth|increase|\bup\b|\brose\b|higher|over q1|from q1|vs\.? q1|quarter[- ]over[- ]quarter|qoq)
+- type: text_numbers_present
+  name: end-of-June ARR, customers and cash
+  path: update.md
+  numbers:
+  - 1385040
+  - 239
+  - 1433143
+  rel_tol: 0.0005
+- type: text_sentence_matches
+  name: runway
+  path: update.md
+  all:
+  - (runway|months of (cash|runway)|last us|cash (lasts|will last))
+  - (?<![\d.])(16\.7|17)\s*(-|\s)?months?\b
+- type: text_not_contains
+  name: unrestated Q2 total absent
+  path: update.md
+  phrases:
+  - 403,137
+  - '403137'
+- type: text_not_contains
+  name: confidential conversation not mentioned
+  path: update.md
+  phrases:
+  - Vantage Point Media
+  - Vantage Point

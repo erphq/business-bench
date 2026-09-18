@@ -1,0 +1,75 @@
+id: inventory-shrinkage
+track: desk
+category: bookkeeping
+title: Shrinkage by department from the Sunday floor count
+ask: |
+  Rhea needs our shrinkage from Sunday's floor count for the insurance renewal. The count sheet, the POS reports and her note are in the folder. Save it as shrinkage.xlsx.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the export carries retail beside average cost and the note wants average cost; valuing at retail roughly doubles every department (checks: Dog Food value; Treats & Chews value; total net shrinkage)
+- |-
+  the on-hand report ran Monday 11:15 am: Monday-morning sales and returns and the 9:34 am delivery happened after the count and must be backed out of it, while Sunday sales before 5 pm and Monday afternoon sales are already consistent and need nothing (checks: Dog Food value; Cat Food value; total net shrinkage)
+- |-
+  damaged stock was pulled before the count: the lines not yet written off still sit in the POS and come out of expected as a separate damage figure, while the lines marked written off are already gone from the report (checks: damage set aside; Cat Food value)
+- |-
+  shrink is net within a department, so the few items found over offset the shortages; totalling shortages alone overstates every department (checks: Treats & Chews value; total net shrinkage)
+- |-
+  two aquarium items in a locked case (AQ-1440, AQ-1447) are blank on the count sheet; they were not counted and stay out, where a blank read as zero adds hundreds of dollars (checks: Aquarium value; total net shrinkage)
+- |-
+  the figures must be live formulas that recalculate clean (checks: live formulas; no error cells)
+checks:
+- type: file_exists
+  name: shrinkage.xlsx exists
+  path: shrinkage.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: shrinkage.xlsx
+  min_count: 6
+- type: xlsx_no_errors
+  name: no error cells
+  path: shrinkage.xlsx
+- type: xlsx_value_present
+  name: Dog Food value
+  path: shrinkage.xlsx
+  expected: 176.97
+  rel_tol: 0.001
+  near_text: dog food
+- type: xlsx_value_present
+  name: Cat Food value
+  path: shrinkage.xlsx
+  expected: 28.59
+  rel_tol: 0.01
+  near_text: cat food
+- type: xlsx_value_present
+  name: Treats & Chews value
+  path: shrinkage.xlsx
+  expected: 117.71
+  rel_tol: 0.001
+  near_text: treats
+- type: xlsx_value_present
+  name: Aquarium value
+  path: shrinkage.xlsx
+  expected: 60.74
+  rel_tol: 0.01
+  near_text: aquarium
+- type: xlsx_value_present
+  name: total net shrinkage
+  path: shrinkage.xlsx
+  expected: 488.5
+  rel_tol: 0.001
+  near_text: total
+- type: xlsx_value_present
+  name: damage set aside
+  path: shrinkage.xlsx
+  # Rhea's note: the back-room damage "was pulled before the count ... Some of it I already wrote off in the POS,
+  # some I have not. Damage is not shrinkage - show it on its own line." The line can show the damage not yet
+  # written off (the part backed out of expected: CA-1154 3x17.11 + CA-1189 2x22.10 + AQ-1447 3x71.90 +
+  # TR-1282 1x2.28 = 313.51) or all damage pulled before the count (adds TR-1303 3x1.41 + TR-1289 1x5.61 +
+  # AQ-1468 2x14.81 = 352.97), both at average cost. Retail valuation or the written-off lines alone still fail.
+  expected_any:
+  - 313.51
+  - 352.97
+  rel_tol: 0.001
+  near_text: damage

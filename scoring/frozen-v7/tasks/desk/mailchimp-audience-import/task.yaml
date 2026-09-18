@@ -1,0 +1,85 @@
+id: mailchimp-audience-import
+track: desk
+category: reformatting
+title: Summer signups into one Mailchimp audience import
+ask: |
+  Put everyone who signed up with us this summer into one Mailchimp import file using their template. Ines's note has the rules. Save it as mailchimp_import.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  5 people on the unsubscribed export signed up again and opted in; the export writes their email in lower case while the sheets use other casing, so an exact-match filter misses them (checks: one row per subscriber; row count)
+- |-
+  people appear in two or three sources with the email upper-cased, capitalised or padded with spaces; one row per address (checks: row count; tags per subscriber)
+- |-
+  three multi-source people opted in on only one of their sources; they are in, and tagged with every source (check: tags per subscriber)
+- |-
+  rows with N, an unticked opt-in or Consent No stay out unless the person said yes elsewhere; four market-sheet emails are smudged (no @, no dot, comma for dot, ' at ') and stay out (check: one row per subscriber)
+- |-
+  tags must be the audience's spellings Farmers Market / Workshop / Website, several in one comma-separated cell (check: tags per subscriber)
+- |-
+  workshop birthdays are free text ('Jul 4', '4 July', '7/4', 'July 4th') and must become MM/DD (check: birthday merge field)
+- |-
+  the market sheet has one Name column with five 'LAST, First' entries and three first-name-only entries whose last name is on another source (check: name merge fields)
+checks:
+- type: csv_columns
+  name: Mailchimp template columns in order
+  path: mailchimp_import.csv
+  columns:
+  - Email Address
+  - First Name
+  - Last Name
+  - Phone Number
+  - Birthday
+  - Tags
+  exact: true
+- type: csv_set_equal
+  name: one row per subscriber
+  path: mailchimp_import.csv
+  column: Email Address
+  ref: mailchimp_import.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: mailchimp_import.csv
+  equals_ref: mailchimp_import.csv
+- type: custom
+  name: tags per subscriber
+  module: check.py
+- type: csv_values_match
+  name: birthday merge field
+  path: mailchimp_import.csv
+  ref: mailchimp_import.csv
+  key: Email Address
+  columns:
+  - Birthday
+  normalize:
+  - strip
+  min_accuracy: 1.0
+  must_match_keys:
+  - morales.jeffrey@me.com
+  - dosei@yahoo.com
+  - kenneth.ramirez@gmail.com
+  - margaret_turner@outlook.com
+  - wood.sharon@gmail.com
+  - donald_green@me.com
+  - kathleen.gutierrez@gmail.com
+  - patriciabaker9@protonmail.com
+- type: csv_values_match
+  name: name merge fields
+  path: mailchimp_import.csv
+  ref: mailchimp_import.csv
+  key: Email Address
+  columns:
+  - First Name
+  - Last Name
+  min_accuracy: 1.0
+  must_match_keys:
+  - ehaddad@yahoo.com
+  - james.brooks@outlook.com
+  - john_rodriguez@hotmail.com
+  - joshua.williams@yahoo.com
+  - lee.elizabeth@yahoo.com
+  - jessica_tanaka@aol.com

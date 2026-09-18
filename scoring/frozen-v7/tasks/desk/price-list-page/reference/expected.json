@@ -1,0 +1,232 @@
+{
+  "discontinued": [
+    {
+      "name": "Frosted pinecone",
+      "sku": "HOL-136"
+    },
+    {
+      "name": "Grateful garden",
+      "sku": "TY-169"
+    },
+    {
+      "name": "Blue bicycle",
+      "sku": "EVD-121"
+    },
+    {
+      "name": "Paper boats",
+      "sku": "EVD-127"
+    },
+    {
+      "name": "Just married tandem",
+      "sku": "WED-181"
+    },
+    {
+      "name": "Rings and roses",
+      "sku": "WED-184"
+    }
+  ],
+  "labels": {
+    "Art Prints": "\\bart prints?\\b|\\bprints?\\b",
+    "Birthday": "\\bbirthdays?\\b",
+    "Everyday": "\\beveryday\\b",
+    "Holiday": "\\bholidays?\\b",
+    "Notebooks": "\\bnotebooks?\\b|\\bjournals?\\b",
+    "Sympathy": "\\bsympathy\\b",
+    "Thank You": "\\bthank[- ]?yous?\\b"
+  },
+  "order": [
+    "Holiday",
+    "Birthday",
+    "Thank You",
+    "Sympathy",
+    "Everyday",
+    "Notebooks",
+    "Art Prints"
+  ],
+  "products": [
+    {
+      "category": "Holiday",
+      "each": 2.65,
+      "name": "Pine sprig",
+      "pack": 6,
+      "pack_price": 14.31,
+      "sku": "HOL-139"
+    },
+    {
+      "category": "Holiday",
+      "each": 2.8,
+      "name": "Starry sleigh ride",
+      "pack": 6,
+      "pack_price": 15.12,
+      "sku": "HOL-145"
+    },
+    {
+      "category": "Holiday",
+      "each": 2.1,
+      "name": "Snowy owl",
+      "pack": 12,
+      "pack_price": 21.42,
+      "sku": "HOL-142"
+    },
+    {
+      "category": "Holiday",
+      "each": 2.1,
+      "name": "Candlelit window",
+      "pack": 6,
+      "pack_price": 11.34,
+      "sku": "HOL-133"
+    },
+    {
+      "category": "Birthday",
+      "each": 2.0,
+      "name": "Balloon bouquet",
+      "pack": 6,
+      "pack_price": 10.8,
+      "sku": "BDY-109"
+    },
+    {
+      "category": "Birthday",
+      "each": 1.9,
+      "name": "Rocket candle",
+      "pack": 12,
+      "pack_price": 19.38,
+      "sku": "BDY-118"
+    },
+    {
+      "category": "Birthday",
+      "each": 2.75,
+      "name": "Party hat corgi",
+      "pack": 12,
+      "pack_price": 28.05,
+      "sku": "BDY-115"
+    },
+    {
+      "category": "Birthday",
+      "each": 3.45,
+      "name": "Confetti burst",
+      "pack": 6,
+      "pack_price": 18.63,
+      "sku": "BDY-112"
+    },
+    {
+      "category": "Thank You",
+      "each": 3.2,
+      "name": "Hummingbird note",
+      "pack": 12,
+      "pack_price": 32.64,
+      "sku": "TY-172"
+    },
+    {
+      "category": "Thank You",
+      "each": 3.35,
+      "name": "Pressed fern",
+      "pack": 6,
+      "pack_price": 18.09,
+      "sku": "TY-178"
+    },
+    {
+      "category": "Thank You",
+      "each": 1.85,
+      "name": "Paper crane",
+      "pack": 6,
+      "pack_price": 9.99,
+      "sku": "TY-175"
+    },
+    {
+      "category": "Sympathy",
+      "each": 1.7,
+      "name": "Forget-me-nots",
+      "pack": 12,
+      "pack_price": 17.34,
+      "sku": "SYM-160"
+    },
+    {
+      "category": "Sympathy",
+      "each": 2.95,
+      "name": "Quiet harbor",
+      "pack": 6,
+      "pack_price": 15.93,
+      "sku": "SYM-163"
+    },
+    {
+      "category": "Sympathy",
+      "each": 1.7,
+      "name": "Willow branch",
+      "pack": 12,
+      "pack_price": 17.34,
+      "sku": "SYM-166"
+    },
+    {
+      "category": "Sympathy",
+      "each": 3.25,
+      "name": "Evening lantern",
+      "pack": 12,
+      "pack_price": 33.15,
+      "sku": "SYM-157"
+    },
+    {
+      "category": "Everyday",
+      "each": 1.9,
+      "name": "Tiny cactus",
+      "pack": 12,
+      "pack_price": 19.38,
+      "sku": "EVD-130"
+    },
+    {
+      "category": "Everyday",
+      "each": 3.4,
+      "name": "Letterpress alphabet",
+      "pack": 6,
+      "pack_price": 18.36,
+      "sku": "EVD-124"
+    },
+    {
+      "category": "Notebooks",
+      "each": 8.78,
+      "name": "Pocket notebook kraft",
+      "pack": 3,
+      "pack_price": 26.34,
+      "sku": "NB-154"
+    },
+    {
+      "category": "Notebooks",
+      "each": 5.13,
+      "name": "Dot grid journal",
+      "pack": 3,
+      "pack_price": 15.39,
+      "sku": "NB-148"
+    },
+    {
+      "category": "Notebooks",
+      "each": 5.02,
+      "name": "Lined jotter trio",
+      "pack": 3,
+      "pack_price": 15.06,
+      "sku": "NB-151"
+    },
+    {
+      "category": "Art Prints",
+      "each": 19.5,
+      "name": "Harbor map print",
+      "pack": 1,
+      "pack_price": 19.5,
+      "sku": "PRT-106"
+    },
+    {
+      "category": "Art Prints",
+      "each": 12.5,
+      "name": "Botanical fern print",
+      "pack": 1,
+      "pack_price": 12.5,
+      "sku": "PRT-103"
+    },
+    {
+      "category": "Art Prints",
+      "each": 26.5,
+      "name": "Bee study print",
+      "pack": 1,
+      "pack_price": 26.5,
+      "sku": "PRT-100"
+    }
+  ]
+}

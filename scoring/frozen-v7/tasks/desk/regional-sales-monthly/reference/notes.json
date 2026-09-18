@@ -1,0 +1,14 @@
+{
+  "credit_memos": 13,
+  "credit_total": -66438.66,
+  "gap": {
+    "month": "2026-05",
+    "territory": "Mountain"
+  },
+  "grand_total": 1747317.16,
+  "month_totals": {
+    "2026-04": 550673.04,
+    "2026-05": 549203.11,
+    "2026-06": 647441.01
+  }
+}

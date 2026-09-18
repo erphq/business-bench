@@ -1,0 +1,83 @@
+id: quarterly-sales-report
+track: desk
+category: reports
+title: Q3 wholesale sales by product, with the odd things called out
+ask: |
+  Theo needs the Q3 wholesale numbers by product, month by month, for the partners meeting. Build q_report.xlsx with live formulas and write memo.md with anything they should know - his emails have the details.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  a timed-out sync on 19 August retried and pushed import batch B0819-1 again as B0819-2: the same accounts, SKUs, bags and totals under new order numbers, so deduplicating on Order # finds nothing (checks: Assam Breakfast August; Q3 net revenue total; memo names the duplicate batch)
+- |-
+  Yunnan Gold (TL-YG-1) was renamed Golden Yunnan (TL-GY-1) on 10 August; the old SKU only survives in the catalog's Notes column, so a pivot on the Product or SKU column splits the quarter into two rows (checks: Golden Yunnan quarter; memo names the renamed product)
+- |-
+  refunds are a separate export with positive amounts that come off the product and month they were issued; one is a 2 July refund on a June order and some quote the old Yunnan SKU (checks: Masala Chai September; Q3 net revenue total)
+- |-
+  line totals are '$1,234.00' text and the order export carries a BOM and CRLF endings; the catalog lists a retail-only and a discontinued product that sold nothing wholesale (check: Q3 net revenue total)
+checks:
+- type: file_exists
+  name: q_report.xlsx exists
+  path: q_report.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: q_report.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: q_report.xlsx
+- type: xlsx_value_present
+  name: Golden Yunnan quarter (renamed product as one line)
+  path: q_report.xlsx
+  # after B0819-2 is dropped, orders W-58464 and W-58465 (both 09/03/2026, Meridian Title, batch B0903-1, each
+  # TL-GY-1 6 bags $348.00 + TL-AB-1 2 bags $76.00) are an exact copy under consecutive order numbers, which Theo's
+  # 'some orders may have been imported more than once ... leave them out' also covers: 36,134 keeps W-58465,
+  # 36,134 - 348 = 35,786 leaves it out
+  expected: 36134.0
+  expected_any:
+  - 36134.0
+  - 35786.0
+  rel_tol: 2.5e-05
+  near_text: yunnan
+- type: xlsx_value_present
+  name: Assam Breakfast August (duplicate batch removed)
+  path: q_report.xlsx
+  expected: 15162.0
+  rel_tol: 5.9e-05
+  near_text: assam
+- type: xlsx_value_present
+  name: Masala Chai September (net of refunds)
+  path: q_report.xlsx
+  expected: 8446.0
+  rel_tol: 0.00011
+  near_text: chai
+- type: xlsx_value_present
+  name: Q3 net revenue total
+  path: q_report.xlsx
+  # the same W-58465 reading: 196,009 keeps it, 196,009 - 348 - 76 = 195,585 leaves it out
+  expected: 196009.0
+  expected_any:
+  - 196009.0
+  - 195585.0
+  rel_tol: 4.6e-06
+  near_text: total
+- type: text_numbers_present
+  name: memo carries the Q3 net revenue
+  path: memo.md
+  numbers:
+  - 196009.0
+  rel_tol: 0.005
+- type: text_sentence_matches
+  name: memo names the duplicate batch
+  path: memo.md
+  all:
+  - \bB0819-?[12]\b
+  - |-
+    (duplicat|twice|double|more than once|re-?import|re-?sent|re-?pushed|repeat|retr(y|ied)|again)
+- type: text_sentence_matches
+  name: memo names the renamed product
+  path: memo.md
+  all:
+  - \b(yunnan gold|golden yunnan|yunnan)\b
+  - |-
+    (renam|formerly|previously|used to be|new name|now called|same (product|tea|blend)|became|replaced|old sku|tl-yg-1)

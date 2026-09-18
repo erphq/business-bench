@@ -1,0 +1,7 @@
+{
+  "tin_last4": "5105",
+  "vendor": "Luis Ortiz",
+  "reportable_total": 636.73,
+  "tolerance": 0.005,
+  "computation": "w9_form_responses_export.csv: W9-3170 (2024-02-12) Luis Ortiz, sole proprietor, SSN ***-**-5105; W9-3234 (2025-05-19 15:22) Ortiz Lighting & Rigging Inc, S corporation, EIN **-***3408. operating_account_payments_2025.csv, payee Ortiz Lighting & Rigging: the only payment dated before 2025-05-19 is 05/15/2025 Check #2671 $636.73 (reportable method, no refunds); the six later payments (checks and one Zelle, $8,494.49) fall after the S-corporation form and stay out. Under the reading that the S-corporation form (a different TIN) does not replace the SSN vendor, the SSN row carries 636.73."
+}

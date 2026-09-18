@@ -1,0 +1,172 @@
+{
+  "variants": {
+    "first_code_only": {
+      "BACKTOSCHOOL": [
+        34,
+        1623.19
+      ],
+      "BOOKCLUB20": [
+        42,
+        5403.31
+      ],
+      "BOOKCLUB2O": [
+        1,
+        22.37
+      ],
+      "FREESHIP50": [
+        23,
+        1597.56
+      ],
+      "MOTHERSDAY": [
+        2,
+        33.33
+      ],
+      "SPRING2026": [
+        4,
+        171.57
+      ],
+      "SUMMERREAD15": [
+        2,
+        110.04
+      ],
+      "SUMMERREADS15": [
+        28,
+        1269.64
+      ],
+      "TEACHER10": [
+        33,
+        2011.52
+      ],
+      "WELCOME5": [
+        3,
+        88.85
+      ]
+    },
+    "keep_cancelled": {
+      "BACKTOSCHOOL": [
+        38,
+        1871.77
+      ],
+      "BOOKCLUB20": [
+        44,
+        5679.28
+      ],
+      "BOOKCLUB2O": [
+        1,
+        22.37
+      ],
+      "FREESHIP50": [
+        23,
+        1597.56
+      ],
+      "MOTHERSDAY": [
+        2,
+        33.33
+      ],
+      "SPRING2026": [
+        4,
+        171.57
+      ],
+      "SUMMERREAD15": [
+        2,
+        110.04
+      ],
+      "SUMMERREADS15": [
+        32,
+        1487.82
+      ],
+      "TEACHER10": [
+        41,
+        2371.98
+      ],
+      "WELCOME5": [
+        3,
+        88.85
+      ]
+    },
+    "no_window": {
+      "BACKTOSCHOOL": [
+        38,
+        1871.77
+      ],
+      "BOOKCLUB20": [
+        42,
+        5403.31
+      ],
+      "BOOKCLUB2O": [
+        1,
+        22.37
+      ],
+      "FREESHIP50": [
+        23,
+        1597.56
+      ],
+      "MOTHERSDAY": [
+        2,
+        33.33
+      ],
+      "SPRING2026": [
+        4,
+        171.57
+      ],
+      "SUMMERREAD15": [
+        2,
+        110.04
+      ],
+      "SUMMERREADS15": [
+        37,
+        1645.43
+      ],
+      "TEACHER10": [
+        39,
+        2343.22
+      ],
+      "WELCOME5": [
+        3,
+        88.85
+      ]
+    },
+    "total_revenue": {
+      "BACKTOSCHOOL": [
+        38,
+        2159.25
+      ],
+      "BOOKCLUB20": [
+        42,
+        5970.81
+      ],
+      "BOOKCLUB2O": [
+        1,
+        23.99
+      ],
+      "FREESHIP50": [
+        23,
+        1713.39
+      ],
+      "MOTHERSDAY": [
+        2,
+        35.74
+      ],
+      "SPRING2026": [
+        4,
+        205.98
+      ],
+      "SUMMERREAD15": [
+        2,
+        118.02
+      ],
+      "SUMMERREADS15": [
+        31,
+        1672.32
+      ],
+      "TEACHER10": [
+        39,
+        2636.91
+      ],
+      "WELCOME5": [
+        3,
+        95.3
+      ]
+    }
+  }
+}

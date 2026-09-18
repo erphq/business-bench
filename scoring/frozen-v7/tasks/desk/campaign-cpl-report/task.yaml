@@ -1,0 +1,71 @@
+id: campaign-cpl-report
+track: desk
+category: reports
+title: Cost per lead by channel for the quarter
+ask: |
+  Work out our cost per lead by channel for the second quarter from the finance spend sheet and the CRM leads export. Dana's email has the details. Save it as cpl.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the CRM tags sources differently from the finance sheet (facebook, instagram, fb / paid and ig are all Meta Ads; google / cpc, adwords and google are Google Ads); Dana's email carries the mapping and a naive join on the raw source loses the Instagram leads (check: Meta cost per lead)
+- |-
+  LinkedIn is billed in euros: the finance sheet's Currency column says EUR and the email gives 1.08 USD per EUR; unconverted spend is off by 8% (check: LinkedIn cost per lead)
+- |-
+  the finance sheet has a Subtotal line after each month block and a Total Q2 line inside the data; a plain SUM of the Spend column doubles the quarter (check: Q2 spend total)
+- |-
+  Direct Mail spent money in May and has no tracked leads; it must stay on the report with its spend and a cost per lead that is not #DIV/0! (checks: Direct Mail spend; no error cells)
+- |-
+  the CRM export runs from March into July and carries Spam and Test leads, all in the same file; only real leads created April-June count (check: total leads)
+- |-
+  unpaid sources (organic, referral, direct, word of mouth) are in the CRM export and are not channels on the report (check: total leads)
+checks:
+- type: file_exists
+  name: cpl.xlsx exists
+  path: cpl.xlsx
+- type: xlsx_has_formulas
+  name: totals are live formulas
+  path: cpl.xlsx
+  min_count: 8
+- type: xlsx_no_errors
+  name: no error cells (Direct Mail has zero leads)
+  path: cpl.xlsx
+- type: xlsx_value_present
+  name: Google Ads cost per lead
+  path: cpl.xlsx
+  expected: 193.61
+  rel_tol: 0.001
+  near_text: google
+- type: xlsx_value_present
+  name: Meta cost per lead (facebook + instagram merged)
+  path: cpl.xlsx
+  expected: 179.92
+  rel_tol: 0.001
+  near_text: meta
+- type: xlsx_value_present
+  name: LinkedIn cost per lead (EUR converted)
+  path: cpl.xlsx
+  expected: 356.17
+  rel_tol: 0.001
+  rounding: LinkedIn spend converted from EUR at 1.08
+  near_text: linkedin
+- type: xlsx_value_present
+  name: Direct Mail spend shown
+  path: cpl.xlsx
+  expected: 4347.81
+  rel_tol: 0.0001
+  near_text: direct mail
+  raw_value_ok: true
+- type: xlsx_value_present
+  name: total leads (quarter only, no spam/test)
+  path: cpl.xlsx
+  expected: 253
+  rel_tol: 0.001
+  near_text: total
+- type: xlsx_value_present
+  name: Q2 spend total (no subtotal double count)
+  path: cpl.xlsx
+  expected: 53939.18
+  rel_tol: 0.0001
+  rounding: includes LinkedIn spend converted from EUR at 1.08
+  near_text: total

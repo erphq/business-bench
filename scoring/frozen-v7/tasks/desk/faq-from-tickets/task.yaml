@@ -1,0 +1,87 @@
+id: faq-from-tickets
+track: desk
+category: drafting
+title: Website FAQ from the summer support tickets
+ask: |
+  Can you turn our July and August support tickets into an FAQ for the website? Dana's note says what she wants. Save it as faq.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  each question is asked eight or ten different ways and the Tags column is inconsistent (a quarter blank, 'shipping' on Canada, free-shipping and damaged tickets alike), so topics come from reading the messages (check: top five questions in order)
+- |-
+  repeat tickets ('any update?', 'sending this again') carry no topic words and some use the email in a different case; counted per ticket the order is pause, damaged, cancel, deadline, canada, which lifts Canada shipping into the five and cancellations above the change deadline; counted once per customer, as Dana's note says, it is pause, damaged, deadline, cancel, freeship (check: top five questions in order)
+- |-
+  Dana wants exactly five questions; grind, gift, decaf and Canada questions must not be padded in (check: top five questions in order)
+- |-
+  the pause limit rose from 8 to 12 weeks on 1 August; July replies, Tyler's August replies and the saved replies file still say 8 (check: pause answer uses the current limit)
+- |-
+  the damaged-coffee window is 30 days with a refund option, not 14 days with store credit (check: damaged coffee answer uses the current window)
+- |-
+  the change deadline moved from Wednesday 5 pm to Thursday 11:59 pm Pacific (check: change deadline answer)
+- |-
+  the three-shipment minimum was withdrawn; cancel any time, no fee (checks: cancel answer; withdrawn minimum absent)
+- |-
+  free shipping on one-off orders starts at $45, not $35 (check: free shipping answer uses the current threshold)
+checks:
+- type: file_exists
+  name: faq.md exists
+  path: faq.md
+- type: custom
+  name: top five questions in order
+  module: check.py
+- type: text_sentence_matches
+  name: pause answer uses the current limit
+  path: faq.md
+  all:
+  - (\bpaus|on hold|\bhold\b)
+  - (\b12\b|\btwelve\b)[\s-]*weeks?
+  none:
+  - (\b8\b|\beight\b)[\s-]*weeks?
+- type: text_sentence_matches
+  name: damaged coffee answer uses the current window
+  path: faq.md
+  # the policy states the window and the remedy in two sentences ('Email a photo within 30 days of delivery. We send
+  # a free replacement or a refund...'), so the facts may sit in two consecutive sentences; a refund or replacement
+  # named only inside a question (the FAQ's own heading) does not count as the answer offering it
+  window: 2
+  all:
+  - (\b30\b|\bthirty\b)[\s-]*days?
+  - (refund|replace)(?![^.!?]*\?)
+  none:
+  - (\b14\b|\bfourteen\b)[\s-]*days?
+  - store credit
+- type: text_sentence_matches
+  name: change deadline answer
+  path: faq.md
+  all:
+  - \bthursday
+  - (11:59|\bmidnight\b)
+  none:
+  - \bwednesday
+- type: text_sentence_matches
+  name: cancel answer
+  path: faq.md
+  all:
+  - \bcancel
+  - (any ?time|at any point|whenever you (like|want|choose))
+  none:
+  - \bminimum of\b
+  - \bat least (3|three)\b
+  - \bafter (3|three)\b
+- type: text_sentence_matches
+  name: free shipping answer uses the current threshold
+  path: faq.md
+  all:
+  - \$\s?45\b
+  - (\bfree\b|no shipping (charge|fee))
+  none:
+  - \$\s?35\b
+- type: text_not_contains
+  name: withdrawn minimum absent
+  path: faq.md
+  phrases:
+  - minimum of three
+  - minimum of 3
+  - three shipments
+  - 3 shipments

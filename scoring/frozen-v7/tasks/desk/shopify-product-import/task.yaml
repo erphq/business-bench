@@ -1,0 +1,165 @@
+id: shopify-product-import
+track: desk
+category: reformatting
+title: Fall catalog into Shopify's product import
+ask: |
+  We're launching the online store. Turn the fall catalog into a Shopify product import using their template; Jess's notes have the rules. Save it as shopify_products.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  one catalog row per SKU must become one handle per style with a row per variant; product fields and option names belong on the first row only, as in Shopify's sample (checks: handles; first-row product fields and prices)
+- |-
+  new handles follow Jess's slug rules: "Hike & Bike" -> hike-and-bike, "Men's" -> mens, "Café" -> cafe, the en dash in "Trekking Poles – Pair" and the parentheses in "(3-Pack)" collapse to one hyphen (check: handles)
+- |-
+  three styles already live in the November export keep their existing handles (mens-ridgeline-jacket, merino-hike-socks-3pk, enamel-camp-mug), which the slug rule would change; the export's old prices are not this season's (check: handles)
+- |-
+  socks and kids' boots only have sizes (Option1 Size), the daypack and tent only colors (Option1 Color), the mug and poles are single-variant (Title / Default Title) (checks: option values; first-row product fields)
+- |-
+  Retail is filled only on each style's first row, 2XL is $5 more, and the daypack's sale price becomes the Variant Price with retail in Compare At; the tent's retail is the text "$1,249.00" (checks: variant price; first-row product fields and prices)
+- |-
+  weights are written in lb, oz, kg and g, sometimes without a space, and must become whole grams (check: grams)
+- 'two variants have negative on-hand counts that import as 0 (check: inventory quantity)'
+- |-
+  Excel dropped the leading zero from several UPCs, which must be 12 digits again (check: barcodes)
+- |-
+  the Classic Canvas Hat style and the Men's Ridgeline Black 2XL variant are discontinued and stay out; Alpine Down Vest is Coming Soon, so draft and Published FALSE (checks: one row per SKU; row count; first-row product fields)
+checks:
+- type: csv_columns
+  name: Shopify template columns in order
+  path: shopify_products.csv
+  columns:
+  - Handle
+  - Title
+  - Body (HTML)
+  - Vendor
+  - Product Category
+  - Type
+  - Tags
+  - Published
+  - Option1 Name
+  - Option1 Value
+  - Option2 Name
+  - Option2 Value
+  - Variant SKU
+  - Variant Grams
+  - Variant Inventory Tracker
+  - Variant Inventory Qty
+  - Variant Inventory Policy
+  - Variant Fulfillment Service
+  - Variant Price
+  - Variant Compare At Price
+  - Variant Requires Shipping
+  - Variant Taxable
+  - Variant Barcode
+  - Variant Weight Unit
+  - Status
+  exact: true
+- type: csv_set_equal
+  name: one row per SKU
+  path: shopify_products.csv
+  column: Variant SKU
+  ref: shopify_products.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: shopify_products.csv
+  equals_ref: shopify_products.csv
+- type: csv_values_match
+  name: handles
+  path: shopify_products.csv
+  ref: shopify_products.csv
+  key: Variant SKU
+  columns:
+  - Handle
+  min_accuracy: 1.0
+  must_match_keys:
+  - GP1001-BLU-S
+  - GP3100-SLT-8
+  - GP2040-S
+  - GP4010
+  - GP1002-TEA-XS
+  - GP8015-T8
+  - GP9002
+- type: csv_values_match
+  name: option values
+  path: shopify_products.csv
+  ref: shopify_products.csv
+  key: Variant SKU
+  columns:
+  - Option1 Value
+  - Option2 Value
+  min_accuracy: 1.0
+  must_match_keys:
+  - GP2040-S
+  - GP2040-M
+  - GP4010
+  - GP5020-RED
+  - GP9002
+- type: csv_values_match
+  name: variant price
+  path: shopify_products.csv
+  ref: shopify_products.csv
+  key: Variant SKU
+  columns:
+  - Variant Price
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - GP1001-BLU-2XL
+  - GP7001-BLK-2XL
+  - GP7001-RST-2XL
+  - GP1001-BLU-M
+  - GP1001-BLU-L
+  - GP1001-BLU-XL
+  - GP5020-RED
+  - GP5020-FOR
+  - GP5020-BLK
+  - GP6003-SND
+  - GP6003-OLV
+- type: csv_values_match
+  name: grams
+  path: shopify_products.csv
+  ref: shopify_products.csv
+  key: Variant SKU
+  columns:
+  - Variant Grams
+  numeric: true
+  tolerance: 1.0
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: inventory quantity
+  path: shopify_products.csv
+  ref: shopify_products.csv
+  key: Variant SKU
+  columns:
+  - Variant Inventory Qty
+  numeric: true
+  tolerance: 0.0
+  min_accuracy: 1.0
+  must_match_keys:
+  - GP2040-M
+  - GP3100-MOS-9
+- type: csv_values_match
+  name: barcodes
+  path: shopify_products.csv
+  ref: shopify_products.csv
+  key: Variant SKU
+  columns:
+  - Variant Barcode
+  normalize:
+  - strip
+  min_accuracy: 1.0
+  must_match_keys:
+  - GP1001-BLU-L
+  - GP1001-BLK-XL
+  - GP1002-PLM-XS
+  - GP1002-PLM-M
+  - GP3100-SLT-9
+  - GP3100-MOS-8
+- type: custom
+  name: first-row product fields and prices
+  module: check.py

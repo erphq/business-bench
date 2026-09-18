@@ -1,0 +1,48 @@
+id: loan-schedule-check
+track: desk
+category: bookkeeping
+title: Check the gym loan's interest and principal split
+ask: |
+  Can you check our gym loan against what the credit union has been charging? Ingrid's email says what the books need, and the loan paperwork and activity download are in the folder. Save it as loan_check.xlsx.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  interest is paid in arrears, so the payment due 1 March 2026 still carries February's interest at 6.85%; the credit union charged 7.60% on it, a month early, and every later split carries a few cents more interest on its higher balance (checks: interest per payment, one line; interest overcharged by the credit union)
+- |-
+  the 10,000.00 additional principal payment on 2026-05-15 is all principal and lowers June's interest; charging interest on it as if it were a payment, or leaving it out, moves June to August (checks: interest per payment, one line; principal balance after August)
+- |-
+  the June autopay was returned NSF and paid again three days later; the reversal line carries positive amounts, so adding up the payment rows counts June's interest twice (check: total interest Jan-Aug)
+- |-
+  the closing-day amortization table has neither the rate change nor the extra payment, and its balances drift further off every month from May (checks: principal balance after August; total interest Jan-Aug)
+- |-
+  the activity download runs from a September 2025 balance forward to a September 2026 payment, under a three-line preamble with a BOM, CRLF endings and amounts as '$1,234.56' text (check: total interest Jan-Aug)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: loan_check.xlsx
+  min_count: 16
+- type: xlsx_no_errors
+  name: no error cells
+  path: loan_check.xlsx
+- type: custom
+  name: interest per payment, one line
+  module: check.py
+- type: xlsx_value_present
+  name: total interest Jan-Aug
+  path: loan_check.xlsx
+  expected: 9328.13
+  rel_tol: 1.0e-06
+  near_text: interest
+- type: xlsx_value_present
+  name: principal balance after August
+  path: loan_check.xlsx
+  expected: 178925.74
+  rel_tol: 1.0e-07
+  near_text: balance
+- type: xlsx_value_present
+  name: interest overcharged by the credit union
+  path: loan_check.xlsx
+  expected: 127.25
+  rel_tol: 1.0e-05
+  near_text: interest

@@ -1,0 +1,124 @@
+{
+  "no_credit_note": [
+    "RMA-2609-134"
+  ],
+  "notes": [
+    {
+      "applied_to": [
+        [
+          "INV-30417",
+          "606.69"
+        ]
+      ],
+      "gross": "676.35",
+      "rma": "RMA-2609-102",
+      "role": "fee_mix"
+    },
+    {
+      "applied_to": [
+        [
+          "INV-30485",
+          "431.48"
+        ],
+        [
+          "INV-30420",
+          "597.02"
+        ]
+      ],
+      "gross": "1058.98",
+      "rma": "RMA-2609-110",
+      "role": "exceeds"
+    },
+    {
+      "applied_to": [
+        [
+          "INV-30478",
+          "1701.34"
+        ],
+        [
+          "INV-30483",
+          "36.97"
+        ]
+      ],
+      "gross": "1794.27",
+      "rma": "RMA-2609-113",
+      "role": "paid_invoice"
+    },
+    {
+      "applied_to": [],
+      "gross": "224.40",
+      "rma": "RMA-2609-122",
+      "role": "no_open"
+    },
+    {
+      "applied_to": [
+        [
+          "INV-30451",
+          "135.48"
+        ]
+      ],
+      "gross": "135.48",
+      "rma": "RMA-2609-130",
+      "role": "rejected_line"
+    },
+    {
+      "applied_to": [
+        [
+          "INV-30433",
+          "921.98"
+        ],
+        [
+          "INV-30429",
+          "267.52"
+        ]
+      ],
+      "gross": "1189.50",
+      "rma": "RMA-2609-137",
+      "role": "pair_first"
+    },
+    {
+      "applied_to": [
+        [
+          "INV-30429",
+          "438.99"
+        ]
+      ],
+      "gross": "1087.30",
+      "rma": "RMA-2609-156",
+      "role": "pair_second"
+    },
+    {
+      "applied_to": [
+        [
+          "INV-30434",
+          "141.37"
+        ]
+      ],
+      "gross": "166.32",
+      "rma": "RMA-2609-166",
+      "role": "plain"
+    },
+    {
+      "applied_to": [
+        [
+          "INV-30421",
+          "181.83"
+        ]
+      ],
+      "gross": "181.83",
+      "rma": "RMA-2609-167",
+      "role": "plain"
+    },
+    {
+      "applied_to": [
+        [
+          "INV-30468",
+          "69.65"
+        ]
+      ],
+      "gross": "81.94",
+      "rma": "RMA-2609-190",
+      "role": "plain"
+    }
+  ]
+}

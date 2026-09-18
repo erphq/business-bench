@@ -1,0 +1,47 @@
+id: expense-categorize
+track: desk
+category: bookkeeping
+title: Categorize card transactions per policy, with thread overrides
+ask: |
+  Categorize these card transactions per our policy, the thread has a couple of changes. Output categorized.csv with a category column added, and put REVIEW on anything you can't place.
+followup: null
+timeout_s: 1200
+traps:
+  - Message 2 of thread.txt says "the policy stands"; message 4 (owner, 31 Aug) then overrides it three ways. The latest message wins.
+  - "Uber rides before 9am or after 7pm are Commuting, not Travel (policy says rideshare = Travel). Five such rows: TXN-4K7QD2, TXN-9MW3XA, TXN-2HV8PL (06:05-08:50) and TXN-7RZ5NC, TXN-5TQ1JE (19:10-23:30). Five midday Ubers and two midday Lyfts stay Travel; UBER *EATS is food delivery (Meals)."
+  - Anything at Blue Bottle is Meals (policy files the bean subscription under Office). Trap rows TXN-8CX6WM (subscription) and TXN-3PN2YK (bluebottlecoffee.com bean order); the SQ *BLUE BOTTLE cafe row is Meals either way.
+  - Notion moved from Marketing (policy, content calendar) to Software this month, TXN-6LD9RT.
+  - Three genuinely unplaceable strings must be REVIEW, not guessed - TXN-1SF4HB (PayPal to a person), TXN-0GJ7VU (bare POS terminal charge), TXN-2BK5ZD (SP HLDNGS CO). Both the policy and the owner say flag rather than guess.
+  - Two negative refund rows keep the category of the original charge (Office, Travel).
+  - Trap txn_ids are fixed across seeds so must_match_keys stays valid when gen.py is re-rolled.
+checks:
+  - type: csv_row_count
+    name: one output row per transaction
+    path: categorized.csv
+    equals_ref: categorized.csv
+  - type: csv_columns
+    name: source columns kept and category added (txn_id, date, time, description, amount, card_last4, category)
+    path: categorized.csv
+    columns: [txn_id, date, time, description, amount, card_last4, category]
+  - type: csv_values_match
+    name: category per txn_id (thread-override rows, REVIEW rows, and policy-settled furniture and supplies merchants must be right)
+    path: categorized.csv
+    ref: categorized.csv
+    key: txn_id
+    columns: [category]
+    min_accuracy: 0.95
+    must_match_keys:
+      - TXN-4K7QD2
+      - TXN-9MW3XA
+      - TXN-2HV8PL
+      - TXN-7RZ5NC
+      - TXN-5TQ1JE
+      - TXN-8CX6WM
+      - TXN-3PN2YK
+      - TXN-6LD9RT
+      - TXN-1SF4HB
+      - TXN-0GJ7VU
+      - TXN-2BK5ZD
+      - TXN-GC4THB
+      - TXN-QGD7MF
+      - TXN-9NPJJL

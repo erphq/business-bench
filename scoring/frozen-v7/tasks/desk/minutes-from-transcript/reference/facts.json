@@ -1,0 +1,47 @@
+{
+  "actions": [
+    {
+      "due": "2026-10-16",
+      "key": "freezer",
+      "keyword": "northwind|quote|freezer|compressor",
+      "naive_due": "2026-10-23",
+      "owner_first": "Marcus",
+      "owner_last": "Wright",
+      "task": "Return Northwind's signed quote to the general manager"
+    },
+    {
+      "due": "2026-10-19",
+      "key": "holiday",
+      "keyword": "holiday|schedule|christmas",
+      "naive_due": "2026-10-26",
+      "owner_first": "Sarah",
+      "owner_last": "White",
+      "task": "Send the holiday hours schedule to all staff"
+    },
+    {
+      "due": "2026-10-31",
+      "key": "newsletter",
+      "keyword": "newsletter",
+      "naive_due": "2026-10-31",
+      "owner_first": "Rahul",
+      "owner_last": "Smith",
+      "task": "Draft the November member newsletter"
+    },
+    {
+      "due": "2026-11-02",
+      "key": "parking",
+      "keyword": "parking|restrip|stripe|bids?",
+      "naive_due": "2026-11-02",
+      "owner_first": "Amanda",
+      "owner_last": "Cook",
+      "task": "Get three bids for restriping the parking lot"
+    }
+  ],
+  "cheap": 8650,
+  "cheap_vendor": "Polar Tech",
+  "dear": 9400,
+  "dear_vendor": "Northwind",
+  "meeting": "2026-10-05",
+  "upload": "2026-10-12",
+  "wrong_marcus": "Rodriguez"
+}

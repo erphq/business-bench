@@ -1,0 +1,145 @@
+id: quickbooks-customer-import
+track: desk
+category: reformatting
+title: CRM accounts into a QuickBooks Online customer import
+ask: |
+  We're moving invoicing to QuickBooks Online. Turn the CRM export into the customer import file using Marisol's template and rules, and save it as qbo_customers.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  two active residential customers are both named William Turner (Austin and Tacoma) and need the city in parentheses (check: display names)
+- |-
+  Westbrook Plumbing is a commercial customer and also a vendor in qbo_vendor_list.csv, so its display name is 'Westbrook Plumbing (Customer)' (check: display names)
+- |-
+  an inactive account shares the name Chloe Hernandez with an active one; filtering to Active first leaves the active customer's plain name, deduplicating before filtering wrongly adds a city (check: display names)
+- |-
+  the billing address is one cell: suite as its own segment or inline after the street, no comma before the state, a line break before the city, ZIP+4, two states spelled out, and two Providence/Burlington ZIPs that lost their leading zero (checks: street lines; city, state and ZIP)
+- |-
+  phones come in seven formats and two carry extensions (x123, ext. 45) that must be dropped; the template wants (206) 555-0142 (check: phone format)
+- |-
+  payment terms are written NET30, 30, '2% 10 Net 30', COD, Upon receipt, Net15, '15 days', '60 days' and must be QuickBooks' Due on receipt / Net 15 / Net 30 / Net 60 (check: terms)
+- |-
+  three leads and one inactive account stay out (checks: one row per active customer; row count)
+- 'residential customers have a blank Company Name (check: company name)'
+checks:
+- type: csv_columns
+  name: template columns in order
+  path: qbo_customers.csv
+  columns:
+  - Display Name
+  - Company Name
+  - First Name
+  - Last Name
+  - Email
+  - Phone
+  - Billing Street 1
+  - Billing Street 2
+  - Billing City
+  - Billing State
+  - Billing ZIP
+  - Billing Country
+  - Terms
+  - Taxable
+  exact: true
+- type: csv_set_equal
+  name: one row per active customer
+  path: qbo_customers.csv
+  column: Email
+  ref: qbo_customers.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: qbo_customers.csv
+  equals_ref: qbo_customers.csv
+- type: csv_values_match
+  name: display names
+  path: qbo_customers.csv
+  ref: qbo_customers.csv
+  key: Email
+  columns:
+  - Display Name
+  min_accuracy: 1.0
+  must_match_keys:
+  - williamturner92@aol.com
+  - turner.william@icloud.com
+  - nicholas.ortiz@westbrookplumbing.com
+  - chloe_hernandez@me.com
+- type: csv_values_match
+  name: company name
+  path: qbo_customers.csv
+  ref: qbo_customers.csv
+  key: Email
+  columns:
+  - Company Name
+  min_accuracy: 1.0
+  must_match_keys:
+  - smith.daniel@gmail.com
+  - susan.turner@outlook.com
+- type: csv_values_match
+  name: street lines
+  path: qbo_customers.csv
+  ref: qbo_customers.csv
+  key: Email
+  columns:
+  - Billing Street 1
+  - Billing Street 2
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - nicholas.ortiz@westbrookplumbing.com
+  - davis.stephanie@uptownfit.com
+  - kevin.nguyen@mossbank.cpa
+- type: csv_values_match
+  name: city, state and ZIP
+  path: qbo_customers.csv
+  ref: qbo_customers.csv
+  key: Email
+  columns:
+  - Billing City
+  - Billing State
+  - Billing ZIP
+  normalize:
+  - strip
+  - lower
+  min_accuracy: 1.0
+  must_match_keys:
+  - michaelcook66@icloud.com
+  - kathleenroberts81@orchardhilldental.com
+  - susan.mendoza@outlook.com
+  - collins.aisha@riverbendphysio.com
+  - rodriguez.jonathan@outlook.com
+  - kevin.nguyen@mossbank.cpa
+- type: csv_values_match
+  name: phone format
+  path: qbo_customers.csv
+  ref: qbo_customers.csv
+  key: Email
+  columns:
+  - Phone
+  normalize:
+  - strip
+  min_accuracy: 1.0
+  must_match_keys:
+  - smith.daniel@gmail.com
+  - brian.cooper@outlook.com
+- type: csv_values_match
+  name: terms
+  path: qbo_customers.csv
+  ref: qbo_customers.csv
+  key: Email
+  columns:
+  - Terms
+  min_accuracy: 1.0
+  must_match_keys:
+  - smith.daniel@gmail.com
+  - kevin.nguyen@mossbank.cpa
+  - susan.turner@outlook.com
+  - susan.mendoza@outlook.com
+  - kyoung@icloud.com
+  - gary.peterson@icloud.com
+  - michaelcook66@icloud.com
+  - jgarcia@valleyforgestorage.com

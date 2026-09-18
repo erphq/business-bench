@@ -1,0 +1,39 @@
+email,name,description,phone,currency,address_line1,address_line2,address_city,address_state,address_postal_code,address_country,metadata[legacy_account],metadata[plan]
+anna.ward@vantagepointmedia.com,Vantage Point Media Inc,Billing contact: Anna Ward,(206) 555-6372,usd,5226 Main St,Floor 8,Boulder,CO,80302,US,002224,starter_monthly
+thomas.nguyen@rooklegal.com,Rook Legal Inc,Billing contact: Thomas Nguyen,(415) 555-9778,usd,802 Dogwood Ave,,Burlington,VT,05401,US,010896,team_annual
+lisa.watson@zephyrbikeworks.com,Zephyr Bike Works Pty Ltd,Billing contact: Lisa Watson,+61 2 5550 4244,aud,34 George St,Level 3,Sydney,NSW,2000,AU,015219,business_annual
+kevin.lee@northwindgrocers.com,Northwind Grocers Inc,Billing contact: Kevin Lee,(720) 555-6428,usd,6095 School St,,Tucson,AZ,85701,US,015453,business_annual
+ryan.carter@terninsurance.com,Tern Insurance LLC,Billing contact: Ryan Carter,(415) 555-6776,usd,1728 Bridge St,,Raleigh,NC,27601,US,025053,business_monthly
+aisha.hernandez@sablefitness.com,Sable Fitness Inc,Billing contact: Aisha Hernandez,(512) 555-3287,usd,5490 Chestnut Ave,,Asheville,NC,28801,US,028306,business_monthly
+anthony.nguyen@orbitdentallabs.com,Orbit Dental Labs Pty Ltd,Billing contact: Anthony Nguyen,+61 2 5550 1335,aud,312 Pitt St,,Melbourne,VIC,3000,AU,028996,team_annual
+andrew.mendoza@umberceramics.com,Umber Ceramics LLC,Billing contact: Andrew Mendoza,(720) 555-8666,usd,2180 Dogwood Ave,,Providence,RI,02903,US,030967,business_monthly
+yuki.ruiz@thistlethreadalterations.com,Thistle & Thread Alterations LLC,Billing contact: Yuki Ruiz,(802) 555-7503,usd,5295 Bridge St,Floor 11,Richmond,VA,23219,US,031955,business_monthly
+eric.garcia@quaysidemarinas.com,Quayside Marinas Inc,Billing contact: Eric Garcia,(206) 555-8777,usd,677 Dogwood Ave,,Raleigh,NC,27601,US,035625,starter_annual
+mary.castillo@dorseyfreight.com,Dorsey Freight Inc,Billing contact: Mary Castillo,(604) 555-5954,cad,792 Spruce Blvd,Ste 280,Toronto,ON,M5V 2T6,CA,036172,business_annual
+michelle.wood@glassworksoptical.co,Glassworks Optical LLC,Billing contact: Michelle Wood,(802) 555-8591,usd,2525 Maple St,,Santa Fe,NM,87501,US,036227,team_annual
+elizabeth.hill@brightwaterdental.co,Brightwater Dental Ltd,Billing contact: Elizabeth Hill,+353 1 555 8766,eur,107 Grand Canal Street,,Dublin,,D02 X285,IE,042609,team_monthly
+ronald.allen@wrensparrowbookshop.com,Wren & Sparrow Bookshop Inc,Billing contact: Ronald Allen,(416) 555-4243,usd,896 Hickory Pl,,Toronto,ON,M5V 2T6,CA,044044,business_annual
+john.garcia@acmeindustrial.co,Acme Industrial LLC,Billing contact: John Garcia,(617) 555-5048,usd,9571 Alder St,Unit 4,Raleigh,NC,27601,US,046940,starter_annual
+dmitri.smith@westbrookplumbing.co,Westbrook Plumbing,Billing contact: Dmitri Smith,(617) 555-1677,usd,8316 Juniper Way,,Ann Arbor,MI,48104,US,048866,starter_annual
+jennifer.kim@harborlightmarine.com,Harbor Light Marine Inc,Billing contact: Jennifer Kim,(403) 555-8704,cad,828 Juniper Way,,Montreal,QC,H3B 2Y5,CA,051387,business_annual
+james.jones@foxgloveinteriors.co,Foxglove Interiors BV,Billing contact: James Jones,+31 20 555 9987,eur,Damrak 120,,Amsterdam,,1012 AB,NL,055074,team_monthly
+emily.hughes@lakesideveterinary.com,Lakeside Veterinary Inc,Billing contact: Emily Hughes,(416) 555-5500,cad,1636 Birch Ct,,Montreal,QC,H3B 2Y5,CA,059156,starter_monthly
+mark.davis@pinnacleroofing.com,Pinnacle Roofing Ltd,Billing contact: Mark Davis,(403) 555-8348,cad,1625 Prospect Ave,,Toronto,ON,M5V 2T6,CA,063859,starter_monthly
+laura.mensah@everlineinsurance.co,Everline Insurance GmbH,Billing contact: Laura Mensah,+49 30 55503530,eur,Chausseestraße 168,,Berlin,,10115,DE,064673,team_monthly
+kevin.long@blueheronconsulting.co,Blue Heron Consulting Inc,Billing contact: Kevin Long,(802) 555-4609,usd,2221 Laurel Ct,Suite 726,Santa Fe,NM,87501,US,068492,business_monthly
+steven.thomas@copperfieldlaw.co,Copperfield Law,Billing contact: Steven Thomas,(720) 555-6828,usd,228 Water St,,Boston,MA,02110,US,068856,team_annual
+kathleen.clark@pembertonhvac.com,Pemberton HVAC,Billing contact: Kathleen Clark,(416) 555-5258,cad,2241 Hill St,,Toronto,ON,M5V 2T6,CA,070957,starter_monthly
+yuki.hernandez@meridiantitle.com,Meridian Title,Billing contact: Yuki Hernandez,(617) 555-1033,usd,6595 River St,,Portland,OR,97209,US,076081,business_monthly
+gary.haddad@quarryroadnursery.com,Quarry Road Nursery GmbH,Billing contact: Gary Haddad,+49 30 55503729,eur,Invalidenstraße 95,,Berlin,,10115,DE,077049,team_annual
+lisa.edwards@brassicafarms.com,Brassica Farms Inc,Billing contact: Lisa Edwards,(802) 555-6749,usd,7325 Prospect Ave,Floor 9,Boise,ID,83702,US,077406,team_monthly
+amanda.thomas@harrowpike.com,Harrow & Pike,Billing contact: Amanda Thomas,+44 20 7946 0138,gbp,128 Wellington Street,,Leeds,,LS1 4AP,GB,080418,starter_monthly
+dorothy.anderson@silverlinelogistics.com,Silverline Logistics Ltd,Billing contact: Dorothy Anderson,+44 20 7946 0870,gbp,135 Old Street,,London,,EC2A 3AR,GB,082694,business_annual
+yuki.parker@northfieldautobody.com,Northfield Auto Body LLC,Billing contact: Yuki Parker,(971) 555-3980,usd,3417 Lake Dr,,Boise,ID,83702,US,084142,business_monthly
+jennifer.garcia@hollowellelectric.co,Hollowell Electric Ltd,Billing contact: Jennifer Garcia,+44 20 7946 0475,gbp,143 Oldham Street,Flat 1,Manchester,,M1 1AE,GB,086639,business_annual
+timothy.alvarez@mossbankaccounting.com,Mossbank Accounting,Billing contact: Timothy Alvarez,(971) 555-5280,usd,528 Ridge Rd,,Tacoma,WA,98402,US,089160,business_monthly
+david.lewis@fjordtravel.co,Fjord Travel Ltd,Billing contact: David Lewis,+44 20 7946 0284,gbp,90 Oldham Street,Flat 8,Manchester,,M1 1AE,GB,089687,business_annual
+ronald.lopez@coastlinecreditunion.com,Coastline Credit Union LLC,Billing contact: Ronald Lopez,(415) 555-8351,usd,366 Poplar Rd,,Burlington,VT,05401,US,091761,business_annual
+sarah.martin@wharfstreetbooks.co,Wharf Street Books LLC,Billing contact: Sarah Martin,(617) 555-8989,usd,6028 Birch Ct,Ste 222,Boulder,CO,80302,US,091879,team_monthly
+carlos.perez@valleyforgestorage.com,Valley Forge Storage,Billing contact: Carlos Perez,(415) 555-4508,usd,963 Chestnut Ave,,Providence,RI,02903,US,092542,business_annual
+john.kelly@orchardhilldental.com,Orchard Hill Dental Pty Ltd,Billing contact: John Kelly,+61 2 5550 7985,aud,389 George St,Level 21,Brisbane,QLD,4000,AU,092549,business_annual
+steven.cox@fernbrookmontessori.com,Fernbrook Montessori Inc,Billing contact: Steven Cox,(303) 555-9191,usd,4835 Water St,,Omaha,NE,68102,US,095977,team_annual

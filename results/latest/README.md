@@ -1,63 +1,49 @@
-# Latest full-arm results: campaign full-1
+# Latest complete desk comparison
 
-This is the recorded desk scoring snapshot from the four complete arms of the latest full benchmark campaign. Each arm covers all 187 tasks three times (561 attempts); the release contains 2,244 attempts. It is not a Proto development comparison. The overall campaign included additional incomplete arms; they are not represented as complete results here. No fully acceptance-validated full build campaign is included.
+**Proto + DeepSeek V4.1 Flash: 507/561 (90.4%). Codex + GPT-5.6-sol: 473/561 (84.3%).**
 
-## Recorded artifact scores
+All 187 tasks, three repetitions per system, one shared conservative-v7 scorer. All 1,122 attempts are retained. The lead is 34 passes, or 6.06 percentage points. This is the completed 2026-09-16 comparison, not a later Proto-vs-Proto development experiment.
 
-| System | Passes / 561 | Pass rate | All 3 / 187 | Median min |
-|---|---|---|---|---|
-| Codex / gpt-5.6-sol | 431 | 76.83% | 126 | 2.25 |
-| Proto / DeepSeek V4.1 Flash | 374 | 66.67% | 90 | 4.29 |
-| Proto / GLM-5.3-Flash | 355 | 63.28% | 77 | 4.03 |
-| Proto / Qwen 3.8 Flash | 381 | 67.91% | 105 | 7.03 |
+| Measure | Proto + DeepSeek V4.1 Flash | Codex + GPT-5.6-sol |
+|---|---|---|
+| Repetition 1 | 171/187 | 152/187 |
+| Repetition 2 | 167/187 | 160/187 |
+| Repetition 3 | 169/187 | 161/187 |
+| Frozen score | **507/561 (90.4%)** | **473/561 (84.3%)** |
+| All three attempts pass | 147/187 | 141/187 |
+| Original raw score | 447/561 (79.7%) | 431/561 (76.8%) |
 
-Codex / gpt-5.6-sol has the highest recorded artifact pass rate in this release. The cells use different models; these numbers do not isolate a harness effect or establish performance beyond this workload.
+## Resources
 
-## Repetition and execution accounting
+| Measure | Proto + DeepSeek | Codex + Sol |
+|---|---|---|
+| Input tokens | 823,587,929 | 165,959,457 |
+| Cached input | 775,672,448 | 150,329,088 |
+| Uncached input | 47,915,481 | 15,630,369 |
+| Output tokens | 20,910,907 | 4,823,643 |
+| Estimated model cost (USD) | 22.06 | 219.13 |
+| Median task duration (s) | 124.9 | 135.2 |
+| p90 task duration (s) | 455.6 | 403.3 |
+| Summed task duration (s) | 113,460.1 | 111,218.8 |
 
-| System | R1 / 187 | R2 / 187 | R3 / 187 | Timeouts | Nonzero exits |
-|---|---|---|---|---|---|
-| codex-sol | 138 | 145 | 148 | 0 | 0 |
-| proto-deepseek | 125 | 126 | 123 | 56 | 78 |
-| proto-glm | 122 | 116 | 117 | 34 | 45 |
-| proto-qwen | 129 | 126 | 126 | 112 | 117 |
+Costs are captured-usage API-equivalent estimates, not billed subscription charges. Uncaptured errored requests may add unknown cost. Summed parallel task time is not elapsed campaign wall time.
 
-| System | Passing, abnormal exit | Grader-error attempts | Missing usage |
-|---|---|---|---|
-| codex-sol | 0 | 3 | 0 |
-| proto-deepseek | 10 | 5 | 21 |
-| proto-glm | 5 | 2 | 11 |
-| proto-qwen | 32 | 3 | 5 |
+## Scoring and scope
 
-Timeout and nonzero-exit columns can overlap. Artifact pass is the stored grader verdict, not normal process completion. All attempts remain in the denominator. Grader-error counts and missing usage describe unresolved evidence; they are not silently repaired or removed.
+Every frozen pass also completed normally. Proto had three timeouts overall; Codex had none. Original grader errors (four Proto, three Codex) are retained separately; the frozen scorer has zero grader errors. Raw and frozen verdicts are distinct fields, never mixed.
 
-## Estimated model cost
+The paired task-clustered bootstrap reports a descriptive 95% interval of +1.25 to +11.05 percentage points (20,000 samples, seed 20260916). The task set was used during development, and models, sampling controls, and cohort timing differ. This establishes a lead for the reported configurations on this workload, not a causal harness-only or unseen-generalization result. Proto did not reach 90% in every repetition: repetition two was 167/187 (89.3%).
 
-| System | Observations / 561 | Mean USD, observed | Sum USD, observed |
-|---|---|---|---|
-| codex-sol | 561 | 0.3906 | 219.1257 |
-| proto-deepseek | 540 | 0.0617 | 33.3271 |
-| proto-glm | 550 | 0.0461 | 25.3543 |
-| proto-qwen | 556 | 0.0472 | 26.2309 |
+The release includes the frozen scorer at `scoring/frozen-v7/`, an allowlisted ledger, original-result and receipt hashes, artifact hashes, and provenance. `python bench/export_campaign.py --verify` checks matrix completeness, score arithmetic and the complete scorer fingerprint. Raw artifacts remain private; their hashes do not reconstruct their contents. No completed build leaderboard is claimed.
 
-Costs are recorded estimates under the historical price assumptions, not invoices or current-price claims. Means exclude missing cost observations; sums are observed sums, not complete billed totals when observations are missing. The price table is in bench/prices.json.
+## Category results
 
-## Category counts
-
-| Category | Codex sol | Proto DeepSeek | Proto GLM | Proto Qwen |
-|---|---|---|---|---|
-| bookkeeping | 91 / 108 | 70 / 108 | 68 / 108 | 72 / 108 |
-| drafting | 28 / 57 | 21 / 57 | 27 / 57 | 20 / 57 |
-| extraction | 66 / 78 | 56 / 78 | 56 / 78 | 69 / 78 |
-| reformatting | 78 / 78 | 68 / 78 | 66 / 78 | 78 / 78 |
-| reports | 45 / 90 | 47 / 90 | 35 / 90 | 34 / 90 |
-| spreadsheet | 98 / 123 | 94 / 123 | 90 / 123 | 94 / 123 |
-| tooling | 25 / 27 | 18 / 27 | 13 / 27 | 14 / 27 |
-
-## Provenance and interpretation
-
-The launcher names image business-bench:v38 and runtime revision 53a303309; it sets high reasoning effort, first-party provider routes for the three API models, native workbook recalculation, and three repetitions. These are recorded launch settings, not independently recovered per-request configurations. Model usage is retained in the ledger; the Codex usage extractor may infer the configured model name when its event stream omits it.
-
-Original result.json files lack per-attempt scorer hashes. Their source file hashes are retained, but a uniform immutable historical grader cannot be established from these records. The published snapshot preserves the recorded verdicts without applying current release code retrospectively. Treat the table as descriptive campaign evidence, not a scorer-controlled causal experiment or independently certified leaderboard.
-
-attempts.jsonl contains every included result with allowlisted check verdicts, execution fields, usage, costs, source hashes, and source modification timestamps. File modification times are not asserted to be run start times. summary.json is reproducible from that ledger. provenance.json defines inclusion and known gaps. Raw workspaces, homes, trace logs, and secret-bearing reviewer sheets are deliberately absent.
+| Category | Proto + DeepSeek | Codex + Sol |
+|---|---|---|
+| bookkeeping | 99/108 | 98/108 |
+| drafting | 49/57 | 37/57 |
+| extraction | 70/78 | 69/78 |
+| reformatting | 74/78 | 78/78 |
+| reports | 81/90 | 56/90 |
+| spreadsheet | 115/123 | 109/123 |
+| tooling | 19/27 | 26/27 |

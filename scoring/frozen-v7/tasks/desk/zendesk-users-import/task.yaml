@@ -1,0 +1,140 @@
+id: zendesk-users-import
+track: desk
+category: reformatting
+title: Import client contacts as Zendesk users
+ask: |
+  Our helpdesk is moving to Zendesk and the client companies are already set up there. Please turn the CRM contact export into the user import file; Amara's rules, the organizations export and the template are in the folder. Save it as zendesk_users.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  CRM account names are loose (ALL CAPS, Inc., LLC, Tamarack Brewing Co.) and Brightwater Dental is split into two site accounts; organization must be the Zendesk name exactly, and the new Kingfisher Charters account is not in Zendesk so its people get a blank organization (check: organization and external id)
+- |-
+  three people are contacts on two accounts under the same email; the note that decides their organization sits on the kept row for two of them and on the other row for the person who moved, and external_id must come from the kept row (checks: one row per person; organization and external id)
+- |-
+  eight contacts are Portal Admins in the CRM, which is not a Zendesk role: everyone is end-user, and restriction is organization only for each account's primary contact (check: role and restriction)
+- |-
+  the plan tag follows the organization the person is filed under, and accounts still marked Pro (legacy) take plan_managed_pro; plan names are not tags until lowercased with underscores (check: plan tag)
+- |-
+  emails arrive in mixed case and the two-account people appear twice, so a plain row copy imports duplicate users (checks: one row per person; row count)
+checks:
+- type: csv_columns
+  name: Zendesk template columns, exact order
+  path: zendesk_users.csv
+  columns:
+  - name
+  - email
+  - external_id
+  - role
+  - restriction
+  - organization
+  - tags
+  - phone
+  - notes
+  exact: true
+- type: csv_set_equal
+  name: one row per person
+  path: zendesk_users.csv
+  column: email
+  ref: zendesk_users.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: zendesk_users.csv
+  equals_ref: zendesk_users.csv
+- type: csv_values_match
+  name: organization and external id
+  path: zendesk_users.csv
+  ref: zendesk_users.csv
+  key: email
+  columns:
+  - organization
+  - external_id
+  min_accuracy: 1.0
+  must_match_keys:
+  - aisha_collins@gmail.com
+  - amanda_thomas@fernbrookmontessori.org
+  - amy.adams@copperfieldlaw.com
+  - amy.gomez@wrensparrowbooks.com
+  - anthony.myers@protonmail.com
+  - awatson@tamarackbrewing.com
+  - barbara.mitchell@gmail.com
+  - cooper.leila@brightwaterdental.com
+  - dana_chavez@aol.com
+  - dharris@outlook.com
+  - dorothy.anderson@wrensparrowbooks.com
+  - emily_hughes@protonmail.com
+  - hiroshiscott85@tamarackbrewing.com
+  - jackson.rebecca@yahoo.com
+  - jeffreylopez50@brightwaterdental.com
+  - jkim@dorseyfreight.com
+  - jmendoza@copperfieldlaw.com
+  - john_ward@yahoo.com
+  - johnson.deborah@hollowellelectric.com
+  - jonathan.cox@tamarackbrewing.com
+  - joshua_phillips@yahoo.com
+  - king.david@copperfieldlaw.com
+  - lgonzalez@juniperstreet.cafe
+  - lisa.nelson@tamarackbrewing.com
+  - lisa.watson@hollowellelectric.com
+  - lmartinez@kingfishercharters.com
+  - marcus.mendoza@dorseyfreight.com
+  - mark_martinez@juniperstreet.cafe
+  - mateotaylor31@haddadbooks.com
+  - mgonzalez@gmail.com
+  - osei.kathleen@icloud.com
+  - rramirez@hollowellelectric.com
+  - ryan.carter@wrensparrowbooks.com
+  - stephanie.alvarez@me.com
+  - susan.hill@brightwaterdental.com
+  - thomas_johnson@copperfieldlaw.com
+- type: csv_values_match
+  name: role and restriction
+  path: zendesk_users.csv
+  ref: zendesk_users.csv
+  key: email
+  columns:
+  - role
+  - restriction
+  min_accuracy: 1.0
+  must_match_keys:
+  - aisha_collins@gmail.com
+  - barbara.mitchell@gmail.com
+  - cooper.leila@brightwaterdental.com
+  - dana_chavez@aol.com
+  - dorothy.anderson@wrensparrowbooks.com
+  - emily_hughes@protonmail.com
+  - eric_murphy@everline.com
+  - hiroshiscott85@tamarackbrewing.com
+  - jkim@dorseyfreight.com
+  - joshua_phillips@yahoo.com
+  - king.david@copperfieldlaw.com
+  - klong@meridiantitle.com
+  - leila.mendoza@lakesidevet.com
+  - lisa.watson@hollowellelectric.com
+  - lmartinez@kingfishercharters.com
+  - osei.kathleen@icloud.com
+  - priyamorris67@acmeindustrial.com
+  - sjones@riverbendphysio.com
+  - susan.hill@brightwaterdental.com
+  - thomas_johnson@copperfieldlaw.com
+- type: csv_values_match
+  name: plan tag
+  path: zendesk_users.csv
+  ref: zendesk_users.csv
+  key: email
+  columns:
+  - tags
+  min_accuracy: 1.0
+  must_match_keys:
+  - amanda_thomas@fernbrookmontessori.org
+  - cox.steven@everline.com
+  - eric_murphy@everline.com
+  - jackson.rebecca@yahoo.com
+  - jenniferrodriguez6@everline.com
+  - joshua_phillips@yahoo.com
+  - marybaker96@everline.com
+  - mateotaylor31@haddadbooks.com
+  - mgonzalez@gmail.com

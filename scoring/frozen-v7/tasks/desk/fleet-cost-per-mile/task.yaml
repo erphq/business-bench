@@ -1,0 +1,70 @@
+id: fleet-cost-per-mile
+track: desk
+category: reports
+title: Cost per mile per vehicle for the first half
+ask: |
+  Can you work out what each of our vehicles cost per mile to run from January to June? Save it as fleet_costs.xlsx with live formulas. Carla's note says where everything comes from.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  fill-ups at Quebec stations are in litres (UOM LTR) with the amount already in US dollars; Van 26 has 9 of them and adding the Quantity column as gallons inflates its gallons and wrecks its MPG (check: Van 26 gallons)
+- |-
+  Van 24 was sold on 2026-04-17 and the odometer tab says 'sold' from April; its miles run to the 92,684 on the bill of sale (Fleet tab), while its April fuel and pre-sale repairs are real costs, so stopping at the 31 March read overstates its cost per mile (checks: Van 24 miles; Van 24 cost per mile)
+- |-
+  Van 30 entered service on 2026-04-20 with its delivery miles on the Fleet tab and no reading before 30 April; starting from the 30 April read loses its first ten days (check: fleet miles)
+- |-
+  the fuel card also carries car washes and merchandise (qty 1, UOM EA) that Carla excludes (check: fleet total cost)
+- |-
+  Champlain Fleet names Van 22 by its licence plate on every invoice (and a few other vans some of the time), and unit names come as 'Van 22', 'VAN 22' and 'VAN22'; a join on the unit number alone drops those invoices (check: Van 22 total cost)
+- |-
+  the WEX export has a three-line preamble and CRLF endings and invoice totals are '$1,234.56' text (check: fleet total cost)
+- 'the summary has to be live formulas (check: live formulas)'
+checks:
+- type: file_exists
+  name: fleet_costs.xlsx exists
+  path: fleet_costs.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: fleet_costs.xlsx
+  min_count: 10
+- type: xlsx_no_errors
+  name: no error cells
+  path: fleet_costs.xlsx
+- type: xlsx_value_present
+  name: Van 26 gallons (litres converted)
+  path: fleet_costs.xlsx
+  expected: 795.39
+  rel_tol: 0.001
+  rounding: Quebec fill-ups converted from litres to US gallons
+  near_text: van 26
+- type: xlsx_value_present
+  name: Van 24 miles (to the bill of sale)
+  path: fleet_costs.xlsx
+  expected: 5735
+  rel_tol: 0.0001
+  near_text: van 24
+- type: xlsx_value_present
+  name: Van 24 cost per mile
+  path: fleet_costs.xlsx
+  expected: 0.6424
+  rel_tol: 0.005
+  near_text: van 24
+- type: xlsx_value_present
+  name: Van 22 total cost (plate-named invoices included)
+  path: fleet_costs.xlsx
+  expected: 2879.13
+  rel_tol: 0.0001
+  near_text: van 22
+- type: xlsx_value_present
+  name: fleet total cost (no car washes or snacks)
+  path: fleet_costs.xlsx
+  expected: 31321.72
+  rel_tol: 1.0e-05
+  near_text: total
+- type: xlsx_value_present
+  name: fleet miles
+  path: fleet_costs.xlsx
+  expected: 75154
+  rel_tol: 1.0e-05
+  near_text: total

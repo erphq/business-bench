@@ -1,0 +1,39 @@
+{
+  "files": {
+    "AP": "AeroPac_export_manifest_09Sep2026.pdf",
+    "NL10": "Northline_manifest_2026-09-10.pdf",
+    "NL8": "Northline_manifest_2026-09-08.pdf",
+    "PPLOG": "postpoint_postage_log_2026-09-09.pdf",
+    "PPSCAN": "scan_postpoint_manifest_0911.pdf"
+  },
+  "multi_package": [
+    "NL837811162064",
+    "NL244987804856"
+  ],
+  "scan_figures": {
+    "manifests/scan_postpoint_manifest_0911.pdf": [
+      "94024216937586819395",
+      "SB-10738",
+      "3 pounds 11 ounces",
+      "16.54",
+      "INS 2.85",
+      "94026049434795020066",
+      "SB-10762",
+      "3 pounds 8 ounces",
+      "15.75",
+      "INS 2.85",
+      "94027656466312142990",
+      "SB-10766",
+      "8 ounces",
+      "10.97",
+      "INS 0.00",
+      "94023529970003412426",
+      "VOID"
+    ]
+  },
+  "voided": [
+    "NL465804433792",
+    "94022574636653716651",
+    "94023529970003412426"
+  ]
+}

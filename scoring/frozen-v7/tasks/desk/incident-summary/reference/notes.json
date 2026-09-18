@@ -1,0 +1,13 @@
+{
+  "near_misses": 68,
+  "relisted_ids": [
+    "IR-2026-407",
+    "IR-2026-412",
+    "IR-2026-416"
+  ],
+  "top_site": "Plant 1",
+  "top_site_incidents": 46,
+  "total_incidents": 111,
+  "voided_rows": 5,
+  "zero_incident_site": "Warehouse"
+}

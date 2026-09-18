@@ -1,0 +1,53 @@
+id: event-announcement
+track: desk
+category: drafting
+title: Announcement for the wine club harvest dinner
+ask: |
+  Can you write the announcement for the wine club harvest dinner so I can send it to members? The planning sheet and Sofia's email thread are in the folder. Save it as announcement.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the planning sheet says Saturday, October 17, 2026; the caterer is double-booked and the owner moves the dinner to Saturday, October 24, 2026 in the thread (check: dates and seating)
+- |-
+  the owner pushes the RSVP deadline back a week, from October 5 to October 12; the sheet still shows October 5 (check: dates and seating)
+- |-
+  the sheet's address is the tasting room (3421 Old Mill Road); the estate manager says guests must drive to the pavilion entrance at 3711 Ridgecrest Lane (check: pavilion address)
+- |-
+  the sheet's capacity of 120 is the standing reception count; seated for the plated dinner the pavilion holds 96 (checks: seated capacity; dates and seating)
+- |-
+  last spring's release party announcement is in the folder as a style example with April dates, $65/$80 prices and a 60-guest limit (checks: ticket prices; spring party details absent)
+checks:
+- type: file_exists
+  name: announcement.md exists
+  path: announcement.md
+- type: custom
+  name: dates and seating
+  module: check.py
+- type: text_matches_all
+  name: pavilion address
+  path: announcement.md
+  patterns:
+  - \b3711\s+Ridgecrest\s+(Lane|Ln\b)
+- type: text_sentence_matches
+  name: seated capacity
+  path: announcement.md
+  all:
+  - (?<![\d$.])96(?![\d.])
+  - (guest|seat|people|person|attendee|capacity|limited|spot|place|table)
+  none:
+  - (?<![\d$.])120(?![\d.])
+- type: text_numbers_present
+  name: ticket prices
+  path: announcement.md
+  numbers:
+  - 95
+  - 115
+  rel_tol: 0.0001
+- type: text_not_contains
+  name: spring party details absent
+  path: announcement.md
+  phrases:
+  - $65
+  - $80
+  - Barrel Room

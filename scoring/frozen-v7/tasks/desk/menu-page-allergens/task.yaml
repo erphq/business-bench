@@ -1,0 +1,70 @@
+id: menu-page-allergens
+track: desk
+category: tooling
+title: Fall menu page with allergens for the QR code
+ask: |
+  Can you make the fall menu page for the QR code on the tables? Everything's in the menu workbook, and Mei's note and Kenji's 86 list are in the folder. Save it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  GF in the allergen column means a gluten-free option and V means vegan; reading GF as G plus F puts gluten and fish on Edamame with chili salt, Charred shishito peppers, Salmon poke bowl (check: page structure: allergens per dish)
+- |-
+  SF is shellfish, not fish, and SE is sesame, SY soy; a first-letter or substring reading gives Shrimp har gow fish and scatters soy and sesame (check: page structure: allergens per dish)
+- |-
+  codes are separated by ', ', '/', ',' or a space and some are lower case, so splitting on commas alone leaves 'G/SY' and 'SE SY' as unknown codes (check: page structure: allergens per dish)
+- |-
+  the chef's 86 list takes three dishes off and names them in lower case (checks: 86'd dishes left off; page structure: one row per dish)
+- |-
+  five dishes have new prices on the Fall price changes tab; the Menu tab still shows the old ones (checks: new prices on the menu; page structure: price per dish)
+- |-
+  some Menu-tab prices are text ('$14', '13.5') rather than numbers (check: page structure: price per dish)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: every dish on the menu
+  path: index.html
+  phrases:
+  - Smashed cucumber salad
+  - Edamame with chili salt
+  - Karaage chicken
+  - Crispy tofu bites
+  - Charred shishito peppers
+  - Pork and chive gyoza
+  - Shrimp har gow
+  - Mushroom potstickers
+  - Kimchi dumplings
+  - Tonkotsu ramen
+  - Shoyu chicken ramen
+  - Spicy miso ramen
+  - Vegan tantanmen
+  - Yuzu shio ramen
+  - Salmon poke bowl
+  - Mapo tofu bowl
+  - Katsu curry
+  - Kuro goma ice cream
+  - Yuzu cheesecake
+  - Hojicha latte
+  - Calpico soda
+  - Yuzu lemonade
+  - Ramune
+- type: text_not_contains
+  name: 86'd dishes left off
+  path: index.html
+  phrases:
+  - Crab rangoon
+  - Chashu rice bowl
+  - Matcha mochi
+- type: text_numbers_present
+  name: new prices on the menu
+  path: index.html
+  numbers:
+  - 20.5
+  - 14.0
+  - 10.0
+  rel_tol: 1.0e-07
+- type: custom
+  name: page structure
+  module: check.py

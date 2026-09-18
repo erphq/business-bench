@@ -1,0 +1,9 @@
+staff_id,name,capacity_hours,billable_hours,utilization
+E101,Dana Mossbank,157.50,72.00,0.4571
+E102,Kenneth Oduya,142.50,125.75,0.8825
+E103,Priya Raman,142.50,126.50,0.8877
+E104,Tomasz Wojcik,150.00,108.25,0.7217
+E105,Grace Lin,96.00,60.00,0.6250
+E106,Omar Haddad,123.00,103.50,0.8415
+E107,Hannah Brooks,97.50,54.75,0.5615
+E108,Luis Ortega,120.00,111.75,0.9313

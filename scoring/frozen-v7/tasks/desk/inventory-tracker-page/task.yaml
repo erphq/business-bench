@@ -1,0 +1,69 @@
+id: inventory-tracker-page
+track: desk
+category: tooling
+title: Stock page for the workshop tablet
+ask: |
+  Can you turn the latest stock export into the stock page for the pour-station tablet? Marta's note says what she wants on it. Save it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  on-hand and reorder point are in different units on some lines: a mass line counted in grams against a reorder point in kilos is low while its raw number looks huge, and a volume line counted in litres against a reorder point in millilitres is fine while its raw number looks tiny (check: page structure: low-stock section)
+- |-
+  Marta's rule is at or below the reorder point, and two lines (one counted in grams against kilos, one in pieces) sit exactly on it (check: page structure: low-stock section)
+- |-
+  three Archived lines are still in the export, all under their reorder points; they belong nowhere on the page (checks: archived lines left off; page structure: one row per item)
+- |-
+  cost is quoted per kg, per L, per case of 24 or 48, per pack or per roll while stock is counted in grams, millilitres, kilos, litres and pieces, so on hand times unit cost overstates the total by thousands (checks: total stock value; page structure: totals row)
+- |-
+  the export is in bin order and some names are typed in capitals, lower case or with a leading space, so a raw sort puts them out of place (check: page structure: sorted A to Z)
+- |-
+  last month's export sits next to this month's with the same lines and different counts (checks: total stock value; page structure: low-stock section)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: every stocked item named
+  path: index.html
+  phrases:
+  - Activated charcoal
+  - Amber glass jars
+  - Avocado oil
+  - Candle tins
+  - Castor oil
+  - Cedarwood fragrance oil
+  - Cocoa butter
+  - Coconut oil refined
+  - Colloidal oatmeal
+  - Cotton wicks
+  - Epsom salt
+  - Eucalyptus essential oil
+  - Jar labels
+  - Kaolin clay
+  - Kraft soap boxes
+  - Lavender essential oil
+  - Muslin soap bags
+  - Peppermint essential oil
+  - Rice bran oil
+  - Sodium hydroxide lye
+  - Stearic acid
+  - Sweet almond oil
+  - Vegetable glycerin
+  - Witch hazel extract
+- type: text_not_contains
+  name: archived lines left off
+  path: index.html
+  phrases:
+  - Beeswax pellets
+  - Vanilla bean fragrance oil
+  - Wooden wicks
+- type: text_numbers_present
+  name: total stock value
+  path: index.html
+  numbers:
+  - 5290.37
+  rel_tol: 1.0e-07
+- type: custom
+  name: page structure
+  module: check.py

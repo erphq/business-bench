@@ -1,12 +1,85 @@
 [
   {
+    "harness": "proto-deepseek",
+    "tasks": 187,
+    "attempts": 561,
+    "passed": 507,
+    "raw_passed": 447,
+    "pass_rate": 0.9037433155080213,
+    "all_three_pass": 147,
+    "by_repetition": {
+      "1": 171,
+      "2": 167,
+      "3": 169
+    },
+    "raw_by_repetition": {
+      "1": 147,
+      "2": 148,
+      "3": 152
+    },
+    "timed_out": 3,
+    "nonzero_exit": 3,
+    "passing_abnormal_exit": 0,
+    "grader_error_attempts": 0,
+    "raw_grader_error_attempts": 4,
+    "usage_missing": 0,
+    "cost_observations": 561,
+    "estimated_cost_sum_usd": 22.0613,
+    "estimated_cost_mean_usd": 0.0393,
+    "median_wall_s": 124.9,
+    "p90_wall_s": 455.6,
+    "sum_wall_s": 113460.1,
+    "usage": {
+      "input": 823587929,
+      "cached_input": 775672448,
+      "output": 20910907,
+      "uncached_input": 47915481
+    },
+    "by_category": {
+      "bookkeeping": {
+        "attempts": 108,
+        "passed": 99
+      },
+      "drafting": {
+        "attempts": 57,
+        "passed": 49
+      },
+      "extraction": {
+        "attempts": 78,
+        "passed": 70
+      },
+      "reformatting": {
+        "attempts": 78,
+        "passed": 74
+      },
+      "reports": {
+        "attempts": 90,
+        "passed": 81
+      },
+      "spreadsheet": {
+        "attempts": 123,
+        "passed": 115
+      },
+      "tooling": {
+        "attempts": 27,
+        "passed": 19
+      }
+    }
+  },
+  {
     "harness": "codex-sol",
     "tasks": 187,
     "attempts": 561,
-    "passed": 431,
-    "pass_rate": 0.768270944741533,
-    "all_three_pass": 126,
+    "passed": 473,
+    "raw_passed": 431,
+    "pass_rate": 0.8431372549019608,
+    "all_three_pass": 141,
     "by_repetition": {
+      "1": 152,
+      "2": 160,
+      "3": 161
+    },
+    "raw_by_repetition": {
       "1": 138,
       "2": 145,
       "3": 148
@@ -14,176 +87,29 @@
     "timed_out": 0,
     "nonzero_exit": 0,
     "passing_abnormal_exit": 0,
-    "grader_error_attempts": 3,
+    "grader_error_attempts": 0,
+    "raw_grader_error_attempts": 3,
     "usage_missing": 0,
     "cost_observations": 561,
     "estimated_cost_sum_usd": 219.1257,
     "estimated_cost_mean_usd": 0.3906,
     "median_wall_s": 135.2,
+    "p90_wall_s": 403.3,
+    "sum_wall_s": 111218.8,
+    "usage": {
+      "input": 165959457,
+      "cached_input": 150329088,
+      "output": 4823643,
+      "uncached_input": 15630369
+    },
     "by_category": {
       "bookkeeping": {
         "attempts": 108,
-        "passed": 91
-      },
-      "drafting": {
-        "attempts": 57,
-        "passed": 28
-      },
-      "extraction": {
-        "attempts": 78,
-        "passed": 66
-      },
-      "reformatting": {
-        "attempts": 78,
-        "passed": 78
-      },
-      "reports": {
-        "attempts": 90,
-        "passed": 45
-      },
-      "spreadsheet": {
-        "attempts": 123,
         "passed": 98
       },
-      "tooling": {
-        "attempts": 27,
-        "passed": 25
-      }
-    }
-  },
-  {
-    "harness": "proto-deepseek",
-    "tasks": 187,
-    "attempts": 561,
-    "passed": 374,
-    "pass_rate": 0.6666666666666666,
-    "all_three_pass": 90,
-    "by_repetition": {
-      "1": 125,
-      "2": 126,
-      "3": 123
-    },
-    "timed_out": 56,
-    "nonzero_exit": 78,
-    "passing_abnormal_exit": 10,
-    "grader_error_attempts": 5,
-    "usage_missing": 21,
-    "cost_observations": 540,
-    "estimated_cost_sum_usd": 33.3271,
-    "estimated_cost_mean_usd": 0.0617,
-    "median_wall_s": 257.5,
-    "by_category": {
-      "bookkeeping": {
-        "attempts": 108,
-        "passed": 70
-      },
       "drafting": {
         "attempts": 57,
-        "passed": 21
-      },
-      "extraction": {
-        "attempts": 78,
-        "passed": 56
-      },
-      "reformatting": {
-        "attempts": 78,
-        "passed": 68
-      },
-      "reports": {
-        "attempts": 90,
-        "passed": 47
-      },
-      "spreadsheet": {
-        "attempts": 123,
-        "passed": 94
-      },
-      "tooling": {
-        "attempts": 27,
-        "passed": 18
-      }
-    }
-  },
-  {
-    "harness": "proto-glm",
-    "tasks": 187,
-    "attempts": 561,
-    "passed": 355,
-    "pass_rate": 0.6327985739750446,
-    "all_three_pass": 77,
-    "by_repetition": {
-      "1": 122,
-      "2": 116,
-      "3": 117
-    },
-    "timed_out": 34,
-    "nonzero_exit": 45,
-    "passing_abnormal_exit": 5,
-    "grader_error_attempts": 2,
-    "usage_missing": 11,
-    "cost_observations": 550,
-    "estimated_cost_sum_usd": 25.3543,
-    "estimated_cost_mean_usd": 0.0461,
-    "median_wall_s": 241.8,
-    "by_category": {
-      "bookkeeping": {
-        "attempts": 108,
-        "passed": 68
-      },
-      "drafting": {
-        "attempts": 57,
-        "passed": 27
-      },
-      "extraction": {
-        "attempts": 78,
-        "passed": 56
-      },
-      "reformatting": {
-        "attempts": 78,
-        "passed": 66
-      },
-      "reports": {
-        "attempts": 90,
-        "passed": 35
-      },
-      "spreadsheet": {
-        "attempts": 123,
-        "passed": 90
-      },
-      "tooling": {
-        "attempts": 27,
-        "passed": 13
-      }
-    }
-  },
-  {
-    "harness": "proto-qwen",
-    "tasks": 187,
-    "attempts": 561,
-    "passed": 381,
-    "pass_rate": 0.679144385026738,
-    "all_three_pass": 105,
-    "by_repetition": {
-      "1": 129,
-      "2": 126,
-      "3": 126
-    },
-    "timed_out": 112,
-    "nonzero_exit": 117,
-    "passing_abnormal_exit": 32,
-    "grader_error_attempts": 3,
-    "usage_missing": 5,
-    "cost_observations": 556,
-    "estimated_cost_sum_usd": 26.2309,
-    "estimated_cost_mean_usd": 0.0472,
-    "median_wall_s": 421.8,
-    "by_category": {
-      "bookkeeping": {
-        "attempts": 108,
-        "passed": 72
-      },
-      "drafting": {
-        "attempts": 57,
-        "passed": 20
+        "passed": 37
       },
       "extraction": {
         "attempts": 78,
@@ -195,15 +121,15 @@
       },
       "reports": {
         "attempts": 90,
-        "passed": 34
+        "passed": 56
       },
       "spreadsheet": {
         "attempts": 123,
-        "passed": 94
+        "passed": 109
       },
       "tooling": {
         "attempts": 27,
-        "passed": 14
+        "passed": 26
       }
     }
   }

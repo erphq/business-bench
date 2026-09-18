@@ -1,0 +1,87 @@
+{
+  "naive_statement": {
+    "Daniel Kim": {
+      "bookings": 99282.96,
+      "commission": 7942.64,
+      "net": 7654.82,
+      "recoveries": 287.82
+    },
+    "Deborah Ward": {
+      "bookings": 47278.52,
+      "commission": 2363.93,
+      "net": 2235.48,
+      "recoveries": 128.45
+    },
+    "Kwame Osei": {
+      "bookings": 89906.65,
+      "commission": 7192.53,
+      "net": 7192.53,
+      "recoveries": 0
+    },
+    "Laila Haddad": {
+      "bookings": 60025.4,
+      "commission": 4802.03,
+      "net": 4070.28,
+      "recoveries": 731.75
+    },
+    "Rebecca Brooks": {
+      "bookings": 47369.49,
+      "commission": 2368.47,
+      "net": 2161.88,
+      "recoveries": 206.59
+    }
+  },
+  "noise_rows": [
+    "SO-72039",
+    "SO-72041",
+    "SO-72045",
+    "SO-72048",
+    "SO-72052",
+    "SO-72053",
+    "SO-72054",
+    "SO-72055",
+    "SO-72059"
+  ],
+  "refunds": [
+    {
+      "amount": 2568.98,
+      "id": "RF-2208",
+      "order": "SO-71880",
+      "origin": "jul",
+      "rate_paid": 0.05,
+      "recovery": 128.45,
+      "rep": "Deborah Ward"
+    },
+    {
+      "amount": 3597.73,
+      "id": "RF-2211",
+      "order": "SO-71939",
+      "origin": "aug",
+      "rate_paid": 0.03,
+      "recovery": 107.93,
+      "rep": "Daniel Kim"
+    },
+    {
+      "amount": 9146.9,
+      "id": "RF-2214",
+      "order": "SO-71827",
+      "origin": "jul",
+      "rate_paid": 0.03,
+      "recovery": 274.41,
+      "rep": "Laila Haddad"
+    },
+    {
+      "amount": 4131.72,
+      "id": "RF-2217",
+      "order": "SO-71888",
+      "origin": "jul",
+      "rate_paid": 0.08,
+      "recovery": 330.54,
+      "rep": "Rebecca Brooks"
+    }
+  ],
+  "split_deals": [
+    "SO-71924",
+    "SO-71999"
+  ]
+}

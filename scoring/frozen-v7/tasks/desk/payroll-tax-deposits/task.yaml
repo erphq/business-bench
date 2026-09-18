@@ -1,0 +1,56 @@
+id: payroll-tax-deposits
+track: desk
+category: bookkeeping
+title: Federal payroll tax deposits and due dates since the provider stopped
+ask: |
+  Tallyrun stopped making our federal payroll tax deposits, so I have to catch up in EFTPS myself. Work out every deposit for the payroll runs in the folder the way Walter's email explains and save it as deposits.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the register carries state income tax, SUI and FUTA beside the federal columns, and the off-cycle sheet the employer Social Security and Medicare match; a deposit is federal income tax plus both halves of Social Security and Medicare only, so summing every tax column or leaving out the employer match is wrong (check: deposit amounts)
+- |-
+  every check date in the register ends with a TOTAL FOR CHECK DATE line that repeats the run's sums, so grouping the rows by check date doubles each regular deposit (check: deposit amounts)
+- |-
+  due dates follow the check date's weekday (Wednesday to Friday due the next Wednesday, Saturday to Tuesday the next Friday); the register's Period End column is a Sunday and using it moves every regular deposit (check: due dates)
+- |-
+  a bank holiday among the three weekdays after the period adds a business day: the 16 Jan run is due 22 Jan, not 21 Jan (Martin Luther King Day), the 13 Feb run 19 Feb, and the 23 Dec off-cycle run 29 Dec (Christmas); the office closures listed in the same file (20 Jan, 16 Mar, 26 Dec) are not bank holidays (check: due dates)
+- |-
+  the off-cycle runs are in a separate workbook with different column names: the 31 Dec final-pay run shares the Wednesday-Friday period with the 2 Jan run but not the quarter, so it is a separate Q4 deposit due the same 7 Jan; the 26 Mar incentive run shares both period and quarter with 27 Mar and goes in one 10,896.19 deposit (checks: deposits grouped by period and quarter; one line per deposit)
+- |-
+  the register is '$1,234.56' text under a two-line preamble with a BOM and CRLF endings, dates are MM/DD/YYYY (check: deposit amounts)
+checks:
+- type: csv_columns
+  name: deposit list columns
+  path: deposits.csv
+  columns:
+  - due_date
+  - quarter
+  - amount
+  - check_dates
+  # Walter asks for "the due date, the amount, which quarter's 941 it belongs to and the check dates it covers" but
+  # never names the headers; each column is found by what its header says it holds
+  column_match:
+    due_date:
+    - \bdue\b|\bdeadline\b
+    quarter:
+    - quarter|\bqtr\b|\b941\b|\bq\b
+    amount:
+    - amount|deposit|total|\btax\b|\bowed\b|\busd\b
+    - ^(?!.*\b(?:due|date|dates|no|num|number|id|count|seq|quarter|qtr|941|check|checks|pay|payroll|period|covers?|covered)\b)
+    check_dates:
+    - check|\bpay\b|payroll|cover|\bruns?\b
+    - ^(?!.*\b(?:due|deadline|quarter|qtr|amount)\b)
+- type: csv_row_count
+  name: one line per deposit
+  path: deposits.csv
+  equals_ref: deposits.csv
+- type: custom
+  name: deposits grouped by period and quarter
+  module: check.py
+- type: custom
+  name: due dates
+  module: check_due.py
+- type: custom
+  name: deposit amounts
+  module: check_amounts.py

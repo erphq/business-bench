@@ -1,0 +1,70 @@
+id: budget-vs-actual
+track: desk
+category: spreadsheet
+title: First-half budget vs actual, line by line
+ask: |
+  The owners want to see how January to June went against the budget, line by line. Put it together as variance.xlsx with live formulas from the budget file and the GL export - Dale's email says how the budget is spread and how he wants the variances shown.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the GL pads account numbers to six digits (410000) while the budget has four (4100), and slip rentals and fuel are split over sub-accounts (410010 transient slips, 530010 diesel), so a join on the raw code or on the xx00 accounts alone drops activity (checks: slip rentals actual; fuel variance)
+- |-
+  the budget is annual; five lines follow Dale's monthly profile (slip rentals 35% by June, winter storage 56%, launch/haul-out and shrink-wrap 52%, seasonal dock staff 44%) and the rest are a twelfth a month; halving every line misstates them (checks: slip rentals budget Jan-Jun; winter storage variance; dock staff variance)
+- |-
+  income comes out of the GL as negative numbers in parentheses, and customer credit memos on income accounts and vendor refunds on cost accounts carry the opposite sign; absolute values add them instead of netting (checks: slip rentals actual; fuel variance)
+- |-
+  variance is favourable-positive per the email: income over budget and costs under budget are positive, costs over budget negative; actual minus budget on every line flips each cost variance (checks: fuel variance; dock staff variance)
+- |-
+  the export runs to 10 July, so early-July invoices, bills and wages sit in the file and are not first-half actuals (checks: slip rentals actual; total expenses actual)
+- |-
+  crane and equipment rental (675000) has spending and no budget line and must be on the report with a zero budget (check: total expenses actual)
+- |-
+  the budget sheet has a merged title, section rows, static totals and last year's actuals beside the FY2026 budget column, and the GL export carries a four-line report preamble and CRLF endings (check: slip rentals budget Jan-Jun)
+checks:
+- type: file_exists
+  name: variance.xlsx exists
+  path: variance.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: variance.xlsx
+  min_count: 16
+- type: xlsx_no_errors
+  name: no error cells
+  path: variance.xlsx
+- type: xlsx_value_present
+  name: slip rentals budget Jan-Jun (seasonal, 35%)
+  path: variance.xlsx
+  expected: 206255.0
+  rel_tol: 4.4e-06
+  near_text: slip
+- type: xlsx_value_present
+  name: slip rentals actual (transient sub-account, credits, no July)
+  path: variance.xlsx
+  expected: 239808.67
+  rel_tol: 3.8e-06
+  near_text: slip
+- type: xlsx_value_present
+  name: winter storage variance (seasonal income)
+  path: variance.xlsx
+  expected: -24131.52
+  rel_tol: 3.7e-05
+  near_text: winter storage
+- type: xlsx_value_present
+  name: dock staff variance (seasonal cost, favourable-positive)
+  path: variance.xlsx
+  expected: 5983.11
+  rel_tol: 0.00015
+  near_text: dock staff
+- type: xlsx_value_present
+  name: fuel variance (over budget is negative)
+  path: variance.xlsx
+  expected: -2583.71
+  rel_tol: 0.00035
+  near_text: fuel
+- type: xlsx_value_present
+  name: total expenses actual
+  path: variance.xlsx
+  expected: 552766.16
+  rel_tol: 1.6e-06
+  near_text: total

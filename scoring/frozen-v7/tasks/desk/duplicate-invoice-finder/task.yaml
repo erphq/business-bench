@@ -1,0 +1,89 @@
+id: duplicate-invoice-finder
+track: desk
+category: spreadsheet
+title: Find bills that were entered twice before the check run
+ask: |
+  Go through this quarter's AP register and list the bills that look like they were entered twice. Marcus's note has how we decide. Save the list as possible_duplicates.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the same vendor is typed five ways (ALL CAPS, Inc./LLC, & vs and, stray spaces); three pairs only surface once vendors are matched on the real company name (check: flagged bills)
+- |-
+  invoice numbers carry clerk prefixes (INV-, #, Inv #, No.); three pairs share a number under different prefixes, one with a keying error in the amount and one 15 days apart, so neither same-amount-within-10-days nor exact-number matching alone finds them (check: flagged bills)
+- |-
+  two vendor credits mirror bills from the same vendor (same amount; one quotes the bill's invoice number) and are never duplicates (check: credits and recurring bills not flagged)
+- |-
+  three vendors have monthly recurring bills with identical amounts 28-35 days apart, one running three months; they stay (check: credits and recurring bills not flagged)
+- |-
+  two different vendors share an invoice number with close dates; not a pair, and one same-vendor same-amount pair is 12 days apart (check: row count)
+- |-
+  amounts are text in five styles ($1,240.00 / 1240.00 / 1,240.00 USD / $ 1,240.00); dates in four formats (checks: amount of the duplicate; days apart)
+- |-
+  one pair carries the same invoice date: the lower Ref No. is the original (check: paired with the original)
+- |-
+  the register ends with a TOTAL footer row and a prior-quarter register sits beside it as a distractor (check: row count)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: possible_duplicates.csv
+  columns:
+  - ref_no
+  - duplicate_of
+  - amount
+  - days_apart
+- type: csv_set_equal
+  name: flagged bills
+  path: possible_duplicates.csv
+  column: ref_no
+  ref: possible_duplicates.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: possible_duplicates.csv
+  equals_ref: possible_duplicates.csv
+- type: csv_values_match
+  name: paired with the original
+  path: possible_duplicates.csv
+  ref: possible_duplicates.csv
+  key: ref_no
+  columns:
+  - duplicate_of
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: amount of the duplicate
+  path: possible_duplicates.csv
+  ref: possible_duplicates.csv
+  key: ref_no
+  columns:
+  - amount
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: days apart
+  path: possible_duplicates.csv
+  ref: possible_duplicates.csv
+  key: ref_no
+  columns:
+  - days_apart
+  numeric: true
+  tolerance: 0.001
+  min_accuracy: 1.0
+- type: text_not_contains
+  name: credits and recurring bills not flagged
+  path: possible_duplicates.csv
+  phrases:
+  - BILL-2015
+  - BILL-2016
+  - BILL-2018
+  - BILL-2019
+  - BILL-2037
+  - BILL-2063
+  - BILL-2067
+  - BILL-2070
+  - BILL-2073
+  - BILL-2102
+  - BILL-2114

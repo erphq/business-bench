@@ -1,0 +1,87 @@
+id: long-to-wide-attendance
+track: desk
+category: reformatting
+title: Fall attendance grid for the district grant
+ask: |
+  The district needs our fall robotics attendance on their grid. Can you build it from the kiosk check-ins and the coach's absence sheet? Their instructions, template and our roster are in the folder - save it as attendance_grid.csv.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  a student with no kiosk check-in and no coach entry on a day gets a blank cell, not U; the late joiner is blank before 1 October, one enrolled student never came, and the 10/13 in-service column is blank for everyone (check: every session cell)
+- |-
+  codes are derived: a kiosk check-in after 3:40 PM is T and 3:40 PM exactly is P; the coach's sheet gives E or U from its Excused? column; writing Present/Late words or copying the reason fails (check: every session cell)
+- |-
+  the coach marked one student absent on a day that student checked in late; the check-in wins, so the cell is T, not U, and one student scanned twice two minutes apart is still a single P (check: every session cell)
+- |-
+  the kiosk is shared with Chess Club; one enrolled robotics student has only a Chess Club check-in on a robotics day, which must stay blank (check: every session cell)
+- |-
+  the kiosk shows preferred names (Alex, Tony, Kate) and the coach types names three ways; the grid wants the roster's legal name as Last, First (checks: one row per enrolled student; every session cell)
+- |-
+  a trial-day guest checked in to Robotics Club and is not enrolled; the student who never attended still needs a row (checks: one row per enrolled student; row count)
+- |-
+  rows must be alphabetical by Last, First, not in roster or kiosk order (check: rows sorted by student name)
+checks:
+- type: csv_columns
+  name: district template columns, exact order
+  path: attendance_grid.csv
+  columns:
+  - Student Name
+  - 09/15/2026
+  - 09/17/2026
+  - 09/22/2026
+  - 09/24/2026
+  - 09/29/2026
+  - 10/01/2026
+  - 10/06/2026
+  - 10/08/2026
+  - 10/13/2026
+  - 10/15/2026
+  - 10/20/2026
+  - 10/22/2026
+  - 10/27/2026
+  - 10/29/2026
+  exact: true
+- type: csv_set_equal
+  name: one row per enrolled student
+  path: attendance_grid.csv
+  column: Student Name
+  ref: attendance_grid.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: attendance_grid.csv
+  equals_ref: attendance_grid.csv
+- type: csv_values_match
+  name: every session cell
+  path: attendance_grid.csv
+  ref: attendance_grid.csv
+  key: Student Name
+  columns:
+  - 09/15/2026
+  - 09/17/2026
+  - 09/22/2026
+  - 09/24/2026
+  - 09/29/2026
+  - 10/01/2026
+  - 10/06/2026
+  - 10/08/2026
+  - 10/13/2026
+  - 10/15/2026
+  - 10/20/2026
+  - 10/22/2026
+  - 10/27/2026
+  - 10/29/2026
+  min_accuracy: 1.0
+  must_match_keys:
+  - Cox, Marcus
+  - Morales, Angela
+  - Myers, Richard
+  - Okafor, Thanh
+  - Roberts, Alejandro
+  - Turner, Katherine
+- type: custom
+  name: rows sorted by student name
+  module: check.py

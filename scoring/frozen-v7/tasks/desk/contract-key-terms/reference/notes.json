@@ -1,0 +1,15 @@
+{
+  "amended": {
+    "id": "JS-2026-0375",
+    "original_end": "2027-06-30",
+    "original_monthly": 4450.0
+  },
+  "naive_notice_60_days_for_2_months": "2027-08-01",
+  "naive_notice_90_days_for_3_months": "2027-04-01",
+  "rolled_over": {
+    "first_monthly": 1695.0,
+    "first_term_end": "2026-06-30",
+    "id": "GM-25-970"
+  },
+  "scan_id": "PC-45409"
+}

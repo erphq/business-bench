@@ -1,0 +1,86 @@
+{
+  "dishes": {
+    "Caesar Salad": {
+      "cost": 2.5071,
+      "keyword": "caesar",
+      "margin": 10.4929,
+      "margin_pct": 0.807146,
+      "price": 13.0
+    },
+    "Chicken Linguine": {
+      "cost": 3.1634,
+      "keyword": "linguine",
+      "margin": 18.3366,
+      "margin_pct": 0.852865,
+      "price": 21.5
+    },
+    "Crispy Chicken Sandwich": {
+      "cost": 2.5891,
+      "keyword": "sandwich",
+      "margin": 12.4109,
+      "margin_pct": 0.827393,
+      "price": 15.0
+    },
+    "Margherita Flatbread": {
+      "cost": 2.8484,
+      "keyword": "flatbread",
+      "margin": 12.1516,
+      "margin_pct": 0.810107,
+      "price": 15.0
+    },
+    "Mushroom Risotto": {
+      "cost": 5.5371,
+      "keyword": "risotto",
+      "margin": 12.4629,
+      "margin_pct": 0.692383,
+      "price": 18.0
+    },
+    "Seared Salmon": {
+      "cost": 10.2021,
+      "keyword": "salmon",
+      "margin": 18.2979,
+      "margin_pct": 0.642032,
+      "price": 28.5
+    },
+    "Smash Burger": {
+      "cost": 4.2149,
+      "keyword": "burger",
+      "margin": 10.7851,
+      "margin_pct": 0.719007,
+      "price": 15.0
+    }
+  },
+  "loss": {
+    "onion": 0.1,
+    "parsley": 0.35,
+    "potato": 0.15,
+    "salmon": 0.3
+  },
+  "sept_prices": {
+    "arborio": 30.4,
+    "basil": 13.32,
+    "beef": 62.73,
+    "bun": 9.75,
+    "butter": 19.44,
+    "canola": 40.36,
+    "cheddar": 30.45,
+    "cream": 6.26,
+    "flour": 15.23,
+    "garlic": 11.59,
+    "greens": 15.92,
+    "lemon": 0.58,
+    "linguine": 18.17,
+    "mozz": 19.22,
+    "mushroom": 24.19,
+    "olive": 42.94,
+    "onion": 14.07,
+    "parmesan": 32.62,
+    "parsley": 12.14,
+    "potato": 30.51,
+    "salmon": 158.19,
+    "stock": 14.21,
+    "thigh": 39.04,
+    "tomato": 11.34,
+    "wine": 24.47
+  }
+}

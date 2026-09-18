@@ -1,0 +1,103 @@
+id: xero-sales-invoices-import
+track: desk
+category: reformatting
+title: August job invoices into Xero's sales invoice import
+ask: |
+  Please get our August invoices out of JobFlow and into Xero's sales invoice import file. Bec's notes explain how Xero wants it. Save it as xero_invoices.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  JobFlow exports one row per invoice with three line-column groups and a delivery fee column; Xero needs a row per line with the delivery fee as its own line and the contact, number and dates repeated on every row (checks: one row per line; invoice lines; contact names)
+- |-
+  JobFlow dates are month-first and Xero is day-first; 4 kept invoices fall on days 1 to 12 where a swap still looks like a valid date, and Juniper Street Cafe's '20th of following month' terms put the due date on 20 September (check: invoice and due dates)
+- |-
+  seven of eight customers are typed differently in JobFlow (Pty Ltd, Physiotherapy, all caps, 'and' for '&', a missing NZ suffix); ContactName comes from xero_contacts_export.csv by email, and the export also holds a stale 'Harbour Light Marine (old)' contact on a different address (check: contact names)
+- |-
+  Kingfisher Charters NZ is overseas, so its lines and its delivery are GST Free Income; the gift voucher line on INV-2513 is BAS Excluded (check: invoice lines)
+- |-
+  account codes differ by line: DES- items 210, delivery 260, gift vouchers 835, everything else 200 (check: invoice lines)
+- |-
+  invoice discounts go on printing and design lines only; INV-2513 has a 10% discount, a gift voucher and delivery, and INV-2506 a 5% discount with delivery (check: invoice lines)
+- |-
+  INV-2508 is Void and INV-2517 is Draft; both stay out (checks: invoices included; one row per line)
+- |-
+  prices are '$650.00' text in the export, quantities include 1.5 design hours, and the export's Total column is after discount and must not be imported (check: invoice lines)
+checks:
+- type: csv_columns
+  name: Xero template columns in order
+  path: xero_invoices.csv
+  columns:
+  - '*ContactName'
+  - EmailAddress
+  - '*InvoiceNumber'
+  - Reference
+  - '*InvoiceDate'
+  - '*DueDate'
+  - InventoryItemCode
+  - '*Description'
+  - '*Quantity'
+  - '*UnitAmount'
+  - Discount
+  - '*AccountCode'
+  - '*TaxType'
+  - Currency
+  exact: true
+- type: csv_set_equal
+  name: invoices included
+  path: xero_invoices.csv
+  column: '*InvoiceNumber'
+  ref: xero_invoices.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: one row per line
+  path: xero_invoices.csv
+  equals_ref: xero_invoices.csv
+- type: csv_values_match
+  name: contact names
+  path: xero_invoices.csv
+  ref: xero_invoices.csv
+  key: '*InvoiceNumber'
+  columns:
+  - '*ContactName'
+  min_accuracy: 1.0
+  must_match_keys:
+  - INV-2506
+  - INV-2507
+  - INV-2510
+  - INV-2511
+  - INV-2512
+  - INV-2513
+  - INV-2514
+  - INV-2515
+  - INV-2516
+  - INV-2518
+  - INV-2519
+  - INV-2520
+  - INV-2521
+  - INV-2522
+  - INV-2523
+  - INV-2524
+  - INV-2525
+- type: csv_values_match
+  name: invoice and due dates
+  path: xero_invoices.csv
+  ref: xero_invoices.csv
+  key: '*InvoiceNumber'
+  columns:
+  - '*InvoiceDate'
+  - '*DueDate'
+  normalize:
+  - strip
+  min_accuracy: 1.0
+  must_match_keys:
+  - INV-2507
+  - INV-2506
+  - INV-2509
+  - INV-2510
+  - INV-2511
+- type: custom
+  name: invoice lines
+  module: check.py

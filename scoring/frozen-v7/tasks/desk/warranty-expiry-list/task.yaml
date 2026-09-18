@@ -1,0 +1,49 @@
+id: warranty-expiry-list
+track: desk
+category: spreadsheet
+title: Equipment warranties running out in the next 90 days
+ask: |
+  Treat today as October 5, 2026. Denise wants a list of the equipment whose warranty runs out in the next 90 days so she can call the vendors; the register and her email are in the folder. Save it as expiring_warranties.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  warranty terms are typed as '36 mo', '18 mos.', '2 yrs', '1 year' and '90 days'; reading every number as months or years moves assets in and out of the window (checks: expiring assets; days left)
+- |-
+  extended warranties exist only in the notes, as '+12 months', '+24 mo' or 'coverage extended to <date>': one lapsed base term is back in the window, one in-window base term is pushed out, and one service plan sets its own end date (checks: expiring assets; days left)
+- |-
+  two assets carry '1 yr labor / 3 yr parts'; the email says parts decides, so the first number in the cell is the wrong term for both (check: expiring assets)
+- |-
+  one Eastside install date is typed a year in the future; per the email it is the same day a year earlier, which puts its twelve-month warranty in the window (checks: expiring assets; days left)
+- |-
+  the ask fixes today as October 5, 2026, so the machine clock gives the wrong window; two warranties lapsed a few weeks earlier and stay off, two end just after the 90 days (checks: expiring assets; days left)
+- |-
+  install dates are a mix of real date cells and three text formats under a merged title, and a Disposed tab lists retired equipment whose original terms would land in the window (check: expiring assets)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: expiring_warranties.csv
+  columns:
+  - asset_tag
+  - days_left
+- type: csv_set_equal
+  name: expiring assets
+  path: expiring_warranties.csv
+  column: asset_tag
+  ref: expiring_warranties.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: one row per asset
+  path: expiring_warranties.csv
+  equals_ref: expiring_warranties.csv
+- type: csv_values_match
+  name: days left
+  path: expiring_warranties.csv
+  ref: expiring_warranties.csv
+  key: asset_tag
+  columns:
+  - days_left
+  numeric: true
+  tolerance: 1.0

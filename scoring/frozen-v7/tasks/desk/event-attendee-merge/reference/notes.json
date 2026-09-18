@@ -1,0 +1,41 @@
+{
+  "bookings": 52,
+  "cancelled_only": [
+    "david.lewis@hotmail.com",
+    "martin.anna@me.com",
+    "ingrid.ruiz@yahoo.com",
+    "jessica_morris@protonmail.com",
+    "anna.edwards@aol.com"
+  ],
+  "declined": "aisha_hall@me.com",
+  "headcount": 75,
+  "nickname": {
+    "email": "deborah.okafor@hotmail.com",
+    "written_as": "Deb Okafor"
+  },
+  "paper_duplicates": [
+    "charles_diaz@yahoo.com",
+    "hernandez.aisha@icloud.com",
+    "joshua.turner@me.com",
+    "dhernandez@aol.com"
+  ],
+  "promoted": [
+    "deborah.okafor@hotmail.com",
+    "cynthia.garcia@protonmail.com",
+    "jhernandez@hotmail.com",
+    "amybennett83@yahoo.com"
+  ],
+  "rebooked": "matthew.peterson@outlook.com",
+  "two_order_buyer": "johnmurphy42@me.com",
+  "uncontacted": [
+    "morris.joshua@icloud.com",
+    "johnward85@me.com",
+    "timothy_howard@yahoo.com",
+    "elizabethchavez39@protonmail.com",
+    "foster.sarah@hotmail.com"
+  ],
+  "walkups": [
+    "Richard Stewart",
+    "Eric King"
+  ]
+}

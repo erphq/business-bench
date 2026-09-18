@@ -1,0 +1,68 @@
+id: ar-aging-report
+track: desk
+category: reports
+title: Receivables aging at month end for the bank
+ask: |
+  Ingrid needs the receivables aging as of 31 August for the bank. Build aging.xlsx with live formulas from the exports and write memo.md she can forward - her note says what goes in both.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the invoice register was run on 8 September: its Balance and Status columns already reflect September payments and credits, and it lists invoices dated in September; balances must be rebuilt as of 31 August from the payment and credit memo dates (checks: total receivables; Pier 9 Fish House balance)
+- |-
+  Pier 9 Fish House cleared its two oldest invoices on 3 September, so it looks current in the register but was one of the three largest past-due accounts on 31 August (checks: memo names the top three past-due customers; Pier 9 Fish House balance)
+- |-
+  partially paid invoices stay open for the unpaid part and age from their original due date (check: 31-60 bucket total)
+- |-
+  buckets count days past the due date and terms run Net 15, 30 or 45 by customer; aging from the invoice date shifts invoices a bucket older (check: 31-60 bucket total)
+- |-
+  credit memos come off the invoice they name; the goodwill credit to Riverbend Bistro names no invoice and comes off its oldest open invoice, which is over 90 days; a 4 September credit does not count yet (check: Riverbend Bistro over 90)
+- |-
+  The Saltwater Grill has the largest balance but nearly all of it is current, so ranking by total balance picks the wrong top three (check: memo names the top three past-due customers)
+- |-
+  amounts in the register are '1,234.00' text, the register has a two-line preamble and CRLF endings, and credit memo dates are US-style (check: total receivables)
+checks:
+- type: file_exists
+  name: aging.xlsx exists
+  path: aging.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: aging.xlsx
+  min_count: 20
+- type: xlsx_no_errors
+  name: no error cells
+  path: aging.xlsx
+- type: xlsx_value_present
+  name: total receivables as of 31 August
+  path: aging.xlsx
+  expected: 621369.99
+  rel_tol: 1.4e-06
+  near_text: total
+- type: xlsx_value_present
+  name: 31-60 bucket total
+  path: aging.xlsx
+  expected: 49111.54
+  rel_tol: 1.8e-05
+  near_text: total
+- type: xlsx_value_present
+  name: Pier 9 Fish House balance (September payment not yet received)
+  path: aging.xlsx
+  expected: 65691.53
+  rel_tol: 1.4e-05
+  near_text: pier 9
+- type: xlsx_value_present
+  name: Riverbend Bistro over 90 (unapplied credit on the oldest invoice)
+  path: aging.xlsx
+  expected: 3492.9
+  rel_tol: 0.00026
+  near_text: riverbend
+- type: text_numbers_present
+  name: memo carries total receivables and total past due
+  path: memo.md
+  numbers:
+  - 621369.99
+  - 282433.6
+  rel_tol: 0.005
+- type: custom
+  name: memo names the top three past-due customers
+  module: check.py

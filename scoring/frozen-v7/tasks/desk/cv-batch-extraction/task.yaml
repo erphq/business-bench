@@ -1,0 +1,103 @@
+id: cv-batch-extraction
+track: desk
+category: extraction
+title: Applicant list from the operations coordinator resumes
+ask: |
+  Please go through the resumes for the operations coordinator job and put the applicants into candidates.csv, one row per person. My note says what I need.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  phones come as (303) 555-0142, 303.555.0142, +1 (303) 555-0142, 303-555-0142, 3035550142 and 1-303-555-0142; the note wants 10 digits, so the +1 and 1- prefixes go (check: phones)
+- |-
+  ongoing jobs end in 'Present', 'Current', 'present' or 'to date'; they count through August 2026 and supply the current title and employer (checks: current roles; years of experience)
+- |-
+  two candidates have gaps, a career break of more than a year and eight months between jobs; counting from the first start date to August 2026 overstates both (check: years of experience)
+- |-
+  one candidate lists a part-time freelance role that overlaps a full-time job for three years; adding up job lengths counts those months twice (check: years of experience)
+- |-
+  one candidate's last contract ended in June 2026 (a chronological resume with school listed first); current title and employer are blank and the months stop at June 2026 (checks: current roles; years of experience)
+- |-
+  one applicant sent a March 2025 resume and a September 2026 resume with a different email and a newer job; one row, from the newer resume, and the old email must not appear (checks: one row per candidate; current roles)
+- |-
+  the month rule counts both end months, so subtracting dates or counting a job from Mar 2019 to Jun 2021 as 27 months moves most figures (check: years of experience)
+- 'the walk-in resume is an image-only scan (checks: one row per candidate; current roles)'
+checks:
+- type: csv_columns
+  name: requested columns
+  path: candidates.csv
+  columns:
+  - email
+  - full_name
+  - phone
+  - current_title
+  - current_employer
+  - years_experience
+- type: csv_set_equal
+  name: one row per candidate
+  path: candidates.csv
+  column: email
+  ref: candidates.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: candidates.csv
+  equals_ref: candidates.csv
+- type: csv_values_match
+  name: names
+  path: candidates.csv
+  ref: candidates.csv
+  key: email
+  columns:
+  - full_name
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: phones
+  path: candidates.csv
+  ref: candidates.csv
+  key: email
+  columns:
+  - phone
+  normalize:
+  - digits
+  min_accuracy: 1.0
+  must_match_keys:
+  - kimberly.rogers@mail.example
+  - margaret.cook9@example.com
+  - sarah.torres@mail.example
+- type: csv_values_match
+  name: current roles
+  path: candidates.csv
+  ref: candidates.csv
+  key: email
+  columns:
+  - current_title
+  - current_employer
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - gary.phillips71@example.org
+  - sarah.torres@mail.example
+  - rebecca.garcia@example.net
+  - dorothy.howard@example.net
+- type: csv_values_match
+  name: years of experience
+  path: candidates.csv
+  ref: candidates.csv
+  key: email
+  columns:
+  - years_experience
+  numeric: true
+  tolerance: 0.05
+  min_accuracy: 1.0
+  must_match_keys:
+  - rebecca.garcia@example.net
+  - kimberly.rogers@mail.example
+  - margaret.cook9@example.com
+  - gary.phillips71@example.org
+  - sarah.torres@mail.example

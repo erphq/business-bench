@@ -1,0 +1,40 @@
+{
+  "disputed": [
+    {
+      "amount": 49.32,
+      "kw": "(argon|co2|c25|cylinder|\\bgas\\b)",
+      "line": 2,
+      "sku": "GAS-C25-300",
+      "why": "billed at 66.80 instead of the PO price of 62.69 on 12 units"
+    },
+    {
+      "amount": 64.7,
+      "kw": "(flap|disc)",
+      "line": 3,
+      "sku": "DSC-45-60G",
+      "why": "billed for 50 but 40 were received"
+    },
+    {
+      "amount": 25.92,
+      "kw": "(glove)",
+      "line": 5,
+      "sku": "GLV-MIG-L",
+      "why": "billed at 11.78 instead of the PO price of 11.06 on 36 units"
+    },
+    {
+      "amount": 80.53,
+      "kw": "(fuel|surcharge)",
+      "line": 8,
+      "sku": "FUEL",
+      "why": "fuel surcharge of 3.5%"
+    }
+  ],
+  "freight": 92.0,
+  "inv_no": "INV-86187",
+  "invoice_total": 2473.41,
+  "netted": 217.47,
+  "pay_now": 2252.94,
+  "po_no": "PO-2026-0509",
+  "total_disputed": 220.47,
+  "with_freight": 312.47
+}

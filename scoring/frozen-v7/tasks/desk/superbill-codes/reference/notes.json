@@ -1,0 +1,21 @@
+{
+  "files": {
+    "S1": "superbill_40242.pdf",
+    "S2": "encounter_form_0909_garcia.pdf",
+    "S3": "PT_daily_note_40323.pdf",
+    "S4": "flowsheet_PHILLIPS_20260910.pdf",
+    "S5": "superbill_39916_late_entry.pdf",
+    "S6": "scan_0910_40873.pdf"
+  },
+  "scan_figures": {
+    "superbills_week_2026-09-07/scan_0910_40873.pdf": [
+      "40873",
+      "A11818",
+      "9/10/2026",
+      "97110  GP KX  3 UNIT",
+      "97530  GP KX  2 UNIT",
+      "97035  GP  1 UNIT"
+    ]
+  },
+  "void": "40388-97530"
+}

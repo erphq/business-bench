@@ -1,0 +1,37 @@
+{
+  "accrued": {
+    "AP-8356": "log_billed_sep",
+    "BSL62514": "straddle",
+    "CSP-4666": "jul_billed_sep",
+    "HCPL-30745": "sep_for_aug",
+    "HW-69280": "aug_date_sep_period",
+    "KM67640": "sep_for_aug",
+    "PO-26-0310": "unbilled",
+    "PO-26-0312": "unbilled",
+    "PO-26-0315": "unbilled",
+    "PO-26-0340": "jul_unbilled",
+    "PO-26-0344": "jul_unbilled",
+    "RH-93148": "sep_for_aug",
+    "SAV-73666": "log_billed_sep"
+  },
+  "excluded": {
+    "DLG-52589": "sep_service",
+    "EPC-71728": "small",
+    "MK64560": "log_billed_aug",
+    "NG67154": "log_billed_aug",
+    "PO-26-0316": "log_billed_sep_po",
+    "PO-26-0317": "log_billed_sep_po",
+    "PO-26-0326": "log_billed_aug_po",
+    "PO-26-0334": "log_billed_aug_po",
+    "PO-26-0336": "small",
+    "PO-26-0363": "jul_billed_sep_po",
+    "PO-26-0365": "jul_billed_aug",
+    "PO-26-0368": "jul_billed_aug",
+    "SAV-93193": "sep_service"
+  },
+  "straddle_days": [
+    9,
+    30
+  ],
+  "total": "29219.86"
+}

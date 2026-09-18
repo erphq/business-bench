@@ -1,0 +1,59 @@
+{
+  "anonymous_names": [
+    "Anna Taylor",
+    "Priya Robinson",
+    "Jacob Cooper",
+    "Patricia Scott",
+    "Nicholas Wright",
+    "Rebecca Howard"
+  ],
+  "decoys": [
+    "Rahul Williams",
+    "Michelle Smith",
+    "Kenneth Campbell"
+  ],
+  "donors": 84,
+  "goal": 48000.0,
+  "percent": 56.4,
+  "remaining": 20912.0,
+  "top": [
+    {
+      "name": "Brian Morgan",
+      "total": 5100.0,
+      "variants": [
+        "Brian Morgan",
+        "Morgan, Brian"
+      ]
+    },
+    {
+      "name": "Kwame Collins",
+      "total": 3200.0,
+      "variants": [
+        "Kwame Collins",
+        "Collins, Kwame"
+      ]
+    },
+    {
+      "name": null,
+      "total": 2400.0,
+      "variants": []
+    },
+    {
+      "name": "Mary Gray",
+      "total": 1900.0,
+      "variants": [
+        "Mary Gray",
+        "Gray, Mary"
+      ]
+    },
+    {
+      "name": "Amanda Johnson",
+      "total": 1700.0,
+      "variants": [
+        "Amanda Johnson",
+        "Johnson, Amanda"
+      ]
+    }
+  ],
+  "total": 27088.0
+}

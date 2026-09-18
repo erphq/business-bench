@@ -1,0 +1,281 @@
+{
+  "as_of": "2026-09-30",
+  "customers": [
+    {
+      "all_invoices": [
+        "INV-20757",
+        "INV-21343"
+      ],
+      "excluded": [],
+      "gets_file": true,
+      "hold": false,
+      "installment": null,
+      "key": "copperfield",
+      "kind": "standard",
+      "label": "A",
+      "name": "Copperfield Law",
+      "next_due": null,
+      "past_due": [
+        {
+          "balance": 1967.25,
+          "days": 18,
+          "no": "INV-20757"
+        },
+        {
+          "balance": 3685.48,
+          "days": 5,
+          "no": "INV-21343"
+        }
+      ],
+      "total": 5652.73
+    },
+    {
+      "all_invoices": [
+        "INV-20595",
+        "INV-20887"
+      ],
+      "excluded": [
+        "INV-20887"
+      ],
+      "gets_file": true,
+      "hold": false,
+      "installment": null,
+      "key": "everline",
+      "kind": "standard",
+      "label": "B",
+      "name": "Everline Insurance",
+      "next_due": null,
+      "past_due": [
+        {
+          "balance": 1375.08,
+          "days": 41,
+          "no": "INV-20595"
+        }
+      ],
+      "total": 1375.08
+    },
+    {
+      "all_invoices": [
+        "INV-20596",
+        "INV-21857"
+      ],
+      "excluded": [],
+      "gets_file": true,
+      "hold": true,
+      "installment": null,
+      "key": "dorsey",
+      "kind": "standard",
+      "label": "C",
+      "name": "Dorsey Freight",
+      "next_due": null,
+      "past_due": [
+        {
+          "balance": 2476.03,
+          "days": 75,
+          "no": "INV-20596"
+        },
+        {
+          "balance": 433.64,
+          "days": 40,
+          "no": "INV-21857"
+        }
+      ],
+      "total": 2909.67
+    },
+    {
+      "all_invoices": [
+        "INV-20504"
+      ],
+      "excluded": [],
+      "gets_file": true,
+      "hold": false,
+      "installment": null,
+      "key": "redwood",
+      "kind": "standard",
+      "label": "D",
+      "name": "Redwood Property Mgmt",
+      "next_due": null,
+      "past_due": [
+        {
+          "balance": 3129.27,
+          "days": 58,
+          "no": "INV-20504"
+        }
+      ],
+      "total": 3129.27
+    },
+    {
+      "all_invoices": [
+        "INV-21576",
+        "INV-21947"
+      ],
+      "excluded": [],
+      "gets_file": true,
+      "hold": false,
+      "installment": 350.0,
+      "key": "larkspur",
+      "kind": "plan",
+      "label": "E",
+      "name": "Larkspur Yoga",
+      "next_due": "2026-10-15",
+      "past_due": [
+        {
+          "balance": 1903.51,
+          "days": 90,
+          "no": "INV-21576"
+        },
+        {
+          "balance": 3530.91,
+          "days": 46,
+          "no": "INV-21947"
+        }
+      ],
+      "total": 5434.42
+    },
+    {
+      "all_invoices": [
+        "INV-20823"
+      ],
+      "excluded": [],
+      "gets_file": true,
+      "hold": false,
+      "installment": 250.0,
+      "key": "kingfisher",
+      "kind": "plan",
+      "label": "F",
+      "name": "Kingfisher Charters",
+      "next_due": "2026-10-05",
+      "past_due": [
+        {
+          "balance": 2717.45,
+          "days": 20,
+          "no": "INV-20823"
+        }
+      ],
+      "total": 2717.45
+    },
+    {
+      "all_invoices": [
+        "INV-21400"
+      ],
+      "excluded": [
+        "INV-21400"
+      ],
+      "gets_file": false,
+      "hold": false,
+      "installment": null,
+      "key": "driftwood",
+      "kind": "none",
+      "label": "G",
+      "name": "Driftwood Studio",
+      "next_due": null,
+      "past_due": [],
+      "total": 0
+    },
+    {
+      "all_invoices": [
+        "INV-21754",
+        "INV-21969"
+      ],
+      "excluded": [
+        "INV-21969"
+      ],
+      "gets_file": true,
+      "hold": false,
+      "installment": null,
+      "key": "uptown",
+      "kind": "standard",
+      "label": "H",
+      "name": "Uptown Fitness",
+      "next_due": null,
+      "past_due": [
+        {
+          "balance": 1622.28,
+          "days": 15,
+          "no": "INV-21754"
+        }
+      ],
+      "total": 1622.28
+    },
+    {
+      "all_invoices": [
+        "INV-21542"
+      ],
+      "excluded": [
+        "INV-21542"
+      ],
+      "gets_file": false,
+      "hold": false,
+      "installment": null,
+      "key": "ivy",
+      "kind": "none",
+      "label": "I",
+      "name": "Ivy Lane Florist",
+      "next_due": null,
+      "past_due": [],
+      "total": 0
+    },
+    {
+      "all_invoices": [
+        "INV-20610"
+      ],
+      "excluded": [],
+      "gets_file": true,
+      "hold": true,
+      "installment": null,
+      "key": "yellowtail",
+      "kind": "standard",
+      "label": "J",
+      "name": "Yellowtail Seafood",
+      "next_due": null,
+      "past_due": [
+        {
+          "balance": 2547.89,
+          "days": 96,
+          "no": "INV-20610"
+        }
+      ],
+      "total": 2547.89
+    },
+    {
+      "all_invoices": [
+        "INV-20945"
+      ],
+      "excluded": [],
+      "gets_file": true,
+      "hold": false,
+      "installment": null,
+      "key": "tamarack",
+      "kind": "standard",
+      "label": "K",
+      "name": "Tamarack Brewing",
+      "next_due": null,
+      "past_due": [
+        {
+          "balance": 1291.51,
+          "days": 22,
+          "no": "INV-20945"
+        }
+      ],
+      "total": 1291.51
+    },
+    {
+      "all_invoices": [
+        "INV-20512"
+      ],
+      "excluded": [
+        "INV-20512"
+      ],
+      "gets_file": false,
+      "hold": false,
+      "installment": null,
+      "key": "glassworks",
+      "kind": "none",
+      "label": "L",
+      "name": "Glassworks Optical",
+      "next_due": null,
+      "past_due": [],
+      "total": 0
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+id: pay-stubs-extraction
+track: desk
+category: extraction
+title: Key the August pay stubs for the CPA
+ask: |
+  Nadia needs our August payroll detail from the pay stubs in the folder. Can you put it in pay_stubs.csv the way her email asks?
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  every stub prints year-to-date figures beside the period figures: PayCrest and the manual check put the period first, Ledgerline puts YTD first and This period last, and the scan prints 'YTD' after each amount; taking the rightmost column gives YTD on PayCrest (checks: gross and net; taxes; pre-tax deductions)
+- |-
+  Ledgerline lists a deduction called '401(k)' under both the Before-Tax and After-Tax headings on LL-00437 and the scan; the after-tax one is the Roth (checks: pre-tax deductions; after-tax deductions)
+- |-
+  health cover is printed as separate Medical, Dental and Vision lines (MEDICAL SEC125, DENTAL SEC125 on PayCrest) that add into one pre-tax health figure (check: pre-tax deductions)
+- |-
+  LL-00436 carries a Bonus earnings line and a separate 'Federal Supplemental (bonus)' withholding line that belongs in federal income tax (checks: bonus; taxes)
+- |-
+  PayCrest advice 108776 dated 24 July is in the folder with the August stubs (checks: one row per stub; row count)
+- |-
+  the 21 August stub LL-00438 is an image-only scan (checks: gross and net; taxes; after-tax deductions)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: pay_stubs.csv
+  columns:
+  - stub_no
+  - employee_id
+  - pay_date
+  - gross_pay
+  - bonus_pay
+  - federal_income_tax
+  - social_security
+  - medicare
+  - state_income_tax
+  - pretax_401k
+  - pretax_health
+  - roth_401k
+  - net_pay
+- type: csv_set_equal
+  name: one row per stub
+  path: pay_stubs.csv
+  column: stub_no
+  ref: pay_stubs.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: pay_stubs.csv
+  equals_ref: pay_stubs.csv
+- type: csv_values_match
+  name: employee and pay date
+  path: pay_stubs.csv
+  ref: pay_stubs.csv
+  key: stub_no
+  columns:
+  - employee_id
+  - pay_date
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: gross and net
+  path: pay_stubs.csv
+  ref: pay_stubs.csv
+  key: stub_no
+  columns:
+  - gross_pay
+  - net_pay
+  must_match_keys:
+  - '108779'
+  - '108780'
+  - '108781'
+  - LL-00436
+  - LL-00437
+  - LL-00438
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: bonus
+  path: pay_stubs.csv
+  ref: pay_stubs.csv
+  key: stub_no
+  columns:
+  - bonus_pay
+  must_match_keys:
+  - LL-00436
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: taxes
+  path: pay_stubs.csv
+  ref: pay_stubs.csv
+  key: stub_no
+  columns:
+  - federal_income_tax
+  - social_security
+  - medicare
+  - state_income_tax
+  must_match_keys:
+  - '108779'
+  - '108780'
+  - '108781'
+  - LL-00436
+  - LL-00437
+  - LL-00438
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: pre-tax deductions
+  path: pay_stubs.csv
+  ref: pay_stubs.csv
+  key: stub_no
+  columns:
+  - pretax_401k
+  - pretax_health
+  must_match_keys:
+  - '108779'
+  - '108780'
+  - '108781'
+  - LL-00436
+  - LL-00437
+  - LL-00438
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: after-tax deductions
+  path: pay_stubs.csv
+  ref: pay_stubs.csv
+  key: stub_no
+  columns:
+  - roth_401k
+  must_match_keys:
+  - LL-00437
+  - LL-00438
+  - '108780'
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

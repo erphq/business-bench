@@ -1,0 +1,88 @@
+id: chargeback-tracker
+track: desk
+category: bookkeeping
+title: Chargeback tracker with evidence deadlines
+ask: |
+  Please bring our chargeback tracker up to date from the Ridgepay exports in the folder - June's note says what she wants and the dispute guide explains the rules. Save it as chargebacks.csv.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  evidence is due 7 business days after the first notice, skipping weekends and the listed holidays: DP-7734729 (1 Sep) runs past Labor Day to 2026-09-11, DP-7734211 past 3 July and DP-7734100 past Juneteenth; the export's Respond By column is a 10-calendar-day estimate the guide says not to use (check: evidence deadlines)
+- |-
+  reminder notices repeat DP-7734433 and two other cases with later notice dates; they are not new cases and the deadline still runs from the first notice (checks: one row per case; evidence deadlines)
+- |-
+  an amendment halves DP-7734359's disputed amount six days later; the lower amount is what is disputed and what the still-open case costs, while its deadline is unchanged (checks: disputed amounts; net loss; evidence deadlines)
+- |-
+  two retrieval requests (DP-7733900, DP-7733911) are in the same export but moved no money and are not chargebacks (checks: one row per case; row count)
+- |-
+  decisions are in a separate file: Accepted by merchant (DP-7734544) is a loss, and a won case costs nothing because the $20 fee comes back too; undecided cases stay open with the amount and fee out (checks: status; net loss)
+- |-
+  DP-7734248 and DP-7734766 dispute only part of the order, so the transaction amount overstates them (checks: disputed amounts; net loss)
+checks:
+- type: csv_columns
+  name: tracker columns
+  path: chargebacks.csv
+  columns:
+  - case_id
+  - disputed_amount
+  - status
+  - evidence_due
+  - net_loss
+- type: csv_set_equal
+  name: one row per case
+  path: chargebacks.csv
+  column: case_id
+  ref: chargebacks.csv
+  normalize:
+  - alnum
+- type: csv_row_count
+  name: row count
+  path: chargebacks.csv
+  equals_ref: chargebacks.csv
+- type: custom
+  name: evidence deadlines
+  module: check.py
+- type: csv_values_match
+  name: status
+  path: chargebacks.csv
+  ref: chargebacks.csv
+  key: case_id
+  columns:
+  - status
+  min_accuracy: 1.0
+  must_match_keys:
+  - DP-7734544
+  - DP-7734248
+  - DP-7734359
+  - DP-7734766
+- type: csv_values_match
+  name: disputed amounts
+  path: chargebacks.csv
+  ref: chargebacks.csv
+  key: case_id
+  columns:
+  - disputed_amount
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - DP-7734359
+  - DP-7734248
+  - DP-7734766
+- type: csv_values_match
+  name: net loss
+  path: chargebacks.csv
+  ref: chargebacks.csv
+  key: case_id
+  columns:
+  - net_loss
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - DP-7734359
+  - DP-7734248
+  - DP-7734766
+  - DP-7734544
+  - DP-7734137

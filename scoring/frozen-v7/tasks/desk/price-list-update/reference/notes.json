@@ -1,0 +1,45 @@
+{
+  "discontinued": [
+    "FT-1748",
+    "PT-3604",
+    "VL-2459",
+    "CS-6859",
+    "CS-6858"
+  ],
+  "fixed_inside_raised_category": [
+    "FT-1042",
+    "FT-1845"
+  ],
+  "fixed_price_items": [
+    "FX-4651",
+    "FX-4436",
+    "FX-4185",
+    "TL-5665",
+    "TL-5205",
+    "CS-6609",
+    "FT-1042",
+    "FT-1845"
+  ],
+  "percent_by_category": {
+    "Fittings": 4.5,
+    "Pipe & Tube": 7.0,
+    "Valves": 4.5
+  },
+  "renumbered": {
+    "VL-2673": "VL-2981"
+  },
+  "rounding_sensitive": [
+    "FT-1415",
+    "FT-1367",
+    "FT-1143",
+    "FT-1102",
+    "FT-1267",
+    "FT-1096",
+    "VL-2194",
+    "VL-2863",
+    "PT-3535",
+    "PT-3282",
+    "PT-3333",
+    "PT-3837"
+  ]
+}

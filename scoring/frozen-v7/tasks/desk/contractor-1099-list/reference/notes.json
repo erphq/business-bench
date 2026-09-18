@@ -1,0 +1,97 @@
+{
+  "c_corp": {
+    "box1": 3000.0,
+    "legal": "Valley Small Engine Repair, Inc.",
+    "reportable": false
+  },
+  "cpa_corp": {
+    "box1": 8300.5,
+    "legal": "Mossbank Accounting, P.C.",
+    "reportable": false
+  },
+  "dec2024": {
+    "box1": 1400.0,
+    "legal": "Dorothy Howard",
+    "reportable": true
+  },
+  "exact600": {
+    "box1": 600.0,
+    "legal": "Rebecca Garcia",
+    "reportable": true
+  },
+  "jan2026": {
+    "box1": 530.0,
+    "legal": "Margaret Cook",
+    "reportable": false
+  },
+  "law_corp": {
+    "box1": 6200.0,
+    "legal": "Copperfield Law, P.C.",
+    "reportable": true
+  },
+  "llc_c": {
+    "box1": 8100.0,
+    "legal": "Brightline Pest Solutions LLC",
+    "reportable": false
+  },
+  "llc_p": {
+    "box1": 6600.0,
+    "legal": "Two Rivers Irrigation LLC",
+    "reportable": true
+  },
+  "llc_s": {
+    "box1": 4200.0,
+    "legal": "Summit Tree Care LLC",
+    "reportable": false
+  },
+  "partnership": {
+    "box1": 11200.5,
+    "legal": "Garcia & Nguyen Snow Removal",
+    "reportable": true
+  },
+  "plain1": {
+    "box1": 12000.0,
+    "legal": "Sarah Torres",
+    "reportable": true
+  },
+  "plain2": {
+    "box1": 2900.25,
+    "legal": "Sarah Foster",
+    "reportable": true
+  },
+  "plain3": {
+    "box1": 13500.0,
+    "legal": "Richard Richardson",
+    "reportable": true
+  },
+  "plain4": {
+    "box1": 17500.0,
+    "legal": "Steven Morgan",
+    "reportable": true
+  },
+  "plain5": {
+    "box1": 3500.5,
+    "legal": "Marcus Cox",
+    "reportable": true
+  },
+  "refund_drop": {
+    "box1": 565.0,
+    "legal": "Gary Phillips",
+    "reportable": false
+  },
+  "refund_keep": {
+    "box1": 2470.0,
+    "legal": "Joshua Morris",
+    "reportable": true
+  },
+  "smllc": {
+    "box1": 12400.0,
+    "legal": "Deborah Okafor",
+    "reportable": true
+  },
+  "under": {
+    "box1": 587.5,
+    "legal": "Kimberly Rogers",
+    "reportable": false
+  }
+}

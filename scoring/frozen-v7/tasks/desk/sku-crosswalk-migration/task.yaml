@@ -1,0 +1,94 @@
+id: sku-crosswalk-migration
+track: desk
+category: spreadsheet
+title: Move the shop inventory onto the new SKUs
+ask: |
+  We go live on the new register next week. Turn our current inventory into the opening catalog using Coastline's crosswalk and save it as catalog_new.csv. Carlos's note has the rules.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  15 new SKUs each replace two or three old codes (valve lengths, pack sizes, colours); their stock must be added together, so a lookup that keeps the first old row per new SKU undercounts (check: on hand per SKU)
+- |-
+  the inventory export has one row per SKU per location (Main and Warehouse) for most items, under a two-line preamble and a BOM (check: on hand per SKU)
+- |-
+  about a third of the crosswalk's Old SKU cells carry trailing spaces and a few a leading space; an exact join misses those mappings and the items fall through as unmapped (checks: catalog SKUs; on hand per SKU)
+- |-
+  6 house-brand items are not on the crosswalk and must stay under their old code with status unmapped, not be dropped by an inner join (checks: catalog SKUs; status)
+- |-
+  the crosswalk covers the distributor's whole range: 5 new SKUs have no old code the shop stocks and must not be added, and some groups include a variant the shop never carried (checks: catalog SKUs; row count)
+- |-
+  merged items take the highest of their old prices, which is not the first row's price in 5 groups, and prices are '$34.99' text (check: price)
+- |-
+  the July draft crosswalk is in the folder with five merged groups split into separate codes (check: catalog SKUs)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: catalog_new.csv
+  columns:
+  - sku
+  - description
+  - on_hand
+  - price
+  - status
+- type: csv_set_equal
+  name: catalog SKUs
+  path: catalog_new.csv
+  column: sku
+  ref: catalog_new.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: catalog_new.csv
+  equals_ref: catalog_new.csv
+- type: csv_values_match
+  name: on hand per SKU
+  path: catalog_new.csv
+  ref: catalog_new.csv
+  key: sku
+  columns:
+  - on_hand
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+  must_match_keys:
+  - BP1522
+  - BT5245
+  - CB4442
+  - CH3720
+  - CH9482
+  - CT2853
+- type: csv_values_match
+  name: price
+  path: catalog_new.csv
+  ref: catalog_new.csv
+  key: sku
+  columns:
+  - price
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - CH3720
+  - CT2853
+  - LU9531
+  - TS3640
+- type: csv_values_match
+  name: status
+  path: catalog_new.csv
+  ref: catalog_new.csv
+  key: sku
+  columns:
+  - status
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - ZBW-SOCK-SM
+  - ZBW-CAP-CYC
+  - ZBW-BOTTLE-21
+  - ZBW-TEE-M
+  - ZBW-TEE-L
+  - ZBW-STICKER

@@ -1,0 +1,59 @@
+id: petty-cash-reconcile
+track: desk
+category: bookkeeping
+title: Reconcile the front desk petty cash and code the top-up
+ask: |
+  Can you reconcile the front desk petty cash for August and work out the replenishment? Dana's log, the receipts, the count sheet and Marisol's email are in the folder. Save it as petty_cash.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  voucher PC-228 (coffee for staff room + milk, 19.79) is in the log but its receipt is not in the envelope; it goes to 1360 missing receipts, not to the kitchen account, and the workbook must flag it (checks: kitchen & refreshments total; over/short and missing receipt flagged)
+- |-
+  voucher PC-227 was logged at 82.98 but the receipt says 28.98; the email says the receipt is right (checks: office supplies total; over/short and missing receipt flagged)
+- |-
+  the log shows the 14 August top-up as cash in, which starts a new period; totalling the whole month's vouchers codes spending already reimbursed, and the receipt for PC-221 from before the top-up is still in the envelope (checks: postage total; office supplies total; kitchen & refreshments total; replenishment check)
+- |-
+  the envelope holds a receipt from The UPS Store #4471 for 27.72 on 27 August that was never logged; the cash still left the box and it is postage (checks: postage total; over/short and missing receipt flagged)
+- |-
+  the log's running balance slips by 1.00 on one line, so its closing balance of 73.59 is not what the box should hold; the shortage has to come from the count and the receipts (check: over/short and missing receipt flagged)
+- |-
+  the count sheet lists denominations with the total left blank; the replenishment is the fund less the cash actually counted, not the sum of the logged vouchers (check: replenishment check)
+checks:
+- type: file_exists
+  name: petty_cash.xlsx exists
+  path: petty_cash.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: petty_cash.xlsx
+  min_count: 4
+- type: xlsx_no_errors
+  name: no error cells
+  path: petty_cash.xlsx
+- type: xlsx_value_present
+  name: replenishment check
+  path: petty_cash.xlsx
+  expected: 305.53
+  rel_tol: 3.273e-05
+  near_text: replenish
+- type: xlsx_value_present
+  name: postage total
+  path: petty_cash.xlsx
+  expected: 65.26
+  rel_tol: 0.000153233
+  near_text: postage
+- type: xlsx_value_present
+  name: office supplies total
+  path: petty_cash.xlsx
+  expected: 170.31
+  rel_tol: 5.8716e-05
+  near_text: office
+- type: xlsx_value_present
+  name: kitchen & refreshments total
+  path: petty_cash.xlsx
+  expected: 25.94
+  rel_tol: 0.000385505
+  near_text: kitchen
+- type: custom
+  name: over/short and missing receipt flagged
+  module: check.py

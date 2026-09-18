@@ -1,0 +1,39 @@
+{
+  "files": {
+    "aug": "Wexford_Suite210_statement_2026-08.pdf",
+    "jul": "Wexford_Suite210_statement_2026-07.pdf",
+    "sep": "scan_wexford_sept_statement.pdf",
+    "st1": "TidewaterStorage_B4_Jul-Aug_2026.pdf",
+    "st2": "TidewaterStorage_B4_Aug-Sep_2026.pdf"
+  },
+  "out_of_quarter": [
+    "PM-244969"
+  ],
+  "prepaid_applied": [
+    "5531649",
+    "5537113",
+    "5539052"
+  ],
+  "scan_figures": {
+    "statements/scan_wexford_sept_statement.pdf": [
+      "CH-249861",
+      "Base rent September 2026",
+      "AMOUNT 3225.00",
+      "CH-242407",
+      "CAM estimate September 2026",
+      "AMOUNT 438.75",
+      "PM-245081",
+      "Payment - thank you (ACH)",
+      "AMOUNT -3663.75",
+      "CR-241618",
+      "Late fee waived - August",
+      "AMOUNT -161.25",
+      "CH-241208",
+      "Electric submeter reimbursement August",
+      "AMOUNT 185.43",
+      "PM-245409",
+      "Payment - thank you (check 3367)",
+      "AMOUNT -185.43"
+    ]
+  }
+}

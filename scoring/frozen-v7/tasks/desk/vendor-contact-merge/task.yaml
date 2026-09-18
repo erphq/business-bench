@@ -1,0 +1,60 @@
+id: vendor-contact-merge
+track: desk
+category: spreadsheet
+title: Merge the purchasing and accounting vendor lists
+ask: |
+  Merge our two vendor lists into one clean list for the new system, one row per vendor. Priya's email has the rules. Save it as vendors.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the same vendor is spelled differently across the files (Inc., LLC, ALL CAPS, trailing spaces); the email domain decides identity (check: one row per vendor)
+- |-
+  accounting's export has a two-line preamble and a BOM; two vendors appear twice in it, once with a blank phone (checks: one row per vendor; phone carried over)
+- |-
+  phones come in seven formats; the grader accepts 10 digits or 11 with a leading 1 (check: phone carried over)
+- |-
+  Priya's email drops one vendor that appears in both files; it must not be in the output (check: dropped vendor absent)
+- |-
+  five vendors have different payment terms in the two files; purchasing wins per the email (check: payment terms)
+- |-
+  two vendors exist only in purchasing and two only in accounting; all four stay (check: one row per vendor)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: vendors.csv
+  columns:
+  - vendor
+  - contact
+  - email
+  - phone
+  - category
+  - payment_terms
+- type: csv_set_equal
+  name: one row per vendor
+  path: vendors.csv
+  column: email
+  ref: vendors.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: vendors.csv
+  equals_ref: vendors.csv
+- type: csv_values_match
+  name: payment terms (purchasing wins)
+  path: vendors.csv
+  ref: vendors.csv
+  key: email
+  columns:
+  - payment_terms
+  min_accuracy: 1.0
+- type: custom
+  name: phone carried over
+  module: check.py
+- type: text_not_contains
+  name: dropped vendor absent
+  path: vendors.csv
+  phrases:
+  - glassworksoptical.com

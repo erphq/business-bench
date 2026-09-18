@@ -1,0 +1,27 @@
+{
+  "files": {
+    "JUL": "PayCrest_Okafor_2026-07-24.pdf",
+    "LL0": "Ledgerline_LL-00436.pdf",
+    "LL1": "Ledgerline_LL-00437.pdf",
+    "MAN": "manual_check_5532.pdf",
+    "PC0": "PayCrest_Okafor_2026-08-07.pdf",
+    "PC1": "PayCrest_Garcia_2026-08-07.pdf",
+    "PC2": "PayCrest_Rogers_2026-08-07.pdf",
+    "SCAN": "scan_paystub_rogers_0821.pdf"
+  },
+  "july_stub": "108776",
+  "scan_figures": {
+    "august_pay_stubs/scan_paystub_rogers_0821.pdf": [
+      "LL-00438",
+      "1054",
+      "3464.50",
+      "2454.48",
+      "389.26",
+      "210.82",
+      "49.31",
+      "246.53",
+      "50.00",
+      "64.10"
+    ]
+  }
+}

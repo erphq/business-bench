@@ -1,0 +1,233 @@
+{
+  "cancelled": "Honey extraction walkthrough",
+  "day_rx": {
+    "Fri": "\\bfri(day)?\\b|\\boct(ober)?\\.?\\s+0?2\\b|\\b0?2\\s+oct(ober)?\\b|\\b10/0?2\\b|\\b2026-10-02\\b",
+    "Sat": "\\bsat(urday)?\\b|\\boct(ober)?\\.?\\s+0?3\\b|\\b0?3\\s+oct(ober)?\\b|\\b10/0?3\\b|\\b2026-10-03\\b"
+  },
+  "flag_rx": "\\bconflicts?\\b|\\bconflicting\\b|\\boverlap(s|ping|ped)?\\b|\\bclash(es|ing)?\\b|\\bdouble[- ]?booked\\b",
+  "room_rx": {
+    "Courtyard": "\\bcourtyard\\b",
+    "Extraction Lab": "\\bextraction lab\\b|\\bext\\.? lab\\b",
+    "Main Hall": "\\bmain hall\\b",
+    "Room 104": "(?<![\\d:.$])104(?![\\d:])",
+    "Room 106": "(?<![\\d:.$])106(?![\\d:])"
+  },
+  "sessions": [
+    {
+      "conflict": false,
+      "day": "Fri",
+      "room": "Courtyard",
+      "start_h": 18,
+      "start_m": 0,
+      "title": "Welcome social and honey tasting",
+      "utc_h": 0
+    },
+    {
+      "conflict": false,
+      "day": "Fri",
+      "room": "Extraction Lab",
+      "start_h": 18,
+      "start_m": 30,
+      "title": "Mead making demo",
+      "utc_h": 0
+    },
+    {
+      "conflict": false,
+      "day": "Fri",
+      "room": "Room 104",
+      "start_h": 19,
+      "start_m": 0,
+      "title": "New beekeeper orientation",
+      "utc_h": 1
+    },
+    {
+      "conflict": false,
+      "day": "Fri",
+      "room": "Extraction Lab",
+      "start_h": 19,
+      "start_m": 30,
+      "title": "Wax rendering hands-on",
+      "utc_h": 1
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Main Hall",
+      "start_h": 8,
+      "start_m": 45,
+      "title": "Opening remarks",
+      "utc_h": 14
+    },
+    {
+      "conflict": true,
+      "day": "Sat",
+      "room": "Main Hall",
+      "start_h": 9,
+      "start_m": 0,
+      "title": "Keynote: bees in a changing climate",
+      "utc_h": 15
+    },
+    {
+      "conflict": true,
+      "day": "Sat",
+      "room": "Main Hall",
+      "start_h": 10,
+      "start_m": 0,
+      "title": "Labeling rules for honey jars",
+      "utc_h": 16
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Extraction Lab",
+      "start_h": 10,
+      "start_m": 15,
+      "title": "Creamed honey workshop",
+      "utc_h": 16
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Room 104",
+      "start_h": 10,
+      "start_m": 15,
+      "title": "Winter feeding decisions",
+      "utc_h": 16
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Room 106",
+      "start_h": 10,
+      "start_m": 15,
+      "title": "Swarm traps that work",
+      "utc_h": 16
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Main Hall",
+      "start_h": 11,
+      "start_m": 15,
+      "title": "Building a top bar hive",
+      "utc_h": 17
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Room 106",
+      "start_h": 11,
+      "start_m": 30,
+      "title": "Varroa monitoring by the numbers",
+      "utc_h": 17
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Room 104",
+      "start_h": 11,
+      "start_m": 45,
+      "title": "Treatment-free hives: the evidence",
+      "utc_h": 17
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Courtyard",
+      "start_h": 12,
+      "start_m": 30,
+      "title": "Lunch and vendor tables",
+      "utc_h": 18
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Extraction Lab",
+      "start_h": 13,
+      "start_m": 45,
+      "title": "Microscope lab: nosema testing",
+      "utc_h": 19
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Main Hall",
+      "start_h": 13,
+      "start_m": 45,
+      "title": "Selling honey at farmers markets",
+      "utc_h": 19
+    },
+    {
+      "conflict": true,
+      "day": "Sat",
+      "room": "Room 104",
+      "start_h": 13,
+      "start_m": 45,
+      "title": "Nuc management in year one",
+      "utc_h": 19
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Room 106",
+      "start_h": 13,
+      "start_m": 45,
+      "title": "Hive scales and sensors",
+      "utc_h": 19
+    },
+    {
+      "conflict": true,
+      "day": "Sat",
+      "room": "Room 104",
+      "start_h": 14,
+      "start_m": 30,
+      "title": "Wax moth and small hive beetle",
+      "utc_h": 20
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Main Hall",
+      "start_h": 15,
+      "start_m": 0,
+      "title": "Queen rearing basics",
+      "utc_h": 21
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Extraction Lab",
+      "start_h": 15,
+      "start_m": 15,
+      "title": "Comb honey cutting",
+      "utc_h": 21
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Room 106",
+      "start_h": 15,
+      "start_m": 15,
+      "title": "Reading a frame like a pro",
+      "utc_h": 21
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Room 104",
+      "start_h": 15,
+      "start_m": 30,
+      "title": "Splitting colonies in spring",
+      "utc_h": 21
+    },
+    {
+      "conflict": false,
+      "day": "Sat",
+      "room": "Main Hall",
+      "start_h": 16,
+      "start_m": 15,
+      "title": "Raffle and closing",
+      "utc_h": 22
+    }
+  ]
+}

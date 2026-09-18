@@ -1,0 +1,77 @@
+id: catalog-normalize-units
+track: desk
+category: spreadsheet
+title: Normalize the catalog sizes for the new POS
+ask: |
+  We're moving the shop to the new POS. Turn the ShopKeep item export into a file the new system will import, using their template and field guide, and save it as catalog_clean.csv. Teodora's note has the changes.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the same size is typed '1.5L', '1,5 l', '1.5 ltr' and '1500ml'; unit_size is always millilitres, so 1500 (check: unit size)
+- |-
+  multipacks are written '6 x 330ml', '330ml x 6', '12pk 355 mL', 'Case of 24 / 250 ml', '4-pack' and '6x35g'; the pack count goes in pack_qty and the size of one unit in unit_size (checks: pack quantity; unit size)
+- |-
+  kg and litre sizes must become g and ml, and counted goods ('100 ct', '20 pcs', '1 dozen', '3-pack') are ea with the count in unit_size; the guide's unit list is exact and lower case, so 'mL', 'G', 'gr', 'pcs' are rejected (checks: unit; unit size)
+- |-
+  departments come as 'BEVERAGES', 'bulk foods' or 'Personal Care' and the new category list is case-sensitive ('Bulk', not 'Bulk Foods' or 'BULK') (check: category)
+- |-
+  Teodora's note renames Household to Home & Cleaning, Dairy to Dairy & Eggs and Grocery to Pantry (check: category)
+- |-
+  a blank Size cell means the size was typed at the end of the description (checks: unit size; pack quantity)
+- 'four items are marked DISC and must not be imported (check: every active item)'
+checks:
+- type: csv_columns
+  name: template columns in order
+  path: catalog_clean.csv
+  columns:
+  - sku
+  - name
+  - category
+  - pack_qty
+  - unit_size
+  - unit
+  - price
+  exact: true
+- type: csv_set_equal
+  name: every active item
+  path: catalog_clean.csv
+  column: sku
+  ref: catalog_clean.csv
+  normalize:
+  - strip
+- type: csv_values_match
+  name: pack quantity
+  path: catalog_clean.csv
+  ref: catalog_clean.csv
+  # 'pk of 2' / '2-pack' / '2 pcs' fit both guide rules (pack_qty 'how many units are sold together' -> 2 x 1 ea;
+  # counted goods 'put the count in one package in unit_size' -> 1 x 2 ea); the other split is accepted here, and
+  # the unit size check grades the pair so a mixed 2 x 2 or 1 x 1 still fails
+  ref_alternatives:
+  - catalog_clean_other_pack_split.csv
+  key: sku
+  columns:
+  - pack_qty
+  numeric: true
+  tolerance: 0.001
+- type: custom
+  name: unit size
+  module: check.py
+- type: csv_values_match
+  name: unit
+  path: catalog_clean.csv
+  ref: catalog_clean.csv
+  key: sku
+  columns:
+  - unit
+  normalize:
+  - strip
+- type: csv_values_match
+  name: category
+  path: catalog_clean.csv
+  ref: catalog_clean.csv
+  key: sku
+  columns:
+  - category
+  normalize:
+  - strip

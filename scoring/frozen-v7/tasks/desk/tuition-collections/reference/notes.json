@@ -1,0 +1,8 @@
+{
+  "autumn_payments_in_feed": 49992.0,
+  "cutoff": "2026-06-05",
+  "payments_without_family_id": 6,
+  "returned_payments": 5076.67,
+  "scheduled_after_cutoff": 15300.0,
+  "sibling_discount_credits": 5275.0
+}

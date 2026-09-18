@@ -1,30 +1,57 @@
 {
-  "campaign": "full-1",
+  "campaign": "complete-desk-comparison-2026-09-16",
   "track": "desk",
-  "release_kind": "recorded scoring snapshot",
-  "exported_utc": "2026-09-18T00:13:21.392615+00:00",
-  "ledger_sha256": "ff632e2ba10b4905d23f81fa782b44f436b5cca91577672e122df4068d40a5a1",
-  "included_arms": [
-    "codex-sol",
-    "proto-deepseek",
-    "proto-glm",
-    "proto-qwen"
-  ],
-  "expected_tasks_per_arm": 187,
   "repetitions": 3,
-  "launch_configuration": {
-    "image_tag": "business-bench:v38",
-    "runtime_revision_recorded_by_launcher": "53a303309",
-    "codex_cli_version_in_image_recipe": "0.154.0",
-    "reasoning_effort": "high",
-    "api_arm_parallelism": 5,
-    "codex_parallelism": 2,
-    "cpus_per_attempt": 2,
-    "memory_per_attempt": "6g",
-    "recalculation_image": "bench-recalc:v1"
+  "expected_tasks_per_arm": 187,
+  "included_arms": [
+    "proto-deepseek",
+    "codex-sol"
+  ],
+  "scorecard_snapshot_utc": "2026-09-16T18:22:23.605946+00:00",
+  "ledger_sha256": "559ba499d014e1bbf7a17afa132b504cdb2fd2740e6a7f319fec29b40560a242",
+  "scorer_manifest_sha256": "b4720db00f2a55461ca70767a4baf8dd2d25aa9d301e8fe22ea13d21ccca358f",
+  "original_scorecard_sha256": "04705007d04df365d8ba2b2debbeac109c47e3b6ab55ba1193f4b421e2f64485",
+  "configurations": {
+    "proto-deepseek": {
+      "runtime_commit": "c8f62dd60",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "provider": "DeepSeek only",
+      "fallbacks": false,
+      "reasoning": "high",
+      "temperature": 0,
+      "max_tokens": 65536
+    },
+    "codex-sol": {
+      "model": "gpt-5.6-sol",
+      "reasoning": "high",
+      "cli_version": "0.154.0",
+      "sampling": "CLI-managed; not asserted matched to Proto"
+    }
   },
-  "scorer_provenance": "Original result records lack per-attempt scorer hashes. No uniform immutable scorer identity is asserted. Results are exported as recorded, not rescored with release source.",
-  "runtime_provenance": "Image tag and short revision are launcher metadata, not a recovered image digest. Historical runtime binaries and credential-dependent skill installations are not distributed.",
-  "build_status": "No completed, fully acceptance-validated build campaign included.",
-  "exclusions": "Incomplete arms, development comparisons, pilots, tuning history, raw outputs, session traces, homes and credentials."
+  "source_cohorts": {
+    "proto-deepseek": [
+      "broad-desk-v43-c8f62dd60 r1",
+      "repeat-desk-v43-c8f62dd60 local r1/r2 map to logical r2/r3"
+    ],
+    "codex-sol": [
+      "full-1-codex-sol r1/r2/r3"
+    ]
+  },
+  "evidence_verification": "Original result hashes, receipt scorer identity and frozen verdicts checked for every attempt during export; frozen scorer package file hashes verified.",
+  "scorer_note": "Immutable manifest retains original assembly-status text; subsequent 1341-attempt replay reported zero differences. Original bytes are preserved.",
+  "paired_task_bootstrap": {
+    "difference_percentage_points": 6.0606060606060606,
+    "bootstrap_95_percent_interval_pp": [
+      1.24777183600713,
+      11.051693404634582
+    ],
+    "resampling_unit": "task, with its three repetitions kept together",
+    "seed": 20260916,
+    "samples": 20000,
+    "limitation": "Descriptive uncertainty for these task families; not evidence of unseen superiority."
+  },
+  "cost_note": "Captured-usage API-equivalent estimate from the frozen pricing table, not subscription or reconciled provider billing. Errored/interrupted requests without captured usage have unknown additional cost, not proven zero cost.",
+  "limitations": "Development task set; different models and non-contemporaneous cohorts. Not a causal harness-only or unseen-generalization comparison. Raw artifacts remain private; hashes identify but do not reconstruct them.",
+  "build_status": "No completed fully acceptance-validated build campaign published.",
+  "exclusions": "Later Proto-vs-Proto experiments, pilots, tuning history, unrelated old arms, raw traces and credentials."
 }

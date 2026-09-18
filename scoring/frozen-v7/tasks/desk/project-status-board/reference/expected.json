@@ -1,0 +1,206 @@
+{
+  "counts": {
+    "Done": 15,
+    "In progress": 6,
+    "Not started": 5
+  },
+  "labels": {
+    "Done": "\\bdone\\b|\\bcompleted?\\b|\\bfinished\\b",
+    "In progress": "\\bin[ -]progress\\b",
+    "Not started": "\\bnot[ -]started\\b|\\bto[ -]?do\\b"
+  },
+  "other_job": [
+    "Remove tub surround",
+    "Set shower pan",
+    "Install vanity",
+    "Tile shower walls",
+    "Replace exhaust fan",
+    "Order glass shower door",
+    "Paint bathroom ceiling",
+    "Plumbing inspection for bath"
+  ],
+  "tasks": [
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-353",
+      "raw_status": "Done",
+      "title": "Sign contract and collect deposit"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-354",
+      "raw_status": "done",
+      "title": "Pull building permit"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-355",
+      "raw_status": "Closed",
+      "title": "Protect floors and hang dust walls"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-356",
+      "raw_status": "Finished",
+      "title": "Demo upper and lower cabinets"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-357",
+      "raw_status": "Completed",
+      "title": "Remove soffit over sink wall"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-358",
+      "raw_status": "Closed",
+      "title": "Haul demo debris"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-359",
+      "raw_status": "Complete",
+      "title": "Rough plumbing for island sink"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-360",
+      "raw_status": "Complete",
+      "title": "Rough electrical and new circuits"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-361",
+      "raw_status": "Done",
+      "title": "Rough-in inspection"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-362",
+      "raw_status": "Complete",
+      "title": "Insulate exterior wall"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-363",
+      "raw_status": "Completed",
+      "title": "Hang and tape drywall"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-364",
+      "raw_status": "done",
+      "title": "Prime and paint walls"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-365",
+      "raw_status": "Closed",
+      "title": "Order cabinets"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-366",
+      "raw_status": "Completed",
+      "title": "Cabinet delivery"
+    },
+    {
+      "blocked": false,
+      "column": "Done",
+      "id": "T-367",
+      "raw_status": "Finished",
+      "title": "Install base cabinets"
+    },
+    {
+      "blocked": false,
+      "column": "In progress",
+      "id": "T-368",
+      "raw_status": "Doing",
+      "title": "Install wall cabinets"
+    },
+    {
+      "blocked": false,
+      "column": "In progress",
+      "id": "T-369",
+      "raw_status": "In progress",
+      "title": "Countertop template visit"
+    },
+    {
+      "blocked": true,
+      "column": "In progress",
+      "id": "T-370",
+      "raw_status": "On hold",
+      "title": "Countertop install"
+    },
+    {
+      "blocked": true,
+      "column": "Not started",
+      "id": "T-371",
+      "raw_status": "",
+      "title": "Tile backsplash"
+    },
+    {
+      "blocked": true,
+      "column": "Not started",
+      "id": "T-372",
+      "raw_status": "not started",
+      "title": "Install sink and faucet"
+    },
+    {
+      "blocked": true,
+      "column": "Not started",
+      "id": "T-373",
+      "raw_status": "Open",
+      "title": "Connect dishwasher"
+    },
+    {
+      "blocked": true,
+      "column": "In progress",
+      "id": "T-374",
+      "raw_status": "Doing",
+      "title": "Install range hood"
+    },
+    {
+      "blocked": true,
+      "column": "In progress",
+      "id": "T-375",
+      "raw_status": "WIP",
+      "title": "Under-cabinet lighting"
+    },
+    {
+      "blocked": false,
+      "column": "In progress",
+      "id": "T-376",
+      "raw_status": "Doing",
+      "title": "Patch hardwood floor"
+    },
+    {
+      "blocked": true,
+      "column": "Not started",
+      "id": "T-377",
+      "raw_status": "Not started",
+      "title": "Final electrical inspection"
+    },
+    {
+      "blocked": true,
+      "column": "Not started",
+      "id": "T-378",
+      "raw_status": "todo",
+      "title": "Homeowner walkthrough"
+    }
+  ]
+}

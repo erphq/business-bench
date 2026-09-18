@@ -1,0 +1,17 @@
+sku,vendor,unit_price,order_total,next_break_qty,effective_date
+PPS-4410,Pacific Packaging Supply,81.76,981.12,25,2026-10-01
+PPS-4412,Pacific Packaging Supply,77.04,770.40,25,2026-10-01
+PPS-2206,Pacific Packaging Supply,62.39,374.34,10,2026-10-01
+PPS-7708,Pacific Packaging Supply,47.19,1415.70,0,2026-10-01
+PPS-3310,Pacific Packaging Supply,67.65,270.60,10,2026-10-01
+CMG-101,Cascade Mill & Grain,19.80,792.00,0,2026-09-15
+CMG-104,Cascade Mill & Grain,17.85,214.20,40,2026-09-15
+CMG-120,Cascade Mill & Grain,22.90,137.40,10,2026-09-15
+CMG-230,Cascade Mill & Grain,11.90,47.60,10,2026-09-15
+BD-2210,Bluestem Dairy,146.00,438.00,24,2026-10-01
+BD-2215,Bluestem Dairy,4.60,331.20,0,2026-10-01
+BD-3104,Bluestem Dairy,9.50,228.00,72,2026-10-05
+BD-4001,Bluestem Dairy,10.45,313.50,72,2026-10-05
+NJ-01,Nightjar Coffee Roasters,49.50,396.00,10,2026-09-01
+NJ-02,Nightjar Coffee Roasters,50.00,100.00,5,2026-09-01
+NJ-05,Nightjar Coffee Roasters,43.00,430.00,0,2026-09-01

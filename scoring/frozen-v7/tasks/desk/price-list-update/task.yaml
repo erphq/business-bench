@@ -1,0 +1,73 @@
+id: price-list-update
+track: desk
+category: spreadsheet
+title: Apply the supplier's price letter to our master price list
+ask: |
+  Ironwood sent their price letter for October. Apply it to our current price list and save the updated list as price_list_2026.xlsx. Gary's note is in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the letter raises three categories by a percentage and reprices eight items to fixed amounts; two fixed items sit inside a raised category and the table price wins over the percentage (check: new prices to the cent)
+- |-
+  percentage results carry fractions of a cent and must be rounded; the grader allows 0.001 (check: new prices to the cent)
+- |-
+  five items are discontinued and must be removed, not left at the old price or zeroed (check: item set)
+- |-
+  one valve is renumbered (VL-2673 to VL-2981); the old code must go and the new code carries the valve increase (check: item set)
+- |-
+  a quarter of the master prices are stored as text such as $38.50, header sits on row 3 under a merged title (check: new prices to the cent)
+- |-
+  last year's notice with different percentages is in the folder and already applied; using it double-counts (check: new prices to the cent)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: price_list_2026.xlsx
+  columns:
+  - item_code
+  - description
+  - category
+  - uom
+  - unit_price
+- type: csv_set_equal
+  name: item set
+  path: price_list_2026.xlsx
+  column: item_code
+  ref: price_list.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: price_list_2026.xlsx
+  equals_ref: price_list.csv
+- type: csv_values_match
+  name: new prices to the cent
+  path: price_list_2026.xlsx
+  ref: price_list.csv
+  key: item_code
+  columns:
+  - unit_price
+  numeric: true
+  tolerance: 0.001
+  min_accuracy: 1.0
+  must_match_keys:
+  - FT-1042
+  - FT-1845
+  - VL-2981
+  - FT-1415
+  - FT-1367
+  - FT-1143
+  - FX-4651
+- type: csv_values_match
+  name: descriptions and categories carried over
+  path: price_list_2026.xlsx
+  ref: price_list.csv
+  key: item_code
+  columns:
+  - description
+  - category
+  min_accuracy: 1.0
+- type: xlsx_no_errors
+  name: workbook opens clean
+  path: price_list_2026.xlsx

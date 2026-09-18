@@ -1,0 +1,61 @@
+id: event-schedule-page
+track: desk
+category: tooling
+title: Conference schedule page for the lobby screen
+ask: |
+  Ingrid needs the conference schedule as a web page for the lobby screen and the volunteers' phones. Her note explains what she wants; the sessions are in the workbook. Save it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  every start time in the sheet is UTC and the conference runs on Mountain Daylight Time, six hours behind; a page that prints the sheet's times has the keynote before breakfast (check: page structure: local start times)
+- |-
+  Friday evening sessions start after midnight UTC, so the sheet dates them 2026-10-03; grouping by the sheet's date puts all four on Saturday (check: page structure: day and room)
+- |-
+  the sheet gives a duration, not an end time; the keynote runs 75 minutes into the next Main Hall talk, while two pairs of sessions are back to back (one ends the minute the next starts) and are not conflicts (check: page structure: CONFLICT marks)
+- |-
+  rooms are typed 'Room 104', 'Rm 104', '104', 'MAIN HALL' and 'Ext. Lab'; 'Nuc management in year one' and 'Wax moth and small hive beetle' overlap in Room 104 but are typed two ways, so grouping on the text misses the conflict (checks: page structure: CONFLICT marks; page structure: day and room)
+- |-
+  'Honey extraction walkthrough' is Cancelled and starts inside another Extraction Lab session; leaving it on the page also marks that session CONFLICT wrongly (checks: cancelled session left off; page structure: CONFLICT marks)
+- |-
+  the workbook opens on an August draft tab with the same sessions at older times and no cancellation (checks: page structure: local start times; cancelled session left off)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: every running session listed
+  path: index.html
+  phrases:
+  - Building a top bar hive
+  - Comb honey cutting
+  - Creamed honey workshop
+  - Hive scales and sensors
+  - 'Keynote: bees in a changing climate'
+  - Labeling rules for honey jars
+  - Lunch and vendor tables
+  - Mead making demo
+  - 'Microscope lab: nosema testing'
+  - New beekeeper orientation
+  - Nuc management in year one
+  - Opening remarks
+  - Queen rearing basics
+  - Raffle and closing
+  - Reading a frame like a pro
+  - Selling honey at farmers markets
+  - Splitting colonies in spring
+  - Swarm traps that work
+  - 'Treatment-free hives: the evidence'
+  - Varroa monitoring by the numbers
+  - Wax moth and small hive beetle
+  - Wax rendering hands-on
+  - Welcome social and honey tasting
+  - Winter feeding decisions
+- type: text_not_contains
+  name: cancelled session left off
+  path: index.html
+  phrases:
+  - Honey extraction walkthrough
+- type: custom
+  name: page structure
+  module: check.py

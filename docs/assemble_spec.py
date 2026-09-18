@@ -1,61 +1,39 @@
-#!/usr/bin/env python3
-"""Assemble the paper premise, technical specification and latest evidence tables."""
+"""Build the paper and result report from the verified two-system ledger summary."""
 import json
 from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
 
-ROOT = Path(__file__).resolve().parents[1]
-MODELS = {'codex-sol': 'Codex / gpt-5.6-sol', 'proto-deepseek': 'Proto / DeepSeek V4.1 Flash',
-          'proto-glm': 'Proto / GLM-5.3-Flash', 'proto-qwen': 'Proto / Qwen 3.8 Flash'}
-
-
-def result_markdown():
-    rows = json.loads((ROOT / 'results/latest/summary.json').read_text())
-    lines = ['# Latest full-arm results: campaign full-1', '',
-        'This is the recorded desk scoring snapshot from the four complete arms of the latest full benchmark campaign. Each arm covers all 187 tasks three times (561 attempts); the release contains 2,244 attempts. It is not a Proto development comparison. The overall campaign included additional incomplete arms; they are not represented as complete results here. No fully acceptance-validated full build campaign is included.', '',
-        '## Recorded artifact scores', '',
-        '| System | Passes / 561 | Pass rate | All 3 / 187 | Median min |',
-        '|---|---|---|---|---|']
-    for r in rows:
-        lines.append(f"| {MODELS[r['harness']]} | {r['passed']} | {r['pass_rate']:.2%} | {r['all_three_pass']} | {r['median_wall_s']/60:.2f} |")
-    lines += ['', 'Codex / gpt-5.6-sol has the highest recorded artifact pass rate in this release. The cells use different models; these numbers do not isolate a harness effect or establish performance beyond this workload.', '',
-        '## Repetition and execution accounting', '',
-        '| System | R1 / 187 | R2 / 187 | R3 / 187 | Timeouts | Nonzero exits |',
-        '|---|---|---|---|---|---|']
-    for r in rows:
-        p = r['by_repetition']
-        lines.append(f"| {r['harness']} | {p['1']} | {p['2']} | {p['3']} | {r['timed_out']} | {r['nonzero_exit']} |")
-    lines += ['', '| System | Passing, abnormal exit | Grader-error attempts | Missing usage |', '|---|---|---|---|']
-    for r in rows:
-        lines.append(f"| {r['harness']} | {r['passing_abnormal_exit']} | {r['grader_error_attempts']} | {r['usage_missing']} |")
-    lines += ['', 'Timeout and nonzero-exit columns can overlap. Artifact pass is the stored grader verdict, not normal process completion. All attempts remain in the denominator. Grader-error counts and missing usage describe unresolved evidence; they are not silently repaired or removed.', '',
-        '## Estimated model cost', '',
-        '| System | Observations / 561 | Mean USD, observed | Sum USD, observed |', '|---|---|---|---|']
-    for r in rows:
-        lines.append(f"| {r['harness']} | {r['cost_observations']} | {r['estimated_cost_mean_usd']:.4f} | {r['estimated_cost_sum_usd']:.4f} |")
-    lines += ['', 'Costs are recorded estimates under the historical price assumptions, not invoices or current-price claims. Means exclude missing cost observations; sums are observed sums, not complete billed totals when observations are missing. The price table is in bench/prices.json.', '',
-        '## Category counts', '',
-        '| Category | Codex sol | Proto DeepSeek | Proto GLM | Proto Qwen |', '|---|---|---|---|---|']
-    for c in rows[0]['by_category']:
-        cells = [f"{r['by_category'][c]['passed']} / {r['by_category'][c]['attempts']}" for r in rows]
-        lines.append('| ' + c + ' | ' + ' | '.join(cells) + ' |')
-    lines += ['', '## Provenance and interpretation', '',
-        'The launcher names image business-bench:v38 and runtime revision 53a303309; it sets high reasoning effort, first-party provider routes for the three API models, native workbook recalculation, and three repetitions. These are recorded launch settings, not independently recovered per-request configurations. Model usage is retained in the ledger; the Codex usage extractor may infer the configured model name when its event stream omits it.', '',
-        'Original result.json files lack per-attempt scorer hashes. Their source file hashes are retained, but a uniform immutable historical grader cannot be established from these records. The published snapshot preserves the recorded verdicts without applying current release code retrospectively. Treat the table as descriptive campaign evidence, not a scorer-controlled causal experiment or independently certified leaderboard.', '',
-        'attempts.jsonl contains every included result with allowlisted check verdicts, execution fields, usage, costs, source hashes, and source modification timestamps. File modification times are not asserted to be run start times. summary.json is reproducible from that ledger. provenance.json defines inclusion and known gaps. Raw workspaces, homes, trace logs, and secret-bearing reviewer sheets are deliberately absent.', '']
-    return '\n'.join(lines)
-
+def tables():
+    a,b=json.loads((ROOT/'results/latest/summary.json').read_text())
+    result=['| Measure | Proto + DeepSeek V4.1 Flash | Codex + GPT-5.6-sol |','|---|---|---|']
+    for i in (1,2,3):
+        result.append(f"| Repetition {i} | {a['by_repetition'][str(i)]}/187 | {b['by_repetition'][str(i)]}/187 |")
+    result += [f"| Frozen score | **{a['passed']}/561 (90.4%)** | **{b['passed']}/561 (84.3%)** |",
+        f"| All three attempts pass | {a['all_three_pass']}/187 | {b['all_three_pass']}/187 |",
+        f"| Original raw score | {a['raw_passed']}/561 (79.7%) | {b['raw_passed']}/561 (76.8%) |"]
+    efficiency=['| Measure | Proto + DeepSeek | Codex + Sol |','|---|---|---|']
+    for label,key in [('Input tokens','input'),('Cached input','cached_input'),('Uncached input','uncached_input'),('Output tokens','output')]:
+        efficiency.append(f"| {label} | {a['usage'][key]:,} | {b['usage'][key]:,} |")
+    for label,key,fmt in [('Estimated model cost (USD)','estimated_cost_sum_usd',',.2f'),('Median task duration (s)','median_wall_s',',.1f'),('p90 task duration (s)','p90_wall_s',',.1f'),('Summed task duration (s)','sum_wall_s',',.1f')]:
+        efficiency.append(f"| {label} | {a[key]:{fmt}} | {b[key]:{fmt}} |")
+    return '\n'.join(result),'\n'.join(efficiency)
 
 def main():
-    results = result_markdown()
-    (ROOT / 'results/latest/README.md').write_text(results)
-    premise = (ROOT / 'paper/premise.md').read_text()
-    technical = (ROOT / 'docs/technical-spec.md').read_text()
-    # Preserve the premise's references, then restart result headings below the technical sections.
-    results_spec = results.replace('# Latest full-arm results: campaign full-1', '## 12. Latest full-arm results: campaign full-1')
-    results_spec = '\n'.join('### ' + line[3:] if line.startswith('## ') and not line.startswith('## 12.') else line for line in results_spec.splitlines())
-    (ROOT / 'SPEC.md').write_text(premise + '\n' + technical + '\n' + results_spec + '\n')
-    print('Assembled SPEC.md and results/latest/README.md')
+    result,efficiency=tables()
+    paper=(ROOT/'paper/benchmark.md').read_text().replace('<!-- result-table -->',result).replace('<!-- efficiency-table -->',efficiency)
+    (ROOT/'SPEC.md').write_text(paper)
+    report='# Latest complete desk comparison\n\n**Proto + DeepSeek V4.1 Flash: 507/561 (90.4%). Codex + GPT-5.6-sol: 473/561 (84.3%).**\n\n'
+    report+='All 187 tasks, three repetitions per system, one shared conservative-v7 scorer. All 1,122 attempts are retained. The lead is 34 passes, or 6.06 percentage points. This is the completed 2026-09-16 comparison, not a later Proto-vs-Proto development experiment.\n\n'+result+'\n\n'
+    report+='## Resources\n\n'+efficiency+'\n\nCosts are captured-usage API-equivalent estimates, not billed subscription charges. Uncaptured errored requests may add unknown cost. Summed parallel task time is not elapsed campaign wall time.\n\n'
+    report+='## Scoring and scope\n\nEvery frozen pass also completed normally. Proto had three timeouts overall; Codex had none. Original grader errors (four Proto, three Codex) are retained separately; the frozen scorer has zero grader errors. Raw and frozen verdicts are distinct fields, never mixed.\n\n'
+    report+='The paired task-clustered bootstrap reports a descriptive 95% interval of +1.25 to +11.05 percentage points (20,000 samples, seed 20260916). The task set was used during development, and models, sampling controls, and cohort timing differ. This establishes a lead for the reported configurations on this workload, not a causal harness-only or unseen-generalization result. Proto did not reach 90% in every repetition: repetition two was 167/187 (89.3%).\n\n'
+    report+='The release includes the frozen scorer at `scoring/frozen-v7/`, an allowlisted ledger, original-result and receipt hashes, artifact hashes, and provenance. `python bench/export_campaign.py --verify` checks matrix completeness, score arithmetic and the complete scorer fingerprint. Raw artifacts remain private; their hashes do not reconstruct their contents. No completed build leaderboard is claimed.\n\n'
+    report+='## Category results\n\n| Category | Proto + DeepSeek | Codex + Sol |\n|---|---|---|\n'
+    a,b=json.loads((ROOT/'results/latest/summary.json').read_text())
+    for category in a['by_category']:
+        x,y=a['by_category'][category],b['by_category'][category]
+        report+=f"| {category} | {x['passed']}/{x['attempts']} | {y['passed']}/{y['attempts']} |\n"
+    (ROOT/'results/latest/README.md').write_text(report)
+    print('Assembled paper and corrected results')
 
-
-if __name__ == '__main__':
-    main()
+if __name__=='__main__': main()

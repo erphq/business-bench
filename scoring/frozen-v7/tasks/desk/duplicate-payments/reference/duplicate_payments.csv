@@ -1,0 +1,5 @@
+payment_id,original_payment_id,vendor,invoice,amount_overpaid,reason
+PMT-26-0369,PMT-26-0357,Finish Line Coatings,INV-77649,4668.80,Same invoice paid again by a second check
+PMT-26-0373,PMT-26-0346,Cascade Hardwood Supply Inc,38235,7735.73,Same invoice paid again under the supplier's duplicate vendor record
+PMT-26-0395,PMT-26-0377,Bayside Stone Tops,INV-18347,4842.61,Paid the invoice in full after already paying a 50% deposit on it
+PMT-26-0396,PMT-26-0390,Ironside Steel Service,326,4778.71,"Same invoice paid again, keyed without its leading zeros"

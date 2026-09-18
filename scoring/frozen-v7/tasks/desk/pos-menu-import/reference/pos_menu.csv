@@ -1,0 +1,48 @@
+Record Type,Code,Name,Parent Code,Category,Price,Min Select,Max Select,Modifier Groups
+ITEM,T101,Classic Black Milk Tea,,Milk Tea,5.00,,,MG-SIZE|MG-SWEET|MG-ICE|MG-TOP
+ITEM,T102,Jasmine Green Milk Tea,,Milk Tea,5.00,,,MG-SIZE|MG-SWEET|MG-ICE|MG-TOP
+ITEM,T103,Brown Sugar Boba Milk,,Milk Tea,6.25,,,MG-SIZE|MG-ICE|MG-TOP
+ITEM,T105,Thai Milk Tea,,Milk Tea,5.25,,,MG-SIZE|MG-SWEET|MG-ICE|MG-TOP
+ITEM,T106,Matcha Latte,,Milk Tea,5.70,,,MG-SIZE|MG-SWEET|MG-ICE|MG-MILK|MG-TOP
+ITEM,T108,Roasted Oolong Milk Tea,,Milk Tea,5.00,,,MG-SIZE|MG-SWEET|MG-ICE|MG-TOP
+ITEM,F201,Passion Fruit Green Tea,,Fruit Tea,5.25,,,MG-SIZE|MG-SWEET|MG-ICE|MG-TOP
+ITEM,F202,Mango Jasmine Tea,,Fruit Tea,5.00,,,MG-SIZE|MG-SWEET|MG-ICE|MG-TOP
+ITEM,F204,Strawberry Hibiscus,,Fruit Tea,5.50,,,MG-SIZE|MG-SWEET|MG-ICE
+ITEM,F205,Peach Black Tea,,Fruit Tea,5.00,,,MG-SIZE|MG-SWEET|MG-ICE|MG-TOP
+ITEM,S301,Mango Slush,,Slush,6.00,,,MG-TOP
+ITEM,S302,Watermelon Slush,,Slush,6.25,,,MG-TOP
+ITEM,S303,Coconut Slush,,Slush,6.25,,,MG-TOP
+ITEM,K401,Popcorn Chicken,,Snacks,7.75,,,MG-SAUCE
+ITEM,K402,Sweet Potato Fries,,Snacks,5.50,,,MG-SAUCE
+ITEM,K403,Egg Waffle,,Snacks,6.00,,,MG-DRIZ
+MODIFIER_GROUP,MG-SIZE,Size,,,,1,1,
+MODIFIER,SZ-REG,Regular,MG-SIZE,,0.00,,,
+MODIFIER,SZ-LG,Large,MG-SIZE,,1.00,,,
+MODIFIER_GROUP,MG-SWEET,Sweetness,,,,1,1,
+MODIFIER,SW-0,0% sweet,MG-SWEET,,0.00,,,
+MODIFIER,SW-25,25% sweet,MG-SWEET,,0.00,,,
+MODIFIER,SW-50,50% sweet,MG-SWEET,,0.00,,,
+MODIFIER,SW-75,75% sweet,MG-SWEET,,0.00,,,
+MODIFIER,SW-100,100% sweet,MG-SWEET,,0.00,,,
+MODIFIER_GROUP,MG-ICE,Ice,,,,1,1,
+MODIFIER,ICE-NO,No ice,MG-ICE,,0.00,,,
+MODIFIER,ICE-LESS,Less ice,MG-ICE,,0.00,,,
+MODIFIER,ICE-REG,Regular ice,MG-ICE,,0.00,,,
+MODIFIER,ICE-HOT,Hot,MG-ICE,,0.00,,,
+MODIFIER_GROUP,MG-TOP,Toppings,,,,0,3,
+MODIFIER,TP-PEARL,Tapioca pearls,MG-TOP,,0.75,,,
+MODIFIER,TP-CRYS,Crystal boba,MG-TOP,,0.75,,,
+MODIFIER,TP-LYCH,Lychee jelly,MG-TOP,,0.60,,,
+MODIFIER,TP-PUD,Egg pudding,MG-TOP,,0.85,,,
+MODIFIER,TP-RBEAN,Red bean,MG-TOP,,0.75,,,
+MODIFIER,TP-FOAM,Cheese foam,MG-TOP,,1.25,,,
+MODIFIER_GROUP,MG-MILK,Milk Swap,,,,0,1,
+MODIFIER,MK-OAT,Oat milk,MG-MILK,,0.70,,,
+MODIFIER,MK-ALM,Almond milk,MG-MILK,,0.70,,,
+MODIFIER,MK-LF,Lactose-free milk,MG-MILK,,0.50,,,
+MODIFIER_GROUP,MG-SAUCE,Sauce,,,,0,2,
+MODIFIER,SC-MAYO,Spicy mayo,MG-SAUCE,,0.00,,,
+MODIFIER,SC-PLUM,Plum powder,MG-SAUCE,,0.50,,,
+MODIFIER,SC-CHILI,Sweet chili,MG-SAUCE,,0.00,,,
+MODIFIER_GROUP,MG-DRIZ,Waffle Drizzle,,,,0,1,
+MODIFIER,DZ-NUT,Nutella,MG-DRIZ,,1.00,,,

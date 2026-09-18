@@ -1,0 +1,84 @@
+{
+  "cross_year_chargeback": {
+    "amount": 4487.0,
+    "gift_id": "G-50391"
+  },
+  "donors_gave": {
+    "FY2024": 53,
+    "FY2025": 151,
+    "FY2026": 156
+  },
+  "fy_totals": {
+    "FY2024": 107103.0,
+    "FY2025": 187578.0,
+    "FY2026": 207635.0
+  },
+  "naive": {
+    "by_name": {
+      "rate": 0.4474,
+      "retained": 85,
+      "tot": {
+        "FY2024": 107103.0,
+        "FY2025": 187578.0,
+        "FY2026": 207635.0
+      }
+    },
+    "calendar": {
+      "rate": 0.3889,
+      "retained": 63,
+      "tot": {
+        "FY2024": 0.0,
+        "FY2025": 214362.0,
+        "FY2026": 102718.0
+      }
+    },
+    "inkind": {
+      "rate": 0.634,
+      "retained": 97,
+      "tot": {
+        "FY2024": 107103.0,
+        "FY2025": 194286.0,
+        "FY2026": 247875.0
+      }
+    },
+    "refund_by_date": {
+      "rate": 0.6159,
+      "retained": 93,
+      "tot": {
+        "FY2024": 107103.0,
+        "FY2025": 192065.0,
+        "FY2026": 203148.0
+      }
+    },
+    "refund_rows_dropped": {
+      "rate": 0.6225,
+      "retained": 94,
+      "tot": {
+        "FY2024": 107103.0,
+        "FY2025": 192230.0,
+        "FY2026": 209144.0
+      }
+    },
+    "status_ignored": {
+      "rate": 0.6424,
+      "retained": 97,
+      "tot": {
+        "FY2024": 107103.0,
+        "FY2025": 187691.0,
+        "FY2026": 245226.0
+      }
+    }
+  },
+  "refunded_major_gift": {
+    "amount": 35000,
+    "donor": "Halvorsen Foundation",
+    "gift_id": "G-50564"
+  },
+  "retained_donors": 94,
+  "retention_rate": 0.6225,
+  "top_donor": {
+    "fy2026": 20973.0,
+    "id": "D-10132",
+    "name": "Thomas Johnson"
+  }
+}

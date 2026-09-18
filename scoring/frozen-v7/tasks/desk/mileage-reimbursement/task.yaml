@@ -1,0 +1,82 @@
+id: mileage-reimbursement
+track: desk
+category: bookkeeping
+title: August mileage reimbursement for the field staff
+ask: |
+  Denise needs August mileage worked out for payroll. Everything is in the folder, including her emails about the policy. Save it as reimbursement.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  Deborah Okafor (BH-197) logs weekend and evening personal errands in the app; they come out entirely (check: reimbursement per clinician)
+- |-
+  home-to-office and office-to-home legs are commuting and pay nothing, and the first business leg out of home and the last one back each lose the clinician's one-way commute, never below zero; Rebecca Garcia (BH-918) has a 18.2-mile commute and many shorter first and last legs, so an unfloored deduction goes negative (checks: reimbursable miles; reimbursement per clinician)
+- |-
+  round-trip lines carry the one-way distance and count twice; Kimberly Rogers (BH-645) has daily supply runs and Saturday home-to-patient round trips where both legs lose the commute (check: reimbursement per clinician)
+- |-
+  Dorothy Howard (BH-201) is not in the app export at all; those miles are odometer end less start in a separate workbook, which also holds personal trips and July and September lines (checks: one row per clinician; reimbursement per clinician)
+- |-
+  the 2025 email says 70 cents; the December 2025 email sets 72.5 cents for 2026 (check: reimbursement per clinician)
+- |-
+  the app export runs 27 July to 4 September, carries a two-line preamble and a BOM, and upper-cases some driver names (checks: reimbursable miles; row count)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: reimbursement.csv
+  columns:
+  - employee_id
+  - employee
+  - reimbursable_miles
+  - reimbursement
+  # Denise's 4 Sep email asks for "employee ID, name, reimbursable miles, and the reimbursement in dollars" but fixes
+  # no headers: the name column is any header naming a name or the person, the dollar column any header naming the
+  # reimbursement, dollars or an amount paid that is not the miles or the rate (headers are read lower-case with
+  # punctuation as spaces, so "Reimbursement ($)" reads "reimbursement")
+  column_match:
+    employee:
+    - \bname\b|^(clinician|staff|staff member|driver|person)$
+    reimbursement:
+    - reimburs(ement|ed)\b|\bdollars?\b|\busd\b|\bamount\b|\bpay(ment|out)?\b
+    - ^(?!.*\b(miles?|mi|mileage rate|rate|cents)\b)
+- type: csv_set_equal
+  name: one row per clinician
+  path: reimbursement.csv
+  column: employee_id
+  ref: reimbursement.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: reimbursement.csv
+  equals_ref: reimbursement.csv
+- type: csv_values_match
+  name: reimbursable miles
+  path: reimbursement.csv
+  ref: reimbursement.csv
+  key: employee_id
+  columns:
+  - reimbursable_miles
+  numeric: true
+  tolerance: 0.05
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - BH-197
+  - BH-918
+  - BH-645
+  - BH-201
+- type: csv_values_match
+  name: reimbursement per clinician
+  path: reimbursement.csv
+  ref: reimbursement.csv
+  key: employee_id
+  columns:
+  - reimbursement
+  column_match:
+    reimbursement:
+    - reimburs(ement|ed)\b|\bdollars?\b|\busd\b|\bamount\b|\bpay(ment|out)?\b
+    - ^(?!.*\b(miles?|mi|mileage rate|rate|cents)\b)
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys: *id001

@@ -1,0 +1,21 @@
+{
+  "balance_after_august": 178925.74,
+  "extra_date": "2026-05-15",
+  "extra_principal": 10000.0,
+  "interest_by_payment": [
+    1141.62,
+    1133.85,
+    1126.04,
+    1240.6,
+    1232.14,
+    1160.29,
+    1151.31,
+    1142.28
+  ],
+  "lender_balance_after_august": 179052.99,
+  "lender_total_interest": 9455.38,
+  "new_payment": 2577.17,
+  "new_rate": 0.076,
+  "overcharge": 127.25,
+  "total_interest": 9328.13
+}

@@ -1,0 +1,27 @@
+{
+  "credit_total": -7066.41,
+  "deposit_lines_net": 33060.0,
+  "grand_total": 245492.01,
+  "sensitive": {
+    "month": "2026-01",
+    "rep": "Christopher Walker",
+    "value": 8513.69
+  },
+  "spellings": {
+    "Christopher Walker": [
+      "Christopher Walker",
+      "Walker, Christopher"
+    ],
+    "Dana Cruz": [
+      "Dana Cruz",
+      "D. Cruz",
+      "Cruz, Dana",
+      "DANA CRUZ"
+    ]
+  },
+  "zero_cell": {
+    "month": "2026-04",
+    "rep": "Priya Patel",
+    "surname": "Patel"
+  }
+}
