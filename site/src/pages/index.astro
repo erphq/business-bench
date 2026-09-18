@@ -10,10 +10,10 @@ const gap = SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed;
 const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed;
 const desc = "Does the agent deliver business work an owner can actually use? 187 desk tasks and 20 app-build tasks with executable checks, and a complete two-system desk comparison of 1,122 attempts.";
 ---
-<Base title="Business Harness Bench" description={desc} path="/">
+<Base title="Business Bench" description={desc} path="/">
   <p class="kicker">A verifiable benchmark for agents that do business work</p>
   <h1>Business work is the domain where agent correctness can actually be measured.</h1>
-  <p class="lede">Code benchmarks have exact verifiers and a narrow, contaminated domain. Work benchmarks have economic breadth and rubric or LLM-judge grading, so they measure plausibility. Business work has messy, long-horizon inputs and a deliverable with a ground truth: a reconciliation balances or it does not. Business Harness Bench uses that to measure what other benchmarks cannot: conjunctive correctness, reliability over repeated attempts, and whether an agent verifies its own work before handing it over.</p>
+  <p class="lede">Code benchmarks have exact verifiers and a narrow, contaminated domain. Work benchmarks have economic breadth and rubric or LLM-judge grading, so they measure plausibility. Business work has messy, long-horizon inputs and a deliverable with a ground truth: a reconciliation balances or it does not. Business Bench uses that to measure what other benchmarks cannot: conjunctive correctness, reliability over repeated attempts, and whether an agent verifies its own work before handing it over.</p>
   <div class="actions">
     <a class="btn primary" href="/results">See the results</a>
     <a class="btn" href="/roadmap">Read the v2 thesis</a>

@@ -3,11 +3,11 @@ import Base from "@/layouts/Base.astro";
 import { readRepoFile, REPO } from "@/lib/data";
 import { renderMarkdown } from "@/lib/markdown";
 const { html, toc } = renderMarkdown(readRepoFile("SPEC.md"), { stripFirstH1: true, linkBase: `${REPO}/blob/main/` });
-const desc = "Business Harness Bench: Evaluating Agents on Business Deliverables. The full paper: design, evaluation protocol, frozen scoring, results, resource use, validity, and how to run and audit the benchmark.";
+const desc = "Business Bench: Evaluating Agents on Business Deliverables. The full paper: design, evaluation protocol, frozen scoring, results, resource use, validity, and how to run and audit the benchmark.";
 ---
 <Base title="Paper" description={desc} path="/paper">
   <p class="kicker">Paper and specification · v1.0.0</p>
-  <h1>Business Harness Bench: Evaluating Agents on Business Deliverables</h1>
+  <h1>Business Bench: Evaluating Agents on Business Deliverables</h1>
   <p class="lede">The complete specification as released in the repository. Sections 1 to 6 are the paper; Appendix A covers running, scoring, and release validation. Result tables are the release\u2019s recorded numbers.</p>
   <div class="actions">
     <a class="btn" href={`${REPO}/blob/main/docs/business-harness-bench-spec.pdf`} rel="noopener">PDF</a>

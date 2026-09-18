@@ -1,4 +1,4 @@
-# Business Harness Bench v2: specification for discussion
+# Business Bench v2: specification for discussion
 
 Status: agreed direction, 2026-09-18. Task authoring has not started. This document
 is the contract the v2 tasks will be written against. It supersedes nothing in v1;

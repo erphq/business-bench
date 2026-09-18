@@ -1,4 +1,4 @@
-# Business Harness Bench v2: the 100 tasks
+# Business Bench v2: the 100 tasks
 
 Agreed list, 2026-09-18. Companion to [README.md](README.md), which holds the thesis, axes, grading vocabulary, difficulty bands, and order of work. Slugs are provisional task ids. Each task will be authored at three bands from one generator.
 

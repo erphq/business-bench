@@ -11,7 +11,7 @@ const tableMd = fmtDoc.slice(fmtDoc.indexOf("| type |"), fmtDoc.indexOf("Paths a
 const checkTable = renderMarkdown(tableMd).html;
 const baselineMd = readRepoFile("docs/build-baseline.md");
 const baselineItems = renderMarkdown(baselineMd.slice(baselineMd.indexOf("\n1. "), baselineMd.lastIndexOf("---"))).html;
-const desc = "How Business Harness Bench runs and scores agents: the agent boundary, desk and build protocols, the deterministic grader and its check types, metrics, and the evaluated cells.";
+const desc = "How Business Bench runs and scores agents: the agent boundary, desk and build protocols, the deterministic grader and its check types, metrics, and the evaluated cells.";
 ---
 <Base title="Methods" description={desc} path="/methods">
   <p class="kicker">Protocol, grader, metrics</p>

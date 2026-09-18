@@ -5,7 +5,7 @@ import { renderMarkdown } from "@/lib/markdown";
 const readme = readRepoFile("README.md");
 const body = readme.slice(readme.indexOf("## Requirements"));
 const { html, toc } = renderMarkdown(body, { linkBase: `${REPO}/blob/main/` });
-const desc = "Install, verify, and run Business Harness Bench: no-model verification, the Codex desk run, optional Proto adapters, the build track, and how to publish a new campaign.";
+const desc = "Install, verify, and run Business Bench: no-model verification, the Codex desk run, optional Proto adapters, the build track, and how to publish a new campaign.";
 ---
 <Base title="Reproduce" description={desc} path="/reproduce">
   <p class="kicker">From the repository README</p>

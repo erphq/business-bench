@@ -11,7 +11,7 @@ const failCounts: Record<string, number> = {};
 for (const a of ARMS) for (const r of runs[a.id]) for (const c of r.checks) if (c.required && !c.passed) failCounts[c.name] = (failCounts[c.name] ?? 0) + 1;
 const med = (xs: number[]) => { const s = xs.filter((x) => x != null).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
 const mean = (xs: (number | null)[]) => { const s = xs.filter((x): x is number => x != null); return s.length ? s.reduce((a, b) => a + b, 0) / s.length : null; };
-const desc = `${task.title}. A ${CATEGORY_LABEL[task.category].toLowerCase()} task from Business Harness Bench: ${task.ask.slice(0, 140)}`;
+const desc = `${task.title}. A ${CATEGORY_LABEL[task.category].toLowerCase()} task from Business Bench: ${task.ask.slice(0, 140)}`;
 ---
 <Base title={task.title} description={desc} path={`/tasks/${task.id}`}>
   <p class="kicker"><a href="/tasks">Tasks</a> · desk · <a href={`/tasks#${task.category}`}>{CATEGORY_LABEL[task.category]}</a></p>

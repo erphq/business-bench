@@ -4,7 +4,7 @@ import { ARMS, CATEGORIES, deskTasks, buildTasks, matrix, REPO } from "@/lib/dat
 const desk = deskTasks(), build = buildTasks(), m = matrix();
 const total = ARMS.length * 3;
 const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
-const desc = "All 187 desk tasks and 20 application-build tasks of Business Harness Bench, with the owner's ask, deliverables, and recorded pass counts.";
+const desc = "All 187 desk tasks and 20 application-build tasks of Business Bench, with the owner's ask, deliverables, and recorded pass counts.";
 ---
 <Base title="Tasks" description={desc} path="/tasks">
   <p class="kicker">Task inventory · {desk.length} desk · {build.length} build</p>

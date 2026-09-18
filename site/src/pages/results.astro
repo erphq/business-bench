@@ -17,7 +17,7 @@ const failTypes = Object.fromEntries(ARMS.map((a) => {
 }));
 const bs = prov.paired_task_bootstrap;
 const eqSet = new Set(sc.equivalenceTasks);
-const desc = "Complete desk comparison of Business Harness Bench: 1,122 attempts, two systems, one frozen scorer with raw verdicts retained, per-task matrix, resource use, and provenance.";
+const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two systems, one frozen scorer with raw verdicts retained, per-task matrix, resource use, and provenance.";
 ---
 <Base title="Results" description={desc} path="/results">
   <p class="kicker">Desk track · {prov.campaign} · snapshot {prov.scorecard_snapshot_utc.slice(0, 10)}</p>

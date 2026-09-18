@@ -3,7 +3,7 @@ import Base from "@/layouts/Base.astro";
 import { buildTasks, REPO, type BuildTask } from "@/lib/data";
 export async function getStaticPaths() { return buildTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
 const { task } = Astro.props as { task: BuildTask };
-const desc = `${task.title}. A build-track task from Business Harness Bench with seed data, a ${task.checklistItems}-item acceptance checklist, and three change requests.`;
+const desc = `${task.title}. A build-track task from Business Bench with seed data, a ${task.checklistItems}-item acceptance checklist, and three change requests.`;
 ---
 <Base title={task.title} description={desc} path={`/build/${task.id}`}>
   <p class="kicker"><a href="/tasks">Tasks</a> · <a href="/tasks#build">build</a> · {task.category}</p>
