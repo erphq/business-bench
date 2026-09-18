@@ -1,40 +1,63 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Bar from "@/components/Bar.astro";
-import { ARMS, SUMMARY_BY_ID, CATEGORIES, deskTasks, buildTasks, attempts, matrix, provenance, fmt, REPO } from "@/lib/data";
+import { ARMS, SUMMARY_BY_ID, CATEGORIES, deskTasks, buildTasks, attempts, matrix, provenance, findings, crossArm, fmt, REPO } from "@/lib/data";
 const desk = deskTasks(), build = buildTasks(), led = attempts(), m = matrix(), prov = provenance();
 const noneTasks = desk.filter((t) => ARMS.every((a) => m[t.id][a.id].every((r) => !r.passed)));
 const allTasks = desk.filter((t) => ARMS.every((a) => m[t.id][a.id].every((r) => r.passed)));
 const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
+const F = Object.fromEntries(ARMS.map((a) => [a.id, findings(a.id)]));
+const X = crossArm();
+const pp = (x: number) => (x * 100).toFixed(1);
 const gap = SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed;
 const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed;
 const desc = "Does the agent deliver business work an owner can actually use? 187 desk tasks and 20 app-build tasks with executable checks, and a complete two-system desk comparison of 1,122 attempts.";
 ---
 <Base title="Business Bench" description={desc} path="/">
-  <p class="kicker">A verifiable benchmark for agents that do business work</p>
+  <p class="kicker">Business Bench · a verifiable benchmark for agents doing business work</p>
   <h1>Business work is the domain where agent correctness can actually be measured.</h1>
-  <p class="lede">Code benchmarks have exact verifiers and a narrow, contaminated domain. Work benchmarks have economic breadth and rubric or LLM-judge grading, so they measure plausibility. Business work has messy, long-horizon inputs and a deliverable with a ground truth: a reconciliation balances or it does not. Business Bench uses that to measure what other benchmarks cannot: conjunctive correctness, reliability over repeated attempts, and whether an agent verifies its own work before handing it over.</p>
+  <p class="lede">Code benchmarks have exact verifiers, a narrow domain, and documented contamination and reward hacking. Work benchmarks have economic breadth and grade by rubric, checkpoint, or expert preference, so they measure plausibility. Business work has long-horizon, many-document inputs and a deliverable with a ground truth. Business Bench uses that to measure conjunctive correctness, repeat reliability, and self-verification with executable checks only: no rubric, no LLM judge, no partial credit.</p>
   <div class="actions">
-    <a class="btn primary" href="/results">See the results</a>
-    <a class="btn" href="/roadmap">Read the v2 thesis</a>
-    <a class="btn" href="/tasks">Browse the tasks</a>
-    <a class="btn" href={REPO} rel="noopener">Run it yourself</a>
+    <a class="btn primary" href="/analysis">Read the findings</a>
+    <a class="btn" href="/results">Results</a>
+    <a class="btn" href="/roadmap">v2 specification</a>
+    <a class="btn" href={REPO} rel="noopener">Repository</a>
   </div>
 
-  <h2 style="margin-top:40px">Why this moves anything</h2>
-  <div class="grid c3">
-    <div class="card"><h3>Conjunctive correctness</h3><p>A task passes only when every required check passes. Agents routinely satisfy most checks and earn nothing, which is exactly the property that separates a demo from delegation. The per-check versus per-task gap is a published number here, not a footnote.</p></div>
-    <div class="card"><h3>Reliability, not capability</h3><p>An owner runs the process every month, so the unit is pass-all-k over repeated attempts, not pass@k. Three repetitions today, five in v2, and the per-repetition rows are the claim, not the aggregate.</p></div>
-    <div class="card"><h3>Procedurally generated, verifiable economics</h3><p>Every task is a generator with a seed and a planted truth: the fraud ring, the real churn cause, the optimal schedule's cost. That gives contamination-resistant sealed variants, a tunable difficulty axis, and, when we choose, an RL environment for economically valuable work with dense exact rewards.</p></div>
+  <h2 style="margin-top:40px">What it measures</h2>
+  <div class="prose">
+    <p>A task <i>t</i> declares required checks <i>C<sub>t</sub></i> over the files the agent leaves behind: exact identifier sets, keyed values, workbook figures after native recalculation, sentence-level text rules, task-specific graders. An attempt passes iff every check in <i>C<sub>t</sub></i> passes. Each task runs <i>k</i> = {prov.repetitions} times in a fresh workspace. Four numbers follow:</p>
+    <ul>
+      <li><b>pass@1</b>, the mean attempt pass rate, and <b>pass^k</b>, the fraction of tasks passed in all <i>k</i> repetitions. The second is what an owner experiences.</li>
+      <li><b>Check rate</b> <i>c̄</i>, passed required checks over all required checks, and the <b>conjunctive gap</b> <i>c̄</i> − pass@1: the credit a partial-credit grader awards for work the owner would have to redo.</li>
+      <li><b>Near-miss share</b>, the fraction of failures one check away from passing: how often the agent had what it needed and did not verify.</li>
+      <li><b>Cost per pass</b>, from captured usage at list price, beside wall time and token work.</li>
+    </ul>
+    <p>Every task is a generator with a seed and a planted truth, so the same task exists as sealed variants and at several difficulty bands, and the whole set can become an environment with dense exact rewards. Verdicts are bound by receipts to a hashed scorer; raw and frozen verdicts are both published.</p>
   </div>
-  <p class="muted" style="margin-top:16px">No rubric, no LLM judge, no institutional gatekeeper. The site is the venue; the release discipline (hashed manifests, receipts per verdict, raw and frozen scores side by side, a public dispute process, a commissioned human baseline) is what anyone can check. The <a href="/roadmap">v2 specification</a> organises 100 new tasks by the capability they isolate.</p>
 
-  <div class="grid c4" style="margin-top:40px">
-    <div class="stat"><div class="num">{desk.length}</div><div class="lbl">desk tasks, seven categories, each with a reference solution</div></div>
-    <div class="stat"><div class="num">{build.length}</div><div class="lbl">app-build tasks, each with seed data, an acceptance checklist, and three change requests</div></div>
-    <div class="stat"><div class="num">{fmt.int(led.length)}</div><div class="lbl">attempts in the complete desk comparison: 187 tasks × {prov.repetitions} repetitions × {ARMS.length} systems</div></div>
-    <div class="stat"><div class="num">1</div><div class="lbl">frozen scorer for every attempt, with raw verdicts retained beside it</div></div>
+  <h2>Findings from the current release</h2>
+  <div class="grid c4">
+    <div class="stat"><div class="num">{pp(Math.min(F[lead.id].gap, F[other.id].gap))}–{pp(Math.max(F[lead.id].gap, F[other.id].gap))}</div><div class="lbl">point conjunctive gap: both systems pass over {Math.floor(Math.min(F[lead.id].checkRate, F[other.id].checkRate) * 100)}% of checks and far fewer tasks</div></div>
+    <div class="stat"><div class="num">{Math.round(Math.min(...ARMS.map((a) => F[a.id].singleFail / F[a.id].failed)) * 100)}–{Math.round(Math.max(...ARMS.map((a) => F[a.id].singleFail / F[a.id].failed)) * 100)}%</div><div class="lbl">of failed attempts failed exactly one required check</div></div>
+    <div class="stat"><div class="num">{pp(F[lead.id].passAny - F[lead.id].passAll)}</div><div class="lbl">points between pass@3 and pass^3 for the leading system: can do it versus does it every time</div></div>
+    <div class="stat"><div class="num">{(F[other.id].costPerPass / F[lead.id].costPerPass).toFixed(1)}×</div><div class="lbl">difference in estimated cost per passing attempt, with the caveats stated</div></div>
   </div>
+  <p class="muted" style="margin-top:16px">Seven findings with their computation and caveats are on the <a href="/analysis">findings page</a>. {X.bothAll} of {X.total} tasks are passed by both systems every time; the current set separates them on about a fifth of its tasks, which is why v2 adds difficulty bands and three new capability axes.</p>
+
+  <h2>Where it sits</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Benchmark</th><th>Verifier</th><th>Domain</th><th>What it cannot tell you</th></tr></thead>
+    <tbody>
+      <tr><td>SWE-bench Verified</td><td>Unit tests</td><td>Python repositories</td><td>Rated Flawed by Epoch AI (Sept 2026): contamination, and an OpenAI audit finding flawed tests in a majority of the audited sample.</td></tr>
+      <tr><td>Terminal-Bench 4.0</td><td>Test scripts</td><td>Shell tasks</td><td>Epoch counts 30 of 66 tasks with scoring defects, including a verifier pipe an agent can write "pass" to.</td></tr>
+      <tr><td>GDPval</td><td>Expert pairwise preference</td><td>44 occupations</td><td>Which deliverable a professional prefers, not whether it is correct.</td></tr>
+      <tr><td>TheAgentCompany</td><td>Checkpoints with partial credit</td><td>Simulated software company</td><td>Partial credit hides the conjunctive gap; some checkpoints are LLM-assessed.</td></tr>
+      <tr><td>τ-bench</td><td>Database state</td><td>Customer-service tool calls</td><td>Introduced pass^k, which this benchmark adopts; single-domain, dialogue-shaped.</td></tr>
+      <tr><td>SpreadsheetBench</td><td>Cell-level exact match</td><td>Single spreadsheets</td><td>One file, one question; no cross-document state, no process.</td></tr>
+      <tr><td><b>Business Bench</b></td><td>Executable checks on artifacts, conjunctive</td><td>Business deliverables and applications</td><td>Whether a result generalises past this workload; see the <a href="/audit">self-audit</a> for every other limit.</td></tr>
+    </tbody>
+  </table></div>
 
   <h2>Complete desk comparison</h2>
   <p class="muted">Pass rate over all 561 attempts per system under the shared frozen scorer. Failures and timeouts stay in the denominator. The systems use different models and were not run at the same time, so this compares two configured systems, not a harness or a model in isolation.</p>
@@ -75,7 +98,7 @@ const desc = "Does the agent deliver business work an owner can actually use? 18
     </div>
   </div>
 
-  <h2>How a task is scored</h2>
+  <h2>Mechanics</h2>
   <div class="grid c3">
     <div class="card"><h3>Executable checks, conjunctive</h3><p>A task passes only when every required check passes: exact identifier sets, keyed values, live spreadsheet formulas recalculated in LibreOffice, sentence-level text rules, and task-specific graders. A percentage of checks is not a pass.</p></div>
     <div class="card"><h3>One frozen scorer, hashed</h3><p>Every attempt in the release was scored by the same immutable package. Each verdict is bound by a receipt to the original result hash, the output-file hashes, and the scorer manifest, so a rescoring can never be confused with a rerun.</p></div>

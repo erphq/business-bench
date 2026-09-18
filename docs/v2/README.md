@@ -35,7 +35,27 @@ verdict to a scorer, raw and frozen verdicts side by side, a public dispute proc
 seeds held back for sealed variants, and a human baseline whose raw sheets are
 published.
 
-## 2. Capability axes
+## 2. Definitions
+
+A task *t* declares a set of required checks *C_t* over the artifacts left in the
+workspace. An attempt passes iff every *c* in *C_t* passes. Each task is run *k* times
+in a fresh workspace (*k* = 3 in the current release, 5 from the first v2 campaign).
+
+| Symbol | Definition | Reading |
+|---|---|---|
+| pass@1 | mean attempt pass rate over all scheduled attempts | headline rate |
+| pass@k | fraction of tasks with at least one passing repetition | what a demo shows |
+| pass^k | fraction of tasks passed in all *k* repetitions (τ-bench) | what an owner experiences |
+| check rate *c̄* | passed required checks / all required checks, pooled | per-check view |
+| conjunctive gap | *c̄* − pass@1 | partial credit a conjunctive grader refuses |
+| near-miss share | failed attempts with exactly one failed check / failed attempts | verification failures |
+| gap to optimum | (objective − reference optimum) / reference optimum, for axis 5 | recorded diagnostic |
+| cost per pass | captured-usage cost at list price / passing attempts | buyer's unit |
+
+Current values for the released comparison are computed on businessbench.org/analysis
+from the ledger at build time.
+
+## 3. Capability axes
 
 v2 tasks are organised by the capability they isolate. Departments (finance, ops,
 legal, HR) are how a task is instantiated, not how it is reported.
@@ -55,7 +75,7 @@ The full list with planted truth and check per task is in [tasks.md](tasks.md).
 Axes 4, 6, and 7 are the ones this benchmark contributes that others do not. Axes 1
 and 2 are where v1 already lives and are deliberately the smallest.
 
-## 3. Grading vocabulary
+## 4. Grading vocabulary
 
 Every v2 task is graded by executable checks against truth the generator planted. No
 rubric, no LLM judge, no pairwise preference. Existing v1 check types cover most of
@@ -77,7 +97,7 @@ Partial credit: none at task level. For feasible+bound tasks the gap is recorded
 diagnostic field so a gap curve can be published; the pass threshold is stated in the
 task.
 
-## 4. Difficulty axis
+## 5. Difficulty axis
 
 Every v2 generator exposes three parameters: `size` (rows and files), `rules` (count of
 interacting rules), and `noise` (rate of formatting and data defects). Each task
@@ -92,7 +112,7 @@ declares three bands built from the same generator:
 Results are reported per band. The v1 set is the clerical band. A system's score is a
 curve, not a number.
 
-## 5. Sealed variants and contamination
+## 6. Sealed variants and contamination
 
 The public task set is exposed by design. Each generator accepts `--seed`. A sealed
 variant is the same task with re-rolled entities, amounts, dates, and planted
@@ -101,14 +121,14 @@ when a public score is disputed or when a system is suspected of having trained 
 public set. A public score and its sealed-variant score are published side by side
 when both exist; a gap larger than the repetition variance is reported as such.
 
-## 6. Human baseline
+## 7. Human baseline
 
 A commissioned baseline is part of the v2 release, not an afterthought. Protocol and
 contractor brief: [human-baseline.md](human-baseline.md). Summary: stratified sample of
 50 tasks, two independent human attempts per task at the analyst band, humans use the
 same files and the same checks, raw time and verdict sheets published.
 
-## 7. What a business harness has to do
+## 8. What a business harness has to do
 
 Proto is one of the evaluated systems and competes on its merits. It is also the
 worked example this project uses to show what a business harness needs, because no
@@ -130,7 +150,7 @@ attempt traces is pending trace access and will be published as its own page.
 - Refusal as a first-class outcome: when evidence is insufficient, the correct
   deliverable says so. Axis 3 measures this.
 
-## 8. Release discipline
+## 9. Release discipline
 
 - Task set versions are semver; any change to a task, check, or scorer bumps it.
 - Every campaign is labeled; results are never merged across labels.
@@ -140,7 +160,35 @@ attempt traces is pending trace access and will be published as its own page.
 - The self-audit page is updated with every release and lists what a reviewer would
   find first.
 
-## 9. Order of work
+## 10. Threats to validity
+
+Stated here so that no reviewer has to discover them.
+
+- **Construct.** Executable checks measure contract satisfaction, not editorial quality
+  or owner delight. A memo can pass every check and still be badly written. We accept
+  this: the contract is what was delegated.
+- **Check strictness.** A conjunctive grader turns every strict check into a task
+  failure. The near-miss share confounds "did not verify" with "check too strict".
+  The false-negative audit (human re-read of failures) is the only way to separate
+  them and is on the order of work.
+- **Scorer authorship.** The scorer is written by the organisation that builds one of
+  the evaluated systems, after outputs exist. Mitigations: hashed frozen packages,
+  raw verdicts published beside frozen, and an independent scorer review before the
+  first v2 campaign is reported.
+- **Cohorts and configurations.** Systems differ in model, sampling, and timing.
+  Results are end-to-end configuration comparisons until a same-model control pair
+  is run.
+- **Exposure.** The public set was used during development of one system and is
+  public now. Sealed variants and the difficulty axis are the mitigations; a public
+  score is never presented as an unseen-generalisation result.
+- **Reward-hacking surface.** Agents never see checks, references, or traps; only the
+  workspace is mounted, and the deliverable is graded as files. The remaining surface
+  is the network, through which a public task could be found. Sealed variants close it
+  for private evaluations.
+- **Repetitions.** *k* = 3 estimates pass^k coarsely. v2 uses *k* = 5 and reports a
+  task-clustered bootstrap interval for every headline difference.
+
+## 11. Order of work
 
 1. Add the three check types to `bench/grade.py` with unit tests and the strict
    validator rules for them.

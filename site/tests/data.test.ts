@@ -76,3 +76,23 @@ describe("markdown", () => {
     expect(toc[0].text).toBe("Hello world");
   });
 });
+
+import { findings, crossArm, SUMMARY_BY_ID } from "../src/lib/data";
+describe("findings", () => {
+  test("derived rates agree with summary.json and are internally consistent", () => {
+    for (const a of ARMS) {
+      const f = findings(a.id), s = SUMMARY_BY_ID[a.id];
+      expect(Math.abs(f.pass1 - s.pass_rate)).toBeLessThan(1e-9);
+      expect(Math.round(f.passAll * s.tasks)).toBe(s.all_three_pass);
+      expect(f.checkRate).toBeGreaterThanOrEqual(f.taskRate);
+      expect(f.passAny).toBeGreaterThanOrEqual(f.pass1);
+      expect(f.pass1).toBeGreaterThanOrEqual(f.passAll);
+      expect(Object.values(f.failedDist).reduce((x, y) => x + y, 0)).toBe(f.failed);
+      expect(f.failed + s.passed).toBe(s.attempts);
+      expect(f.failedDist[0] ?? 0).toBe(0);
+    }
+    const x = crossArm();
+    expect(x.total).toBe(187);
+    expect(x.bothAll + x.anyZero).toBeLessThanOrEqual(187);
+  });
+});
