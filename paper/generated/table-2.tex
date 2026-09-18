@@ -1,0 +1,18 @@
+\begin{table}[!htbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\hsize=1.1\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
+\toprule
+\textbf{Measure} & \textbf{Proto + DeepSeek V4.1 Flash} & \textbf{Codex + GPT-5.6-sol} \\
+\midrule
+Repetition 1 & 171/187 & 152/187 \\
+Repetition 2 & 167/187 & 160/187 \\
+Repetition 3 & 169/187 & 161/187 \\
+Frozen score & \textbf{507/561 (90.4\%)} & \textbf{473/561 (84.3\%)} \\
+All three attempts pass & 147/187 & 141/187 \\
+Original raw score & 447/561 (79.7\%) & 431/561 (76.8\%) \\
+\bottomrule
+\end{tabularx}
+\caption{Complete desk comparison. The primary score is the frozen artifact verdict. Every passing artifact also completed normally; no passing timeout inflates the normal-completion count. Proto has three timeouts overall; Codex has none.}
+\label{tab:2}
+\end{table}

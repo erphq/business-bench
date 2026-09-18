@@ -12,6 +12,8 @@ A business owner delegates a reconciliation because a payment decision depends o
 
 Business correctness is often conjunctive. A workbook may show the right total while its formulas fail. An import may be syntactically valid while dropping customers. A payment may match an amount but refer to the wrong invoice. In an application, hiding a button does not enforce authorization. These failures motivate evaluation against explicit delivery contracts rather than fluency, self-reported completion, or activity counts.
 
+Figure 1 summarizes the complete desk comparison and its repetition-level behavior. The remaining sections define the workload, scoring protocol, category-level findings, and evidence needed to interpret that result.
+
 <!-- pagebreak -->
 
 ## 2. Benchmark design

@@ -1,0 +1,35 @@
+\begin{figure}[!ht]
+\centering
+\begin{minipage}[t]{0.51\linewidth}
+\textbf{A\quad Overall task success}\par\vspace{7pt}
+\begin{tikzpicture}
+\begin{axis}[width=0.90\linewidth,height=38mm,scale only axis=false,
+  xbar,bar width=12pt,xmin=0,xmax=105,ymin=-.6,ymax=1.6,
+  axis x line*=bottom,axis y line*=left,y axis line style={draw=none},ytick style={draw=none},xtick={0,25,50,75,100},ytick={0,1},
+  yticklabels={Codex + Sol,Proto + DeepSeek},
+  tick label style={font=\scriptsize},xlabel={Frozen pass rate (\%)},xlabel style={font=\scriptsize},
+  xmajorgrids,grid style={gray!16},axis line style={gray!45},
+  nodes near coords,nodes near coords style={font=\small\bfseries,/pgf/number format/fixed,/pgf/number format/precision=1}]
+\addplot[fill=accent,draw=none] coordinates {(\ProtoRate,1)};
+\addplot[fill=slate,draw=none] coordinates {(\CodexRate,0)};
+\end{axis}
+\end{tikzpicture}\par
+{\scriptsize Captured-usage estimates: \$\ProtoCost{} / \$\CodexCost.}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.45\linewidth}
+\textbf{B\quad Success by repetition}\par\vspace{7pt}
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=38mm,
+  xmin=.8,xmax=3.2,ymin=70,ymax=100,xtick={1,2,3},xticklabels={R1,R2,R3},ytick={70,80,90,100},
+  axis x line*=bottom,axis y line*=left,ymajorgrids,grid style={gray!16},axis line style={gray!45},
+  tick label style={font=\scriptsize},ylabel={Pass rate (\%)},ylabel style={font=\scriptsize},
+  point meta=y,nodes near coords,nodes near coords style={font=\scriptsize,/pgf/number format/fixed,/pgf/number format/precision=1}]
+\addplot[accent,thick,mark=*,mark size=2pt] table[x=rep,y=proto]{generated/repetitions.dat};
+\addplot[slate,thick,mark=square*,mark size=2pt,nodes near coords style={anchor=north,yshift=-3pt}] table[x=rep,y=codex]{generated/repetitions.dat};
+\end{axis}
+\end{tikzpicture}\par
+{\scriptsize Teal: Proto + DeepSeek. Slate: Codex + Sol.}
+\end{minipage}
+\caption{\textbf{Complete desk comparison under the shared frozen scorer.} Panel A summarizes all 561 attempts per system; panel B shows the three complete 187-task repetitions. All 1,122 attempts are retained. Costs are API-equivalent estimates, not invoices.}
+\label{fig:headline}
+\end{figure}

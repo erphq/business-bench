@@ -1,0 +1,18 @@
+\begin{table}[!htbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\hsize=0.54\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=1.46\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
+\toprule
+\textbf{Record} & \textbf{Required content} \\
+\midrule
+Workload & Task identifiers, task/input hashes, repetition mapping \\
+Agent environment & Runtime revision, image digest, model route, tools and skills \\
+Sampling and budget & Reasoning setting, temperature where controllable, timeout, CPU and memory \\
+Scoring & Frozen package digest, original and primary verdicts, grader errors \\
+Evidence & Original result hash, output hashes, private artifact retention location \\
+Accounting & Captured usage, price assumptions, durations, missing observations \\
+\bottomrule
+\end{tabularx}
+\caption{Minimum record for a new campaign. Missing fields must be disclosed rather than inferred from a successful result. These are prospective requirements, not a claim that every historical environment detail is reconstructible.}
+\label{tab:8}
+\end{table}

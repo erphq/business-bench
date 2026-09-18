@@ -1,0 +1,15 @@
+\begin{table}[!htbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\hsize=0.62\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=1.12\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=1.26\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
+\toprule
+\textbf{Deliverable} & \textbf{Required fields} & \textbf{Business purpose} \\
+\midrule
+unpaid.csv & invoice\_id, customer, amount\_outstanding & Show invoices still open and their remaining balances \\
+matches.csv & invoice\_id, line\_id, amount\_applied & Record which bank lines settle which invoices \\
+unapplied.csv & line\_id, amount, reason & Keep unrelated or closed-invoice credits visible \\
+\bottomrule
+\end{tabularx}
+\caption{The task's three-part delivery contract. A plausible total or explanatory message cannot replace these files or their required row-level relationships.}
+\label{tab:5}
+\end{table}

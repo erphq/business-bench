@@ -1,0 +1,19 @@
+For system $h$, let $y_{htr}\in\{0,1\}$ be the frozen pass verdict for task $t$
+and repetition $r$. With $T=187$ tasks and $R=3$ repetitions, the reported metrics are
+\begin{align}
+  \widehat p_h &= \frac{1}{TR}\sum_{t=1}^{T}\sum_{r=1}^{R}y_{htr},
+  &\widehat c_h &= \frac{1}{T}\sum_{t=1}^{T}\prod_{r=1}^{R}y_{htr},\label{eq:success}\\
+  \Delta_{\mathrm{pp}} &= 100\bigl(\widehat p_{\mathrm{Proto}}-\widehat p_{\mathrm{Codex}}\bigr).
+  &&\label{eq:gap}
+\end{align}
+Here $\widehat p_h$ is attempt-level success and $\widehat c_h$ is all-three success.
+The paired bootstrap resamples tasks, retaining all three repetitions within each sampled task;
+it does not treat requests or repetitions as independent task families.
+For recorded input $I$, cached input $C$, output $O$, and prices per million tokens
+$\pi_u$, $\pi_c$, and $\pi_o$, the cost estimate is
+\begin{equation}
+  \widehat K=\frac{(I-C)\pi_u+C\pi_c+O\pi_o}{10^6}.
+  \label{eq:cost}
+\end{equation}
+Equation~\eqref{eq:cost} accounts only for captured usage. Missing usage is unknown,
+not zero, and this quantity is not a subscription invoice.

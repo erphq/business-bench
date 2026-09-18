@@ -40,20 +40,27 @@ class ReleaseTests(unittest.TestCase):
     def test_paper_layout_and_embedded_typography(self):
         from pypdf import PdfReader
         reader = PdfReader(ROOT / 'docs/business-harness-bench-spec.pdf')
-        self.assertEqual(len(reader.pages), 9, 'Unexpected overflow or near-empty extra page')
-        expected_sections = ['1. Introduction', '2. Benchmark design', '3. Evaluation protocol',
-                             '4. Category results', '5. Worked example', '6. Scoring integrity',
-                             '9. Conclusion', 'Appendix A.', 'Appendix B.']
-        for page, heading in zip(reader.pages, expected_sections):
-            self.assertIn(heading, page.extract_text())
+        self.assertGreaterEqual(len(reader.pages), 7)
+        self.assertLessEqual(len(reader.pages), 11)
+        self.assertIn('LaTeX', str(reader.metadata.get('/Creator')))
+        self.assertIn('xdvipdfmx', str(reader.metadata.get('/Producer')))
+        text = '\n'.join(page.extract_text() for page in reader.pages)
+        for heading in ['Introduction', 'Benchmark design', 'Evaluation protocol',
+                        'Category results', 'Worked example', 'Scoring integrity', 'Conclusion',
+                        'Formal definitions', 'References']:
+            self.assertIn(heading, text)
+        for page in reader.pages:
+            self.assertGreater(len(page.extract_text()), 450, 'Unexpected near-empty page')
         embedded = set()
         for page in reader.pages:
             for ref in page['/Resources']['/Font'].get_object().values():
                 font = ref.get_object()
-                if 'Libertinus' in str(font.get('/BaseFont')):
-                    descriptor = font['/FontDescriptor'].get_object()
-                    self.assertIn('/FontFile2', descriptor)
-                    embedded.add(str(font['/BaseFont']))
+                candidates = [font] + [item.get_object() for item in font.get('/DescendantFonts', [])]
+                for candidate in candidates:
+                    if 'Libertinus' in str(candidate.get('/BaseFont')) and '/FontDescriptor' in candidate:
+                        descriptor = candidate['/FontDescriptor'].get_object()
+                        self.assertTrue('/FontFile2' in descriptor or '/FontFile3' in descriptor)
+                        embedded.add(str(candidate['/BaseFont']))
         self.assertGreaterEqual(len(embedded), 2, 'Regular and bold must both be embedded')
         first_page = reader.pages[0].extract_text()
         for row in json.loads((ROOT / 'results/latest/summary.json').read_text()):

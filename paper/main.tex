@@ -1,0 +1,71 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=23mm,top=26mm,bottom=24mm,headheight=14pt,headsep=11pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{LibertinusSerif-Regular.ttf}[Path=../docs/assets/fonts/,BoldFont=LibertinusSerif-Bold.ttf,ItalicFont=LibertinusSerif-Italic.ttf]
+\setsansfont{lmsans10-regular.otf}[BoldFont=lmsans10-bold.otf]
+\setmonofont{lmmono10-regular.otf}[Scale=0.82]
+\usepackage{unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{microtype,booktabs,tabularx,array,ragged2e,amsmath}
+\usepackage[table]{xcolor}
+\usepackage{graphicx,caption,subcaption,pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr,titlesec,fvextra,needspace}
+\usepackage[section]{placeins}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\definecolor{ink}{HTML}{152631}
+\definecolor{accent}{HTML}{087E8B}
+\definecolor{slate}{HTML}{8493A5}
+\definecolor{muted}{HTML}{65717A}
+\definecolor{wash}{HTML}{F2F5F6}
+\hypersetup{colorlinks=true,linkcolor=accent,citecolor=accent,urlcolor=accent,
+  pdftitle={Business Harness Bench: Evaluating Agents on Business Deliverables},pdfauthor={ERP AI}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{1.5em}
+\linespread{1.06}
+\renewcommand{\arraystretch}{1.16}
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{R}{>{\RaggedLeft\arraybackslash}X}
+\captionsetup{font=small,labelfont=bf,labelsep=period,justification=justified,singlelinecheck=false,skip=6pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{\thesection.}{0.55em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection}{0.55em}{}
+\titlespacing*{\section}{0pt}{12pt plus 2pt}{5pt}
+\titlespacing*{\subsection}{0pt}{8pt plus 1pt}{3pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\color{muted}BUSINESS HARNESS BENCH}
+\fancyhead[R]{\small\color{muted}Evaluating agents on business deliverables}
+\fancyfoot[L]{\footnotesize\color{muted}ERP AI\enspace /\enspace Research}
+\fancyfoot[R]{\footnotesize\color{muted}\thepage}
+\renewcommand{\headrulewidth}{0.35pt}
+\renewcommand{\footrulewidth}{0.35pt}
+\fancypagestyle{firstpage}{\fancyhf{}
+  \fancyhead[L]{\bfseries ERP AI\quad\normalfont\small\color{muted}RESEARCH}
+  \fancyhead[R]{\small\color{muted}Technical report\enspace /\enspace September 2026}
+  \fancyfoot[L]{\footnotesize\color{muted}ERP AI\enspace /\enspace Research}
+  \fancyfoot[R]{\footnotesize\color{muted}\thepage}
+  \renewcommand{\headrulewidth}{1pt}}
+\DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\small,breaklines=true,breakanywhere=true,frame=none}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\input{generated/metrics.tex}
+\begin{document}
+\thispagestyle{firstpage}
+\begin{center}
+{\fontsize{26}{29}\selectfont\bfseries Business Harness Bench\par}
+\vspace{5pt}
+{\fontsize{17}{21}\selectfont Evaluating Agents on Business Deliverables\par}
+\vspace{11pt}
+{\bfseries ERP AI}\par
+\vspace{3pt}
+\href{https://github.com/erphq/business-bench}{\small Code, tasks, scorer, and evaluation evidence}
+\end{center}
+\vspace{4pt}
+\begin{tcolorbox}[colback=wash,colframe=wash,boxrule=0pt,arc=0pt,left=10pt,right=10pt,top=8pt,bottom=8pt]
+\small\textbf{Abstract.}\enspace\input{generated/abstract.tex}
+\end{tcolorbox}
+\input{figures/headline.tex}
+\input{generated/body.tex}
+\end{document}

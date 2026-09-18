@@ -1,0 +1,20 @@
+\begin{table}[!htbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\hsize=1.1\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
+\toprule
+\textbf{Measure} & \textbf{Proto + DeepSeek} & \textbf{Codex + Sol} \\
+\midrule
+Input tokens & 823,587,929 & 165,959,457 \\
+Cached input & 775,672,448 & 150,329,088 \\
+Uncached input & 47,915,481 & 15,630,369 \\
+Output tokens & 20,910,907 & 4,823,643 \\
+Estimated model cost (USD) & 22.06 & 219.13 \\
+Median task duration (s) & 124.9 & 135.2 \\
+p90 task duration (s) & 455.6 & 403.3 \\
+Summed task duration (s) & 113,460.1 & 111,218.8 \\
+\bottomrule
+\end{tabularx}
+\caption{Resources across all 561 attempts per system. Costs are captured-usage API-equivalent estimates under the recorded price table, not subscription invoices or reconciled provider bills. Summed task duration is not elapsed campaign time when attempts run concurrently.}
+\label{tab:7}
+\end{table}

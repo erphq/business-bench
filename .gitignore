@@ -13,3 +13,12 @@ tmp/
 output/
 node_modules/
 docker/proto-runtime/
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.log
+paper/*.out
+paper/*.xdv
+paper/main.pdf

@@ -115,11 +115,10 @@ The optional `bench/audit.py` can prepare a reviewer bundle with `--dry-run`; wi
 ## Rebuild the PDF
 
 ```bash
-python docs/assemble_spec.py
-python docs/render_spec_pdf.py SPEC.md docs/business-harness-bench-spec.pdf
+python docs/build_latex.py
 ```
 
-The premise, technical specification, and current result tables are source-controlled. The paper embeds the bundled SIL Open Font License Libertinus Serif fonts for consistent regular and bold typography across viewers; attribution and license are in `docs/assets/fonts/`. Generated preview images and QA scratch files are not part of the release.
+The paper is compiled with **XeLaTeX**, using native booktabs tables, PGFPlots figures, numbered equations, linked cross-references, and a BibTeX bibliography. See [paper/README.md](paper/README.md) for the TeX/Pandoc prerequisites and the direct `.tex` build. The shared manuscript and complete generated TeX sources are tracked. The paper embeds the bundled SIL Open Font License Libertinus Serif fonts; attribution and license are in `docs/assets/fonts/`. Generated previews and build intermediates remain ignored.
 
 ## Site
 
