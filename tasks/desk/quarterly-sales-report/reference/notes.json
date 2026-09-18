@@ -1,0 +1,32 @@
+{
+  "duplicate_batch": "B0819-2",
+  "duplicate_lines": 9,
+  "duplicate_total": 3230.0,
+  "grand": 196009.0,
+  "month_totals": {
+    "August": 65197.0,
+    "July": 59152.0,
+    "September": 71660.0
+  },
+  "original_batch": "B0819-1",
+  "product_totals": {
+    "Assam Breakfast": 41724.0,
+    "Chamomile Blossom": 14688.0,
+    "Earl Grey Cream": 50600.0,
+    "Golden Yunnan": 36134.0,
+    "Masala Chai": 23165.0,
+    "Sencha Kagoshima": 29698.0
+  },
+  "refunds_in_q3": 2735.0,
+  "renamed": {
+    "date": "2026-08-10",
+    "new": [
+      "TL-GY-1",
+      "Golden Yunnan"
+    ],
+    "old": [
+      "TL-YG-1",
+      "Yunnan Gold"
+    ]
+  }
+}

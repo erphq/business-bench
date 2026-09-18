@@ -1,0 +1,288 @@
+{
+  "archived": [
+    "Beeswax pellets",
+    "Vanilla bean fragrance oil",
+    "Wooden wicks"
+  ],
+  "archived_skus": [
+    "FH-BP177",
+    "FH-VBF226",
+    "FH-WW268"
+  ],
+  "items": [
+    {
+      "base_unit": "g",
+      "low": true,
+      "measure": "mass",
+      "name": "Activated charcoal",
+      "on_hand_base": 4400,
+      "reorder_base": 6000,
+      "role": "below_g",
+      "sku": "FH-AC107",
+      "value": 35.2
+    },
+    {
+      "base_unit": "each",
+      "low": false,
+      "measure": "count",
+      "name": "Amber glass jars",
+      "on_hand_base": 144,
+      "reorder_base": 48,
+      "role": "ok_count",
+      "sku": "FH-AGJ261",
+      "value": 61.92
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Avocado oil",
+      "on_hand_base": 13100,
+      "reorder_base": 10000,
+      "role": "ok_g",
+      "sku": "FH-AO142",
+      "value": 273.79
+    },
+    {
+      "base_unit": "each",
+      "low": false,
+      "measure": "count",
+      "name": "Candle tins",
+      "on_hand_base": 288,
+      "reorder_base": 96,
+      "role": "ok_count",
+      "sku": "FH-CT282",
+      "value": 126.72
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Castor oil",
+      "on_hand_base": 10300,
+      "reorder_base": 10000,
+      "role": "near_above_kg",
+      "sku": "FH-CO121",
+      "value": 96.82
+    },
+    {
+      "base_unit": "ml",
+      "low": false,
+      "measure": "volume",
+      "name": "Cedarwood fragrance oil",
+      "on_hand_base": 6700,
+      "reorder_base": 5000,
+      "role": "ok_l",
+      "sku": "FH-CFO219",
+      "value": 791.27
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Cocoa butter",
+      "on_hand_base": 17100,
+      "reorder_base": 8000,
+      "role": "ok_kg",
+      "sku": "FH-CB170",
+      "value": 355.68
+    },
+    {
+      "base_unit": "g",
+      "low": true,
+      "measure": "mass",
+      "name": "Coconut oil refined",
+      "on_hand_base": 3300,
+      "reorder_base": 6000,
+      "role": "plain_low_kg",
+      "sku": "FH-COR114",
+      "value": 46.53
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Colloidal oatmeal",
+      "on_hand_base": 15600,
+      "reorder_base": 10000,
+      "role": "ok_g",
+      "sku": "FH-CO149",
+      "value": 310.44
+    },
+    {
+      "base_unit": "each",
+      "low": true,
+      "measure": "count",
+      "name": "Cotton wicks",
+      "on_hand_base": 100,
+      "reorder_base": 100,
+      "role": "at_count",
+      "sku": "FH-CW240",
+      "value": 187.0
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Epsom salt",
+      "on_hand_base": 8800,
+      "reorder_base": 8000,
+      "role": "ok_kg",
+      "sku": "FH-ES156",
+      "value": 161.92
+    },
+    {
+      "base_unit": "ml",
+      "low": true,
+      "measure": "volume",
+      "name": "Eucalyptus essential oil",
+      "on_hand_base": 300,
+      "reorder_base": 1000,
+      "role": "below_ml_vs_l",
+      "sku": "FH-EEO198",
+      "value": 21.45
+    },
+    {
+      "base_unit": "each",
+      "low": true,
+      "measure": "count",
+      "name": "Jar labels",
+      "on_hand_base": 1000,
+      "reorder_base": 1500,
+      "role": "plain_low_count",
+      "sku": "FH-JL247",
+      "value": 770.0
+    },
+    {
+      "base_unit": "g",
+      "low": true,
+      "measure": "mass",
+      "name": "Kaolin clay",
+      "on_hand_base": 5000,
+      "reorder_base": 5000,
+      "role": "at_g",
+      "sku": "FH-KC100",
+      "value": 54.0
+    },
+    {
+      "base_unit": "each",
+      "low": false,
+      "measure": "count",
+      "name": "Kraft soap boxes",
+      "on_hand_base": 500,
+      "reorder_base": 200,
+      "role": "ok_count",
+      "sku": "FH-KSB275",
+      "value": 450.0
+    },
+    {
+      "base_unit": "ml",
+      "low": false,
+      "measure": "volume",
+      "name": "Lavender essential oil",
+      "on_hand_base": 2300,
+      "reorder_base": 500,
+      "role": "ok_ml",
+      "sku": "FH-LEO205",
+      "value": 65.09
+    },
+    {
+      "base_unit": "each",
+      "low": false,
+      "measure": "count",
+      "name": "Muslin soap bags",
+      "on_hand_base": 400,
+      "reorder_base": 100,
+      "role": "ok_count",
+      "sku": "FH-MSB254",
+      "value": 108.0
+    },
+    {
+      "base_unit": "ml",
+      "low": false,
+      "measure": "volume",
+      "name": "Peppermint essential oil",
+      "on_hand_base": 2900,
+      "reorder_base": 250,
+      "role": "above_l_vs_ml",
+      "sku": "FH-PEO191",
+      "value": 283.33
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Rice bran oil",
+      "on_hand_base": 3100,
+      "reorder_base": 2000,
+      "role": "ok_g",
+      "sku": "FH-RBO135",
+      "value": 65.72
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Sodium hydroxide lye",
+      "on_hand_base": 7700,
+      "reorder_base": 2000,
+      "role": "ok_g",
+      "sku": "FH-SHL128",
+      "value": 129.36
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Stearic acid",
+      "on_hand_base": 12400,
+      "reorder_base": 6000,
+      "role": "ok_kg",
+      "sku": "FH-SA184",
+      "value": 110.36
+    },
+    {
+      "base_unit": "g",
+      "low": false,
+      "measure": "mass",
+      "name": "Sweet almond oil",
+      "on_hand_base": 14300,
+      "reorder_base": 5000,
+      "role": "ok_kg",
+      "sku": "FH-SAO163",
+      "value": 128.7
+    },
+    {
+      "base_unit": "ml",
+      "low": false,
+      "measure": "volume",
+      "name": "Vegetable glycerin",
+      "on_hand_base": 1700,
+      "reorder_base": 500,
+      "role": "ok_ml",
+      "sku": "FH-VG233",
+      "value": 165.07
+    },
+    {
+      "base_unit": "ml",
+      "low": false,
+      "measure": "volume",
+      "name": "Witch hazel extract",
+      "on_hand_base": 7500,
+      "reorder_base": 3000,
+      "role": "ok_l",
+      "sku": "FH-WHE212",
+      "value": 492.0
+    }
+  ],
+  "low": [
+    "Activated charcoal",
+    "Coconut oil refined",
+    "Cotton wicks",
+    "Eucalyptus essential oil",
+    "Jar labels",
+    "Kaolin clay"
+  ],
+  "low_rx": "\\blow\\b|running low|below (the |its )?reorder|at or below|reorder now|to reorder|needs? (re)?order",
+  "total_value": 5290.37
+}

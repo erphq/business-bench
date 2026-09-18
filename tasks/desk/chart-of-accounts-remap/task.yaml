@@ -1,0 +1,145 @@
+id: chart-of-accounts-remap
+track: desk
+category: reformatting
+title: Restate this year's GL lines on the new chart of accounts
+ask: |
+  Marcus needs our January to August transactions moved onto the new chart of accounts for the new books. His email and the crosswalk are in the folder; please send it back as remapped.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the Account column is QuickBooks' Parent:Child path ('6300 · Vehicle Expense:6310 · Fuel'); taking the first code maps every sub-account line by its parent, which for 6100 and 6500 is not on the crosswalk at all (check: new account code and name)
+- |-
+  many-to-one: Telephone, Internet and Cell Phones all become 6600 Telecommunications; Fuel, Vehicle Repairs, Vehicle Insurance and the 6300 parent all become 6400 (check: new account code and name)
+- |-
+  old 6180 Tools & Equipment has no single target; the email capitalizes lines of $2,500.00 or more to 1520 and sends the rest to 6150, with lines at exactly 2,500.00 (1520) and 2,499.99 (6150) (check: new account code and name)
+- |-
+  coa_crosswalk.xlsx opens on the 'v1 draft' tab, which maps Cell Phones to 6610, Workers Comp to 6710, Licenses to 6810 and all of 6180 to 6150; the email says to use v2 final (check: new account code and name)
+- |-
+  6725 Charitable Contributions and 6999 Ask My Accountant are on no crosswalk; the lines stay with New Account blank and NEEDS MAPPING in Mapping Note, not dropped and not guessed (checks: new account code and name; unmapped lines flagged; one row per GL line)
+- |-
+  amounts are text with thousands separators ('4,240.74') and credits in parentheses ('(212.40)') on a customer credit memo and two vendor credits; they stay negative as plain numbers (check: amount)
+checks:
+- type: csv_columns
+  name: template columns, exact order
+  path: remapped.csv
+  columns:
+  - Line ID
+  - Date
+  - Old Account
+  - New Account
+  - New Account Name
+  - Amount
+  - Memo
+  - Mapping Note
+  exact: true
+- type: csv_set_equal
+  name: one row per GL line
+  path: remapped.csv
+  column: Line ID
+  ref: remapped.csv
+- type: csv_row_count
+  name: row count
+  path: remapped.csv
+  equals_ref: remapped.csv
+- type: csv_values_match
+  name: new account code and name
+  path: remapped.csv
+  ref: remapped.csv
+  key: Line ID
+  columns:
+  - New Account
+  - New Account Name
+  min_accuracy: 1.0
+  must_match_keys:
+  - JL-01052
+  - JL-01331
+  - JL-01493
+  - JL-01655
+  - JL-01731
+  - JL-01770
+  - JL-02020
+  - JL-02075
+  - JL-02155
+  - JL-02251
+  - JL-02286
+  - JL-02376
+  - JL-02625
+  - JL-02818
+  - JL-03086
+  - JL-03308
+  - JL-03324
+  - JL-03386
+  - JL-03407
+  - JL-03562
+  - JL-03683
+  - JL-04015
+  - JL-04063
+  - JL-04538
+  - JL-04776
+  - JL-04815
+  - JL-05184
+  - JL-05745
+  - JL-05794
+  - JL-05804
+  - JL-05855
+  - JL-05961
+  - JL-06002
+  - JL-06042
+  - JL-06450
+  - JL-06659
+  - JL-06679
+  - JL-06699
+  - JL-07286
+  - JL-07335
+  - JL-07351
+  - JL-07422
+  - JL-07685
+  - JL-07802
+  - JL-07809
+  - JL-07832
+  - JL-07914
+  - JL-07979
+  - JL-08319
+  - JL-08439
+  - JL-08965
+  - JL-09033
+  - JL-09085
+  - JL-09304
+  - JL-09580
+  - JL-09736
+  - JL-09997
+- type: csv_values_match
+  name: unmapped lines flagged
+  path: remapped.csv
+  ref: remapped.csv
+  key: Line ID
+  columns:
+  - Mapping Note
+  min_accuracy: 0.9
+  must_match_keys:
+  - JL-03324
+  - JL-03407
+  - JL-04015
+  - JL-07914
+  - JL-09085
+  - JL-09304
+  - JL-09580
+- type: csv_values_match
+  name: amount
+  path: remapped.csv
+  ref: remapped.csv
+  key: Line ID
+  columns:
+  - Amount
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - JL-02155
+  - JL-05745
+  - JL-06779
+  - JL-07845
+  - JL-08900
+  - JL-09503
+  - JL-09772

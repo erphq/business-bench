@@ -1,0 +1,59 @@
+id: sop-from-thread
+track: desk
+category: drafting
+title: Turn the refunds email thread into a counter procedure
+ask: |
+  Dorothy keeps mixing up how refunds work. Please turn the email thread into one written procedure we can print for the register and save it as procedure.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  steps arrive out of order: Gary's inspection and approval steps come in the second message but happen before the refund, and Kimberly's emailed receipt comes in the third but goes after the refund and before logging (check: steps in the right order)
+- |-
+  the blue binder from the first message is replaced by the Refunds Log sheet on 8 September (checks: refunds logged in the sheet; steps in the right order)
+- |-
+  the approval limit is $300 in the second message and Joshua lowers it to $200 in the fifth (check: approval threshold)
+- |-
+  Kimberly's first message says returns within 45 days; the posted policy says a refund within 30 days and store credit to day 60, and the counter follows the posted policy (checks: refund window; store credit window)
+- |-
+  cash sales refund from the drawer only up to $75; above that Gary mails a check (check: cash refunds)
+checks:
+- type: text_sentence_matches
+  name: approval threshold
+  path: procedure.md
+  all:
+  - (?<![\d.,])200(\.00)?(?!\d|,\d|\.\d)
+  - (approv|\bok\b|okay|sign[- ]?off|permission|\byes\b)
+  - (\bJoshua\b|owner)
+  none:
+  - (?<![\d.,])300(\.00)?(?!\d|,\d|\.\d)
+- type: text_sentence_matches
+  name: refund window
+  path: procedure.md
+  all:
+  - (?<![\d.,])30(?!\d|,\d|\.\d)
+  - \bdays?\b
+  - refund
+  none:
+  - (?<![\d.,])45(?!\d|,\d|\.\d)
+- type: text_sentence_matches
+  name: store credit window
+  path: procedure.md
+  all:
+  - (store credit|gift card)
+  - (?<![\d.,])60(?!\d|,\d|\.\d)
+- type: text_sentence_matches
+  name: cash refunds
+  path: procedure.md
+  all:
+  - \bcash\b
+  - (?<![\d.,])75(\.00)?(?!\d|,\d|\.\d)
+  - \b(check|cheque)\b
+- type: text_sentence_matches
+  name: refunds logged in the sheet
+  path: procedure.md
+  all:
+  - (refunds? log|log sheet|shared drive|spreadsheet)
+- type: custom
+  name: steps in the right order
+  module: check.py

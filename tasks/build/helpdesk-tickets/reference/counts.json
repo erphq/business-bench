@@ -1,0 +1,744 @@
+{
+  "baseline": {
+    "EXPORT_COLUMNS": [
+      "Ticket #",
+      "Client",
+      "Priority",
+      "Status",
+      "Assigned To",
+      "Created"
+    ],
+    "EXPORT_ROWS": 250,
+    "FILTER_COUNT": 15,
+    "FILTER_FIELD": "Priority",
+    "FILTER_VALUE": "P1",
+    "KPI_1": "Open tickets",
+    "KPI_1_VALUE": 36,
+    "KPI_2": "Escalated tickets",
+    "KPI_2_VALUE": 11,
+    "KPI_3": "First responses within SLA, August 2026",
+    "KPI_3_VALUE": "76.0% (92 of 121)",
+    "KPI_4": "Tickets resolved in August 2026",
+    "KPI_4_VALUE": 94,
+    "MAIN_ENTITY": "ticket",
+    "MAIN_ENTITY_PLURAL": "tickets",
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "agent": "Priya Nair",
+      "blank_client_in_file": false,
+      "client": "Zephyr Bike Works",
+      "contact_email": "chaddad@zephyrbikes.com",
+      "created": "2026-08-19 11:46",
+      "file_created": "8/19/2026 11:46 AM",
+      "file_lines": [
+        214
+      ],
+      "file_numbers": [
+        "hd-11243"
+      ],
+      "file_priority": "p4",
+      "file_status": "Closed",
+      "first_response": "2026-08-20 04:18",
+      "priority": "P4",
+      "response_minutes": 992,
+      "sla_hours": 24,
+      "status": "Closed",
+      "subject": "New starter laptop setup",
+      "ticket": "HD-11243",
+      "within_sla": true
+    },
+    "REQUIRED_FIELD": "Subject",
+    "SCOPED_KPI_1_VALUE": 5,
+    "SCOPE_COUNT": 28,
+    "SCOPE_RULE": "tickets assigned to Sam Delgado",
+    "SEARCH_COUNT": 25,
+    "SEARCH_TERM": "VPN",
+    "SORT_FIELD": "Created",
+    "SORT_TOP": {
+      "agent": "Priya Nair",
+      "blank_client_in_file": false,
+      "client": "Silverline Logistics",
+      "contact_email": "lrichardson@silverlinelogistics.com",
+      "created": "2026-08-31 11:52",
+      "file_created": "8/31/2026 11:52 AM",
+      "file_lines": [
+        261
+      ],
+      "file_numbers": [
+        "HD-12268"
+      ],
+      "file_priority": "P4",
+      "file_status": "In Progress",
+      "first_response": "2026-08-31 12:10",
+      "priority": "P4",
+      "response_minutes": 18,
+      "sla_hours": 24,
+      "status": "In Progress",
+      "subject": "VPN won't connect",
+      "ticket": "HD-12268",
+      "within_sla": true
+    },
+    "STAFF_ROLE": "Agent",
+    "VIEWER_ROLE": "Read-only"
+  },
+  "change_1_report": {
+    "clients": [
+      {
+        "avg_first_response_minutes": 616.9,
+        "client": "Quill & Ink Print Shop",
+        "pct": 71.4,
+        "tickets": 7,
+        "within_sla": 5
+      },
+      {
+        "avg_first_response_minutes": 460.4,
+        "client": "Ironwood Fabrication",
+        "pct": 83.3,
+        "tickets": 6,
+        "within_sla": 5
+      }
+    ],
+    "portal_client": {
+      "avg_first_response_minutes": 117.8,
+      "client": "Glassworks Optical",
+      "pct": 71.4,
+      "tickets": 7,
+      "within_sla": 5
+    }
+  },
+  "change_2_autoassign": {
+    "client_with_agent": {
+      "agent": "Mei Chen",
+      "client": "Mossbank Accounting"
+    },
+    "client_without_agent": {
+      "client": "Blue Heron Consulting"
+    },
+    "restricted_agent_client": {
+      "agent": "Sam Delgado",
+      "client": "Cedar & Pine Landscaping"
+    }
+  },
+  "change_3_portal": {
+    "resolved_ticket": {
+      "agent": "Kate Morrison",
+      "blank_client_in_file": false,
+      "client": "Glassworks Optical",
+      "contact_email": "ijones@glassworksoptical.com",
+      "created": "2026-08-20 10:39",
+      "file_created": "8/20/2026 10:39 AM",
+      "file_lines": [
+        219
+      ],
+      "file_numbers": [
+        "HD-11968"
+      ],
+      "file_priority": "p3",
+      "file_status": "resolved",
+      "first_response": "2026-08-20 12:53",
+      "priority": "P3",
+      "response_minutes": 134,
+      "sla_hours": 8,
+      "status": "Resolved",
+      "subject": "Printer offline",
+      "ticket": "HD-11968",
+      "within_sla": true
+    },
+    "waiting_ticket": {
+      "agent": "Priya Nair",
+      "blank_client_in_file": false,
+      "client": "Glassworks Optical",
+      "contact_email": "dmoore@glassworksoptical.com",
+      "created": "2026-08-25 15:51",
+      "file_created": "08/25/26 15:51",
+      "file_lines": [
+        240
+      ],
+      "file_numbers": [
+        "HD-11843"
+      ],
+      "file_priority": "3 - Normal",
+      "file_status": "Waiting on client",
+      "first_response": "2026-08-25 17:09",
+      "priority": "P3",
+      "response_minutes": 78,
+      "sla_hours": 8,
+      "status": "Waiting on client",
+      "subject": "Firewall blocking website",
+      "ticket": "HD-11843",
+      "within_sla": true
+    }
+  },
+  "clients": {
+    "dedupe_rule": "same web domain after dropping www. and case",
+    "exact_duplicate_example": {
+      "account": "A-1395",
+      "agent": "Sam Delgado",
+      "client": "Ridgeview Animal Hospital",
+      "domain": "ridgeviewanimal.com",
+      "file_lines": [
+        36,
+        55
+      ],
+      "file_rows": [
+        [
+          "A-1395",
+          "Ridgeview Animal Hospital",
+          "ridgeviewanimal.com",
+          "Silver",
+          "Sam Delgado",
+          "2019-02-20",
+          "1,450.00"
+        ],
+        [
+          "A-1395",
+          "Ridgeview Animal Hospital",
+          "ridgeviewanimal.com",
+          "Silver",
+          "Sam Delgado",
+          "2019-02-20",
+          "1,450.00"
+        ]
+      ]
+    },
+    "exact_duplicate_rows": 2,
+    "file_rows_excluding_header": 64,
+    "same_domain_example": {
+      "account": "A-1325",
+      "agent": "Kate Morrison",
+      "client": "Uptown Fitness",
+      "domain": "uptownfit.com",
+      "file_lines": [
+        5,
+        21
+      ],
+      "file_rows": [
+        [
+          "",
+          "Uptown Fitness LLC",
+          "UPTOWNFIT.COM",
+          "Bronze",
+          "Kate Morrison",
+          "10/07/2022",
+          "450"
+        ],
+        [
+          "A-1325",
+          "Uptown Fitness",
+          "uptownfit.com",
+          "Bronze",
+          "Kate Morrison",
+          "2022-10-07",
+          "450"
+        ]
+      ]
+    },
+    "same_domain_rows": 2,
+    "unique_clients": 60,
+    "without_account_agent": 5,
+    "wrong_count_only_exact_duplicates_removed": 62
+  },
+  "close_test": {
+    "agent": "Sam Delgado",
+    "blank_client_in_file": false,
+    "client": "Ivy Lane Florist",
+    "contact_email": "mmensah@ivylaneflorist.com",
+    "created": "2026-08-21 11:59",
+    "file_created": "08/21/26 11:59",
+    "file_lines": [
+      223
+    ],
+    "file_numbers": [
+      "HD-11234"
+    ],
+    "file_priority": "P4 (Low)",
+    "file_status": "In Progress",
+    "first_response": "2026-08-22 09:44",
+    "priority": "P4",
+    "response_minutes": 1305,
+    "sla_hours": 24,
+    "status": "In Progress",
+    "subject": "MFA reset",
+    "ticket": "HD-11234",
+    "within_sla": true
+  },
+  "contacts": {
+    "exact_duplicate_rows": 4,
+    "file_rows_excluding_header": 160,
+    "same_email_example": {
+      "client": "Quarry Road Nursery",
+      "email": "lwright@quarryroad.com",
+      "emails_as_written": [
+        "LWRIGHT@QUARRYROAD.COM",
+        "lwright@quarryroad.com"
+      ],
+      "file_lines": [
+        64,
+        121
+      ],
+      "name": "Linda Wright"
+    },
+    "same_email_other_case_rows": 6,
+    "unique_contacts": 150,
+    "without_email": [
+      {
+        "client": "Pinewood Property Group",
+        "name": "Luis Murphy"
+      },
+      {
+        "client": "Dorsey Freight",
+        "name": "Kenneth Rivera"
+      },
+      {
+        "client": "Redwood Property Mgmt",
+        "name": "Rahul Nelson"
+      }
+    ]
+  },
+  "date_dependence": "Every imported response deadline is before 2026-09-01, so the escalated count holds for any test date from 2026-09-01; August figures are fixed.",
+  "portal": {
+    "blank_client_tickets": [
+      "HD-12326"
+    ],
+    "client": "Glassworks Optical",
+    "contact": "Ingrid Jones",
+    "contact_email": "ijones@glassworksoptical.com",
+    "other_client_ticket": {
+      "agent": "Jordan Blake",
+      "blank_client_in_file": false,
+      "client": "Saltmarsh Kayaks",
+      "contact_email": "kmorgan@saltmarshkayaks.com",
+      "created": "2026-07-08 17:14",
+      "file_created": "7/8/2026 5:14 PM",
+      "file_lines": [
+        39,
+        70
+      ],
+      "file_numbers": [
+        "#10374",
+        "HD-10374"
+      ],
+      "file_priority": "p3",
+      "file_status": "closed",
+      "first_response": "2026-07-08 20:09",
+      "priority": "P3",
+      "response_minutes": 175,
+      "sla_hours": 8,
+      "status": "Closed",
+      "subject": "Scan to email broken",
+      "ticket": "HD-10374",
+      "within_sla": true
+    },
+    "tickets": 12
+  },
+  "rules": {
+    "escalated": "open ticket (New, Open, In Progress, Waiting on client) with no first response after its deadline",
+    "priority": "the digit in P1 / p1 / 1 - Critical / P1 (Critical)",
+    "resolved_august": "tickets whose Resolved time is in August 2026 (the impossible ticket excluded)",
+    "sla_first_response_hours": {
+      "P1": 1,
+      "P2": 4,
+      "P3": 8,
+      "P4": 24
+    },
+    "sla_pct_august": "tickets created in August 2026 answered within SLA / all tickets created in August 2026 (unanswered ones count as missed)",
+    "within_sla": "first response no later than created + the priority's hours (clock hours)"
+  },
+  "seed": 0,
+  "tickets": {
+    "august_avg_first_response_minutes": 470.5,
+    "august_created": 121,
+    "august_responded": 110,
+    "august_sla_pct": 76.0,
+    "august_within_sla": 92,
+    "blank_client_tickets": [
+      {
+        "agent": "Jordan Blake",
+        "blank_client_in_file": true,
+        "client": "Kingfisher Charters",
+        "contact_email": "rross@kingfishercharters.com",
+        "created": "2026-07-08 12:08",
+        "file_created": "07/08/26 12:08",
+        "file_lines": [
+          38
+        ],
+        "file_numbers": [
+          "HD-10170"
+        ],
+        "file_priority": "p3",
+        "file_status": "resolved",
+        "first_response": "2026-07-08 15:33",
+        "priority": "P3",
+        "response_minutes": 205,
+        "sla_hours": 8,
+        "status": "Resolved",
+        "subject": "VPN slow from home office",
+        "ticket": "HD-10170",
+        "within_sla": true
+      },
+      {
+        "agent": "Mei Chen",
+        "blank_client_in_file": true,
+        "client": "Summit Ridge Surveying",
+        "contact_email": "rmensah@summitridgesurvey.com",
+        "created": "2026-07-23 07:17",
+        "file_created": "2026-07-23 07:17",
+        "file_lines": [
+          98
+        ],
+        "file_numbers": [
+          "#10393"
+        ],
+        "file_priority": "P4",
+        "file_status": "Closed",
+        "first_response": "2026-07-24 12:38",
+        "priority": "P4",
+        "response_minutes": 1761,
+        "sla_hours": 24,
+        "status": "Closed",
+        "subject": "Monitor flickering",
+        "ticket": "HD-10393",
+        "within_sla": false
+      },
+      {
+        "agent": "Mei Chen",
+        "blank_client_in_file": true,
+        "client": "Ironwood Fabrication",
+        "contact_email": "kallen@ironwoodfab.com",
+        "created": "2026-08-21 17:40",
+        "file_created": "08/21/26 17:40",
+        "file_lines": [
+          228
+        ],
+        "file_numbers": [
+          "HD-10579"
+        ],
+        "file_priority": "P4 (Low)",
+        "file_status": "new",
+        "first_response": null,
+        "priority": "P4",
+        "response_minutes": null,
+        "sla_hours": 24,
+        "status": "New",
+        "subject": "Printer offline",
+        "ticket": "HD-10579",
+        "within_sla": false
+      },
+      {
+        "agent": "Jordan Blake",
+        "blank_client_in_file": true,
+        "client": "Ironwood Fabrication",
+        "contact_email": "rmiller@ironwoodfab.com",
+        "created": "2026-08-03 18:30",
+        "file_created": "08/03/26 18:30",
+        "file_lines": [
+          143
+        ],
+        "file_numbers": [
+          "HD-10948"
+        ],
+        "file_priority": "P3",
+        "file_status": "Resolved",
+        "first_response": "2026-08-03 23:39",
+        "priority": "P3",
+        "response_minutes": 309,
+        "sla_hours": 8,
+        "status": "Resolved",
+        "subject": "Backup job failed",
+        "ticket": "HD-10948",
+        "within_sla": true
+      },
+      {
+        "agent": "Mei Chen",
+        "blank_client_in_file": true,
+        "client": "Fairway Physical Therapy",
+        "contact_email": "dthomas@fairwaypt.com",
+        "created": "2026-08-03 13:55",
+        "file_created": "8/3/2026 1:55 PM",
+        "file_lines": [
+          141
+        ],
+        "file_numbers": [
+          "HD-10998"
+        ],
+        "file_priority": "P2",
+        "file_status": "Closed",
+        "first_response": "2026-08-03 16:14",
+        "priority": "P2",
+        "response_minutes": 139,
+        "sla_hours": 4,
+        "status": "Closed",
+        "subject": "Printer offline",
+        "ticket": "HD-10998",
+        "within_sla": true
+      },
+      {
+        "agent": "Andre Silva",
+        "blank_client_in_file": true,
+        "client": "Seaside Realty Partners",
+        "contact_email": "ghaddad@seasiderp.com",
+        "created": "2026-07-17 12:43",
+        "file_created": "2026-07-17 12:43",
+        "file_lines": [
+          81
+        ],
+        "file_numbers": [
+          "11689"
+        ],
+        "file_priority": "P3 (Normal)",
+        "file_status": "Closed",
+        "first_response": "2026-07-17 17:39",
+        "priority": "P3",
+        "response_minutes": 296,
+        "sla_hours": 8,
+        "status": "Closed",
+        "subject": "Phishing email reported",
+        "ticket": "HD-11689",
+        "within_sla": true
+      },
+      {
+        "agent": "Priya Nair",
+        "blank_client_in_file": true,
+        "client": "Glassworks Optical",
+        "contact_email": "dmoore@glassworksoptical.com",
+        "created": "2026-07-03 12:23",
+        "file_created": "7/3/2026 12:23 PM",
+        "file_lines": [
+          19
+        ],
+        "file_numbers": [
+          "HD-12326"
+        ],
+        "file_priority": "p3",
+        "file_status": "resolved",
+        "first_response": "2026-07-03 14:48",
+        "priority": "P3",
+        "response_minutes": 145,
+        "sla_hours": 8,
+        "status": "Resolved",
+        "subject": "Suspicious login alert",
+        "ticket": "HD-12326",
+        "within_sla": true
+      },
+      {
+        "agent": "Priya Nair",
+        "blank_client_in_file": true,
+        "client": "Riverbend Physio",
+        "contact_email": "dlindqvist@riverbendphysio.com",
+        "created": "2026-08-14 13:48",
+        "file_created": "2026-08-14 13:48",
+        "file_lines": [
+          197
+        ],
+        "file_numbers": [
+          "hd-12466"
+        ],
+        "file_priority": "P4 (Low)",
+        "file_status": "Resolved",
+        "first_response": "2026-08-15 06:12",
+        "priority": "P4",
+        "response_minutes": 984,
+        "sla_hours": 24,
+        "status": "Resolved",
+        "subject": "Scan to email broken",
+        "ticket": "HD-12466",
+        "within_sla": true
+      }
+    ],
+    "escalated_count": 11,
+    "escalated_include": {
+      "agent": "Priya Nair",
+      "blank_client_in_file": false,
+      "client": "Dorsey Freight",
+      "contact_email": "ledwards@dorseyfreight.com",
+      "created": "2026-08-25 15:32",
+      "file_created": "25-Aug-2026 15:32",
+      "file_lines": [
+        239
+      ],
+      "file_numbers": [
+        "12030"
+      ],
+      "file_priority": "P4",
+      "file_status": "New",
+      "first_response": null,
+      "priority": "P4",
+      "response_minutes": null,
+      "sla_hours": 24,
+      "status": "New",
+      "subject": "Accounting software won't open",
+      "ticket": "HD-12030",
+      "within_sla": false
+    },
+    "exact_duplicate_example": {
+      "agent": "Mei Chen",
+      "blank_client_in_file": false,
+      "client": "Vantage Point Media",
+      "contact_email": "ywood@vantagepointmedia.com",
+      "created": "2026-08-21 14:43",
+      "file_created": "2026-08-21 14:43",
+      "file_lines": [
+        32,
+        226
+      ],
+      "file_numbers": [
+        "#10514"
+      ],
+      "file_priority": "P3 (Normal)",
+      "file_status": "Closed",
+      "first_response": "2026-08-21 15:17",
+      "priority": "P3",
+      "response_minutes": 34,
+      "sla_hours": 8,
+      "status": "Closed",
+      "subject": "Firewall blocking website",
+      "ticket": "HD-10514",
+      "within_sla": true
+    },
+    "exact_duplicate_rows": 5,
+    "file_rows_excluding_header": 260,
+    "impossible": {
+      "agent": "Andre Silva",
+      "blank_client_in_file": false,
+      "client": "Seaside Realty Partners",
+      "contact_email": "nross@seasiderp.com",
+      "created": "2026-07-28 10:18",
+      "file_created": "2026-07-28 10:18",
+      "file_lines": [
+        118
+      ],
+      "file_numbers": [
+        "HD-11327"
+      ],
+      "file_priority": "P2",
+      "file_resolved": "2026-07-26 19:18",
+      "file_status": "Closed",
+      "first_response": "2026-07-28 13:41",
+      "priority": "P2",
+      "response_minutes": 203,
+      "sla_hours": 4,
+      "status": "Closed",
+      "subject": "Domain renewal",
+      "ticket": "HD-11327",
+      "within_sla": true
+    },
+    "met_example": {
+      "agent": "Jordan Blake",
+      "blank_client_in_file": false,
+      "client": "Seaside Realty Partners",
+      "contact_email": "nross@seasiderp.com",
+      "created": "2026-08-01 12:52",
+      "file_created": "08/01/26 12:52",
+      "file_lines": [
+        136
+      ],
+      "file_numbers": [
+        "10531"
+      ],
+      "file_priority": "P4",
+      "file_status": "Closed",
+      "first_response": "2026-08-02 09:42",
+      "priority": "P4",
+      "response_minutes": 1250,
+      "sla_hours": 24,
+      "status": "Closed",
+      "subject": "Domain renewal",
+      "ticket": "HD-10531",
+      "within_sla": true
+    },
+    "missed_example": {
+      "agent": "Mei Chen",
+      "blank_client_in_file": false,
+      "client": "Everline Insurance",
+      "contact_email": "jhernandez@everline.com",
+      "created": "2026-08-05 17:27",
+      "file_created": "8/5/2026 5:27 PM",
+      "file_lines": [
+        153
+      ],
+      "file_numbers": [
+        "#11797"
+      ],
+      "file_priority": "P2 (High)",
+      "file_status": "resolved",
+      "first_response": "2026-08-06 03:29",
+      "priority": "P2",
+      "response_minutes": 602,
+      "sla_hours": 4,
+      "status": "Resolved",
+      "subject": "Calendar sharing not working",
+      "ticket": "HD-11797",
+      "within_sla": false
+    },
+    "not_escalated_responded_late": {
+      "agent": "Kate Morrison",
+      "blank_client_in_file": false,
+      "client": "Oakhurst Pediatrics",
+      "contact_email": "msanchez@oakhurstpeds.org",
+      "created": "2026-08-21 09:24",
+      "file_created": "2026-08-21 09:24",
+      "file_lines": [
+        222
+      ],
+      "file_numbers": [
+        "HD-11838"
+      ],
+      "file_priority": "P2",
+      "file_status": "In Progress",
+      "first_response": "2026-08-21 15:17",
+      "priority": "P2",
+      "response_minutes": 353,
+      "sla_hours": 4,
+      "status": "In Progress",
+      "subject": "Laptop running slow",
+      "ticket": "HD-11838",
+      "within_sla": false
+    },
+    "per_priority": {
+      "P1": 15,
+      "P2": 57,
+      "P3": 118,
+      "P4": 60
+    },
+    "per_status": {
+      "Closed": 151,
+      "In Progress": 14,
+      "New": 11,
+      "Open": 8,
+      "Resolved": 63,
+      "Waiting on client": 3
+    },
+    "same_number_example": {
+      "agent": "Jordan Blake",
+      "blank_client_in_file": false,
+      "client": "Saltmarsh Kayaks",
+      "contact_email": "kmorgan@saltmarshkayaks.com",
+      "created": "2026-07-08 17:14",
+      "file_created": "7/8/2026 5:14 PM",
+      "file_lines": [
+        39,
+        70
+      ],
+      "file_numbers": [
+        "#10374",
+        "HD-10374"
+      ],
+      "file_priority": "p3",
+      "file_status": "closed",
+      "first_response": "2026-07-08 20:09",
+      "priority": "P3",
+      "response_minutes": 175,
+      "sla_hours": 8,
+      "status": "Closed",
+      "subject": "Scan to email broken",
+      "ticket": "HD-10374",
+      "within_sla": true
+    },
+    "same_number_rows": 5,
+    "unique_tickets": 250,
+    "wrong_sla_pct_responded_only": 83.6
+  },
+  "valid_test_dates": [
+    "2026-09-01",
+    null
+  ]
+}

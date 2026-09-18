@@ -1,0 +1,26 @@
+From: Margaret Hughes <margaret@juniperhollowinn.com>
+To: you; Deb Okafor <deb@juniperhollowinn.com>
+Date: Tue, 8 Sep 2026 10:05
+Subject: What we spend, and with whom
+
+The owners want to see this year's spend so far - January through August - by vendor, grouped into Deb's categories, with a total for each category and one for everything. Please use the vendor names on Deb's list, whatever the bills say. A workbook with the totals as formulas, so we can reuse it at year end.
+
+-----Original Message-----
+
+From: Deb Okafor <deb@juniperhollowinn.com>
+To: you; Margaret Hughes <margaret@juniperhollowinn.com>
+Date: Tue, 8 Sep 2026 11:32
+Subject: RE: What we spend, and with whom
+
+My list is in the folder. Lowcountry Supply is on there twice, sorry - we bought the ice machine from them back in 2024 and I put it under repairs. Everything we buy from them now is cleaning chemicals, trash liners and room supplies, so they belong under Housekeeping & Amenities.
+
+-----Original Message-----
+
+From: Margaret Hughes <margaret@juniperhollowinn.com>
+To: you
+Date: Tue, 8 Sep 2026 12:10
+Subject: RE: What we spend, and with whom
+
+Two more things. Vendor credits come off that vendor's spend - Coastal Linen credited us for the stained sheets and Booking.com refunded commission on a cancelled stay. Bills count whether or not we've paid them yet. And anything marked Voided never happened.
+
+Save it as vendor_spend.xlsx please.

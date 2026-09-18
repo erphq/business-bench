@@ -1,0 +1,18 @@
+HARBOR TRUST TREASURY SERVICES - WHOLESALE LOCKBOX TRANSMISSION, CSV LAYOUT v3
+
+One transmission per business day. Each line is one record; the first field is the record type.
+Records have different numbers of fields. All amounts are unsigned whole cents with no decimal point
+(0000124850 = 1,248.50).
+
+Type 1  File header      1, lockbox number, deposit date YYYYMMDD, bank, client name, file sequence
+Type 5  Batch header     5, batch number, deposit date YYYYMMDD, lockbox number
+Type 6  Payment          6, batch number, item sequence, check number, check amount, remitter name,
+                         routing number, account (masked)
+Type 4  Remittance       4, batch number, item sequence, invoice reference as keyed from the stub, amount
+                         paid on that invoice. Zero or more type 4 records follow the type 6 record they
+                         belong to and carry the same batch number and item sequence. A payment with no
+                         type 4 records arrived without a readable stub.
+Type 7  Batch trailer    7, batch number, item count, batch total
+Type 9  File trailer     9, batch count, item count, file total
+
+Invoice references are keyed exactly as the customer wrote them.

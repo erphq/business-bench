@@ -1,0 +1,135 @@
+{
+  "became_scorp": {
+    "all_methods": 9131.22,
+    "corp": true,
+    "legal": "Ortiz Lighting & Rigging Inc",
+    "reportable": 9131.22,
+    "tin4": "3408"
+  },
+  "card_only": {
+    "all_methods": 7195.66,
+    "corp": false,
+    "legal": "Priya Raman",
+    "reportable": 0,
+    "tin4": "2209"
+  },
+  "ccorp": {
+    "all_methods": 12204.68,
+    "corp": true,
+    "legal": "Ridgeway Party Supply, Inc.",
+    "reportable": 4905.12,
+    "tin4": "9269"
+  },
+  "fixed_form": {
+    "all_methods": 13065.75,
+    "corp": false,
+    "legal": "Oak & Ember Catering",
+    "reportable": 12058.91,
+    "tin4": "6082"
+  },
+  "llc_p": {
+    "all_methods": 10724.05,
+    "corp": false,
+    "legal": "Tentline Crew LLC",
+    "reportable": 5932.42,
+    "tin4": "7635"
+  },
+  "llc_s": {
+    "all_methods": 8812.9,
+    "corp": true,
+    "legal": "Harborside Linen LLC",
+    "reportable": 8812.9,
+    "tin4": "6867"
+  },
+  "plain_1": {
+    "all_methods": 14469.95,
+    "corp": false,
+    "legal": "Tomasz Kowalczyk",
+    "reportable": 14469.95,
+    "tin4": "1231"
+  },
+  "plain_2": {
+    "all_methods": 15155.23,
+    "corp": false,
+    "legal": "Aisha Bello",
+    "reportable": 11148.34,
+    "tin4": "7535"
+  },
+  "plain_3": {
+    "all_methods": 13229.9,
+    "corp": false,
+    "legal": "Riverbank Sound LLC",
+    "reportable": 13229.9,
+    "tin4": "9087"
+  },
+  "plain_4": {
+    "all_methods": 7310.87,
+    "corp": true,
+    "legal": "Graystone Portable Toilets Inc.",
+    "reportable": 7310.87,
+    "tin4": "6329"
+  },
+  "plain_5": {
+    "all_methods": 17626.28,
+    "corp": false,
+    "legal": "Hiroshi Tanaka",
+    "reportable": 6481.05,
+    "tin4": "4633"
+  },
+  "plain_6": {
+    "all_methods": 14440.79,
+    "corp": true,
+    "legal": "Summit Forklift Rental LLC",
+    "reportable": 6085.0,
+    "tin4": "3335"
+  },
+  "refund_card": {
+    "all_methods": 11304.88,
+    "corp": false,
+    "legal": "Kwame Mensah",
+    "reportable": 6772.17,
+    "tin4": "6181"
+  },
+  "refund_check": {
+    "all_methods": 11709.01,
+    "corp": false,
+    "legal": "Hollis Tent Repair",
+    "reportable": 11709.01,
+    "tin4": "2650"
+  },
+  "scorp": {
+    "all_methods": 6152.33,
+    "corp": true,
+    "legal": "Bayview Generator Service Inc",
+    "reportable": 6152.33,
+    "tin4": "3290"
+  },
+  "smllc": {
+    "all_methods": 7476.77,
+    "corp": false,
+    "legal": "Northbeat DJ Services LLC",
+    "reportable": 7476.77,
+    "tin4": "5243"
+  },
+  "two_names": {
+    "all_methods": 4514.48,
+    "corp": false,
+    "legal": "Marisol Vega",
+    "reportable": 1417.32,
+    "tin4": "7312"
+  },
+  "venmo_mix": {
+    "all_methods": 8571.09,
+    "corp": false,
+    "legal": "Dana Whitfield",
+    "reportable": 2727.13,
+    "tin4": "8816"
+  },
+  "wire": {
+    "all_methods": 11417.93,
+    "corp": false,
+    "legal": "Cascade Staging Partners",
+    "reportable": 11417.93,
+    "tin4": "9542"
+  }
+}

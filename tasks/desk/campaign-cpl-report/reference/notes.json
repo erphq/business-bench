@@ -1,0 +1,32 @@
+{
+  "eur_rate": 1.08,
+  "excluded_leads_by_channel": {
+    "Direct Mail": 0,
+    "Google Ads": 6,
+    "LinkedIn Ads": 6,
+    "Meta Ads": 5,
+    "Nextdoor": 3,
+    "Yelp Ads": 5
+  },
+  "instagram_leads": 29,
+  "spend_by_channel_month_usd": {
+    "Direct Mail|2026-05": 4347.81,
+    "Google Ads|2026-04": 8239.92,
+    "Google Ads|2026-05": 6915.75,
+    "Google Ads|2026-06": 8077.85,
+    "LinkedIn Ads|2026-04": 2455.93,
+    "LinkedIn Ads|2026-05": 2574.18,
+    "LinkedIn Ads|2026-06": 2805.59,
+    "Meta Ads|2026-04": 3904.76,
+    "Meta Ads|2026-05": 4526.53,
+    "Meta Ads|2026-06": 3983.35,
+    "Nextdoor|2026-04": 838.39,
+    "Nextdoor|2026-05": 821.23,
+    "Nextdoor|2026-06": 861.54,
+    "Yelp Ads|2026-04": 1228.46,
+    "Yelp Ads|2026-05": 1090.23,
+    "Yelp Ads|2026-06": 1267.66
+  },
+  "total_leads": 253,
+  "total_spend_usd": 53939.18
+}

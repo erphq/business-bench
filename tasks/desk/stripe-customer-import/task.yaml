@@ -1,0 +1,195 @@
+id: stripe-customer-import
+track: desk
+category: reformatting
+title: Build the Stripe customer import from the old billing export
+ask: |
+  We're moving billing to Stripe. Please turn the customer export from our old billing system into Stripe's customer import file using their template; Fatima's migration notes explain the columns. Save it as stripe_customers.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  account numbers are six digits with leading zeros stored as numbers under a 000000 display format; a plain read gives 417 instead of 000417, which breaks the key and the metadata (checks: one customer per legacy account; plan metadata)
+- |-
+  a bare $ means the customer's own country's dollar (cad for Canada, aud for Australia), one Canadian customer is billed in US$, and blank currency takes the country default; symbols and words must become lowercase ISO codes (check: currency)
+- |-
+  suites, units and floors sit in the Street cell after a comma or on a second line, and UK flats and Australian levels sit in front of the street; they belong in address_line2 with the number and street in address_line1 (check: address lines)
+- |-
+  regions are sometimes spelled out (Ontario, New South Wales, Massachusetts), non-US/CA/AU regions such as Greater London or Bayern must be blank, and New England ZIP codes (at least three rows) lost their leading zero in the export (check: city, state and postal code)
+- |-
+  plan names are typed loosely (Team/mo, team yearly, PRO - monthly) and Pro is the old name of Business; metadata[plan] takes the price-list code (check: plan metadata)
+- |-
+  three cancelled accounts and two internal QA accounts (both marked Active) are in the export and stay out; the export also has a title row above the header (checks: one customer per legacy account; row count)
+checks:
+- type: csv_columns
+  name: Stripe template columns, exact order
+  path: stripe_customers.csv
+  columns:
+  - email
+  - name
+  - description
+  - phone
+  - currency
+  - address_line1
+  - address_line2
+  - address_city
+  - address_state
+  - address_postal_code
+  - address_country
+  - metadata[legacy_account]
+  - metadata[plan]
+  exact: true
+- type: csv_set_equal
+  name: one customer per legacy account
+  path: stripe_customers.csv
+  column: metadata[legacy_account]
+  ref: stripe_customers.csv
+  normalize:
+  - strip
+- type: csv_row_count
+  name: row count
+  path: stripe_customers.csv
+  equals_ref: stripe_customers.csv
+- type: csv_values_match
+  name: currency
+  path: stripe_customers.csv
+  ref: stripe_customers.csv
+  key: email
+  columns:
+  - currency
+  min_accuracy: 1.0
+  must_match_keys:
+  - aisha.hernandez@sablefitness.com
+  - amanda.thomas@harrowpike.com
+  - anthony.nguyen@orbitdentallabs.com
+  - carlos.perez@valleyforgestorage.com
+  - david.lewis@fjordtravel.co
+  - dorothy.anderson@silverlinelogistics.com
+  - elizabeth.hill@brightwaterdental.co
+  - eric.garcia@quaysidemarinas.com
+  - gary.haddad@quarryroadnursery.com
+  - james.jones@foxgloveinteriors.co
+  - jennifer.garcia@hollowellelectric.co
+  - jennifer.kim@harborlightmarine.com
+  - john.garcia@acmeindustrial.co
+  - kathleen.clark@pembertonhvac.com
+  - laura.mensah@everlineinsurance.co
+  - lisa.watson@zephyrbikeworks.com
+  - mary.castillo@dorseyfreight.com
+  - michelle.wood@glassworksoptical.co
+  - ronald.allen@wrensparrowbookshop.com
+  - ronald.lopez@coastlinecreditunion.com
+  - ryan.carter@terninsurance.com
+  - steven.cox@fernbrookmontessori.com
+  - steven.thomas@copperfieldlaw.co
+  - thomas.nguyen@rooklegal.com
+  - timothy.alvarez@mossbankaccounting.com
+  - yuki.hernandez@meridiantitle.com
+  - yuki.parker@northfieldautobody.com
+  - yuki.ruiz@thistlethreadalterations.com
+- type: csv_values_match
+  name: address lines
+  path: stripe_customers.csv
+  ref: stripe_customers.csv
+  key: email
+  columns:
+  - address_line1
+  - address_line2
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - anna.ward@vantagepointmedia.com
+  - david.lewis@fjordtravel.co
+  - jennifer.garcia@hollowellelectric.co
+  - john.garcia@acmeindustrial.co
+  - john.kelly@orchardhilldental.com
+  - kevin.long@blueheronconsulting.co
+  - lisa.edwards@brassicafarms.com
+  - lisa.watson@zephyrbikeworks.com
+  - mary.castillo@dorseyfreight.com
+  - sarah.martin@wharfstreetbooks.co
+  - yuki.ruiz@thistlethreadalterations.com
+- type: csv_values_match
+  name: city, state and postal code
+  path: stripe_customers.csv
+  ref: stripe_customers.csv
+  key: email
+  columns:
+  - address_city
+  - address_state
+  - address_postal_code
+  - address_country
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - aisha.hernandez@sablefitness.com
+  - amanda.thomas@harrowpike.com
+  - andrew.mendoza@umberceramics.com
+  - carlos.perez@valleyforgestorage.com
+  - dorothy.anderson@silverlinelogistics.com
+  - elizabeth.hill@brightwaterdental.co
+  - gary.haddad@quarryroadnursery.com
+  - james.jones@foxgloveinteriors.co
+  - jennifer.kim@harborlightmarine.com
+  - john.kelly@orchardhilldental.com
+  - kathleen.clark@pembertonhvac.com
+  - kevin.long@blueheronconsulting.co
+  - laura.mensah@everlineinsurance.co
+  - lisa.watson@zephyrbikeworks.com
+  - mary.castillo@dorseyfreight.com
+  - michelle.wood@glassworksoptical.co
+  - ronald.lopez@coastlinecreditunion.com
+  - steven.thomas@copperfieldlaw.co
+  - thomas.nguyen@rooklegal.com
+- type: csv_values_match
+  name: plan metadata
+  path: stripe_customers.csv
+  ref: stripe_customers.csv
+  key: email
+  columns:
+  - metadata[legacy_account]
+  - metadata[plan]
+  normalize:
+  - strip
+  - lower
+  min_accuracy: 1.0
+  must_match_keys:
+  - aisha.hernandez@sablefitness.com
+  - andrew.mendoza@umberceramics.com
+  - carlos.perez@valleyforgestorage.com
+  - david.lewis@fjordtravel.co
+  - dorothy.anderson@silverlinelogistics.com
+  - elizabeth.hill@brightwaterdental.co
+  - emily.hughes@lakesideveterinary.com
+  - eric.garcia@quaysidemarinas.com
+  - gary.haddad@quarryroadnursery.com
+  - jennifer.garcia@hollowellelectric.co
+  - jennifer.kim@harborlightmarine.com
+  - john.garcia@acmeindustrial.co
+  - john.kelly@orchardhilldental.com
+  - kathleen.clark@pembertonhvac.com
+  - kevin.lee@northwindgrocers.com
+  - kevin.long@blueheronconsulting.co
+  - laura.mensah@everlineinsurance.co
+  - lisa.edwards@brassicafarms.com
+  - lisa.watson@zephyrbikeworks.com
+  - mark.davis@pinnacleroofing.com
+  - mary.castillo@dorseyfreight.com
+  - michelle.wood@glassworksoptical.co
+  - ronald.allen@wrensparrowbookshop.com
+  - ronald.lopez@coastlinecreditunion.com
+  - ryan.carter@terninsurance.com
+  - sarah.martin@wharfstreetbooks.co
+  - timothy.alvarez@mossbankaccounting.com
+  - yuki.hernandez@meridiantitle.com
+  - yuki.parker@northfieldautobody.com
+  - yuki.ruiz@thistlethreadalterations.com
+  - amanda.thomas@harrowpike.com
+  - anna.ward@vantagepointmedia.com
+  - anthony.nguyen@orbitdentallabs.com
+  - dmitri.smith@westbrookplumbing.co
+  - james.jones@foxgloveinteriors.co
+  - steven.cox@fernbrookmontessori.com
+  - steven.thomas@copperfieldlaw.co
+  - thomas.nguyen@rooklegal.com

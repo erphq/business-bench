@@ -1,0 +1,96 @@
+Cedarline POS - Gift Card Activity Detail
+Location: Lantern Row Day Spa | 04/01/2023 - 08/31/2026
+Date/Time,Ticket,Card Last 4,Type,Ticket Total,Card Amount,Note,Employee
+2023-04-01 06:00,T604100,1210,Balance Import,$0.00,$75.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604103,1380,Balance Import,$0.00,$150.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604106,1984,Balance Import,$0.00,$150.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604109,2755,Balance Import,$0.00,$75.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604112,3546,Balance Import,$0.00,$95.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604115,3921,Balance Import,$0.00,$250.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604118,4461,Balance Import,$0.00,$100.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604121,6053,Balance Import,$0.00,$200.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604124,6072,Balance Import,$0.00,$100.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604127,6213,Balance Import,$0.00,$128.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604130,6853,Balance Import,$0.00,$215.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604133,7363,Balance Import,$0.00,$100.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604136,7772,Balance Import,$0.00,$150.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604139,8106,Balance Import,$0.00,$215.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604142,8486,Balance Import,$0.00,$128.00,Oakleaf SpaBook migration,system
+2023-04-01 06:00,T604145,8578,Balance Import,$0.00,$75.00,Oakleaf SpaBook migration,system
+2023-06-24 14:12,T604148,1380,Redemption,$235.00,$150.00,split: card 150.00 / Visa 85.00,Timothy
+2023-07-16 13:05,T604151,6213,Redemption,$240.00,$128.00,split: card 128.00 / Visa 112.00,Sandra
+2023-08-19 16:20,T604154,6072,Redemption,$110.00,$100.00,split: card 100.00 / Visa 10.00,Sarah
+2023-09-22 14:05,T604157,6456,Activation,$75.00,$75.00,front desk,Nicholas
+2023-09-29 13:00,T604160,3921,Redemption,$285.00,$250.00,split: card 250.00 / Visa 35.00,Sandra
+2023-10-22 15:20,T604163,1210,Redemption,$72.00,$72.00,Reflexology 45,Timothy
+2023-10-27 10:12,T604166,3546,Redemption,$65.00,$65.00,Brow and lash tint,Timothy
+2023-11-18 19:12,T604169,1791,Activation,$150.00,$150.00,holiday sale,Sandra
+2024-01-09 12:34,T604172,6101,Activation,$50.00,$50.00,gift purchase,Sandra
+2024-03-09 12:05,T604175,1984,Redemption,$110.00,$60.00,split: card 60.00 / cash 50.00,Nicholas
+2024-03-18 14:34,T604178,6341,Activation,$200.00,$200.00,front desk,Timothy
+2024-04-16 11:48,T604181,5852,Activation,$150.00,$150.00,gift purchase,Nicholas
+2024-05-12 10:05,T604184,4757,Activation,$50.00,$50.00,front desk,Matthew
+2024-05-18 16:55,T604187,2936,Activation,$200.00,$200.00,front desk,Timothy
+2024-05-27 18:00,T604190,4757,Redemption,$110.00,$50.00,split: card 50.00 / Visa 60.00,Sandra
+2024-06-07 18:00,T604193,8271,Activation,$250.00,$250.00,front desk,Matthew
+2024-06-08 10:05,T604196,2936,Redemption,$65.00,$65.00,Brow and lash tint,Jennifer
+2024-06-10 18:55,T604199,2936,Redemption Reversal,$0.00,$65.00,appointment cancelled - returned to card,Nicholas
+2024-06-20 10:05,T604202,4461,Redemption,$65.00,$65.00,Brow and lash tint,Matthew
+2024-06-22 15:12,T604205,5415,Activation,$200.00,$200.00,holiday sale,Matthew
+2024-06-23 11:12,T604208,2526,Activation,$150.00,$150.00,holiday sale,Jennifer
+2024-07-01 19:41,T604211,4757,Reload,$75.00,$75.00,reload,Matthew
+2024-07-07 14:48,T604214,8271,Redemption,$135.00,$135.00,Signature facial,Matthew
+2024-07-26 12:41,T604217,5404,Activation,$200.00,$200.00,holiday sale,Timothy
+2024-07-28 11:20,T604220,6341,Redemption,$235.00,$200.00,split: card 200.00 / Visa 35.00,Timothy
+2024-08-02 14:34,T604223,5415,Redemption,$235.00,$200.00,split: card 200.00 / Visa 35.00,Matthew
+2024-09-01 19:41,T604226,5852,Redemption,$235.00,$150.00,split: card 150.00 / Visa 85.00,Matthew
+2024-09-05 10:05,T604229,8271,Redemption,$95.00,$95.00,Body scrub,Timothy
+2024-10-16 17:34,T604232,3347,Activation,$100.00,$100.00,online order,Matthew
+2024-12-01 15:41,T604235,5585,Activation,$50.00,$50.00,online order,Nicholas
+2024-12-27 17:55,T604238,3347,Redemption,$145.00,$100.00,split: card 100.00 / Visa 45.00,Sarah
+2025-01-16 14:41,T604241,3531,Activation,$75.00,$75.00,gift purchase,Jennifer
+2025-01-26 17:20,T604244,4248,Activation,$200.00,$200.00,gift purchase,Timothy
+2025-02-24 14:48,T604247,3531,Redemption,$72.00,$72.00,Reflexology 45,Sarah
+2025-02-26 13:05,T604250,5585,Redemption,$240.00,$50.00,split: card 50.00 / Visa 190.00,Jennifer
+2025-04-06 14:05,T604253,8857,Activation,$50.00,$50.00,holiday sale,Jennifer
+2025-04-15 15:05,T604256,3531,Redemption,$65.00,$3.00,split: card 3.00 / Visa 62.00,Jennifer
+2025-04-21 15:20,T604259,4248,Redemption,$240.00,$200.00,split: card 200.00 / Visa 40.00,Sandra
+2025-04-23 11:34,T604262,5701,Activation,$150.00,$150.00,front desk,Jennifer
+2025-05-08 18:34,T604265,5701,Redemption,$78.00,$78.00,Mani-pedi,Sarah
+2025-05-11 18:12,T604268,1328,Activation,$250.00,$250.00,gift purchase,Matthew
+2025-06-03 10:34,T604271,5801,Activation,$250.00,$250.00,online order,Jennifer
+2025-06-15 14:41,T604274,8857,Redemption,$72.00,$50.00,split: card 50.00 / Visa 22.00,Sarah
+2025-07-13 09:55,T604277,5801,Redemption,$310.00,$250.00,split: card 250.00 / Visa 60.00,Matthew
+2025-08-26 17:05,T604280,5115,Activation,$75.00,$75.00,online order,Nicholas
+2025-08-30 19:00,T604283,7186,Activation,$100.00,$100.00,front desk,Nicholas
+2025-09-05 18:20,T604286,1866,Activation,$200.00,$200.00,front desk,Jennifer
+2025-09-22 15:05,T604289,5115,Redemption,$78.00,$75.00,split: card 75.00 / Visa 3.00,Jennifer
+2025-09-24 14:55,T604292,7186,Redemption,$185.00,$100.00,split: card 100.00 / Visa 85.00,Sandra
+2025-10-04 11:55,T604295,6072,Reload,$100.00,$100.00,reload,Jennifer
+2025-10-08 18:34,T604298,6572,Activation,$200.00,$200.00,holiday sale,Sandra
+2025-10-20 15:55,T604301,3474,Activation,$100.00,$100.00,holiday sale,Timothy
+2025-11-06 19:34,T604304,8218,Activation,$150.00,$150.00,gift purchase,Timothy
+2025-11-22 17:05,T604307,4702,Activation,$250.00,$250.00,holiday sale,Sarah
+2025-11-30 19:34,T604310,5592,Promo Issue,$0.00,$25.00,Black Friday bonus card,Timothy
+2025-12-04 19:48,T604313,2309,Promo Issue,$0.00,$25.00,Black Friday bonus card,Sarah
+2025-12-12 12:41,T604316,6988,Activation,$0.00,$25.00,promo - buy $200 get $25,Nicholas
+2025-12-15 18:12,T604319,5388,Promo Issue,$0.00,$25.00,Black Friday bonus card,Nicholas
+2025-12-22 18:34,T604322,4203,Activation,$100.00,$100.00,front desk,Sandra
+2025-12-24 13:20,T604325,2309,Redemption,$95.00,$25.00,split: card 25.00 / Visa 70.00,Matthew
+2025-12-28 09:00,T604328,2049,Activation,$0.00,$25.00,promo - buy $200 get $25,Sarah
+2026-01-01 14:00,T604331,6988,Redemption,$95.00,$25.00,split: card 25.00 / Visa 70.00,Jennifer
+2026-01-04 11:00,T604334,5388,Redemption,$95.00,$25.00,split: card 25.00 / Visa 70.00,Timothy
+2026-01-20 14:12,T604337,4696,Activation,$250.00,$250.00,gift purchase,Sandra
+2026-02-02 15:41,T604340,4702,Redemption,$72.00,$72.00,Reflexology 45,Sandra
+2026-02-14 16:34,T604343,6072,Redemption,$72.00,$72.00,Reflexology 45,Jennifer
+2026-02-15 14:00,T604346,8218,Redemption,$165.00,$150.00,split: card 150.00 / Visa 15.00,Sandra
+2026-03-15 18:55,T604349,6572,Redemption,$240.00,$200.00,split: card 200.00 / Visa 40.00,Sandra
+2026-03-20 13:55,T604352,3631,Activation,$75.00,$75.00,front desk,Jennifer
+2026-04-02 13:12,T604355,1774,Activation,$75.00,$75.00,online order,Nicholas
+2026-04-12 14:41,T604358,4203,Redemption,$185.00,$100.00,split: card 100.00 / Visa 85.00,Sarah
+2026-05-08 11:14,T604361,1146,Activation,$150.00,$150.00,front desk,Matthew
+2026-05-08 11:31,T604364,1146,Void,($150.00),($150.00),keyed wrong card - refunded to Visa,Jennifer
+2026-05-09 17:12,T604367,1774,Redemption,$110.00,$75.00,split: card 75.00 / Visa 35.00,Sarah
+2026-05-26 15:20,T604370,4696,Redemption,$72.00,$72.00,Reflexology 45,Timothy
+2026-07-18 12:00,T604373,4702,Redemption,$95.00,$95.00,Body scrub,Timothy
+2026-08-04 17:34,T604376,3631,Redemption,$185.00,$75.00,split: card 75.00 / Visa 110.00,Sarah

@@ -1,0 +1,53 @@
+id: supplier-dispute-letter
+track: desk
+category: drafting
+title: Dispute letter for a supplier invoice that does not match the PO
+ask: |
+  The Cascade invoice for our last welding supplies order doesn't match what we ordered and received. Please write the dispute letter to their AR team; Emily's note says what goes in it. Save it as dispute.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  two lines (shielding gas, gloves) are billed at the July increase prices; section 4.2 fixes prices unless the buyer accepts in writing, and the notice was never accepted, so the PO price governs (checks: disputed lines with amounts; total disputed and amount paid now)
+- |-
+  the flap discs are billed at the ordered 40 or 50 but 10 are backordered per the receiving log; the contact tips arrived in two deliveries that add up to the full quantity and are not short (checks: disputed lines with amounts; total disputed and amount paid now)
+- |-
+  the fuel surcharge is barred by section 4.5 and is disputed in full (check: disputed lines with amounts)
+- |-
+  the ops note says freight is free over $2,000, but section 6.1 says $2,500 and the PO merchandise value is $2,228.64, so the $92.00 freight stands; disputing it gives $312.47 (checks: total disputed and amount paid now; freight-inclusive total absent)
+- |-
+  the nozzle line is billed below the PO price and the note says not to raise it; netting it against the overcharges gives $217.47 (check: total disputed and amount paid now)
+- |-
+  the letter must identify the invoice and PO and cite the price clause from the agreement, not just 'our contract' (checks: invoice and PO referenced; price clause cited)
+checks:
+- type: file_exists
+  name: dispute.md exists
+  path: dispute.md
+- type: text_contains_all
+  name: invoice and PO referenced
+  path: dispute.md
+  phrases:
+  - INV-86187
+  - PO-2026-0509
+- type: custom
+  name: disputed lines with amounts
+  module: check.py
+- type: text_numbers_present
+  name: total disputed and amount paid now
+  path: dispute.md
+  numbers:
+  - 220.47
+  - 2252.94
+  rel_tol: 1.0e-05
+- type: text_sentence_matches
+  name: price clause cited
+  path: dispute.md
+  all:
+  - (section|clause|§|paragraph|art(icle)?\.?)\s*4\.2\b
+  - (price|pricing)
+- type: text_not_contains
+  name: freight-inclusive total absent
+  path: dispute.md
+  phrases:
+  - '312.47'
+  - '312.47'

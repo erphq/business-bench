@@ -1,0 +1,26 @@
+GRANT TERMS CHEAT SHEET - keep with the tracking file
+(from the award letters; Nia, Development)
+
+State Clean Water Fund (SCWF) - award period 1/1/2026 to 12/31/2026
+  - Costs are allowable only if incurred inside the award period. Use the invoice date, not the date we posted it.
+  - No food or beverages of any kind, including volunteer events.
+
+Hartwell Family Foundation (HFF) - award period 2/1/2026 to 1/31/2027
+  - Same rule on the award period.
+  - The foundation does not pay staff mileage or travel, even when it is booked to a staff line.
+
+County Parks Community Grant (CPCG) - award period 3/1/2026 to 10/31/2026
+  - Same rule on the award period.
+  - Food for volunteers is fine. Gift cards and alcohol are never allowable.
+
+Split-funded costs
+  - The budget line column shows the split, e.g. 'SCWF-PER 60% / CPCG-STI 40%'. Work out each grant's share of the
+    expense: every grant but the last one listed is rounded to the cent, and the last one listed gets whatever is left,
+    so the pieces add back to the expense exactly. Each piece is then allowable or not under its own grant's rules.
+
+Anything disallowed comes off the grant and gets paid from unrestricted funds. Credits and refunds reduce the line they
+were booked to. GEN-OPS lines are ordinary operating costs that were never charged to a grant, so they are not grant
+spending and not disallowed costs either - leave them out.
+
+For the board packet: for each grant and budget line, the budget, what we have spent that the grant will actually pay
+for, and what is left, plus what we disallowed. Formulas please, the auditors like to trace them.

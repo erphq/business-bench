@@ -1,0 +1,77 @@
+id: fx-invoice-gains
+track: desk
+category: bookkeeping
+title: Realized FX gain or loss on the euro invoices
+ask: |
+  The auditors want the FX gain or loss on each of our euro invoices from the first half. The invoice register, the bank's wire report and the ECB rates are in the folder, and Miriam's note says how she books it. Save it as fx_results.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  rates come from the ECB file, which leaves weekends out and has blank rows on TARGET holidays: AF-26010 is dated Saturday 14 February, AF-26040 Good Friday 3 April and AF-26025 is paid on Easter Monday 6 April, all of which take the last rate published before, not the next one (check: fx gain or loss per invoice)
+- |-
+  the bank's rate and USD credited include a spread of about a cent per euro, so gains taken from the bank columns are understated on every invoice; that difference is bank charges (check: fx gain or loss per invoice)
+- |-
+  AF-26001 is paid in two parts, the second on Easter Monday, and AF-26046 only half, so each part is valued at its own receipt rate and the unpaid half stays open without FX (checks: fx gain or loss per invoice; euros still open)
+- |-
+  one wire pays AF-26028 and AF-26031 together, with the split in German number format in the remittance line (check: fx gain or loss per invoice)
+- |-
+  AF-26019 arrived short by the dealer's bank charge; under the 25 euro rule it is settled in full and the FX is on the whole invoice, not the euros received (checks: fx gain or loss per invoice; euros still open)
+- |-
+  two dealers are billed in US dollars and their wires carry no FX; they are not euro invoices (checks: which invoices; row count)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: fx_results.csv
+  columns:
+  - invoice
+  - eur_settled
+  - fx_gain_loss
+  - eur_open
+- type: csv_set_equal
+  name: which invoices
+  path: fx_results.csv
+  column: invoice
+  ref: fx_results.csv
+  normalize:
+  - alnum
+- type: csv_row_count
+  name: row count
+  path: fx_results.csv
+  equals_ref: fx_results.csv
+- type: csv_values_match
+  name: fx gain or loss per invoice
+  path: fx_results.csv
+  ref: fx_results.csv
+  key: invoice
+  columns:
+  - fx_gain_loss
+  numeric: true
+  tolerance: 0.011
+  rounding: |-
+    EUR converted at ECB rates, each side rounded to the cent per receipt as the controller's note states
+  min_accuracy: 1.0
+  must_match_keys:
+  - AF-26010
+  - AF-26040
+  - AF-26025
+  - AF-26001
+  - AF-26046
+  - AF-26028
+  - AF-26031
+  - AF-26019
+- type: csv_values_match
+  name: euros still open
+  path: fx_results.csv
+  ref: fx_results.csv
+  key: invoice
+  columns:
+  - eur_open
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - AF-26001
+  - AF-26046
+  - AF-26019
+  - AF-26052

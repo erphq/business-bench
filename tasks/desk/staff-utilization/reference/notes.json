@@ -1,0 +1,69 @@
+{
+  "capacity": {
+    "Dana Mossbank": 157.5,
+    "Grace Lin": 96.0,
+    "Hannah Brooks": 97.5,
+    "Kenneth Oduya": 142.5,
+    "Luis Ortega": 120.0,
+    "Omar Haddad": 123.0,
+    "Priya Raman": 142.5,
+    "Tomasz Wojcik": 150.0
+  },
+  "firm_billable": 762.5,
+  "firm_capacity": 1029.0,
+  "firm_utilization": 0.741,
+  "holiday": "2026-09-07",
+  "naive": {
+    "Dana Mossbank": {
+      "cap_40h_22d": 176,
+      "cap_all_statuses": 157.5,
+      "cap_hr_days_column": 157.5
+    },
+    "Grace Lin": {
+      "cap_40h_22d": 176,
+      "cap_all_statuses": 96.0,
+      "cap_hr_days_column": 96.0
+    },
+    "Hannah Brooks": {
+      "cap_40h_22d": 176,
+      "cap_all_statuses": 97.5,
+      "cap_hr_days_column": 97.5
+    },
+    "Kenneth Oduya": {
+      "cap_40h_22d": 176,
+      "cap_all_statuses": 135.0,
+      "cap_hr_days_column": 135.0
+    },
+    "Luis Ortega": {
+      "cap_40h_22d": 176,
+      "cap_all_statuses": 105.0,
+      "cap_hr_days_column": 120.0
+    },
+    "Omar Haddad": {
+      "cap_40h_22d": 176,
+      "cap_all_statuses": 117.0,
+      "cap_hr_days_column": 123.0
+    },
+    "Priya Raman": {
+      "cap_40h_22d": 176,
+      "cap_all_statuses": 120.0,
+      "cap_hr_days_column": 120.0
+    },
+    "Tomasz Wojcik": {
+      "cap_40h_22d": 176,
+      "cap_all_statuses": 127.5,
+      "cap_hr_days_column": 150.0
+    }
+  },
+  "utilization": {
+    "Dana Mossbank": 0.4571,
+    "Grace Lin": 0.625,
+    "Hannah Brooks": 0.5615,
+    "Kenneth Oduya": 0.8825,
+    "Luis Ortega": 0.9313,
+    "Omar Haddad": 0.8415,
+    "Priya Raman": 0.8877,
+    "Tomasz Wojcik": 0.7217
+  },
+  "working_days": 21
+}

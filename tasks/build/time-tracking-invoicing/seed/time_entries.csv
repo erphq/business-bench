@@ -1,0 +1,260 @@
+Entry ID,Date,Consultant,Role,Client,Task,Notes,Duration,Billable,Invoice #
+TE-40001,07/01/26,Chloe Brandt,Associate,Westbridge Community Bank,Workshop,Board deck revisions,0.50,TRUE,INV-2607-0823
+TE-40002,07/01/26,Eleanor Voss,Partner,Ellery Textiles,Workshop,Data request follow-up,0:30,Y,INV-2607-0428
+TE-40003,2026-07-01,Eleanor Voss,Partner,Kittering Dairy Cooperative,Discovery,Data request follow-up,123 min,Yes,INV-2607-0665
+TE-40004,Jul 01 2026,Eleanor Voss,Partner,Kittering Dairy Cooperative,Reporting,Proposal prep,270 min,no,
+TE-40005,07/01/26,Graham Achebe,Partner,Northwind Energy Cooperative,Discovery,Cost baseline analysis,0:39,yes,INV-2607-0501
+TE-40006,"July 01, 2026",Hana Kobayashi,Associate,ELLERY TEXTILES,Analysis,Interview synthesis,5:00,Yes,INV-2607-0428
+TE-40007,07/01/2026,Marcus Iyer,Senior,Nettlefield Farms,Discovery,Data request follow-up,1.33,Yes,INV-2607-0294
+TE-40008,Jul 01 2026,Owen Mensah,Associate,Driftwood Home Goods,Analysis,Cost baseline analysis,70 min,Yes,INV-2607-0635
+TE-40009,2026-07-01,Sofia Lindqvist,Senior,Fairhaven Senior Living,Workshop,Proposal prep,250 min,FALSE,
+TE-40010,07/02/2026,Chloe Brandt,Associate,Fairhaven Senior Living,Workshop,Steering committee prep,70 min,Yes,INV-2607-0654
+TE-40011,2026-07-02,Daniel Reyes,Senior,Ellery Textiles,Workshop,Interview synthesis,7h,Yes,INV-2607-0428
+TE-40012,02-Jul-2026,Daniel Reyes,Senior,Delta Ridge Foods,Project management,Board deck revisions,0:40,TRUE,INV-2607-0935
+TE-40013,2026-07-02,Eleanor Voss,Partner,Kittering Dairy Cooperative,Analysis,Operating model options,2h 4m,TRUE,INV-2607-0665
+TE-40014,07/02/2026,Graham Achebe,Partner,Wexford Steelworks,Discovery,Weekly status call,7:00,Y,INV-2607-0398
+TE-40015,2026-07-02,Marcus Iyer,Senior,Fairhaven Senior Living,Workshop,Process mapping session,1:30,TRUE,INV-2607-0654
+TE-40016,07/02/26,Owen Mensah,Associate,Driftwood Home Goods,Analysis,Internal review (no charge),6:49,No,
+TE-40017,2026-07-02,Priya Raman,Associate,Driftwood Home Goods,Reporting,Team handover,6h 19m,No,
+TE-40018,07/03/2026,Graham Achebe,Partner,Thornbury School District,Workshop,Proposal prep,0:15,N,
+TE-40019,"July 03, 2026",Hana Kobayashi,Associate,Glenmoor Title & Escrow,Discovery,Board deck revisions,2:30,Yes,INV-2607-0970
+TE-40020,07/03/2026,Marcus Iyer,Senior,Fairhaven Senior Living,Analysis,Operating model options,1:30,yes,INV-2607-0654
+TE-40021,"July 03, 2026",Marcus Iyer,Senior,Fairhaven Senior Living,Reporting,Process mapping session,5:30,Y,INV-2607-0654
+TE-40022,Jul 03 2026,Nadia Okafor,Senior,Ellery Textiles,Workshop,Internal review (no charge),0:25,FALSE,
+TE-40023,"July 03, 2026",Sofia Lindqvist,Senior,Driftwood Home Goods,Workshop,KPI definitions,4:30,TRUE,INV-2607-0635
+TE-40024,Jul 03 2026,Sofia Lindqvist,Senior,Fairhaven Senior Living,Analysis,Process mapping session,1.67,TRUE,INV-2607-0654
+TE-40025,07/06/2026,Marcus Iyer,Senior,Nettlefield Farms,Analysis,Operating model options,3h 30m,TRUE,INV-2607-0294
+TE-40026,07/06/2026,Owen Mensah,Associate,Driftwood Home Goods,Analysis,Operating model options,0.42,Yes,INV-2607-0635
+TE-40027,2026-07-06,Tom Whitaker,Associate,Ellery Textiles,Analysis,Process mapping session,1:15,Yes,INV-2607-0428
+TE-40028,"July 07, 2026",Daniel Reyes,Senior,Evergreen Credit Union,Project management,Weekly status call,1.75,TRUE,INV-2607-0588
+TE-40029,Jul 07 2026,Luis Ortega,Associate,Ellery Textiles,Discovery,Board deck revisions,270 min,yes,INV-2607-0428
+TE-40030,07/07/26,Sofia Lindqvist,Senior,Fairhaven Senior Living,Workshop,Weekly status call,5.48,yes,INV-2607-0654
+TE-40031,07/07/2026,Tom Whitaker,Associate,Ashgrove Manufacturing,Project management,Internal review (no charge),2.75,No,
+TE-40032,07/08/2026,Daniel Reyes,Senior,Nettlefield Farms,Reporting,Site visit,3:00,Yes,INV-2607-0294
+TE-40033,2026-07-08,Daniel Reyes,Senior,ELLERY TEXTILES,Discovery,Data request follow-up,0:30,yes,INV-2607-0428
+TE-40034,"July 08, 2026",Eleanor Voss,Partner,Ellery Textiles,Reporting,Data request follow-up,2:45,yes,INV-2607-0428
+TE-40035,07/08/26,Marcus Iyer,Senior,Fairhaven Senior Living,Analysis,Site visit,180 min,Yes,INV-2607-0654
+TE-40036,Jul 08 2026,Owen Mensah,Associate,Vantage Fleet Solutions,Discovery,Process mapping session,420 min,yes,INV-2607-0367
+TE-40037,07/09/2026,Hana Kobayashi,Associate,Ellery Textiles,Analysis,Data request follow-up,144 min,Yes,INV-2607-0428
+TE-40038,07/10/2026,Chloe Brandt,Associate,Fairhaven Senior Living,Analysis,KPI definitions,0.75,TRUE,INV-2607-0654
+TE-40039,Jul 10 2026,Marcus Iyer,Senior,Fairhaven Senior Living,Project management,Data request follow-up,1.58,Y,INV-2607-0654
+TE-40040,07/10/2026,Nadia Okafor,Senior,Ellery Textiles,Project management,Implementation planning,70 min,TRUE,INV-2607-0428
+TE-40041,07/10/26,Priya Raman,Associate,Jasper Ridge Winery,Reporting,Process mapping session,0:40,Y,INV-2607-0234
+TE-40042,"July 13, 2026",Chloe Brandt,Associate,Driftwood Home Goods,Reporting,Vendor evaluation,0:20,TRUE,INV-2607-0635
+TE-40043,07/13/2026,Daniel Reyes,Senior,Nettlefield Farms,Discovery,Stakeholder interviews,6:06,yes,INV-2607-0294
+TE-40044,"July 13, 2026",Daniel Reyes,Senior,Ellery Textiles,Discovery,Site visit,2:30,Y,INV-2607-0428
+TE-40045,13-Jul-2026,Eleanor Voss,Partner,Ellery Textiles,Analysis,Interview synthesis,2:30,Y,INV-2607-0428
+TE-40046,2026-07-13,Hana Kobayashi,Associate,Ellery Textiles,Project management,KPI definitions,66 min,TRUE,INV-2607-0428
+TE-40047,"July 13, 2026",Hana Kobayashi,Associate,Ellery Textiles,Project management,Site visit,1.58,Y,INV-2607-0428
+TE-40048,Jul 13 2026,Luis Ortega,Associate,Thornbury School District,Analysis,Steering committee prep,6:30,Y,INV-2607-0918
+TE-40049,07/13/2026,Owen Mensah,Associate,Driftwood Home Goods,Analysis,Requirements workshop,5:02,yes,INV-2607-0635
+TE-40050,2026-07-13,Owen Mensah,Associate,Millbrook Orthopedics,Workshop,Write-off: rework on memo,1:15,No,
+TE-40051,07/13/2026,Priya Raman,Associate,Driftwood Home Goods ,Project management,Process mapping session,5:00,TRUE,INV-2607-0635
+TE-40052,Jul 14 2026,Chloe Brandt,Associate,Coppermine Analytics,Analysis,Weekly status call,1.25,TRUE,INV-2607-0661
+TE-40053,07/14/26,Daniel Reyes,Senior,Ellery Textiles,Analysis,Write-off: rework on memo,300 min,No,
+TE-40054,2026-07-14,Eleanor Voss,Partner,Larkfield Printing,Analysis,Team handover,3:53,no,
+TE-40055,Jul 14 2026,Luis Ortega,Associate,Fairhaven Senior Living,Analysis,Team handover,80 min,no,
+TE-40056,Jul 14 2026,Marcus Iyer,Senior,Fairhaven Senior Living,Analysis,Proposal prep,4.43,no,
+TE-40057,2026-07-14,Nadia Okafor,Senior,Kittering Dairy Cooperative,Discovery,Interview synthesis,0.83,Yes,INV-2607-0665
+TE-40058,"July 14, 2026",Sofia Lindqvist,Senior,Fairhaven Senior Living,Project management,Stakeholder interviews,4:30,Yes,INV-2607-0654
+TE-40059,2026-07-15,Nadia Okafor,Senior,Vantage Fleet Solutions,Analysis,Draft findings memo,1:15,Yes,INV-2607-0367
+TE-40060,2026-07-15,Owen Mensah,Associate,Driftwood Home Goods,Analysis,Team handover,163 min,FALSE,
+TE-40061,07/15/2026,Sofia Lindqvist,Senior,Driftwood Home Goods,Reporting,Data request follow-up,40 min,yes,INV-2607-0635
+TE-40062,07/15/2026,Sofia Lindqvist,Senior,Driftwood Home Goods,Project management,Cost baseline analysis,2h 15m,Y,INV-2607-0635
+TE-40092,"July 21, 2026",Tom Whitaker,Associate,Kingsway Transit Authority,Discovery,Data request follow-up,2:36,yes,INV-2607-0409
+TE-40063,Jul 15 2026,Sofia Lindqvist,Senior,Fairhaven Senior Living,Reporting,Process mapping session,3:20,yes,INV-2607-0654
+TE-40064,07/15/2026,Sofia Lindqvist,Senior,Fairhaven Senior Living,Reporting,Cost baseline analysis,3.53,Yes,INV-2607-0654
+TE-40065,07/15/26,Tom Whitaker,Associate,Wexford Steelworks,Reporting,Implementation planning,135 min,Y,INV-2607-0398
+TE-40066,"July 15, 2026",Tom Whitaker,Associate,Upland Timber Products,Analysis,Operating model options,3.00,TRUE,INV-2607-0718
+TE-40067,16-Jul-2026,Daniel Reyes,Senior,Nettlefield Farms,Workshop,Weekly status call,108 min,Yes,INV-2607-0294
+TE-40068,16-Jul-2026,Daniel Reyes,Senior,EVERGREEN CREDIT UNION,Discovery,Site visit,4.00,Y,INV-2607-0588
+TE-40069,07/16/2026,Hana Kobayashi,Associate,Glenmoor Title & Escrow,Reporting,Team handover,2:01,No,
+TE-40070,2026-07-16,Marcus Iyer,Senior,Nettlefield Farms,Analysis,Proposal prep,0:15,no,
+TE-40071,Jul 16 2026,Nadia Okafor,Senior,Vantage Fleet Solutions,Reporting,Team handover,5.50,no,
+TE-40072,16-Jul-2026,Owen Mensah,Associate,Vantage Fleet Solutions,Project management,Interview synthesis,4.32,Y,INV-2607-0367
+TE-40073,"July 16, 2026",Priya Raman,Associate,Driftwood Home Goods,Workshop,Process mapping session,0.23,yes,INV-2607-0635
+TE-40074,2026-07-17,Daniel Reyes,Senior,Nettlefield Farms,Discovery,Site visit,5.80,Y,INV-2607-0294
+TE-40075,2026-07-17,Daniel Reyes,Senior,Ellery Textiles,Discovery,Process mapping session,37m,Y,INV-2607-0428
+TE-40076,Jul 17 2026,Hana Kobayashi,Associate,Zenith Precision Optics,Workshop,Requirements workshop,4h 11m,Y,INV-2607-0602
+TE-40077,07/17/2026,Luis Ortega,Associate,Jadeport Imports,Discovery,Site visit,50m,Y,INV-2607-0395
+TE-40078,"July 17, 2026",Luis Ortega,Associate,Ellery Textiles,Reporting,Cost baseline analysis,2:30,TRUE,INV-2607-0428
+TE-40079,07/17/26,Nadia Okafor,Senior,Ellery Textiles,Project management,Operating model options,6:43,TRUE,INV-2607-0428
+TE-40080,07/17/2026,Owen Mensah,Associate,Driftwood Home Goods,Discovery,Board deck revisions,239 min,Yes,INV-2607-0635
+TE-40081,07/17/26,Sofia Lindqvist,Senior,Driftwood Home Goods,Reporting,Stakeholder interviews,3.37,Y,INV-2607-0635
+TE-40082,2026-07-20,Chloe Brandt,Associate,Delta Ridge Foods,Analysis,Cost baseline analysis,6:00,Yes,INV-2607-0935
+TE-40090,07/21/2026,Nadia Okafor,Senior,Westbridge Community Bank,Project management,Internal review (no charge),3.82,No,
+TE-40083,Jul 20 2026,Eleanor Voss,Partner,OAKLINE FURNITURE,Discovery,Internal review (no charge),4:30,N,
+TE-40084,2026-07-20,Luis Ortega,Associate,Thornbury School District,Reporting,Board deck revisions,1:40,TRUE,INV-2607-0918
+TE-40085,07/20/2026,Sofia Lindqvist,Senior,Driftwood Home Goods,Workshop,Board deck revisions,4h 29m,Y,INV-2607-0635
+TE-40086,2026-07-21,Eleanor Voss,Partner,Ellery Textiles,Analysis,Requirements workshop,1:00,Y,INV-2607-0428
+TE-40087,07/21/26,Hana Kobayashi,Associate,Ellery Textiles,Project management,Internal review (no charge),3.75,FALSE,
+TE-40088,Jul 21 2026,Hana Kobayashi,Associate,Fairhaven Senior Living,Reporting,Process mapping session,1h 30m,Yes,INV-2607-0654
+TE-40089,07/21/2026,Luis Ortega,Associate,Kingsway Transit Authority,Workshop,Vendor evaluation,4h 30m,Yes,INV-2607-0409
+TE-40090,07/21/2026,Nadia Okafor,Senior,Westbridge Community Bank,Project management,Internal review (no charge),3.82,No,
+TE-40091,2026-07-21,Owen Mensah,Associate,Vantage Fleet Solutions,Analysis,Vendor evaluation,6.23,yes,INV-2607-0367
+TE-40092,"July 21, 2026",Tom Whitaker,Associate,Kingsway Transit Authority,Discovery,Data request follow-up,2:36,yes,INV-2607-0409
+TE-40093,2026-07-21,Tom Whitaker,Associate,Ellery Textiles,Discovery,Financial model review,4:52,TRUE,INV-2607-0428
+TE-40094,2026-07-22,Chloe Brandt,Associate,Northwind Energy Cooperative,Analysis,Operating model options,0.50,Y,INV-2607-0501
+TE-40095,07/22/2026,Chloe Brandt,Associate,Fairhaven Senior Living,Workshop,Stakeholder interviews,5.98,Yes,INV-2607-0654
+TE-40096,"July 22, 2026",Eleanor Voss,Partner,Larkfield Printing,Analysis,Write-off: rework on memo,2:59,N,
+TE-40097,2026-07-22,Hana Kobayashi,Associate,Zenith Precision Optics,Discovery,Cost baseline analysis,2:58,yes,INV-2607-0602
+TE-40098,07/22/2026,Nadia Okafor,Senior,Ellery Textiles,Discovery,Interview synthesis,420 min,yes,INV-2607-0428
+TE-40099,07/22/26,Owen Mensah,Associate,DRIFTWOOD HOME GOODS,Reporting,Implementation planning,3.92,TRUE,INV-2607-0635
+TE-40100,22-Jul-2026,Priya Raman,Associate,Ashgrove Manufacturing,Reporting,Write-off: rework on memo,0.75,N,
+TE-40101,Jul 22 2026,Sofia Lindqvist,Senior,Driftwood Home Goods,Reporting,Draft findings memo,60 min,yes,INV-2607-0635
+TE-40102,07/22/26,Sofia Lindqvist,Senior,Driftwood Home Goods,Discovery,Proposal prep,3:55,no,
+TE-40103,07/23/2026,Eleanor Voss,Partner,Ellery Textiles,Discovery,Implementation planning,0:25,Y,INV-2607-0428
+TE-40104,07/23/26,Hana Kobayashi,Associate,Ellery Textiles,Analysis,Implementation planning,80 min,Y,INV-2607-0428
+TE-40105,Jul 23 2026,Luis Ortega,Associate,Fairhaven Senior Living,Project management,KPI definitions,0:27,Yes,INV-2607-0654
+TE-40106,2026-07-23,Marcus Iyer,Senior,Nettlefield Farms,Reporting,Stakeholder interviews,5.50,Yes,INV-2607-0294
+TE-40107,2026-07-23,Nadia Okafor,Senior,Ellery Textiles,Discovery,Financial model review,0.25,Yes,INV-2607-0428
+TE-40108,23-Jul-2026,Owen Mensah,Associate,Driftwood Home Goods,Analysis,Financial model review,0:05,TRUE,INV-2607-0635
+TE-40109,07/23/2026,Owen Mensah,Associate,Driftwood Home Goods,Project management,Internal review (no charge),1.75,FALSE,
+TE-40110,2026-07-23,Owen Mensah,Associate,Driftwood Home Goods,Analysis,Board deck revisions,6.58,Y,INV-2607-0635
+TE-40111,07/23/2026,Tom Whitaker,Associate,Ellery Textiles,Workshop,Data request follow-up,3.00,Y,INV-2607-0428
+TE-40112,07/24/2026,Chloe Brandt,Associate,Westbridge Community Bank,Workshop,Board deck revisions,30 min,Yes,INV-2607-0823
+TE-40113,Jul 24 2026,Nadia Okafor,Senior,Ellery Textiles,Discovery,Write-off: rework on memo,2:48,no,
+TE-40114,2026-07-24,Sofia Lindqvist,Senior,Jadeport Imports,Project management,Requirements workshop,22m,Y,INV-2607-0395
+TE-40115,"July 24, 2026",Sofia Lindqvist,Senior,Driftwood Home Goods,Workshop,Weekly status call,0.25,yes,INV-2607-0635
+TE-40116,2026-07-27,Chloe Brandt,Associate,Driftwood Home Goods,Workshop,Draft findings memo,6.00,yes,INV-2607-0635
+TE-40117,2026-07-27,Eleanor Voss,Partner,Kittering Dairy Cooperative,Workshop,Proposal prep,7:00,N,
+TE-40118,Jul 27 2026,Graham Achebe,Partner,Northwind Energy Cooperative,Analysis,Steering committee prep,0.67,yes,INV-2607-0501
+TE-40119,27-Jul-2026,Hana Kobayashi,Associate,Fairhaven Senior Living,Discovery,Team handover,4:10,FALSE,
+TE-40120,07/27/2026,Priya Raman,Associate,Ashgrove Manufacturing,Workshop,Proposal prep,1.03,no,
+TE-40121,07/28/26,Hana Kobayashi,Associate,Fairhaven Senior Living,Project management,Site visit,0.25,Y,INV-2607-0654
+TE-40122,28-Jul-2026,Hana Kobayashi,Associate,Glenmoor Title & Escrow,Reporting,Data request follow-up,1.00,Y,INV-2607-0970
+TE-40123,29-Jul-2026,Chloe Brandt,Associate,Driftwood Home Goods,Workshop,Stakeholder interviews,4:00,Yes,
+TE-40124,07/29/26,Chloe Brandt,Associate,COPPERMINE ANALYTICS,Discovery,Draft findings memo,2.43,TRUE,INV-2607-0661
+TE-40125,29-Jul-2026,Nadia Okafor,Senior,Ellery Textiles,Workshop,Draft findings memo,135 min,TRUE,INV-2607-0428
+TE-40126,07/29/2026,Priya Raman,Associate,Driftwood Home Goods,Project management,Interview synthesis,200 min,Y,
+TE-40127,07/30/26,Graham Achebe,Partner,Wexford Steelworks,Analysis,Draft findings memo,6:30,yes,
+TE-40128,30-Jul-2026,Hana Kobayashi,Associate,Ellery Textiles,Analysis,KPI definitions,5h 56m,TRUE,INV-2607-0428
+TE-40129,07/30/2026,Sofia Lindqvist,Senior,Jadeport Imports,Project management,Implementation planning,2.15,Yes,
+TE-40130,2026-07-31,Chloe Brandt,Associate,Driftwood Home Goods,Project management,Interview synthesis,0:50,Yes,INV-2607-0635
+TE-40131,07/31/2026,Eleanor Voss,Partner,Jasper Ridge Winery,Analysis,Implementation planning,2:17,yes,INV-2607-0234
+TE-40132,2026-07-31,Eleanor Voss,Partner,Kittering Dairy Cooperative,Project management,Stakeholder interviews,1h 45m,Y,
+TE-40133,Jul 31 2026,Marcus Iyer,Senior,Fairhaven Senior Living,Analysis,Implementation planning,20 min,TRUE,INV-2607-0654
+TE-40134,07/31/26,Marcus Iyer,Senior,Fairhaven Senior Living,Reporting,Cost baseline analysis,200 min,TRUE,
+TE-40135,2026-07-31,Nadia Okafor,Senior,Ellery Textiles,Project management,Interview synthesis,0.33,TRUE,INV-2607-0428
+TE-40136,07/31/26,Owen Mensah,Associate,Driftwood Home Goods,Workshop,Weekly status call,1:30,TRUE,INV-2607-0635
+TE-40137,2026-07-31,Priya Raman,Associate,JASPER RIDGE WINERY,Reporting,Draft findings memo,1.67,TRUE,INV-2607-0234
+TE-40138,07/31/2026,Sofia Lindqvist,Senior,Fairhaven Senior Living,Reporting,Process mapping session,25 min,yes,
+TE-40139,"July 31, 2026",Sofia Lindqvist,Senior,Fairhaven Senior Living,Reporting,Cost baseline analysis,3:20,Yes,INV-2607-0654
+TE-40140,"August 03, 2026",Chloe Brandt,Associate,Westbridge Community Bank,Reporting,Requirements workshop,0:30,yes,
+TE-40141,"August 03, 2026",Eleanor Voss,Partner,Kittering Dairy Cooperative,Reporting,Internal review (no charge),0:30,FALSE,
+TE-40142,Aug 03 2026,Hana Kobayashi,Associate,ELLERY TEXTILES,Analysis,Draft findings memo,5:51,TRUE,
+TE-40143,"August 03, 2026",Hana Kobayashi,Associate,Zenith Precision Optics,Workshop,Cost baseline analysis,1:30,Y,
+TE-40144,03-Aug-2026,Luis Ortega,Associate,Jadeport Imports,Analysis,Process mapping session,4:30,Yes,
+TE-40145,2026-08-03,Owen Mensah,Associate,Driftwood Home Goods,Discovery,Process mapping session,0.82,Y,
+TE-40146,08/04/2026,Marcus Iyer,Senior,Fairhaven Senior Living,Analysis,Site visit,1:51,TRUE,
+TE-40147,08/04/2026,Marcus Iyer,Senior,Fairhaven Senior Living,Reporting,Steering committee prep,2.75,TRUE,
+TE-40148,08/04/26,Nadia Okafor,Senior,Ellery Textiles,Analysis,Internal review (no charge),1.50,No,
+TE-40149,2026-08-04,Owen Mensah,Associate,Driftwood Home Goods,Project management,KPI definitions,0:50,TRUE,
+TE-40150,08/05/2026,Daniel Reyes,Senior,Ellery Textiles,Project management,Steering committee prep,139 min,TRUE,
+TE-40151,"August 05, 2026",Luis Ortega,Associate,Fairhaven Senior Living,Workshop,Stakeholder interviews,6.12,Y,
+TE-40152,08/05/26,Nadia Okafor,Senior,Ellery Textiles,Analysis,Data request follow-up,45 min,Y,
+TE-40153,Aug 05 2026,Priya Raman,Associate,Fairhaven Senior Living,Workshop,Implementation planning,0.67,TRUE,
+TE-40154,05-Aug-2026,Priya Raman,Associate,Fairhaven Senior Living,Discovery,Data request follow-up,59 min,yes,
+TE-40155,08/05/2026,Tom Whitaker,Associate,Ellery Textiles,Reporting,Financial model review,2:45,TRUE,
+TE-40156,Aug 05 2026,Tom Whitaker,Associate,Ashgrove Manufacturing,Discovery,KPI definitions,5:00,yes,
+TE-40157,2026-08-06,Chloe Brandt,Associate,Driftwood Home Goods,Project management,Steering committee prep,6:33,TRUE,
+TE-40158,08/06/2026,Chloe Brandt,Associate,Fairhaven Senior Living,Workshop,KPI definitions,60 min,Y,
+TE-40159,"August 06, 2026",Nadia Okafor,Senior,ELLERY TEXTILES,Discovery,Draft findings memo,4h,Y,
+TE-40160,Aug 06 2026,Priya Raman,Associate,Jasper Ridge Winery,Analysis,Data request follow-up,4.50,TRUE,
+TE-40161,08/07/2026,Chloe Brandt,Associate,Coppermine Analytics,Project management,Implementation planning,0:20,Yes,
+TE-40162,2026-08-07,Hana Kobayashi,Associate,Fairhaven Senior Living,Workshop,Process mapping session,5:00,TRUE,
+TE-40208,2026-08-20,Graham Achebe,Partner,Oakline Furniture,Workshop,Cost baseline analysis,0:30,TRUE,
+TE-40163,08/07/26,Marcus Iyer,Senior,Fairhaven Senior Living,Reporting,Data request follow-up,5:11,Yes,
+TE-40164,"August 07, 2026",Priya Raman,Associate,Fairhaven Senior Living,Reporting,Vendor evaluation,95 min,Yes,
+TE-40165,08/07/26,Sofia Lindqvist,Senior,Jadeport Imports,Analysis,Draft findings memo,6:00,TRUE,
+TE-40166,2026-08-10,Chloe Brandt,Associate,Coppermine Analytics ,Workshop,Board deck revisions,70 min,Yes,
+TE-40167,08/11/26,Daniel Reyes,Senior,Delta Ridge Foods,Analysis,Site visit,5:30,TRUE,
+TE-40168,08/11/2026,Graham Achebe,Partner,Northwind Energy Cooperative,Reporting,Interview synthesis,3.50,yes,
+TE-40169,2026-08-11,Hana Kobayashi,Associate,Fairhaven Senior Living,Analysis,Cost baseline analysis,2.75,TRUE,
+TE-40170,08/11/2026,Hana Kobayashi,Associate,Glenmoor Title & Escrow,Project management,Interview synthesis,0.25,TRUE,
+TE-40171,08/11/26,Priya Raman,Associate,Driftwood Home Goods,Reporting,Interview synthesis,0.75,yes,
+TE-40172,08/12/26,Eleanor Voss,Partner,Kittering Dairy Cooperative,Workshop,Steering committee prep,0:45,Y,
+TE-40173,Aug 12 2026,Graham Achebe,Partner,Driftwood Home Goods ,Analysis,Cost baseline analysis,2.00,yes,
+TE-40174,"August 12, 2026",Hana Kobayashi,Associate,Ellery Textiles,Analysis,Operating model options,7:00,Y,
+TE-40175,08/12/2026,Luis Ortega,Associate,Granite State Tooling,Reporting,Data request follow-up,1.75,Y,
+TE-40176,2026-08-12,Owen Mensah,Associate,Vantage Fleet Solutions,Workshop,KPI definitions,1.78,Yes,
+TE-40177,08/12/2026,Priya Raman,Associate,FAIRHAVEN SENIOR LIVING,Workshop,Financial model review,5.00,Y,
+TE-40070,2026-07-16,Marcus Iyer,Senior,Nettlefield Farms,Analysis,Proposal prep,0:15,no,
+TE-40178,08/12/26,Tom Whitaker,Associate,Ellery Textiles,Project management,Weekly status call,3.50,TRUE,
+TE-40179,12-Aug-2026,Tom Whitaker,Associate,Evergreen Credit Union,Discovery,Proposal prep,1:40,No,
+TE-40007,07/01/2026,Marcus Iyer,Senior,Nettlefield Farms,Discovery,Data request follow-up,1.33,Yes,INV-2607-0294
+TE-40180,2026-08-13,Graham Achebe,Partner,Wexford Steelworks,Workshop,KPI definitions,3:00,Yes,
+TE-40181,13-Aug-2026,Graham Achebe,Partner,Glenmoor Title & Escrow,Discovery,Operating model options,80 min,yes,
+TE-40121,07/28/26,Hana Kobayashi,Associate,Fairhaven Senior Living,Project management,Site visit,0.25,Y,INV-2607-0654
+TE-40182,13-Aug-2026,Hana Kobayashi,Associate,Ellery Textiles,Discovery,KPI definitions,2.25,yes,
+TE-40183,13-Aug-2026,Luis Ortega,Associate,Thornbury School District,Analysis,Process mapping session,2:47,Y,
+TE-40184,13-Aug-2026,Marcus Iyer,Senior,Fairhaven Senior Living,Analysis,Proposal prep,4.00,N,
+TE-40185,2026-08-13,Nadia Okafor,Senior,Ellery Textiles,Workshop,Stakeholder interviews,2:00,Yes,
+TE-40186,2026-08-13,Tom Whitaker,Associate,Ellery Textiles,Analysis,Vendor evaluation,1:35,yes,
+TE-40094,2026-07-22,Chloe Brandt,Associate,Northwind Energy Cooperative,Analysis,Operating model options,0.50,Y,INV-2607-0501
+TE-40187,2026-08-14,Daniel Reyes,Senior,Ellery Textiles,Discovery,Proposal prep,6:00,N,
+TE-40072,16-Jul-2026,Owen Mensah,Associate,Vantage Fleet Solutions,Project management,Interview synthesis,4.32,Y,INV-2607-0367
+TE-40188,Aug 14 2026,Luis Ortega,Associate,Ellery Textiles,Project management,Operating model options,1h 45m,Yes,
+TE-40189,08/14/2026,Sofia Lindqvist,Senior,Driftwood Home Goods ,Project management,Cost baseline analysis,3:30,Yes,
+TE-40190,2026-08-14,Tom Whitaker,Associate,Kingsway Transit Authority,Discovery,Weekly status call,0:25,Y,
+TE-40191,08/17/26,Daniel Reyes,Senior,Ellery Textiles,Reporting,Data request follow-up,1h 24m,Yes,
+TE-40192,Aug 17 2026,Daniel Reyes,Senior,Evergreen Credit Union,Workshop,Implementation planning,25 min,Y,
+TE-40193,"August 17, 2026",Luis Ortega,Associate,Fairhaven Senior Living,Project management,Steering committee prep,0:50,TRUE,
+TE-40194,2026-08-17,Luis Ortega,Associate,Fairhaven Senior Living ,Workshop,Site visit,3:20,Y,
+TE-40195,08/17/26,Luis Ortega,Associate,Thornbury School District,Discovery,Steering committee prep,80 min,yes,
+TE-40196,08/17/26,Nadia Okafor,Senior,Kittering Dairy Cooperative,Workshop,Requirements workshop,6:00,yes,
+TE-40197,08/17/2026,Sofia Lindqvist,Senior,Jadeport Imports,Discovery,Weekly status call,4.77,TRUE,
+TE-40198,18-Aug-2026,Chloe Brandt,Associate,Fairhaven Senior Living,Discovery,Financial model review,1h 20m,yes,
+TE-40199,2026-08-18,Marcus Iyer,Senior,Fairhaven Senior Living,Analysis,Draft findings memo,1:00,Y,
+TE-40200,08/18/2026,Priya Raman,Associate,Fairhaven Senior Living,Workshop,Steering committee prep,0.67,Y,
+TE-40201,Aug 19 2026,Daniel Reyes,Senior,Evergreen Credit Union,Discovery,Stakeholder interviews,360 min,Y,
+TE-40202,08/19/2026,Marcus Iyer,Senior,Fairhaven Senior Living,Reporting,Write-off: rework on memo,3:30,No,
+TE-40203,"August 19, 2026",Nadia Okafor,Senior,Kittering Dairy Cooperative,Reporting,Stakeholder interviews,1.75,Y,
+TE-40204,Aug 19 2026,Sofia Lindqvist,Senior,Fairhaven Senior Living,Reporting,Data request follow-up,1:20,Y,
+TE-40205,2026-08-19,Tom Whitaker,Associate,Ellery Textiles,Reporting,Write-off: rework on memo,7:00,N,
+TE-40206,2026-08-20,Daniel Reyes,Senior,Ellery Textiles,Discovery,Operating model options,3:57,yes,
+TE-40207,"August 20, 2026",Daniel Reyes,Senior,Evergreen Credit Union,Discovery,Cost baseline analysis,4h,Yes,
+TE-40208,2026-08-20,Graham Achebe,Partner,Oakline Furniture,Workshop,Cost baseline analysis,0:30,TRUE,
+TE-40209,08/20/2026,Graham Achebe,Partner,NORTHWIND ENERGY COOPERATIVE,Discovery,Cost baseline analysis,45 min,yes,
+TE-40210,2026-08-20,Hana Kobayashi,Associate,Ellery Textiles,Project management,Steering committee prep,2h 48m,yes,
+TE-40211,20-Aug-2026,Owen Mensah,Associate,Driftwood Home Goods,Workshop,Financial model review,1:41,Y,
+TE-40212,08/20/2026,Priya Raman,Associate,Fairhaven Senior Living,Analysis,Implementation planning,2h 55m,yes,
+TE-40213,2026-08-20,Tom Whitaker,Associate,Ellery Textiles,Discovery,Team handover,1h 35m,N,
+TE-40214,2026-08-21,Chloe Brandt,Associate,Driftwood Home Goods,Analysis,Implementation planning,20m,TRUE,
+TE-40215,2026-08-21,Chloe Brandt,Associate,DELTA RIDGE FOODS,Analysis,Interview synthesis,2.83,yes,
+TE-40216,08/21/2026,Daniel Reyes,Senior,Nettlefield Farms,Workshop,Draft findings memo,135 min,yes,
+TE-40217,08/21/2026,Daniel Reyes,Senior,Nettlefield Farms,Analysis,Steering committee prep,7h 45m,Yes,
+TE-40218,08/21/2026,Graham Achebe,Partner,Northwind Energy Cooperative,Workshop,Implementation planning,232 min,TRUE,
+TE-40219,"August 21, 2026",Tom Whitaker,Associate,Wexford Steelworks,Project management,Internal review (no charge),4.00,no,
+TE-40220,2026-08-24,Daniel Reyes,Senior,Ellery Textiles,Discovery,Financial model review,390 min,TRUE,
+TE-40221,08/24/2026,Nadia Okafor,Senior,Kittering Dairy Cooperative,Workshop,Site visit,7.00,TRUE,
+TE-40222,08/24/2026,Owen Mensah,Associate,Driftwood Home Goods,Project management,Requirements workshop,2:45,TRUE,
+TE-40223,08/24/2026,Owen Mensah,Associate,Driftwood Home Goods,Project management,KPI definitions,7:00,TRUE,
+TE-40224,08/24/2026,Priya Raman,Associate,Fairhaven Senior Living ,Workshop,Internal review (no charge),2.00,no,
+TE-40225,2026-08-25,Luis Ortega,Associate,Blackmoor Quarry Co,Analysis,Operating model options,3h 30m,yes,
+TE-40226,2026-08-25,Tom Whitaker,Associate,Kingsway Transit Authority,Discovery,Steering committee prep,25 min,Y,
+TE-40227,08/25/26,Tom Whitaker,Associate,Ellery Textiles,Discovery,Interview synthesis,6:11,yes,
+TE-40228,Aug 26 2026,Daniel Reyes,Senior,Ellery Textiles,Workshop,Financial model review,0.38,Yes,
+TE-40229,26-Aug-2026,Daniel Reyes,Senior,Ellery Textiles,Project management,Draft findings memo,0:45,yes,
+TE-40230,Aug 26 2026,Eleanor Voss,Partner,Larkfield Printing,Discovery,Operating model options,5.00,Y,
+TE-40231,08/26/26,Graham Achebe,Partner,Northwind Energy Cooperative,Workshop,Requirements workshop,270 min,Yes,
+TE-40232,2026-08-26,Marcus Iyer,Senior,Nettlefield Farms,Analysis,Site visit,1.00,yes,
+TE-40233,Aug 26 2026,Priya Raman,Associate,Fairhaven Senior Living,Workshop,Site visit,0:20,TRUE,
+TE-40234,Aug 27 2026,Daniel Reyes,Senior,Nettlefield Farms,Discovery,Financial model review,1:15,TRUE,
+TE-40235,Aug 27 2026,Nadia Okafor,Senior,Kittering Dairy Cooperative,Analysis,Site visit,227 min,Y,
+TE-40236,"August 27, 2026",Tom Whitaker,Associate,Ellery Textiles,Project management,Steering committee prep,180 min,Y,
+TE-40237,2026-08-27,Tom Whitaker,Associate,Ashgrove Manufacturing,Analysis,Operating model options,4:29,Y,
+TE-40238,08/28/2026,Chloe Brandt,Associate,Fairhaven Senior Living,Workshop,Stakeholder interviews,2.50,TRUE,
+TE-40239,08/28/2026,Eleanor Voss,Partner,Kittering Dairy Cooperative,Reporting,Draft findings memo,0.67,TRUE,
+TE-40240,Aug 28 2026,Luis Ortega,Associate,Jadeport Imports,Analysis,Steering committee prep,105 min,yes,
+TE-40241,08/28/2026,Luis Ortega,Associate,Ellery Textiles,Workshop,Team handover,200 min,No,
+TE-40242,08/28/26,Marcus Iyer,Senior,Fairhaven Senior Living,Discovery,Site visit,4.50,Yes,
+TE-40243,08/28/2026,Marcus Iyer,Senior,Fairhaven Senior Living ,Workshop,Financial model review,5:41,Y,
+TE-40244,2026-08-28,Owen Mensah,Associate,Driftwood Home Goods,Workshop,Internal review (no charge),3:20,No,
+TE-40245,2026-08-28,Owen Mensah,Associate,Driftwood Home Goods,Discovery,Process mapping session,5:30,Y,
+TE-40246,31-Aug-2026,Graham Achebe,Partner,Wexford Steelworks,Discovery,Weekly status call,5.15,Yes,
+TE-40247,Aug 31 2026,Luis Ortega,Associate,FAIRHAVEN SENIOR LIVING,Analysis,Interview synthesis,1h 41m,yes,
+TE-40248,2026-08-31,Marcus Iyer,Senior,Fairhaven Senior Living,Workshop,Financial model review,1:30,Yes,
+TE-40249,"August 31, 2026",Nadia Okafor,Senior,Ellery Textiles,Discovery,Requirements workshop,3:00,Y,
+TE-40250,Aug 31 2026,Nadia Okafor,Senior,Ellery Textiles,Analysis,Operating model options,3.00,TRUE,
+TE-40251,08/31/26,Priya Raman,Associate,Fairhaven Senior Living,Project management,Data request follow-up,1:40,yes,

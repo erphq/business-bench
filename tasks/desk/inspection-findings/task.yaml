@@ -1,0 +1,108 @@
+id: inspection-findings
+track: desk
+category: extraction
+title: Open findings from this season's inspection reports
+ask: |
+  Please go through the inspection reports in the folder and build our corrective action list as findings.csv. The policy file explains how we track them.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  severity words differ by inspector: Imminent hazard/Serious/Minor on the fire reports, High/Medium/Low on licensing, Priority/Priority Foundation/Core on the health report and Priority 1/2/3 on the insurer's audit; the policy maps them, so the health report's 'Priority' is high while the insurer's 'Priority 2' is medium (check: severity)
+- |-
+  the fire re-inspection FM-26-0499 lists item 3 of FM-26-0425 as NOT CORRECTED with its classification raised from Minor to Serious and a new correction date, and the insurer's audit repeats recommendation R-4 of LC-5361, a March report not in the folder; each is one row keyed FM-26-0425-3 and LC-5361-R-4, with the first inspection date and the latest severity and due date (checks: one row per open finding; site, source and date; severity; due dates)
+- |-
+  closed items stay off the list: the August fire report's item 4 corrected on site and its items 1, 2 and 5 marked 'Corrected. CLOSED.' on the re-inspection, two licensing items corrected during the inspection, two health items marked COS, and last year's Hilltop fire report whose items are all closed (checks: one row per open finding; row count)
+- |-
+  due dates are printed as periods ('within 14 days', 'COMPLETE WITHIN 30 DAYS'), as 'immediately', or only by the health report's footnote that Core violations are due within 90 calendar days (check: due dates)
+- 'the insurer''s playground audit is an image-only scan (checks: descriptions; due dates)'
+checks:
+- type: csv_columns
+  name: requested columns
+  path: findings.csv
+  columns:
+  - finding_ref
+  - site
+  - source
+  - inspection_date
+  - description
+  - severity
+  - due_date
+- type: csv_set_equal
+  name: one row per open finding
+  path: findings.csv
+  column: finding_ref
+  ref: findings.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: findings.csv
+  equals_ref: findings.csv
+- type: csv_values_match
+  name: site, source and date
+  path: findings.csv
+  ref: findings.csv
+  key: finding_ref
+  columns:
+  - site
+  - source
+  - inspection_date
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - FM-26-0425-3
+  - LC-5361-R-4
+- type: csv_values_match
+  name: descriptions
+  path: findings.csv
+  ref: findings.csv
+  key: finding_ref
+  columns:
+  - description
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - LC-5538-R-1
+  - LC-5538-R-2
+  - LC-5538-R-3
+  - LC-5361-R-4
+- type: csv_values_match
+  name: severity
+  path: findings.csv
+  ref: findings.csv
+  key: finding_ref
+  columns:
+  - severity
+  min_accuracy: 1.0
+  must_match_keys:
+  - FM-26-0425-3
+  - HD-77849-2
+  - HD-77849-4
+  - HD-77849-5
+  - LC-5538-R-1
+  - LC-5538-R-2
+  - LC-5538-R-3
+  - LC-5361-R-4
+- type: csv_values_match
+  name: due dates
+  path: findings.csv
+  ref: findings.csv
+  key: finding_ref
+  columns:
+  - due_date
+  min_accuracy: 1.0
+  must_match_keys:
+  - FM-26-0425-3
+  - LC-5361-R-4
+  - FM-26-0499-1
+  - HD-77849-2
+  - HD-77849-4
+  - HD-77849-5
+  - LC-5538-R-1
+  - LC-5538-R-2
+  - LC-5538-R-3
+  - LC-5361-R-4

@@ -1,0 +1,2 @@
+jurisdiction_code,jurisdiction_name,gross_sales,exempt_sales,taxable_sales,tax_due
+9999,Example City,10000.00,2500.00,7500.00,543.75

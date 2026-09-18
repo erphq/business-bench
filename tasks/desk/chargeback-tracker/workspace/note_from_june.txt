@@ -1,0 +1,9 @@
+Can you get the chargeback tracker up to date? One line per case (not per notice - Ridgepay sends a
+lot of repeats) in chargebacks.csv with:
+
+case_id, disputed_amount, status (open, won or lost), evidence_due, net_loss
+
+net_loss is what the case has cost us so far: the disputed amount plus the fee while it is still open or once we
+lost it, and nothing if we won.
+
+Thanks - June

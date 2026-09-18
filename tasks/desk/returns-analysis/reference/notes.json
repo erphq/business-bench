@@ -1,0 +1,15 @@
+{
+  "naive": {
+    "amount_total": 8258.0,
+    "name_ret": 5,
+    "name_sold": 83,
+    "refund_only": 0
+  },
+  "rates": {
+    "total": 0.1163,
+    "trail jacket m": 0.0816
+  },
+  "refunded_total": 5093.0,
+  "total_units_returned": 139,
+  "total_units_sold": 1195
+}

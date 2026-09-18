@@ -1,0 +1,18 @@
+Venue invoices for September
+
+Every venue invoice we have for the September events is in venue_invoices. I need them keyed into the job-cost sheet, one row per invoice line, save as venue_lines.csv with these columns:
+
+line_ref - the invoice number exactly as the venue prints it, a hyphen, then the line number (1, 2, 3 in the order the lines are printed). A deposit counts as the last line of its invoice.
+event_code - from event_list.csv.
+invoice_no - as printed.
+invoice_date - YYYY-MM-DD.
+line_type - charge, or deposit for money we already paid that the venue credits on the invoice.
+description - as printed. For a deposit row just write Deposit applied.
+amount - before tax, plain number. Deposits go in negative.
+tax - the tax on that one line in dollars. Not every venue prints it per line, so work it out from the rate or code they show and round to the cent. 0 on exempt lines and deposits.
+balance_due - what the invoice says we still owe after the deposit, repeated on every row of that invoice.
+
+Venues sometimes re-send an invoice when the count changes. Only the current version gets keyed - the old one is dead.
+
+Thanks!
+Tamsin

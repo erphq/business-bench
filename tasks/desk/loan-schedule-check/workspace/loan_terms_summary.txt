@@ -1,0 +1,21 @@
+CASCADE CREDIT UNION - COMMERCIAL LENDING
+Loan terms summary (provided at closing, 15 October 2024)
+
+Borrower:            Basalt Bouldering Co.
+Loan number:         CL-46634-48
+Original principal:  $217,000.00
+Term:                120 monthly payments, first payment due 1 December 2024
+Initial rate:        6.85% per year, fixed through 28 February 2026
+Rate adjustment:     on 1 March 2026 and every 36 months after, to WSJ Prime plus 0.35%
+Initial payment:     $2,502.81 per month
+
+How payments are applied
+  1. Payments are due on the 1st of each month. A payment received by the 10th is on time.
+  2. Interest is paid in arrears. Each monthly payment pays the interest for the calendar month before its
+     due date, at the rate in effect for that month.
+  3. That interest is the unpaid principal balance after the previous payment, times the annual rate,
+     divided by 12, rounded to the nearest cent. The rest of the payment reduces principal.
+  4. Additional principal payments are applied entirely to principal on the day they are received. They
+     do not change the monthly payment or the next due date.
+  5. When the rate adjusts, the monthly payment is recalculated and the new amount is due from the
+     payment after the adjustment date.

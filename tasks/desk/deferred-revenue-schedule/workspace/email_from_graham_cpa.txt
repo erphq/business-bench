@@ -1,0 +1,44 @@
+From: Graham Whitfield <graham@whitfieldcpa.com>
+To: Nadia Ruiz <nadia@tallgrassdispatch.com>
+Date: Mon, 4 Jan 2027 10:12
+Subject: 2026 year-end: deferred revenue
+
+Hi Nadia,
+
+For the 2026 file I need the deferred revenue roll-forward for the annual plans. Same method as last year:
+
+- An annual plan is earned evenly over its twelve months, one twelfth each month.
+- Month one: a plan that starts on or before the 15th earns in its start month; a plan that starts on the 16th or later starts earning the following month.
+- Upgrades: the prorated add-on in your change log is earned evenly over the months left in the term, starting with the upgrade month under the same 15th rule. The original fee keeps earning as before.
+- Cancellations: dated on or before the 15th, that month earns nothing; dated after the 15th, that month is the last one earned. Nothing is earned after it. The refund comes straight out of deferred revenue.
+- Monthly-billed customers are invoiced as they go and never carry a deferred balance, so leave them out. Same for anything that is not signed.
+- Deferred revenue at any month end is everything invoiced on an annual plan that has not been earned yet.
+
+What I need back: one line per month for 2026 showing the opening balance, invoiced, refunded, revenue recognized and the closing deferred balance, with a total line, plus the contract-by-contract detail behind it so I can trace a number to a customer. Keep the math live so I can follow it.
+
+Thanks,
+Graham
+
+-----Original Message-----
+
+From: Nadia Ruiz <nadia@tallgrassdispatch.com>
+To: Graham Whitfield <graham@whitfieldcpa.com>
+Date: Mon, 4 Jan 2027 11:40
+Subject: RE: 2026 year-end: deferred revenue
+
+Will do. The contract export and the change log are both in the folder.
+
+One thing that changed since last year: our terms now let us keep a $250 early-cancellation fee when someone cancels an annual plan, so refunds are the unused months less $250.
+
+Nadia
+
+-----Original Message-----
+
+From: Graham Whitfield <graham@whitfieldcpa.com>
+To: Nadia Ruiz <nadia@tallgrassdispatch.com>
+Date: Mon, 4 Jan 2027 12:05
+Subject: RE: 2026 year-end: deferred revenue
+
+Good to know. The $250 you keep is earned when they cancel - book it as revenue in the month the cancellation is dated.
+
+Graham

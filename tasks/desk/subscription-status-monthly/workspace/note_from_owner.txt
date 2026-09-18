@@ -1,0 +1,19 @@
+Subscriber counts - how I count them
+
+A subscriber is someone paying us for coffee. The free first bag is a trial: they are not a subscriber
+until their first paid box, and if they cancel during the trial that is not a lost subscriber either.
+
+Active in a month means they have a paid period that covers the last day of that month. Quarterly
+people pay once for three months, so they are active all three.
+
+When someone cancels, they keep getting coffee until the end of the period they already paid for.
+Count the cancellation in the month that paid period ends, not the month they emailed us.
+
+If somebody cancels and comes back later, they are active again from their new paid period, and the
+earlier cancellation still counts in its month.
+
+The billing tool retries a failed card the next day, so a failed invoice usually has a paid twin.
+
+I want January to June: active subscribers at the end of each month and cancellations in each month.
+
+- Wren

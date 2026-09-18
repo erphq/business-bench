@@ -1,0 +1,15 @@
+Q3 rent ledger
+
+For the quarter close I need a ledger of everything on our two rented spaces for July 1 to September 30 - the studio (Suite 210, Wexford) and the storage unit (B-4 at Tidewater). All the statements they sent are in the statements folder. We prepaid the storage unit for July through September back in June, so that money is already on the books.
+
+Please save it as tenant_ledger.csv, one row per charge or payment, with:
+  entry_ref   the landlord's document or transaction number for the line
+  unit        Suite 210 or Storage B-4
+  entry_date  YYYY-MM-DD
+  entry_type  charge, late_fee, payment or credit (credit = something they reversed or waived)
+  description as printed
+  amount      charges and late fees positive, payments and credits negative
+
+Each thing only once, even if two statements show it. Balance lines aren't entries.
+
+Camille

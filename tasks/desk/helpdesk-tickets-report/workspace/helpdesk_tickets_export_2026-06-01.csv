@@ -1,0 +1,281 @@
+﻿Ticket ID,Subject,Category,Priority,Status,Created,Resolved,Assigned To,Requester
+INC-20411,Locked out after vacation,Accounts & Access,Critical,Closed,2026-04-27 09:27:59,2026-05-01 10:35:00,Luis Ortiz,Mark Haddad
+INC-20412,Outlook add-in missing,Software,P3,Closed,2026-04-27 11:46:41,2026-05-01 10:00:00,Priya Shah,Dana Reed
+INC-20413,Out of office not working,Email,P3,Closed,2026-04-27 14:53:31,2026-05-01 14:08:00,Priya Shah,Anna Green
+INC-20414,Access to escrow share,Accounts & Access,med,Closed,2026-04-28 14:36:47,2026-05-01 14:27:00,Luis Ortiz,Patricia Myers
+INC-20415,Laptop will not boot,Hardware,P3,Closed,2026-04-29 08:52:10,2026-05-05 09:29:00,Tom Becker,Jessica Ruiz
+INC-20416,Scanner at closing desk dead,Hardware,med,Closed,2026-04-29 16:17:39,2026-05-01 17:14:00,Priya Shah,Emily Rodriguez
+INC-20417,Adobe license expired,Software,Hi,Closed,2026-04-29 16:47:44,2026-05-04 16:27:00,Gwen Adeyemi,Shirley Torres
+INC-20418,Calendar invites missing,Email,2 - High,Closed,2026-04-29 17:56:08,2026-05-04 11:18:00,Priya Shah,Amara Flores
+INC-20419,Calendar invites missing,Email,med,Closed,2026-04-29 21:22:10,2026-05-04 08:48:00,Luis Ortiz,Sofia Anderson
+INC-20420,Access to escrow share,Accounts & Access,high,Closed,2026-04-30 21:51:59,2026-05-04 15:43:00,Luis Ortiz,Gary Ross
+INC-20421,Cannot send attachments over 10MB,Email,low,Resolved,2026-05-01 06:56:55,2026-05-01 11:47:00,Gwen Adeyemi,Sandra Martin
+INC-20422,Cannot send attachments over 10MB,Email,P2,Resolved,2026-05-01 07:32:48,2026-05-01 14:51:00,Gwen Adeyemi,Laura Smith
+INC-20423,Offboarding - disable account,Accounts & Access,P1,Closed,2026-05-01 09:31:27,2026-05-01 11:27:00,Gwen Adeyemi,Carlos Bennett
+INC-20424,Keyboard keys sticking,Hardware,1 - Critical,Merged,2026-05-01 11:23:20,2026-05-01 12:17:00,Priya Shah,Lisa Young
+INC-20425,Password reset,Accounts & Access,Hi,Closed,2026-05-01 13:15:02,2026-05-04 09:46:00,Tom Becker,Steven Bailey
+INC-20426,Docking station not detecting monitors,Hardware,Medium,Closed,2026-05-01 13:22:33,2026-05-07 08:58:00,Tom Becker,Deborah Hughes
+INC-20427,New hire account setup,Accounts & Access,3 - Normal,Closed,2026-05-01 14:13:00,2026-05-04 12:44:00,Priya Shah,Leila Davis
+INC-20428,New monitor request,Hardware,Medium,Resolved,2026-05-01 14:55:31,2026-05-05 14:00:00,Tom Becker,Paul Davis
+INC-20429,Excel crashes opening closing statements,Software,3 - Normal,Resolved,2026-05-01 16:57:08,2026-05-05 15:36:00,Tom Becker,Richard Ramirez
+INC-20430,Keyboard keys sticking,Hardware,2 - High,Resolved,2026-05-01 18:10:29,2026-05-04 08:30:00,Priya Shah,James Ross
+INC-20431,New monitor request,Hardware,low,Resolved,2026-05-01 19:14:08,2026-05-04 10:30:00,Priya Shah,Sandra Brooks
+INC-20432,Keyboard keys sticking,Hardware,3 - Normal,Closed,2026-05-01 21:00:07,2026-05-05 13:08:00,Tom Becker,George Hernandez
+INC-20433,Title plant search errors,Software,P3,Closed,2026-05-02 11:28:33,2026-05-05 08:36:00,Luis Ortiz,Mateo Kelly
+INC-20434,Phishing email reported,Email,Normal,Resolved,2026-05-02 17:45:05,2026-05-05 09:44:00,Gwen Adeyemi,Jonathan Ramos
+INC-20435,Shared mailbox not syncing,Email,med,Closed,2026-05-02 19:29:05,2026-05-04 12:33:00,Luis Ortiz,Betty Walker
+INC-20436,Excel crashes opening closing statements,Software,med,Resolved,2026-05-02 20:34:13,2026-05-04 17:48:00,Priya Shah,Anthony Peterson
+INC-20437,Wi-Fi down in conference room B,Network,med,Resolved,2026-05-03 14:51:00,2026-05-04 11:14:00,Tom Becker,Marcus Roberts
+INC-20438,Toner low 2nd floor,Printers,4 - Low,Resolved,2026-05-03 14:59:25,2026-05-08 17:03:00,Tom Becker,Betty Adams
+INC-20439,RE: wire instructions update,Email,3 - Normal,Spam,2026-05-03 16:55:27,2026-05-03 17:10:00,Gwen Adeyemi,Mateo Hernandez
+INC-20440,Distribution list update,Email,Normal,Resolved,2026-05-03 17:53:54,2026-05-04 14:45:00,Tom Becker,Melissa Davis
+INC-20441,Laptop will not boot,Hardware,Normal,Resolved,2026-05-03 18:28:12,2026-05-05 13:32:00,Luis Ortiz,Michael Williams
+INC-20442,Adobe license expired,Software,Urgent,Resolved,2026-05-03 18:50:23,2026-05-03 19:30:00,Gwen Adeyemi,Susan Ruiz
+INC-20443,Branch office cannot reach file server,Network,P4,Resolved,2026-05-03 19:56:27,2026-05-04 12:43:00,Gwen Adeyemi,Nadia Ortiz
+INC-20444,Shared mailbox not syncing,Email,Normal,Closed,2026-05-04 07:24:38,2026-05-05 12:48:00,Tom Becker,Kevin Collins
+INC-20445,Laptop will not boot,Hardware,high,Closed,2026-05-04 08:13:47,2026-05-04 14:56:00,Priya Shah,Andrew Cruz
+INC-20446,Cannot map S: drive,Network,High,Closed,2026-05-04 09:39:03,2026-05-05 13:44:00,Gwen Adeyemi,Mateo Diaz
+INC-20447,Webcam not working in Teams,Hardware,4 - Low,Resolved,2026-05-04 09:59:14,2026-05-06 15:33:00,Priya Shah,Ashley Hernandez
+INC-20448,You have (3) undelivered messages,Email,Normal,Spam,2026-05-04 10:42:54,2026-05-04 11:16:00,Priya Shah,Anthony Evans
+INC-20449,Install DocuSign plugin,Software,P4,Merged,2026-05-04 12:36:03,2026-05-04 14:02:00,Priya Shah,Kevin Lindqvist
+INC-20450,Distribution list update,Email,Medium,Resolved,2026-05-04 12:54:45,2026-05-05 15:37:00,Priya Shah,James Perez
+INC-20451,New monitor request,Hardware,Low,Resolved,2026-05-04 14:28:29,2026-05-07 09:56:00,Priya Shah,Aisha Thomas
+INC-20452,Adobe license expired,Software,P4,Resolved,2026-05-04 16:24:56,2026-05-05 11:31:00,Luis Ortiz,Yuki Flores
+INC-20453,Check printer jammed,Printers,Hi,Closed,2026-05-04 18:09:32,2026-05-06 14:05:00,Luis Ortiz,Susan Rodriguez
+INC-20454,Check printer jammed,Printers,Normal,Resolved,2026-05-04 18:33:30,2026-05-06 12:38:00,Luis Ortiz,Joshua Davis
+INC-20455,Password reset,Accounts & Access,Normal,Resolved,2026-05-04 20:31:20,2026-05-05 09:57:00,Tom Becker,Leila Jackson
+INC-20456,Adobe license expired,Software,P3,Resolved,2026-05-04 20:57:10,2026-05-11 09:45:00,Priya Shah,Jacob Howard
+INC-20457,Cannot map S: drive,Network,3 - Normal,Closed,2026-05-05 08:08:16,2026-05-08 10:53:00,Gwen Adeyemi,Nicholas Rivera
+INC-20458,MFA device replaced,Accounts & Access,P1,Closed,2026-05-05 10:30:00,2026-05-05 13:16:00,Luis Ortiz,Priya Johnson
+INC-20459,Keyboard keys sticking,Hardware,Medium,Resolved,2026-05-05 10:45:58,2026-05-07 08:30:00,Gwen Adeyemi,Sandra Davis
+INC-20460,Scanner at closing desk dead,Hardware,3 - Normal,Resolved,2026-05-05 10:52:27,2026-05-12 09:02:00,Tom Becker,George Thompson
+INC-20461,Distribution list update,Email,P3,Closed,2026-05-05 11:05:44,2026-05-05 12:43:00,Luis Ortiz,Michelle Nelson
+INC-20462,Laptop will not boot,Hardware,4 - Low,Closed,2026-05-05 14:46:31,2026-05-13 16:47:00,Luis Ortiz,Jeffrey Hill
+INC-20463,Scanner at closing desk dead,Hardware,Medium,Closed,2026-05-05 15:33:23,2026-05-06 09:26:00,Gwen Adeyemi,Sofia Phillips
+INC-20464,Keyboard keys sticking,Hardware,low,Closed,2026-05-05 15:55:21,2026-05-18 16:15:00,Priya Shah,Marcus Murphy
+INC-20465,Your mailbox is full,Email,Normal,Spam,2026-05-05 20:03:13,2026-05-05 20:17:00,Priya Shah,Anna Okafor
+INC-20466,Locked out after vacation,Accounts & Access,Urgent,Resolved,2026-05-05 21:41:16,2026-05-05 22:17:00,Gwen Adeyemi,Wei Martinez
+INC-20467,New hire account setup,Accounts & Access,P3,Resolved,2026-05-06 06:32:53,2026-05-06 09:44:00,Priya Shah,Shirley Lee
+INC-20468,Toner low 2nd floor,Printers,P4,Resolved,2026-05-06 11:49:42,2026-05-07 09:01:00,Priya Shah,Elizabeth Murphy
+INC-20469,Cannot map S: drive,Network,Medium,Resolved,2026-05-06 13:23:33,2026-05-07 10:46:00,Priya Shah,Gary Alvarez
+INC-20470,Cannot send attachments over 10MB,Email,Low,Resolved,2026-05-06 14:10:04,2026-05-12 08:24:00,Priya Shah,Leila Lee
+INC-20471,Laptop will not boot,Hardware,high,Resolved,2026-05-06 15:04:04,2026-05-07 11:53:00,Priya Shah,Carlos Kelly
+INC-20472,Cannot send attachments over 10MB,Email,3 - Normal,Resolved,2026-05-06 15:05:32,2026-05-11 13:45:00,Priya Shah,Jonathan Phillips
+INC-20473,Install DocuSign plugin,Software,Normal,Resolved,2026-05-06 16:03:08,2026-05-07 13:08:00,Priya Shah,Donna Evans
+INC-20474,Distribution list update,Email,P3,Resolved,2026-05-06 16:25:53,2026-05-07 15:09:00,Tom Becker,Kwame Mitchell
+INC-20475,Windows update stuck,Software,Normal,Resolved,2026-05-07 09:00:54,2026-05-07 13:05:00,Priya Shah,Fatima Hill
+INC-20476,Webcam not working in Teams,Hardware,2 - High,Resolved,2026-05-07 12:19:44,2026-05-07 16:54:00,Luis Ortiz,Mark Kelly
+INC-20477,Calendar invites missing,Email,Normal,Closed,2026-05-07 16:11:56,2026-05-08 16:17:00,Luis Ortiz,Rahul Adams
+INC-20478,Printer offline in closing room,Printers,Medium,Resolved,2026-05-07 16:15:52,2026-05-08 09:27:00,Luis Ortiz,Michelle Diaz
+INC-20479,Firewall blocking county recorder site,Network,med,Resolved,2026-05-07 16:58:28,2026-05-11 17:21:00,Gwen Adeyemi,Hiroshi Peterson
+INC-20480,Firewall blocking county recorder site,Network,low,Resolved,2026-05-07 17:40:47,2026-05-08 14:25:00,Tom Becker,Melissa Lindqvist
+INC-20481,Title plant search errors,Software,Normal,Resolved,2026-05-07 20:26:31,2026-05-11 17:53:00,Gwen Adeyemi,Andrew Morgan
+INC-20482,Access to escrow share,Accounts & Access,Critical,Resolved,2026-05-08 07:24:20,2026-05-08 07:59:00,Priya Shah,Anthony Hill
+INC-20483,Locked out after vacation,Accounts & Access,Hi,Resolved,2026-05-08 08:19:07,2026-05-08 13:51:00,Luis Ortiz,Anna Diaz
+INC-20484,Check printer jammed,Printers,Low,Resolved,2026-05-08 08:22:20,2026-05-11 17:54:00,Tom Becker,Tomasz Castillo
+INC-20485,Distribution list update,Email,P3,Closed,2026-05-08 08:36:57,2026-05-11 10:37:00,Luis Ortiz,Kenneth Perez
+INC-20486,Laptop battery swelling,Hardware,4 - Low,Merged,2026-05-08 09:16:01,2026-05-08 09:57:00,Gwen Adeyemi,Ashley Rogers
+INC-20487,Adobe license expired,Software,2 - High,Resolved,2026-05-08 09:31:33,2026-05-08 11:36:00,Gwen Adeyemi,Deborah Evans
+INC-20488,Distribution list update,Email,P3,Closed,2026-05-08 10:19:46,2026-05-08 15:22:00,Priya Shah,Linda Haddad
+INC-20489,Install DocuSign plugin,Software,Critical,Resolved,2026-05-08 11:46:35,2026-05-08 14:49:00,Priya Shah,Edward Moore
+INC-20490,Locked out after vacation,Accounts & Access,URGENT,Resolved,2026-05-08 12:14:42,2026-05-11 08:50:00,Priya Shah,Matthew Kelly
+INC-20491,New hire account setup,Accounts & Access,P4,Resolved,2026-05-08 13:23:35,2026-05-20 09:42:00,Priya Shah,Hiroshi Edwards
+INC-20492,SoftPro slow to load,Software,Medium,Resolved,2026-05-08 15:06:19,2026-05-12 10:05:00,Tom Becker,Jonathan Collins
+INC-20493,Excel crashes opening closing statements,Software,4 - Low,Closed,2026-05-08 16:45:02,2026-05-12 11:28:00,Gwen Adeyemi,Laura Thompson
+INC-20494,Laptop battery swelling,Hardware,Normal,Resolved,2026-05-08 20:59:06,2026-05-11 15:33:00,Tom Becker,Yuki Thompson
+INC-20495,Cannot map S: drive,Network,Critical,Closed,2026-05-09 10:32:30,2026-05-09 12:57:00,Gwen Adeyemi,Sofia Lewis
+INC-20496,Laptop will not boot,Hardware,med,Closed,2026-05-09 11:17:43,2026-05-18 08:28:00,Tom Becker,Ingrid Reyes
+INC-20497,New monitor request,Hardware,P3,Closed,2026-05-09 12:07:18,2026-05-14 13:45:00,Priya Shah,Daniel Wilson
+INC-20498,Check printer jammed,Printers,high,Resolved,2026-05-09 14:47:05,2026-05-11 14:18:00,Priya Shah,Melissa Miller
+INC-20499,Phishing email reported,Email,med,Merged,2026-05-09 14:54:29,2026-05-09 16:06:00,Gwen Adeyemi,Sandra Johnson
+INC-20500,MFA device replaced,Accounts & Access,3 - Normal,Closed,2026-05-09 16:08:24,2026-05-11 10:17:00,Luis Ortiz,John Gutierrez
+INC-20501,Phishing email reported,Email,P4,Resolved,2026-05-09 16:40:47,2026-05-12 15:16:00,Gwen Adeyemi,Omar Howard
+INC-20502,Firewall blocking county recorder site,Network,P4,Resolved,2026-05-09 17:45:34,2026-05-26 09:59:00,Gwen Adeyemi,Shirley Baker
+INC-20503,Printer offline in closing room,Printers,P4,Closed,2026-05-09 18:15:24,2026-05-12 14:08:00,Luis Ortiz,Linda Green
+INC-20504,Shared mailbox not syncing,Email,P3,Resolved,2026-05-09 19:10:43,2026-05-12 08:16:00,Gwen Adeyemi,Angela Cox
+INC-20505,New hire account setup,Accounts & Access,med,Resolved,2026-05-09 19:43:50,2026-05-12 08:04:00,Luis Ortiz,Anna Morgan
+INC-20506,Firewall blocking county recorder site,Network,4 - Low,Resolved,2026-05-09 20:06:17,2026-05-12 11:02:00,Gwen Adeyemi,Hiroshi Myers
+INC-20507,Check printer jammed,Printers,High,Closed,2026-05-10 09:01:10,2026-05-11 11:37:00,Luis Ortiz,Carol Price
+INC-20508,Phishing email reported,Email,2 - High,Resolved,2026-05-10 09:01:38,2026-05-11 14:17:00,Gwen Adeyemi,Dmitri Mendoza
+INC-20509,Toner low 2nd floor,Printers,Normal,Resolved,2026-05-10 10:19:41,2026-05-12 15:42:00,Luis Ortiz,Amy Hernandez
+INC-20510,Shared mailbox not syncing,Email,2 - High,Resolved,2026-05-10 10:50:20,2026-05-11 13:48:00,Gwen Adeyemi,Donna Lewis
+INC-20511,Toner low 2nd floor,Printers,high,Resolved,2026-05-10 11:08:13,2026-05-11 12:35:00,Gwen Adeyemi,Amy Diaz
+INC-20512,Locked out after vacation,Accounts & Access,med,Closed,2026-05-10 11:15:17,2026-05-11 11:44:00,Tom Becker,Sharon Nelson
+INC-20513,Docking station not detecting monitors,Hardware,med,Closed,2026-05-10 11:38:37,2026-05-12 16:02:00,Gwen Adeyemi,Sandra Allen
+INC-20514,Distribution list update,Email,high,Closed,2026-05-10 11:40:53,2026-05-11 12:08:00,Gwen Adeyemi,Michael Hernandez
+INC-20515,Locked out after vacation,Accounts & Access,Hi,Closed,2026-05-10 14:37:32,2026-05-11 11:52:00,Tom Becker,Hiroshi Lewis
+INC-20516,Adobe license expired,Software,3 - Normal,Resolved,2026-05-10 16:41:37,2026-05-11 12:30:00,Tom Becker,William Hughes
+INC-20517,Branch office cannot reach file server,Network,Medium,Resolved,2026-05-10 17:38:41,2026-05-11 15:16:00,Priya Shah,Thomas Reyes
+INC-20518,Excel crashes opening closing statements,Software,P2,Resolved,2026-05-10 18:10:37,2026-05-11 10:18:00,Priya Shah,Jacob Robinson
+INC-20519,Shared mailbox not syncing,Email,4 - Low,Resolved,2026-05-10 19:34:07,2026-05-13 14:02:00,Priya Shah,Sharon Stewart
+INC-20520,Laptop battery swelling,Hardware,High,Closed,2026-05-10 19:39:54,2026-05-11 09:52:00,Tom Becker,Yuki Murphy
+INC-20521,Access to escrow share,Accounts & Access,Low,Resolved,2026-05-10 20:22:54,2026-05-12 09:00:00,Tom Becker,Michael Kim
+INC-20522,Offboarding - disable account,Accounts & Access,P2,Closed,2026-05-11 08:03:16,2026-05-11 13:52:00,Gwen Adeyemi,Nicholas Cox
+INC-20523,Distribution list update,Email,Medium,Closed,2026-05-11 08:12:07,2026-05-15 16:45:00,Luis Ortiz,Marcus Okafor
+INC-20524,Outlook add-in missing,Software,P4,Resolved,2026-05-11 08:20:21,2026-05-12 13:19:00,Tom Becker,Nancy Rodriguez
+INC-20525,Laptop will not boot,Hardware,2 - High,Closed,2026-05-11 08:38:56,2026-05-11 09:10:00,Gwen Adeyemi,Gary Nelson
+INC-20526,Offboarding - disable account,Accounts & Access,P3,Resolved,2026-05-11 09:05:39,2026-05-11 14:03:00,Luis Ortiz,Jennifer Moore
+INC-20527,Calendar invites missing,Email,med,Closed,2026-05-11 09:39:31,2026-05-18 12:55:00,Tom Becker,Jessica Harris
+INC-20528,VPN drops every few minutes,Network,Hi,Resolved,2026-05-11 13:21:27,2026-05-13 08:33:00,Luis Ortiz,Fatima Young
+INC-20529,Laptop battery swelling,Hardware,3 - Normal,Resolved,2026-05-11 15:14:15,2026-05-13 12:12:00,Priya Shah,Carol Long
+INC-20530,Distribution list update,Email,high,Resolved,2026-05-11 15:43:28,2026-05-12 11:39:00,Priya Shah,Sofia Young
+INC-20531,Phishing email reported,Email,P2,Resolved,2026-05-11 17:03:22,2026-05-12 08:08:00,Tom Becker,Donald Cooper
+INC-20532,Webcam not working in Teams,Hardware,3 - Normal,Resolved,2026-05-11 17:47:06,2026-05-15 14:20:00,Gwen Adeyemi,Patricia Harris
+INC-20533,Laptop will not boot,Hardware,Medium,Resolved,2026-05-12 06:13:51,2026-05-14 08:23:00,Priya Shah,Amara Rivera
+INC-20534,MFA device replaced,Accounts & Access,P3,Closed,2026-05-12 11:59:40,2026-05-12 16:40:00,Luis Ortiz,Kimberly Hall
+INC-20535,New monitor request,Hardware,med,Resolved,2026-05-12 12:12:58,2026-05-13 15:09:00,Luis Ortiz,Hiroshi Robinson
+INC-20536,Webcam not working in Teams,Hardware,Normal,Resolved,2026-05-12 12:50:12,2026-05-18 17:18:00,Luis Ortiz,Dana Turner
+INC-20537,Locked out after vacation,Accounts & Access,4 - Low,Resolved,2026-05-12 17:50:16,2026-05-18 11:24:00,Gwen Adeyemi,Tomasz Bennett
+INC-20538,Phishing email reported,Email,Hi,Resolved,2026-05-12 19:32:03,2026-05-13 10:34:00,Gwen Adeyemi,Leila Bennett
+INC-20539,Password reset,Accounts & Access,P4,Resolved,2026-05-12 20:28:11,2026-05-15 17:40:00,Tom Becker,Kwame Allen
+INC-20540,Install DocuSign plugin,Software,Hi,Resolved,2026-05-12 21:46:57,2026-05-13 14:30:00,Gwen Adeyemi,Joshua Cox
+INC-20541,Access to escrow share,Accounts & Access,high,Closed,2026-05-13 08:05:02,2026-05-13 09:09:00,Tom Becker,Ronald Carter
+INC-20542,Distribution list update,Email,low,Resolved,2026-05-13 11:22:16,2026-05-18 16:07:00,Gwen Adeyemi,Dana Garcia
+INC-20543,Cannot send attachments over 10MB,Email,2 - High,Resolved,2026-05-13 12:08:36,2026-05-13 17:23:00,Luis Ortiz,Sharon Mitchell
+INC-20544,Shared mailbox not syncing,Email,Critical,Resolved,2026-05-13 12:48:29,2026-05-13 14:43:00,Luis Ortiz,Gary Williams
+INC-20545,Install DocuSign plugin,Software,Normal,Resolved,2026-05-13 12:59:52,2026-05-13 17:45:00,Luis Ortiz,David Cooper
+INC-20546,Windows update stuck,Software,Urgent,Closed,2026-05-13 15:27:26,2026-05-14 08:44:00,Luis Ortiz,Kenneth Gonzalez
+INC-20547,Keyboard keys sticking,Hardware,High,Resolved,2026-05-13 16:45:19,2026-05-14 11:22:00,Gwen Adeyemi,Carlos Gray
+INC-20548,Password reset,Accounts & Access,Medium,Closed,2026-05-13 19:02:30,2026-05-15 13:15:00,Gwen Adeyemi,Priya Ortiz
+INC-20549,MFA device replaced,Accounts & Access,4 - Low,Resolved,2026-05-14 09:26:18,2026-05-15 10:07:00,Gwen Adeyemi,Christopher Smith
+INC-20550,Title plant search errors,Software,low,Resolved,2026-05-14 11:27:17,2026-05-19 13:06:00,Gwen Adeyemi,Sofia Howard
+INC-20551,Calendar invites missing,Email,Hi,Pending - waiting on user,2026-05-14 12:32:53,,Gwen Adeyemi,Brian King
+INC-20552,Laptop battery swelling,Hardware,Normal,Closed,2026-05-14 14:01:44,2026-05-20 13:55:00,Luis Ortiz,Nadia Brown
+INC-20553,Branch office cannot reach file server,Network,low,Closed,2026-05-14 16:20:02,2026-05-19 12:13:00,Priya Shah,Kwame Osei
+INC-20554,Password reset,Accounts & Access,med,Pending - waiting on user,2026-05-14 17:29:26,,Tom Becker,Christopher Thompson
+INC-20555,Install DocuSign plugin,Software,med,Resolved,2026-05-14 17:54:27,2026-05-18 15:36:00,Luis Ortiz,Dmitri Taylor
+INC-20556,Cannot map S: drive,Network,3 - Normal,Resolved,2026-05-15 07:25:54,2026-05-21 10:30:00,Tom Becker,Sofia Lopez
+INC-20557,Offboarding - disable account,Accounts & Access,Medium,Resolved,2026-05-15 09:36:54,2026-05-19 09:54:00,Tom Becker,Carol Kelly
+INC-20558,Install DocuSign plugin,Software,High,Resolved,2026-05-15 09:42:50,2026-05-15 11:04:00,Gwen Adeyemi,Priya Baker
+INC-20559,Firewall blocking county recorder site,Network,med,Resolved,2026-05-15 09:42:53,2026-05-18 10:12:00,Luis Ortiz,Cynthia Rogers
+INC-20560,Cannot send attachments over 10MB,Email,3 - Normal,Merged,2026-05-15 10:40:51,2026-05-15 11:25:00,Luis Ortiz,Chloe Martin
+INC-20561,Password reset,Accounts & Access,4 - Low,Closed,2026-05-15 13:47:51,2026-05-18 08:09:00,Gwen Adeyemi,Kathleen Cook
+INC-20562,Toner low 2nd floor,Printers,P4,In progress,2026-05-15 13:49:12,,Luis Ortiz,Dorothy Robinson
+INC-20563,Laptop battery swelling,Hardware,P4,Closed,2026-05-15 13:52:29,2026-05-20 14:05:00,Priya Shah,Linda Collins
+INC-20564,Out of office not working,Email,med,Closed,2026-05-15 14:04:01,2026-05-18 14:49:00,Gwen Adeyemi,Kathleen Castillo
+INC-20565,VPN drops every few minutes,Network,Urgent,Resolved,2026-05-15 15:10:20,2026-05-15 17:48:00,Tom Becker,Edward Peterson
+INC-20566,Scanner at closing desk dead,Hardware,Critical,Closed,2026-05-15 18:40:42,2026-05-18 08:48:00,Gwen Adeyemi,Gary Patel
+INC-20567,Access to escrow share,Accounts & Access,Medium,Resolved,2026-05-16 09:04:39,2026-05-18 11:43:00,Luis Ortiz,Christopher Ramos
+INC-20568,Phishing email reported,Email,P4,Closed,2026-05-16 09:11:44,2026-05-19 16:19:00,Gwen Adeyemi,Priya Turner
+INC-20569,New hire account setup,Accounts & Access,med,In progress,2026-05-16 09:17:47,,Priya Shah,Mateo Lopez
+INC-20570,Offboarding - disable account,Accounts & Access,Low,Closed,2026-05-16 11:22:54,2026-05-21 12:53:00,Gwen Adeyemi,Paul Chavez
+INC-20571,VPN drops every few minutes,Network,P2,Resolved,2026-05-16 11:24:13,2026-05-18 10:05:00,Luis Ortiz,Richard Turner
+INC-20572,Title plant search errors,Software,P3,Closed,2026-05-16 11:30:21,2026-05-19 16:24:00,Priya Shah,Eric Gomez
+INC-20573,Adobe license expired,Software,P2,Resolved,2026-05-16 11:32:59,2026-05-18 14:50:00,Tom Becker,Eric Mensah
+INC-20574,Excel crashes opening closing statements,Software,Medium,Closed,2026-05-16 12:40:03,2026-05-18 11:17:00,Gwen Adeyemi,Ryan Hill
+INC-20575,MFA device replaced,Accounts & Access,3 - Normal,Resolved,2026-05-16 13:25:00,2026-05-19 17:41:00,Luis Ortiz,Anna Watson
+INC-20576,Adobe license expired,Software,med,Pending - waiting on user,2026-05-16 13:28:08,,Priya Shah,Anthony Young
+INC-20577,Windows update stuck,Software,P2,Closed,2026-05-16 15:06:22,2026-05-18 09:42:00,Tom Becker,Kenneth Hall
+INC-20578,Locked out after vacation,Accounts & Access,Low,Resolved,2026-05-16 15:16:56,2026-05-19 16:50:00,Gwen Adeyemi,Priya Scott
+INC-20579,Phishing email reported,Email,high,Resolved,2026-05-16 15:18:05,2026-05-18 17:28:00,Priya Shah,Jason Chavez
+INC-20580,Laptop battery swelling,Hardware,1 - Critical,Resolved,2026-05-16 15:45:55,2026-05-18 10:23:00,Tom Becker,Lisa Collins
+INC-20581,Windows update stuck,Software,P2,Resolved,2026-05-16 16:50:19,2026-05-20 08:37:00,Priya Shah,Rebecca Scott
+INC-20582,New monitor request,Hardware,4 - Low,Closed,2026-05-16 19:18:22,2026-05-20 14:42:00,Luis Ortiz,Laura Diaz
+INC-20583,VPN drops every few minutes,Network,high,Closed,2026-05-16 19:37:56,2026-05-18 11:49:00,Tom Becker,Ashley Lopez
+INC-20584,Calendar invites missing,Email,Hi,Merged,2026-05-16 20:00:44,2026-05-16 20:53:00,Gwen Adeyemi,Priya Smith
+INC-20585,Keyboard keys sticking,Hardware,Hi,Resolved,2026-05-16 20:35:25,2026-05-18 11:28:00,Luis Ortiz,Angela Bennett
+INC-20586,Laptop battery swelling,Hardware,URGENT,Resolved,2026-05-17 09:40:48,2026-05-17 10:28:00,Priya Shah,Sandra Davis
+INC-20587,Excel crashes opening closing statements,Software,P2,Resolved,2026-05-17 10:37:06,2026-05-18 12:48:00,Luis Ortiz,Laura Parker
+INC-20588,Docking station not detecting monitors,Hardware,Normal,Closed,2026-05-17 11:22:37,2026-05-18 12:41:00,Luis Ortiz,Kwame Richardson
+INC-20589,Password reset,Accounts & Access,URGENT,Resolved,2026-05-17 13:59:28,2026-05-17 16:28:00,Tom Becker,Angela Taylor
+INC-20590,Slow internet at Eastside branch,Network,Low,Resolved,2026-05-17 16:53:09,2026-05-26 15:40:00,Tom Becker,Cynthia Rodriguez
+INC-20591,Install DocuSign plugin,Software,low,Resolved,2026-05-18 08:57:18,2026-05-19 11:15:00,Priya Shah,Andrew Morgan
+INC-20592,Access to escrow share,Accounts & Access,med,Closed,2026-05-18 09:52:28,2026-05-19 10:48:00,Luis Ortiz,Sarah Lopez
+INC-20593,Branch office cannot reach file server,Network,P2,Closed,2026-05-18 10:09:31,2026-05-19 16:20:00,Tom Becker,Sandra Robinson
+INC-20594,Laptop will not boot,Hardware,Normal,Resolved,2026-05-18 10:49:55,2026-05-19 11:26:00,Luis Ortiz,Joseph Gutierrez
+INC-20595,Shared mailbox not syncing,Email,med,Resolved,2026-05-18 11:59:06,2026-05-19 14:09:00,Tom Becker,Amara Gomez
+INC-20596,Keyboard keys sticking,Hardware,P3,Resolved,2026-05-18 12:48:09,2026-05-20 12:51:00,Priya Shah,Patricia Cox
+INC-20597,Calendar invites missing,Email,Critical,Merged,2026-05-18 13:07:40,2026-05-18 14:33:00,Luis Ortiz,Kevin Hernandez
+INC-20598,Branch office cannot reach file server,Network,P4,Closed,2026-05-18 13:25:34,2026-05-20 08:57:00,Tom Becker,Patricia Lindqvist
+INC-20599,MFA device replaced,Accounts & Access,Normal,Resolved,2026-05-18 13:39:47,2026-05-19 13:33:00,Gwen Adeyemi,Nadia Bailey
+INC-20600,New monitor request,Hardware,URGENT,Resolved,2026-05-18 15:54:30,2026-05-18 16:25:00,Gwen Adeyemi,Eric Flores
+INC-20601,Cannot map S: drive,Network,P2,Resolved,2026-05-18 17:03:14,2026-05-20 16:20:00,Tom Becker,Susan Morales
+INC-20602,VPN drops every few minutes,Network,P3,Resolved,2026-05-18 17:45:10,2026-05-19 09:36:00,Tom Becker,Jessica Chavez
+INC-20603,Windows update stuck,Software,med,Resolved,2026-05-18 18:13:45,2026-05-19 17:39:00,Gwen Adeyemi,Shirley Walker
+INC-20604,Access to escrow share,Accounts & Access,Medium,Resolved,2026-05-18 18:14:24,2026-05-19 14:17:00,Tom Becker,Hiroshi Foster
+INC-20605,Wi-Fi down in conference room B,Network,high,Resolved,2026-05-19 08:01:15,2026-05-19 08:40:00,Tom Becker,Gary Parker
+INC-20606,Distribution list update,Email,med,Merged,2026-05-19 09:07:51,2026-05-19 10:23:00,Tom Becker,Laura Evans
+INC-20607,Password reset,Accounts & Access,3 - Normal,Resolved,2026-05-19 10:46:59,2026-05-20 16:48:00,Gwen Adeyemi,David Castillo
+INC-20608,New monitor request,Hardware,P4,Resolved,2026-05-19 11:28:44,2026-05-22 11:30:00,Priya Shah,Donald Wright
+INC-20609,Shared mailbox not syncing,Email,Hi,Resolved,2026-05-19 12:14:50,2026-05-19 14:02:00,Luis Ortiz,Rahul Roberts
+INC-20610,Outlook add-in missing,Software,Low,Closed,2026-05-19 16:21:18,2026-05-26 09:31:00,Luis Ortiz,Anna Williams
+INC-20611,Laptop will not boot,Hardware,P3,Closed,2026-05-19 16:56:29,2026-05-20 12:56:00,Gwen Adeyemi,Melissa Scott
+INC-20612,Wi-Fi down in conference room B,Network,Normal,Resolved,2026-05-20 07:22:58,2026-05-21 17:29:00,Tom Becker,Kwame Foster
+INC-20613,Adobe license expired,Software,med,Closed,2026-05-20 09:20:04,2026-05-21 12:14:00,Priya Shah,Mary Gray
+INC-20614,MFA device replaced,Accounts & Access,P4,Merged,2026-05-20 11:59:36,2026-05-20 12:16:00,Tom Becker,Tomasz Haddad
+INC-20615,New monitor request,Hardware,3 - Normal,Closed,2026-05-20 13:37:53,2026-05-27 17:04:00,Priya Shah,Ryan Campbell
+INC-20616,Password reset,Accounts & Access,Urgent,Resolved,2026-05-20 14:42:48,2026-05-20 17:22:00,Gwen Adeyemi,Angela Hall
+INC-20617,RE: wire instructions update,Email,3 - Normal,Spam,2026-05-20 15:34:18,2026-05-20 16:14:00,Priya Shah,Stephanie White
+INC-20618,Outlook add-in missing,Software,Normal,Resolved,2026-05-20 15:53:02,2026-05-22 15:13:00,Tom Becker,Priya Gray
+INC-20619,Scanner at closing desk dead,Hardware,Normal,Closed,2026-05-20 16:09:10,2026-05-21 10:29:00,Tom Becker,Cynthia Mendoza
+INC-20620,Laptop battery swelling,Hardware,P3,Resolved,2026-05-20 16:25:25,2026-05-22 13:37:00,Tom Becker,Kenneth Robinson
+INC-20621,Wi-Fi down in conference room B,Network,high,Resolved,2026-05-20 16:30:30,2026-05-21 09:49:00,Luis Ortiz,Andrew Hill
+INC-20622,Toner low 2nd floor,Printers,Normal,Closed,2026-05-20 21:28:28,2026-05-22 13:32:00,Gwen Adeyemi,Amy Alvarez
+INC-20623,Access to escrow share,Accounts & Access,Medium,Closed,2026-05-21 08:17:02,2026-05-29 08:49:00,Priya Shah,David Davis
+INC-20624,Locked out after vacation,Accounts & Access,Low,Closed,2026-05-21 08:37:20,2026-05-26 14:38:00,Tom Becker,Amy Nelson
+INC-20625,VPN drops every few minutes,Network,2 - High,Resolved,2026-05-21 08:54:22,2026-05-22 10:27:00,Gwen Adeyemi,Michael Lewis
+INC-20626,Adobe license expired,Software,med,Resolved,2026-05-21 11:17:00,2026-05-22 17:32:00,Tom Becker,David Myers
+INC-20627,Excel crashes opening closing statements,Software,Normal,Resolved,2026-05-21 11:38:44,2026-05-22 15:37:00,Priya Shah,Linda Baker
+INC-20628,Outlook add-in missing,Software,Urgent,Resolved,2026-05-21 12:08:44,2026-05-21 14:21:00,Priya Shah,Wei Parker
+INC-20629,Locked out after vacation,Accounts & Access,Low,Open,2026-05-21 12:31:13,,Priya Shah,Rahul Richardson
+INC-20630,Check printer jammed,Printers,4 - Low,Resolved,2026-05-21 12:39:21,2026-05-26 14:43:00,Gwen Adeyemi,Barbara Rogers
+INC-20631,Phishing email reported,Email,P3,Resolved,2026-05-21 13:15:41,2026-05-22 09:31:00,Gwen Adeyemi,Aisha Baker
+INC-20632,MFA device replaced,Accounts & Access,med,In progress,2026-05-21 14:16:18,,Luis Ortiz,Jonathan Thomas
+INC-20633,Access to escrow share,Accounts & Access,P3,Closed,2026-05-22 08:22:37,2026-05-26 14:16:00,Tom Becker,Jonathan Morris
+INC-20634,Outlook add-in missing,Software,3 - Normal,In progress,2026-05-22 09:14:29,,Tom Becker,Kimberly Sanchez
+INC-20635,Docking station not detecting monitors,Hardware,3 - Normal,Closed,2026-05-22 09:59:20,2026-05-26 08:57:00,Tom Becker,Susan Davis
+INC-20636,MFA device replaced,Accounts & Access,4 - Low,Resolved,2026-05-22 11:44:58,2026-05-27 12:32:00,Gwen Adeyemi,Ingrid Reed
+INC-20637,Webcam not working in Teams,Hardware,P3,Resolved,2026-05-22 12:43:59,2026-05-29 15:15:00,Gwen Adeyemi,Sarah Chavez
+INC-20638,New hire account setup,Accounts & Access,Low,Resolved,2026-05-22 13:00:03,2026-05-28 10:42:00,Gwen Adeyemi,Jeffrey Turner
+INC-20639,Wi-Fi down in conference room B,Network,P2,Resolved,2026-05-22 13:52:12,2026-05-26 11:20:00,Priya Shah,Priya Ramos
+INC-20640,Adobe license expired,Software,P3,Closed,2026-05-22 14:20:29,2026-05-26 09:31:00,Tom Becker,Timothy Reyes
+INC-20641,Slow internet at Eastside branch,Network,High,Resolved,2026-05-22 15:05:09,2026-05-26 13:35:00,Priya Shah,Sarah Hughes
+INC-20642,Shared mailbox not syncing,Email,1 - Critical,Resolved,2026-05-22 15:32:26,2026-05-26 08:24:00,Priya Shah,William Gomez
+INC-20643,Out of office not working,Email,3 - Normal,Closed,2026-05-22 15:32:29,2026-05-27 08:45:00,Gwen Adeyemi,Mateo Tanaka
+INC-20644,SoftPro slow to load,Software,High,Closed,2026-05-22 16:10:15,2026-05-26 11:54:00,Gwen Adeyemi,Nadia Lewis
+INC-20645,Branch office cannot reach file server,Network,URGENT,Resolved,2026-05-22 16:31:53,2026-05-26 09:42:00,Luis Ortiz,Brian Richardson
+INC-20646,Laptop will not boot,Hardware,Normal,Resolved,2026-05-23 10:44:08,2026-05-27 10:51:00,Gwen Adeyemi,Eric Harris
+INC-20647,Locked out after vacation,Accounts & Access,Low,Closed,2026-05-23 14:27:18,2026-05-28 17:13:00,Priya Shah,Jessica Anderson
+INC-20648,Laptop battery swelling,Hardware,high,Resolved,2026-05-23 19:12:00,2026-05-26 10:52:00,Luis Ortiz,Jacob Adams
+INC-20649,Branch office cannot reach file server,Network,P1,Closed,2026-05-23 19:23:00,2026-05-26 10:25:00,Gwen Adeyemi,Andrew Harris
+INC-20650,SoftPro slow to load,Software,Hi,Closed,2026-05-24 11:21:54,2026-05-26 11:12:00,Priya Shah,Rebecca Brooks
+INC-20651,New monitor request,Hardware,P2,Closed,2026-05-24 11:24:07,2026-05-26 14:51:00,Priya Shah,Kevin Morgan
+INC-20652,VPN drops every few minutes,Network,P4,Closed,2026-05-24 11:32:04,2026-06-08 11:44:00,Priya Shah,Rebecca Reed
+INC-20653,Scanner at closing desk dead,Hardware,3 - Normal,Resolved,2026-05-24 11:35:36,2026-05-26 15:11:00,Tom Becker,Charles Torres
+INC-20654,Branch office cannot reach file server,Network,P1,Resolved,2026-05-24 15:08:58,2026-05-26 09:08:00,Priya Shah,Chloe Martinez
+INC-20655,Webcam not working in Teams,Hardware,2 - High,Resolved,2026-05-24 17:27:59,2026-05-27 16:00:00,Gwen Adeyemi,Michael Castillo
+INC-20656,Shared mailbox not syncing,Email,Critical,Resolved,2026-05-25 06:57:57,2026-05-26 09:59:00,Gwen Adeyemi,Sofia Anderson
+INC-20657,Access to escrow share,Accounts & Access,Hi,Closed,2026-05-25 07:10:49,2026-05-26 08:35:00,Luis Ortiz,Charles Martinez
+INC-20658,New monitor request,Hardware,med,Closed,2026-05-25 07:14:24,2026-06-01 08:29:00,Tom Becker,Jason Morales
+INC-20659,Out of office not working,Email,URGENT,Resolved,2026-05-25 07:24:34,2026-05-26 09:45:00,Priya Shah,Kevin Wilson
+INC-20660,Password reset,Accounts & Access,Medium,Resolved,2026-05-25 07:39:41,2026-05-27 13:46:00,Luis Ortiz,Ingrid Baker
+INC-20661,Windows update stuck,Software,P2,Resolved,2026-05-25 19:25:27,2026-05-26 14:26:00,Priya Shah,Kathleen Murphy
+INC-20662,Windows update stuck,Software,P3,Resolved,2026-05-25 19:39:12,2026-05-27 17:30:00,Priya Shah,Shirley Davis
+INC-20663,Outlook add-in missing,Software,med,Resolved,2026-05-25 19:47:58,2026-05-27 10:18:00,Tom Becker,James Young
+INC-20664,Title plant search errors,Software,P4,Resolved,2026-05-25 19:51:40,2026-05-29 11:58:00,Tom Becker,Andrew Perez
+INC-20665,Password reset,Accounts & Access,Normal,Resolved,2026-05-25 20:18:47,2026-06-02 09:53:00,Luis Ortiz,Patricia Rivera
+INC-20666,Firewall blocking county recorder site,Network,Hi,Resolved,2026-05-26 06:52:14,2026-05-27 10:19:00,Tom Becker,Mary Bennett
+INC-20667,Printer offline in closing room,Printers,P2,Closed,2026-05-26 10:24:31,2026-05-26 12:23:00,Luis Ortiz,Emily Collins
+INC-20668,Shared mailbox not syncing,Email,4 - Low,Closed,2026-05-26 13:04:05,2026-05-28 15:34:00,Priya Shah,Jason Hill
+INC-20669,New monitor request,Hardware,P2,Resolved,2026-05-26 16:38:49,2026-05-26 17:21:00,Tom Becker,Michelle Martinez
+INC-20670,RE: wire instructions update,Email,P3,Spam,2026-05-26 17:50:25,2026-05-26 17:58:00,Tom Becker,Kevin Morales
+INC-20671,Wi-Fi down in conference room B,Network,High,Resolved,2026-05-26 18:19:15,2026-05-27 11:16:00,Luis Ortiz,Amy Reyes
+INC-20672,Windows update stuck,Software,Normal,Pending - waiting on user,2026-05-26 18:28:08,,Luis Ortiz,Jason Castillo
+INC-20673,Check printer jammed,Printers,med,Resolved,2026-05-27 06:04:36,2026-05-29 08:24:00,Priya Shah,Dana Johnson
+INC-20674,Outlook add-in missing,Software,P4,In progress,2026-05-27 07:24:16,,Tom Becker,Carol Flores
+INC-20675,Adobe license expired,Software,4 - Low,Resolved,2026-05-27 09:21:04,2026-05-28 10:33:00,Tom Becker,Robert Mensah
+INC-20676,New monitor request,Hardware,P2,Resolved,2026-05-27 11:09:03,2026-05-27 13:20:00,Gwen Adeyemi,Brian Jones
+INC-20677,Title plant search errors,Software,Urgent,Resolved,2026-05-27 11:30:28,2026-05-27 12:29:00,Priya Shah,Yuki Walker
+INC-20678,Phishing email reported,Email,Low,Resolved,2026-05-27 11:37:17,2026-05-29 15:26:00,Tom Becker,Michelle Williams
+INC-20679,Slow internet at Eastside branch,Network,low,Closed,2026-05-27 12:00:51,2026-05-28 14:45:00,Gwen Adeyemi,Chloe Perez
+INC-20680,Windows update stuck,Software,High,Resolved,2026-05-27 12:20:17,2026-05-27 15:16:00,Gwen Adeyemi,Edward Torres
+INC-20681,Excel crashes opening closing statements,Software,4 - Low,Resolved,2026-05-27 13:39:19,2026-06-01 09:51:00,Tom Becker,Melissa Long
+INC-20682,Adobe license expired,Software,Normal,Resolved,2026-05-27 14:00:21,2026-05-27 16:05:00,Luis Ortiz,Mark Taylor
+INC-20683,New hire account setup,Accounts & Access,Normal,Resolved,2026-05-27 14:03:11,2026-05-27 16:30:00,Tom Becker,Aisha Watson
+INC-20684,Access to escrow share,Accounts & Access,Low,Pending - waiting on user,2026-05-27 15:33:27,,Tom Becker,Amanda Johnson
+INC-20685,New monitor request,Hardware,Normal,Closed,2026-05-27 15:38:40,2026-05-28 17:42:00,Gwen Adeyemi,Dana Osei
+INC-20686,Outlook add-in missing,Software,P3,Closed,2026-05-27 16:02:25,2026-06-01 15:41:00,Luis Ortiz,Kevin Moore
+INC-20687,Wi-Fi down in conference room B,Network,P3,Resolved,2026-05-27 16:52:22,2026-06-04 15:14:00,Priya Shah,Cynthia Clark
+INC-20688,Laptop will not boot,Hardware,3 - Normal,Resolved,2026-05-27 17:45:25,2026-05-29 17:07:00,Gwen Adeyemi,Sharon Mensah
+INC-20689,Invoice #88213 attached,Email,3 - Normal,Spam,2026-05-28 09:57:44,2026-05-28 10:28:00,Luis Ortiz,Sarah Davis
+INC-20690,MFA device replaced,Accounts & Access,High,Pending - waiting on user,2026-05-29 10:43:22,,Luis Ortiz,James Morgan

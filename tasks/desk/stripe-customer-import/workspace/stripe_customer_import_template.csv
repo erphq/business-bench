@@ -1,0 +1,2 @@
+email,name,description,phone,currency,address_line1,address_line2,address_city,address_state,address_postal_code,address_country,metadata[legacy_account],metadata[plan]
+billing@example.com,Example Co,Billing contact: Sam Example,+1 303 555 0100,usd,100 Main St,Suite 200,Denver,CO,80202,US,001234,team_monthly

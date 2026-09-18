@@ -1,0 +1,347 @@
+{
+  "seed": 0,
+  "district": {
+    "departments": [
+      "Transportation",
+      "Facilities & Maintenance",
+      "Technology",
+      "Food Services",
+      "Special Education",
+      "Curriculum & Instruction"
+    ],
+    "approvers": {
+      "Transportation": "Denise Harlan",
+      "Facilities & Maintenance": "Marcus Bell",
+      "Technology": "Anita Rao",
+      "Food Services": "Gloria Vance",
+      "Special Education": "Terrence Holt",
+      "Curriculum & Instruction": "Yvonne Castillo"
+    },
+    "restricted_login": "Denise Harlan",
+    "restricted_department": "Transportation",
+    "fiscal_year": "2026-27",
+    "roles": {
+      "admin": "Admin (business office)",
+      "staff": "Department Approver",
+      "viewer": "Auditor (read-only)",
+      "extra": "Requester"
+    },
+    "approval_rule": "under 2,500.00: department approver only; 2,500.00 or more: department approver, then business office",
+    "po_rule": "PO numbers PO-27-#### are issued in sequence only on final approval",
+    "today": "2026-09-13"
+  },
+  "tester_records": {
+    "department": "Transportation",
+    "account_code": "01-3600-4300",
+    "vendor": "Clearview Glass & Glazing LLC",
+    "amount": 100.0,
+    "description": "Checklist test",
+    "status": "Submitted",
+    "note": "requests the tester creates without named details use these and are deleted when the item is done"
+  },
+  "budgets": {
+    "file_rows_excluding_header": 90,
+    "prior_year_rows": 12,
+    "exact_duplicate_rows": 4,
+    "code_format_duplicate_rows": 2,
+    "fy2026_27_lines": 72,
+    "code_rule": "an account code is fund-function-object; 01.3600.4300, 0136004300, and '01 3600 4300' all mean 01-3600-4300",
+    "wrong_counts": {
+      "all_rows": 90,
+      "fy27_rows_without_dedupe": 78,
+      "exact_dedupe_only": 74,
+      "prior_year_included_after_dedupe": 84
+    },
+    "code_format_duplicates": [
+      {
+        "code": "01-1180-4200",
+        "written": [
+          "01-1180-4200",
+          "0111804200"
+        ]
+      },
+      {
+        "code": "01-1180-4300",
+        "written": [
+          "0111804300",
+          "01.1180.4300"
+        ]
+      }
+    ],
+    "per_department_lines": {
+      "Transportation": 12,
+      "Facilities & Maintenance": 12,
+      "Technology": 12,
+      "Food Services": 12,
+      "Special Education": 12,
+      "Curriculum & Instruction": 12
+    },
+    "budget_total": 5020500.0,
+    "budget_total_if_prior_year_included": 6151799.0,
+    "supplies_line": {
+      "code": "01-3600-4300",
+      "description": "Transportation - Materials & Supplies",
+      "budget": 48000.0,
+      "approved_requests": [
+        {
+          "request": "PR-27-0012",
+          "amount": 912.6
+        },
+        {
+          "request": "PR-27-0015",
+          "amount": 2389.4
+        },
+        {
+          "request": "PR-27-0031",
+          "amount": 4125.75
+        }
+      ],
+      "approved_total": 7427.75,
+      "remaining": 40572.25,
+      "submitted_request_not_counted": {
+        "request": "PR-27-0049",
+        "amount": 1840.0,
+        "wrong_remaining_if_deducted": 38732.25
+      }
+    },
+    "dues_line": {
+      "code": "01-3600-5300",
+      "budget": 3500.0,
+      "approved_total": 2265.5,
+      "remaining": 1234.5
+    },
+    "replacement_line": {
+      "code": "01-3600-6500",
+      "budget": 420000.0,
+      "approved_total": 46459.1,
+      "remaining": 373540.9
+    }
+  },
+  "vendors": {
+    "file_rows_excluding_header": 90,
+    "exact_duplicate_rows": 3,
+    "tax_id_format_duplicate_rows": 3,
+    "unique_vendors": 84,
+    "dedupe_rule": "one vendor per Tax ID with the hyphen removed",
+    "wrong_counts": {
+      "no_dedupe": 90,
+      "exact_rows_only": 87
+    },
+    "tax_id_groups": [
+      {
+        "vendor": "Dayspring Occupational Therapy LLC",
+        "names_as_written": [
+          "Dayspring Occupational Therapy LLC",
+          "Dayspring Occupational Therapy, LLC"
+        ],
+        "tax_ids_as_written": [
+          "75-4736753",
+          "754736753"
+        ]
+      },
+      {
+        "vendor": "Gateway Staffing",
+        "names_as_written": [
+          "Gateway Staffing",
+          "Gateway Staffing Inc"
+        ],
+        "tax_ids_as_written": [
+          "42-1197693",
+          "421197693"
+        ]
+      },
+      {
+        "vendor": "Lantern Special Needs Transport",
+        "names_as_written": [
+          "Lantern Special Needs Transport",
+          "Lantern Special Needs Transport Inc"
+        ],
+        "tax_ids_as_written": [
+          "41-3556309",
+          "413556309"
+        ]
+      }
+    ],
+    "inactive": 6,
+    "inactive_vendors": [
+      "Apex Floor Care",
+      "Emerald Textbook Depot",
+      "Heartland Paper Co Inc.",
+      "Ironclad Security Systems",
+      "Ridgeline Transportation Consulting",
+      "Yosemite Bus Sales"
+    ],
+    "active": 78
+  },
+  "requests": {
+    "file_rows_excluding_header": 130,
+    "requests": 130,
+    "per_status": {
+      "Submitted": 28,
+      "Dept Approved": 6,
+      "Approved": 80,
+      "Rejected": 16
+    },
+    "awaiting_approval": 34,
+    "approved_total": 464927.85,
+    "pos_issued": 80,
+    "highest_po": "PO-27-0080",
+    "next_po": "PO-27-0081",
+    "next_po_after": "PO-27-0082",
+    "po_written_unpadded_example": "PO-27-9",
+    "po_text_sort_would_pick": "PO27-0057",
+    "negative_amount": {
+      "request": "PR-27-0075",
+      "department": "Facilities & Maintenance",
+      "status": "Rejected",
+      "file_value": "-480.00"
+    },
+    "largest_request": {
+      "request": "PR-27-0065",
+      "department": "Curriculum & Instruction",
+      "amount": 35558.0,
+      "file_value": "$35,558.00",
+      "text_sort_would_put_first": "PR-27-0085"
+    },
+    "restricted": {
+      "requests": 30,
+      "awaiting_approval": 7
+    },
+    "search_check": {
+      "term": "Canyon Water Treatment",
+      "expected_results": 3
+    },
+    "filter_check": {
+      "field": "Status",
+      "value": "Submitted",
+      "expected_results": 28
+    },
+    "sort_check": {
+      "field": "Amount",
+      "direction": "descending",
+      "first": "PR-27-0065"
+    },
+    "export_check": {
+      "rows": 130,
+      "columns": [
+        "Request #",
+        "Department",
+        "Vendor",
+        "Amount",
+        "Status",
+        "PO Number"
+      ]
+    },
+    "out_of_scope_request": {
+      "request": "PR-27-0067",
+      "department": "Technology",
+      "amount": 1649.9,
+      "status": "Submitted"
+    }
+  },
+  "dashboard": {
+    "awaiting_approval": 34,
+    "budget_remaining": 4555572.15,
+    "approved_this_year": 464927.85,
+    "pos_issued": 80,
+    "restricted_awaiting_approval": 7
+  },
+  "checks": {
+    "one_step": {
+      "amount": 2499.99,
+      "code": "01-3600-4300",
+      "remaining_after": 38072.26,
+      "po": "PO-27-0081"
+    },
+    "two_step": {
+      "amount": 2500.0,
+      "code": "01-3600-4300",
+      "remaining_after_department_step": 38072.26,
+      "remaining_after_business_office": 35572.26,
+      "po": "PO-27-0082"
+    },
+    "wrong_line": {
+      "department": "Transportation",
+      "other_department_code": "01-7700-4300"
+    },
+    "reject": {
+      "request": "PR-27-0049",
+      "amount": 1840.0
+    },
+    "other_department": {
+      "request": "PR-27-0067"
+    }
+  },
+  "changes": {
+    "1_budget_report": {
+      "per_department": {
+        "Transportation": {
+          "budget": 865500.0,
+          "approved": 85026.8,
+          "pending": 76480.05,
+          "remaining": 780473.2,
+          "percent_used": 9.8
+        },
+        "Facilities & Maintenance": {
+          "budget": 835500.0,
+          "approved": 87270.35,
+          "pending": 65232.2,
+          "remaining": 748229.65,
+          "percent_used": 10.4
+        },
+        "Technology": {
+          "budget": 969500.0,
+          "approved": 54369.5,
+          "pending": 13080.0,
+          "remaining": 915130.5,
+          "percent_used": 5.6
+        },
+        "Food Services": {
+          "budget": 958500.0,
+          "approved": 59864.25,
+          "pending": 21065.2,
+          "remaining": 898635.75,
+          "percent_used": 6.2
+        },
+        "Special Education": {
+          "budget": 807500.0,
+          "approved": 75158.2,
+          "pending": 18974.1,
+          "remaining": 732341.8,
+          "percent_used": 9.3
+        },
+        "Curriculum & Instruction": {
+          "budget": 584000.0,
+          "approved": 103238.75,
+          "pending": 33972.15,
+          "remaining": 480761.25,
+          "percent_used": 17.7
+        }
+      },
+      "district": {
+        "budget": 5020500.0,
+        "approved": 464927.85,
+        "pending": 228803.7,
+        "remaining": 4555572.15,
+        "percent_used": 9.3
+      }
+    },
+    "2_no_overspend": {
+      "line": "01-3600-5300",
+      "remaining": 1234.5,
+      "over": 1234.51,
+      "exact": 1234.5,
+      "remaining_after_exact": 0.0,
+      "two_step_over": 2600.0
+    },
+    "3_superintendent": {
+      "threshold": 25000.0,
+      "line": "01-3600-6500",
+      "at_threshold": 25000.0,
+      "below": 24999.99,
+      "remaining_before": 373540.9,
+      "remaining_after_25000": 348540.9,
+      "remaining_after_both": 323540.91
+    }
+  }
+}

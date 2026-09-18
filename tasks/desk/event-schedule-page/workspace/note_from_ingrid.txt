@@ -1,0 +1,17 @@
+From: Ingrid Haddad <program@frontrangebees.org>
+To: you
+Date: Sun, 13 Sep 2026 19:48
+Subject: schedule page for the conference
+
+Could you turn the session sheet into the schedule page? It goes on the lobby screen and the volunteers' phones, so one HTML file that works without a connection and without scripts (the lobby screen's kiosk browser has them switched off).
+
+Use the Sessions tab. The draft tab is from August and half of it has moved since.
+
+Lay it out by day, then by room, sessions in time order, with start and end times. Everything we are running is in Fort Collins, so the page is Mountain time - the platform exports every start time in UTC and nobody in the building thinks in UTC.
+
+Anything marked Cancelled comes off the page.
+
+The volunteers type the rooms however they like. If two sessions end up in the same room at the same time, keep both on the page but put the word CONFLICT on each of them so I can sort it out with the presenters. A session that starts the minute the one before it ends is fine, that is how we planned the day.
+
+Thanks!
+Ingrid

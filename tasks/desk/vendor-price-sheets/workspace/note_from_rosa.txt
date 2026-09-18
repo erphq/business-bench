@@ -1,0 +1,14 @@
+Hi,
+
+The fall price sheets are in the price_sheets folder. Before I load them into the ordering system I need prices.csv with one row for every item on the ordering guide:
+
+sku - the vendor SKU as on the guide
+vendor - the supplier's name as printed on its price sheet
+unit_price - what we pay per order unit (the unit on the guide) when we order our usual quantity
+order_total - usual quantity times unit_price
+next_break_qty - the order quantity at which the next cheaper price starts, 0 if we already get the best price
+effective_date - the date that price takes effect, YYYY-MM-DD
+
+Current prices only, please.
+
+Rosa

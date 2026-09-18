@@ -1,0 +1,3 @@
+Journal No,Journal Date,Account Code,Description,Debit,Credit
+WC-10000,2026-07-31,1210,Order #10000 - Credit Card (Stripe),25.00,
+WC-10000,2026-07-31,4000,Order #10000 - coffee sales,,25.00

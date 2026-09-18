@@ -1,0 +1,354 @@
+{
+  "seed": 0,
+  "company": {
+    "warehouses": [
+      "Reno",
+      "Sacramento",
+      "Stockton"
+    ],
+    "leads": {
+      "Reno": "Dale Brennan",
+      "Sacramento": "Marisol Vega",
+      "Stockton": "Anh Tran"
+    },
+    "restricted_login": "Marisol Vega",
+    "restricted_warehouse": "Sacramento",
+    "roles": {
+      "admin": "Admin (owner)",
+      "staff": "Warehouse Lead",
+      "viewer": "Bookkeeper (read-only)"
+    },
+    "adjustment_reasons_suggested": [
+      "Damaged",
+      "Count correction",
+      "Theft or loss",
+      "Found stock",
+      "Expired"
+    ]
+  },
+  "tester_records": {
+    "item": "01354",
+    "description": "Dish detergent manual 4x1 gal",
+    "warehouse": "Stockton",
+    "on_hand": 0,
+    "reorder_point": 5,
+    "note": "stock items the tester creates use this item at Stockton (not stocked there) and are deleted when the item is done"
+  },
+  "items": {
+    "file_rows_excluding_header": 106,
+    "exact_duplicate_rows": 4,
+    "trailing_space_duplicate_rows": 2,
+    "unique_items_after_dedupe": 100,
+    "dedupe_rule": "Two rows are the same item when Item # matches after trimming spaces; item numbers are text and keep leading zeros.",
+    "wrong_counts": {
+      "no_dedupe": 106,
+      "exact_rows_only": 102
+    },
+    "trailing_space_duplicates": [
+      "18534 C-fold paper towels 12/150",
+      "55889 Wiper roll blue 4/cs"
+    ],
+    "items_with_leading_zero": 25,
+    "categories": [
+      "Can Liners",
+      "Chemicals",
+      "Disposables",
+      "Equipment",
+      "Gloves",
+      "Janitorial Tools",
+      "Paper Goods"
+    ],
+    "category_rows_in_other_case": 9,
+    "currency_string_cost_rows": 17,
+    "highest_unit_cost": {
+      "item": "54286",
+      "description": "Auto scrubber 20in battery",
+      "file_value": "$3,480.00",
+      "numeric": 3480.0,
+      "text_sort_would_put_first": "17605 Floor stripper 5 gal (96.50)"
+    }
+  },
+  "stock": {
+    "file_rows_excluding_header": 236,
+    "exact_duplicate_rows": 5,
+    "unique_stock_lines": 231,
+    "dedupe_rule": "A stock line is one item at one warehouse; warehouse names normalise RNO/RENO/Reno NV -> Reno, SAC/sacramento/Sacramento CA -> Sacramento, STK/stockton/'Stockton ' -> Stockton; item numbers written without their leading zero link to the zero-led item.",
+    "wrong_counts": {
+      "no_dedupe": 236
+    },
+    "rows_with_leading_zero_dropped": 32,
+    "per_warehouse": {
+      "Reno": {
+        "lines": 87,
+        "reorder_alerts": 11,
+        "lines_exactly_at_reorder_point": 2,
+        "value": 592188.9,
+        "value_if_negative_kept": 592188.9
+      },
+      "Sacramento": {
+        "lines": 79,
+        "reorder_alerts": 8,
+        "lines_exactly_at_reorder_point": 1,
+        "value": 523060.9,
+        "value_if_negative_kept": 523060.9
+      },
+      "Stockton": {
+        "lines": 65,
+        "reorder_alerts": 10,
+        "lines_exactly_at_reorder_point": 4,
+        "value": 489530.75,
+        "value_if_negative_kept": 489463.95
+      }
+    },
+    "reorder_rule": "a line needs reordering when On Hand is at or below its Reorder Point",
+    "reorder_alerts": 29,
+    "lines_exactly_at_reorder_point": 7,
+    "reorder_alerts_if_strictly_below": 22,
+    "inventory_value": 1604780.55,
+    "inventory_value_if_negative_line_kept_at_minus_4": 1604713.75,
+    "negative_on_hand": {
+      "item": "36362",
+      "description": "Wet floor sign",
+      "warehouse": "Stockton",
+      "on_hand": -4,
+      "unit_cost": 16.7,
+      "value_difference_if_kept": 66.8
+    },
+    "max_on_hand": {
+      "item": "67331",
+      "description": "Straw wrapped jumbo 12x250",
+      "warehouse": "Reno",
+      "file_value": "1,450",
+      "text_sort_would_put_first": "35643 at Sacramento (99)"
+    },
+    "leading_zero_link_check": {
+      "item": "01038",
+      "description": "Floor machine 17in 175rpm",
+      "on_hand": {
+        "Reno": 12,
+        "Sacramento": 9,
+        "Stockton": 3
+      },
+      "reno_row_written_as": "1038"
+    },
+    "reorder_examples": {
+      "at_point": {
+        "item": "26445",
+        "description": "Portion cup 2oz 2500/cs",
+        "warehouse": "Reno",
+        "on_hand": 12,
+        "reorder_point": 12
+      },
+      "one_above": {
+        "item": "38987",
+        "description": "Foam cup 12oz 1000/cs",
+        "warehouse": "Reno",
+        "on_hand": 13,
+        "reorder_point": 12
+      }
+    },
+    "search_check": {
+      "term": "burnisher",
+      "expected_results": 3,
+      "item": "23993"
+    },
+    "filter_check": {
+      "field": "Warehouse",
+      "value": "Stockton",
+      "expected_results": 65
+    },
+    "sort_check": {
+      "field": "On Hand",
+      "direction": "descending",
+      "first": "67331 Straw wrapped jumbo 12x250 at Reno"
+    },
+    "export_check": {
+      "rows": 231,
+      "columns": [
+        "Item #",
+        "Description",
+        "Warehouse",
+        "On Hand",
+        "Reorder Point"
+      ]
+    },
+    "out_of_scope_line": {
+      "item": "26988",
+      "description": "Grill brick 12/cs",
+      "warehouse": "Reno",
+      "on_hand": 36
+    }
+  },
+  "dashboard": {
+    "reorder_alerts": 29,
+    "inventory_value": 1604780.55,
+    "inventory_value_if_negative_line_kept_at_minus_4": 1604713.75,
+    "reno_value": 592188.9,
+    "items": 100,
+    "restricted_reorder_alerts": 8
+  },
+  "checks": {
+    "transfer": {
+      "item": "11493",
+      "description": "Hand sanitizer gel 4x1000ml",
+      "qty": 10,
+      "from": "Reno",
+      "to": "Sacramento",
+      "from_before": 48,
+      "from_after": 38,
+      "to_before": 6,
+      "to_after": 16,
+      "to_reorder_point": 10,
+      "value_change": 0.0,
+      "over_limit_qty": 49,
+      "company_alerts_after": 28
+    },
+    "adjustment": {
+      "item": "53397",
+      "description": "Scrub sponge 20/cs",
+      "warehouse": "Reno",
+      "qty": -3,
+      "unit_cost": 18.4,
+      "on_hand_before": 45,
+      "on_hand_after": 42,
+      "value_change": -55.2,
+      "value_decrease": 55.2,
+      "reason": "Damaged",
+      "company_value_after": 1604725.35,
+      "reno_value_after": 592133.7
+    },
+    "alert_trigger": {
+      "item": "04088",
+      "description": "Degreaser heavy duty 4x1 gal",
+      "warehouse": "Reno",
+      "on_hand_before": 15,
+      "reorder_point": 12,
+      "adjust_by": -3,
+      "on_hand_after": 12,
+      "reno_alerts_before": 11,
+      "reno_alerts_after": 12,
+      "company_alerts_before": 29,
+      "company_alerts_after": 30
+    },
+    "restricted_transfer_out": {
+      "item": "11493",
+      "qty": 1,
+      "from": "Sacramento",
+      "to": "Reno",
+      "sacramento_after": 5,
+      "reno_after": 49
+    }
+  },
+  "changes": {
+    "1_valuation_report": {
+      "categories": [
+        "Can Liners",
+        "Chemicals",
+        "Disposables",
+        "Equipment",
+        "Gloves",
+        "Janitorial Tools",
+        "Paper Goods"
+      ],
+      "by_category_and_warehouse": {
+        "Can Liners": {
+          "Reno": 23622.35,
+          "Sacramento": 41225.7,
+          "Stockton": 53172.5,
+          "total": 118020.55
+        },
+        "Chemicals": {
+          "Reno": 151467.2,
+          "Sacramento": 112309.7,
+          "Stockton": 174698.7,
+          "total": 438475.6
+        },
+        "Disposables": {
+          "Reno": 94310.9,
+          "Sacramento": 72710.2,
+          "Stockton": 59829.6,
+          "total": 226850.7
+        },
+        "Equipment": {
+          "Reno": 95320.0,
+          "Sacramento": 69896.2,
+          "Stockton": 52842.8,
+          "total": 218059.0
+        },
+        "Gloves": {
+          "Reno": 63102.5,
+          "Sacramento": 83897.1,
+          "Stockton": 45955.8,
+          "total": 192955.4
+        },
+        "Janitorial Tools": {
+          "Reno": 104851.4,
+          "Sacramento": 88313.8,
+          "Stockton": 48780.3,
+          "total": 241945.5
+        },
+        "Paper Goods": {
+          "Reno": 59514.55,
+          "Sacramento": 54708.2,
+          "Stockton": 54251.05,
+          "total": 168473.8
+        }
+      },
+      "warehouse_totals": {
+        "Reno": 592188.9,
+        "Sacramento": 523060.9,
+        "Stockton": 489530.75
+      },
+      "grand_total": 1604780.55,
+      "grand_total_if_negative_line_kept": 1604713.75,
+      "negative_line_category": "Janitorial Tools",
+      "negative_line_alternative": {
+        "category": "Janitorial Tools",
+        "warehouse": "Stockton",
+        "cell_if_kept": 48713.5,
+        "category_total_if_kept": 241878.7,
+        "stockton_total_if_kept": 489463.95
+      }
+    },
+    "2_adjustment_approval": {
+      "limit": 500.0,
+      "rule": "adjustments worth more than 500.00 at cost wait for admin approval; 500.00 or less apply at once",
+      "over_limit": {
+        "item": "53397",
+        "description": "Scrub sponge 20/cs",
+        "warehouse": "Sacramento",
+        "qty": -30,
+        "unit_cost": 18.4,
+        "value": 552.0,
+        "on_hand_before": 60,
+        "on_hand_after_approval": 30,
+        "company_value_after_approval": 1604228.55
+      },
+      "at_limit": {
+        "item": "55782",
+        "description": "Push broom 24in",
+        "warehouse": "Sacramento",
+        "qty": -25,
+        "unit_cost": 20.0,
+        "value": 500.0,
+        "on_hand_before": 40,
+        "on_hand_after": 15,
+        "company_value_after": 1604280.55
+      }
+    },
+    "3_two_step_transfer": {
+      "item": "11493",
+      "description": "Hand sanitizer gel 4x1000ml",
+      "qty": 10,
+      "from": "Reno",
+      "to": "Sacramento",
+      "reno_after_ship": 38,
+      "sacramento_after_ship": 6,
+      "in_transit_after_ship": 10,
+      "sacramento_after_receipt": 16,
+      "in_transit_after_receipt": 0,
+      "sacramento_if_received_twice": 26,
+      "company_value_unchanged": 1604780.55
+    }
+  }
+}

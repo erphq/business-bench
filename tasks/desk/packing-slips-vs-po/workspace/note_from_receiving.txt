@@ -1,0 +1,15 @@
+Receiving update for purchasing
+
+This week's packing slips are in packing_slips. Please check them against the open PO lines and give me receipts.csv, one row for every line on the open PO list:
+
+po_line          PO number, a hyphen, and the line number (PO-12345-2)
+sku              the SKU on the PO line
+qty_ordered      from the PO
+qty_received     everything that has physically arrived for that line so far, across all slips
+qty_open         ordered minus received
+substitute_sku   if the vendor shipped a different item in place of the one ordered, the SKU they shipped; otherwise blank
+status           received (nothing open), partial (some arrived, some open) or open (nothing arrived)
+
+Substitutes we keep, so they count against the line they replaced.
+
+Ingrid

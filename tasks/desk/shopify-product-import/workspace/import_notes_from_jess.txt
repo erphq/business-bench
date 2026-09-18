@@ -1,0 +1,21 @@
+Getting the fall catalog into Shopify - notes
+
+- Use the columns in Shopify's product_template.csv exactly, same order.
+- One product per style number. Each color/size is a variant row under the same handle. Product fields (Title, Body,
+  Vendor, Type, Tags, Published, Status, and the option names) go on the first row of each product only, like the
+  sample; the other variant rows just repeat the handle and fill the variant columns.
+- Handles: products already on the store (see the November export) keep their existing handle or Shopify creates
+  duplicates. New handles: lower case, & becomes "and", drop apostrophes and accents, anything else that isn't a
+  letter or a number becomes a single hyphen, no hyphens at either end.
+- Options: Color first, then Size. Products that only come in sizes use Size as Option1; products that only come in
+  colors use Color. One-variant products use Option1 Name "Title" and Option1 Value "Default Title".
+- Price: plain numbers, no $ or commas. Retail is only filled on the first row of each style and applies to all its
+  variants, except 2XL which is $5 more. Where there is a sale price, that is the Variant Price and retail goes in
+  Variant Compare At Price (2XL still +$5 on both). Otherwise leave Compare At blank.
+- Variant Grams: the Weight column in grams, whole numbers. Weight Unit g.
+- On Hand goes to Variant Inventory Qty. Negative counts are miscounts, import them as 0.
+- UPCs are 12 digits. Excel dropped the leading zero on some of them, put it back.
+- Status: Active -> active with Published TRUE. Coming Soon -> draft with Published FALSE. Anything Discontinued
+  (whole style or a single variant) stays out of the file.
+- Vendor is the Brand column, Type is the Category. Inventory Tracker shopify, Inventory Policy deny, Fulfillment
+  Service manual, Requires Shipping TRUE, Taxable TRUE.

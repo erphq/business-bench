@@ -1,0 +1,11 @@
+Brightpath Learning Center - attendance and cancellation policy (front desk copy)
+
+1. Families must cancel at least 24 hours before the session starts. A cancellation with less than 24
+   hours' notice is billed and recorded as a no-show.
+2. A cancellation with 24 hours' notice or more takes the session off the book. It is not a no-show and
+   it is not a booked session.
+3. If a tutor or the center cancels, it is never held against the family, however late.
+4. No-show rate = no-shows / sessions on the book (sessions kept + no-shows).
+5. The booking app sometimes records the same session twice when a parent taps Book twice. Same student,
+   same tutor, same start time is one session.
+6. Sessions are reported in the month they were scheduled for.

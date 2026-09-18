@@ -1,0 +1,94 @@
+Part No,Description,Type,UoM,On Hand,Unit Cost,Reorder Point,Bin
+001010,SS304 sheet 16ga 48x96,Component,sheet,63,233.72,20,E-03
+001011,SS304 sheet 14ga 48x96,Purchased,sheet,10,$299.98,6,D-01
+001012,SS304 sheet 18ga 36x96,Purchased,sheet,63,165.28,25,E-08
+001013,SS430 sheet 18ga 36x96,Component,sheet,30,109.48,8,A-05
+001020,SS304 square tube 1-1/4in x 20ft,Raw,ea,11,$70.96,15,B-01
+1021,SS304 square tube 1in x 20ft,Purchased,ea,27,56.10,12,C-02
+001022,SS304 round tube 1-5/8in x 20ft,Purchased,ea,46,74.92,12,C-06
+001030,SS leg 1-5/8in x 34in,Purchased,ea,262,19.37,80,E-10
+1031,SS leg 1-5/8in x 30in,Component,ea,103,15.21,40,E-09
+001032,SS leg 1-5/8in x 24in,Component,ea,23,15.53,20,B-09
+001040,Cart upright SS 1in x 36in,Component,ea,271,$11.88,100,A-02
+001041,Cart upright SS 1in x 30in,Raw,ea,83,8.3,30,C-05
+1050,Shelving post chrome 74in,Raw,ea,574,$15.10,120,C-06
+001051,Shelving post chrome 63in,Purchased,ea,71,10.62,40,D-04
+1052,Shelving post SS 74in,Component,ea,33,$22.13,20,D-08
+1053,Shelving post chrome 86in,Component,ea,11,17.1,16,B-11
+1060,Wall shelf bracket SS 12in,Raw,ea,94,7.67,30,C-04
+1060,Wall shelf bracket SS 12in,Raw,ea,94,7.67,30,C-04
+1061,Wall shelf bracket SS 18in,Component,ea,27,11.79,16,B-09
+002010,Caster 5in swivel with brake,Raw,ea,40,$15.97,40,A-04
+002011,Caster 5in swivel,Component,ea,43,$11.16,80,C-10
+002012,Caster 5in rigid,Raw,ea,213,10.9,80,D-09
+002013,Caster 3in swivel,Raw,ea,124,$6.67,40,B-10
+002014,Caster 4in swivel with brake,Component,ea,55,$14.08,24,E-12
+002015,Caster 6in polyurethane swivel,Purchased,ea,33,22.86,12,E-11
+002020,Adjustable bullet foot 1-5/8in,Component,ea,322,4.19,100,D-12
+2021,Leveling foot for shelving post,Component,ea,777,$1.61,160,D-10
+2022,Flanged foot 1-5/8in,Component,ea,50,$5.09,30,D-03
+2030,Wire shelf chrome 18x48,Component,ea,246,25.77,80,C-05
+002031,Wire shelf chrome 24x48,Component,ea,492,25.85,120,C-09
+2032,Wire shelf chrome 18x36,Component,ea,258,20.20,80,E-01
+002032,Wire shelf chrome 18x36,Component,ea,258,20.20,80,E-01
+002033,Wire shelf chrome 24x60,Component,ea,114,$34.39,60,D-09
+002034,Solid shelf SS 20x36 dunnage,Component,ea,30,45.28,12,A-01
+002035,Wire shelf chrome 14x36,Component,ea,72,13.82,30,C-09
+002036,Wire shelf epoxy green 18x48,Raw,ea,78,28.59,20,E-02
+002040,Split sleeve pair,Purchased,ea,"2,057",$0.48,600,D-01
+2041,S-hook shelf connector,Component,ea,51,$0.65,100,A-02
+002041,S-hook shelf connector,Component,ea,51,$0.65,100,A-02
+002050,Push handle SS 18in,Purchased,ea,63,16.26,30,C-12
+002051,Push handle SS 24in,Component,ea,114,20.00,30,E-12
+002060,Corner bumper rubber,Raw,ea,404,1.55,120,C-05
+2061,Perimeter bumper strip 6ft,Component,ea,73,$11.09,30,C-05
+002070,Sink bowl 18x18x12 SS,Purchased,ea,19,83.07,20,D-08
+002070,Sink bowl 18x18x12 SS,Purchased,ea,19,83.07,20,D-08
+002071,Sink bowl 16x20x12 SS,Component,ea,18,$75.56,8,D-01
+002080,Lever waste drain 3.5in,Raw,ea,57,18.29,20,E-07
+002080,Lever waste drain 3.5in,Raw,ea,57,18.29,20,E-07
+2081,Basket strainer drain 3.5in,Raw,ea,58,14.99,16,A-02
+2090,Deck faucet 8in splash mount,Component,ea,23,76.01,12,D-03
+002091,Deck faucet 12in splash mount,Raw,ea,4,81.31,8,E-05
+2100,Pan slide angle 18in pair,Component,ea,444,$6.63,100,A-04
+002110,Undershelf gusset,Raw,ea,378,2.68,80,C-12
+2120,Drawer assembly 20x20 SS,Component,ea,25,$63.34,8,D-03
+002130,Backsplash 4in SS 60in,Purchased,ea,15,23.92,10,A-06
+003010,Bolt 1/4-20 x 3/4 SS,Component,ea,"2,400",0.16,800,C-06
+003011,Nylock nut 1/4-20 SS,Component,ea,"3,369",$0.08,800,C-04
+003012,Hex bolt 3/8-16 x 1 SS,Component,ea,"1,521",0.36,400,E-01
+3013,Flat washer 1/4 SS,Component,ea,"2,049",$0.03,500,A-11
+003014,Carriage bolt 5/16-18 x 1 SS,Component,ea,810,0.34,200,B-01
+3020,Welding wire ER308L 0.035 (lb),Component,lb,90,12.36,40,A-06
+003021,Welding rod ER308L 1/16 (lb),Component,lb,52,15.97,15,E-02
+003030,Passivation gel (qt),Component,ea,11,$21.32,6,E-06
+3040,Rivet SS 3/16,Component,ea,"3,119",0.09,800,B-12
+003050,Grinding disc 4-1/2in 60 grit,Component,ea,106,2.20,60,A-03
+5010,Carton kit cart,Component,ea,191,8.78,60,D-02
+5011,Carton shelving 4-tier,Component,ea,358,$5.28,90,D-01
+005012,Carton shelving 5-tier,Component,ea,124,6.57,30,B-06
+005020,Crate table,Component,ea,80,21.82,20,B-09
+005021,Crate sink,Component,ea,24,24.83,8,A-06
+5030,Serial plate label,Component,ea,"1,066",0.96,300,A-01
+005031,Assembly instructions sheet,Component,ea,"1,131",0.14,200,E-05
+005040,Stretch wrap roll,Component,ea,18,23.24,6,D-07
+CRT-1827-2S,Utility cart 18x27 two shelf,Finished good,ea,23,,,FG-2
+CRT-1827-3S,Utility cart 18x27 three shelf,Finished good,ea,9,,,FG-2
+CRT-2436-2S,Utility cart 24x36 two shelf,Finished good,ea,16,,,FG-2
+CRT-BUS-3S,Bus cart three shelf,Finished good,ea,8,,,FG-2
+CRT-UTIL-HD,Heavy-duty utility cart 24x48,Finished good,ea,0,,,FG-2
+DOL-1818,Dolly 18x18,Finished good,ea,21,,,FG-2
+RCK-PAN-20,Pan rack 20 slot,Finished good,ea,8,,,FG-3
+SHF-1836-5T,Wire shelving 18x36 five tier,Finished good,ea,0,,,FG-3
+SHF-1848-4T,Wire shelving 18x48 four tier,Finished good,ea,0,,,FG-3
+SHF-2448-4T,Wire shelving 24x48 four tier,Finished good,ea,22,,,FG-3
+SHF-2460-4T,Wire shelving 24x60 four tier,Finished good,ea,4,,,FG-3
+SHF-DUN-2036,Dunnage rack 20x36,Finished good,ea,17,,,FG-3
+SHF-WALL-36,Wall shelf 12x36,Finished good,ea,13,,,FG-3
+SNK-1C18,One-compartment sink 18x18,Finished good,ea,14,,,FG-1
+SNK-3C18,Three-compartment sink 18x18,Finished good,ea,22,,,FG-1
+TBL-2448,Work table 24x48 with undershelf,Finished good,ea,20,,,FG-1
+TBL-3048,Work table 30x48 with undershelf,Finished good,ea,22,,,FG-1
+TBL-3060,Work table 30x60 with undershelf,Finished good,ea,10,,,FG-1
+TBL-3072,Work table 30x72 with undershelf,Finished good,ea,16,,,FG-1
+TBL-EQ-2430,Equipment stand 24x30,Finished good,ea,6,,,FG-1

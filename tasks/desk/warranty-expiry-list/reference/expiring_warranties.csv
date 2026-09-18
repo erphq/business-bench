@@ -1,0 +1,10 @@
+asset_tag,equipment,location,warranty_end,days_left
+LH-1175,Chemistry analyzer,Eastside,2026-10-25,20
+LH-1243,Laser therapy unit,Main St,2026-11-01,27
+LH-1413,Commercial dryer,Main St,2026-11-08,34
+LH-1260,"Refrigerator, vaccine",Eastside,2026-11-12,38
+LH-1192,ECG unit,Eastside,2026-11-14,40
+LH-1515,Surgical LED light,Main St,2026-11-20,46
+LH-1685,Microscope,Eastside,2026-11-27,53
+LH-1549,Multiparameter monitor,Eastside,2026-12-14,70
+LH-1651,Dental unit with scaler,Eastside,2026-12-18,74

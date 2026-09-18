@@ -1,0 +1,15 @@
+From: Carol Whitcombe <carol@alderbirchrentals.com>
+To: you
+Date: Wed, 30 Sep 2026 18:40
+Subject: rent roll for the bank
+
+The bank wants a rent roll as of October 1 for the refinance. RentEasy only lets me export the three tables, so they're all in the folder.
+
+Every unit in both buildings has to be on it, including the empty ones - the bank counts them. For each unit I need who is living there on the 1st, their lease dates and what they pay us each month, and a total at the bottom.
+
+A few people stayed on after their lease ran out and are month to month now. RentEasy still shows their old lease rent, but month-to-month tenants pay an extra $75 a month on top of it (we bill it as a separate charge), so put their real monthly amount on the roll.
+
+Also flag any lease that ends between October 1 and December 31 so I know whose renewals to start. The month-to-month people don't have a lease to renew, so leave them off that.
+
+Thanks,
+Carol

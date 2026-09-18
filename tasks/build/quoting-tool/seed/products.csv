@@ -1,0 +1,65 @@
+SKU,Product,Collection,Board Feet,Labor Cost,List Price,Lead Time (weeks)
+SHK-CT,Shaker Coffee Table,Shaker,18,520.00,1255.00,12
+FRM-BN48,"Farmhouse Bench 48""",Farmhouse,16,360.00,930.00,6
+STD-BN48,"Studio Bench 48""",Studio,13,$340.00,845.00,12
+SHK-WD,Shaker Writing Desk,Shaker,28,$860.00,"2,045.00",10
+MCM-DC,Mid-Century Dining Chair,Mid-Century,7,340.00,740.00,12
+MCM-CON,Mid-Century Console Table,Mid-Century,16,$530.00,1240.00,12
+SHK-DT96,"Shaker Dining Table 96""",Shaker,60,1560.00,3875.00,8
+SHK-DR6,"Shaker Dresser, 6 drawers",Shaker,54,1620.00,3880.00,8
+STD-DT60,"Studio Dining Table 60""",Studio,36,"$1,090.00",2605.00,12
+STD-NS,Studio Nightstand,Studio,11,370.00,865.00,8
+MCM-SB,Mid-Century Sideboard,Mid-Century,46,1520.00,3560.00,6
+FRM-DT96,"Farmhouse Dining Table 96""",Farmhouse,69,1560.00,4030.00,8
+SHK-BS4,"Shaker Bookshelf, 4 shelves",Shaker,32,$640.00,1715.00,8
+MCM-DT72,"Mid-Century Dining Table 72""",Mid-Century,44,1410.00,3325.00,6
+SHK-BN48,"Shaker Bench 48""",Shaker,14,360,895.00,8
+FRM-DC,Farmhouse Dining Chair,Farmhouse,8,310.00,700.00,6
+STD-DC,Studio Dining Chair,Studio,7,295.00,655.00,10
+FRM-DT84,"Farmhouse Dining Table 84""",Farmhouse,60,"$1,420.00",3620.00,12
+FRM-SB,Farmhouse Sideboard,Farmhouse,53,1380,"3,425.00",8
+FRM-BFQ,"Farmhouse Bed Frame, Queen",Farmhouse,55,1180.00,"3,095.00",6
+MCM-NS,Mid-Century Nightstand,Mid-Century,12,430,990.00,8
+STD-BST,Studio Bar Stool,Studio,6,265.00,585.00,6
+frm-sb,Farmhouse Sideboard,Farmhouse,53,1380,"3,425.00",8
+STD-WD,Studio Writing Desk,Studio,27,815,"1,950.00",8
+STD-DT84 ,"Studio Dining Table 84""",Studio,49,1350,"3,300.00",8
+SHK-BST,Shaker Bar Stool,Shaker,6,280.00,615.00,8
+STD-BS4,"Studio Bookshelf, 4 shelves",Studio,30,610,1625.00,12
+FRM-CON,Farmhouse Console Table,Farmhouse,18,$480.00,1185.00,10
+FRM-DT72,"Farmhouse Dining Table 72""",Farmhouse,51,"$1,280.00",3210.00,8
+STD-DT72,"Studio Dining Table 72""",Studio,42,1215.00,"2,935.00",10
+FRM-WD,Farmhouse Writing Desk,Farmhouse,32,860.00,2115.00,10
+MCM-BST,Mid-Century Bar Stool,Mid-Century,6,310.00,665.00,6
+SHK-BFQ,"Shaker Bed Frame, Queen",Shaker,48,1180.00,2975.00,8
+STD-SB,Studio Sideboard,Studio,44,"$1,310.00",3140.00,8
+SHK-NS,Shaker Nightstand,Shaker,12,390,915.00,12
+STD-BFQ,"Studio Bed Frame, Queen",Studio,46,1120.00,2830.00,6
+SHK-DC,Shaker Dining Chair,Shaker,7,310,685.00,12
+SHK-DT60,"Shaker Dining Table 60""",Shaker,38,1150,2745.00,10
+MCM-DT84,"Mid-Century Dining Table 84""",Mid-Century,52,1560.00,3735.00,12
+MCM-BN48,"Mid-Century Bench 48""",Mid-Century,14,395.00,960.00,10
+MCM-DR6,"Mid-Century Dresser, 6 drawers",Mid-Century,54,1780,"4,170.00",6
+MCM-CT,Mid-Century Coffee Table,Mid-Century,18,$570.00,1345.00,12
+STD-DR6,"Studio Dresser, 6 drawers",Studio,51,1540.00,3680.00,8
+STD-CT,Studio Coffee Table,Studio,17,495,1195.00,8
+FRM-NS,Farmhouse Nightstand,Farmhouse,14,390,950.00,12
+FRM-BS4,"Farmhouse Bookshelf, 4 shelves",Farmhouse,37,640.00,"1,805.00",12
+STD-CON,Studio Console Table,Studio,15,455.00,1085.00,6
+FRM-BST,Farmhouse Bar Stool,Farmhouse,7,280.00,630.00,10
+MCM-DT96,"Mid-Century Dining Table 96""",Mid-Century,60,"$1,715.00",4155.00,8
+FRM-DR6,"Farmhouse Dresser, 6 drawers",Farmhouse,62,1620.00,"4,015.00",6
+MCM-BS4,"Mid-Century Bookshelf, 4 shelves",Mid-Century,32,705.00,1835.00,8
+FRM-DT60,"Farmhouse Dining Table 60""",Farmhouse,44,1150.00,2850.00,10
+STD-DT96,"Studio Dining Table 96""",Studio,57,1480.00,3675.00,8
+MCM-DT60,"Mid-Century Dining Table 60""",Mid-Century,38,1265,2955.00,8
+SHK-SB,Shaker Sideboard,Shaker,46,1380,3305.00,10
+MCM-DT84,"Mid-Century Dining Table 84""",Mid-Century,52,1560.00,3735.00,12
+FRM-CT,Farmhouse Coffee Table,Farmhouse,21,520,1310.00,12
+SHK-DT84,"Shaker Dining Table 84""",Shaker,52,1420,3480.00,6
+SHK-NS,Shaker Nightstand,Shaker,12,390,915.00,12
+MCM-WD,Mid-Century Writing Desk,Mid-Century,28,$945.00,2200.00,8
+SHK-CON,Shaker Console Table,Shaker,16,480.00,"1,150.00",10
+STD-DT84,"Studio Dining Table 84""",Studio,49,1350,"3,300.00",8
+MCM-BFQ,"Mid-Century Bed Frame, Queen",Mid-Century,48,1300,"3,195.00",8
+SHK-DT72,"Shaker Dining Table 72""",Shaker,44,"$1,280.00",3085.00,10

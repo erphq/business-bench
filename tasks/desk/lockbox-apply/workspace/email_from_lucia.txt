@@ -1,0 +1,14 @@
+From: Lucia Mensah <lucia@ironwoodfab.com>
+To: you
+Date: Thu, 10 Sep 2026 08:20
+Subject: today's lockbox
+
+Can you apply today's lockbox file? Yesterday's is already posted - the open AR report is from after it went in.
+
+Go by the stub: each remittance line tells you which invoice and how much. Some customers pay one invoice with two checks, and the Harbor Light holding company pays for both Harbor Light Marine and Kingfisher Charters on one check - that's fine, apply to whichever account the invoice belongs to.
+
+Short pays: if a customer pays an invoice short by $10.00 or less, apply what they paid and write off the difference so the invoice closes. More than $10.00 short, apply what they paid and leave the rest open - no write-off, I'll chase it.
+
+Anything that doesn't go onto an invoice stays unapplied: the extra when a check is bigger than the invoices on its stub, and any check that came without a stub. Don't guess from the amount, I'll call them.
+
+I need applied.csv with check_number, invoice_number, amount_applied and write_off, one line per check and invoice, and unapplied.csv with check_number, amount and reason. Everything in today's file should end up in one or the other.

@@ -1,0 +1,59 @@
+id: occupancy-report
+track: desk
+category: reports
+title: Q1 occupancy per cabin per month
+ask: |
+  I need Q1 occupancy for each of our cabins for the owners' letters - one row per cabin, January to March across. Save it as occupancy.xlsx with live formulas. Ruth's note says how the owner agreements count it.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  stays cross month ends - a New Year stay checks in during December and one late-March stay checks out in April - and the export's Nights column is the whole stay; putting all of a stay's nights in its check-in month moves Aspen Hollow's January and its quarter (checks: Aspen Hollow Q1 booked nights; occupancy rates)
+- |-
+  blocked dates are an iCalendar file whose all-day DTEND is the morning after the last blocked night; reading DTEND as a blocked night takes one extra night off every block, and Fox Den's owner hold runs from late January into February (checks: Fox Den Cabin Q1 available nights; occupancy rates)
+- |-
+  one maintenance block in the calendar is STATUS:CANCELLED and guests stayed on those dates (check: occupancy rates)
+- |-
+  cancelled reservations stay in the export, some carrying a cancellation-fee payout, and some overlap the stay that rebooked the dates; Bear Creek has three (checks: Bear Creek Lodge Q1 booked nights; total Q1 booked nights)
+- |-
+  owner stays are $0 'Owner' reservations with status Confirmed; Ruth's note makes those nights blocked rather than occupied (checks: Bear Creek Lodge Q1 booked nights; total Q1 booked nights)
+- |-
+  the listing names carry marketing suffixes ('Cedar Loft | studio near lifts'), check-in and check-out come in three date formats, and the export has a BOM and CRLF endings (check: total Q1 booked nights)
+checks:
+- type: file_exists
+  name: occupancy.xlsx exists
+  path: occupancy.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: occupancy.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: occupancy.xlsx
+- type: xlsx_value_present
+  name: Aspen Hollow Q1 booked nights (stays split at month ends)
+  path: occupancy.xlsx
+  expected: 49
+  rel_tol: 0.001
+  near_text: aspen
+- type: xlsx_value_present
+  name: Bear Creek Lodge Q1 booked nights (no cancellations or owner stays)
+  path: occupancy.xlsx
+  expected: 49
+  rel_tol: 0.001
+  near_text: bear creek
+- type: xlsx_value_present
+  name: Fox Den Cabin Q1 available nights (blocks, DTEND exclusive)
+  path: occupancy.xlsx
+  expected: 80
+  rel_tol: 0.001
+  near_text: fox den
+- type: xlsx_value_present
+  name: total Q1 booked nights
+  path: occupancy.xlsx
+  expected: 247
+  rel_tol: 0.001
+  near_text: total
+- type: custom
+  name: occupancy rates for Fox Den February, Aspen Hollow January and the portfolio quarter
+  module: check.py

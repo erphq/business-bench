@@ -1,0 +1,181 @@
+id: variants-flatten
+track: desk
+category: reformatting
+title: Flatten the nested fall catalog into the inventory platform's variant import
+ask: |
+  We're loading the fall catalog into Stockwell and they want one row per variant using their template; their notes and June's note about how she writes the sheet are in the folder. Save it as variants_flat.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  variant lines are indented under their product with no code or name of their own, and heading rows (OUTERWEAR, CAMP) are not products; each variant must repeat its parent's code and name (checks: one row per variant; product and option fields)
+- |-
+  one line can stand for several combinations - 'S, M, L / Olive' is three variants and 'S, M, L, XL / Navy, Rust' is eight - with the stock figure ('4 each') applying to each; copying each line as one row loses 14 variants (checks: one row per variant; row count; stock quantity; availability)
+- |-
+  a blank price inherits the product row's price, '+10' / '+$10' adds to it and a full price is the variant's own clearance price; reading '+10' as 10 or leaving blanks blank breaks every variant price (check: prices)
+- |-
+  sold-out variants are written '0', 'sold out', 'on order (Oct)', '-' and an oversold '-2'; they stay in the file with inventory 0 and out_of_stock rather than being dropped or imported negative (checks: one row per variant; stock quantity; availability)
+- |-
+  products with no options (headlamp, map case, stove) carry their price and stock on the product row and become one row whose sku is the bare product code with blank option columns (checks: one row per variant; product and option fields)
+- |-
+  last spring's upload sits in the folder in the right format but with old prices and a shorter variant list; June's note says ignore it (checks: prices; one row per variant)
+- |-
+  the template's ten columns in exact order, SKUs built from the house pattern TJ24-M-OLIVE, and the template's availability spellings (checks: template columns; one row per variant; stock quantity; availability)
+checks:
+- type: csv_columns
+  name: template columns
+  path: variants_flat.csv
+  columns:
+  - product_code
+  - product_name
+  - sku
+  - option1_name
+  - option1_value
+  - option2_name
+  - option2_value
+  - price
+  - inventory_qty
+  - availability
+  exact: true
+- type: csv_set_equal
+  name: one row per variant
+  path: variants_flat.csv
+  column: sku
+  ref: variants_flat.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: variants_flat.csv
+  equals_ref: variants_flat.csv
+- type: csv_values_match
+  name: prices
+  path: variants_flat.csv
+  ref: variants_flat.csv
+  key: sku
+  columns:
+  - price
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - DB20-10L-BLUE
+  - DB20-10L-YELLOW
+  - DB20-20L-BLUE
+  - DB20-20L-YELLOW
+  - DB20-35L-BLUE
+  - FV11-L-NAVY
+  - FV11-L-RUST
+  - FV11-L-SAND
+  - FV11-M-NAVY
+  - FV11-M-RUST
+  - FV11-M-SAND
+  - FV11-S-NAVY
+  - FV11-S-RUST
+  - FV11-XL-NAVY
+  - FV11-XL-RUST
+  - RS03-XL
+  - SP40-LONG
+  - SP40-WIDE
+  - TJ24-L-OLIVE
+  - TJ24-M-OLIVE
+  - TJ24-S-OLIVE
+  - TJ24-XL-BLACK
+  - TJ24-XL-OLIVE
+  - TN2P-OLIVE
+  - TP22-GREEN
+  - WB10-1L-BLUE
+  - WB10-1L-GREEN
+  - WS3P-L
+  - WS3P-M
+  - WS3P-S
+  - WS3P-XL
+- type: csv_values_match
+  name: stock quantity
+  path: variants_flat.csv
+  ref: variants_flat.csv
+  key: sku
+  columns:
+  - inventory_qty
+  numeric: true
+  tolerance: 0.001
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - CS01
+  - DB20-10L-BLUE
+  - DB20-10L-YELLOW
+  - DB20-20L-BLUE
+  - DB20-20L-YELLOW
+  - FV11-L-NAVY
+  - FV11-L-RUST
+  - FV11-L-SAND
+  - FV11-M-NAVY
+  - FV11-M-RUST
+  - FV11-S-NAVY
+  - FV11-S-RUST
+  - FV11-XL-NAVY
+  - FV11-XL-RUST
+  - HL300
+  - MC01
+  - RS03-M
+  - SP40-LONG
+  - TJ24-L-OLIVE
+  - TJ24-M-OLIVE
+  - TJ24-S-OLIVE
+  - TJ24-XL-OLIVE
+  - TN2P-ORANGE
+  - TP22-RED
+  - WB10-1L-BLUE
+  - WB10-1L-GREEN
+  - WB10-750ML-ORANGE
+  - WS3P-L
+  - WS3P-M
+  - WS3P-S
+  - WS3P-XL
+- type: csv_values_match
+  name: availability
+  path: variants_flat.csv
+  ref: variants_flat.csv
+  key: sku
+  columns:
+  - availability
+  min_accuracy: 1.0
+  must_match_keys: *id001
+- type: csv_values_match
+  name: product and option fields
+  path: variants_flat.csv
+  ref: variants_flat.csv
+  key: sku
+  columns:
+  - product_code
+  - product_name
+  - option1_name
+  - option1_value
+  - option2_name
+  - option2_value
+  min_accuracy: 1.0
+  must_match_keys:
+  - CS01
+  - DB20-10L-BLUE
+  - DB20-10L-YELLOW
+  - DB20-20L-BLUE
+  - DB20-20L-YELLOW
+  - FV11-L-NAVY
+  - FV11-L-RUST
+  - FV11-M-NAVY
+  - FV11-M-RUST
+  - FV11-S-NAVY
+  - FV11-S-RUST
+  - FV11-XL-NAVY
+  - FV11-XL-RUST
+  - HL300
+  - MC01
+  - TJ24-L-OLIVE
+  - TJ24-M-OLIVE
+  - TJ24-S-OLIVE
+  - WB10-1L-BLUE
+  - WB10-1L-GREEN
+  - WS3P-L
+  - WS3P-M
+  - WS3P-S

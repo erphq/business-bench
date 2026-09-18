@@ -1,0 +1,61 @@
+id: event-registration
+track: build
+category: events
+title: Conference workshop registration with room capacity, waitlist promotion, badges, and chair-scoped access
+ask: |
+  We organize a three-day operations summit with 60 paid workshops across three venues, and every
+  workshop is capped at the capacity of the room it is in. I've attached the venue's room list, our
+  workshop schedule, and the registrations so far; when a workshop is full new people go on its
+  waitlist, and when someone cancels, the person who has been waiting longest gets the seat
+  automatically. I need to export name badges for everyone holding a confirmed seat, and a dashboard
+  with confirmed and waitlisted numbers and our revenue from confirmed seats. Each session chair should
+  log in and see only the registrations for the workshops they chair, our finance lead needs a
+  read-only login, and I want an admin login for me and a login for Helena Varga, one of our chairs.
+seed:
+  - seed/rooms.csv
+  - seed/sessions.csv
+  - seed/registrations.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for session chair Helena Varga.
+      password: That chair's password.
+    notes: >
+      Free text. Must say the restricted login is session chair Helena Varga. May include the
+      read-only login, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "admin@example.com", "password": "..."},
+      "restricted": {"user": "helena.varga@example.com", "password": "..."},
+      "notes": "restricted login is session chair Helena Varga. Read-only: finance@example.com / ... Restart: systemctl restart summit."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 18, 21, 23]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - "rooms.csv repeats 2 rows and writes 2 room codes without the hyphen (RM343) with the name in capitals; capacities are 24 / 24 pax / 1,200 / 40 seats, so Grand Hall sorts first only when parsed (item 15)"
+  - "sessions.csv refers to rooms as RM-052, RM52, rm-052, RM-52 and repeats 2 sessions under their bare number; a literal room join leaves WS-084 with no capacity and the capacity rule cannot hold (items 16, 21, 25)"
+  - "WS-128 is written 11:00 AM to 10:15 AM; it must be flagged, not imported silently (item 17)"
+  - "statuses come in eight spellings (waitlist, Wait list, canceled...); matching exact words drops seats from every figure and from the full-session list (items 8, 18)"
+  - "waitlisted and cancelled rows carry an Amount; summing the column gives 42,364.00 and counting waitlisted gives 40,961.00 instead of 39,306.00 (items 8, 19, 24)"
+  - "the file is grouped by session and surname, not arrival time, and timestamps mix 8/15/2026 5:50 PM, 2026-08-16 10:40 and 17-Aug-2026 12:25; promoting by file order picks Nadia Kim and by text sort Ryan Lopez instead of Dorothy Murphy (item 23)"
+  - "badges are per attendee, not per registration, and Ronald Ruiz's email appears in three cases: 255 or 139 rows instead of 137 (item 20)"
+  - "8 exact duplicate registration rows, two of them confirmed seats in full session WS-007; no dedupe gives 284 registrations, 40 for Helena, and WS-007 over its 20 seats (items 6, 11, 18)"
+  - "session codes in registrations are written WS-084, WS-84, WS084, and 84 (items 6, 18, 23)"

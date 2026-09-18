@@ -1,0 +1,297 @@
+Deposit Date,Customer,Applied To,Amount,Method
+2026-03-11,Juniper Street Cafe,YS-31213,2462.21,Check
+2026-03-18,Kingfisher Charters Galley,YS-31203,4300.81,Check
+2026-03-20,Juniper Street Cafe,YS-31202,6022.24,ACH
+2026-03-24,Nightjar Supper Club,YS-31216,7639.77,Check
+2026-03-26,Harborview Oyster Bar,YS-31210,6956.40,Check
+2026-03-26,Kingfisher Charters Galley,YS-31232,3250.72,ACH
+2026-03-27,Ellington Bakeries,YS-31212,1760.83,ACH
+2026-03-28,Juniper Street Cafe,YS-31229,5301.75,Check
+2026-03-29,The Saltwater Grill,YS-31206,4442.03,Check
+2026-03-30,Blue Heron Catering,YS-31223,919.47,Check
+2026-03-31,Mossbank Country Club,YS-31214,1211.73,ACH
+2026-04-02,Blue Heron Catering,YS-31201,7448.75,ACH
+2026-04-05,Tamarack Brewing,YS-31209,5659.20,Check
+2026-04-06,Copper Kettle Diner,YS-31250,4123.15,Check
+2026-04-08,Copper Kettle Diner,YS-31226,2753.34,Check
+2026-04-08,Ellington Bakeries,YS-31240,5452.63,Check
+2026-04-09,Driftwood Taqueria,YS-31211,6143.13,ACH
+2026-04-09,Larkspur Hotel Kitchen,YS-31219,6182.76,Check
+2026-04-11,Harborview Oyster Bar,YS-31234,3805.16,ACH
+2026-04-13,Tamarack Brewing,YS-31231,3182.04,ACH
+2026-04-13,Kingfisher Charters Galley,YS-31257,1996.50,ACH
+2026-04-16,The Saltwater Grill,YS-31222,8624.20,ACH
+2026-04-17,Copper Kettle Diner,YS-31207,2576.86,ACH
+2026-04-19,The Saltwater Grill,YS-31217,7911.43,ACH
+2026-04-20,Harborview Oyster Bar,YS-31224,6194.39,ACH
+2026-04-20,Larkspur Hotel Kitchen,YS-31243,1541.52,Check
+2026-04-20,Juniper Street Cafe,YS-31262,2023.83,ACH
+2026-04-22,The Saltwater Grill,YS-31237,8050.19,ACH
+2026-04-22,The Saltwater Grill,YS-31238,11826.03,ACH
+2026-04-22,The Saltwater Grill,YS-31258,5008.16,ACH
+2026-04-22,Juniper Street Cafe,YS-31289,2288.47,Check
+2026-04-23,Ellington Bakeries,YS-31273,6676.70,Check
+2026-04-24,Nightjar Supper Club,YS-31280,2106.59,Check
+2026-04-25,Mossbank Country Club,YS-31254,1189.73,ACH
+2026-04-26,Harborview Oyster Bar,YS-31218,2089.31,ACH
+2026-04-27,Driftwood Taqueria,YS-31259,1786.41,Check
+2026-04-28,Driftwood Taqueria,YS-31309,1675.74,Check
+2026-04-30,The Saltwater Grill,YS-31245,6794.69,ACH
+2026-05-01,Blue Heron Catering,YS-31265,3476.69,ACH
+2026-05-02,Blue Heron Catering,YS-31248,2195.36,ACH
+2026-05-03,Copper Kettle Diner,YS-31271,5001.93,ACH
+2026-05-03,Ellington Bakeries,YS-31301,1710.74,ACH
+2026-05-04,Tamarack Brewing,YS-31244,4406.64,ACH
+2026-05-05,Riverbend Bistro,YS-31236,3018.80,Check
+2026-05-06,Larkspur Hotel Kitchen,YS-31204,2074.96,ACH
+2026-05-06,Pier 9 Fish House,YS-31208,3775.04,ACH
+2026-05-06,Riverbend Bistro,YS-31225,3141.00,ACH
+2026-05-06,Larkspur Hotel Kitchen,YS-31227,4192.45,ACH
+2026-05-06,Harborview Oyster Bar,YS-31256,3124.32,Check
+2026-05-07,Juniper Street Cafe,YS-31308,3708.30,ACH
+2026-05-08,The Saltwater Grill,YS-31255,11279.61,ACH
+2026-05-08,The Saltwater Grill,YS-31261,2207.44,ACH
+2026-05-09,Mossbank Country Club,YS-31241,4617.03,ACH
+2026-05-09,Harborview Oyster Bar,YS-31279,6835.23,Check
+2026-05-09,Copper Kettle Diner,YS-31285,3884.82,ACH
+2026-05-10,Pier 9 Fish House,YS-31297,5374.34,ACH
+2026-05-11,Mossbank Country Club,YS-31220,5069.41,Check
+2026-05-11,The Saltwater Grill,YS-31278,5664.33,ACH
+2026-05-12,Tamarack Brewing,YS-31264,5064.39,ACH
+2026-05-13,Harborview Oyster Bar,YS-31288,4658.17,ACH
+2026-05-14,Blue Heron Catering,YS-31233,5469.50,Check
+2026-05-15,Larkspur Hotel Kitchen,YS-31253,1927.69,Check
+2026-05-15,The Saltwater Grill,YS-31267,10871.08,ACH
+2026-05-15,Kingfisher Charters Galley,YS-31304,5378.51,ACH
+2026-05-17,Riverbend Bistro,YS-31315,5342.58,ACH
+2026-05-19,Harborview Oyster Bar,YS-31269,5555.02,Check
+2026-05-19,Copper Kettle Diner,YS-31330,1779.87,Check
+2026-05-20,The Saltwater Grill,YS-31287,10575.98,ACH
+2026-05-21,Larkspur Hotel Kitchen,YS-31235,5276.99,ACH
+2026-05-21,Larkspur Hotel Kitchen,YS-31268,3284.83,ACH
+2026-05-22,Juniper Street Cafe,YS-31336,4257.23,Check
+2026-05-23,The Saltwater Grill,YS-31300,8361.40,Check
+2026-05-24,Riverbend Bistro,YS-31215,7376.97,ACH
+2026-05-24,The Saltwater Grill,YS-31270,1555.17,Check
+2026-05-24,Kingfisher Charters Galley,YS-31332,1554.84,ACH
+2026-05-25,Tamarack Brewing,YS-31282,4824.19,ACH
+2026-05-25,Blue Heron Catering,YS-31283,4429.75,Check
+2026-05-26,Tamarack Brewing,YS-31294,3689.19,ACH
+2026-05-26,Copper Kettle Diner,YS-31306,6868.17,Check
+2026-05-27,Riverbend Bistro,YS-31247,4471.59,ACH
+2026-05-27,Riverbend Bistro,YS-31281,5992.42,ACH
+2026-05-27,Mossbank Country Club,YS-31293,6325.87,Check
+2026-05-28,Pier 9 Fish House,YS-31230,4578.87,Check
+2026-05-28,The Saltwater Grill,YS-31303,10465.71,Check
+2026-05-28,Ellington Bakeries,YS-31346,1467.44,Check
+2026-05-29,The Saltwater Grill,YS-31318,5054.14,ACH
+2026-05-29,Pier 9 Fish House,YS-31328,662.55,ACH
+2026-05-29,Harborview Oyster Bar,YS-31351,7694.09,ACH
+2026-05-30,Copper Kettle Diner,YS-31348,1972.03,ACH
+2026-06-01,The Saltwater Grill,YS-31295,3506.79,ACH
+2026-06-02,Driftwood Taqueria,YS-31228,5623.14,ACH
+2026-06-03,Riverbend Bistro,YS-31205,2422.61,ACH
+2026-06-03,Kingfisher Charters Galley,YS-31365,1714.23,ACH
+2026-06-04,The Saltwater Grill,YS-31311,11744.43,ACH
+2026-06-04,Ellington Bakeries,YS-31377,6703.85,ACH
+2026-06-05,Larkspur Hotel Kitchen,YS-31313,6861.88,Check
+2026-06-06,Tamarack Brewing,YS-31310,6651.77,Check
+2026-06-06,Blue Heron Catering,YS-31312,7514.55,ACH
+2026-06-07,Larkspur Hotel Kitchen,YS-31284,4156.40,ACH
+2026-06-08,Harborview Oyster Bar,YS-31276,4343.97,Check
+2026-06-08,Harborview Oyster Bar,YS-31291,3992.88,ACH
+2026-06-08,Blue Heron Catering,YS-31298,5858.36,ACH
+2026-06-08,Juniper Street Cafe,YS-31381,7336.80,ACH
+2026-06-09,Larkspur Hotel Kitchen,YS-31292,1564.42,ACH
+2026-06-09,Harborview Oyster Bar,YS-31307,6871.97,ACH
+2026-06-09,Riverbend Bistro,YS-31350,4247.36,Check
+2026-06-09,Copper Kettle Diner,YS-31389,3491.47,Check
+2026-06-10,Larkspur Hotel Kitchen,YS-31274,2639.92,ACH
+2026-06-11,The Saltwater Grill,YS-31322,12116.06,ACH
+2026-06-11,The Saltwater Grill,YS-31326,11671.39,Check
+2026-06-11,Blue Heron Catering,YS-31372,3155.96,ACH
+2026-06-13,Mossbank Country Club,YS-31260,6854.93,Check
+2026-06-13,Mossbank Country Club,YS-31275,3700.19,ACH
+2026-06-13,Copper Kettle Diner,YS-31363,1301.45,Check
+2026-06-13,Nightjar Supper Club,YS-31388,3194.04,ACH
+2026-06-14,The Saltwater Grill,YS-31334,3518.20,ACH
+2026-06-14,The Saltwater Grill,YS-31344,10750.14,ACH
+2026-06-14,Driftwood Taqueria,YS-31376,2659.04,Check
+2026-06-15,Harborview Oyster Bar,YS-31296,2580.94,Check
+2026-06-15,The Saltwater Grill,YS-31352,1536.62,ACH
+2026-06-15,Juniper Street Cafe,YS-31399,4486.11,Check
+2026-06-16,Pier 9 Fish House,YS-31290,6373.65,Check
+2026-06-17,Driftwood Taqueria,YS-31272,6913.86,ACH
+2026-06-17,Pier 9 Fish House,YS-31277,6181.72,ACH
+2026-06-18,Larkspur Hotel Kitchen,YS-31320,5854.13,Check
+2026-06-18,Tamarack Brewing,YS-31354,6558.19,ACH
+2026-06-18,Driftwood Taqueria,YS-31393,3723.40,Check
+2026-06-19,Driftwood Taqueria,YS-31286,2515.89,Check
+2026-06-19,Tamarack Brewing,YS-31339,2161.53,Check
+2026-06-19,Copper Kettle Diner,YS-31375,2997.93,ACH
+2026-06-21,Mossbank Country Club,YS-31325,3893.25,ACH
+2026-06-22,Mossbank Country Club,YS-31340,3554.39,Check
+2026-06-23,Pier 9 Fish House,YS-31242,7312.44,ACH
+2026-06-23,The Saltwater Grill,YS-31364,10089.30,ACH
+2026-06-24,Harborview Oyster Bar,YS-31316,7549.44,Check
+2026-06-24,Larkspur Hotel Kitchen,YS-31324,2140.84,ACH
+2026-06-25,Mossbank Country Club,YS-31314,3510.84,ACH
+2026-06-25,Harborview Oyster Bar,YS-31323,602.56,Check
+2026-06-25,Blue Heron Catering,YS-31327,3463.64,ACH
+2026-06-26,Driftwood Taqueria,YS-31331,6222.60,ACH
+2026-06-27,Larkspur Hotel Kitchen,YS-31302,5704.00,ACH
+2026-06-27,The Saltwater Grill,YS-31374,7835.30,ACH
+2026-06-28,Pier 9 Fish House,YS-31263,1813.45,Check
+2026-06-28,The Saltwater Grill,YS-31371,4313.82,ACH
+2026-06-30,Larkspur Hotel Kitchen,YS-31347,2630.56,ACH
+2026-06-30,The Saltwater Grill,YS-31360,10913.44,Check
+2026-07-01,Blue Heron Catering,YS-31345,6240.44,ACH
+2026-07-01,Tamarack Brewing,YS-31370,1788.37,Check
+2026-07-01,The Saltwater Grill,YS-31382,4541.14,ACH
+2026-07-02,Riverbend Bistro,YS-31299,6217.09,Check
+2026-07-02,Mossbank Country Club,YS-31400,1511.00,Check
+2026-07-02,Ellington Bakeries,YS-31414,2926.53,ACH
+2026-07-03,The Saltwater Grill,YS-31396,2831.47,Check
+2026-07-03,The Saltwater Grill,YS-31405,4318.23,ACH
+2026-07-03,Copper Kettle Diner,YS-31429,5668.06,Check
+2026-07-04,Larkspur Hotel Kitchen,YS-31367,6779.30,ACH
+2026-07-04,Juniper Street Cafe,YS-31417,5125.46,ACH
+2026-07-04,Juniper Street Cafe,YS-31424,7231.18,ACH
+2026-07-04,Ellington Bakeries,YS-31437,2563.19,ACH
+2026-07-05,Larkspur Hotel Kitchen,YS-31342,2332.48,ACH
+2026-07-05,The Saltwater Grill,YS-31385,10430.82,ACH
+2026-07-05,Tamarack Brewing,YS-31398,2792.06,ACH
+2026-07-06,Mossbank Country Club,YS-31368,5860.84,ACH
+2026-07-06,Juniper Street Cafe,YS-31464,2861.68,ACH
+2026-07-07,Driftwood Taqueria,YS-31353,1104.01,Check
+2026-07-07,Blue Heron Catering,YS-31410,3192.77,Check
+2026-07-08,Kingfisher Charters Galley,YS-31427,2700.30,ACH
+2026-07-09,Ellington Bakeries,YS-31454,1010.60,ACH
+2026-07-10,Pier 9 Fish House,YS-31359,1213.55,Check
+2026-07-10,Driftwood Taqueria,YS-31426,7087.41,Check
+2026-07-12,Harborview Oyster Bar,YS-31481,1676.74,ACH
+2026-07-13,Blue Heron Catering,YS-31335,1348.84,ACH
+2026-07-13,Blue Heron Catering,YS-31362,2704.18,ACH
+2026-07-13,Mossbank Country Club,YS-31425,6780.66,ACH
+2026-07-13,Nightjar Supper Club,YS-31445,2038.53,ACH
+2026-07-14,Copper Kettle Diner,YS-31411,825.02,ACH
+2026-07-15,Harborview Oyster Bar,YS-31390,1397.52,Check
+2026-07-16,Pier 9 Fish House,YS-31430,4458.60,Check
+2026-07-17,Larkspur Hotel Kitchen,YS-31379,2052.63,Check
+2026-07-18,Riverbend Bistro,YS-31321,6632.89,ACH
+2026-07-18,Harborview Oyster Bar,YS-31329,3935.00,Check
+2026-07-18,Juniper Street Cafe,YS-31441,7348.63,ACH
+2026-07-19,Larkspur Hotel Kitchen,YS-31403,6020.82,Check
+2026-07-19,Tamarack Brewing,YS-31413,3075.42,Check
+2026-07-20,Harborview Oyster Bar,YS-31356,1449.10,Check
+2026-07-21,The Saltwater Grill,YS-31416,12116.21,Check
+2026-07-21,The Saltwater Grill,YS-31443,4617.83,Check
+2026-07-21,Copper Kettle Diner,YS-31448,4684.24,ACH
+2026-07-21,Kingfisher Charters Galley,YS-31471,2632.33,ACH
+2026-07-22,The Saltwater Grill,YS-31406,2051.53,Check
+2026-07-22,Harborview Oyster Bar,YS-31431,3199.76,ACH
+2026-07-23,Pier 9 Fish House,YS-31338,4154.13,ACH
+2026-07-23,Copper Kettle Diner,YS-31460,1640.92,Check
+2026-07-24,Larkspur Hotel Kitchen,YS-31358,5380.96,ACH
+2026-07-24,Blue Heron Catering,YS-31392,7492.08,ACH
+2026-07-24,The Saltwater Grill,YS-31422,11047.54,ACH
+2026-07-24,The Saltwater Grill,YS-31432,4314.10,ACH
+2026-07-25,Riverbend Bistro,YS-31266,5608.36,Check
+2026-07-25,Copper Kettle Diner,YS-31477,3681.00,ACH
+2026-07-26,Harborview Oyster Bar,YS-31349,924.55,Check
+2026-07-26,Mossbank Country Club,YS-31384,2192.93,ACH
+2026-07-26,The Saltwater Grill,YS-31428,725.92,ACH
+2026-07-28,Blue Heron Catering,YS-31386,7432.17,Check
+2026-07-28,Larkspur Hotel Kitchen,YS-31409,5109.77,Check
+2026-07-29,Larkspur Hotel Kitchen,YS-31433,4004.06,Check
+2026-07-30,Pier 9 Fish House,YS-31305,4501.32,ACH
+2026-07-30,Mossbank Country Club,YS-31355,1948.59,ACH
+2026-07-30,Tamarack Brewing,YS-31435,2871.07,ACH
+2026-07-30,The Saltwater Grill,YS-31469,2638.41,Check
+2026-07-31,The Saltwater Grill,YS-31453,5266.71,Check
+2026-07-31,Ellington Bakeries,YS-31480,5187.81,Check
+2026-08-01,Pier 9 Fish House,YS-31439,4906.69,Check
+2026-08-01,Harborview Oyster Bar,YS-31444,7652.86,ACH
+2026-08-01,Harborview Oyster Bar,YS-31461,3259.94,ACH
+2026-08-02,Pier 9 Fish House,YS-31317,2683.26,ACH
+2026-08-02,Harborview Oyster Bar,YS-31341,6623.58,ACH
+2026-08-02,Driftwood Taqueria,YS-31436,5212.47,Check
+2026-08-02,Harborview Oyster Bar,YS-31455,5709.87,ACH
+2026-08-02,Juniper Street Cafe,YS-31485,4581.96,ACH
+2026-08-03,Harborview Oyster Bar,YS-31387,2944.25,ACH
+2026-08-03,Blue Heron Catering,YS-31440,640.25,Check
+2026-08-03,The Saltwater Grill,YS-31447,5083.97,ACH
+2026-08-03,Ellington Bakeries,YS-31505,1429.52,ACH
+2026-08-06,Harborview Oyster Bar,YS-31378,5540.24,ACH
+2026-08-07,Tamarack Brewing,YS-31446,1821.73,Check
+2026-08-08,Blue Heron Catering,YS-31474,1743.35,ACH
+2026-08-08,Riverbend Bistro,YS-31496,4514.13,Check
+2026-08-09,Mossbank Country Club,YS-31452,2256.88,ACH
+2026-08-09,Mossbank Country Club,YS-31466,2173.62,Check
+2026-08-10,Pier 9 Fish House,YS-31395,4516.63,ACH
+2026-08-10,Harborview Oyster Bar,YS-31402,5529.68,ACH
+2026-08-10,Nightjar Supper Club,YS-31528,1236.37,ACH
+2026-08-11,The Saltwater Grill,YS-31459,2597.10,Check
+2026-08-12,Juniper Street Cafe,YS-31502,7199.67,ACH
+2026-08-13,Harborview Oyster Bar,YS-31366,2255.51,Check
+2026-08-13,The Saltwater Grill,YS-31479,8968.55,Check
+2026-08-13,Copper Kettle Diner,YS-31498,1405.38,ACH
+2026-08-14,Riverbend Bistro,YS-31383,2183.66,Check
+2026-08-14,Larkspur Hotel Kitchen,YS-31462,7745.30,ACH
+2026-08-15,Blue Heron Catering,YS-31419,2574.89,Check
+2026-08-15,Harborview Oyster Bar,YS-31423,4012.23,Check
+2026-08-15,Juniper Street Cafe,YS-31534,2294.61,ACH
+2026-08-16,Larkspur Hotel Kitchen,YS-31397,2502.73,ACH
+2026-08-16,Pier 9 Fish House,YS-31407,5732.09,ACH
+2026-08-16,Pier 9 Fish House,YS-31418,963.64,ACH
+2026-08-16,Mossbank Country Club,YS-31499,3468.80,Check
+2026-08-16,Kingfisher Charters Galley,YS-31511,2684.52,ACH
+2026-08-16,Copper Kettle Diner,YS-31519,1579.41,Check
+2026-08-17,Larkspur Hotel Kitchen,YS-31438,6324.53,ACH
+2026-08-17,Larkspur Hotel Kitchen,YS-31468,1271.87,ACH
+2026-08-17,The Saltwater Grill,YS-31473,10919.32,Check
+2026-08-17,Copper Kettle Diner,YS-31544,5772.48,ACH
+2026-08-17,Driftwood Taqueria,YS-31561,3361.60,ACH
+2026-08-18,Tamarack Brewing,YS-31467,7650.87,ACH
+2026-08-18,The Saltwater Grill,YS-31488,8458.60,ACH
+2026-08-18,Tamarack Brewing,YS-31492,5722.80,ACH
+2026-08-20,Riverbend Bistro,YS-31361,6271.13,ACH
+2026-08-20,Larkspur Hotel Kitchen,YS-31450,5354.97,Check
+2026-08-20,Harborview Oyster Bar,YS-31514,1375.49,ACH
+2026-08-21,Harborview Oyster Bar,YS-31412,7026.40,ACH
+2026-08-21,Pier 9 Fish House,YS-31476,7689.35,Check
+2026-08-21,Larkspur Hotel Kitchen,YS-31486,3664.53,Check
+2026-08-21,Harborview Oyster Bar,YS-31490,7043.75,Check
+2026-08-21,Blue Heron Catering,YS-31521,3493.23,ACH
+2026-08-22,Larkspur Hotel Kitchen,YS-31420,5908.19,Check
+2026-08-23,Blue Heron Catering,YS-31489,3550.31,Check
+2026-08-23,Pier 9 Fish House,YS-31531,2217.53,ACH
+2026-08-26,Driftwood Taqueria,YS-31458,2769.75,ACH
+2026-08-26,The Saltwater Grill,YS-31493,3451.87,Check
+2026-08-27,Pier 9 Fish House,YS-31369,6130.92,Check
+2026-08-27,The Saltwater Grill,YS-31484,11715.24,ACH
+2026-08-28,Driftwood Taqueria,YS-31408,5546.55,ACH
+2026-08-28,Pier 9 Fish House,YS-31487,1762.31,ACH
+2026-08-29,Harborview Oyster Bar,YS-31475,4873.37,ACH
+2026-08-30,Riverbend Bistro,YS-31415,7532.34,ACH
+2026-08-30,Mossbank Country Club,YS-31434,5536.55,ACH
+2026-08-30,The Saltwater Grill,YS-31508,7273.33,ACH
+2026-08-30,Ellington Bakeries,YS-31562,6393.12,ACH
+2026-08-31,The Saltwater Grill,YS-31500,7303.17,Check
+2026-09-02,Riverbend Bistro,YS-31252,5752.44,ACH
+2026-09-02,Pier 9 Fish House,YS-31550,7563.67,Check
+2026-09-03,Pier 9 Fish House,YS-31221,1712.93,ACH
+2026-09-03,Pier 9 Fish House,YS-31251,6493.90,ACH
+2026-09-03,Pier 9 Fish House,YS-31451,7275.07,ACH
+2026-09-03,Blue Heron Catering,YS-31456,1684.43,Check
+2026-09-04,Copper Kettle Diner,YS-31576,1896.95,Check
+2026-09-05,Tamarack Brewing,YS-31516,2417.46,Check
+2026-09-05,The Saltwater Grill,YS-31530,5613.81,Check
+2026-09-06,Riverbend Bistro,YS-31404,1065.37,ACH
+2026-09-06,The Saltwater Grill,YS-31513,8418.85,Check
+2026-09-06,Mossbank Country Club,YS-31549,4117.02,Check
+2026-09-06,Juniper Street Cafe,YS-31563,6666.64,Check
+2026-09-06,Nightjar Supper Club,YS-31581,2880.15,ACH
+2026-09-07,Pier 9 Fish House,YS-31463,938.83,Check
+2026-09-08,Harborview Oyster Bar,YS-31495,3637.02,ACH
+2026-09-08,Copper Kettle Diner,YS-31529,3296.40,Check

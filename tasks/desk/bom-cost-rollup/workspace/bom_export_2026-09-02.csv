@@ -1,0 +1,64 @@
+﻿Ironwood Fabrication - Bill of Materials (single level, all parents)
+Printed 09/02/2026 07:41
+Parent Item,Parent Description,Rev,Status,Seq,Component,Component Description,Qty Per,UoM
+IW-4830,Workbench 48in,C,Released,10,SA-FRM48,Frame weldment 48,1,EA
+IW-4830,Workbench 48in,C,Released,20,TOP-4830,Maple butcher block top 48x30,1,EA
+IW-4830,Workbench 48in,C,Released,30,SA-DRW,Drawer unit,1,EA
+IW-4830,Workbench 48in,C,Released,40,BLT-M10,Hex bolt M10x30 zinc,8,EA
+IW-4830,Workbench 48in,C,Released,50,NUT-M10,Nylock nut M10,8,EA
+IW-6030,Workbench 60in (discontinued),B,Obsolete,10,SA-FRM48,Frame weldment 48,1,EA
+IW-6030,Workbench 60in (discontinued),B,Obsolete,20,TOP-4830,Maple butcher block top 48x30,1,EA
+IW-6030,Workbench 60in (discontinued),B,Obsolete,30,BLT-M10,Hex bolt M10x30 zinc,8,EA
+IW-7230,Workbench 72in with drawers,D,Released,10,SA-FRM72,Frame weldment 72,1,EA
+IW-7230,Workbench 72in with drawers,D,Released,20,TOP-7230,Maple butcher block top 72x30,1,EA
+IW-7230,Workbench 72in with drawers,D,Released,30,SA-DRW,Drawer unit,2,EA
+IW-7230,Workbench 72in with drawers,D,Released,40,BLT-M10,Hex bolt M10x30 zinc,12,EA
+IW-7230,Workbench 72in with drawers,D,Released,50,NUT-M10,Nylock nut M10,12,EA
+IW-MC2,Mobile cart 2-shelf,A,Released,10,SA-FRMC,Cart frame,1,EA
+IW-MC2,Mobile cart 2-shelf,A,Released,20,SA-CKT,Caster kit,1,EA
+IW-MC2,Mobile cart 2-shelf,A,Released,30,SA-SHF,Shelf assembly 48x18,2,EA
+IW-MC2,Mobile cart 2-shelf,A,Released,40,BLT-M10,Hex bolt M10x30 zinc,8,EA
+IW-SR5,Shelving rack 5-tier,B,Released,10,SA-UPR,Upright frame,2,EA
+IW-SR5,Shelving rack 5-tier,B,Released,20,SHF-4818,Steel shelf panel 48x18,5,EA
+IW-SR5,Shelving rack 5-tier,B,Released,30,BLT-M10,Hex bolt M10x30 zinc,40,EA
+IW-SR5,Shelving rack 5-tier,B,Released,40,NUT-M10,Nylock nut M10,40,EA
+IW-TS1,Tool station,A,Released,10,SA-FRM48,Frame weldment 48,1,EA
+IW-TS1,Tool station,A,Released,20,SA-PEG,Pegboard panel assembly,1,EA
+IW-TS1,Tool station,A,Released,30,SA-CKT,Caster kit,1,EA
+IW-TS1,Tool station,A,Released,40,SA-DRW,Drawer unit,3,EA
+IW-TS1,Tool station,A,Released,50,OUT-6,Power strip 6-outlet 15A,1,EA
+IW-TS1,Tool station,A,Released,60,SHF-4818,Steel shelf panel 48x18,1,EA
+SA-CKT,Caster kit,C,Released,10,CST-5,Caster 5in swivel with brake,4,EA
+SA-CKT,Caster kit,C,Released,20,BLT-M10,Hex bolt M10x30 zinc,16,EA
+SA-CKT,Caster kit,C,Released,30,NUT-M10,Nylock nut M10,16,EA
+SA-DBX,Drawer box,A,Released,10,SHT-1624,Sheet steel 16ga 24x48,0.50,EA
+SA-DBX,Drawer box,A,Released,20,PUL-01,Drawer pull 4in,1,EA
+SA-DRW,Drawer unit,A,Superseded,10,SA-DBX,Drawer box,1,EA
+SA-DRW,Drawer unit,A,Superseded,20,SLD-18L,Drawer slide 18in light duty (pair),1,EA
+SA-DRW,Drawer unit,A,Superseded,30,BLT-M10,Hex bolt M10x30 zinc,4,EA
+SA-DRW,Drawer unit,B,Released,40,SA-DBX,Drawer box,1,EA
+SA-DRW,Drawer unit,B,Released,50,SLD-18,Drawer slide 18in full extension (pair),1,EA
+SA-DRW,Drawer unit,B,Released,60,BLT-M10,Hex bolt M10x30 zinc,6,EA
+SA-FRM48,Frame weldment 48,A,Released,10,SA-LEG,Leg assembly,4,EA
+SA-FRM48,Frame weldment 48,A,Released,20,TUB-2020,Steel tube 2x2 11ga,9.50,FT
+SA-FRM48,Frame weldment 48,A,Released,30,BLT-M10,Hex bolt M10x30 zinc,8,EA
+SA-FRM72,Frame weldment 72,A,Released,10,SA-LEG,Leg assembly,4,EA
+SA-FRM72,Frame weldment 72,A,Released,20,TUB-2020,Steel tube 2x2 11ga,13.50,FT
+SA-FRM72,Frame weldment 72,A,Released,30,BLT-M10,Hex bolt M10x30 zinc,8,EA
+SA-FRMC,Cart frame,A,Released,10,TUB-1515,Steel tube 1.5x1.5 14ga,13,FT
+SA-FRMC,Cart frame,A,Released,20,ANG-1010,Steel angle 1x1 x 1/8,6,FT
+SA-FRMC,Cart frame,A,Released,30,HDL-12,Push handle 12in,1,EA
+SA-FRMC,Cart frame,A,Released,40,BLT-M10,Hex bolt M10x30 zinc,8,EA
+SA-LEG,Leg assembly,B,Released,10,TUB-2020,Steel tube 2x2 11ga,2.75,FT
+SA-LEG,Leg assembly,B,Released,20,PLT-0404,Base plate 4x4 x 1/4,1,EA
+SA-LEG,Leg assembly,B,Released,30,LEV-58,Leveling foot 5/8-11,1,EA
+SA-PEG,Pegboard panel assembly,A,Released,10,PEG-2448,Pegboard panel 24x48,1,EA
+SA-PEG,Pegboard panel assembly,A,Released,20,ANG-1010,Steel angle 1x1 x 1/8,7,FT
+SA-PEG,Pegboard panel assembly,A,Released,30,BLT-M10,Hex bolt M10x30 zinc,6,EA
+SA-SHF,Shelf assembly 48x18,A,Released,10,SHF-4818,Steel shelf panel 48x18,1,EA
+SA-SHF,Shelf assembly 48x18,A,Released,20,ANG-1010,Steel angle 1x1 x 1/8,6,FT
+SA-SHF,Shelf assembly 48x18,A,Released,30,BLT-M10,Hex bolt M10x30 zinc,4,EA
+SA-SHF,Shelf assembly 48x18,A,Released,40,NUT-M10,Nylock nut M10,4,EA
+SA-UPR,Upright frame,A,Released,10,TUB-1515,Steel tube 1.5x1.5 14ga,12,FT
+SA-UPR,Upright frame,A,Released,20,ANG-1010,Steel angle 1x1 x 1/8,3.50,FT
+SA-UPR,Upright frame,A,Released,30,PLT-0404,Base plate 4x4 x 1/4,2,EA

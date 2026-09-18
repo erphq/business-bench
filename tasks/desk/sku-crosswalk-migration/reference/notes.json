@@ -1,0 +1,56 @@
+{
+  "draft_split_groups": [
+    "BP1522",
+    "CB4442",
+    "LU9531",
+    "TS9205",
+    "TS9607"
+  ],
+  "merged_new_skus": [
+    "BP1522",
+    "BT5245",
+    "CB4442",
+    "CH2234",
+    "CH3720",
+    "CH9482",
+    "CT2853",
+    "GR1749",
+    "LU9531",
+    "TS3640",
+    "TS9205",
+    "TS9607",
+    "TU1926",
+    "TU7226",
+    "TU9340"
+  ],
+  "not_stocked_new_skus": [
+    "GR3089",
+    "CO8285",
+    "CO6895",
+    "BT9327",
+    "LT8861"
+  ],
+  "padded_in_merged": [
+    "BP1522",
+    "CH3720",
+    "CH9482",
+    "CT2853",
+    "GR1749",
+    "TS3640"
+  ],
+  "price_not_first": [
+    "CH3720",
+    "CT2853",
+    "LU9531",
+    "TS3640",
+    "TS9205"
+  ],
+  "unmapped": [
+    "ZBW-SOCK-SM",
+    "ZBW-CAP-CYC",
+    "ZBW-BOTTLE-21",
+    "ZBW-TEE-M",
+    "ZBW-TEE-L",
+    "ZBW-STICKER"
+  ]
+}

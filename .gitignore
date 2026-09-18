@@ -1,0 +1,15 @@
+.venv/
+.venv312/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+!.env.example
+homes/
+results/*
+!results/latest/
+tmp/
+output/
+node_modules/
+docker/proto-runtime/

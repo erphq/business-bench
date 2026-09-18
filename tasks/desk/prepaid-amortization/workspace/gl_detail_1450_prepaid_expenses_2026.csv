@@ -1,0 +1,14 @@
+Brightline Commercial Cleaning LLC
+General Ledger - 1450 Prepaid Expenses
+January 1 - December 31, 2026
+
+Date,Transaction Type,Num,Name,Memo/Description,Debit,Credit,Balance
+,,,,Beginning Balance,,,"10,725.08"
+01/09/2026,Bill Payment (Check),8259,Northwest Cleaning Contractors Assn,NWCCA-2026 2026 membership dues 01/01/26-12/31/26,"2,650.00",,"13,375.08"
+01/26/2026,Bill Payment (Check),8311,Summit Specialty Underwriters,SSU-32289 inland marine floater 02/01/26-01/31/27,"3,588.00",,"16,963.08"
+03/14/2026,Bill Payment (Check),8363,Keystone Commercial Auto,KCA-253075 commercial auto policy 03/19/26-03/18/27,"25,522.00",,"42,485.08"
+03/25/2026,Bill Payment (Check),8423,Cascadia Workers' Comp Fund,WC-746930 workers' compensation policy 04/01/26-03/31/27,"11,779.00",,"54,264.08"
+05/19/2026,Bill Payment (Check),8443,ScrubPro Equipment Service,SP-3407 floor equipment service contract 06/01/26-05/31/27,"5,770.00",,"60,034.08"
+08/03/2026,Bill Payment (Check),8493,Riverside Industrial Properties,Security deposit - Unit 4 warehouse lease,"5,400.00",,"65,434.08"
+09/06/2026,Deposit,,Summit Specialty Underwriters,Return premium - SSU-32289 cancelled eff 08/12/26,,"1,445.54","63,988.54"
+,,,,Total for 1450 Prepaid Expenses,"54,709.00","1,445.54","63,988.54"

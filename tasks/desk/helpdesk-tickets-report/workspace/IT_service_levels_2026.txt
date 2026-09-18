@@ -1,0 +1,28 @@
+Meridian Title - IT service levels
+Effective 1 January 2026. Replaces the 2024 document.
+
+1. Priorities
+
+P1 Critical  - a branch or a closing cannot proceed. The old helpdesk called this Urgent and imported
+               tickets still show it that way.
+P2 High      - one person cannot work, or a deadline today is at risk.
+P3 Normal    - everything else with a workaround. Tickets raised from the web form show Medium.
+P4 Low       - requests and questions.
+
+2. Resolution targets
+
+P1   4 business hours
+P2   8 business hours
+P3  24 business hours
+P4  40 business hours
+
+3. Business hours
+
+Monday to Friday, 08:00 to 18:00 local time. The clock only runs inside business hours. A ticket opened
+in the evening or at the weekend starts its clock when we next open. Company holidays are not business
+days; in the first half of 2026 those are 1 January, 19 January, 16 February and 25 May (Memorial Day).
+
+4. What counts as a breach
+
+A ticket breaches when it is resolved after its target. Time to resolve is measured from Created to
+Resolved in business hours.

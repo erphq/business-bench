@@ -1,0 +1,10 @@
+September utilization, please, same as we talk about it in partner meetings: billable hours divided by the hours
+each person was actually available.
+
+Available hours are the working days in the month times the person's standard day - their standard week from the
+HR roster divided by five. Working days are weekdays the office is open, less any approved leave. Anyone who
+started this month is counted from their start date. Mei is admin and is not on the report.
+
+One row per person with their available hours, billable hours and utilization, and a firm total at the bottom.
+
+Dana

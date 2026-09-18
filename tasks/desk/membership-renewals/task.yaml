@@ -1,0 +1,64 @@
+id: membership-renewals
+track: desk
+category: spreadsheet
+title: October renewal letters and the lapsed list
+ask: |
+  Leila needs this month's letter lists: who is due to renew in October and who has lapsed. Work it out from the membership export and save renewals.csv - her note has the museum's rules.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the grace rule: annual members stay members for 30 days after expiration and sustainers for 10 days after their paid-through date, and anyone in grace is on neither list; the export's Status says Expired the day after expiry, so filtering on it lists 14 annual members who are still in grace (checks: members on the list; row count)
+- |-
+  grace days count from the day after expiry: the member who expired on 2026-08-16 is in grace through 2026-09-15 (the report date) and stays off, while the one who expired on 2026-08-15 is lapsed; ending grace on day 30 lists the first, and waiting until more than 31 days have passed misses the second (checks: members on the list; list per member)
+- |-
+  monthly sustainers have a blank Expiration and always show Active; they are paid through one month after the last charge and lapse 10 days later, so 3 who stopped paying are lapsed (the boundary sustainer charged 2026-08-05 is still in grace), and the one who stopped in October 2025 looks due for October under an annual reading (checks: list per member; expiry dates)
+- |-
+  3 comped memberships (board, volunteers, honorary) would be due or lapsed and get no letter (check: members on the list)
+- |-
+  two members upgraded and left an old record under another member number with the same email (one in capitals); the old Individual record looks lapsed and the old Dual record looks due in October (check: members on the list)
+- |-
+  last month's September mailing list sits in the folder as a distractor, and the export has a two-line preamble, a BOM and CRLF endings (check: members on the list)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: renewals.csv
+  columns:
+  - member_id
+  - name
+  - email
+  - list
+  - expires
+- type: csv_set_equal
+  name: members on the list
+  path: renewals.csv
+  column: member_id
+  ref: renewals.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: renewals.csv
+  equals_ref: renewals.csv
+- type: csv_values_match
+  name: list per member
+  path: renewals.csv
+  ref: renewals.csv
+  key: member_id
+  columns:
+  - list
+  min_accuracy: 1.0
+  must_match_keys:
+  - HC-4113
+  - HC-4314
+  - HC-4530
+  - HC-4107
+- type: csv_values_match
+  name: expiry dates
+  path: renewals.csv
+  ref: renewals.csv
+  key: member_id
+  columns:
+  - expires
+  min_accuracy: 1.0

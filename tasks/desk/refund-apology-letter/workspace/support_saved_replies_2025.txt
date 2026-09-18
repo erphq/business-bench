@@ -1,0 +1,22 @@
+SAVED REPLIES - support inbox (updated March 2025)
+==================================================
+
+[Damaged item - refund]
+Hi {first name},
+
+I'm so sorry your {item} arrived damaged! We've refunded the item and your original shipping, and we've added a $15 store credit to your account for the trouble. Refunds take 7-10 business days to process. No need to send anything back.
+
+[Damaged item - replacement]
+Hi {first name},
+
+Sorry about that! A replacement {item} ships today and you'll get tracking by email. Keep or recycle the damaged one.
+
+[Late delivery]
+Hi {first name},
+
+Thanks for your patience. Carriers have been slow this season. As a thank-you, here is a code for 10% off your next order: SORRY10.
+
+[Where is my refund]
+Hi {first name},
+
+Refunds take 7-10 business days to process, and then your bank may need a few more days.

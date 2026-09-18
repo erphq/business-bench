@@ -1,0 +1,32 @@
+{
+  "annual_grace_boundary_in": [
+    "HC-4442"
+  ],
+  "annual_grace_boundary_lapsed": [
+    "HC-4113"
+  ],
+  "comps": [
+    "HC-4209",
+    "HC-4338",
+    "HC-4428",
+    "HC-4496",
+    "HC-4510",
+    "HC-4512",
+    "HC-4540",
+    "HC-4562",
+    "HC-4585",
+    "HC-4591"
+  ],
+  "due": 12,
+  "lapsed": 12,
+  "monthly_lapsed": [
+    "HC-4314",
+    "HC-4530",
+    "HC-4107"
+  ],
+  "report_date": "2026-09-15",
+  "superseded": [
+    "HC-4455",
+    "HC-4505"
+  ]
+}

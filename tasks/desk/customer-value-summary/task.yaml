@@ -1,0 +1,82 @@
+id: customer-value-summary
+track: desk
+category: spreadsheet
+title: Lifetime value per customer from the shop export
+ask: |
+  Maya wants lifetime value for every customer before the loyalty launch. Work it out from the order export and save customer_value.csv - her note explains the ids, refunds and test orders.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the export has one row per line item; Financial Status, Total, Refunded Amount and Tags are only on an order's first row, so counting rows counts line items, not orders (check: order count)
+- |-
+  customer ids changed in the March 2025 migration and in account merges; one customer went SQ id -> an intermediate id -> today's id, so a single lookup of the change file leaves their oldest orders under a dead id (checks: customer list; lifetime value; first and last order)
+- |-
+  partial refunds come off the order, and a fully refunded order counts for nothing - including when it is a customer's first or last order, which moves their dates (checks: lifetime value; first and last order)
+- |-
+  test orders are both the ops@nightjar.coffee account (only half of its orders carry a test tag) and two tagged test orders on a real customer's account (checks: customer list; order count)
+- 'voided orders have a Total but were never paid (check: order count)'
+- |-
+  the June customers export has Orders Count and Total Spent columns that look like the answer but are stale, gross of refunds and split across old ids (check: lifetime value)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: customer_value.csv
+  columns:
+  - customer_id
+  - first_order
+  - last_order
+  - orders
+  - lifetime_value
+- type: csv_set_equal
+  name: customer list
+  path: customer_value.csv
+  column: customer_id
+  ref: customer_value.csv
+- type: csv_row_count
+  name: row count
+  path: customer_value.csv
+  equals_ref: customer_value.csv
+- type: csv_values_match
+  name: order count
+  path: customer_value.csv
+  ref: customer_value.csv
+  key: customer_id
+  columns:
+  - orders
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - '7391096787'
+  - '7378795832'
+  - '7377303096'
+  - '7365289435'
+  - '7363300491'
+  - '7375242487'
+  - '7391180437'
+  - '7304884456'
+  - '7329589712'
+  - '7316628927'
+  - '7316065254'
+- type: csv_values_match
+  name: lifetime value
+  path: customer_value.csv
+  ref: customer_value.csv
+  key: customer_id
+  columns:
+  - lifetime_value
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys: *id001
+- type: csv_values_match
+  name: first and last order
+  path: customer_value.csv
+  ref: customer_value.csv
+  key: customer_id
+  columns:
+  - first_order
+  - last_order
+  min_accuracy: 1.0
+  must_match_keys: *id001

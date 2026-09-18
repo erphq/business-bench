@@ -1,0 +1,60 @@
+{
+  "naive": {
+    "cancel": {
+      "aspen_jan": 0.5769,
+      "fox_feb": 0.6957,
+      "total_nights": 296,
+      "total_occ": 0.7031
+    },
+    "cancelled_block": {
+      "aspen_jan": 0.5769,
+      "fox_feb": 0.6957,
+      "total_nights": 247,
+      "total_occ": 0.5923
+    },
+    "checkin": {
+      "aspen_jan": 0.5385,
+      "fox_feb": 0.6957,
+      "total_nights": 240,
+      "total_occ": 0.5701
+    },
+    "inclusive": {
+      "aspen_jan": 0.5769,
+      "fox_feb": 0.7619,
+      "total_nights": 247,
+      "total_occ": 0.5938
+    },
+    "no_blocks": {
+      "aspen_jan": 0.5769,
+      "fox_feb": 0.5714,
+      "total_nights": 247,
+      "total_occ": 0.5614
+    },
+    "owner": {
+      "aspen_jan": 0.6452,
+      "fox_feb": 0.6957,
+      "total_nights": 257,
+      "total_occ": 0.5963
+    }
+  },
+  "rate_pins": [
+    [
+      "Fox Den Cabin",
+      "2026-02",
+      0.6957
+    ],
+    [
+      "Aspen Hollow",
+      "2026-01",
+      0.5769
+    ],
+    [
+      "total",
+      "Q1",
+      0.5867
+    ]
+  ],
+  "total_available": 421,
+  "total_nights": 247,
+  "total_occupancy": 0.5867
+}

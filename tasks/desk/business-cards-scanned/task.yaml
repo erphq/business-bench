@@ -1,0 +1,100 @@
+id: business-cards-scanned
+track: desk
+category: extraction
+title: CRM contacts from the scanned expo business cards
+ask: |
+  Jess scanned the business cards from the expo. Can you turn them into contacts.csv for the CRM? Her note says how marketing wants it.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  titles vs names: the Morgan Hale card prints 'VP, Business Development' above the person's name and the company is named like a person, and the Halcyon and Northshore cards carry 'Dr' and ', P.Eng.' around the name (checks: names; titles and companies)
+- |-
+  the French card prints the surname first in capitals ('LAURENT Camille' style), so the first line is not first name then last name (check: names)
+- |-
+  two phones with different labels on each card (T/M, Main/Mobile, Standard/Mob, Desk/Mobile, Switchboard/Mobile, Mobile/Office); the Kapoor Farah and Southern Lux cards print the mobile first, the Pennine card has an F fax line and no mobile, and the Brightline card has only a Ph number marked (mobile) (checks: office phones; mobile phones)
+- |-
+  international format: UK and French numbers print '+44 (0)20' and '+33 (0)4' with a trunk zero E.164 drops, the Australian and one London card print domestic numbers ('(02) 5550 1234', '0491 570 156', '020 7946 0123') that need +61 and +44, and North American numbers need +1 (checks: office phones; mobile phones)
+- 'the Halcyon Acoustics card was scanned twice (checks: one row per contact; row count)'
+- |-
+  every card is a small image-only scan with no text layer (checks: names; one row per contact)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: contacts.csv
+  columns:
+  - email
+  - first_name
+  - last_name
+  - title
+  - company
+  - office_phone
+  - mobile_phone
+  - country
+- type: csv_set_equal
+  name: one row per contact
+  path: contacts.csv
+  column: email
+  ref: contacts.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: contacts.csv
+  equals_ref: contacts.csv
+- type: csv_values_match
+  name: names
+  path: contacts.csv
+  ref: contacts.csv
+  key: email
+  columns:
+  - first_name
+  - last_name
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: titles and companies
+  path: contacts.csv
+  ref: contacts.csv
+  key: email
+  columns:
+  - title
+  - company
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: office phones
+  path: contacts.csv
+  ref: contacts.csv
+  key: email
+  columns:
+  - office_phone
+  normalize:
+  - digits
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: mobile phones
+  path: contacts.csv
+  ref: contacts.csv
+  key: email
+  columns:
+  - mobile_phone
+  normalize:
+  - digits
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: countries
+  path: contacts.csv
+  ref: contacts.csv
+  key: email
+  columns:
+  - country
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - chloe@kfarchitects.example
+  - nadia@brightlineelectric.example

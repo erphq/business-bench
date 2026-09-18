@@ -1,0 +1,23 @@
+Amazon inventory upload - how we do it (Carlos)
+
+We use the Inventory Loader because everything we sell already has a product page on Amazon; this file only
+attaches our offer to it. Use Inventory_Loader_template.csv, those columns in that order, one row per product.
+
+sku                    our Shop SKU, exactly.
+product-id             the Amazon ID from the sheet: either an ASIN (10 characters, starts with B) or a UPC
+                       (12 digits). Never our shop SKU. A product with no Amazon ID can't go in this file at
+                       all (it needs a full listing), so leave it out.
+product-id-type        what kind of ID product-id is: 1 = ASIN, 2 = ISBN, 3 = UPC, 4 = EAN.
+price                  our Amazon price, not the shelf price. Items we ship ourselves: shelf price + $6.00 to
+                       cover shipping. FBA items: shelf price + 12% to cover Amazon's fees, to the cent. In-store
+                       sale prices never go on Amazon.
+item-condition         Amazon's code: 11 = New, 1 = Used; Like New, 2 = Used; Very Good, 3 = Used; Good,
+                       4 = Used; Acceptable, 10 = Refurbished. Amazon does not allow anything that has been opened
+                       to be sold as New, so open box goes up as Used; Like New. We are NOT approved for Amazon
+                       Renewed, which is the only way to sell refurbished, so refurbished items stay off Amazon.
+quantity               for items we ship: On Hand minus what is Held for Store customers, never less than 0.
+                       For FBA items leave it blank; Amazon counts what is in their warehouse.
+add-delete             a to add or update. Discontinued products are still live on Amazon from last year's upload,
+                       so keep them in the file, filled in as usual, with d so Amazon takes the offer down.
+item-note              the condition notes, blank for new items.
+fulfillment-center-id  DEFAULT for items we ship, AMAZON_NA for FBA.

@@ -1,0 +1,16 @@
+Calendar file for the website - fall
+
+Can we get the fall schedule into one calendar file (.ics) so people can click "add to calendar"
+on the website? Only fall - summer is done.
+
+- Event name exactly as the class is written on the schedule.
+- We're in Denver, so times are Mountain time unless the row says otherwise. PLEASE put the time
+  zone on the events. Last spring's file (spring_2026_classes.ics, still in the folder) didn't have
+  one and after the clocks changed everybody's phone showed puppy class an hour off.
+- Weekly classes should be ONE repeating event, not a separate event for every week, so people add
+  the whole series in one go. The repeat should stop when the class ends.
+- If a week is cancelled it must not show up on anyone's calendar.
+- Test day and the fun match are all-day things - all-day events, not midnight to midnight.
+- Location from the Location column. The instructor can go in the description.
+
+Thanks! - Jess

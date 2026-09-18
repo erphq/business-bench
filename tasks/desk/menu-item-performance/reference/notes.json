@@ -1,0 +1,143 @@
+{
+  "comps": 68,
+  "naive": {
+    "count_voids": {
+      "Breakfast Sandwich": {
+        "cost": 824.25,
+        "margin": 1493.25,
+        "qty": 223,
+        "sales": 2317.5
+      },
+      "Cold Brew": {
+        "cost": 159.12,
+        "margin": 730.6,
+        "qty": 201,
+        "sales": 889.72
+      },
+      "Latte": {
+        "cost": 355.02,
+        "margin": 1176.89,
+        "qty": 282,
+        "sales": 1531.91
+      },
+      "Smashed Avocado Toast": {
+        "cost": 679.5,
+        "margin": 1274.5,
+        "qty": 181,
+        "sales": 1954.0
+      }
+    },
+    "drop_comps": {
+      "Breakfast Sandwich": {
+        "cost": 792.45,
+        "margin": 1525.05,
+        "qty": 215,
+        "sales": 2317.5
+      },
+      "Cold Brew": {
+        "cost": 149.82,
+        "margin": 739.9,
+        "qty": 189,
+        "sales": 889.72
+      },
+      "Latte": {
+        "cost": 343.83,
+        "margin": 1188.08,
+        "qty": 273,
+        "sales": 1531.91
+      },
+      "Smashed Avocado Toast": {
+        "cost": 641.6,
+        "margin": 1312.4,
+        "qty": 171,
+        "sales": 1954.0
+      }
+    },
+    "gross": {
+      "Breakfast Sandwich": {
+        "cost": 811.9,
+        "margin": 1605.1,
+        "qty": 220,
+        "sales": 2417.0
+      },
+      "Cold Brew": {
+        "cost": 156.72,
+        "margin": 788.88,
+        "qty": 198,
+        "sales": 945.6
+      },
+      "Latte": {
+        "cost": 353.57,
+        "margin": 1253.28,
+        "qty": 281,
+        "sales": 1606.85
+      },
+      "Smashed Avocado Toast": {
+        "cost": 667.2,
+        "margin": 1376.3,
+        "qty": 178,
+        "sales": 2043.5
+      }
+    },
+    "no_mods": {
+      "Breakfast Sandwich": {
+        "cost": 682.0,
+        "margin": 1322.5,
+        "qty": 220,
+        "sales": 2004.5
+      },
+      "Cold Brew": {
+        "cost": 138.6,
+        "margin": 698.4,
+        "qty": 198,
+        "sales": 837.0
+      },
+      "Latte": {
+        "cost": 309.1,
+        "margin": 1097.95,
+        "qty": 281,
+        "sales": 1407.05
+      },
+      "Smashed Avocado Toast": {
+        "cost": 640.8,
+        "margin": 1229.2,
+        "qty": 178,
+        "sales": 1870.0
+      }
+    },
+    "split_rename": {
+      "Avocado Toast": {
+        "cost": 276.0,
+        "margin": 536.5,
+        "qty": 74,
+        "sales": 812.5
+      },
+      "Breakfast Sandwich": {
+        "cost": 811.9,
+        "margin": 1505.6,
+        "qty": 220,
+        "sales": 2317.5
+      },
+      "Cold Brew": {
+        "cost": 156.72,
+        "margin": 733.0,
+        "qty": 198,
+        "sales": 889.72
+      },
+      "Latte": {
+        "cost": 353.57,
+        "margin": 1178.34,
+        "qty": 281,
+        "sales": 1531.91
+      },
+      "Smashed Avocado Toast": {
+        "cost": 391.2,
+        "margin": 750.3,
+        "qty": 104,
+        "sales": 1141.5
+      }
+    }
+  },
+  "total_margin": 10834.98,
+  "voids": 26
+}

@@ -1,0 +1,18 @@
+From: Renata Oyelaran <renata.oyelaran@everline.com>
+To: you
+Date: Mon, 14 Sep 2026 10:22
+Subject: Revised schedule for week of 9/21 - notices
+
+The revised schedule for next week came out of WFM this morning (the rev2 export). Can you write the change
+notices? Rules:
+
+- Only people whose shifts actually changed get a notice. If someone's week is the same, no file for them.
+- In each notice list only the shifts that changed: the day, the old time and the new time. Added and dropped
+  shifts count. Don't list the rest of their week.
+- WFM exports in UTC. Our agents think in their office's local time, so put times in local time and say which
+  time zone.
+- Queue changes are handled separately by the team leads, they are not schedule changes.
+- One file per person in a notices folder, named first-last in lower case, e.g. notices/dana-cruz.md
+
+Thanks,
+Renata

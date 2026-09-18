@@ -1,0 +1,88 @@
+﻿WO #,Product,Qty,Line,Status,Start Date,Due Date,Completed On,Qty Completed,Supervisor,Notes
+WO-3101,CRT-1827-2S,35,Line 2 - Carts,Cancelled,2026-03-06,3/12/2026,,0,Sam Whitaker,rush
+WO-3102,TBL-3060,14,Line 1,Completed,Mar 9 2026,19-Mar-26,18-Mar-26,14,Dale Pruitt,
+WO-3103,SHF-1848-4T,120,Line 3,Complete,Mar 9 2026,2026-03-17,Mar 16 2026,120,Grace Liu,customer pickup
+WO-3104,SHF-2460-4T,80,Line 3,Complete,Mar 11 2026,2026-03-21,Mar 22 2026,80,Grace Liu,
+WO-3105,DOL-1818,55,Line 2 - Carts,Closed,16-Mar-26,2026-03-29,2026-03-28,55,Sam Whitaker,customer pickup
+WO-3106,SHF-2448-4T,45,Shelving,Complete,20-Mar-26,25-Mar-26,2026-03-24,45,Grace Liu,rush
+WO-3107,SHF-1848-4T,50,Line 3,Complete,20-Mar-26,Mar 31 2026,2026-04-01,50,Grace Liu,weld rework on 2 units
+WO-3108,TBL-3072,6,L1,Complete,2026-03-23,05-Apr-26,2026-04-05,6,Dale Pruitt,split from larger order
+WO-3174,CRT-2436-2S,10,Line 2 - Carts,In Progress,8/28/2026,Sep 9 2026,,0,Sam Whitaker,split from larger order
+WO-3109,CRT-UTIL-HD,10,Line 2 - Carts,Completed,2026-03-25,2026-04-04,04-Apr-26,10,Sam Whitaker,short on cartons - substituted
+WO-3110,CRT-2436-2S,20,Line 2,Completed,Mar 25 2026,2026-04-01,03-Apr-26,20,Sam Whitaker,
+WO-3111,SNK-1C18,12,Line 1 - Tables,Completed,3/27/2026,Apr 8 2026,4/8/2026,12,Dale Pruitt,short on cartons - substituted
+WO-3112,CRT-2436-2S,40,L2,Closed,Apr 2 2026,17-Apr-26,4/17/2026,40,Sam Whitaker,weld rework on 2 units
+WO-3113,SHF-WALL-36,35,Line 3 - Shelving,Completed,2026-04-07,4/14/2026,2026-04-11,35,Grace Liu,customer pickup
+WO-3114,SHF-WALL-36,70,Line 3 - Shelving,Completed,2026-04-10,21-Apr-26,Apr 26 2026,70,Grace Liu,short on cartons - substituted
+WO-3115,CRT-1827-3S,35,Line 2 - Carts,Completed,12-Apr-26,Apr 23 2026,24-Apr-26,35,Sam Whitaker,rush
+WO-3116,DOL-1818,40,Line 2 - Carts,Completed,4/16/2026,23-Apr-26,2026-04-22,40,Sam Whitaker,
+WO-3117,CRT-1827-3S,15,L2,Complete,4/16/2026,4/25/2026,22-Apr-26,15,Sam Whitaker,
+WO-3118,CRT-UTIL-HD,30,L2,Completed,Apr 17 2026,2026-04-24,2026-04-24,30,Sam Whitaker,
+WO-3119,TBL-EQ-2430,26,Line 1 - Tables,Closed,19-Apr-26,24-Apr-26,Apr 21 2026,26,Dale Pruitt,split from larger order
+WO-3120,TBL-3060,28,L1,Completed,21-Apr-26,4/28/2026,2026-04-27,28,Dale Pruitt,
+WO-3121,CRT-2436-2S,25,Line 2,Completed,22-Apr-26,29-Apr-26,01-May-26,25,Sam Whitaker,weld rework on 2 units
+WO-3122,TBL-3060,22,Line 1 - Tables,Completed,2026-04-24,Apr 30 2026,01-May-26,22,Dale Pruitt,
+WO-3123,SHF-DUN-2036,25,Line 3 - Shelving,Complete,Apr 25 2026,5/7/2026,5/4/2026,25,Grace Liu,short on cartons - substituted
+WO-3124,SNK-1C18,28,L1,Completed,5/3/2026,14-May-26,14-May-26,28,Dale Pruitt,
+WO-3125,SHF-2448-4T,35,Line 3 - Shelving,Completed,10-May-26,May 25 2026,2026-05-25,35,Grace Liu,customer pickup
+WO-3126,SHF-2460-4T,10,Line 3,Completed,5/20/2026,29-May-26,28-May-26,10,Grace Liu,rush
+WO-3127,SHF-1836-5T,70,Shelving,Completed,5/20/2026,5/30/2026,May 30 2026,70,Grace Liu,rush
+WO-3128,SHF-DUN-2036,40,Line 3 - Shelving,Closed,5/20/2026,6/3/2026,Jun 1 2026,40,Grace Liu,short on cartons - substituted
+WO-3129,SNK-1C18,14,Line 1 - Tables,Completed,May 23 2026,5/28/2026,2026-05-28,14,Dale Pruitt,customer pickup
+WO-3130,TBL-2448,28,Line 1 - Tables,Completed,2026-05-26,31-May-26,5/30/2026,28,Dale Pruitt,rush
+WO-3131,TBL-3060,6,L1,Closed,5/28/2026,12-Jun-26,17-Jun-26,6,Dale Pruitt,split from larger order
+WO-3132,TBL-3060,22,Line 1 - Tables,Complete,2026-05-29,2026-06-06,07-Jun-26,22,Dale Pruitt,
+WO-3133,TBL-EQ-2430,18,Line 1 - Tables,Complete,2026-05-31,Jun 10 2026,Jun 12 2026,18,Dale Pruitt,rush
+WO-3134,CRT-BUS-3S,25,Line 2 - Carts,Completed,01-Jun-26,12-Jun-26,6/17/2026,25,Sam Whitaker,short on cartons - substituted
+WO-3135,CRT-BUS-3S,10,Line 2 - Carts,Complete,2026-06-03,6/18/2026,6/18/2026,10,Sam Whitaker,short on cartons - substituted
+WO-3136,SNK-1C18,12,Line 1 - Tables,Completed,2026-06-04,Jun 10 2026,15-Jun-26,12,Dale Pruitt,
+WO-3137,SNK-1C18,24,Line 1,Closed,6/7/2026,2026-06-16,2026-06-15,24,Dale Pruitt,split from larger order
+WO-3138,TBL-3048,18,Line 1,Closed,6/8/2026,2026-06-19,2026-06-19,18,Dale Pruitt,short on cartons - substituted
+WO-3139,CRT-BUS-3S,35,Line 2 - Carts,Completed,Jun 10 2026,2026-06-24,6/25/2026,35,Sam Whitaker,
+WO-3140,CRT-BUS-3S,25,L2,Completed,2026-06-13,2026-06-27,7/2/2026,25,Sam Whitaker,customer pickup
+WO-3141,CRT-UTIL-HD,15,L2,Closed,14-Jun-26,6/22/2026,6/22/2026,15,Sam Whitaker,
+WO-3142,RCK-PAN-20,20,Line 3 - Shelving,Closed,6/16/2026,29-Jun-26,2026-06-30,20,Grace Liu,customer pickup
+WO-3143,CRT-1827-3S,30,Carts,Completed,2026-06-21,01-Jul-26,Jun 29 2026,30,Sam Whitaker,
+WO-3144,TBL-3048,26,Line 1 - Tables,Closed,6/23/2026,2026-07-07,06-Jul-26,26,Dale Pruitt,rush
+WO-3145,CRT-UTIL-HD,50,Line 2 - Carts,Completed,26-Jun-26,7/3/2026,2026-07-08,50,Sam Whitaker,rush
+WO-3146,CRT-1827-3S,40,Carts,Complete,Jul 4 2026,7/14/2026,2026-07-14,40,Sam Whitaker,rush
+WO-3147,CRT-BUS-3S,50,Line 2 - Carts,Completed,2026-07-04,Jul 18 2026,Jul 17 2026,50,Sam Whitaker,weld rework on 2 units
+WO-3148,DOL-1818,25,Line 2 - Carts,Completed,7/5/2026,7/15/2026,20-Jul-26,25,Sam Whitaker,weld rework on 2 units
+WO-3149,CRT-UTIL-HD,20,L2,Closed,16-Jul-26,2026-07-25,7/25/2026,20,Sam Whitaker,
+WO-3150,TBL-3072,20,Tables,Complete,Jul 16 2026,2026-07-26,7/24/2026,20,Dale Pruitt,split from larger order
+WO-3151,SHF-2460-4T,15,Line 3,Complete,18-Jul-26,27-Jul-26,28-Jul-26,15,Grace Liu,rush
+WO-3152,TBL-2448,24,L1,Completed,22-Jul-26,7/31/2026,Aug 1 2026,24,Dale Pruitt,rush
+WO-3153,CRT-1827-2S,30,Line 2 - Carts,Completed,24-Jul-26,Jul 30 2026,7/29/2026,30,Sam Whitaker,weld rework on 2 units
+WO-3154,TBL-EQ-2430,10,Line 1 - Tables,Completed,7/28/2026,8/6/2026,2026-08-05,10,Dale Pruitt,split from larger order
+WO-3123,SHF-DUN-2036,25,Line 3 - Shelving,Complete,Apr 25 2026,5/7/2026,5/4/2026,25,Grace Liu,short on cartons - substituted
+WO-3155,RCK-PAN-20,20,Line 3 - Shelving,Completed,2026-07-28,Aug 9 2026,09-Aug-26,20,Grace Liu,
+WO-3156,SHF-2448-4T,20,Line 3 - Shelving,Completed,30-Jul-26,11-Aug-26,8/12/2026,20,Grace Liu,
+WO-3157,DOL-1818,35,Line 2,Complete,8/1/2026,10-Aug-26,8/9/2026,35,Sam Whitaker,
+WO-3158,CRT-1827-2S,55,L2,Closed,Aug 2 2026,8/15/2026,Aug 16 2026,55,Sam Whitaker,short on cartons - substituted
+WO-3159,SHF-2460-4T,60,L3,Completed,05-Aug-26,8/20/2026,20-Aug-26,60,Grace Liu,
+WO-3160,CRT-UTIL-HD,40,Line 2 - Carts,Completed,08-Aug-26,2026-08-17,2026-08-15,40,Sam Whitaker,
+WO-3161,CRT-2436-2S,40,L2,Void,Aug 8 2026,8/23/2026,,0,Sam Whitaker,
+WO-3162,SHF-1836-5T,20,Line 3 - Shelving,Completed,Aug 12 2026,25-Aug-26,25-Aug-26,20,Grace Liu,
+WO-3163,SNK-3C18,12,Line 1 - Tables,Complete,Aug 12 2026,23-Aug-26,20-Aug-26,12,Dale Pruitt,rush
+WO-3164,SNK-1C18,4,Tables,In Progress,Aug 17 2026,29-Aug-26,,0,Dale Pruitt,
+WO-3165,CRT-2436-2S,25,L2,WIP,8/19/2026,26-Aug-26,,0,Sam Whitaker,
+WO-3166,SHF-DUN-2036,40,Line 3 - Shelving,WIP,22-Aug-26,9/4/2026,,0,Grace Liu,weld rework on 2 units
+WO-3167,TBL-2448,10,L1,Rel.,Aug 22 2026,2026-08-29,,0,Dale Pruitt,split from larger order
+WO-3168,DOL-1818,50,Line 2 - Carts,Rel.,2026-08-24,2026-09-02,,0,Sam Whitaker,short on cartons - substituted
+WO-3169,SHF-2460-4T,75,Line 3 - Shelving,Completed,2026-08-24,03-Sep-26,02-Sep-26,75,Grace Liu,customer pickup
+3131,TBL-3060,6,L1,Closed,5/28/2026,12-Jun-26,17-Jun-26,6,Dale Pruitt,split from larger order
+WO-3170,TBL-EQ-2430,28,Tables,In Progress,2026-08-24,9/6/2026,,0,Dale Pruitt,
+WO-3171,CRT-1827-2S,30,Line 2,WIP,2026-08-25,30-Aug-26,,0,Sam Whitaker,customer pickup
+WO-3172,SHF-2448-4T,15,Line 3 - Shelving,Complete,Aug 25 2026,9/6/2026,05-Sep-26,15,Grace Liu,
+WO-3173,RCK-PAN-20,75,Line 3 - Shelving,In Progress,2026-08-27,Sep 11 2026,,0,Grace Liu,customer pickup
+WO-3174,CRT-2436-2S,10,Line 2 - Carts,In Progress,8/28/2026,Sep 9 2026,,0,Sam Whitaker,split from larger order
+WO-3175,DOL-1818,15,Line 2,In Progress,30-Aug-26,9/5/2026,,0,Sam Whitaker,weld rework on 2 units
+WO-3176,SHF-2460-4T,45,Line 3 - Shelving,Closed,2026-08-30,9/12/2026,11-Sep-26,45,Grace Liu,
+WO-3177,DOL-1818,50,Line 2,Rel.,9/2/2026,9/7/2026,,0,Sam Whitaker,customer pickup
+WO-3178,CRT-UTIL-HD,40,Carts,In Progress,2026-09-06,9/13/2026,,0,Sam Whitaker,short on cartons - substituted
+WO-3179,TBL-2448,20,Line 1 - Tables,Released,2026-09-12,27-Sep-26,,0,Dale Pruitt,
+WO-3180,CRT-2436-2S,25,Line 2 - Carts,planned,2026-09-20,9/29/2026,,0,Sam Whitaker,
+WO-3181,SHF-2460-4T,65,Line 3 - Shelving,Planned,2026-09-20,9/17/2026,,0,Grace Liu,customer pickup
+WO-3182,TBL-3072,30,Line 1 - Tables,Released,2026-09-20,Sep 29 2026,,0,Dale Pruitt,short on cartons - substituted
+WO-3183,CRT-UTIL-HD,30,Carts,planned,Sep 21 2026,01-Oct-26,,0,Sam Whitaker,split from larger order
+WO-3184,TBL-3048,30,Tables,Planned,2026-09-22,Sep 27 2026,,0,Dale Pruitt,

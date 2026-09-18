@@ -1,0 +1,67 @@
+id: grant-budget-tracking
+track: desk
+category: bookkeeping
+title: Grant budget tracking for the board packet
+ask: |
+  The board packet needs where we stand on each grant budget through August. Nia's cheat sheet on the award terms is in the folder with the budgets and the expense export. Save it as grant_tracking.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the program coordinator's wages are split 'SCWF-PER 60% / CPCG-STI 40%' every month from March and the JE-2347 bus is split 70/30; each grant carries only its percentage (the first listed rounded to the cent, the last taking the remainder), so charging the whole amount to the first code listed moves both lines (checks: restoration personnel remaining; coordinator stipend remaining)
+- |-
+  JE-2318 (volunteer pizza) is tagged to SCWF restoration materials and the state fund pays for no food; JE-2356 is a volunteer lunch split 50/50 where the SCWF half is disallowed and the CPCG half is fine (checks: restoration materials remaining; volunteer recognition remaining)
+- |-
+  JE-2272 was posted in January but invoiced in December 2025, before the SCWF award period (check: restoration materials remaining)
+- |-
+  JE-2400 (gift cards) and JE-2403 (wine) are tagged to CPCG volunteer recognition and are never allowable (check: volunteer recognition remaining)
+- |-
+  JE-2324 and a second staff mileage entry are booked to the HFF education staff line; the foundation pays no mileage (check: total disallowed)
+- |-
+  JE-2367 is a LaMotte credit memo in parentheses that reduces monitoring equipment spending (check: monitoring equipment remaining)
+- |-
+  three general-operations expenses (GEN-OPS) sit in the same export and are neither grant spending nor disallowed costs; amounts are text with thousands separators under a two-line preamble with CRLF endings (checks: total disallowed; restoration personnel remaining)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: grant_tracking.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no formula errors
+  path: grant_tracking.xlsx
+- type: xlsx_value_present
+  name: restoration materials remaining
+  path: grant_tracking.xlsx
+  expected: 11944.62
+  rel_tol: 1.0e-06
+  near_text: restoration materials
+- type: xlsx_value_present
+  name: restoration personnel remaining
+  path: grant_tracking.xlsx
+  expected: 683.68
+  rel_tol: 1.0e-06
+  near_text: restoration personnel
+- type: xlsx_value_present
+  name: coordinator stipend remaining
+  path: grant_tracking.xlsx
+  expected: 844.02
+  rel_tol: 1.0e-06
+  near_text: coordinator stipend
+- type: xlsx_value_present
+  name: volunteer recognition remaining
+  path: grant_tracking.xlsx
+  expected: 1193.99
+  rel_tol: 1.0e-06
+  near_text: volunteer recognition
+- type: xlsx_value_present
+  name: monitoring equipment remaining
+  path: grant_tracking.xlsx
+  expected: 3203.05
+  rel_tol: 1.0e-06
+  near_text: monitoring equipment
+- type: xlsx_value_present
+  name: total disallowed
+  path: grant_tracking.xlsx
+  expected: 2424.01
+  rel_tol: 1.0e-06
+  near_text: disallow

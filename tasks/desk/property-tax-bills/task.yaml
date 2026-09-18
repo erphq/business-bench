@@ -1,0 +1,117 @@
+id: property-tax-bills
+track: desk
+category: extraction
+title: Log this year's property tax bills
+ask: |
+  This year's property tax bills are in the folder. Please log them in tax_bills.csv - Walt's note says what he needs to schedule the payments.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  two installments: Juniper prints both halves with a due date and a later 'delinquent after' date, Keel prints only the total with the rule (equal halves, the odd cent on the first), and the scanned bill's tear-off stubs print the second installment above the first (checks: installments; due dates)
+- |-
+  exemptions: a 7,000 homeowner exemption on 041-234-18 and a farm-use exemption on the Keel pasture 207-0158-00; Keel prints the market value above the assessed value, which is 40% of market (check: assessed values and exemptions)
+- |-
+  Juniper prints 'Total ad valorem tax' first and adds solid waste and lighting special assessments before 'Total taxes and assessments' (check: total tax)
+- |-
+  a Keel notice of delinquent tax for last year's second installment on the storage yard 207-0058-00 sits among the bills; it is not a 2026-27 bill, the parcel is flagged yes, and its penalty and redemption amount stay out of this year's total (checks: one row per parcel; county and delinquency flag; total tax)
+- |-
+  parcel numbers print without hyphens on the scan and with a trailing '-000' on Keel bills; the parcel list's format is wanted, and a sold parcel in the list has no bill (checks: one row per parcel; row count)
+- 'the vacant lot''s bill 041-236-05 is an image-only scan (checks: installments; due dates)'
+checks:
+- type: csv_columns
+  name: requested columns
+  path: tax_bills.csv
+  columns:
+  - parcel_number
+  - county
+  - assessed_value
+  - exemptions
+  - taxable_value
+  - total_tax
+  - first_installment
+  - first_due
+  - second_installment
+  - second_due
+  - prior_year_delinquent
+- type: csv_set_equal
+  name: one row per parcel
+  path: tax_bills.csv
+  column: parcel_number
+  ref: tax_bills.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: tax_bills.csv
+  equals_ref: tax_bills.csv
+- type: csv_values_match
+  name: county and delinquency flag
+  path: tax_bills.csv
+  ref: tax_bills.csv
+  key: parcel_number
+  columns:
+  - county
+  - prior_year_delinquent
+  min_accuracy: 1.0
+  must_match_keys:
+  - 207-0058-00
+- type: csv_values_match
+  name: assessed values and exemptions
+  path: tax_bills.csv
+  ref: tax_bills.csv
+  key: parcel_number
+  columns:
+  - assessed_value
+  - exemptions
+  - taxable_value
+  must_match_keys:
+  - 041-234-18
+  - 207-0058-00
+  - 207-0158-00
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: total tax
+  path: tax_bills.csv
+  ref: tax_bills.csv
+  key: parcel_number
+  columns:
+  - total_tax
+  must_match_keys:
+  - 041-234-17
+  - 041-234-18
+  - 207-0058-00
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: installments
+  path: tax_bills.csv
+  ref: tax_bills.csv
+  key: parcel_number
+  columns:
+  - first_installment
+  - second_installment
+  must_match_keys:
+  - 207-0058-00
+  - 207-0158-00
+  - 041-236-05
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: due dates
+  path: tax_bills.csv
+  ref: tax_bills.csv
+  key: parcel_number
+  columns:
+  - first_due
+  - second_due
+  min_accuracy: 1.0
+  must_match_keys:
+  - 041-234-17
+  - 041-234-18
+  - 041-236-05

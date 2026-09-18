@@ -1,0 +1,69 @@
+id: payroll-quarterly-summary
+track: desk
+category: reports
+title: 2025 payroll by quarter for the accountant
+ask: |
+  Deborah needs our 2025 payroll summarized by quarter: gross wages, taxes withheld and net pay. Both payroll exports are in the folder and her note says how she wants it counted. Save it as payroll_q.xlsx with live formulas so she can trace the totals.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  quarters go by check date (the note); the 04/04 and 10/03 runs cover pay periods ending in the prior quarter (checks: Q1 gross; Q4 gross)
+- |-
+  16 off-cycle rows (final pay in May, missed hours in August, the December bonus run) are in a separate xlsx with different column names and a merged title; they count (checks: Q2 gross; Q3 net; Q4 net)
+- |-
+  three corrections appear as a full reversal row in parentheses plus a reissue row on a later check date; net them, do not drop or abs the negatives (checks: Q1 gross; Q3 net)
+- |-
+  the register has employer-side Social Security and Medicare columns; taxes withheld are the employee columns only (check: Q2 taxes withheld)
+- |-
+  register amounts are "$1,234.56" text with "($1,234.56)" negatives, dates are MM/DD/YYYY, and the csv has a two-line preamble (check: Q1 gross)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: payroll_q.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no formula errors
+  path: payroll_q.xlsx
+- type: xlsx_value_present
+  name: Q1 gross
+  path: payroll_q.xlsx
+  expected: 176488.17
+  rel_tol: 1.0e-06
+  near_text: q1
+- type: xlsx_value_present
+  name: Q2 gross
+  path: payroll_q.xlsx
+  expected: 198895.92
+  rel_tol: 1.0e-06
+  near_text: q2
+- type: xlsx_value_present
+  name: Q2 taxes withheld
+  path: payroll_q.xlsx
+  expected: 49493.95
+  rel_tol: 1.0e-05
+  near_text: q2
+- type: xlsx_value_present
+  name: Q3 net
+  path: payroll_q.xlsx
+  expected: 111461.67
+  rel_tol: 1.0e-06
+  near_text: q3
+- type: xlsx_value_present
+  name: Q4 gross
+  path: payroll_q.xlsx
+  expected: 209471.54
+  rel_tol: 1.0e-06
+  near_text: q4
+- type: xlsx_value_present
+  name: Q4 net
+  path: payroll_q.xlsx
+  expected: 143958.35
+  rel_tol: 1.0e-06
+  near_text: q4
+- type: xlsx_value_present
+  name: year gross
+  path: payroll_q.xlsx
+  expected: 746895.05
+  rel_tol: 1.0e-06
+  near_text: total

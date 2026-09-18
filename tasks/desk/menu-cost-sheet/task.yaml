@@ -1,0 +1,50 @@
+id: menu-cost-sheet
+track: desk
+category: spreadsheet
+title: Cost out the fall menu, plate by plate
+ask: |
+  Can you cost out every dish on the fall menu from Dana's recipe cards and the Harbor price sheet, so I can see what each plate costs us and what we keep? Save it as menu_costs.xlsx with the math as live formulas. Dana left a note about how the kitchen counts it.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  Harbor quotes one price per pack (5 KG, 20 KG SACK, 3 L TIN, 500 G) while the cards are in grams and millilitres, so every line needs the pack price divided by the pack size in the card's unit (checks: plate cost and margin, every dish; Mushroom Risotto plate cost)
+- |-
+  brioche buns are the one line priced per case (CS/12); taking the case price as the price of a bun adds most of a case to the burger and the chicken sandwich (check: Smash Burger plate cost)
+- |-
+  card weights are plate weights; salmon, potatoes, onions and parsley lose 30/15/10/35% on the prep table and Dana's note says to divide by what is left, so adding the percent on top undercosts the salmon (check: Seared Salmon plate cost)
+- |-
+  a few card lines are written in kg or L (the salmon plate's potatoes, the risotto's stock) among grams and millilitres; reading them as grams costs them at a thousandth (checks: Seared Salmon plate cost; Mushroom Risotto plate cost)
+- |-
+  June's price sheet sits beside September's with the same layout and lower prices; Dana's note says September is current (check: Mushroom Risotto plate cost)
+- |-
+  the recipe card names the dish only on the first row of each block and the menu tab holds prices as '$28.00' text; a flat read loses which dish a line belongs to (check: plate cost and margin, every dish)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: menu_costs.xlsx
+  min_count: 7
+- type: xlsx_no_errors
+  name: no error cells
+  path: menu_costs.xlsx
+- type: xlsx_value_present
+  name: Smash Burger plate cost
+  path: menu_costs.xlsx
+  expected: 4.21
+  rel_tol: 0.005
+  near_text: burger
+- type: xlsx_value_present
+  name: Seared Salmon plate cost
+  path: menu_costs.xlsx
+  expected: 10.2
+  rel_tol: 0.005
+  near_text: salmon
+- type: xlsx_value_present
+  name: Mushroom Risotto plate cost
+  path: menu_costs.xlsx
+  expected: 5.54
+  rel_tol: 0.005
+  near_text: risotto
+- type: custom
+  name: plate cost and margin, every dish
+  module: check.py

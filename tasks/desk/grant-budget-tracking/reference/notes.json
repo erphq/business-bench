@@ -1,0 +1,57 @@
+{
+  "disallowed": [
+    {
+      "amount": "1255.86",
+      "entry": "JE-2272",
+      "line": "SCWF-MAT",
+      "reason": "incurred before the award period"
+    },
+    {
+      "amount": "221.89",
+      "entry": "JE-2318",
+      "line": "SCWF-MAT",
+      "reason": "food is not allowable on the state fund"
+    },
+    {
+      "amount": "265.67",
+      "entry": "JE-2324",
+      "line": "HFF-EDU",
+      "reason": "the foundation does not pay staff mileage"
+    },
+    {
+      "amount": "120.94",
+      "entry": "JE-2388",
+      "line": "HFF-EDU",
+      "reason": "the foundation does not pay staff mileage"
+    },
+    {
+      "amount": "179.96",
+      "entry": "JE-2356",
+      "line": "SCWF-MAT",
+      "reason": "food is not allowable on the state fund"
+    },
+    {
+      "amount": "241.14",
+      "entry": "JE-2400",
+      "line": "CPCG-VOL",
+      "reason": "gift cards are not allowable on the county grant"
+    },
+    {
+      "amount": "138.55",
+      "entry": "JE-2403",
+      "line": "CPCG-VOL",
+      "reason": "alcohol is not allowable on the county grant"
+    }
+  ],
+  "disallowed_total": "2424.01",
+  "splits": [
+    "JE-2305",
+    "JE-2335",
+    "JE-2355",
+    "JE-2383",
+    "JE-2396",
+    "JE-2413",
+    "JE-2356",
+    "JE-2347"
+  ]
+}

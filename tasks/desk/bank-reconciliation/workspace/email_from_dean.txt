@@ -1,0 +1,15 @@
+From: Dean Westbrook <dean@westbrookplumbing.com>
+To: you
+Date: Tue, 8 Sep 2026 07:55
+Subject: August bank rec
+
+Alma is out, can you do August's bank reconciliation? Same idea as her July one in the folder: what matched between the bank and the books, what is still outstanding either way, and anything on the bank statement that never made it into the books. It has to come out to zero, to the cent, and I'd like the totals to be formulas so I can see how you got there.
+
+-----Original Message-----
+
+From: Dean Westbrook <dean@westbrookplumbing.com>
+To: you
+Date: Tue, 8 Sep 2026 08:10
+Subject: RE: August bank rec
+
+Two more things. Bank charges, interest and bounced customer checks get booked from the statement, so treat those as adjustments on the book side. And if the bank and the books disagree on the amount of a check, the bank is right - they pay what's written on the check. Alma sometimes fat-fingers the entry.

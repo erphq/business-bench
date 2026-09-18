@@ -1,0 +1,761 @@
+{
+  "badges": {
+    "multi_attendee": {
+      "company": "Uptown Fitness",
+      "confirmed_registrations": 3,
+      "emails_as_written": [
+        "RONALD.RUIZ@UPTOWNFIT.COM",
+        "Ronald.Ruiz@Uptownfit.Com",
+        "ronald.ruiz@uptownfit.com"
+      ],
+      "name": "Ronald Ruiz"
+    },
+    "rows": 137,
+    "waitlist_only_attendee": {
+      "email": "ryan.lopez@brightwaterdental.com",
+      "name": "Ryan Lopez",
+      "registrations": [
+        {
+          "amount": "245.00",
+          "attendee": "Ryan Lopez",
+          "company": "Brightwater Dental",
+          "email": "ryan.lopez@brightwaterdental.com",
+          "file_amount": "245.00",
+          "file_email": "ryan.lopez@brightwaterdental.com",
+          "file_lines": [
+            146
+          ],
+          "file_registered_at": "17-Aug-2026 12:25",
+          "file_session": "WS-084",
+          "file_status": "Wait list",
+          "id": "R-36363",
+          "registered_at": "2026-08-17 12:25",
+          "session": "WS-084",
+          "status": "waitlisted"
+        }
+      ]
+    },
+    "wrong_rows_case_sensitive_email": 139,
+    "wrong_rows_one_per_registration": 255
+  },
+  "baseline": {
+    "EXPORT_COLUMNS": [
+      "Registration ID",
+      "Attendee",
+      "Email",
+      "Session",
+      "Status",
+      "Amount"
+    ],
+    "EXPORT_ROWS": 276,
+    "FILTER_COUNT": 9,
+    "FILTER_FIELD": "Status",
+    "FILTER_VALUE": "Waitlisted",
+    "KPI_1": "Confirmed registrations",
+    "KPI_1_VALUE": 255,
+    "KPI_2": "Waitlisted registrations",
+    "KPI_2_VALUE": 9,
+    "KPI_3": "Revenue (confirmed registrations)",
+    "KPI_3_VALUE": "39,306.00",
+    "KPI_4": "Full sessions",
+    "KPI_4_VALUE": 5,
+    "MAIN_ENTITY": "registration",
+    "MAIN_ENTITY_PLURAL": "registrations",
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "amount": "245.00",
+      "attendee": "Patricia Stewart",
+      "company": "Dorsey Freight",
+      "email": "patricia.stewart@dorseyfreight.com",
+      "file_amount": "$245.00",
+      "file_email": "patricia.stewart@dorseyfreight.com",
+      "file_lines": [
+        228
+      ],
+      "file_registered_at": "Jul 30 2026 13:18",
+      "file_session": "WS-155",
+      "file_status": "Confirmed",
+      "id": "R-37091",
+      "registered_at": "2026-07-30 13:18",
+      "session": "WS-155",
+      "status": "confirmed"
+    },
+    "REQUIRED_FIELD": "Email",
+    "SCOPED_KPI_1_VALUE": 34,
+    "SCOPE_COUNT": 39,
+    "SCOPE_RULE": "registrations for the sessions Helena Varga chairs",
+    "SEARCH_COUNT": 13,
+    "SEARCH_TERM": "Dorsey",
+    "SORT_FIELD": "Registered At",
+    "SORT_TOP": {
+      "amount": "0.00",
+      "attendee": "Fatima Tanaka",
+      "company": "Ivy Lane Florist",
+      "email": "fatima.tanaka@ivylaneflorist.com",
+      "file_amount": "0.00",
+      "file_email": "fatima.tanaka@ivylaneflorist.com",
+      "file_lines": [
+        160
+      ],
+      "file_registered_at": "9/10/2026 4:45 PM",
+      "file_session": "WS090",
+      "file_status": "Confirmed",
+      "id": "R-35356",
+      "registered_at": "2026-09-10 16:45",
+      "session": "WS-090",
+      "status": "confirmed"
+    },
+    "STAFF_ROLE": "Session chair",
+    "VIEWER_ROLE": "Read-only"
+  },
+  "change_1_report": {
+    "fill_rate_session": {
+      "cancelled": 0,
+      "capacity": 28,
+      "chair": "Chloe Dumont",
+      "code": "WS-091",
+      "confirmed": 5,
+      "date": "2026-10-14",
+      "end": "12:30",
+      "file_lines": [
+        2
+      ],
+      "file_price": "245.00",
+      "file_room": "RM-364",
+      "fill_rate_pct": 17.9,
+      "fill_rate_pct_2dp": 17.86,
+      "price": "245.00",
+      "revenue": "1,225.00",
+      "room": "RM-364",
+      "room_name": "Convention Studio 3",
+      "start": "11:00",
+      "title": "Capex Reviews",
+      "track": "Finance",
+      "waitlisted": 0
+    },
+    "restricted_chair_session_count": 3,
+    "revenue_by_track": {
+      "Finance": "7,607.00",
+      "Operations": "11,515.00",
+      "People": "13,062.00",
+      "Technology": "7,122.00"
+    }
+  },
+  "change_2_overlap": {
+    "attendee": {
+      "email": "ronald.ruiz@uptownfit.com",
+      "name": "Ronald Ruiz"
+    },
+    "confirmed_in": {
+      "cancelled": 0,
+      "capacity": 72,
+      "chair": "Fatima Qureshi",
+      "code": "WS-160",
+      "confirmed": 5,
+      "date": "2026-10-13",
+      "end": "12:30",
+      "file_lines": [
+        35
+      ],
+      "file_price": "245",
+      "file_room": "rm-051",
+      "price": "245.00",
+      "revenue": "1,078.00",
+      "room": "RM-051",
+      "room_name": "Harbor Salon 12",
+      "start": "11:00",
+      "title": "Audit Readiness",
+      "track": "Finance",
+      "waitlisted": 0
+    },
+    "existing_double_bookings": [
+      {
+        "attendee": "Sofia Mitchell",
+        "email": "sofia.mitchell@quillandink.print",
+        "sessions": [
+          "WS-053",
+          "WS-169"
+        ]
+      },
+      {
+        "attendee": "Brian Watson",
+        "email": "brian.watson@dorseyfreight.com",
+        "sessions": [
+          "WS-002",
+          "WS-024"
+        ]
+      }
+    ],
+    "other_block_session": {
+      "cancelled": 1,
+      "capacity": 100,
+      "chair": "Fatima Qureshi",
+      "code": "WS-008",
+      "confirmed": 3,
+      "date": "2026-10-13",
+      "end": "10:30",
+      "file_lines": [
+        32
+      ],
+      "file_price": "$195.00",
+      "file_room": "RM387",
+      "price": "195.00",
+      "revenue": "507.00",
+      "room": "RM-387",
+      "room_name": "Lakeside Hall 6",
+      "start": "09:00",
+      "title": "Freight Audit",
+      "track": "Operations",
+      "waitlisted": 0
+    },
+    "same_block_session": {
+      "cancelled": 0,
+      "capacity": 72,
+      "chair": "Victor Huang",
+      "code": "WS-003",
+      "confirmed": 4,
+      "date": "2026-10-13",
+      "end": "12:30",
+      "file_lines": [
+        52
+      ],
+      "file_price": "195",
+      "file_room": "RM-249",
+      "price": "195.00",
+      "revenue": "741.00",
+      "room": "RM-249",
+      "room_name": "Convention Suite 2",
+      "start": "11:00",
+      "title": "Close Acceleration",
+      "track": "Finance",
+      "waitlisted": 0
+    }
+  },
+  "change_3_checkin": {
+    "confirmed_in_restricted_session": {
+      "amount": "156.00",
+      "attendee": "Thomas Haddad",
+      "company": "Uptown Fitness",
+      "email": "thomas.haddad@uptownfit.com",
+      "file_amount": "$156.00",
+      "file_email": "thomas.haddad@uptownfit.com",
+      "file_lines": [
+        253
+      ],
+      "file_registered_at": "6/6/2026 11:04 AM",
+      "file_session": "WS-161",
+      "file_status": "Confirmed",
+      "id": "R-30090",
+      "registered_at": "2026-06-06 11:04",
+      "session": "WS-161",
+      "status": "confirmed"
+    },
+    "other_chair_confirmed": {
+      "amount": "76.00",
+      "attendee": "Richard Jones",
+      "company": "Meridian Title",
+      "email": "richard.jones@meridiantitle.com",
+      "file_amount": "76.00",
+      "file_email": "richard.jones@meridiantitle.com",
+      "file_lines": [
+        73
+      ],
+      "file_registered_at": "6/7/2026 6:06 PM",
+      "file_session": "WS-033",
+      "file_status": "Confirmed",
+      "id": "R-31095",
+      "registered_at": "2026-06-07 18:06",
+      "session": "WS-033",
+      "status": "confirmed"
+    },
+    "waitlisted_in_test_session": {
+      "amount": "245.00",
+      "attendee": "Ryan Lopez",
+      "company": "Brightwater Dental",
+      "email": "ryan.lopez@brightwaterdental.com",
+      "file_amount": "245.00",
+      "file_email": "ryan.lopez@brightwaterdental.com",
+      "file_lines": [
+        146
+      ],
+      "file_registered_at": "17-Aug-2026 12:25",
+      "file_session": "WS-084",
+      "file_status": "Wait list",
+      "id": "R-36363",
+      "registered_at": "2026-08-17 12:25",
+      "session": "WS-084",
+      "status": "waitlisted"
+    }
+  },
+  "date_dependence": "No figure depends on the test date.",
+  "registrations": {
+    "cancel_in_test_session": {
+      "amount": "196.00",
+      "attendee": "Ronald Richardson",
+      "company": "Meridian Title",
+      "email": "ronald.richardson@meridiantitle.com",
+      "file_amount": "196.00",
+      "file_email": "ronald.richardson@meridiantitle.com",
+      "file_lines": [
+        153
+      ],
+      "file_registered_at": "6/2/2026 5:23 PM",
+      "file_session": "WS-084",
+      "file_status": "Confirmed",
+      "id": "R-31715",
+      "registered_at": "2026-06-02 17:23",
+      "session": "WS-084",
+      "status": "confirmed"
+    },
+    "cancelled": 12,
+    "confirmed": 255,
+    "duplicate_example": {
+      "amount": "76.00",
+      "attendee": "Yuki Thompson",
+      "company": "Zephyr Bike Works",
+      "email": "yuki.thompson@zephyrbikes.com",
+      "file_amount": "76.00",
+      "file_email": "yuki.thompson@zephyrbikes.com",
+      "file_lines": [
+        66,
+        200
+      ],
+      "file_registered_at": "Jun 16 2026 08:49",
+      "file_session": "WS031",
+      "file_status": "Confirmed",
+      "id": "R-33337",
+      "registered_at": "2026-06-16 08:49",
+      "session": "WS-031",
+      "status": "confirmed"
+    },
+    "exact_duplicate_rows": 8,
+    "file_rows_excluding_header": 284,
+    "latest": {
+      "amount": "0.00",
+      "attendee": "Fatima Tanaka",
+      "company": "Ivy Lane Florist",
+      "email": "fatima.tanaka@ivylaneflorist.com",
+      "file_amount": "0.00",
+      "file_email": "fatima.tanaka@ivylaneflorist.com",
+      "file_lines": [
+        160
+      ],
+      "file_registered_at": "9/10/2026 4:45 PM",
+      "file_session": "WS090",
+      "file_status": "Confirmed",
+      "id": "R-35356",
+      "registered_at": "2026-09-10 16:45",
+      "session": "WS-090",
+      "status": "confirmed"
+    },
+    "other_chair_cancel": {
+      "amount": "76.00",
+      "attendee": "Richard Jones",
+      "company": "Meridian Title",
+      "email": "richard.jones@meridiantitle.com",
+      "file_amount": "76.00",
+      "file_email": "richard.jones@meridiantitle.com",
+      "file_lines": [
+        73
+      ],
+      "file_registered_at": "6/7/2026 6:06 PM",
+      "file_session": "WS-033",
+      "file_status": "Confirmed",
+      "id": "R-31095",
+      "registered_at": "2026-06-07 18:06",
+      "session": "WS-033",
+      "status": "confirmed"
+    },
+    "promoted": {
+      "amount": "245.00",
+      "attendee": "Dorothy Murphy",
+      "company": "Wren & Sparrow Bookshop",
+      "email": "dorothy.murphy@wrensparrowbooks.com",
+      "file_amount": "245",
+      "file_email": "dorothy.murphy@wrensparrowbooks.com",
+      "file_lines": [
+        147
+      ],
+      "file_registered_at": "8/15/2026 5:50 PM",
+      "file_session": "WS084",
+      "file_status": "waitlist",
+      "id": "R-32464",
+      "registered_at": "2026-08-15 17:50",
+      "session": "WS-084",
+      "status": "waitlisted"
+    },
+    "restricted_chair_cancel": {
+      "amount": "195.00",
+      "attendee": "Emily Clark",
+      "company": "Silverline Logistics",
+      "email": "emily.clark@silverlinelogistics.com",
+      "file_amount": "195",
+      "file_email": "emily.clark@silverlinelogistics.com",
+      "file_lines": [
+        251
+      ],
+      "file_registered_at": "Sep 2 2026 02:17",
+      "file_session": "WS-161",
+      "file_status": "confirmed",
+      "id": "R-33825",
+      "registered_at": "2026-09-02 02:17",
+      "session": "WS-161",
+      "status": "confirmed"
+    },
+    "revenue_after_promotion": "39,355.00",
+    "revenue_change_on_promotion": "49.00",
+    "revenue_confirmed": "39,306.00",
+    "status_spellings": [
+      "CONFIRMED",
+      "Cancelled",
+      "Confirmed",
+      "Wait list",
+      "Waitlisted",
+      "canceled",
+      "confirmed",
+      "waitlist"
+    ],
+    "test_session_waitlist_amounts": "735.00",
+    "test_session_waitlist_in_file_order": [
+      {
+        "amount": "245.00",
+        "attendee": "Nadia Kim",
+        "company": "Pinnacle Roofing",
+        "email": "nadia.kim@pinnacleroofing.com",
+        "file_amount": "245",
+        "file_email": "nadia.kim@pinnacleroofing.com",
+        "file_lines": [
+          144
+        ],
+        "file_registered_at": "2026-08-16 10:40",
+        "file_session": "WS-084",
+        "file_status": "waitlist",
+        "id": "R-33838",
+        "registered_at": "2026-08-16 10:40",
+        "session": "WS-084",
+        "status": "waitlisted"
+      },
+      {
+        "amount": "245.00",
+        "attendee": "Ryan Lopez",
+        "company": "Brightwater Dental",
+        "email": "ryan.lopez@brightwaterdental.com",
+        "file_amount": "245.00",
+        "file_email": "ryan.lopez@brightwaterdental.com",
+        "file_lines": [
+          146
+        ],
+        "file_registered_at": "17-Aug-2026 12:25",
+        "file_session": "WS-084",
+        "file_status": "Wait list",
+        "id": "R-36363",
+        "registered_at": "2026-08-17 12:25",
+        "session": "WS-084",
+        "status": "waitlisted"
+      },
+      {
+        "amount": "245.00",
+        "attendee": "Dorothy Murphy",
+        "company": "Wren & Sparrow Bookshop",
+        "email": "dorothy.murphy@wrensparrowbooks.com",
+        "file_amount": "245",
+        "file_email": "dorothy.murphy@wrensparrowbooks.com",
+        "file_lines": [
+          147
+        ],
+        "file_registered_at": "8/15/2026 5:50 PM",
+        "file_session": "WS084",
+        "file_status": "waitlist",
+        "id": "R-32464",
+        "registered_at": "2026-08-15 17:50",
+        "session": "WS-084",
+        "status": "waitlisted"
+      }
+    ],
+    "unique_registrations": 276,
+    "waitlisted": 9,
+    "wrong_revenue_all_rows": "42,364.00",
+    "wrong_revenue_confirmed_and_waitlisted": "40,961.00"
+  },
+  "rooms": {
+    "exact_duplicate_example": {
+      "capacity": 18,
+      "code": "RM-048",
+      "file_lines": [
+        22,
+        54
+      ],
+      "file_rows": [
+        [
+          "RM-048",
+          "Lakeside Breakout 4",
+          "Lakeside Hotel",
+          1,
+          "18",
+          "U-shape",
+          "Y"
+        ],
+        [
+          "RM-048",
+          "Lakeside Breakout 4",
+          "Lakeside Hotel",
+          1,
+          "18",
+          "U-shape",
+          "Y"
+        ]
+      ],
+      "name": "Lakeside Breakout 4"
+    },
+    "exact_duplicate_rows": 2,
+    "file_rows_excluding_header": 64,
+    "largest": {
+      "capacity": 1200,
+      "code": "RM-198",
+      "file_lines": [
+        16
+      ],
+      "file_rows": [
+        [
+          "RM-198",
+          "Grand Hall",
+          "Convention Center",
+          3,
+          "1,200",
+          "Classroom",
+          "Y"
+        ]
+      ],
+      "name": "Grand Hall"
+    },
+    "same_code_example": {
+      "capacity": 40,
+      "code": "RM-343",
+      "file_lines": [
+        24,
+        27
+      ],
+      "file_rows": [
+        [
+          "RM343",
+          "HARBOR SUITE 8",
+          "Harbor Hotel",
+          3,
+          "40 pax",
+          "Cabaret",
+          "N"
+        ],
+        [
+          "RM-343",
+          "Harbor Suite 8",
+          "Harbor Hotel",
+          3,
+          "40",
+          "Cabaret",
+          "N"
+        ]
+      ],
+      "name": "Harbor Suite 8"
+    },
+    "same_code_rows": 2,
+    "second_largest_capacity": 600,
+    "smaller_room_for_move": {
+      "capacity": 12,
+      "code": "RM-283",
+      "file_lines": [
+        29
+      ],
+      "file_rows": [
+        [
+          "RM-283",
+          "Convention Meeting Room 9",
+          "Convention Center",
+          3,
+          "12 pax",
+          "Boardroom",
+          "N"
+        ]
+      ],
+      "name": "Convention Meeting Room 9"
+    },
+    "unique_rooms": 60
+  },
+  "rules": {
+    "badge_export": "one badge per attendee (email, case-insensitive) with at least one confirmed registration",
+    "capacity": "confirmed registrations for a session never exceed its room's capacity",
+    "revenue": "sum of Amount over confirmed registrations only",
+    "waitlist_promotion": "when a confirmed registration in a full session is cancelled, the earliest-registered waitlisted registration becomes confirmed"
+  },
+  "seed": 0,
+  "sessions": {
+    "exact_duplicate_rows": 2,
+    "file_rows_excluding_header": 64,
+    "free_sessions": 8,
+    "full_sessions": [
+      "WS-002",
+      "WS-007",
+      "WS-037",
+      "WS-084",
+      "WS-155"
+    ],
+    "impossible_times": {
+      "cancelled": 0,
+      "capacity": 60,
+      "chair": "Martin Kessler",
+      "code": "WS-128",
+      "confirmed": 1,
+      "date": "2026-10-13",
+      "end": "10:15",
+      "file_lines": [
+        56
+      ],
+      "file_price": "$195.00",
+      "file_room": "RM-156",
+      "price": "195.00",
+      "revenue": "195.00",
+      "room": "RM-156",
+      "room_name": "Convention Suite 5",
+      "start": "11:00",
+      "title": "Working Capital",
+      "track": "Finance",
+      "waitlisted": 0
+    },
+    "restricted_chair_sessions": [
+      {
+        "cancelled": 0,
+        "capacity": 18,
+        "chair": "Helena Varga",
+        "code": "WS-084",
+        "confirmed": 18,
+        "date": "2026-10-13",
+        "end": "15:00",
+        "file_lines": [
+          34
+        ],
+        "file_price": "$245.00",
+        "file_room": "rm-052",
+        "price": "245.00",
+        "revenue": "3,871.00",
+        "room": "RM-052",
+        "room_name": "Harbor Studio 3",
+        "start": "13:30",
+        "title": "Safety Culture",
+        "track": "Operations",
+        "waitlisted": 3
+      },
+      {
+        "cancelled": 1,
+        "capacity": 96,
+        "chair": "Helena Varga",
+        "code": "WS-161",
+        "confirmed": 7,
+        "date": "2026-10-14",
+        "end": "10:30",
+        "file_lines": [
+          25
+        ],
+        "file_price": "195",
+        "file_room": "rm-259",
+        "price": "195.00",
+        "revenue": "1,326.00",
+        "room": "RM-259",
+        "room_name": "Lakeside Breakout 5",
+        "start": "09:00",
+        "title": "Demand Sensing",
+        "track": "Operations",
+        "waitlisted": 0
+      },
+      {
+        "cancelled": 1,
+        "capacity": 100,
+        "chair": "Helena Varga",
+        "code": "WS-157",
+        "confirmed": 9,
+        "date": "2026-10-15",
+        "end": "10:30",
+        "file_lines": [
+          63
+        ],
+        "file_price": "195",
+        "file_room": "RM-184",
+        "price": "195.00",
+        "revenue": "1,560.00",
+        "room": "RM-184",
+        "room_name": "Harbor Hall 12",
+        "start": "09:00",
+        "title": "Shift Handover Design",
+        "track": "Operations",
+        "waitlisted": 0
+      }
+    ],
+    "same_code_example": {
+      "cancelled": 0,
+      "capacity": 80,
+      "chair": "Chloe Dumont",
+      "code": "WS-169",
+      "confirmed": 1,
+      "date": "2026-10-15",
+      "end": "12:30",
+      "file_lines": [
+        43,
+        45
+      ],
+      "file_price": "145",
+      "file_room": "rm-076",
+      "price": "145.00",
+      "revenue": "145.00",
+      "room": "RM-076",
+      "room_name": "Lakeside Meeting Room 6",
+      "start": "11:00",
+      "title": "Rolling Forecasts",
+      "track": "Finance",
+      "waitlisted": 0
+    },
+    "same_code_rows": 2,
+    "setup_session": {
+      "cancelled": 0,
+      "capacity": 80,
+      "chair": "Aisha Bello",
+      "code": "WS-019",
+      "confirmed": 2,
+      "date": "2026-10-14",
+      "end": "15:00",
+      "file_lines": [
+        62
+      ],
+      "file_price": "$195.00",
+      "file_room": "RM-049",
+      "price": "195.00",
+      "revenue": "351.00",
+      "room": "RM-049",
+      "room_name": "Lakeside Boardroom 1",
+      "start": "13:30",
+      "title": "Frontline Retention",
+      "track": "People",
+      "waitlisted": 0
+    },
+    "test_session": {
+      "cancelled": 0,
+      "capacity": 18,
+      "chair": "Helena Varga",
+      "code": "WS-084",
+      "confirmed": 18,
+      "date": "2026-10-13",
+      "end": "15:00",
+      "file_lines": [
+        34
+      ],
+      "file_price": "$245.00",
+      "file_room": "rm-052",
+      "price": "245.00",
+      "revenue": "3,871.00",
+      "room": "RM-052",
+      "room_name": "Harbor Studio 3",
+      "start": "13:30",
+      "title": "Safety Culture",
+      "track": "Operations",
+      "waitlisted": 3
+    },
+    "unique_sessions": 60,
+    "wrong_confirmed_if_capacity_ignored": 19
+  }
+}

@@ -1,0 +1,76 @@
+id: promo-code-analysis
+track: desk
+category: spreadsheet
+title: How the August promo codes did
+ask: |
+  Hannah wants to know how each promo code did in August, including any codes that shouldn't have gone through. Use the order export and marketing's code list and save promo_summary.csv; her email has the details.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  codes are typed in mixed case with spaces inside and around them ('summer reads15', ' Freeship50'); grouping the raw text splits one code into several rows (checks: codes used; orders per code)
+- |-
+  online orders stack FREESHIP50 with a percent code and the till stacks BACKTOSCHOOL with TEACHER10, sometimes with no space after the comma; each order counts under both codes (checks: orders per code; revenue per code)
+- |-
+  SUMMERREADS15 kept working on the website for a week after its 15 August end date; the orders from 16 August on must not count toward it (checks: orders per code; revenue per code)
+- |-
+  SPRING2026 and MOTHERSDAY are on marketing's list but ended in May, so they are EXPIRED; SUMMERREAD15, WELCOME5 and BOOKCLUB2O (letter O) are not on the list at all and are UNKNOWN (checks: status per code; codes used)
+- |-
+  revenue is subtotal less discount; the Total column adds shipping and tax (check: revenue per code)
+- 'five cancelled orders carry codes and count for nothing (check: orders per code)'
+checks:
+- type: csv_columns
+  name: requested columns
+  path: promo_summary.csv
+  columns:
+  - code
+  - orders
+  - revenue
+  - status
+- type: csv_set_equal
+  name: codes used
+  path: promo_summary.csv
+  column: code
+  ref: promo_summary.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: promo_summary.csv
+  equals_ref: promo_summary.csv
+- type: csv_values_match
+  name: orders per code
+  path: promo_summary.csv
+  ref: promo_summary.csv
+  key: code
+  columns:
+  - orders
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - SUMMERREADS15
+  - FREESHIP50
+  - TEACHER10
+  - SPRING2026
+  - SUMMERREAD15
+- type: csv_values_match
+  name: revenue per code
+  path: promo_summary.csv
+  ref: promo_summary.csv
+  key: code
+  columns:
+  - revenue
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys: *id001
+- type: csv_values_match
+  name: status per code
+  path: promo_summary.csv
+  ref: promo_summary.csv
+  key: code
+  columns:
+  - status
+  min_accuracy: 1.0

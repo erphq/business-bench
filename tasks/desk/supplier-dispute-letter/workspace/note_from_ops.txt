@@ -1,0 +1,14 @@
+Cascade invoice INV-86187 (our PO-2026-0509) doesn't match. Can you write the dispute letter to their AR team,
+attention Wei Garcia? It has to reach them within 15 days of the invoice date. Things I noticed:
+
+- some lines are billed at the new prices from their July letter. We never agreed to that, and section 4.2 of the
+  supply agreement fixes prices for the year unless we accept in writing.
+- receiving says we did not get everything they billed, check the receiving log against the invoice
+- there is a fuel surcharge on it, pretty sure the agreement doesn't allow that
+- they charged freight too. Orders over $2,000 ship free under the agreement so that should come off.
+- a couple of lines might be billed a bit under the PO. Don't bring those up.
+
+We'll pay the undisputed part now and want a credit memo for the rest. List each line you are disputing with its
+amount and the total. Save it as dispute.md.
+
+Emily

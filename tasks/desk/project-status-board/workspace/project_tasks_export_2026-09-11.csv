@@ -1,0 +1,38 @@
+Task ID,Project,Task,Assignee,Status,Depends on,Due date
+T-353,Alder Street kitchen,Sign contract and collect deposit,Tomasz Nowak,Done,,07/15/2026
+T-365,Alder Street kitchen,Order cabinets,Luis Ortiz,Closed,T-353,07/16/2026
+T-354,Alder Street kitchen,Pull building permit,Luis Ortiz,done,T-353,07/17/2026
+T-355,Alder Street kitchen,Protect floors and hang dust walls,Tomasz Nowak,Closed,T-353,07/20/2026
+T-356,Alder Street kitchen,Demo upper and lower cabinets,Tomasz Nowak,Finished,T-355,07/20/2026
+T-356,Alder Street kitchen,Demo upper and lower cabinets,Aisha Mensah,Finished,T-355,07/20/2026
+T-357,Alder Street kitchen,Remove soffit over sink wall,Tomasz Nowak,Completed,T-356,07/24/2026
+T-360,Alder Street kitchen,Rough electrical and new circuits,Luis Ortiz,Complete,"T-357, T-354",07/27/2026
+T-359,Alder Street kitchen,Rough plumbing for island sink,Wei Chen,Complete,"T-357, T-354",07/28/2026
+T-358,Alder Street kitchen,Haul demo debris,Aisha Mensah,Closed,T-356,07/31/2026
+T-392,Hillcrest bathroom,Remove tub surround,Tomasz Nowak,Complete,,08/03/2026
+T-366,Alder Street kitchen,Cabinet delivery,Luis Ortiz,Completed,T-365,08/06/2026
+T-361,Alder Street kitchen,Rough-in inspection,Dana Kelly,Done,"T-359, T-360",08/07/2026
+T-393,Hillcrest bathroom,Set shower pan,Aisha Mensah,Doing,,08/07/2026
+T-394,Hillcrest bathroom,Install vanity,Wei Chen,in progress,,08/11/2026
+T-362,Alder Street kitchen,Insulate exterior wall,Wei Chen,Complete,T-361,08/12/2026
+T-363,Alder Street kitchen,Hang and tape drywall,Wei Chen,Completed,T-362,08/12/2026
+T-395,Hillcrest bathroom,Tile shower walls,Dana Kelly,In progress,,08/15/2026
+T-364,Alder Street kitchen,Prime and paint walls,Tomasz Nowak,done,T-363,08/18/2026
+T-396,Hillcrest bathroom,Replace exhaust fan,Wei Chen,Doing,,08/19/2026
+T-397,Hillcrest bathroom,Order glass shower door,Aisha Mensah,In progress,,08/23/2026
+T-367,Alder Street kitchen,Install base cabinets,Ryan Brooks,Finished,"T-364, T-366",08/25/2026
+T-368,Alder Street kitchen,Install wall cabinets,Dana Kelly,Doing,T-367,08/25/2026
+T-398,Hillcrest bathroom,Paint bathroom ceiling,Ryan Brooks,Not started,,08/27/2026
+T-399,Hillcrest bathroom,Plumbing inspection for bath,Aisha Mensah,Completed,,08/31/2026
+T-375,Alder Street kitchen,Under-cabinet lighting,Wei Chen,WIP,T-368,08/31/2026
+T-374,Alder Street kitchen,Install range hood,Ryan Brooks,Doing,T-368,09/01/2026
+T-376,Alder Street kitchen,Patch hardwood floor,Wei Chen,Doing,T-367,09/02/2026
+T-369,Alder Street kitchen,Countertop template visit,Wei Chen,In progress,T-367,09/04/2026
+T-370,Alder Street kitchen,Countertop install,Tomasz Nowak,On hold,T-369,09/08/2026
+T-372,Alder Street kitchen,Install sink and faucet,Dana Kelly,not started,T-370,09/14/2026
+T-371,Alder Street kitchen,Tile backsplash,Aisha Mensah,,T-370,09/18/2026
+T-373,Alder Street kitchen,Connect dishwasher,Ryan Brooks,Open,T-372,09/22/2026
+T-373,Alder Street kitchen,Connect dishwasher,Aisha Mensah,Open,T-372,09/22/2026
+T-377,Alder Street kitchen,Final electrical inspection,Ryan Brooks,Not started,"T-375, T-374",09/25/2026
+T-378,Alder Street kitchen,Homeowner walkthrough,Wei Chen,todo,"T-377, T-371, T-373",10/02/2026
+T-378,Alder Street kitchen,Homeowner walkthrough,Luis Ortiz,todo,"T-377, T-371, T-373",10/02/2026

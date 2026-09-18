@@ -1,0 +1,19 @@
+Complaints report - how we count
+
+Board wants complaints by category and by month for January to June, and I want a short memo that says which month was worst and anything else that jumps out.
+
+The log has a row for every update on a ticket (new, in progress, escalated, resolved), so the same ticket id shows up several times - and people paste rows twice sometimes. Web-form tickets come in through the website export first and then get worked in the log under the same ticket id. Count each ticket once:
+  - in the month it was opened (its earliest entry in either file), even if it was resolved the next month
+  - under the category on its most recent entry - investigation often changes it
+
+Categories are typed by hand. These are the six we report and the spellings that belong to each:
+  Late delivery: Late delivery, late, Delivery late, LATE DELIVERY, delayed shipment; web code DLV-LATE
+  Missed pickup: Missed pickup, missed pick-up, driver no-show, Pickup missed; web code PKP-MISS
+  Damaged goods: Damaged, damaged goods, Broken item, crushed carton; web code DMG-GOODS
+  Driver conduct: Driver rude, driver behaviour, Unsafe driving, Driver conduct; web code STF-DRV
+  Billing: Billing error, overcharged, Invoice wrong, billing; web code BIL-ERR
+  Tracking & communication: No tracking update, no call back, Tracking, communication; web code CSR-COMM
+
+Compliments, thank-yous, general questions and quote requests (Compliment, Thank you, General question, Quote request; web code INQ-GEN) get logged too. They are not complaints - leave them out.
+
+- Grace

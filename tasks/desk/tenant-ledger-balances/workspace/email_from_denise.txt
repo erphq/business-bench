@@ -1,0 +1,10 @@
+From: Denise Moreau <office@pinehollowcommunity.com>
+To: bookkeeper@pinehollowcommunity.com
+Date: Thu, 3 Sep 2026 17:20
+Subject: August balances - late fees did not run
+
+The ledger upgrade switched off automatic late fees for all of August, and the two move-outs were billed a full month anyway. The owners want every resident's balance as of August 31 with the correct late fee included, following section 4 of the rules.
+
+Please send tenant_balances.csv with one row per resident who lived here in August (including the two who moved out): lot, resident, late_fee and balance at August 31. Show a credit as a negative number.
+
+Denise

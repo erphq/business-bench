@@ -1,0 +1,3 @@
+Handle,Title,Body (HTML),Vendor,Product Category,Type,Tags,Published,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Variant SKU,Variant Grams,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Variant Barcode,Variant Weight Unit,Status
+example-hiking-hat,Example Hiking Hat,<p>Sample product</p>,Example Brand,,Hats,sample,TRUE,Size,S/M,,,EX-HAT-SM,85,shopify,10,deny,manual,25.00,,TRUE,TRUE,,g,active
+example-hiking-hat,,,,,,,,,L/XL,,,EX-HAT-LXL,90,shopify,4,deny,manual,25.00,,TRUE,TRUE,,g,

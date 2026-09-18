@@ -1,0 +1,22 @@
+Sales tax on the September orders
+
+Before I invoice the first batch of September orders I need the sales tax on each one. The rate table
+from the accountants is in the folder. We only collect in the five states on it; everywhere else is
+no tax. Inside a state, use the city row when the ship-to ZIP falls between its From and To (both ends
+count), otherwise the 'all other ZIPs' row for that state. The Shipping sheet says whether shipping
+gets taxed along with the kits.
+
+These customers have exemption certificates on file and pay no tax:
+  C-1004 Aspen Ridge Elementary
+  C-1011 Rio Grande STEM Academy
+  C-1019 Puget Sound Science Center
+  C-1023 Books & Beakers (resale certificate)
+  C-1030 St. Brigid Academy - their certificate expired on 5 September and they haven't sent the new one,
+         so anything they ordered after the 5th is taxable for now.
+The Mesa Verde Homeschool Co-op keeps asking, but a co-op isn't a school and they don't have a
+certificate, so they pay tax.
+
+Round the tax on each order to the cent. Save it as orders_tax.csv with order_id, state (two letters),
+zip (five digits), rate (the combined rate you used, 0 where we don't collect) and tax.
+
+Carmen

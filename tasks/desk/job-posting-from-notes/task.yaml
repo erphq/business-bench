@@ -1,0 +1,76 @@
+id: job-posting-from-notes
+track: desk
+category: drafting
+title: Write the front desk coordinator job posting
+ask: |
+  Can you write the job posting for the Northside front desk coordinator from Joshua's kickoff notes and the email thread? Save it as posting.md so I can put it up this week.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  Joshua's kickoff notes say around $22.50 an hour; HR's email gives the approved range $21.00 to $24.50 and says the posting must show a range (check: pay range)
+- |-
+  last year's downtown posting is in the folder with $19.00-$22.00, 212 Main St, Monday-Friday hours and a Spanish requirement (checks: pay range; old addresses left out; language requirement withdrawn)
+- |-
+  the kickoff notes say Mon-Fri 8:00-4:30; Joshua's later email moves the role to Tuesday through Saturday, 11:00 a.m. to 7:30 p.m. (checks: schedule days; schedule hours)
+- |-
+  the owner withdraws the Spanish requirement and asks that language not be mentioned at all (check: language requirement withdrawn)
+- |-
+  the kickoff notes give Northside's old suite at 2380 Ridge Rd; the email says the posting should give the new building at 4410 Ridge Rd (checks: clinic address; old addresses left out)
+- |-
+  CPR/BLS can be earned within 90 days of hire; last year's posting required current certification (check: CPR timing)
+- |-
+  the application email and the October 12, 2026 closing date are only in HR's email (check: how to apply)
+checks:
+- type: text_sentence_matches
+  name: pay range
+  path: posting.md
+  all:
+  - (?<![\d.,])21(\.00)?(?!\d|,\d|\.\d)
+  - (?<![\d.,])24\.50(?!\d|,\d|\.\d)
+  - (hour|\bhr\b|hourly)
+  none:
+  - (?<![\d.,])22\.50(?!\d|,\d|\.\d)
+  - (?<![\d.,])19(\.00)?(?!\d|,\d|\.\d)
+- type: text_sentence_matches
+  name: schedule days
+  path: posting.md
+  all:
+  - \btue(s|sday)?\b
+  - \bsat(urday)?\b
+  none:
+  - \bmon(day)?\b\s*(-|–|—|to|through|thru)\s*\bfri
+- type: custom
+  name: schedule hours
+  module: check.py
+- type: text_sentence_matches
+  name: clinic address
+  path: posting.md
+  all:
+  - \b4410\s+ridge
+- type: text_not_contains
+  name: old addresses left out
+  path: posting.md
+  phrases:
+  - 2380 Ridge
+  - 212 Main
+- type: text_not_contains
+  name: language requirement withdrawn
+  path: posting.md
+  phrases:
+  - spanish
+  - bilingual
+- type: text_sentence_matches
+  name: CPR timing
+  path: posting.md
+  all:
+  - \b(cpr|bls)\b
+  - (?<![\d.,])90(?!\d)
+  - \bdays?\b
+- type: text_sentence_matches
+  name: how to apply
+  path: posting.md
+  all:
+  - jobs@riverbendphysio[.]com
+  - |-
+    (october|oct\.?)\s+12(st|nd|rd|th)?\b|\b12(st|nd|rd|th)?\s+(of\s+)?oct|\b10/12\b|2026-10-12|\boct\.$

@@ -1,0 +1,19 @@
+Keystone statement came in - can you tie it out against our books before I pay them?
+
+How I do it:
+- Only open items matter: everything still open on their statement, and every bill or credit still open in our
+  books (Open Balance not zero). Paid-off bills and the checks that paid them are history.
+- One line per document. Reference = their document number, digits only, no leading zeros (INV 0418102 is 418102).
+- Type is invoice or credit. Amounts are what the document does to what we owe: invoices positive, credits negative
+  with a minus sign. Put 0.00 on the side that does not have the document.
+- Difference = statement amount minus our amount.
+- Status, one of:
+    matched                  - open on both, same amount
+    amount differs           - open on both, amounts not the same, even by a penny
+    not in our books         - on their statement, and our ledger has no bill or credit for it at all
+    not on statement         - open in our books, not on their statement
+    paid - check in transit  - open on their statement but we already paid it (check not on their statement yet)
+- Columns: reference, type, statement_amount, our_amount, difference, status. No total line - I add up the
+  difference column myself and it should come to their total due minus our open balance.
+
+- Luis

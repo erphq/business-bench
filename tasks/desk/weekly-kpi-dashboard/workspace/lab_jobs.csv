@@ -1,0 +1,224 @@
+Job,Ordered,Type,Status,Finished,Lab charge
+J-7701,07/14/2026,Blue-light upgrade,Picked up,07/16/2026,75.46
+J-7702,07/14/2026,Lens replacement,Waiting on lenses,,131.70
+J-7703,07/15/2026,Bifocal,Ready for pickup,07/15/2026,161.60
+J-7704,07/15/2026,Single vision,Ready for pickup,07/23/2026,95.70
+J-7705,07/15/2026,Blue-light upgrade,Picked up,07/15/2026,61.87
+J-7706,07/16/2026,Progressive,Picked up,07/19/2026,239.22
+J-7707,07/16/2026,Frame repair,Picked up,07/21/2026,24.77
+J-7708,07/16/2026,Prescription sunglasses,Ready for pickup,07/16/2026,202.99
+J-7709,07/16/2026,Single vision,Ready for pickup,07/17/2026,85.48
+J-7710,07/16/2026,Single vision,Ready for pickup,07/18/2026,98.16
+J-7711,07/16/2026,Blue-light upgrade,Ready for pickup,07/19/2026,76.96
+J-7712,07/17/2026,Progressive,Picked up,07/17/2026,243.95
+J-7713,07/17/2026,Bifocal,Ready for pickup,07/19/2026,166.56
+J-7714,07/17/2026,Bifocal,Ready for pickup,07/18/2026,162.25
+J-7715,07/17/2026,Progressive,Waiting on lenses,,273.03
+J-7716,07/17/2026,Progressive,Waiting on lenses,,264.51
+J-7717,07/18/2026,Blue-light upgrade,Ready for pickup,07/30/2026,73.59
+J-7718,07/18/2026,Single vision,Picked up,07/21/2026,84.70
+J-7719,07/18/2026,Single vision,Picked up,07/26/2026,85.76
+J-7720,07/18/2026,Single vision,Picked up,07/21/2026,96.07
+J-7721,07/19/2026,Frame repair,Picked up,07/21/2026,24.35
+J-7722,07/19/2026,Prescription sunglasses,Picked up,07/22/2026,177.35
+J-7723,07/19/2026,Lens replacement,Ready for pickup,07/31/2026,137.15
+J-7724,07/19/2026,Prescription sunglasses,Picked up,07/19/2026,170.01
+J-7725,07/19/2026,Prescription sunglasses,Ready for pickup,07/19/2026,183.01
+J-7726,07/19/2026,Frame repair,Picked up,07/31/2026,29.96
+J-7727,07/21/2026,Bifocal,Picked up,07/26/2026,159.12
+J-7728,07/21/2026,Bifocal,Picked up,07/23/2026,158.67
+J-7729,07/21/2026,Progressive,Ready for pickup,07/23/2026,243.13
+J-7730,07/22/2026,Blue-light upgrade,Ready for pickup,07/25/2026,68.35
+J-7731,07/22/2026,Prescription sunglasses,Waiting on lenses,,199.50
+J-7732,07/23/2026,Frame repair,Ready for pickup,07/24/2026,26.40
+J-7733,07/23/2026,Lens replacement,Ready for pickup,07/25/2026,139.57
+J-7734,07/24/2026,Blue-light upgrade,Picked up,07/28/2026,68.17
+J-7735,07/24/2026,Lens replacement,Ready for pickup,07/28/2026,139.11
+J-7736,07/24/2026,Progressive,Ready for pickup,07/25/2026,267.20
+J-7737,07/24/2026,Progressive,Waiting on lenses,,251.77
+J-7738,07/25/2026,Lens replacement,Ready for pickup,07/28/2026,121.48
+J-7739,07/25/2026,Single vision,Ready for pickup,07/28/2026,96.69
+J-7740,07/26/2026,Lens replacement,Ready for pickup,07/26/2026,142.51
+J-7741,07/26/2026,Frame repair,Ready for pickup,07/28/2026,22.61
+J-7742,07/26/2026,Blue-light upgrade,Picked up,07/29/2026,66.02
+J-7743,07/26/2026,Single vision,Waiting on lenses,,96.17
+J-7744,07/26/2026,Frame repair,Picked up,07/28/2026,29.12
+J-7745,07/28/2026,Progressive,Waiting on lenses,,237.14
+J-7746,07/28/2026,Bifocal,Picked up,07/29/2026,145.27
+J-7747,07/28/2026,Single vision,Waiting on lenses,,83.44
+J-7748,07/28/2026,Prescription sunglasses,Ready for pickup,07/31/2026,212.64
+J-7749,07/28/2026,Blue-light upgrade,Ready for pickup,07/29/2026,69.32
+J-7750,07/29/2026,Single vision,Picked up,07/30/2026,80.28
+J-7751,07/29/2026,Progressive,Ready for pickup,07/30/2026,244.88
+J-7752,07/29/2026,Prescription sunglasses,Picked up,08/06/2026,185.99
+J-7753,07/29/2026,Single vision,Picked up,07/29/2026,92.37
+J-7754,07/29/2026,Single vision,Ready for pickup,08/04/2026,100.40
+J-7755,07/30/2026,Frame repair,Picked up,07/31/2026,29.97
+J-7756,07/30/2026,Progressive,Waiting on lenses,,253.46
+J-7757,07/30/2026,Single vision,Picked up,08/01/2026,95.49
+J-7758,07/30/2026,Blue-light upgrade,Picked up,08/07/2026,77.89
+J-7759,07/30/2026,Frame repair,Ready for pickup,08/02/2026,26.84
+J-7760,07/30/2026,Lens replacement,Picked up,08/01/2026,115.76
+J-7761,07/31/2026,Single vision,Picked up,08/04/2026,83.63
+J-7762,07/31/2026,Bifocal,Ready for pickup,08/05/2026,159.20
+J-7763,08/01/2026,Single vision,Ready for pickup,08/13/2026,80.19
+J-7764,08/01/2026,Single vision,Ready for pickup,08/04/2026,97.05
+J-7765,08/02/2026,Prescription sunglasses,Picked up,08/02/2026,169.98
+J-7766,08/02/2026,Blue-light upgrade,Ready for pickup,08/07/2026,75.93
+J-7767,08/02/2026,Prescription sunglasses,Ready for pickup,08/05/2026,179.66
+J-7768,08/02/2026,Bifocal,Waiting on lenses,,190.90
+J-7769,08/04/2026,Lens replacement,Ready for pickup,08/07/2026,110.23
+J-7770,08/04/2026,Progressive,Picked up,08/06/2026,240.02
+J-7771,08/04/2026,Prescription sunglasses,Picked up,08/12/2026,215.11
+J-7772,08/04/2026,Lens replacement,Picked up,08/05/2026,122.60
+J-7773,08/04/2026,Frame repair,Picked up,08/06/2026,28.08
+J-7774,08/05/2026,Bifocal,Picked up,08/07/2026,155.29
+J-7775,08/05/2026,Bifocal,Picked up,08/11/2026,149.82
+J-7776,08/05/2026,Single vision,Picked up,08/08/2026,95.56
+J-7777,08/05/2026,Blue-light upgrade,Ready for pickup,08/06/2026,64.14
+J-7778,08/05/2026,Progressive,Ready for pickup,08/06/2026,239.26
+J-7779,08/05/2026,Single vision,Ready for pickup,08/08/2026,101.03
+J-7780,08/06/2026,Blue-light upgrade,Ready for pickup,08/08/2026,77.14
+J-7781,08/06/2026,Lens replacement,Picked up,08/06/2026,124.50
+J-7782,08/06/2026,Progressive,Ready for pickup,08/08/2026,253.85
+J-7783,08/06/2026,Single vision,Picked up,08/08/2026,84.61
+J-7784,08/06/2026,Progressive,Picked up,08/07/2026,256.74
+J-7785,08/06/2026,Blue-light upgrade,Ready for pickup,08/11/2026,66.12
+J-7786,08/07/2026,Single vision,Ready for pickup,08/19/2026,99.68
+J-7787,08/07/2026,Frame repair,Ready for pickup,08/11/2026,25.00
+J-7788,08/07/2026,Frame repair,Ready for pickup,08/12/2026,25.48
+J-7789,08/07/2026,Single vision,Picked up,08/12/2026,94.98
+J-7790,08/07/2026,Lens replacement,Ready for pickup,08/11/2026,127.68
+J-7791,08/08/2026,Bifocal,Ready for pickup,08/09/2026,174.79
+J-7792,08/08/2026,Lens replacement,Picked up,08/16/2026,140.54
+J-7793,08/08/2026,Progressive,Picked up,08/09/2026,238.91
+J-7794,08/09/2026,Frame repair,Ready for pickup,08/11/2026,26.74
+J-7795,08/09/2026,Blue-light upgrade,Ready for pickup,08/12/2026,77.90
+J-7796,08/09/2026,Frame repair,Ready for pickup,08/12/2026,24.10
+J-7797,08/09/2026,Bifocal,Picked up,08/09/2026,180.75
+J-7798,08/09/2026,Single vision,Picked up,08/14/2026,96.71
+J-7799,08/09/2026,Single vision,Ready for pickup,08/11/2026,94.92
+J-7800,08/11/2026,Bifocal,Ready for pickup,08/23/2026,148.14
+J-7801,08/11/2026,Bifocal,Picked up,08/13/2026,177.29
+J-7802,08/11/2026,Blue-light upgrade,Picked up,08/13/2026,67.59
+J-7803,08/11/2026,Prescription sunglasses,Ready for pickup,08/14/2026,166.56
+J-7804,08/12/2026,Frame repair,Ready for pickup,08/15/2026,23.78
+J-7805,08/12/2026,Progressive,Ready for pickup,08/20/2026,252.51
+J-7806,08/13/2026,Single vision,Picked up,08/13/2026,89.07
+J-7807,08/13/2026,Single vision,Waiting on lenses,,82.90
+J-7808,08/13/2026,Prescription sunglasses,Ready for pickup,08/15/2026,162.43
+J-7809,08/14/2026,Lens replacement,Waiting on lenses,,124.37
+J-7810,08/14/2026,Progressive,Ready for pickup,08/15/2026,272.91
+J-7811,08/14/2026,Progressive,Ready for pickup,08/19/2026,250.91
+J-7812,08/14/2026,Progressive,Picked up,08/18/2026,269.83
+J-7813,08/14/2026,Progressive,Picked up,08/16/2026,216.48
+J-7814,08/15/2026,Lens replacement,Ready for pickup,08/20/2026,138.92
+J-7815,08/15/2026,Single vision,Waiting on lenses,,80.40
+J-7816,08/15/2026,Single vision,Waiting on lenses,,96.49
+J-7817,08/15/2026,Single vision,Ready for pickup,08/18/2026,99.23
+J-7818,08/15/2026,Bifocal,Ready for pickup,08/23/2026,145.07
+J-7819,08/16/2026,Single vision,Waiting on lenses,,84.22
+J-7820,08/16/2026,Single vision,Ready for pickup,08/28/2026,87.07
+J-7821,08/18/2026,Frame repair,Ready for pickup,08/30/2026,29.21
+J-7822,08/18/2026,Single vision,Picked up,08/19/2026,87.85
+J-7823,08/18/2026,Progressive,Ready for pickup,08/19/2026,260.53
+J-7824,08/18/2026,Progressive,Ready for pickup,08/23/2026,243.35
+J-7825,08/18/2026,Lens replacement,Picked up,08/20/2026,139.37
+J-7826,08/18/2026,Bifocal,Picked up,08/19/2026,152.75
+J-7827,08/19/2026,Lens replacement,Picked up,08/20/2026,117.55
+J-7828,08/19/2026,Single vision,Ready for pickup,08/27/2026,96.60
+J-7829,08/19/2026,Bifocal,Ready for pickup,08/20/2026,183.74
+J-7830,08/19/2026,Bifocal,Picked up,08/20/2026,153.93
+J-7831,08/19/2026,Progressive,Waiting on lenses,,286.34
+J-7832,08/20/2026,Blue-light upgrade,Ready for pickup,08/23/2026,73.79
+J-7833,08/20/2026,Blue-light upgrade,Picked up,08/25/2026,66.39
+J-7834,08/20/2026,Prescription sunglasses,Waiting on lenses,,197.16
+J-7835,08/20/2026,Single vision,Picked up,08/22/2026,104.01
+J-7836,08/21/2026,Blue-light upgrade,Picked up,08/23/2026,61.50
+J-7837,08/21/2026,Lens replacement,Waiting on lenses,,137.53
+J-7838,08/21/2026,Frame repair,Picked up,08/25/2026,28.82
+J-7839,08/21/2026,Lens replacement,Waiting on lenses,,130.51
+J-7840,08/22/2026,Blue-light upgrade,Picked up,08/27/2026,76.75
+J-7841,08/22/2026,Lens replacement,Picked up,08/23/2026,125.99
+J-7842,08/22/2026,Prescription sunglasses,Ready for pickup,08/30/2026,177.31
+J-7843,08/22/2026,Lens replacement,Picked up,08/25/2026,117.56
+J-7844,08/22/2026,Bifocal,Picked up,08/22/2026,161.76
+J-7845,08/23/2026,Bifocal,Picked up,08/28/2026,168.14
+J-7846,08/23/2026,Bifocal,Ready for pickup,08/25/2026,166.51
+J-7847,08/23/2026,Blue-light upgrade,Ready for pickup,08/23/2026,58.54
+J-7848,08/23/2026,Single vision,Picked up,09/04/2026,86.13
+J-7849,08/25/2026,Progressive,Picked up,08/27/2026,256.90
+J-7850,08/25/2026,Bifocal,Picked up,08/30/2026,169.48
+J-7851,08/25/2026,Frame repair,Picked up,08/30/2026,26.22
+J-7852,08/26/2026,Progressive,Ready for pickup,08/29/2026,280.77
+J-7853,08/26/2026,Lens replacement,Picked up,08/28/2026,142.71
+J-7854,08/26/2026,Bifocal,Ready for pickup,08/27/2026,146.69
+J-7855,08/26/2026,Single vision,Picked up,08/27/2026,90.10
+J-7856,08/26/2026,Blue-light upgrade,Picked up,08/28/2026,60.18
+J-7857,08/27/2026,Frame repair,Ready for pickup,09/04/2026,27.93
+J-7858,08/27/2026,Bifocal,Ready for pickup,08/30/2026,175.56
+J-7859,08/27/2026,Blue-light upgrade,Waiting on lenses,,72.38
+J-7860,08/27/2026,Bifocal,Waiting on lenses,,183.99
+J-7861,08/27/2026,Lens replacement,Ready for pickup,09/01/2026,129.32
+J-7862,08/27/2026,Bifocal,Picked up,08/27/2026,186.18
+J-7863,08/28/2026,Lens replacement,Ready for pickup,08/30/2026,113.47
+J-7864,08/28/2026,Blue-light upgrade,Picked up,09/05/2026,67.59
+J-7865,08/28/2026,Prescription sunglasses,Ready for pickup,09/02/2026,204.09
+J-7866,08/28/2026,Lens replacement,Waiting on lenses,,117.94
+J-7867,08/29/2026,Bifocal,Picked up,08/29/2026,171.89
+J-7868,08/29/2026,Bifocal,Ready for pickup,09/03/2026,178.98
+J-7869,08/29/2026,Progressive,Waiting on lenses,,225.83
+J-7870,08/29/2026,Frame repair,Ready for pickup,09/01/2026,27.92
+J-7871,08/29/2026,Progressive,Picked up,08/30/2026,260.18
+J-7872,08/29/2026,Frame repair,Ready for pickup,09/03/2026,26.63
+J-7873,08/30/2026,Lens replacement,Ready for pickup,08/30/2026,128.01
+J-7874,08/30/2026,Single vision,Ready for pickup,09/08/2026,86.65
+J-7875,08/30/2026,Prescription sunglasses,Ready for pickup,09/01/2026,197.26
+J-7876,08/30/2026,Single vision,Ready for pickup,09/08/2026,80.82
+J-7877,08/30/2026,Bifocal,Picked up,08/30/2026,170.52
+J-7878,09/01/2026,Bifocal,Ready for pickup,09/06/2026,182.48
+J-7879,09/01/2026,Single vision,Picked up,09/03/2026,105.80
+J-7880,09/01/2026,Single vision,Ready for pickup,09/02/2026,105.81
+J-7881,09/01/2026,Progressive,Picked up,09/04/2026,223.81
+J-7882,09/01/2026,Frame repair,Picked up,09/04/2026,26.79
+J-7883,09/01/2026,Frame repair,Ready for pickup,09/13/2026,29.61
+J-7884,09/02/2026,Progressive,Picked up,09/03/2026,244.09
+J-7885,09/02/2026,Progressive,Ready for pickup,09/10/2026,281.31
+J-7886,09/02/2026,Single vision,Waiting on lenses,,81.65
+J-7887,09/02/2026,Single vision,Ready for pickup,09/04/2026,96.09
+J-7888,09/03/2026,Progressive,Picked up,09/04/2026,243.45
+J-7889,09/03/2026,Lens replacement,In lab,,122.21
+J-7890,09/03/2026,Single vision,In lab,,105.25
+J-7891,09/03/2026,Prescription sunglasses,Picked up,09/04/2026,183.27
+J-7892,09/03/2026,Bifocal,Picked up,09/08/2026,180.80
+J-7893,09/04/2026,Blue-light upgrade,Picked up,09/08/2026,76.47
+J-7894,09/04/2026,Progressive,Ready for pickup,09/05/2026,262.05
+J-7895,09/04/2026,Prescription sunglasses,Picked up,09/06/2026,162.47
+J-7896,09/05/2026,Lens replacement,Ready for pickup,09/06/2026,128.36
+J-7897,09/05/2026,Frame repair,Picked up,09/08/2026,28.82
+J-7898,09/06/2026,Prescription sunglasses,Picked up,09/06/2026,174.99
+J-7899,09/06/2026,Lens replacement,Picked up,09/06/2026,135.56
+J-7900,09/06/2026,Lens replacement,Picked up,09/08/2026,115.37
+J-7901,09/06/2026,Single vision,In lab,,80.89
+J-7902,09/08/2026,Frame repair,In lab,,22.61
+J-7903,09/08/2026,Prescription sunglasses,Ready for pickup,09/10/2026,187.42
+J-7904,09/08/2026,Single vision,Ready for pickup,09/10/2026,83.26
+J-7905,09/09/2026,Prescription sunglasses,Ready for pickup,09/10/2026,206.57
+J-7906,09/09/2026,Frame repair,In lab,,23.46
+J-7907,09/09/2026,Frame repair,In lab,,27.75
+J-7908,09/09/2026,Progressive,Picked up,09/10/2026,217.11
+J-7909,09/09/2026,Bifocal,Picked up,09/11/2026,179.97
+J-7910,09/10/2026,Blue-light upgrade,In lab,,74.94
+J-7911,09/10/2026,Frame repair,In lab,,25.43
+J-7912,09/10/2026,Bifocal,Ready for pickup,09/13/2026,165.05
+J-7913,09/10/2026,Bifocal,Ready for pickup,09/13/2026,170.16
+J-7914,09/11/2026,Single vision,Ready for pickup,09/12/2026,98.47
+J-7915,09/11/2026,Single vision,Ready for pickup,09/11/2026,93.83
+J-7916,09/12/2026,Frame repair,In lab,,24.56
+J-7917,09/12/2026,Single vision,Waiting on lenses,,94.42
+J-7918,09/12/2026,Single vision,Picked up,09/13/2026,93.14
+J-7919,09/12/2026,Lens replacement,Picked up,09/13/2026,127.97
+J-7920,09/13/2026,Single vision,In lab,,93.29
+J-7921,09/13/2026,Progressive,Waiting on lenses,,252.14
+J-7922,09/13/2026,Blue-light upgrade,In lab,,68.95
+J-7923,09/13/2026,Prescription sunglasses,Waiting on lenses,,196.39

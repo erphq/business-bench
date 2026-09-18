@@ -1,0 +1,13 @@
+For the loyalty program launch I need a lifetime value per customer: what each customer has actually paid us since we opened, how many orders, and their first and last order dates.
+
+A few things you need to know:
+
+- We moved stores in March 2025 and customer ids changed, and every so often we merge two accounts that belong to the same person. customer_id_changes.csv has every change. Report everyone under the id they have now.
+- Refunds come off. If an order was refunded in full it doesn't count at all - not as an order and not for the first or last order date.
+- Voided orders never got paid, leave them out.
+- Test orders: anything tagged as a test, and anything from our own ops@nightjar.coffee account. Leave those out too.
+- The customers export from June is out of date, don't trust its totals.
+
+Columns: customer_id, first_order, last_order, orders, lifetime_value. Dates like 2025-03-10. One row per customer who has bought something.
+
+Thanks! Maya

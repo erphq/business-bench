@@ -1,0 +1,30 @@
+From: Dana Whitfield <dana@pembertonhvac.com>
+To: you
+Date: Mon, 6 Jul 2026 09:31
+Subject: Q2 cost per lead
+
+Can you put together cost per lead by channel for the second quarter (April through June)? Finance sent over the paid media spend sheet and I exported the leads from the CRM this morning.
+
+Report by the channel names finance uses. The CRM tags sources differently: google / cpc, adwords and google are all Google Ads; facebook, fb / paid, instagram and ig are all Meta Ads (one line, we buy them together); linkedin and LinkedIn Sponsored are LinkedIn Ads; yelp is Yelp Ads; nextdoor is Nextdoor. Organic, referral, direct and word of mouth are not paid channels, leave them out of this.
+
+LinkedIn bills our Irish entity in euros. Finance books it at 1.08 US dollars per euro for the quarter, use that.
+
+Leads marked Spam or Test are not leads. The Direct Mail line has no tracked leads, we did the spring mailer in May and the phone number was never set up, but show it anyway so the spend is visible.
+
+-----Original Message-----
+
+From: you
+To: Dana Whitfield <dana@pembertonhvac.com>
+Date: Mon, 6 Jul 2026 09:40
+Subject: RE: Q2 cost per lead
+
+Will do. Anything else you want on it?
+
+-----Original Message-----
+
+From: Dana Whitfield <dana@pembertonhvac.com>
+To: you
+Date: Mon, 6 Jul 2026 09:52
+Subject: RE: Q2 cost per lead
+
+Spend per month and for the quarter, leads for the quarter, and cost per lead, one row per channel with a total line. Keep the totals as formulas please, Marcus will change numbers in it.

@@ -1,0 +1,69 @@
+id: team-directory-page
+track: desk
+category: tooling
+title: Staff directory page for the backstage screen
+ask: |
+  Please build the new staff directory page from this morning's HR export. Sam's note says what goes on it. Save it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  four people are Terminated with a last day before today; they are off the page entirely (checks: former staff left off; page structure: one row per person)
+- |-
+  Tomasz Lindqvist is also marked Terminated but the effective date is 2026-09-21, after today: notice given, still on staff (checks: every current staff member named; page structure: one row per person)
+- |-
+  Preferred name holds a first name for some people (the page shows it with the legal last name), a whole name for others, and nothing for most; Yuki Bennett-Underwood uses a married name only the Preferred field carries, and seven people's legal first names must not be printed (check: page structure: name people go by)
+- |-
+  departments are codes, and SCN (Scene Shop) was folded into Production in July, so Maya Yilmaz, Tomasz Lindqvist, Luis Oyelaran belong under Production (check: page structure: department per person)
+- |-
+  two people hold a secondary job in another department and appear on two export rows; each is listed once, under the primary job (checks: page structure: one row per person; page structure: department per person)
+- |-
+  two people are on Leave of absence and stay listed (check: every current staff member named)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: every current staff member named
+  path: index.html
+  phrases:
+  - Aisha Kowalski
+  - Alex Sato
+  - Amara Foster
+  - Becca Ellery
+  - Carlos Szabo
+  - Dana Carrow
+  - Dmitri Ferreira
+  - Emeka Novak
+  - Grace Castillo
+  - Hiroshi Varga
+  - Iris Nguyen
+  - Jamal Marsh
+  - Jon Brooks
+  - Leila Okafor
+  - Liz Abara
+  - Luis Oyelaran
+  - Mateo Ramos
+  - Maya Yilmaz
+  - Nadia Zelenko
+  - Peggy Tanaka
+  - Sam Osei
+  - Ted Ibsen
+  - Tomasz Lindqvist
+  - Yuki Bennett-Underwood
+  - Zara Quinlan
+- type: text_not_contains
+  name: former staff left off
+  path: index.html
+  phrases:
+  - Rahul Dunmore
+  - Oscar Alvarez
+  - Marcus Haddad
+  - Noor Delacroix
+  - rdunmore@lanternstreetplayhouse.org
+  - oalvarez@lanternstreetplayhouse.org
+  - mhaddad@lanternstreetplayhouse.org
+  - ndelacroix@lanternstreetplayhouse.org
+- type: custom
+  name: page structure
+  module: check.py

@@ -1,0 +1,8 @@
+Handle,Title,Vendor,Type,Published,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Variant SKU,Variant Price,Status
+mens-ridgeline-jacket,Men's Ridgeline Rain Jacket,Granite Peak,Jackets,TRUE,Color,Blue,Size,S,GP1001-BLU-S,119.00,active
+mens-ridgeline-jacket,,,,,,Blue,,M,GP1001-BLU-M,119.00,
+mens-ridgeline-jacket,,,,,,Blue,,L,GP1001-BLU-L,119.00,
+merino-hike-socks-3pk,Hike & Bike Merino Socks (3-Pack),Thistle Wool Co.,Socks,TRUE,Size,S,,,GP2040-S,22.00,active
+merino-hike-socks-3pk,,,,,,M,,,GP2040-M,22.00,
+merino-hike-socks-3pk,,,,,,L,,,GP2040-L,22.00,
+enamel-camp-mug,Café Enamel Camp Mug,Granite Peak,Camp Kitchen,TRUE,Title,Default Title,,,GP4010,16.00,active

@@ -1,0 +1,64 @@
+id: helpdesk-tickets
+track: build
+category: support
+title: Managed-service helpdesk with client contacts, first-reply promises, escalation, and agent and client scoping
+ask: |
+  We're a managed IT provider looking after about 60 small businesses, and I need a helpdesk that both
+  our six agents and our clients log into. I've attached our client list, our client contacts, and the
+  July and August tickets from the old system; some tickets have no client filled in, but the contact's
+  email tells you whose they are. We promise a first reply within 1 hour for P1, 4 hours for P2, 8
+  hours for P3, and 24 hours for P4: anything still waiting for its first reply past that deadline gets
+  escalated to me, and a ticket can't be resolved or closed without a resolution note. Agents should see
+  only the tickets in their own queue, each client's people should see and raise tickets for their own
+  company only, our finance person needs a read-only login, and I want a dashboard with open and
+  escalated tickets and how often we keep our first-reply promise. Give me an admin login and a login
+  for Sam Delgado, one of our agents.
+seed:
+  - seed/clients.csv
+  - seed/contacts.csv
+  - seed/tickets.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for agent Sam Delgado.
+      password: That agent's password.
+    notes: >
+      Free text. Must say the restricted login is agent Sam Delgado. May include a client user login,
+      the read-only login, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "service.manager@example.com", "password": "..."},
+      "restricted": {"user": "sam.delgado@example.com", "password": "..."},
+      "notes": "restricted login is agent Sam Delgado. Client user: ijones@glassworksoptical.com / ... Restart: systemctl restart helpdesk."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 17, 19, 23]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - "clients.csv repeats 2 rows exactly and 2 clients with the domain in capitals, LLC on the name, and no account number; deduping on account number or name keeps 62 (item 15)"
+  - "contacts.csv repeats 6 emails in other letter case and 4 rows exactly; three contacts have no email and must not be merged (item 16)"
+  - "tickets.csv writes numbers as HD-10374, #10374, 10374, hd-10374 and repeats 10 rows: no dedupe gives 260 (items 11, 17)"
+  - "8 tickets have a blank Client; only the contact email ties them to a company, so a client user and the per-client figures miss them (items 17, 25, change 1)"
+  - "priorities are written P2, p2, 2 - High, P2 (High); matching the literal text splits every priority count and breaks the deadline rule on imports (items 10, 18, 20, 21)"
+  - "the promise percentage must count unanswered August tickets as missed: 76.0% (92 of 121), not 83.6% of answered ones (items 8, 20)"
+  - "timestamps mix 2026-08-21 14:43, 8/5/2026 5:27 PM, 25-Aug-2026 15:32, 08/21/26 11:59; reading 5:27 PM as 05:27 flips HD-11797 and others between met and missed (items 10, 20)"
+  - "escalation is 'still waiting for a first reply', not 'answered late': HD-11838 was answered after its deadline and is not escalated; 11 imported tickets are (items 8, 21)"
+  - "HD-11327 is resolved 2026-07-26 19:18, before its 2026-07-28 10:18 creation; it must be flagged (item 22)"
+  - "the resolution-note rule must hold on the server, not only in the form (item 23)"

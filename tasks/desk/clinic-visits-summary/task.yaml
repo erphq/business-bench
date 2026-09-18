@@ -1,0 +1,59 @@
+id: clinic-visits-summary
+track: desk
+category: reports
+title: Visits per provider and the no-show rate for Q1
+ask: |
+  Can you pull our Q1 numbers out of the scheduler export - how many visits each provider did in each month, and how bad our no-show problem is? Save it as visits.xlsx with live formulas. The front desk notes say how we count them.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  Mitchell appears under four spellings in the export ('Sandra Mitchell', 'Mitchell, Sandra', 'S. Mitchell', 'SANDRA MITCHELL') and Taylor under two; a group-by on the raw provider column splits them into separate rows (checks: merged provider February visits; merged provider quarter visits)
+- |-
+  the clinic changed schedulers in February, so a kept visit is written 'Completed' in January and mostly 'Arrived' afterwards; counting only 'Completed' loses a third of the quarter (checks: merged provider February visits; clinic total visits)
+- |-
+  walk-ins are visits with no appointment id, and they are treated patients, but they were never on the book so they stay out of the no-show denominator (checks: clinic total visits; no-show rates)
+- |-
+  cancellations are spelled four ways and are neither visits nor no-shows; 'Rescheduled' rows are the vacated slot and must not be counted twice (checks: no-show count; no-show rates)
+- |-
+  the cancellation-fee billing export carries a provider, a date and a patient on every row and looks like a second visit list; merging it inflates every count (check: clinic total visits)
+- |-
+  dates come in three formats and the export carries a two-line preamble and a BOM (check: clinic total visits)
+checks:
+- type: file_exists
+  name: visits.xlsx exists
+  path: visits.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: visits.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: visits.xlsx
+- type: xlsx_value_present
+  name: merged provider February visits
+  path: visits.xlsx
+  expected: 51
+  rel_tol: 0.001
+  near_text: mitchell
+- type: xlsx_value_present
+  name: merged provider quarter visits
+  path: visits.xlsx
+  expected: 148
+  rel_tol: 0.001
+  near_text: mitchell
+- type: xlsx_value_present
+  name: second provider no-show count
+  path: visits.xlsx
+  expected: 20
+  rel_tol: 0.001
+  near_text: taylor
+- type: xlsx_value_present
+  name: clinic total visits
+  path: visits.xlsx
+  expected: 582
+  rel_tol: 0.001
+  near_text: total
+- type: custom
+  name: no-show rates per provider
+  module: check.py

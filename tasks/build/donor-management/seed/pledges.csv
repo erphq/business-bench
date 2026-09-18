@@ -1,0 +1,65 @@
+Pledge ID,Donor ID,Donor,Program,Pledge Amount,Pledged On,Start Date,End Date,Schedule,Notes
+PL-0001,D-157,Chloe Anderson,General Operating,250.00,"January 09, 2025",01-Feb-2025,31-Jan-2026,Semiannual,
+PL-0002,D-00109,Donald Harris,General Operating,"2,500.00",02/15/2025,01-Mar-2025,02/28/26,Quarterly,Paying by check
+PL-0003,D-00094,Kenneth Walker,Youth Literacy,"$2,500.00",12/27/2025,01/01/2026,"December 31, 2026",Semiannual,
+PL-0004,76,Donald Edwards,General Operating,"5,000.00",2026-01-02,2026-02-01,01/31/25,Annual,Memorial pledge
+PL-0005,D-00060,Betty King,Youth Literacy,200.00,"December 23, 2025",01/01/2026,"December 31, 2026",Semiannual,Memorial pledge
+PL-0006,D-00059,"Ruiz, Edward",Scholarships,"$5,000.00",07-Jan-2025,02/01/25,01/31/26,Annual,
+PL-0007,D-00086,Amara Bennett,Senior Meals,200.00,2025-03-07,01-Apr-2025,"March 31, 2026",Semiannual,
+PL-0008,D-60,Betty King,Food Pantry,500.00,2025-06-17,2025-07-01,06/30/2026,Quarterly,
+PL-0009,D-00003,"Rivera, Carol",Food Pantry,"$1,000.00",2025-04-23,06/01/2025,2026-05-31,Annual,
+PL-0010,D-00114,"Hill, Mateo",Youth Literacy,"$1,250.00",12/08/25,01-Jan-2026,12/31/26,Semiannual,Memorial pledge
+PL-0011,D-00098,"Baker, Kevin",General Operating,"5,000.00",03/25/25,01-May-2025,04/30/2026,Annual,
+PL-0012,D-00005,Kenneth Carter,General Operating,"$2,000.00",03/12/2026,"April 01, 2026",31-Mar-2027,Quarterly,
+PL-0013,D-00067,Donna Lewis,General Operating,"5,000.00",2025-09-07,10/01/2025,"September 30, 2026",Annual,Paying by check
+PL-0014,D-00169,Jessica Jackson,Food Pantry,"1,000.00",07/24/25,2025-09-01,2026-08-31,Semiannual,
+PL-0015,D-00081,Dmitri Collins,Senior Meals,500.00,05/10/2025,01-Jun-2025,31-May-2026,Annual,
+PL-0016,D-00134,Timothy Cooper,Youth Literacy,$500.00,12-Feb-2026,03/01/26,"February 28, 2027",Semiannual,Memorial pledge
+PL-0017,D-165,Patricia Thompson,General Operating,"1,000.00",05/30/25,07/01/2025,06/30/2026,Semiannual,
+PL-0018,D-00056,Ronald Richardson,Youth Literacy,"1,000.00",04/24/2025,01-Jun-2025,05/31/26,Annual,Memorial pledge
+PL-0019,D-00111,Stephanie Phillips,Senior Meals,"1,000.00",05/07/2025,01-Jun-2025,31-May-2026,Semiannual,Matched by employer
+PL-0020,D-131,"Morris, Mary",Youth Literacy,"5,000.00",03/03/2026,"April 01, 2026","March 31, 2027",Quarterly,
+PL-0021,D-00057,Sandra Hughes,Scholarships,"1,200.00",20-Feb-2026,04/01/2026,03/31/27,Quarterly,Paying by check
+PL-0022,D-00160,Amy Wright,Youth Literacy,"5,000.00","December 13, 2025",01-Jan-2026,12/31/2026,Annual,Paying by check
+PL-0023,D-00009,Jonathan Thompson,Youth Literacy,$500.00,02/02/2025,03/01/25,"February 28, 2026",Annual,
+PL-0024,D-00105,"Rivera, Jonathan",Food Pantry,"2,500.00",07/22/25,08/01/25,"July 31, 2026",Quarterly,Matched by employer
+PL-0025,D-00123,Amanda King,Food Pantry,"$1,000.00",01/07/25,"February 01, 2025",2026-01-31,Semiannual,
+PL-0026,D-55,Kwame Johnson,Food Pantry,$500.00,02/10/2026,03/01/26,02/28/27,Semiannual,Paying by check
+PL-0027,88,Joseph Miller,Scholarships,"$1,250.00",12/10/2025,01-Jan-2026,31-Dec-2026,Semiannual,Paying by check
+PL-0028,D-00100,Jason Gomez,Senior Meals,500.00,15-Jun-2025,2025-07-01,2026-06-30,Quarterly,Matched by employer
+PL-0029,D-00092,Amy Okafor,General Operating,600.00,06/05/2025,07/01/25,2026-06-30,Semiannual,Matched by employer
+PL-0030,D-00074,Mary Hughes,General Operating,"$5,000.00",03/20/26,04/01/2026,03/31/27,Annual,Matched by employer
+PL-0031,D-114,Mateo Hill,Senior Meals,"1,000.00",04/23/25,01-Jun-2025,2026-05-31,Semiannual,
+PL-0032,D-00037,"Bennett, Aisha",Food Pantry,$400.00,2025-01-23,2025-03-01,02/28/2026,Quarterly,
+PL-0033,D-00138,Eric Lopez,Senior Meals,"1,000.00",03/23/25,"April 01, 2025","March 31, 2026",Quarterly,Memorial pledge
+PL-0034,D-00024,"Bailey, Hiroshi",Senior Meals,"$2,500.00",2025-05-04,2025-06-01,2026-05-31,Semiannual,Paying by check
+PL-0035,173,"Lopez, Aisha",Senior Meals,500.00,"April 16, 2025",01-May-2025,2026-04-30,Semiannual,Matched by employer
+PL-0036,D-00175,Yuki Ross,Food Pantry,$250.00,01/27/2025,02/01/25,01/31/2026,Semiannual,Paying by check
+PL-0037,D-00049,Sharon Diaz,Scholarships,$600.00,"June 24, 2025",08/01/2025,"July 31, 2026",Semiannual,Memorial pledge
+PL-0038,D-102,Ronald Johnson,Scholarships,"1,000.00",06/25/2025,"July 01, 2025",06/30/26,Semiannual,Memorial pledge
+PL-0039,70,Gary Okafor,Food Pantry,"$2,000.00","December 03, 2025",01-Jan-2026,12/31/2026,Quarterly,
+PL-0040,D-00040,"Phillips, Laura",General Operating,"$2,500.00",05/22/2025,01-Jun-2025,05/31/26,Annual,Matched by employer
+PL-0041,D-95,Rebecca Chavez,Senior Meals,"$5,000.00",15-Feb-2025,"March 01, 2025",02/28/2026,Annual,
+PL-0042,D-00033,Hiroshi Tanaka,Senior Meals,"5,000.00",12/25/2024,2025-02-01,31-Jan-2026,Quarterly,Paying by check
+PL-0043,D-00072,Carol Rogers,Food Pantry,"1,200.00",12/17/24,01/01/2025,12/31/25,Quarterly,
+PL-0044,D-53,Dmitri Chavez,Youth Literacy,"1,000.00",05/16/2025,2025-06-01,"May 31, 2026",Annual,Memorial pledge
+PL-0045,D-00174,"Allen, Cynthia",Senior Meals,"1,000.00",2025-02-21,2025-03-01,02/28/2026,Semiannual,
+PL-0046,D-115,Nancy Mensah,Senior Meals,"$5,000.00",02/04/2025,"March 01, 2025",02/28/2026,Annual,
+PL-0047,D-4,"Wright, Patricia",Food Pantry,$500.00,"January 24, 2025",03/01/2025,2026-02-28,Annual,Memorial pledge
+PL-0048,D-00076,Donald Edwards,Scholarships,500.00,2025-08-16,"September 01, 2025","August 31, 2026",Annual,
+PL-0049,D-00133,Jennifer Castillo,Food Pantry,"$5,000.00","December 13, 2025",01-Jan-2026,31-Dec-2026,Quarterly,Matched by employer
+PL-0050,D-00068,Hiroshi Wilson,General Operating,500.00,07/16/25,08/01/25,2026-07-31,Annual,Memorial pledge
+PL-0051,7,Carlos Sanchez,Food Pantry,400.00,05/31/2025,2025-07-01,30-Jun-2026,Quarterly,
+PL-0052,D-00034,Dana Hughes,Senior Meals,$200.00,09-Jan-2026,2026-02-01,01/31/27,Semiannual,Matched by employer
+PL-0053,D-00016,Angela Brown,Youth Literacy,"2,500.00",2025-10-27,2025-12-01,30-Nov-2026,Annual,
+PL-0054,D-00032,Kwame Alvarez,Senior Meals,"$1,250.00",15-Apr-2026,05/01/2026,04/30/27,Semiannual,Paying by check
+PL-0055,D-00112,Amanda Lopez,Scholarships,"5,000.00",09/22/25,"November 01, 2025","October 31, 2026",Annual,
+PL-0056,D-43,"Gutierrez, Sofia",Food Pantry,"$2,500.00","December 22, 2025",2026-01-01,2026-12-31,Annual,
+PL-0057,D-00101,Jeffrey Gonzalez,Food Pantry,"2,500.00",22-Apr-2025,"May 01, 2025","April 30, 2026",Quarterly,
+PL-0058,D-00158,"Anderson, Dorothy",Youth Literacy,$200.00,06-Mar-2025,01-Apr-2025,03/31/2026,Semiannual,Paying by check
+PL-0059,D-00080,Donald Rodriguez,Food Pantry,$400.00,12/17/24,01-Jan-2025,2025-12-31,Quarterly,
+PL-0060,D-00108,Timothy Peterson,Food Pantry,"1,250.00",2025-09-12,"October 01, 2025",09/30/26,Semiannual,Matched by employer
+PL-0061,D-00069,Kwame Turner,Youth Literacy,$500.00,05-Dec-2024,"January 01, 2025",12/31/2025,Annual,Paying by check
+PL-0062,D-59,Edward Ruiz,Food Pantry,$500.00,12-Jul-2025,01-Aug-2025,31-Jul-2026,Annual,Matched by employer
+PL-0063,D-00029,Chloe Hernandez,Food Pantry,500.00,06/26/2025,08/01/2025,"July 31, 2026",Quarterly,Matched by employer
+PL-0064,D-176,Carol Richardson,Youth Literacy,"1,000.00",28-Mar-2026,2026-05-01,2027-04-30,Annual,

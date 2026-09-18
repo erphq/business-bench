@@ -1,0 +1,55 @@
+id: menu-item-performance
+track: desk
+category: reports
+title: August menu items ranked by sales and margin
+ask: |
+  I'm redoing the menu. Using the August POS export and Rosa's cost sheet, show me every item ranked by how many we sold and by margin - my note has how to read the export. Save it as menu_performance.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  modifiers ("+ Oat milk", "+ Add bacon") are separate lines with their own price and a Parent Item; they are not menu items and their charge and cost roll into the parent, so dropping or ranking them separately moves the parent's margin (checks: Latte margin; Breakfast Sandwich margin)
+- |-
+  68 comped items show a full discount to a zero net price and still count in quantity and cost, while 26 voided items were never made; counting every line or dropping every zero line both miss (checks: Cold Brew quantity; Breakfast Sandwich margin)
+- |-
+  Avocado Toast became Smashed Avocado Toast on 15 August; both names are in the export and only the new one is in the cost sheet (check: Smashed Avocado Toast quantity)
+- |-
+  staff meals are half price, so the Gross Price column overstates sales; sales are the Net Price (check: total margin)
+- 'July''s POS export sits in the folder with the same columns (check: total margin)'
+checks:
+- type: file_exists
+  name: menu_performance.xlsx exists
+  path: menu_performance.xlsx
+- type: xlsx_no_errors
+  name: no formula errors
+  path: menu_performance.xlsx
+- type: xlsx_value_present
+  name: Smashed Avocado Toast quantity
+  path: menu_performance.xlsx
+  expected: 178
+  rel_tol: 0.001
+  near_text: smashed avocado
+- type: xlsx_value_present
+  name: Cold Brew quantity
+  path: menu_performance.xlsx
+  expected: 198
+  rel_tol: 0.001
+  near_text: cold brew
+- type: xlsx_value_present
+  name: Latte margin
+  path: menu_performance.xlsx
+  expected: 1178.34
+  rel_tol: 0.0001
+  near_text: latte
+- type: xlsx_value_present
+  name: Breakfast Sandwich margin
+  path: menu_performance.xlsx
+  expected: 1505.6
+  rel_tol: 0.0001
+  near_text: breakfast sandwich
+- type: xlsx_value_present
+  name: total margin
+  path: menu_performance.xlsx
+  expected: 10834.98
+  rel_tol: 1.0e-05
+  near_text: total

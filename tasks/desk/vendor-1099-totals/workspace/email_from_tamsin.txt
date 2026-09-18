@@ -1,0 +1,20 @@
+From: Tamsin Rourke <tamsin@rourkeledger.com>
+To: Gabe <gabe@juniperhollowrentals.com>
+Date: Mon, 12 Jan 2026 09:30
+Subject: 1099 totals for 2025
+
+Hi Gabe,
+
+Before I prepare the 1099s I need the 2025 totals per vendor. How I want them counted:
+
+1. Only vendors who filled in your W-9 form count; the utility, the equipment loan and payroll are not vendors for this.
+2. Leave out corporations - a C or S corporation, and an LLC that told us it is taxed as a C or S corporation. Individuals, single-member LLCs, partnerships and LLCs taxed as partnerships stay in.
+3. If someone filled in the form more than once, the most recent submission replaces the earlier one.
+4. Anything you paid by credit card, PayPal or Venmo is reported by the card company or the app, not by us, so leave those payments out. Checks, ACH, Zelle and wires count.
+5. Refunds from a vendor come off the total only if the money came back the same reportable way (a refund check you deposited, a Zelle back to you). A refund credited back to the card or to PayPal or Venmo just reverses a card or app payment that was never in the total.
+6. Some people show up in the bank under their business name and sometimes under their own name - it is the same TIN, one line.
+
+Send me vendor_totals.csv with vendor (the line 1 name from their latest form), tin_last4 (just the four digits) and reportable_total. Skip anyone whose reportable total comes to zero. I will apply the threshold myself.
+
+Thanks,
+Tamsin

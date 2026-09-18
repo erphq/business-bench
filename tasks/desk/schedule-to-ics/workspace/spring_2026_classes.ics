@@ -1,0 +1,53 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+X-WR-CALNAME:Copper Creek Spring
+BEGIN:VEVENT
+DTSTART:20260303T183000
+DTEND:20260303T193000
+UID:spring-puppy-1@coppercreekdogs.com
+SUMMARY:Puppy Kindergarten (spring)
+LOCATION:Training barn
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20260310T183000
+DTEND:20260310T193000
+UID:spring-puppy-2@coppercreekdogs.com
+SUMMARY:Puppy Kindergarten (spring)
+LOCATION:Training barn
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20260317T183000
+DTEND:20260317T193000
+UID:spring-puppy-3@coppercreekdogs.com
+SUMMARY:Puppy Kindergarten (spring)
+LOCATION:Training barn
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20260324T183000
+DTEND:20260324T193000
+UID:spring-puppy-4@coppercreekdogs.com
+SUMMARY:Puppy Kindergarten (spring)
+LOCATION:Training barn
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20260331T183000
+DTEND:20260331T193000
+UID:spring-puppy-5@coppercreekdogs.com
+SUMMARY:Puppy Kindergarten (spring)
+LOCATION:Training barn
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20260407T183000
+DTEND:20260407T193000
+UID:spring-puppy-6@coppercreekdogs.com
+SUMMARY:Puppy Kindergarten (spring)
+LOCATION:Training barn
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20260418
+DTEND:20260418
+UID:spring-cgc@coppercreekdogs.com
+SUMMARY:CGC Test Day (spring)
+END:VEVENT
+END:VCALENDAR

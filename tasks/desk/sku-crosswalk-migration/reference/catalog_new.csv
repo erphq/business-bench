@@ -1,0 +1,40 @@
+sku,description,on_hand,price,status
+BP1522,Disc brake pads Tektro HD resin,75,13.99,mapped
+BP2739,Disc brake pads Shimano B01S resin,13,13.99,mapped
+BP2741,Disc brake pads SRAM Level resin,19,23.99,mapped
+BP4448,Disc brake pads Magura MT resin,50,31.99,mapped
+BT3157,Bar tape Supacaz black,13,21.99,mapped
+BT5245,Bar tape cork black,52,24.99,mapped
+CB4442,Brake cable road stainless,45,18.99,mapped
+CB7848,Brake cable MTB stainless,19,22.99,mapped
+CH2234,Chain 12-speed 116L,65,69.99,mapped
+CH3720,Chain 10-speed 116L,48,72.99,mapped
+CH8480,Chain 9-speed 116L,26,52.99,mapped
+CH9482,Chain 11-speed 116L,61,52.99,mapped
+CT2105,Tire 700x28 Gatorskin folding,15,37.99,mapped
+CT2853,Tire 27.5x2.6 Rekon folding,20,54.99,mapped
+CT3574,Tire 700x32 Marathon folding,31,71.99,mapped
+CT5060,Tire 29x2.4 Minion folding,13,43.99,mapped
+GR1749,Lock-on grips Ergon GE1,60,37.99,mapped
+GR6182,Lock-on grips ODI Ruffian,2,39.99,mapped
+LK1257,U-lock standard 9in,19,81.99,mapped
+LK7754,U-lock mini 7in,12,49.99,mapped
+LT2942,Light rear 100lm,12,89.99,mapped
+LT7098,Light front 1500lm,33,71.99,mapped
+LU1324,Chain lube dry 4oz,14,10.99,mapped
+LU3625,Chain lube wet 4oz,16,9.99,mapped
+LU9531,Chain lube wax 4oz,69,16.99,mapped
+TS3640,Inner tube 29x2.2 Schrader,100,12.99,mapped
+TS9205,Inner tube 20x1.75 Schrader,82,9.99,mapped
+TS9358,Inner tube 26x2.1 Schrader,18,9.99,mapped
+TS9607,Inner tube 27.5x2.3 Schrader,50,12.99,mapped
+TU1585,Inner tube 700x28 Presta 48mm,2,10.99,mapped
+TU1926,Inner tube 700x25 Presta 48mm,57,7.99,mapped
+TU7226,Inner tube 650x47 Presta 48mm,63,8.99,mapped
+TU9340,Inner tube 700x32 Presta 48mm,47,13.99,mapped
+ZBW-BOTTLE-21,Zephyr logo bottle 21oz,6,12.99,unmapped
+ZBW-CAP-CYC,Zephyr cycling cap,12,24.99,unmapped
+ZBW-SOCK-SM,Zephyr socks S/M,70,14.99,unmapped
+ZBW-STICKER,Zephyr sticker pack,22,4.99,unmapped
+ZBW-TEE-L,Zephyr shop tee L,15,29.99,unmapped
+ZBW-TEE-M,Zephyr shop tee M,22,29.99,unmapped

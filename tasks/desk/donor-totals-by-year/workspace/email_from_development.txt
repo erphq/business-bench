@@ -1,0 +1,16 @@
+From: Maya Ellison <maya@riversidefoodbank.org>
+To: you
+Date: Thu, 15 Jan 2026 10:22
+Subject: donor totals for the appeal list
+
+Before we segment the year-end appeal list I need one clean line per donor with what they gave us in 2024 and in 2025. The gifts are in three places: the giving platform export, Janelle's check log and the event app.
+
+We count giving by household, the way the CRM is set up. If Linda gives online and Robert mails a check, that's one household. Use the CRM donor ID.
+
+Only count money we actually received. Refunds come off. Gala pledges are promises until the check shows up (and when it does, it's in Janelle's log). Soft credits on the platform are just there so fundraisers can see their page totals - the money is already counted under the person who gave it.
+
+A check counts in the year written on the check, even when we didn't deposit it until January.
+
+Only donors who actually gave something in 2024 or 2025, please. Columns: donor_id, donor_name, total_2024, total_2025.
+
+Maya

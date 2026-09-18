@@ -1,0 +1,19 @@
+Q2 investor update - draft please
+
+Same shape as the Q1 letter. Every figure comes from Finance's KPI tracker, except where Priya has corrected it.
+Heads up that the Q1 letter went out before March closed, so its Q1 numbers were preliminary - do not reuse them.
+
+Cover:
+- Q2 revenue, and growth over Q1 (quarter revenue vs previous quarter revenue, as a percent)
+- ARR at the end of June (June MRR x 12)
+- paying customers at the end of June
+- cash at the end of June and runway in months: cash divided by the average monthly net burn over the quarter,
+  one decimal
+- headcount
+
+Investors asked us to stop rounding to "k", so full dollar amounts.
+
+Do NOT mention the conversation with Vantage Point Media. Nothing is signed and it is confidential.
+
+Save as update.md.
+Marcus

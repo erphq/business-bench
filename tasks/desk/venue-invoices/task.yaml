@@ -1,0 +1,198 @@
+id: venue-invoices
+track: desk
+category: extraction
+title: Key the September venue invoices into job costing
+ask: |
+  The venue invoices for our September events are in the folder. Can you key them into venue_lines.csv for job costing? Tamsin's note explains how she wants it laid out.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  deposits already paid are credited four ways: below the totals (Foundry, Old Mill Barn), as an 'Advance deposit applied' line under Harborview's totals, and inside Magnolia Hall's item table in a Credits column printed positive; each must become its own negative deposit row, and balance due is the figure after the deposit, not the invoice total (checks: one row per invoice line; line types; amounts; balance due)
+- |-
+  tax is wanted per line but only the Foundry and Old Mill Barn print it that way: Magnolia Hall prints a letter code (F, T, E) with the rates in a legend at the foot, Harborview prints a rate percent, and Rosewater prints only category tax totals under a Type column (check: line tax)
+- |-
+  Harborview re-issued the rehearsal dinner invoice as HTH-51573-R1 when the guarantee dropped; the superseded HTH-51573 with more guests and a higher balance is still in the folder (checks: one row per invoice line; row count; amounts)
+- |-
+  Harborview hosts both the rehearsal dinner and the farewell brunch for the same couple, and Magnolia Hall hosts two events for the same company; the event code comes from the event the invoice names (check: event codes and invoice numbers)
+- 'the Old Mill Barn invoice 2342 is an image-only scan (checks: descriptions; balance due)'
+- |-
+  invoice dates are printed in five formats ('August 21, 2026', '09/01/2026', '08 Sep 2026', '9/1/2026', 'Sep 7 2026') and the sheet wants YYYY-MM-DD (check: invoice dates)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: venue_lines.csv
+  columns:
+  - line_ref
+  - event_code
+  - invoice_no
+  - invoice_date
+  - line_type
+  - description
+  - amount
+  - tax
+  - balance_due
+- type: csv_set_equal
+  name: one row per invoice line
+  path: venue_lines.csv
+  column: line_ref
+  ref: venue_lines.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: venue_lines.csv
+  equals_ref: venue_lines.csv
+- type: csv_values_match
+  name: event codes and invoice numbers
+  path: venue_lines.csv
+  ref: venue_lines.csv
+  key: line_ref
+  columns:
+  - event_code
+  - invoice_no
+  min_accuracy: 1.0
+  must_match_keys:
+  - HTH-51573-R1-1
+  - HTH-51573-R1-2
+  - HTH-51573-R1-3
+  - HTH-51573-R1-4
+  - HTH-51573-R1-5
+  - HTH-51573-R1-6
+  - MH-7779-1
+  - MH-7779-2
+  - MH-7779-3
+  - MH-7779-4
+  - MH-7779-5
+  - MH-7779-6
+  - MH-7779-7
+- type: csv_values_match
+  name: invoice dates
+  path: venue_lines.csv
+  ref: venue_lines.csv
+  key: line_ref
+  columns:
+  - invoice_date
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: descriptions
+  path: venue_lines.csv
+  ref: venue_lines.csv
+  key: line_ref
+  columns:
+  - description
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - 2342-1
+  - 2342-2
+  - 2342-3
+  - 2342-4
+  - 2342-5
+  - 2342-6
+- type: csv_values_match
+  name: line types
+  path: venue_lines.csv
+  ref: venue_lines.csv
+  key: line_ref
+  columns:
+  - line_type
+  min_accuracy: 1.0
+  must_match_keys:
+  - FCR-2026-0418-7
+  - MH-7779-7
+  - HTH-51573-R1-6
+  - 2342-6
+- type: csv_values_match
+  name: amounts
+  path: venue_lines.csv
+  ref: venue_lines.csv
+  key: line_ref
+  columns:
+  - amount
+  must_match_keys:
+  - MH-7779-1
+  - MH-7779-2
+  - MH-7779-3
+  - MH-7779-4
+  - MH-7779-5
+  - MH-7779-6
+  - MH-7779-7
+  - HTH-51573-R1-1
+  - HTH-51573-R1-2
+  - HTH-51573-R1-3
+  - HTH-51573-R1-4
+  - HTH-51573-R1-5
+  - HTH-51573-R1-6
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: line tax
+  path: venue_lines.csv
+  ref: venue_lines.csv
+  key: line_ref
+  columns:
+  - tax
+  must_match_keys:
+  - MH-7779-1
+  - MH-7779-2
+  - MH-7779-3
+  - MH-7779-4
+  - MH-7779-5
+  - MH-7779-6
+  - MH-7779-7
+  - HTH-51573-R1-1
+  - HTH-51573-R1-2
+  - HTH-51573-R1-3
+  - HTH-51573-R1-4
+  - HTH-51573-R1-5
+  - HTH-51573-R1-6
+  - RG-26-0911-1
+  - RG-26-0911-2
+  - RG-26-0911-3
+  - RG-26-0911-4
+  - RG-26-0911-5
+  - RG-26-0911-6
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: balance due
+  path: venue_lines.csv
+  ref: venue_lines.csv
+  key: line_ref
+  columns:
+  - balance_due
+  must_match_keys:
+  - FCR-2026-0418-1
+  - FCR-2026-0418-2
+  - FCR-2026-0418-3
+  - FCR-2026-0418-4
+  - FCR-2026-0418-5
+  - FCR-2026-0418-6
+  - FCR-2026-0418-7
+  - MH-7779-1
+  - MH-7779-2
+  - MH-7779-3
+  - MH-7779-4
+  - MH-7779-5
+  - MH-7779-6
+  - MH-7779-7
+  - HTH-51573-R1-1
+  - HTH-51573-R1-2
+  - HTH-51573-R1-3
+  - HTH-51573-R1-4
+  - HTH-51573-R1-5
+  - HTH-51573-R1-6
+  - 2342-1
+  - 2342-2
+  - 2342-3
+  - 2342-4
+  - 2342-5
+  - 2342-6
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

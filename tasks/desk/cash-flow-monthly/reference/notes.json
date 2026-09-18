@@ -1,0 +1,47 @@
+{
+  "fee_spike_month": "June",
+  "fees": {
+    "April": 55.0,
+    "August": 25.0,
+    "July": 25.0,
+    "June": 370.0,
+    "March": 25.0,
+    "May": 25.0
+  },
+  "naive": {
+    "fees_substring": {
+      "April": 715.88,
+      "August": 649.72,
+      "July": 468.44,
+      "June": 657.72,
+      "March": 738.72,
+      "May": 655.42
+    },
+    "in_with_transfers": {
+      "April": 56644.24,
+      "August": 73213.09,
+      "July": 74061.02,
+      "June": 84318.73,
+      "March": 42651.34,
+      "May": 58810.67
+    },
+    "out_checking_only": {
+      "April": 65916.11,
+      "August": 62727.61,
+      "July": 54986.45,
+      "June": 57820.74,
+      "March": 48144.78,
+      "May": 49300.15
+    },
+    "out_with_transfers_pending": {
+      "April": 77512.56,
+      "August": 70165.31,
+      "July": 57986.45,
+      "June": 82164.69,
+      "March": 51144.78,
+      "May": 51800.15
+    }
+  },
+  "total_in": 358168.96,
+  "total_out": 356336.24
+}

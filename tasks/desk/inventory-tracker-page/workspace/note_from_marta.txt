@@ -1,0 +1,18 @@
+From: Marta Lindqvist
+To: you
+Date: Sat, 12 Sep 2026 16:20
+Subject: stock page for the tablet
+
+The tablet at the pour station has no signal half the time, so what I want is one page it can open on its own, nothing it has to fetch, and no scripts - the tablet's locked-down browser blocks them.
+
+Everything we still stock, A to Z by name, with how much is on hand and what it is worth at cost. Put the unit next to every quantity - last month somebody read 800 grams of shea as 800 kilos and nearly skipped an order.
+
+At the top I want a Low stock section: anything sitting at or below its reorder point, so whoever does the Friday order sees it first. At the reorder point counts as low, that is the whole point of the number.
+
+Under the main list, a total row with the value of everything on hand at cost.
+
+Archived lines are things we stopped making or buying. They are still in the export because the app never deletes anything - leave them off the page completely.
+
+Costs are whatever the supplier quotes, so check the Cost per column before you multiply anything.
+
+Marta

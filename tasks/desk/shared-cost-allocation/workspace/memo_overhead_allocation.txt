@@ -1,0 +1,20 @@
+To: Bookkeeping
+From: Carla Mendes, Controller
+Re: Monthly overhead allocation - how we do it now
+
+Tomas's July sheet split everything by his own estimates. From August on we allocate on real bases:
+
+1. Building costs go by square feet: rent, property insurance, electric, gas, water & sewer, janitorial and building
+   repairs. People costs go by headcount: IT support, software subscriptions, payroll service, the HR & benefits
+   platform, phones & internet and office supplies.
+2. Square feet: each department's own space from the floor plan. The common break room and restrooms and the space
+   we sublet are not a department and stay out of the base.
+3. Headcount: employees on the payroll on the last day of the month. Part-time counts as one half. Contractors are not
+   employees. Somebody who left during the month, or who has not started yet, does not count.
+4. A GL line that already has a department code is a direct cost of that department. It is not overhead and does
+   not go into the allocation at all. Credits and refunds net against their account.
+5. Rounding: split each account on its own. Work out each department's share, round it to the cent, and put
+   whatever difference is left (a cent or two) on the department with the biggest base for that account, so every
+   account allocates to the penny.
+
+I want accounts down the side, the five departments across, and department totals, with the formulas left in.

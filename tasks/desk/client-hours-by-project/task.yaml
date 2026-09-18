@@ -1,0 +1,82 @@
+id: client-hours-by-project
+track: desk
+category: spreadsheet
+title: Q3 hours per client project, billable and not
+ask: |
+  Ines wants last quarter's hours for every client project, split into billable and unbillable, from the two time exports. Her note has the details - save it as client_hours.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the phone timer app exports Duration (min) in minutes, with a BOM and client and project run together in one column; adding minutes to the tracker's hours inflates every project the photographer or illustrator touched (check: total hours per project)
+- |-
+  the tracker's Hours column mixes decimals (1.5) with clock-style entries (2:45), which a numeric parse drops or reads as 2.45 (check: total hours per project)
+- |-
+  Harbor Light Marine's Spring Catalog was renamed Catalog 2026 on 10 August; both names carry code HLM-07 in projects.xlsx and must come out as one row under the current name (checks: project list; total hours per project)
+- |-
+  the studio's own time sits under Driftwood Studio in the tracker and Internal on the timer app and is left out (checks: internal time excluded; project list)
+- |-
+  the timer export runs from 22 June to 2 October, so June and October time must be dropped, and Summer Beer Fest only has June time and must not appear (checks: project list; total hours per project)
+- |-
+  Revisions (no charge) time is unbillable even where Billable? says Yes, and the timer app marks billing with billable/non-billable tags instead of Yes/No (checks: billable hours; unbillable hours)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: client_hours.csv
+  columns:
+  - client
+  - project
+  - billable_hours
+  - unbillable_hours
+  - total_hours
+- type: csv_set_equal
+  name: project list
+  path: client_hours.csv
+  column: project
+  ref: client_hours.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: one row per project
+  path: client_hours.csv
+  equals_ref: client_hours.csv
+- type: csv_values_match
+  name: total hours per project
+  path: client_hours.csv
+  ref: client_hours.csv
+  key: project
+  columns:
+  - total_hours
+  numeric: true
+  tolerance: 0.011
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: billable hours
+  path: client_hours.csv
+  ref: client_hours.csv
+  key: project
+  columns:
+  - billable_hours
+  numeric: true
+  tolerance: 0.011
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: unbillable hours
+  path: client_hours.csv
+  ref: client_hours.csv
+  key: project
+  columns:
+  - unbillable_hours
+  numeric: true
+  tolerance: 0.011
+  min_accuracy: 1.0
+- type: text_not_contains
+  name: internal time excluded
+  path: client_hours.csv
+  phrases:
+  - Driftwood
+  - Internal
+  - Portfolio Site Refresh
+  - New Business Pitches
+  - Studio Admin

@@ -1,0 +1,71 @@
+id: payments-match-v2
+track: desk
+category: bookkeeping
+title: Match bank payments to open invoices, with card fees, short wires, and a wrong reference
+ask: |
+  Match the payments in this morning's bank export to our open invoices. Give me unpaid.csv with the invoices still open (invoice_id, customer, amount_outstanding), matches.csv showing what got applied where (invoice_id, line_id, amount_applied), and unapplied.csv for any credit that is not a payment on an open invoice (line_id, amount, reason). My note in the folder has the house rules.
+followup: null
+timeout_s: 1200
+traps:
+- invoice references in bank descriptions are inconsistent ("INV-2026-0413", "INV 2026-0413", "inv2026-0413", "Payment 0413
+  Acme", "INV#20260413", bare "0413", "INVOICE 413"); payer names are bank-style uppercase and truncated
+- six payments carry only the customer name plus an exact invoice amount (match on customer + amount; those customers have
+  several open invoices)
+- one ACH line pays two invoices and names both numbers; both must be applied from the same line
+- one wire names only the customer and equals the sum of two of that customer's three open invoices; the third invoice stays
+  open
+- partial payment (60%) on INV-2026-0417; the remainder must appear in unpaid.csv (note.txt says partials stay open)
+- one credit is a supplier refund (REFUND ... ORD ...), not a customer payment; it must not be applied
+- one bank line is exported twice (identical row, same line_id); applying it twice over-pays the invoice
+- seven invoices have no payment at all; ~20 debits, a bank fee and an interest credit are noise
+- bank amounts carry thousands separators and dates are MM/DD/YYYY while invoice dates are ISO
+- a Stripe card remittance arrives net of the processor fee (2.9% plus 30 cents); the note says the invoice is paid in full,
+  so matches.csv applies the invoice amount and the invoice leaves unpaid.csv (a mechanical partial-payment rung leaves the
+  fee open)
+- an international wire is 1.2% short from intermediary bank charges; the note says treat up to about 2% short as paid in
+  full
+- one ACH credit names an invoice number that is not in the open list (closed last month) and must go to unapplied.csv, not
+  be applied by customer + amount
+- one payer's credit names another customer's invoice number while the amount equals the payer's own open invoice; the note
+  says trust the payer and the amount over the reference, so it applies to the payer's invoice (a reference-first ladder applies
+  it to the wrong customer)
+- the refund and the interest credit belong in unapplied.csv with a reason; debits do not
+checks:
+- type: csv_columns
+  name: unpaid.csv columns
+  path: unpaid.csv
+  columns:
+  - invoice_id
+  - customer
+  - amount_outstanding
+- type: csv_set_equal
+  name: unpaid invoice ids
+  path: unpaid.csv
+  column: invoice_id
+  ref: unpaid.csv
+- type: csv_values_match
+  name: amount outstanding per open invoice (partial remainder required)
+  path: unpaid.csv
+  ref: unpaid.csv
+  key: invoice_id
+  columns:
+  - amount_outstanding
+  numeric: true
+  tolerance: 0.01
+  must_match_keys:
+  - INV-2026-0417
+- type: custom
+  name: matches.csv applies payments correctly
+  module: check.py
+- type: csv_columns
+  name: unapplied.csv columns
+  path: unapplied.csv
+  columns:
+  - line_id
+  - amount
+  - reason
+- type: csv_set_equal
+  name: unapplied line ids (refund, interest, closed-invoice payment; nothing else)
+  path: unapplied.csv
+  column: line_id
+  ref: unapplied.csv

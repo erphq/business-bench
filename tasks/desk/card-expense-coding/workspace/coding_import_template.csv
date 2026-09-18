@@ -1,0 +1,2 @@
+txn_id,cardholder,amount,gl_account,employee_owes
+CX00000000,Jane Example,125.40,6120,0.00

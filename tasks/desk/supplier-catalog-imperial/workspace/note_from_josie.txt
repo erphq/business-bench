@@ -1,0 +1,18 @@
+Nordwerk 2026 prices into our catalog
+
+Nordwerk's 2026 dealer price list came in. It's in dollars but everything else is metric, and our
+catalog is inches and pounds and priced by the piece. Last year's file is in the folder so you can see
+the layout. Please make catalog_us.csv with sku (their Art.-Nr.), description, length_in, width_in,
+weight_lb, pack_qty and price_each.
+
+- 1 inch is exactly 25.4 mm and 1 pound is exactly 453.59237 g. Watch the units - they write mm, cm and
+  m, and g and kg, and not always the same way in one row.
+- Our rounding: lengths and widths to the nearest sixteenth of an inch, written as a decimal (17.6875,
+  not 17 11/16). Weights to three decimals of a pound. Prices to three decimals, since some hardware
+  sells for pennies apiece.
+- The weight on their list is already per piece.
+- price_each is what one piece costs. Their 'Price per' column says what the price is for: one piece, a
+  whole PU (pack), or 100 or 1000 pieces. pack_qty is the PU.
+- Leave out anything they've discontinued.
+
+Josie

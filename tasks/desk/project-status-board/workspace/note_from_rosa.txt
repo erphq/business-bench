@@ -1,0 +1,16 @@
+From: Rosa Alvarez
+To: you
+Date: Fri, 11 Sep 2026 07:05
+Subject: board for the Alder Street crew
+
+Morning. The crew wants the kitchen board back on the wall - I print it on the black and white printer in the trailer, so it has to be one page that opens without the internet. Plain page, no scripts - the trailer laptop blocks them.
+
+Only the Alder Street kitchen. The Hillcrest bathroom is in the same export but that crew has its own wall.
+
+Three columns: Not started, In progress, Done, with how many cards are in each column right on the column heading. One card per task - when two people are on a task the app spits it out twice, but it is still one task.
+
+People type whatever they like in the status box. On hold still goes under In progress (we started it, it is just parked) and a blank status means nobody has touched it yet, so Not started.
+
+Anything that is waiting on another task that is not Done yet is blocked. Leave it in its column but print the word BLOCKED on the card - colour does not survive our printer. If everything it waits on is done, it is not blocked, whatever else it says.
+
+Rosa

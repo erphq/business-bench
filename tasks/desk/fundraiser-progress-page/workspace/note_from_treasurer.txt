@@ -1,0 +1,18 @@
+From: Dana Whitlock (treasurer)
+To: you
+Date: Sat, 12 Sep 2026 10:30
+Subject: progress page for the boat campaign
+
+The board wants a progress page for the new eight we can put on the club website and the screen in the boathouse. One HTML file please, it gets uploaded as is, and no scripts - the site builder strips them.
+
+Our goal is $48,000. The page should show how much we have raised, what percent of the goal that is (one decimal is fine), how much is still to raise, how many donors have given, and a Top donors list with the five biggest donors and what each has given in total.
+
+What counts:
+- Only gifts to the "New eight for the juniors" campaign. The platform export has everything - general fund, regatta entry fees - in the same file.
+- Refunded gifts do not count. If only part of a gift was refunded, count what we kept.
+- My log has the checks and cash. One check bounced; it is marked in the note column.
+- A donor is a person, not a gift. Plenty of people gave online and also handed me a check, so add those together. My log writes names surname first.
+
+Privacy: if someone ticked Hide my name on any gift, their name never goes on the page, even if they also gave by check. In the top donors list they show as Anonymous.
+
+Dana

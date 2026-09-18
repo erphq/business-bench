@@ -1,0 +1,67 @@
+id: production-yield
+track: desk
+category: reports
+title: August yield and scrap by production line
+ask: |
+  Tomasz wants August's yield and scrap for each production line from the batch records. Save it as yield.xlsx with live formulas; his note in the folder says how he wants it worked out.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the Bar line records good output mostly in cases and sometimes loose pieces; three bar SKUs have different weights and case packs (42 g x 24, 45 g x 20), so a single conversion or a raw sum of the quantity column is wrong (checks: Bar line good output kg; yield per line)
+- |-
+  Granola output is in bags of 340 g or 500 g on some batches and in kg on others (check: Granola line good output kg)
+- |-
+  Bites scrap is in grams on most batches and kilograms on the rest; adding the column as kilograms inflates scrap about a thousandfold (check: Bites line scrap kg)
+- |-
+  rework batches reprocess quarantined rejects from a named parent batch: their input must not be counted again and the rework input comes off scrap; treated as ordinary batches they double-count input and leave the recovered product in scrap (checks: Bar line scrap kg; yield per line; plant input kg)
+- |-
+  two R&D trial batches (one on the Bar line, one on Granola) sit in the same export, and the spec sheet lists the trial bar's weight (check: plant input kg)
+- |-
+  dates are DD/MM/YYYY per the export's preamble line, and counts come with and without thousands separators (check: plant input kg)
+- |-
+  the summary has to be live formulas so next month's records can be dropped in (check: live formulas)
+checks:
+- type: file_exists
+  name: yield.xlsx exists
+  path: yield.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: yield.xlsx
+  min_count: 8
+- type: xlsx_no_errors
+  name: no error cells
+  path: yield.xlsx
+- type: xlsx_value_present
+  name: Bar line good output kg (cases and pieces converted)
+  path: yield.xlsx
+  expected: 38122.8
+  rel_tol: 1.0e-05
+  near_text: bar
+- type: xlsx_value_present
+  name: Bar line scrap kg (rework netted)
+  path: yield.xlsx
+  expected: 2024.8
+  rel_tol: 0.0001
+  near_text: bar
+- type: xlsx_value_present
+  name: Granola line good output kg (bags converted)
+  path: yield.xlsx
+  expected: 17777.82
+  rel_tol: 1.0e-05
+  near_text: granola
+- type: xlsx_value_present
+  name: Bites line scrap kg (grams converted, rework netted)
+  path: yield.xlsx
+  expected: 304.4
+  rel_tol: 0.001
+  near_text: bites
+- type: xlsx_value_present
+  name: plant input kg (no rework or trial input)
+  path: yield.xlsx
+  expected: 65601.0
+  rel_tol: 1.0e-05
+  near_text: total
+- type: custom
+  name: yield per line
+  module: check.py

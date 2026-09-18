@@ -1,0 +1,22 @@
+FX on the euro invoices - how we book it
+
+Our books are in dollars. Every euro invoice is booked at the ECB reference rate (the USD per 1 euro file) for the
+invoice date. When the money arrives, the euros it settles are valued at the ECB rate for the value date on the bank
+line. The difference is our realized FX gain (positive) or loss (negative).
+
+- If the ECB did not publish a rate on the date (weekend, holiday), use the last rate it published before that date.
+- Do not use the bank's rate or the USD amount the bank credited. The bank takes a spread; that difference goes to
+  bank charges, not to FX.
+- A partial payment settles only the euros it pays, at its own rate. Whatever is still unpaid stays open; I do not
+  want unrealized FX on open balances in this file.
+- Some dealers' banks take their charge out of the wire. If the remittance says so and the charge is 25 euros or
+  less, the invoice counts as settled in full: convert the full invoice amount it settles, and I book the charge
+  separately.
+- Rounding: for each receipt, convert the euros it settles at the receipt's rate and at the invoice's rate, round each
+  to the cent, then subtract. An invoice's result is the sum over its receipts.
+- Invoices billed in US dollars have no FX and do not belong in this file.
+
+For the auditors I need one line per euro invoice from January to June: invoice, eur_settled, fx_gain_loss
+(USD) and eur_open.
+
+Miriam

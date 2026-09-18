@@ -1,0 +1,26 @@
+﻿Hollow Creek Woodworks LLC
+General ledger detail - overhead accounts 6100-6799
+08/01/2026 - 08/31/2026
+Date,Account,Account name,Vendor,Memo,Dept,Amount
+08/01/2026,6100,Rent,Creekside Industrial Properties,August rent - 1450 Mill Race Rd,,"13,900.00"
+08/02/2026,6600,Phones & internet,Lumen Business,Fiber internet,,375.59
+08/04/2026,6300,Janitorial,Brightway Cleaning,Nightly cleaning - August,,"1,308.74"
+08/04/2026,6410,Software subscriptions,Microsoft 365,Monthly subscription,,448.30
+08/07/2026,6310,Building repairs,Hollis Door & Dock,Overhead door spring replacement,,836.15
+08/07/2026,6410,Software subscriptions,Adobe,Monthly subscription,,80.88
+08/08/2026,6220,Gas,Northern Gas Utility,Gas service July,,608.61
+08/12/2026,6120,Property insurance,Everline Insurance,Property policy monthly installment,,"1,124.48"
+08/12/2026,6400,IT support,TechBridge IT,Managed IT - August,,"1,214.99"
+08/13/2026,6310,Building repairs,Summit HVAC Service,Spray booth exhaust fan motor,FIN,718.44
+08/14/2026,6210,Electric,Valley Electric Co-op,Service 07/15-08/14,,"3,335.86"
+08/16/2026,6500,Payroll service,Gusto,Payroll processing,,270.14
+08/18/2026,6700,Office supplies,Staples,Supplies,,47.46
+08/20/2026,6410,Software subscriptions,QuickBooks Online,Monthly subscription,,201.49
+08/20/2026,6700,Office supplies,Amazon Business,Supplies,,179.46
+08/21/2026,6230,Water & sewer,City of Ashford Utilities,Water & sewer bi-monthly,,304.02
+08/22/2026,6600,Phones & internet,Verizon Wireless,Crew phones,,266.75
+08/23/2026,6410,Software subscriptions,Cabinet Vision,Design seats - showroom,SHOW,305.15
+08/24/2026,6510,HR & benefits platform,Justworks,Benefits platform,,394.50
+08/26/2026,6210,Electric,Valley Electric Co-op,Billing adjustment credit - meter misread in June,,-166.48
+08/27/2026,6310,Building repairs,Apex Fire Protection,Sprinkler inspection,,508.68
+08/27/2026,6700,Office supplies,Uline,Supplies,,73.25

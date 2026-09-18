@@ -1,0 +1,129 @@
+id: amazon-inventory-loader
+track: desk
+category: reformatting
+title: Build the Amazon inventory upload from the product sheet
+ask: |
+  Please get our products ready for Amazon: turn amazon_listing_sheet.xlsx into an Inventory Loader file using the template. My notes on how we list things are in the folder. Save it as amazon_inventory.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the Amazon ID column mixes 10-character ASINs with 12-digit UPCs (some stored as numbers); product-id-type is 1 for ASINs and 3 for UPCs, the shop SKU never goes in product-id, and two products with no Amazon ID are left out (checks: product id and type; one row per sku)
+- |-
+  conditions are typed freely (New - open box, like new (used), used, good, Refurb (shop rebuilt)); open box is code 1 Used; Like New, and three refurbished items stay off Amazon entirely (checks: item condition code; one row per sku)
+- |-
+  price is shelf price + $6.00 for items the shop ships and shelf price + 12% for FBA items; copying the shelf price, using one rule for both, or taking the in-store Sale Price moves the price (check: price rules)
+- |-
+  quantity is On Hand minus Held for Store for shop-shipped items, floored at 0 where holds exceed stock, blank for FBA, with fulfillment-center-id DEFAULT or AMAZON_NA (check: quantity and fulfillment)
+- |-
+  three discontinued products are still live on Amazon and must stay in the file with add-delete d, not be dropped (checks: add-delete; one row per sku)
+checks:
+- type: csv_columns
+  name: Inventory Loader columns, exact order
+  path: amazon_inventory.csv
+  columns:
+  - sku
+  - product-id
+  - product-id-type
+  - price
+  - item-condition
+  - quantity
+  - add-delete
+  - item-note
+  - fulfillment-center-id
+  exact: true
+- type: csv_set_equal
+  name: one row per sku
+  path: amazon_inventory.csv
+  column: sku
+  ref: amazon_inventory.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: amazon_inventory.csv
+  equals_ref: amazon_inventory.csv
+- type: csv_values_match
+  name: product id and type
+  path: amazon_inventory.csv
+  ref: amazon_inventory.csv
+  key: sku
+  columns:
+  - product-id
+  - product-id-type
+  min_accuracy: 1.0
+  must_match_keys:
+  - ZBW-1040
+  - ZBW-1053
+  - ZBW-1079
+  - ZBW-1131
+  - ZBW-1157
+  - ZBW-1261
+  - ZBW-1313
+  - ZBW-1326
+  - ZBW-1378
+- type: csv_values_match
+  name: item condition code
+  path: amazon_inventory.csv
+  ref: amazon_inventory.csv
+  key: sku
+  columns:
+  - item-condition
+  min_accuracy: 1.0
+  must_match_keys:
+  - ZBW-1053
+  - ZBW-1079
+  - ZBW-1092
+  - ZBW-1131
+  - ZBW-1157
+  - ZBW-1209
+  - ZBW-1235
+  - ZBW-1248
+  - ZBW-1274
+  - ZBW-1287
+  - ZBW-1404
+  - ZBW-1443
+  - ZBW-1456
+  - ZBW-1469
+- type: csv_values_match
+  name: price rules
+  path: amazon_inventory.csv
+  ref: amazon_inventory.csv
+  key: sku
+  columns:
+  - price
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - ZBW-1040
+  - ZBW-1066
+  - ZBW-1092
+  - ZBW-1118
+  - ZBW-1131
+  - ZBW-1144
+  - ZBW-1183
+  - ZBW-1235
+  - ZBW-1248
+  - ZBW-1274
+  - ZBW-1352
+  - ZBW-1391
+  - ZBW-1404
+  - ZBW-1456
+  - ZBW-1469
+- type: custom
+  name: quantity and fulfillment
+  module: check.py
+- type: csv_values_match
+  name: add-delete
+  path: amazon_inventory.csv
+  ref: amazon_inventory.csv
+  key: sku
+  columns:
+  - add-delete
+  min_accuracy: 1.0
+  must_match_keys:
+  - ZBW-1183
+  - ZBW-1352
+  - ZBW-1378

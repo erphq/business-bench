@@ -1,0 +1,16 @@
+Operations Coordinator applicants
+
+All the resumes that came in are in the resumes folder (one was a walk-in, I scanned it). Before I start calling people I want candidates.csv, one row per applicant, with:
+
+  email             their email address
+  full_name
+  phone             10 digits, nothing else
+  current_title     the job they're in now; blank if they're not working right now
+  current_employer  blank if they're not working right now
+  years_experience  years of work experience, one decimal
+
+For experience: count each calendar month someone was working once, including the start and end months (Mar 2019 to Jun 2021 is 28 months). Overlapping jobs don't count twice, gaps between jobs don't count, and school doesn't count. For a job that's still going, count through August 2026. Then divide the months by 12.
+
+If somebody sent us more than one resume, use the most recent one.
+
+- Carol

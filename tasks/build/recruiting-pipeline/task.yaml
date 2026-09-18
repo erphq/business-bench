@@ -1,0 +1,61 @@
+id: recruiting-pipeline
+track: build
+category: recruiting
+title: Hiring app for a growing company with roles, candidates, stages, interviews, offer approvals, and a dashboard
+ask: |
+  We're a software company growing fast, and I need to run hiring in one place instead of our old
+  applicant tracker: roles, candidates, and each candidate's path from applied through phone screen,
+  interview, and offer to hired. Our open and past roles and the candidate export are attached; people
+  show up more than once in that export, and I want each person once with every role they applied for.
+  Interviews get scheduled in the app, and no interviewer should ever be booked twice at the same time.
+  Every offer needs my approval before it goes out, and nobody can offer above the salary range on the
+  role. I want team logins with different access: hiring managers see only candidates for their own
+  roles, our CEO can look at everything without changing anything, and I want a dashboard with our
+  pipeline and how long it takes us to hire. Give me an admin login and one for Ken Okafor, who hires for
+  Engineering.
+seed:
+  - seed/roles.csv
+  - seed/candidates.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for Ken Okafor, hiring manager for Engineering.
+      password: Ken's password.
+    notes: >
+      Free text. Must say the restricted login is Ken Okafor. May include an interviewer login, how to
+      invite users, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "people@example.com", "password": "..."},
+      "restricted": {"user": "ken@example.com", "password": "..."},
+      "notes": "restricted login is Ken Okafor (Engineering). Restart: systemctl restart hiring."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 16, 22, 24]  # "first usable" = these pass
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - candidates.csv is one row per application, 211 rows: 6 exact repeats, 4 re-applications with the email in different capitals, and 5 people with two applications; the answer is 196 people and 201 applications, not 211, 205, or 201 candidate rows (items 16, 11, 10)
+  - two different people are both named Rebecca Phillips; the second's note says so, and merging by name gives 195 (item 17)
+  - role ids are written REQ-0142, REQ-142, and 142; unpadded ids must link to the same role or applications go missing from the role and from Ken's scope (items 17, 6)
+  - roles.csv writes the hiring manager as "Ken Okafor", "K. Okafor", and "Okafor, Ken"; matching the exact string drops Ken's roles and shrinks his scope below 87 (items 15, 6, 9)
+  - salaries mix "$250,000", "215000", and "159k"; a text sort or a "k"-blind parser ranks the wrong role and candidate first or stores 159 (items 18, 10)
+  - stage words come from two eras (New applicant, Screening, Onsite, Offer Extended, Not selected, Offer declined); unmapped words break active counts and the change-1 pipeline report (items 8, 27)
+  - Carol Alvarez's Hired On (10/31/2025) is before her application (2025-12-13); counted, it drags average time to hire from 33.6 to 31.2 days (items 19, 20, 8)
+  - the offer ceiling is the role's maximum: 185,000 on REQ-0161 must save and 190,000 must not, and the maximum is written "$185,000" beside a minimum written "150k" (item 25)

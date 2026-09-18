@@ -1,0 +1,86 @@
+id: dept-expense-report
+track: desk
+category: reports
+title: Q2 expenses by department against budget
+ask: |
+  Hiroshi wants Q2 expenses by department, month by month, and a note on who went over budget. Build it as dept_expenses.xlsx with live formulas and write the memo as memo.md. His note and the booth thread are in the folder with the export.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the export writes cost centers four ways ('4200', 'CC-4200', '4200 - Events', 'Events (4200)') and twelve cost centers roll up to five departments through cost_centers.xlsx; a group-by on the raw column gives neither departments nor stable groups (check: Marketing Q2 total)
+- |-
+  13 lines have no cost center, most of them Production shoot costs; Hiroshi's note sends them to the employee's home cost center on the second (People) sheet, which writes names 'Last, First'; dropping them leaves Production under budget (checks: Production Q2 total; memo says Production is over budget)
+- |-
+  the budgets in the note are annual and phased evenly, so the Q2 budget is a quarter of each figure; compared with the annual figure nobody is over (checks: memo says Sales is over budget; memo carries both overrun amounts)
+- |-
+  the NAB booth was coded to Events; the thread first proposes a half-and-half split, then the CFO's later message moves all of it to Sales - East; left in Marketing, Marketing looks over and Sales under, and split, both totals are wrong (checks: Sales Q2 total; Marketing Q2 total; memo says Sales is over budget)
+- 'Rejected and Draft lines sit in the same export and are not spend (check: total Q2 spend)'
+- |-
+  the export is by approval activity, so seven March-dated expenses approved in April are in it and belong to closed Q1 (check: total Q2 spend)
+- |-
+  amounts are '$1,234.56' text, dates are MM/DD/YYYY and the export has a two-line preamble with CRLF endings (check: total Q2 spend)
+checks:
+- type: file_exists
+  name: dept_expenses.xlsx exists
+  path: dept_expenses.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: dept_expenses.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: dept_expenses.xlsx
+- type: xlsx_value_present
+  name: Sales Q2 total (booth moved in)
+  path: dept_expenses.xlsx
+  expected: 37984.55
+  rel_tol: 1.0e-05
+  near_text: sales
+- type: xlsx_value_present
+  name: Marketing Q2 total (booth moved out)
+  path: dept_expenses.xlsx
+  expected: 95258.33
+  rel_tol: 1.0e-05
+  near_text: marketing
+- type: xlsx_value_present
+  name: Production Q2 total (blank cost centers resolved)
+  path: dept_expenses.xlsx
+  expected: 63042.48
+  rel_tol: 1.0e-05
+  near_text: production
+- type: xlsx_value_present
+  name: total Q2 spend
+  path: dept_expenses.xlsx
+  expected: 231525.46
+  rel_tol: 1.0e-06
+  near_text: total
+- type: text_sentence_matches
+  name: memo says Sales is over budget
+  path: memo.md
+  all:
+  - \bsales\b
+  - (\bover\b|\bexceed|\babove\b|\boverr?un|\boverspen[dt]|\bbeyond\b)
+  - \bbudget
+  none:
+  - |-
+    \bsales\b\W+(is|was|came in|finished|ended|stayed|remained|are)?\W*(under|within|below|inside)\b
+  - (\bnot\b|n't\b|\bnever\b)[^.;]{0,15}\bover\b
+- type: text_sentence_matches
+  name: memo says Production is over budget
+  path: memo.md
+  all:
+  - \bproduction\b
+  - (\bover\b|\bexceed|\babove\b|\boverr?un|\boverspen[dt]|\bbeyond\b)
+  - \bbudget
+  none:
+  - |-
+    \bproduction\b\W+(is|was|came in|finished|ended|stayed|remained)?\W*(under|within|below|inside)\b
+  - (\bnot\b|n't\b|\bnever\b)[^.;]{0,15}\bover\b
+- type: text_numbers_present
+  name: memo carries both overrun amounts
+  path: memo.md
+  numbers:
+  - 7234.55
+  - 3542.48
+  rel_tol: 0.01

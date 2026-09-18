@@ -1,0 +1,17 @@
+Before I release the September check run I want a list of bills that look like they were entered twice.
+Use the register export for this quarter (the April-June one is just there for reference, ignore it).
+
+Call a pair a probable duplicate when it is the same vendor and either
+  (a) the invoice number is the same once you ignore the INV-, #, Inv #, No. and similar prefixes the clerks type in, or
+  (b) the amount is identical and the invoice dates are within 10 days of each other.
+Vendor credits are never duplicates and never pair with anything, even when they quote a bill's number.
+Same-amount bills more than ten days apart are our monthly recurring ones (yard lease, uniforms, toilets), leave those alone.
+Vendors get typed however the clerk feels like it that day (caps, Inc, LLC, extra spaces), so match on the real company
+name from vendor_list.xlsx, not the exact spelling.
+
+For each pair the earlier-dated bill is the original; if both carry the same date, the lower Ref No. is the original.
+List the other one as the duplicate, one row per duplicate, with these columns:
+ref_no, duplicate_of, vendor, invoice_no, amount, days_apart
+(amount as a plain number, days_apart as a whole number of days between the two invoice dates).
+
+Marcus

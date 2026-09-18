@@ -1,0 +1,48 @@
+product_code,product_name,sku,option1_name,option1_value,option2_name,option2_value,price,inventory_qty,availability
+CS01,Two-Burner Camp Stove,CS01,,,,,95.50,2,in_stock
+DB20,Roll-Top Dry Bag,DB20-10L-BLUE,Size,10L,Color,Blue,29.50,5,in_stock
+DB20,Roll-Top Dry Bag,DB20-10L-YELLOW,Size,10L,Color,Yellow,29.50,5,in_stock
+DB20,Roll-Top Dry Bag,DB20-20L-BLUE,Size,20L,Color,Blue,34.50,5,in_stock
+DB20,Roll-Top Dry Bag,DB20-20L-YELLOW,Size,20L,Color,Yellow,34.50,5,in_stock
+DB20,Roll-Top Dry Bag,DB20-35L-BLUE,Size,35L,Color,Blue,43.00,4,in_stock
+FV11,Summit Fleece Vest,FV11-L-NAVY,Size,L,Color,Navy,77.50,5,in_stock
+FV11,Summit Fleece Vest,FV11-L-RUST,Size,L,Color,Rust,77.50,5,in_stock
+FV11,Summit Fleece Vest,FV11-L-SAND,Size,L,Color,Sand,62.00,0,out_of_stock
+FV11,Summit Fleece Vest,FV11-M-NAVY,Size,M,Color,Navy,77.50,5,in_stock
+FV11,Summit Fleece Vest,FV11-M-RUST,Size,M,Color,Rust,77.50,5,in_stock
+FV11,Summit Fleece Vest,FV11-M-SAND,Size,M,Color,Sand,62.00,11,in_stock
+FV11,Summit Fleece Vest,FV11-S-NAVY,Size,S,Color,Navy,77.50,5,in_stock
+FV11,Summit Fleece Vest,FV11-S-RUST,Size,S,Color,Rust,77.50,5,in_stock
+FV11,Summit Fleece Vest,FV11-XL-NAVY,Size,XL,Color,Navy,77.50,5,in_stock
+FV11,Summit Fleece Vest,FV11-XL-RUST,Size,XL,Color,Rust,77.50,5,in_stock
+HL300,Headlamp 300lm,HL300,,,,,44.00,8,in_stock
+MC01,Waterproof Map Case,MC01,,,,,17.50,0,out_of_stock
+RS03,Storm Shell Pants,RS03-L,Size,L,,,95.50,6,in_stock
+RS03,Storm Shell Pants,RS03-M,Size,M,,,95.50,0,out_of_stock
+RS03,Storm Shell Pants,RS03-S,Size,S,,,95.50,10,in_stock
+RS03,Storm Shell Pants,RS03-XL,Size,XL,,,103.50,5,in_stock
+SP40,Insulated Sleeping Pad,SP40-LONG,Size,Long,,,133.00,0,out_of_stock
+SP40,Insulated Sleeping Pad,SP40-REGULAR,Size,Regular,,,118.00,5,in_stock
+SP40,Insulated Sleeping Pad,SP40-WIDE,Size,Wide,,,143.00,8,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-L-BLACK,Size,L,Color,Black,131.50,10,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-L-OLIVE,Size,L,Color,Olive,131.50,8,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-M-BLACK,Size,M,Color,Black,131.50,3,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-M-OLIVE,Size,M,Color,Olive,131.50,8,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-S-BLACK,Size,S,Color,Black,131.50,15,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-S-OLIVE,Size,S,Color,Olive,131.50,8,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-XL-BLACK,Size,XL,Color,Black,141.50,17,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-XL-OLIVE,Size,XL,Color,Olive,141.50,0,out_of_stock
+TN2P,Backcountry Tent 2P,TN2P-OLIVE,Color,Olive,,,334.50,5,in_stock
+TN2P,Backcountry Tent 2P,TN2P-ORANGE,Color,Orange,,,314.50,0,out_of_stock
+TN2P,Backcountry Tent 2P,TN2P-SAND,Color,Sand,,,314.50,18,in_stock
+TP22,Carbon Trekking Poles,TP22-GREEN,Color,Green,,,71.00,12,in_stock
+TP22,Carbon Trekking Poles,TP22-RED,Color,Red,,,83.00,0,out_of_stock
+TP22,Carbon Trekking Poles,TP22-SLATE,Color,Slate,,,83.00,12,in_stock
+WB10,Insulated Water Bottle,WB10-1L-BLUE,Size,1L,Color,Blue,42.00,2,in_stock
+WB10,Insulated Water Bottle,WB10-1L-GREEN,Size,1L,Color,Green,42.00,2,in_stock
+WB10,Insulated Water Bottle,WB10-750ML-BLUE,Size,750ML,Color,Blue,36.00,18,in_stock
+WB10,Insulated Water Bottle,WB10-750ML-ORANGE,Size,750ML,Color,Orange,36.00,0,out_of_stock
+WS3P,Merino Wool Socks 3-Pack,WS3P-L,Size,L,,,27.00,7,in_stock
+WS3P,Merino Wool Socks 3-Pack,WS3P-M,Size,M,,,27.00,7,in_stock
+WS3P,Merino Wool Socks 3-Pack,WS3P-S,Size,S,,,27.00,7,in_stock
+WS3P,Merino Wool Socks 3-Pack,WS3P-XL,Size,XL,,,29.00,0,out_of_stock

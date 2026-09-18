@@ -1,0 +1,215 @@
+﻿Month,Store,Item Code,Item Name,Qty Sold,Net Sales
+2026-07,Harbor Street,ESP-SGL,Espresso single,256,$796.36
+2026-07,Harbor Street,ESP-DBL,Espresso double,550,"$1,992.99"
+2026-07,Harbor St,AMR-12,Americano 12oz,556,"2,219.79"
+July 2026,Harbor Street,AMR-16,Americano 16oz,596,"2,575.57"
+2026-07,Harbor St,AMR-12,Americano 12oz,556,"2,219.79"
+Jul 2026,Harbor Street,LAT-12,Latte 12oz,357,"$1,787.45"
+Jul 2026,Harbor Street,LAT-16,Latte 16oz,597,"$3,313.29"
+July 2026,Harbor Street,CAP-12,Cappuccino 12oz,363,"1,743.13"
+2026-07,Harbor Street,FLW-8,Flat white 8oz,343,"$1,659.26"
+Jul 2026,Harbor Street,MOC-12,Mocha 12oz,292,"1,640.73"
+2026-07,Harbor Street,MOC-16,Mocha 16oz,692,"4,062.55"
+Jul 2026,Harbor Street,COR-6,Cortado 6oz,362,"1,637.12"
+Jul 2026,Harbor Street,MAC-4,Macchiato 4oz,311,"$1,223.38"
+July 2026,Harbor Street,DRP-12,Drip coffee 12oz,397,1137.78
+2026-07,Harbor St,DRP-16,Drip coffee 16oz,248,883.07
+Jul 2026,Harbor Street,CHA-12,Chai latte 12oz,258,"$1,358.83"
+2026-07,Harbor Street,CHA-16,Chai latte 16oz,289,1722.56
+2026-07,Harbor St,HOT-12,Hot chocolate 12oz,361,1646.83
+2026-07,Harbor Street,CBR-16,Cold brew 16oz,383,"1,912.35"
+Jul 2026,Harbor Street,CBR-20,Cold brew 20oz,312,1670.38
+Jul 2026,Harbor St,ICL-16,Iced latte 16oz,276,"1,648.24"
+July 2026,Harbor Street,NIT-16,Nitro cold brew 16oz,257,1497.49
+2026-07,Harbor Street,LEM-16,Lemonade 16oz,177,$707.95
+2026-07,Harbor St,ITE-16,Iced tea 16oz,102,381.68
+July 2026,Harbor St,SPK-12,Sparkling water 12oz,272,852.07
+July 2026,Harbor Street,TEA-EB,English breakfast tea,207,$726.65
+Jul 2026,Harbor St,TEA-GR,Sencha green tea,130,446.48
+2026-07,Harbor Street,TEA-CM,Chamomile tea,214,725.62
+Jul 2026,Harbor Street,TEA-EG,Earl grey tea,99,325.20
+July 2026,Harbor Street,MAT-12,Matcha latte 12oz,174,957.86
+2026-07,Harbor Street,MAT-16,Matcha latte 16oz,205,"1,269.18"
+2026-07,Harbor St,CRS-BUT,Butter croissant,198,$750.91
+Jul 2026,Harbor Street,CRS-ALM,Almond croissant,145,640.68
+2026-07,Harbor St,crs-cho,Chocolate croissant,156,670.74
+2026-07,Harbor Street,MUF-BLU,Blueberry muffin,429,1476.54
+July 2026,Harbor Street,SCN-CHE,Cheddar scone,152,608.82
+Jul 2026,Harbor Street,COO-CHO,Chocolate chip cookie,459,1249.91
+Jul 2026,Harbor St,brn-sal,Salted brownie,355,1428.94
+Jul 2026,Harbor Street,CIN-ROL,Cinnamon roll,178,$734.07
+July 2026,Harbor St,BAN-BRD,Banana bread slice,408,1552.88
+Jul 2026,Harbor Street,KGA-MAN,Kouign-amann,206,970.78
+July 2026,Harbor Street,TST-AVO,Avocado toast,125,1218.58
+Jul 2026,Harbor Street,BAG-LOX,Bagel with lox,96,"1,090.85"
+Jul 2026,Harbor Street,BRK-SAN,Breakfast sandwich,109,934.50
+July 2026,Harbor Street,GRN-YOG,Granola yogurt bowl,238,"$1,700.41"
+July 2026,Harbor Street,QCH-SPN,Spinach quiche,204,"1,616.83"
+July 2026,Harbor St,snd-tur,Turkey pesto sandwich,90,946.78
+July 2026,Harbor Street,SND-VEG,Veggie wrap,171,"1,640.11"
+July 2026,Harbor Street,OAT-BWL,Oatmeal bowl,178,"1,095.50"
+July 2026,Harbor Street,BNS-HSE,House blend beans 12oz,17,265.36
+July 2026,Harbor Street,bns-eth,Ethiopia beans 12oz,22,416.79
+July 2026,Harbor Street,BNS-DEC,Decaf beans 12oz,15,257.23
+July 2026,Harbor Street,MUG-LOG,Logo mug,37,652.59
+July 2026,Harbor Street,TUM-16,Travel tumbler 16oz,32,897.81
+2026-07,Harbor Street,PMP-SCN,Pumpkin scone,163,684.55
+2026-07,Mill Road,ESP-SGL,Espresso single,333,"$1,074.70"
+July 2026,Mill Rd,ESP-DBL,Espresso double,212,785.28
+July 2026,Mill Road,AMR-12,Americano 12oz,342,1297.90
+July 2026,Mill Road,AMR-16,Americano 16oz,294,"$1,329.12"
+July 2026,Mill Road,LAT-12,Latte 12oz,360,"1,798.42"
+July 2026,Mill Road,lat-16,Latte 16oz,283,"1,636.60"
+Jul 2026,Mill Rd,CAP-12,Cappuccino 12oz,332,"1,577.36"
+July 2026,Mill Road,FLW-8,Flat white 8oz,140,$655.64
+July 2026,Mill Rd,MOC-12,Mocha 12oz,228,"$1,273.87"
+2026-07,Mill Rd,MOC-16,Mocha 16oz,135,$816.63
+Jul 2026,Mill Road,COR-6,Cortado 6oz,106,$452.80
+2026-07,Mill Rd,MAC-4,Macchiato 4oz,208,$807.51
+Jul 2026,Mill Road,DRP-12,Drip coffee 12oz,267,756.11
+Jul 2026,Mill Road,DRP-16,Drip coffee 16oz,285,$942.14
+2026-07,Mill Rd,CHA-12,Chai latte 12oz,364,"$1,877.54"
+July 2026,Mill Road,CHA-16,Chai latte 16oz,355,1977.61
+Jul 2026,Mill Road,HOT-12,Hot chocolate 12oz,123,527.15
+July 2026,Mill Road,BRV-12,Breve 12oz,310,"$1,666.29"
+2026-07,Mill Road,CBR-16,Cold brew 16oz,80,412.93
+July 2026,Mill Road,CBR-20,Cold brew 20oz,172,952.33
+Jul 2026,Mill Road,ICL-16,Iced latte 16oz,143,835.56
+Jul 2026,Mill Road,lem-16,Lemonade 16oz,122,$514.15
+2026-07,Mill Road,ITE-16,Iced tea 16oz,37,$131.96
+July 2026,Mill Road,SPK-12,Sparkling water 12oz,103,310.17
+Jul 2026,Mill Road,TEA-EB,English breakfast tea,42,$137.00
+July 2026,Mill Rd,tea-gr,Sencha green tea,57,188.35
+2026-07,Mill Rd,TEA-CM,Chamomile tea,108,372.68
+July 2026,Mill Rd,TEA-EG,Earl grey tea,53,180.70
+2026-07,Mill Road,MAT-12,Matcha latte 12oz,33,$189.18
+2026-07,Mill Road,mat-16,Matcha latte 16oz,103,$630.12
+Jul 2026,Mill Road,CRS-BUT,Butter croissant,193,729.79
+July 2026,Mill Road,CRS-ALM,Almond croissant,198,$888.67
+July 2026,Mill Rd,CRS-CHO,Chocolate croissant,135,563.30
+July 2026,Mill Road,MUF-BLU,Blueberry muffin,160,$571.99
+2026-07,Mill Rd,SCN-CHE,Cheddar scone,136,$538.52
+Jul 2026,Mill Road,COO-CHO,Chocolate chip cookie,193,538.88
+2026-07,Mill Road,BRN-SAL,Salted brownie,137,539.53
+2026-07,Mill Road,CIN-ROL,Cinnamon roll,121,506.47
+Jul 2026,Mill Road,BAN-BRD,Banana bread slice,105,388.32
+Jul 2026,Mill Road,DON-GLZ,Glazed doughnut,116,$349.90
+2026-07,Mill Road,TST-AVO,Avocado toast,78,732.10
+2026-07,Mill Road,BRK-SAN,Breakfast sandwich,123,"$1,074.48"
+July 2026,Mill Road,GRN-YOG,Granola yogurt bowl,113,$822.41
+Jul 2026,Mill Rd,QCH-SPN,Spinach quiche,26,206.38
+Jul 2026,Mill Road,SND-TUR,Turkey pesto sandwich,63,$658.66
+Jul 2026,Mill Road,SND-VEG,Veggie wrap,60,579.63
+July 2026,Mill Road,sou-day,Soup of the day,117,$768.95
+2026-07,Mill Rd,OAT-BWL,Oatmeal bowl,29,177.94
+Jul 2026,Mill Rd,BNS-HSE,House blend beans 12oz,5,80.93
+July 2026,Mill Road,BNS-ETH,Ethiopia beans 12oz,2,$35.59
+2026-07,Mill Road,BNS-DEC,Decaf beans 12oz,15,252.90
+2026-07,Mill Road,MUG-LOG,Logo mug,17,296.73
+Jul 2026,Mill Road,TUM-16,Travel tumbler 16oz,9,250.55
+2026-07,Mill Road,PMP-SCN,Pumpkin scone,71,308.42
+2026-08,Harbor Street,ESP-SGL,Espresso single,496,"$1,508.26"
+August 2026,Harbor Street,ESP-DBL,Espresso double,270,967.22
+2026-08,Harbor St,AMR-12,Americano 12oz,704,"2,698.02"
+Aug 2026,Harbor St,AMR-16,Americano 16oz,702,"$3,062.54"
+2026-08,Harbor St,LAT-12,Latte 12oz,259,"$1,332.48"
+August 2026,Harbor Street,LAT-16,Latte 16oz,422,"$2,294.72"
+Aug 2026,Harbor Street,CAP-12,Cappuccino 12oz,195,972.94
+2026-08,Harbor St,FLW-8,Flat white 8oz,218,"$1,048.59"
+Aug 2026,Harbor St,moc-12,Mocha 12oz,444,"2,515.12"
+Aug 2026,Harbor Street,MOC-16,Mocha 16oz,573,"3,579.00"
+2026-08,Harbor St,COR-6,Cortado 6oz,203,923.23
+August 2026,Harbor Street,MAC-4,Macchiato 4oz,608,2449.97
+Aug 2026,Harbor Street,DRP-12,Drip coffee 12oz,218,629.47
+Aug 2026,Harbor Street,DRP-16,Drip coffee 16oz,253,869.51
+2026-08,Harbor Street,cha-12,Chai latte 12oz,539,"$2,678.82"
+Aug 2026,Harbor Street,CHA-16,Chai latte 16oz,223,1225.40
+Aug 2026,Harbor St,moc-12,Mocha 12oz,444,"2,515.12"
+August 2026,Harbor Street,hot-12,Hot chocolate 12oz,586,"$2,682.11"
+Aug 2026,Harbor St,CBR-16,Cold brew 16oz,278,1413.87
+Aug 2026,Harbor Street,CBR-20,Cold brew 20oz,286,1563.48
+Aug 2026,Harbor Street,ICL-16,Iced latte 16oz,190,"$1,141.95"
+August 2026,Harbor St,NIT-16,Nitro cold brew 16oz,168,1012.12
+2026-08,Harbor Street,LEM-16,Lemonade 16oz,336,"1,429.51"
+Aug 2026,Harbor Street,ITE-16,Iced tea 16oz,305,1155.81
+Aug 2026,Harbor St,SPK-12,Sparkling water 12oz,220,667.16
+2026-08,Harbor St,TEA-EB,English breakfast tea,202,674.49
+August 2026,Harbor St,tea-gr,Sencha green tea,53,180.32
+August 2026,Harbor Street,TEA-CM,Chamomile tea,137,484.36
+Aug 2026,Harbor Street,TEA-EG,Earl grey tea,127,$454.12
+August 2026,Harbor St,mat-12,Matcha latte 12oz,143,$769.52
+August 2026,Harbor Street,MAT-16,Matcha latte 16oz,191,"$1,185.80"
+Aug 2026,Harbor Street,CRS-BUT,Butter croissant,241,907.93
+August 2026,Harbor Street,CRS-ALM,Almond croissant,283,1289.43
+August 2026,Harbor Street,CRS-CHO,Chocolate croissant,167,$710.44
+August 2026,Harbor St,MUF-BLU,Blueberry muffin,203,707.93
+Aug 2026,Harbor Street,SCN-CHE,Cheddar scone,288,1149.31
+2026-08,Harbor Street,coo-cho,Chocolate chip cookie,307,830.14
+2026-08,Harbor Street,BRN-SAL,Salted brownie,389,"$1,558.22"
+Aug 2026,Harbor Street,CIN-ROL,Cinnamon roll,397,"1,654.51"
+2026-08,Harbor Street,BAN-BRD,Banana bread slice,232,$872.06
+August 2026,Harbor Street,kga-man,Kouign-amann,194,910.82
+August 2026,Harbor Street,TST-AVO,Avocado toast,199,1915.36
+Aug 2026,Harbor Street,BAG-LOX,Bagel with lox,185,"$2,039.15"
+2026-08,Harbor Street,BRK-SAN,Breakfast sandwich,79,698.33
+2026-08,Harbor Street,grn-yog,Granola yogurt bowl,138,$986.77
+August 2026,Harbor St,QCH-SPN,Spinach quiche,237,1845.46
+Aug 2026,Harbor St,SND-TUR,Turkey pesto sandwich,129,1336.16
+Aug 2026,Harbor Street,snd-veg,Veggie wrap,225,"$2,228.00"
+2026-08,Harbor Street,BNS-HSE,House blend beans 12oz,31,499.38
+Aug 2026,Harbor Street,bns-eth,Ethiopia beans 12oz,6,$106.38
+August 2026,Harbor Street,BNS-DEC,Decaf beans 12oz,25,416.14
+Aug 2026,Harbor Street,MUG-LOG,Logo mug,27,485.51
+August 2026,Harbor Street,TUM-16,Travel tumbler 16oz,26,$737.69
+Aug 2026,Mill Rd,ESP-SGL,Espresso single,361,"1,156.24"
+2026-08,Mill Road,ESP-DBL,Espresso double,174,653.51
+2026-08,Mill Road,AMR-12,Americano 12oz,251,981.62
+August 2026,Mill Road,AMR-16,Americano 16oz,335,"$1,449.16"
+August 2026,Mill Road,LAT-12,Latte 12oz,364,"1,812.19"
+Aug 2026,Mill Road,LAT-16,Latte 16oz,149,$807.38
+August 2026,Mill Road,CAP-12,Cappuccino 12oz,252,"$1,218.14"
+Aug 2026,Mill Rd,FLW-8,Flat white 8oz,273,"$1,325.77"
+Aug 2026,Mill Rd,moc-12,Mocha 12oz,158,899.77
+2026-08,Mill Road,MOC-16,Mocha 16oz,99,594.63
+Aug 2026,Mill Road,COR-6,Cortado 6oz,132,$568.31
+August 2026,Mill Road,MAC-4,Macchiato 4oz,151,$611.59
+2026-08,Mill Rd,drp-12,Drip coffee 12oz,164,$472.20
+August 2026,Mill Road,DRP-16,Drip coffee 16oz,293,$992.30
+2026-08,Mill Road,cha-12,Chai latte 12oz,258,"$1,353.14"
+August 2026,Mill Road,CHA-16,Chai latte 16oz,380,2149.33
+2026-08,Mill Road,HOT-12,Hot chocolate 12oz,350,"1,614.16"
+2026-08,Mill Road,BRV-12,Breve 12oz,330,"1,693.41"
+2026-08,Mill Rd,cbr-16,Cold brew 16oz,60,304.66
+2026-08,Mill Road,CBR-20,Cold brew 20oz,148,784.50
+2026-08,Mill Rd,ICL-16,Iced latte 16oz,107,592.83
+2026-08,Mill Rd,lem-16,Lemonade 16oz,110,466.39
+Aug 2026,Mill Road,ITE-16,Iced tea 16oz,138,495.84
+August 2026,Mill Road,SPK-12,Sparkling water 12oz,165,$514.47
+Aug 2026,Mill Road,TEA-EB,English breakfast tea,64,228.96
+Aug 2026,Mill Rd,TEA-GR,Sencha green tea,105,348.63
+August 2026,Mill Road,TEA-CM,Chamomile tea,37,132.08
+August 2026,Mill Road,tea-eg,Earl grey tea,106,$370.55
+2026-08,Mill Rd,mat-12,Matcha latte 12oz,51,278.81
+2026-08,Mill Road,mat-16,Matcha latte 16oz,96,$580.12
+August 2026,Mill Rd,crs-but,Butter croissant,95,360.13
+August 2026,Mill Road,crs-alm,Almond croissant,131,580.54
+August 2026,Mill Road,CRS-CHO,Chocolate croissant,139,$602.22
+August 2026,Mill Rd,MUF-BLU,Blueberry muffin,217,747.63
+2026-08,Mill Road,SCN-CHE,Cheddar scone,148,582.90
+2026-08,Mill Road,COO-CHO,Chocolate chip cookie,162,$444.46
+Aug 2026,Mill Road,BRN-SAL,Salted brownie,81,321.02
+August 2026,Mill Road,CIN-ROL,Cinnamon roll,156,665.98
+Aug 2026,Mill Road,BAN-BRD,Banana bread slice,163,614.75
+2026-08,Mill Road,don-glz,Glazed doughnut,170,499.19
+Aug 2026,Mill Road,TST-AVO,Avocado toast,27,255.50
+Aug 2026,Mill Road,BRK-SAN,Breakfast sandwich,76,655.78
+Aug 2026,Mill Road,GRN-YOG,Granola yogurt bowl,50,366.66
+August 2026,Mill Road,QCH-SPN,Spinach quiche,103,808.80
+2026-08,Mill Road,SND-TUR,Turkey pesto sandwich,95,"$1,002.61"
+2026-08,Mill Road,SND-VEG,Veggie wrap,130,"$1,279.03"
+August 2026,Mill Road,SOU-DAY,Soup of the day,120,793.06
+2026-08,Mill Road,BNS-HSE,House blend beans 12oz,6,95.80
+August 2026,Mill Road,BNS-ETH,Ethiopia beans 12oz,3,$64.11
+August 2026,Mill Road,BNS-DEC,Decaf beans 12oz,4,$68.09
+August 2026,Mill Road,MUG-LOG,Logo mug,7,121.97
+2026-08,Mill Road,TUM-16,Travel tumbler 16oz,13,368.11

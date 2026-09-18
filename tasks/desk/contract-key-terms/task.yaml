@@ -1,0 +1,123 @@
+id: contract-key-terms
+track: desk
+category: extraction
+title: Pull key terms from our service contracts into a register
+ask: |
+  Can you go through our service contracts and put the key terms into contracts.csv, one row per contract? They're in the contracts folder and Renee's note says what she needs.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  three contracts name us first (one in a summary box) and three name the vendor first (the pest scan only in its letterhead), so the first party named is not the vendor; the vendor is the service provider's full legal name (check: vendor names)
+- |-
+  fees are stated per month, as quarterly installments of an annual price, per site per month (4 sites), per visit (2 a month), and per annum billed monthly; the register wants the annual figure (check: annual values)
+- |-
+  the janitorial amendment raises the monthly fee and extends the initial term to 31 Dec 2027, which moves the notice deadline; the amendment is not a contract of its own (checks: annual values; term dates; notice deadlines; row count)
+- |-
+  the grounds contract's first year ended 30 June 2026 and rolled over automatically with a 3% price escalator, so today's term ends 30 June 2027 and the fee is 3% higher than printed (checks: term dates; annual values)
+- |-
+  notice periods are written in days (sixty, 30) and in months (three, two); counting months as 30 days moves the grounds and waste deadlines (check: notice deadlines)
+- |-
+  the HVAC and alarm contracts do not auto-renew but both mention renewal and a 90-day proposal or quotation; month-to-month continuation on the pest contract is a 1-month renewal (check: renewal terms)
+- |-
+  the HVAC term is 'twenty-four (24) months commencing March 1, 2026' and ends on 29 February 2028 (check: term dates)
+- |-
+  the pest control agreement is an image-only scan (checks: one row per contract; annual values)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: contracts.csv
+  columns:
+  - contract_id
+  - vendor
+  - start_date
+  - end_date
+  - annual_value
+  - auto_renew
+  - renewal_months
+  - notice_deadline
+- type: csv_set_equal
+  name: one row per contract
+  path: contracts.csv
+  column: contract_id
+  ref: contracts.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: contracts.csv
+  equals_ref: contracts.csv
+- type: csv_values_match
+  name: vendor names
+  path: contracts.csv
+  ref: contracts.csv
+  key: contract_id
+  columns:
+  - vendor
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - JS-2026-0375
+  - GM-25-970
+  - WH-462-65
+- type: csv_values_match
+  name: term dates
+  path: contracts.csv
+  ref: contracts.csv
+  key: contract_id
+  columns:
+  - start_date
+  - end_date
+  min_accuracy: 1.0
+  must_match_keys:
+  - JS-2026-0375
+  - PM-2618
+  - GM-25-970
+  - WH-462-65
+- type: csv_values_match
+  name: annual values
+  path: contracts.csv
+  ref: contracts.csv
+  key: contract_id
+  columns:
+  - annual_value
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - JS-2026-0375
+  - PM-2618
+  - GM-25-970
+  - PC-45409
+  - SM-83375
+  - WH-462-65
+- type: csv_values_match
+  name: renewal terms
+  path: contracts.csv
+  ref: contracts.csv
+  key: contract_id
+  columns:
+  - auto_renew
+  - renewal_months
+  min_accuracy: 1.0
+  must_match_keys:
+  - PM-2618
+  - SM-83375
+  - PC-45409
+  - WH-462-65
+- type: csv_values_match
+  name: notice deadlines
+  path: contracts.csv
+  ref: contracts.csv
+  key: contract_id
+  columns:
+  - notice_deadline
+  min_accuracy: 1.0
+  must_match_keys:
+  - JS-2026-0375
+  - GM-25-970
+  - WH-462-65
+  - PM-2618
+  - SM-83375

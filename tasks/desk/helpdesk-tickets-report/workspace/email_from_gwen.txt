@@ -1,0 +1,19 @@
+From: Gwen Adeyemi <gwen@meridiantitle.com>
+To: you
+Date: Mon, 1 Jun 2026 08:05
+Subject: May helpdesk numbers for Thursday
+
+I pulled the ticket export first thing this morning. For the ops meeting I need May's tickets by category and how many missed the SLA, using this year's policy.
+
+May means tickets opened in May. The export is everything updated during the month, so it also has a few April tickets we closed in the first days of May - those were in April's numbers already.
+
+Anything with status Merged was a duplicate of another ticket and Spam is spam, neither is a ticket.
+
+-----Original Message-----
+
+From: Gwen Adeyemi <gwen@meridiantitle.com>
+To: you
+Date: Mon, 1 Jun 2026 08:19
+Subject: RE: May helpdesk numbers for Thursday
+
+One more thing. Some tickets are still open. If one of them is already past its target it has breached, whether or not we close it today - count it. If it is not due yet, it has not breached.

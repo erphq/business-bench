@@ -1,0 +1,16 @@
+product_code,product_name,sku,option1_name,option1_value,option2_name,option2_value,price,inventory_qty,availability
+CS01,Two-Burner Camp Stove,CS01,,,,,89.50,2,in_stock
+HL300,Headlamp 300lm,HL300,,,,,39.00,14,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-L-BLACK,Size,L,Color,Black,126.50,3,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-L-OLIVE,Size,L,Color,Olive,125.50,14,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-M-BLACK,Size,M,Color,Black,121.50,3,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-M-OLIVE,Size,M,Color,Olive,125.50,1,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-S-BLACK,Size,S,Color,Black,125.50,7,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-S-OLIVE,Size,S,Color,Olive,126.50,15,in_stock
+TJ24,Ridgeline Trail Jacket,TJ24-XL-BLACK,Size,XL,Color,Black,135.50,4,in_stock
+TP22,Carbon Trekking Poles,TP22-GREEN,Color,Green,,,65.00,0,out_of_stock
+TP22,Carbon Trekking Poles,TP22-RED,Color,Red,,,78.00,1,in_stock
+TP22,Carbon Trekking Poles,TP22-SLATE,Color,Slate,,,77.00,1,in_stock
+WB10,Insulated Water Bottle,WB10-1L-BLUE,Size,1L,Color,Blue,32.00,11,in_stock
+WB10,Insulated Water Bottle,WB10-750ML-BLUE,Size,750ML,Color,Blue,30.00,3,in_stock
+WB10,Insulated Water Bottle,WB10-750ML-ORANGE,Size,750ML,Color,Orange,30.00,15,in_stock

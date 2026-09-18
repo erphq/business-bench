@@ -1,0 +1,18 @@
+From Beth (office), for whoever moves the phone list into Google Contacts
+
+I downloaded Google's CSV layout (google_contacts_template.csv), so please fill that in exactly, one row per person
+on the phone list. Some things about how I kept the list:
+
+- Names: I typed them however I felt like that day. Put first, middle and last in their own columns. For
+  suppliers and subs I wrote the company in front of the person; the company goes in Organization Name.
+- Anything in brackets after a name is a note to myself, not part of the name. Put it in Notes.
+- Phone: I often typed two or three numbers in one cell. Each number needs its own Phone slot (Phone 1,
+  Phone 2, Phone 3, in the order I wrote them) with Google's label: Mobile, Home, Work or Work Fax.
+  c / cell / mobile is Mobile, h / home is Home, w / work / o / office is Work, fax is Work Fax. A number with
+  no label is a cell phone. If I wrote anything in the phone cell that is not a number (like "text first"),
+  that goes in Notes too.
+- Where the Name cell is empty, that line is just the person above it running over onto a second line.
+- Notes: keep what is in my Notes column, plus the bits above. Separate them with a semicolon.
+- Labels: the heading rows tell you what someone is. Clients under CLIENTS - CURRENT get the label Clients,
+  PAST CLIENTS get Former Clients, SUPPLIERS get Suppliers and SUBS get Subcontractors.
+- E-mail 1 - Label is Home for clients and past clients, Work for suppliers and subs.

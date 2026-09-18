@@ -1,0 +1,18 @@
+Payroll for the Aug 30 - Sep 12 pay period (Sunday to Saturday, two weeks).
+
+Everyone's paper time sheets are scanned into scanned_timesheets. The payroll upload wants one line per caregiver per day they worked, saved as timesheet_hours.csv with these columns:
+
+  entry_id       employee number, an underscore, then the date - like HC-100_2026-08-31
+  employee_id    employee number as on the sheet
+  employee_name  as written on the sheet
+  work_date      YYYY-MM-DD
+  hours          hours worked that day after unpaid breaks, as a decimal (7.5, not 7:30)
+  sheet_signed   yes if the sheet that day came from is signed by both the caregiver and a supervisor, otherwise no
+
+A few rules:
+- Only days in this pay period. Days off don't get a line.
+- If someone worked more than one shift or visit on the same day, that's still one line with the hours added up.
+- A shift or visit that runs past midnight counts entirely on the day it started.
+- Put unsigned sheets in anyway - I hold those lines until the supervisor signs, so I need the flag right.
+
+Gloria

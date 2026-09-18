@@ -1,0 +1,115 @@
+id: card-statements-pdf
+track: desk
+category: extraction
+title: August transactions from the company card statements
+ask: |
+  Please key all of August's company card transactions from the statements in the folder into card_transactions.csv. Ingrid's note has how she books them.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the Summit Bank card's statements run 18 July to 17 August and 18 August to 17 September, so each carries July or September transactions, and three lines post in a different month from their transaction date (31 July posted 3 August, 30 August posted 1 September, 30 July posted 1 August on Harborline); August is by transaction date (checks: one row per transaction; row count)
+- |-
+  foreign transaction fees: Summit prints each as its own 'FOREIGN TRANSACTION FEE' line with its own reference under the purchase, while Harborline folds the 3% fee into the purchase amount and notes it underneath; the fee belongs in foreign_fee on the purchase row and out of the amount (checks: one row per transaction; amounts; foreign fees)
+- |-
+  payments, refunds and credits are shown with a leading minus on Summit and a CR suffix on Harborline (check: amounts)
+- |-
+  Harborline's statement is for an account ending 7890 with two cardholder sections headed 'CARD ENDING 1663' and 'CARD ENDING 5242', and it prints Post Date before Trans Date (check: cards and dates)
+- |-
+  the Summit statement for 18 August to 17 September is an image-only scan (checks: descriptions; amounts; foreign fees)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: card_transactions.csv
+  columns:
+  - txn_ref
+  - card_last4
+  - trans_date
+  - description
+  - amount
+  - foreign_fee
+- type: csv_set_equal
+  name: one row per transaction
+  path: card_transactions.csv
+  column: txn_ref
+  ref: card_transactions.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: card_transactions.csv
+  equals_ref: card_transactions.csv
+- type: csv_values_match
+  name: cards and dates
+  path: card_transactions.csv
+  ref: card_transactions.csv
+  key: txn_ref
+  columns:
+  - card_last4
+  - trans_date
+  min_accuracy: 1.0
+  must_match_keys:
+  - '49694547976'
+  - '15096964533'
+  - '75541442355'
+  - '86576521802'
+  - '81748645873'
+  - '43550689829'
+  - '69913783924'
+  - '76359663233'
+- type: csv_values_match
+  name: descriptions
+  path: card_transactions.csv
+  ref: card_transactions.csv
+  key: txn_ref
+  columns:
+  - description
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - '362945216046'
+  - '700450083709'
+  - '640877402763'
+  - '236178644349'
+- type: csv_values_match
+  name: amounts
+  path: card_transactions.csv
+  ref: card_transactions.csv
+  key: txn_ref
+  columns:
+  - amount
+  must_match_keys:
+  - '879102014641'
+  - '459618808186'
+  - '700450083709'
+  - '236178644349'
+  - '15096964533'
+  - '81748645873'
+  - '76359663233'
+  - '674947128222'
+  - '306428945612'
+  - '75541442355'
+  - '43550689829'
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: foreign fees
+  path: card_transactions.csv
+  ref: card_transactions.csv
+  key: txn_ref
+  columns:
+  - foreign_fee
+  must_match_keys:
+  - '879102014641'
+  - '459618808186'
+  - '700450083709'
+  - '236178644349'
+  - '15096964533'
+  - '81748645873'
+  - '76359663233'
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

@@ -1,0 +1,15 @@
+employee,week_ending,regular_hours,overtime_hours,total_hours
+Cynthia Ward,2026-09-05,40.00,5.75,45.75
+Cynthia Ward,2026-09-12,40.00,0.25,40.25
+Melissa Wright,2026-09-05,40.00,3.50,43.50
+Melissa Wright,2026-09-12,35.00,0.00,35.00
+Sarah White,2026-09-05,40.00,5.75,45.75
+Sarah White,2026-09-12,38.25,0.00,38.25
+Rahul Smith,2026-09-05,40.00,0.25,40.25
+Rahul Smith,2026-09-12,38.25,0.00,38.25
+Amanda Cook,2026-09-05,36.75,0.00,36.75
+Amanda Cook,2026-09-12,34.50,0.00,34.50
+William Nelson,2026-09-05,37.75,0.00,37.75
+William Nelson,2026-09-12,40.00,7.00,47.00
+Leila Garcia,2026-09-05,35.50,0.00,35.50
+Leila Garcia,2026-09-12,40.00,0.75,40.75

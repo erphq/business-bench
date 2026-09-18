@@ -1,0 +1,38 @@
+{
+  "canada_litre_fills": {
+    "Truck 27": 0,
+    "Truck 28": 0,
+    "Van 21": 0,
+    "Van 22": 0,
+    "Van 23": 1,
+    "Van 24": 0,
+    "Van 25": 0,
+    "Van 26": 9,
+    "Van 29": 0,
+    "Van 30": 0
+  },
+  "fleet_cost_per_mile": 0.4168,
+  "fleet_miles": 75154,
+  "fleet_total_cost": 31321.72,
+  "non_fuel_card_spend": 833.16,
+  "plate_named_invoices": [
+    "W22096",
+    "W22056",
+    "W22601",
+    "W22474",
+    "W22184",
+    "W22785",
+    "W22814",
+    "W22003",
+    "W21931",
+    "W22161",
+    "W22821",
+    "W22336"
+  ],
+  "sold": {
+    "march_odometer": 91726,
+    "miles": 5735,
+    "sale_odometer": 92684,
+    "unit": "Van 24"
+  }
+}

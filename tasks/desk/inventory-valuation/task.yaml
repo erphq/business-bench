@@ -1,0 +1,59 @@
+id: inventory-valuation
+track: desk
+category: spreadsheet
+title: Stock valued at cost by department for the accountant
+ask: |
+  Frank needs our stock valued at cost by department as of 30 September for the accountant. Save it as valuation.xlsx with live formulas - his note explains the counts and the costs.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the receipts sheet has one line per delivery and costs rose through the year; the latest line is current cost, while a VLOOKUP or first-match join takes the oldest, which undervalues the trees most (checks: Trees value; total stock value)
+- |-
+  unit costs are typed text in four styles ('$1,249.00', '1,249.00', '84', '14.25 ea'); a numeric read loses the comma and 'ea' rows (checks: Trees value; total stock value)
+- |-
+  four items show negative on-hand counts, two of them shrubs; they are valued at zero, not netted against the rest (check: Shrubs value)
+- |-
+  purchasing typed five SKUs in lower case or with a trailing space, three of them pots, so an exact lookup finds no cost for stocked items (check: Pots & Planters value)
+- |-
+  five stocked items have no usable cost (two never received, one TBD, one n/a consignment, one blank); they must be listed and flagged and left out of the totals rather than guessed at retail (checks: items without a cost are flagged; total stock value)
+- |-
+  the on-hand export carries a two-line preamble and a BOM, and the receipts sheet a merged title and an instruction row (check: total stock value)
+checks:
+- type: file_exists
+  name: valuation.xlsx exists
+  path: valuation.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: valuation.xlsx
+  min_count: 20
+- type: xlsx_no_errors
+  name: no error cells
+  path: valuation.xlsx
+- type: xlsx_value_present
+  name: Trees value (latest receipt cost)
+  path: valuation.xlsx
+  expected: 15562.25
+  rel_tol: 5.8e-05
+  near_text: trees
+- type: xlsx_value_present
+  name: Shrubs value (negative counts at zero)
+  path: valuation.xlsx
+  expected: 9409.21
+  rel_tol: 9.6e-05
+  near_text: shrubs
+- type: xlsx_value_present
+  name: Pots & Planters value (loosely typed SKUs)
+  path: valuation.xlsx
+  expected: 12514.67
+  rel_tol: 7.2e-05
+  near_text: pots
+- type: xlsx_value_present
+  name: total stock value
+  path: valuation.xlsx
+  expected: 54432.63
+  rel_tol: 1.7e-05
+  near_text: total
+- type: custom
+  name: items without a cost are flagged
+  module: check.py

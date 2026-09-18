@@ -1,0 +1,13 @@
+Filewell - 1099-NEC recipient import
+
+Upload one CSV built on filewell_1099nec_template.csv: the same nine columns in the same order.
+One row per recipient who will receive a 1099-NEC. Do not include anyone who is not getting a form.
+
+recipient_name         the name exactly as on line 1 of the recipient's W-9.
+dba_name               line 2 of the W-9 (business name / disregarded entity name), blank if none.
+tin_type               SSN or EIN, as the TIN on the W-9 is formatted (000-00-0000 is an SSN, 00-0000000 an EIN).
+recipient_tin          nine digits, no dashes or spaces.
+address                street address (W-9 line 5).
+city, state, zip       from W-9 line 6, in three columns; state as the two-letter code; zip as five digits, keep
+                       any leading zero.
+box1_nonemployee_comp  total nonemployee compensation for the tax year, a plain number with two decimals.

@@ -1,0 +1,74 @@
+id: mrr-report
+track: desk
+category: reports
+title: MRR by month and churn for the first half
+ask: |
+  The board pack needs our MRR month by month for the first half and what we lost to churn. Build it as mrr.xlsx with live formulas and write memo.md alongside it. Marcus's email says how he wants the subscriptions counted.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  upgrade and downgrade rows carry the account's new full price, not the change; adding them to the previous price inflates MRR from the month of the move onwards (checks: March ending MRR; June ending MRR)
+- |-
+  30 accounts are on annual contracts written at the yearly amount, which counts at one twelfth; the billing-period column is blank on some of those rows (checks: March ending MRR; June ending MRR)
+- |-
+  cancellations carry a separate effective date after the notice period, so the subscription is still live at the end of the month it was logged in; four of them move a whole month (checks: worst month churned MRR; June ending MRR)
+- |-
+  6 trial accounts are logged at list price and are not revenue until they convert; two of them convert during the half (checks: March ending MRR; June ending MRR)
+- |-
+  two churned accounts reactivate later in the half and count again from their reactivation date (check: June ending MRR)
+- |-
+  amounts are '$199.00' / '$5,388.00' text, dates come in three formats and the export has a two-line preamble with CRLF endings (check: March ending MRR)
+- |-
+  the churn is concentrated in one month (May) behind the notice periods, so a memo written off the logged dates names the wrong month (check: memo names the month the churn landed in)
+checks:
+- type: file_exists
+  name: mrr.xlsx exists
+  path: mrr.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: mrr.xlsx
+  min_count: 10
+- type: xlsx_no_errors
+  name: no error cells
+  path: mrr.xlsx
+- type: xlsx_value_present
+  name: March ending MRR
+  path: mrr.xlsx
+  expected: 14415.0
+  rel_tol: 1.0e-05
+  near_text: mrr
+- type: xlsx_value_present
+  name: June ending MRR
+  path: mrr.xlsx
+  expected: 14074.0
+  rel_tol: 1.0e-05
+  near_text: mrr
+- type: xlsx_value_present
+  name: churned MRR in May
+  path: mrr.xlsx
+  expected: 4069.0
+  rel_tol: 0.0001
+  near_text: churn
+- type: xlsx_value_present
+  name: churned MRR for the half
+  path: mrr.xlsx
+  expected: 5301.0
+  rel_tol: 0.0001
+  near_text: churn
+- type: text_numbers_present
+  name: memo carries the June MRR and the churn figure
+  path: memo.md
+  numbers:
+  - 14074.0
+  - 4069.0
+  rel_tol: 0.005
+- type: text_sentence_matches
+  name: memo names the month the churn landed in
+  path: memo.md
+  all:
+  - (\bmay\b|\b2026-05\b|\b05/2026\b)
+  - (\bchurn|\bcancel|\blost\b|\bleft\b)
+  none:
+  - \bno churn\b
+  - \bnothing churned\b

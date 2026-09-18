@@ -1,0 +1,212 @@
+Claim No,Employee ID,Employee,Submitted,Purpose,Expense Date,Category,Description,Amount,Receipt,Status,Reimbursement Batch
+C-1001,E-0041,Charles Turner,2026-03-03,Certification course,"February 08, 2026",Meals - Travel,Dinner,40.80,,Paid,RB-2026-04
+C-1002,E-53,Stephanie Patel,03/04/26,Client dinner,02/24/2026,Client Gifts,Thank-you gift,$60.15,No,Paid,RB-2026-04
+C-1003,6,Betty Cox,"March 05, 2026",Quarterly subscriptions,08-Feb-2026,Phone & Internet,Home internet share,43.88,,Paid,RB-2026-04
+C-1004,E-0010,Michael Reed,03/08/2026,Team offsite,2026-02-17,Client Entertainment,Client lunch,59.42,N,Paid,RB-2026-04
+C-1004,E-0010,Michael Reed,03/08/2026,Team offsite,"February 21, 2026",Meals - Travel,Lunch,13.12,,Paid,RB-2026-04
+C-1005,E-47,Deborah Nelson,03/08/26,Customer onboarding trip,02/12/26,Mileage,Drive to airport,$231.89,attached,Paid,RB-2026-04
+C-1006,E-0011,Mark Ruiz,11-Mar-2026,Q3 training,"March 04, 2026",Hotel,Conference hotel,173.57,yes,Paid,RB-2026-04
+C-1006,E-0011,Mark Ruiz,11-Mar-2026,Q3 training,08-Mar-2026,Conference Fees,Workshop pass,1027.25,Yes,Paid,RB-2026-04
+C-1007,E-0029,Andrew Hughes,15-Mar-2026,Industry conference,02/27/26,meals - travel,Dinner,$20.67,,Paid,RB-2026-04
+C-1007,E-0029,Andrew Hughes,15-Mar-2026,Industry conference,2026-03-10,Visa & Passport,Passport renewal,116.77,Yes,Paid,RB-2026-04
+C-1007,29,Andrew Hughes,15-Mar-2026,Industry conference,02/19/2026,Airfare,Flight change fee,297.67,attached,Paid,RB-2026-04
+C-1008,E-0021,Brian Young,03/16/26,Industry conference,10-Mar-2026,Training & Courses,Certification exam,206.32,Yes,Paid,RB-2026-04
+C-1009,E-0004,William Kim,2026-03-19,Customer appreciation,03/11/2026,Client Gifts,Gift basket,$41.02,No,Paid,RB-2026-04
+C-1010,E-0040,Jacob Howard,"March 22, 2026",Client dinner,2026-02-25,Client Gifts,Thank-you gift,29.22,N,PAID,RB-2026-04
+C-1011,E-0048,Ryan Cook,03/26/2026,Certification course,02-Mar-2026,Hotel,Conference hotel,147.92,Yes,Paid,RB-2026-04
+C-1012,E-6,Betty Cox,27-Mar-2026,Customer appreciation,03/12/26,Meals - Travel,Lunch,31.32,Yes,Rejected,
+C-1012,E-0006,Betty Cox,27-Mar-2026,Customer appreciation,13-Mar-2026,Client Gifts,Gift basket,41.16,,Rejected,
+C-1012,E-0006,Betty Cox,27-Mar-2026,Customer appreciation,03/20/2026,Client Entertainment,Client lunch,127.95,Yes,Rejected,
+C-1013,E-0047,Deborah Nelson,28-Mar-2026,Customer appreciation,15-Mar-2026,Team Events,Team lunch,58.99,,REJECTED,
+C-1014,E-32,Stephanie Ortiz,03/31/2026,Team supplies,03/14/2026,Postage & Shipping,Courier,$61.06,,Paid,RB-2026-04
+C-1015,E-0034,Margaret Phillips,31-Mar-2026,Quarterly subscriptions,03/22/26,Office Supplies,Printer toner,32.09,Yes,PAID,RB-2026-04
+C-1015,E-0034,MARGARET PHILLIPS,31-Mar-2026,Quarterly subscriptions,2026-03-28,Postage & Shipping,Courier,22.86,N,Paid,RB-2026-04
+C-1015,E-0034,Margaret Phillips,31-Mar-2026,Quarterly subscriptions,"March 13, 2026",Home Office Equipment,Keyboard,145.15,Y,Paid,RB-2026-04
+C-1016,E-0003,Cynthia Parker,"April 02, 2026",Site visit - Austin,03/30/26,Rail & Bus,Bus fare,188.54,Yes,Paid,RB-2026-05
+C-1016,E-0003,Cynthia Parker,"April 02, 2026",Site visit - Austin,03/15/2026,Mileage,Drive to client site,$77.89,Y,Paid,RB-2026-05
+C-1017,E-0019,Fatima Roberts,04/02/26,Team offsite,03/14/26,Meals - Travel,Breakfast,37.47,,Paid,RB-2026-05
+C-1018,E-0008,Betty Phillips,04/04/26,Client dinner,03/16/26,Meals - Travel,Dinner,47.87,No,Paid,RB-2026-05
+C-1018,E-0008,Betty Phillips,04/04/26,Client dinner,2026-03-17,Client Gifts,Gift basket,48.30,Yes,PAID,RB-2026-05
+C-1018,E-8,Betty Phillips,04/04/26,Client dinner,02-Apr-2026,Team Events,Team lunch,$102.36,Yes,Paid,RB-2026-05
+C-1018,E-8,Betty Phillips,04/04/26,Client dinner,03/21/26,Client Entertainment,Client lunch,84.67,attached,Paid,RB-2026-05
+C-1019,8,Betty Phillips,04-Apr-2026,Team offsite,"March 13, 2026",Client Gifts,Gift basket,20.23,,REJECTED,
+C-1020,E-56,NICHOLAS GREEN,"April 06, 2026",Client visit - Denver,2026-03-17,Mileage,Drive to airport,43.95,,PAID,RB-2026-05
+C-1020,E-0056,Nicholas Green,"April 06, 2026",Client visit - Denver,03/27/26,Parking & Tolls,Airport parking,10.54,N,Paid,RB-2026-05
+C-1020,E-56,Nicholas Green,"April 06, 2026",Client visit - Denver,04/05/26,Airfare,Flight change fee,456.92,yes,PAID,RB-2026-05
+C-1020,56,Nicholas Green,"April 06, 2026",Client visit - Denver,03/23/26,Car Rental,Rental car 1 day,$96.73,Y,Paid,RB-2026-05
+C-1021,E-0054,Joseph Okafor,08-Apr-2026,Team offsite,04/03/2026,client gifts,Thank-you gift,22.93,,Paid,RB-2026-05
+C-1021,E-0054,Joseph Okafor,08-Apr-2026,Team offsite,2026-03-24,Meals - Travel,Lunch,54.94,,Paid,RB-2026-05
+C-1022,E-0039,Karen Campbell,04/15/26,Q3 training,"April 07, 2026",Hotel,2 nights,127.51,Y,Paid,RB-2026-05
+C-1023,E-0028,Thomas Ortiz,04/19/2026,Client visit - Chicago,04/11/26,Meals - Travel,Breakfast,26.81,,Rejected,
+C-1024,E-0040,Jacob Howard,04/19/2026,Sales kickoff,04/18/2026,Car Rental,Rental car 1 day,110.85,Yes,Paid,RB-2026-05
+C-1025,E-0033,Andrew Okafor,04/21/2026,Client dinner,03/28/2026,Team Events,Team lunch,91.37,Yes,PAID,RB-2026-05
+C-1026,E-21,BRIAN YOUNG,04/28/26,Sales kickoff,2026-04-12,Hotel,Conference hotel,185.21,Yes,Paid,RB-2026-05
+C-1026,E-0021,Brian Young,04/28/26,Sales kickoff,"April 11, 2026",Taxi & Rideshare,Airport ride,13.34,N,Paid,RB-2026-05
+C-1027,E-9,Robert Morris,30-Apr-2026,Industry conference,04/13/2026,Training & Courses,Online course,577.00,yes,Paid,RB-2026-05
+C-1027,E-0009,Robert Morris,30-Apr-2026,Industry conference,"April 24, 2026",Meals - Travel,Dinner,$49.09,,Paid,RB-2026-05
+C-1027,E-0009,Robert Morris,30-Apr-2026,Industry conference,04/14/26,Visa & Passport,Visa fee,237.60,Yes,Paid,RB-2026-05
+C-1028,E-0033,Andrew Okafor,05/01/2026,Client visit - Denver,2026-04-17,Hotel,1 night,147.98,Yes,Paid,RB-2026-06
+C-1029,E-0031,Shirley Torres,05/02/2026,Onboarding kit,29-Apr-2026,Software,Plugin,104.99,Yes,Paid,RB-2026-06
+C-1030,E-0019,Fatima Roberts,05/03/26,Customer onboarding trip,21-Apr-2026,Car Rental,Rental car 1 day,58.31,,Paid,RB-2026-06
+C-1030,E-0019,Fatima Roberts,05/03/26,Customer onboarding trip,21-Apr-2026,Car Rental,Rental car 1 day,58.31,,Paid,RB-2026-06
+C-1031,E-0008,Betty Phillips,08-May-2026,Onboarding kit,"May 03, 2026",Software,Monthly license,$25.29,N,Paid,RB-2026-06
+C-1031,8,BETTY PHILLIPS,08-May-2026,Onboarding kit,"May 06, 2026",Home Office Equipment,Desk chair,216.48,yes,Paid,RB-2026-06
+C-1031,E-0008,Betty Phillips,08-May-2026,Onboarding kit,"May 05, 2026",Postage & Shipping,Shipping samples,5.69,Yes,Paid,RB-2026-06
+C-1032,E-0019,Fatima Roberts,05/08/26,Industry conference,04/18/2026,Conference Fees,Registration,1226.12,attached,Rejected,
+C-1032,E-0019,Fatima Roberts,05/08/26,Industry conference,"May 04, 2026",Meals - Travel,Dinner,$48.31,No,Rejected,
+C-1032,E-0019,Fatima Roberts,05/08/26,Industry conference,24-Apr-2026,Visa & Passport,Visa fee,$71.56,,Rejected,
+C-1033,E-51,Margaret Torres,05/11/2026,Industry conference,"April 25, 2026",Hotel,Conference hotel,$202.21,yes,Paid,RB-2026-06
+C-1033,E-0051,Margaret Torres,05/11/2026,Industry conference,04/25/26,airfare,Flight change fee,301.06,Yes,Paid,RB-2026-06
+C-1033,E-0051,Margaret Torres,05/11/2026,Industry conference,05/02/26,Meals - Travel,Dinner,$14.55,,Paid,RB-2026-06
+C-1033,E-0051,Margaret Torres,05/11/2026,Industry conference,05/02/26,Meals - Travel,Dinner,$14.55,,Paid,RB-2026-06
+C-1034,E-0025,Donald Peterson,05/15/2026,Partner summit,05/05/26,Taxi & Rideshare,Airport ride,23.67,No,Paid,RB-2026-06
+C-1035,E-0014,Jason Wright,17-May-2026,Team supplies,05/09/26,Office Supplies,Printer toner,63.72,,Paid,RB-2026-06
+C-1035,E-0014,Jason Wright,17-May-2026,Team supplies,05/13/2026,Home Office Equipment,Monitor,345.22,Y,Paid,RB-2026-06
+C-1036,E-0032,STEPHANIE ORTIZ,05/27/2026,Client visit - Denver,"May 21, 2026",Meals - Travel,Lunch,49.10,,Paid,RB-2026-06
+C-1036,E-32,Stephanie Ortiz,05/27/2026,Client visit - Denver,05/09/2026,Airfare,Flight change fee,399.63,Yes,Paid,RB-2026-06
+C-1037,E-9,ROBERT MORRIS,06/03/2026,Industry conference,"May 31, 2026",Meals - Travel,Lunch,$21.04,Yes,Paid,RB-2026-07
+C-1038,23,Donald Taylor,03-Jun-2026,Certification course,"May 20, 2026",Airfare,One-way flight,492.33,Yes,Paid,RB-2026-07
+C-1039,E-53,STEPHANIE PATEL,06/14/2026,Home office setup,2026-05-23,Phone & Internet,Phone bill share,$60.23,,Paid,RB-2026-07
+C-1039,E-0053,Stephanie Patel,06/14/2026,Home office setup,05-Jun-2026,Postage & Shipping,Shipping samples,40.69,N,Paid,RB-2026-07
+C-1039,E-0053,Stephanie Patel,06/14/2026,Home office setup,21-May-2026,Software,Monthly license,77.96,attached,Paid,RB-2026-07
+C-1040,E-0041,Charles Turner,06/15/2026,Customer onboarding trip,12-Jun-2026,Hotel,2 nights,$229.17,Yes,Paid,RB-2026-07
+C-1040,E-0041,Charles Turner,06/15/2026,Customer onboarding trip,"June 12, 2026",Car Rental,Rental car 2 days,68.52,,Paid,RB-2026-07
+C-1041,E-0056,NICHOLAS GREEN,18-Jun-2026,Onboarding kit,06/01/2026,Postage & Shipping,Shipping samples,21.19,,Paid,RB-2026-07
+C-1041,56,Nicholas Green,18-Jun-2026,Onboarding kit,2026-06-16,books & subscriptions,Annual subscription,60.57,N,Paid,RB-2026-07
+C-1042,E-0049,Hannah Weiss,06/19/2026,Client visit - Chicago,05/29/26,Mileage,Drive to client site,$245.00,Y,Rejected,
+C-1042,E-0049,Hannah Weiss,06/19/2026,Client visit - Chicago,"May 27, 2026",Hotel,2 nights,233.41,Yes,REJECTED,
+C-1043,E-24,Susan Gonzalez,"June 20, 2026",Industry conference,05/27/26,Hotel,Conference hotel,236.15,Yes,Paid,RB-2026-07
+C-1044,E-0025,Donald Peterson,06/21/2026,Customer onboarding trip,06/12/2026,Mileage,Drive to client site,$206.06,Yes,Rejected,
+C-1044,E-25,Donald Peterson,06/21/2026,Customer onboarding trip,06/15/2026,Rail & Bus,Train ticket,74.78,,Rejected,
+C-1044,E-0025,Donald Peterson,06/21/2026,Customer onboarding trip,2026-06-10,Hotel,2 nights,173.46,Yes,Rejected,
+C-1045,E-0036,Ellen Park,06/22/2026,Client dinner,06/10/2026,Client Gifts,Thank-you gift,57.18,,Paid,RB-2026-07
+C-1046,E-0043,Laura Edwards,06/23/2026,Quarterly subscriptions,06/04/2026,postage & shipping,Shipping samples,10.66,,Paid,RB-2026-07
+C-1047,E-0038,Timothy Ruiz,24-Jun-2026,Industry conference,"June 20, 2026",Airfare,Flight change fee,238.44,Yes,Paid,RB-2026-07
+C-1047,E-38,TIMOTHY RUIZ,24-Jun-2026,Industry conference,31-May-2026,hotel,Conference hotel,221.06,yes,PAID,RB-2026-07
+C-1048,45,Victor Almeida,2026-07-02,Client visit - Chicago,06/17/2026,Mileage,Drive to airport,247.64,attached,Paid,RB-2026-08
+C-1048,E-0045,Victor Almeida,2026-07-02,Client visit - Chicago,06/22/26,Hotel,Conference hotel,180.25,Y,Paid,RB-2026-08
+C-1049,E-4,William Kim,"July 06, 2026",Team supplies,"June 22, 2026",Postage & Shipping,Shipping samples,91.26,Y,Paid,RB-2026-08
+C-1049,E-0004,William Kim,"July 06, 2026",Team supplies,06/22/26,Books & Subscriptions,Book,$14.02,No,Paid,RB-2026-08
+C-1050,E-0035,Anna Turner,"July 06, 2026",Partner summit,07/01/2026,Rail & Bus,Bus fare,$38.79,,Paid,RB-2026-08
+C-1050,35,Anna Turner,"July 06, 2026",Partner summit,06/11/2026,Hotel,Conference hotel,124.95,yes,Paid,RB-2026-08
+C-1051,E-53,Stephanie Patel,07/07/26,Q3 training,"June 16, 2026",Hotel,1 night,161.33,yes,Paid,RB-2026-08
+C-1051,E-53,Stephanie Patel,07/07/26,Q3 training,06-Jul-2026,Visa & Passport,Visa fee,231.98,Y,Paid,RB-2026-08
+C-1052,E-0057,Anthony Martin,07/07/26,Quarterly subscriptions,06/18/26,Software,Monthly license,85.80,Yes,Paid,RB-2026-08
+C-1053,E-0011,MARK RUIZ,"July 08, 2026",Home office setup,"June 19, 2026",Phone & Internet,Home internet share,68.65,No,Paid,RB-2026-08
+C-1054,E-0051,Margaret Torres,12-Jul-2026,Client visit - Chicago,02-Jul-2026,Airfare,Flight change fee,338.46,Y,Paid,RB-2026-08
+C-1054,E-0051,Margaret Torres,12-Jul-2026,Client visit - Chicago,06/29/2026,Car Rental,Rental car 1 day,103.69,yes,Paid,RB-2026-08
+C-1055,44,Christopher Perez,"July 14, 2026",Regional roadshow,06/20/2026,Hotel,Conference hotel,221.07,Yes,Paid,RB-2026-08
+C-1056,E-1,Melissa Hall,2026-07-15,Site visit - Austin,"June 25, 2026",Rail & Bus,Train ticket,185.95,Yes,PAID,RB-2026-08
+C-1056,1,Melissa Hall,2026-07-15,Site visit - Austin,07/07/26,Meals - Travel,Dinner,32.42,,Paid,RB-2026-08
+C-1056,E-0001,Melissa Hall,2026-07-15,Site visit - Austin,22-Jun-2026,Car Rental,Rental car 1 day,51.89,Yes,Paid,RB-2026-08
+C-1057,E-0005,Amanda Miller,07/15/26,Home office setup,06/21/26,Phone & Internet,Home internet share,40.20,No,Paid,RB-2026-08
+C-1058,E-0042,SOFIA GARCIA,"July 15, 2026",Home office setup,06/21/26,Home Office Equipment,Desk chair,69.10,Yes,Paid,RB-2026-08
+C-1058,E-0042,Sofia Garcia,"July 15, 2026",Home office setup,07/12/2026,Postage & Shipping,Shipping samples,48.23,No,Paid,RB-2026-08
+C-1059,E-0051,MARGARET TORRES,2026-07-15,Customer appreciation,07/11/26,Client Gifts,Thank-you gift,71.26,Yes,Paid,RB-2026-08
+C-1060,E-0003,Cynthia Parker,07/17/26,Q3 training,06/27/2026,Meals - Travel,Breakfast,28.04,,Rejected,
+C-1060,E-3,Cynthia Parker,07/17/26,Q3 training,"July 15, 2026",Airfare,Round trip economy,406.86,Yes,Rejected,
+C-1061,E-0034,Margaret Phillips,07/23/2026,Site visit - Austin,05-Jul-2026,Taxi & Rideshare,Airport ride,55.63,No,Paid,RB-2026-08
+C-1061,E-0034,MARGARET PHILLIPS,07/23/2026,Site visit - Austin,07/06/26,Rail & Bus,Bus fare,146.30,Y,Paid,RB-2026-08
+C-1062,E-38,Timothy Ruiz,23-Jul-2026,Quarterly subscriptions,2026-07-02,Office Supplies,Printer toner,14.50,,Paid,RB-2026-08
+C-1062,E-0038,TIMOTHY RUIZ,23-Jul-2026,Quarterly subscriptions,07/05/2026,Phone & Internet,Home internet share,55.34,,Paid,RB-2026-08
+C-1062,E-38,Timothy Ruiz,23-Jul-2026,Quarterly subscriptions,10-Jul-2026,Postage & Shipping,Courier,$74.64,,Paid,RB-2026-08
+C-1062,E-0038,Timothy Ruiz,23-Jul-2026,Quarterly subscriptions,2026-06-29,Books & Subscriptions,Annual subscription,$89.41,Yes,Paid,RB-2026-08
+C-1063,E-0057,Anthony Martin,07/23/2026,Sales kickoff,07/20/2026,Rail & Bus,Bus fare,$99.18,attached,Paid,RB-2026-08
+C-1064,E-0060,Amara Lewis,25-Jul-2026,Regional roadshow,2026-07-22,Airfare,Round trip economy,515.47,Yes,PAID,RB-2026-08
+C-1064,E-0060,AMARA LEWIS,25-Jul-2026,Regional roadshow,07/06/2026,taxi & rideshare,Airport ride,62.95,Yes,Paid,RB-2026-08
+C-1064,E-0060,Amara Lewis,25-Jul-2026,Regional roadshow,2026-07-20,Car Rental,Rental car 2 days,$52.89,No,Paid,RB-2026-08
+C-1065,11,Mark Ruiz,07/27/26,Quarterly subscriptions,25-Jul-2026,Phone & Internet,Phone bill share,31.90,No,Paid,RB-2026-08
+C-1066,E-50,Yuki Wilson,"July 27, 2026",Team offsite,07/11/2026,client entertainment,Dinner with client,79.01,Yes,Paid,RB-2026-08
+C-1067,E-0048,Ryan Cook,08/14/2026,Team supplies,2026-08-08,Office Supplies,Printer toner,83.63,Yes,Approved,
+C-1068,E-0019,Fatima Roberts,08/15/26,Q3 training,"July 26, 2026",Meals - Travel,Breakfast,36.86,,Rejected,
+C-1069,E-0001,Melissa Hall,08/16/26,Client visit - Chicago,2026-07-23,meals - travel,Breakfast,44.06,N,Approved,
+C-1070,E-0009,ROBERT MORRIS,08/16/2026,Sales kickoff,"August 08, 2026",Hotel,Conference hotel,148.76,Yes,Approved,
+C-1070,E-0009,Robert Morris,08/16/2026,Sales kickoff,2026-07-25,Airfare,Round trip economy,$189.97,yes,Approved,
+C-1070,E-0009,Robert Morris,08/16/2026,Sales kickoff,"July 22, 2026",Parking & Tolls,Garage parking,44.02,N,Approved,
+C-1070,E-0009,Robert Morris,08/16/2026,Sales kickoff,08/04/2026,Rail & Bus,Train ticket,180.26,attached,Approved,
+C-1071,E-0040,Jacob Howard,16-Aug-2026,Customer appreciation,14-Aug-2026,Client Gifts,Thank-you gift,31.65,Yes,Approved,
+C-1072,45,Victor Almeida,2026-08-20,Partner summit,"August 14, 2026",Airfare,Round trip business class,1850.00,attached,Submitted,
+C-1073,E-54,Joseph Okafor,2026-08-20,Certification course,08/14/26,meals - travel,Lunch,19.05,Yes,Approved,
+C-1074,E-0058,Priya Raman,2026-08-20,Client visit - Chicago,"August 16, 2026",hotel,2 nights,312.40,Yes,SUBMITTED,
+C-1074,E-0058,Priya Raman,2026-08-20,Client visit - Chicago,"August 08, 2026",Hotel,1 night,206.65,Yes,Submitted,
+C-1075,E-0008,Betty Phillips,2026-08-21,Partner summit,"August 17, 2026",Hotel,2 nights,289,Y,Submitted,
+C-1076,E-0011,Mark Ruiz,08/21/2026,Client dinner,"August 16, 2026",Meals - Travel,Breakfast,54.72,,Submitted,
+C-1076,E-0011,MARK RUIZ,08/21/2026,Client dinner,"August 16, 2027",Team Events,Offsite activity,67.24,Yes,Submitted,
+C-1077,30,Mark Alvarez,08/21/26,Q3 training,07/28/26,Visa & Passport,Visa fee,78.06,Yes,Approved,
+C-1077,E-0030,Mark Alvarez,08/21/26,Q3 training,07/31/2026,Meals - Travel,Breakfast,52.01,Yes,Approved,
+C-1077,E-30,Mark Alvarez,08/21/26,Q3 training,08/14/2026,Conference Fees,Workshop pass,$537.87,attached,Approved,
+C-1078,E-0043,Laura Edwards,08/21/26,Home office setup,08/16/2026,Home Office Equipment,Keyboard,98.97,Y,Submitted,
+C-1078,E-0043,Laura Edwards,08/21/26,Home office setup,08/06/2026,Software,Plugin,142.84,Yes,Submitted,
+C-1078,E-0043,Laura Edwards,08/21/26,Home office setup,2026-08-13,Office Supplies,Notebooks and pens,41.33,Yes,Submitted,
+C-1078,E-0043,Laura Edwards,08/21/26,Home office setup,07-Aug-2026,Postage & Shipping,Shipping samples,70.42,,SUBMITTED,
+C-1079,E-48,Ryan Cook,08/21/26,Client visit - Chicago,27-Jul-2026,Mileage,Drive to airport,129.24,yes,Submitted,
+C-1079,E-48,Ryan Cook,08/21/26,Client visit - Chicago,27-Jul-2026,Mileage,Drive to airport,129.24,yes,Submitted,
+C-1080,E-0053,Stephanie Patel,08/21/26,Certification course,08/19/26,Meals - Travel,Dinner,30.31,No,Rejected,
+C-1081,E-0015,Stephanie Green,08/22/2026,Client visit - Denver,08/12/26,Airfare,One-way flight,542.46,Yes,SUBMITTED,
+C-1082,E-19,Fatima Roberts,"August 22, 2026",Quarterly subscriptions,20-Aug-2026,phone & internet,Home internet share,36.98,,Submitted,
+C-1082,E-19,FATIMA ROBERTS,"August 22, 2026",Quarterly subscriptions,08/21/26,Postage & Shipping,Shipping samples,40.47,,Submitted,
+C-1083,E-0051,Margaret Torres,"August 22, 2026",Client dinner,2026-08-08,client entertainment,Client lunch,116.52,Y,Submitted,
+C-1084,E-0024,Susan Gonzalez,08/23/26,Site visit - Austin,2026-08-18,Meals - Travel,Lunch,86.25,Y,Submitted,
+C-1085,E-0030,Mark Alvarez,"August 23, 2026",Team offsite,08/15/2026,Client Gifts,Gift basket,$62.90,N,Approved,
+C-1086,E-0023,Donald Taylor,"August 24, 2026",Home office setup,"August 22, 2026",home office equipment,Keyboard,529.99,Yes,Submitted,
+C-1087,E-0002,Grace Liu,08/25/2026,Certification course,31-Jul-2026,Meals - Travel,Lunch,46.80,,Submitted,
+C-1088,E-18,Jonathan Davis,2026-08-25,Quarterly subscriptions,"August 10, 2026",Books & Subscriptions,Book,84.74,Yes,Submitted,
+C-1088,E-0018,Jonathan Davis,2026-08-25,Quarterly subscriptions,"August 05, 2026",Postage & Shipping,Courier,60.51,Yes,Submitted,
+C-1088,E-0018,Jonathan Davis,2026-08-25,Quarterly subscriptions,08/18/2026,software,Plugin,$183.14,Yes,Submitted,
+C-1089,E-0022,Samuel Okoye,25-Aug-2026,Certification course,2026-08-16,Visa & Passport,Visa fee,73.30,N,Submitted,
+C-1090,E-0001,Melissa Hall,2026-08-26,Client dinner,2026-08-19,Meals - Travel,Lunch,29.70,Yes,Approved,
+C-1090,E-0001,Melissa Hall,2026-08-26,Client dinner,2026-08-12,Client Gifts,Gift basket,32.99,No,Approved,
+C-1091,E-0009,Robert Morris,"August 26, 2026",Onboarding kit,08/04/2026,Software,Monthly license,70.46,N,Submitted,
+C-1092,E-0042,Sofia Garcia,2026-08-26,Industry conference,"August 05, 2026",Airfare,Flight change fee,$431.51,attached,Submitted,
+C-1092,E-42,Sofia Garcia,2026-08-26,Industry conference,08/23/2026,Conference Fees,Workshop pass,"$1,405.59",Yes,Submitted,
+C-1092,E-42,Sofia Garcia,2026-08-26,Industry conference,"August 18, 2026",training & courses,Online course,"$1,071.24",Y,Submitted,
+C-1093,55,Ingrid Hill,2026-08-26,Onboarding kit,04-Aug-2026,Postage & Shipping,Shipping samples,56.65,N,Approved,
+C-1094,E-0023,Donald Taylor,"August 27, 2026",Sales kickoff,"August 24, 2026",Mileage,Drive to airport,268.31,Yes,Approved,
+C-1094,E-23,Donald Taylor,"August 27, 2026",Sales kickoff,03-Aug-2026,Parking & Tolls,Airport parking,32.69,Yes,Approved,
+C-1095,9,Robert Morris,28-Aug-2026,Certification course,"August 03, 2026",Conference Fees,Workshop pass,742.20,attached,Submitted,
+C-1095,E-0009,ROBERT MORRIS,28-Aug-2026,Certification course,08/14/2026,Training & Courses,Certification exam,368.30,Yes,Submitted,
+C-1095,E-0009,Robert Morris,28-Aug-2026,Certification course,24-Aug-2026,Meals - Travel,Lunch,19.85,Yes,Submitted,
+C-1095,E-9,ROBERT MORRIS,28-Aug-2026,Certification course,08/27/26,Hotel,1 night,218.29,Yes,Submitted,
+C-1096,E-0048,Ryan Cook,08/28/2026,Certification course,"August 20, 2026",Visa & Passport,Visa fee,129.59,Y,Approved,
+C-1096,E-0048,Ryan Cook,08/28/2026,Certification course,08/21/26,Training & Courses,Online course,538.32,Y,APPROVED,
+C-1096,E-0048,Ryan Cook,08/28/2026,Certification course,08/21/26,Training & Courses,Online course,538.32,Y,APPROVED,
+C-1097,E-0014,Jason Wright,08/29/2026,Industry conference,08/22/2026,Airfare,Flight change fee,742.00,Yes,SUBMITTED,
+C-1097,E-0014,Jason Wright,08/29/2026,Industry conference,28-Aug-2026,Visa & Passport,Passport renewal,$205.79,Yes,SUBMITTED,
+C-1098,19,Fatima Roberts,29-Aug-2026,Client visit - Denver,08/11/26,Parking & Tolls,Airport parking,$26.99,No,Submitted,
+C-1098,E-0019,FATIMA ROBERTS,29-Aug-2026,Client visit - Denver,08/05/2026,Meals - Travel,Breakfast,$21.53,N,Submitted,
+C-1098,E-0019,Fatima Roberts,29-Aug-2026,Client visit - Denver,17-Aug-2026,Rail & Bus,Train ticket,31.37,Yes,SUBMITTED,
+C-1099,28,Thomas Ortiz,08/29/2026,Industry conference,"August 26, 2026",Airfare,Flight change fee,422.20,Yes,SUBMITTED,
+C-1099,E-0028,Thomas Ortiz,08/29/2026,Industry conference,"August 19, 2026",Meals - Travel,Dinner,$15.52,,Submitted,
+C-1099,E-0028,Thomas Ortiz,08/29/2026,Industry conference,08/10/2026,Conference Fees,Workshop pass,715.99,Y,Submitted,
+C-1100,E-56,NICHOLAS GREEN,2026-08-31,Team supplies,08/24/26,Office Supplies,Printer toner,$38.11,No,Submitted,
+C-1101,E-0002,Grace Liu,2026-09-01,Customer onboarding trip,27-Aug-2026,Meals - Travel,Breakfast,20.67,,Approved,
+C-1101,E-0002,Grace Liu,2026-09-01,Customer onboarding trip,08/17/2026,Airfare,Round trip economy,287.55,Yes,Approved,
+C-1101,E-0002,Grace Liu,2026-09-01,Customer onboarding trip,2026-08-16,Car Rental,Rental car 1 day,$57.98,Yes,Approved,
+C-1102,E-0010,Michael Reed,09/02/2026,Customer appreciation,2026-08-12,Client Gifts,Thank-you gift,64.07,No,Submitted,
+C-1103,E-0011,Mark Ruiz,2026-09-04,Customer onboarding trip,"August 14, 2026",Car Rental,Rental car 2 days,51.86,No,SUBMITTED,
+C-1103,E-11,MARK RUIZ,2026-09-04,Customer onboarding trip,2026-08-20,Meals - Travel,Breakfast,48.33,,SUBMITTED,
+C-1103,E-0011,Mark Ruiz,2026-09-04,Customer onboarding trip,08/28/26,Parking & Tolls,Garage parking,34.22,N,Submitted,
+C-1103,E-0011,Mark Ruiz,2026-09-04,Customer onboarding trip,28-Aug-2026,Airfare,Round trip economy,$255.62,attached,SUBMITTED,
+C-1104,E-0044,Christopher Perez,09/04/2026,Client dinner,2026-08-10,Client Gifts,Gift basket,48.43,Yes,Submitted,
+C-1105,E-3,Cynthia Parker,"September 05, 2026",Industry conference,08/31/2026,meals - travel,Breakfast,40.58,No,Submitted,
+C-1106,E-0034,Margaret Phillips,09/05/26,Q3 training,02-Sep-2026,Visa & Passport,Passport renewal,176.00,Y,Submitted,
+C-1106,E-0034,Margaret Phillips,09/05/26,Q3 training,2026-08-23,meals - travel,Dinner,57.16,Yes,Submitted,
+C-1106,34,Margaret Phillips,09/05/26,Q3 training,"September 03, 2026",Training & Courses,Certification exam,618.68,attached,SUBMITTED,
+C-1106,E-0034,Margaret Phillips,09/05/26,Q3 training,08/28/26,Conference Fees,Registration,1103.32,Yes,Submitted,
+C-1107,E-0037,Nancy Cook,"September 05, 2026",Team offsite,29-Aug-2026,Client Entertainment,Client lunch,65.41,,Approved,
+C-1107,E-37,Nancy Cook,"September 05, 2026",Team offsite,2026-08-24,client gifts,Thank-you gift,53.30,,Approved,
+C-1108,E-0035,Anna Turner,09/07/26,Onboarding kit,09/03/26,Office Supplies,Notebooks and pens,84.60,attached,Approved,
+C-1108,E-0035,Anna Turner,09/07/26,Onboarding kit,09/03/26,Office Supplies,Notebooks and pens,84.60,attached,Approved,
+C-1108,E-0035,Anna Turner,09/07/26,Onboarding kit,"September 02, 2026",Postage & Shipping,Shipping samples,51.39,No,Approved,
+C-1108,E-0035,Anna Turner,09/07/26,Onboarding kit,19-Aug-2026,Books & Subscriptions,Book,67.24,N,Approved,
+C-1109,E-56,Nicholas Green,09/07/26,Industry conference,19-Aug-2026,Hotel,2 nights,234.27,yes,Submitted,
+C-1109,E-0056,NICHOLAS GREEN,09/07/26,Industry conference,08/13/2026,Conference Fees,Workshop pass,862.53,Yes,Submitted,
+C-1109,E-0056,NICHOLAS GREEN,09/07/26,Industry conference,08/13/2026,Conference Fees,Workshop pass,862.53,Yes,Submitted,
+C-1109,E-56,Nicholas Green,09/07/26,Industry conference,08/19/26,Visa & Passport,Passport renewal,154.33,Yes,SUBMITTED,
+C-1109,E-56,Nicholas Green,09/07/26,Industry conference,"August 22, 2026",Airfare,One-way flight,209.19,Yes,SUBMITTED,
+C-1110,E-33,Andrew Okafor,2026-09-08,Partner summit,08/30/26,Hotel,1 night,312.40,Yes,Submitted,
+C-1110,E-0033,Andrew Okafor,2026-09-08,Partner summit,2026-08-28,Office Supplies,Printer toner,$81.23,attached,Submitted,
+C-1110,E-0033,Andrew Okafor,2026-09-08,Partner summit,08/28/2026,Phone & Internet,Phone bill share,$76.39,Y,Submitted,
+C-1110,E-0033,Andrew Okafor,2026-09-08,Partner summit,08/23/26,Software,Monthly license,81.57,yes,SUBMITTED,
+C-1111,E-56,Nicholas Green,09/08/2026,Client visit - Chicago,2026-09-01,Parking & Tolls,Airport parking,$37.00,,Submitted,
+C-1112,E-56,Nicholas Green,09/09/2026,Regional roadshow,08/24/2026,Rail & Bus,Bus fare,184.71,yes,Submitted,

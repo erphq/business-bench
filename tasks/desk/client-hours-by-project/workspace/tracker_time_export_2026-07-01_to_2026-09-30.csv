@@ -1,0 +1,218 @@
+Date,Client,Project,Task,Notes,Hours,Billable?,First Name,Last Name
+2026-07-01,Fernbrook Montessori,Enrollment Website,Copy edits,,0.25,Yes,Chloe,Nguyen
+2026-07-01,Harbor Light Marine,Spring Catalog,Prepress,,4.5,Yes,Chloe,Nguyen
+2026-07-01,Driftwood Studio,Portfolio Site Refresh,Portfolio,,4.25,No,Ines,Okafor
+2026-07-01,Everline Insurance,Annual Report 2026,Client meeting,,2.75,No,Ines,Okafor
+2026-07-01,Lakeside Veterinary,Clinic Rebrand,Production art,,6.25,Yes,Wei,Tanaka
+2026-07-02,Driftwood Studio,Portfolio Site Refresh,Pitch deck,,1.5,No,Ines,Okafor
+2026-07-02,Everline Insurance,Annual Report 2026,Client meeting,,3.25,Yes,Ines,Okafor
+2026-07-02,Harbor Light Marine,Spring Catalog,Production art,,2.75,No,Wei,Tanaka
+2026-07-03,Lakeside Veterinary,Clinic Rebrand,Concept design,,3:30,Yes,Ines,Okafor
+2026-07-03,Everline Insurance,Annual Report 2026,Layout,,5,No,Marcus,Lindqvist
+2026-07-03,Harbor Light Marine,Spring Catalog,Revisions (no charge),,3:45,No,Rahul,Patel
+2026-07-03,Lakeside Veterinary,Clinic Rebrand,Production art,,3.75,Yes,Sofia,Reyes
+2026-07-06,Driftwood Studio,Portfolio Site Refresh,Portfolio,,1.5,No,Wei,Tanaka
+2026-07-07,Driftwood Studio,Studio Admin,Pitch deck,,3.75,No,Dana,Brooks
+2026-07-08,Everline Insurance,Annual Report 2026,Client meeting,,1:15,Yes,Dana,Brooks
+2026-07-08,Lakeside Veterinary,Clinic Rebrand,Concept design,,3,Yes,Marcus,Lindqvist
+2026-07-08,Driftwood Studio,New Business Pitches,Portfolio,,4.5,No,Rahul,Patel
+2026-07-08,Harbor Light Marine,Spring Catalog,Copy edits,,5.5,Yes,Sofia,Reyes
+2026-07-08,Tamarack Brewing,Fall Seasonal Can Labels,Layout,,1.5,No,Sofia,Reyes
+2026-07-08,Everline Insurance,Annual Report 2026,Project management,,3:15,Yes,Wei,Tanaka
+2026-07-08,Harbor Light Marine,Spring Catalog,Copy edits,,2.75,No,Wei,Tanaka
+2026-07-09,Lakeside Veterinary,Clinic Rebrand,Copy edits,,3,Yes,Chloe,Nguyen
+2026-07-09,Everline Insurance,Annual Report 2026,Project management,,0.5,No,Ines,Okafor
+2026-07-09,Driftwood Studio,Portfolio Site Refresh,Admin,,0.75,No,Marcus,Lindqvist
+2026-07-09,Harbor Light Marine,Spring Catalog,Concept design,,0.75,Yes,Rahul,Patel
+2026-07-09,Tamarack Brewing,Fall Seasonal Can Labels,Concept design,,5,Yes,Rahul,Patel
+2026-07-10,Lakeside Veterinary,Clinic Rebrand,Layout,,2.5,Yes,Rahul,Patel
+2026-07-10,Driftwood Studio,Studio Admin,Admin,,5.25,No,Sofia,Reyes
+2026-07-13,Fernbrook Montessori,Enrollment Website,Production art,,4,Yes,Chloe,Nguyen
+2026-07-13,Harbor Light Marine,Spring Catalog,Revisions (no charge),,2.75,Yes,Dana,Brooks
+2026-07-13,Driftwood Studio,Portfolio Site Refresh,Pitch deck,,5.5,No,Rahul,Patel
+2026-07-13,Driftwood Studio,Studio Admin,Admin,,5,No,Sofia,Reyes
+2026-07-13,Tamarack Brewing,Fall Seasonal Can Labels,Concept design,,3:15,Yes,Wei,Tanaka
+2026-07-14,Driftwood Studio,New Business Pitches,Pitch deck,,2.25,No,Chloe,Nguyen
+2026-07-14,Everline Insurance,Annual Report 2026,Layout,,5:30,Yes,Dana,Brooks
+2026-07-14,Harbor Light Marine,Spring Catalog,Client meeting,,6.5,Yes,Dana,Brooks
+2026-07-14,Tamarack Brewing,Fall Seasonal Can Labels,Production art,,2,Yes,Rahul,Patel
+2026-07-14,Driftwood Studio,Studio Admin,Pitch deck,,6,No,Sofia,Reyes
+2026-07-15,Tamarack Brewing,Fall Seasonal Can Labels,Production art,,2.5,Yes,Ines,Okafor
+2026-07-15,Everline Insurance,Annual Report 2026,Client meeting,,4,Yes,Marcus,Lindqvist
+2026-07-15,Lakeside Veterinary,Clinic Rebrand,Copy edits,,0.75,Yes,Rahul,Patel
+2026-07-16,Everline Insurance,Annual Report 2026,Client meeting,,4.25,No,Chloe,Nguyen
+2026-07-16,Lakeside Veterinary,Clinic Rebrand,Client meeting,,5.25,Yes,Chloe,Nguyen
+2026-07-16,Driftwood Studio,Portfolio Site Refresh,Portfolio,,4.75,No,Marcus,Lindqvist
+2026-07-20,Tamarack Brewing,Taproom Menu Boards,Layout,,6.25,Yes,Ines,Okafor
+2026-07-20,Everline Insurance,Annual Report 2026,Production art,,2.75,Yes,Marcus,Lindqvist
+2026-07-21,Tamarack Brewing,Fall Seasonal Can Labels,Layout,,4.75,Yes,Ines,Okafor
+2026-07-21,Driftwood Studio,Portfolio Site Refresh,Portfolio,,3.75,No,Marcus,Lindqvist
+2026-07-21,Fernbrook Montessori,Enrollment Website,Concept design,,5.5,No,Wei,Tanaka
+2026-07-21,Lakeside Veterinary,Clinic Rebrand,Production art,,2.75,Yes,Wei,Tanaka
+2026-07-22,Lakeside Veterinary,Clinic Rebrand,Production art,,1,Yes,Chloe,Nguyen
+2026-07-22,Lakeside Veterinary,Clinic Rebrand,Revisions (no charge),,2:45,Yes,Chloe,Nguyen
+2026-07-22,Tamarack Brewing,Fall Seasonal Can Labels,Prepress,,3:30,No,Dana,Brooks
+2026-07-22,Fernbrook Montessori,Enrollment Website,Copy edits,,3.25,Yes,Rahul,Patel
+2026-07-23,Driftwood Studio,Portfolio Site Refresh,Pitch deck,,3,No,Chloe,Nguyen
+2026-07-23,Lakeside Veterinary,Clinic Rebrand,Client meeting,,1:15,Yes,Dana,Brooks
+2026-07-23,Everline Insurance,Annual Report 2026,Project management,,3,Yes,Wei,Tanaka
+2026-07-23,Fernbrook Montessori,Enrollment Website,Layout,,4.25,Yes,Wei,Tanaka
+2026-07-24,Driftwood Studio,New Business Pitches,Admin,,1.25,No,Dana,Brooks
+2026-07-24,Harbor Light Marine,Spring Catalog,Production art,,2.25,Yes,Dana,Brooks
+2026-07-24,Harbor Light Marine,Spring Catalog,Photography,,3.5,Yes,Sofia,Reyes
+2026-07-24,Driftwood Studio,Studio Admin,Portfolio,,4,No,Wei,Tanaka
+2026-07-27,Driftwood Studio,New Business Pitches,Admin,,4:45,No,Chloe,Nguyen
+2026-07-27,Lakeside Veterinary,Clinic Rebrand,Layout,,1.75,Yes,Ines,Okafor
+2026-07-27,Driftwood Studio,Portfolio Site Refresh,Pitch deck,,4,No,Marcus,Lindqvist
+2026-07-27,Everline Insurance,Annual Report 2026,Production art,,0:15,Yes,Marcus,Lindqvist
+2026-07-27,Lakeside Veterinary,Clinic Rebrand,Copy edits,,3.5,Yes,Marcus,Lindqvist
+2026-07-27,Driftwood Studio,Portfolio Site Refresh,Team meeting,,1.75,No,Sofia,Reyes
+2026-07-28,Tamarack Brewing,Fall Seasonal Can Labels,Illustration,,1,Yes,Dana,Brooks
+2026-07-28,Driftwood Studio,New Business Pitches,Admin,,4,No,Rahul,Patel
+2026-07-28,Driftwood Studio,New Business Pitches,Team meeting,,3.25,No,Sofia,Reyes
+2026-07-28,Driftwood Studio,Studio Admin,Admin,,2,No,Wei,Tanaka
+2026-07-29,Fernbrook Montessori,Enrollment Website,Project management,,4:30,No,Chloe,Nguyen
+2026-07-29,Fernbrook Montessori,Enrollment Website,Photography,,1.75,No,Dana,Brooks
+2026-07-29,Tamarack Brewing,Fall Seasonal Can Labels,Prepress,,2.75,Yes,Dana,Brooks
+2026-07-29,Tamarack Brewing,Taproom Menu Boards,Client meeting,,4:15,Yes,Sofia,Reyes
+2026-07-30,Fernbrook Montessori,Enrollment Website,Production art,,6.25,Yes,Ines,Okafor
+2026-07-30,Lakeside Veterinary,Clinic Rebrand,Project management,,0.75,Yes,Ines,Okafor
+2026-07-30,Harbor Light Marine,Spring Catalog,Revisions (no charge),,2:45,Yes,Wei,Tanaka
+2026-07-31,Driftwood Studio,New Business Pitches,Portfolio,,2.75,No,Dana,Brooks
+2026-07-31,Fernbrook Montessori,Enrollment Website,Client meeting,,1.5,Yes,Marcus,Lindqvist
+2026-07-31,Harbor Light Marine,Spring Catalog,Client meeting,,2.75,No,Marcus,Lindqvist
+2026-08-03,Everline Insurance,Annual Report 2026,Layout,,6,Yes,Dana,Brooks
+2026-08-03,Fernbrook Montessori,Enrollment Website,Layout,,0.75,Yes,Rahul,Patel
+2026-08-03,Everline Insurance,Annual Report 2026,Project management,,3:30,Yes,Sofia,Reyes
+2026-08-04,Tamarack Brewing,Fall Seasonal Can Labels,Illustration,,4.5,Yes,Ines,Okafor
+2026-08-04,Tamarack Brewing,Fall Seasonal Can Labels,Production art,,3,Yes,Ines,Okafor
+2026-08-04,Driftwood Studio,Studio Admin,Portfolio,,5.5,No,Marcus,Lindqvist
+2026-08-04,Lakeside Veterinary,Clinic Rebrand,Client meeting,,4.5,Yes,Wei,Tanaka
+2026-08-05,Fernbrook Montessori,Enrollment Website,Revisions (no charge),,4.75,No,Dana,Brooks
+2026-08-05,Fernbrook Montessori,Enrollment Website,Copy edits,,3,No,Marcus,Lindqvist
+2026-08-05,Lakeside Veterinary,Clinic Rebrand,Concept design,,1.5,Yes,Marcus,Lindqvist
+2026-08-06,Wren & Sparrow Bookshop,Author Event Posters,Concept design,,4,Yes,Dana,Brooks
+2026-08-06,Harbor Light Marine,Spring Catalog,Client meeting,,4.5,No,Ines,Okafor
+2026-08-06,Lakeside Veterinary,Clinic Rebrand,Client meeting,,6,Yes,Rahul,Patel
+2026-08-06,Everline Insurance,Annual Report 2026,Production art,,6,Yes,Wei,Tanaka
+2026-08-07,Everline Insurance,Annual Report 2026,Prepress,,2.5,Yes,Dana,Brooks
+2026-08-07,Everline Insurance,Annual Report 2026,Concept design,,1.25,Yes,Marcus,Lindqvist
+2026-08-07,Harbor Light Marine,Spring Catalog,Production art,,0:30,No,Marcus,Lindqvist
+2026-08-07,Lakeside Veterinary,Clinic Rebrand,Production art,,6,Yes,Marcus,Lindqvist
+2026-08-10,Lakeside Veterinary,Clinic Rebrand,Prepress,,4:15,Yes,Ines,Okafor
+2026-08-10,Tamarack Brewing,Taproom Menu Boards,Concept design,,6,Yes,Marcus,Lindqvist
+2026-08-10,Lakeside Veterinary,Clinic Rebrand,Concept design,,3.25,No,Wei,Tanaka
+2026-08-11,Driftwood Studio,Portfolio Site Refresh,Team meeting,,5.25,No,Dana,Brooks
+2026-08-11,Everline Insurance,Annual Report 2026,Concept design,,4.25,Yes,Dana,Brooks
+2026-08-11,Wren & Sparrow Bookshop,Author Event Posters,Concept design,,6.25,No,Marcus,Lindqvist
+2026-08-11,Harbor Light Marine,Catalog 2026,Layout,,4.75,Yes,Rahul,Patel
+2026-08-11,Tamarack Brewing,Taproom Menu Boards,Illustration,,3.25,Yes,Sofia,Reyes
+2026-08-12,Harbor Light Marine,Catalog 2026,Layout,,4.25,Yes,Chloe,Nguyen
+2026-08-12,Tamarack Brewing,Taproom Menu Boards,Photography,,3,Yes,Rahul,Patel
+2026-08-12,Driftwood Studio,Portfolio Site Refresh,Admin,,4.25,No,Wei,Tanaka
+2026-08-13,Harbor Light Marine,Catalog 2026,Illustration,,4.25,Yes,Dana,Brooks
+2026-08-13,Driftwood Studio,Portfolio Site Refresh,Portfolio,,0.25,No,Ines,Okafor
+2026-08-13,Harbor Light Marine,Catalog 2026,Copy edits,,4:30,Yes,Marcus,Lindqvist
+2026-08-13,Driftwood Studio,Studio Admin,Team meeting,,1.25,No,Rahul,Patel
+2026-08-13,Everline Insurance,Annual Report 2026,Layout,,6.25,Yes,Sofia,Reyes
+2026-08-17,Driftwood Studio,Studio Admin,Pitch deck,,3.75,No,Chloe,Nguyen
+2026-08-17,Fernbrook Montessori,Enrollment Website,Prepress,,5,No,Marcus,Lindqvist
+2026-08-17,Driftwood Studio,New Business Pitches,Pitch deck,,3,No,Sofia,Reyes
+2026-08-18,Driftwood Studio,New Business Pitches,Portfolio,,3.5,No,Chloe,Nguyen
+2026-08-18,Driftwood Studio,Studio Admin,Admin,,1.25,No,Dana,Brooks
+2026-08-18,Tamarack Brewing,Taproom Menu Boards,Concept design,,3:15,No,Marcus,Lindqvist
+2026-08-18,Driftwood Studio,Studio Admin,Portfolio,,4.5,No,Rahul,Patel
+2026-08-18,Lakeside Veterinary,Clinic Rebrand,Project management,,3,Yes,Rahul,Patel
+2026-08-19,Harbor Light Marine,Boat Show Signage,Project management,,4.75,Yes,Chloe,Nguyen
+2026-08-19,Lakeside Veterinary,Clinic Rebrand,Photography,,1.75,No,Rahul,Patel
+2026-08-20,Lakeside Veterinary,Clinic Rebrand,Project management,,0.5,Yes,Chloe,Nguyen
+2026-08-20,Driftwood Studio,New Business Pitches,Portfolio,,3,No,Ines,Okafor
+2026-08-20,Everline Insurance,Annual Report 2026,Revisions (no charge),,1.5,Yes,Rahul,Patel
+2026-08-20,Harbor Light Marine,Catalog 2026,Concept design,,5.25,Yes,Rahul,Patel
+2026-08-20,Harbor Light Marine,Boat Show Signage,Copy edits,,6.25,No,Rahul,Patel
+2026-08-20,Tamarack Brewing,Fall Seasonal Can Labels,Layout,,2.25,Yes,Sofia,Reyes
+2026-08-20,Driftwood Studio,Portfolio Site Refresh,Pitch deck,,3,No,Wei,Tanaka
+2026-08-21,Lakeside Veterinary,Clinic Rebrand,Layout,,6.25,Yes,Dana,Brooks
+2026-08-21,Harbor Light Marine,Catalog 2026,Revisions (no charge),,5:45,No,Rahul,Patel
+2026-08-21,Harbor Light Marine,Boat Show Signage,Copy edits,,1.75,No,Sofia,Reyes
+2026-08-24,Driftwood Studio,Portfolio Site Refresh,Team meeting,,2,No,Chloe,Nguyen
+2026-08-24,Everline Insurance,Annual Report 2026,Concept design,,3.75,Yes,Dana,Brooks
+2026-08-24,Everline Insurance,Annual Report 2026,Client meeting,,5.25,Yes,Dana,Brooks
+2026-08-24,Driftwood Studio,Studio Admin,Team meeting,,1,No,Ines,Okafor
+2026-08-24,Lakeside Veterinary,Clinic Rebrand,Copy edits,,2.25,Yes,Rahul,Patel
+2026-08-25,Everline Insurance,Annual Report 2026,Production art,,1.25,Yes,Sofia,Reyes
+2026-08-25,Lakeside Veterinary,Clinic Rebrand,Prepress,,2,Yes,Wei,Tanaka
+2026-08-26,Lakeside Veterinary,Clinic Rebrand,Project management,,0.75,Yes,Dana,Brooks
+2026-08-26,Wren & Sparrow Bookshop,Author Event Posters,Concept design,,4.75,No,Sofia,Reyes
+2026-08-26,Harbor Light Marine,Boat Show Signage,Revisions (no charge),,5:30,Yes,Wei,Tanaka
+2026-08-27,Driftwood Studio,Portfolio Site Refresh,Portfolio,,6,No,Chloe,Nguyen
+2026-08-27,Lakeside Veterinary,Clinic Rebrand,Concept design,,3,Yes,Marcus,Lindqvist
+2026-08-27,Driftwood Studio,Portfolio Site Refresh,Portfolio,,0:15,No,Wei,Tanaka
+2026-08-28,Tamarack Brewing,Fall Seasonal Can Labels,Revisions (no charge),,2.75,No,Chloe,Nguyen
+2026-08-28,Lakeside Veterinary,Appointment Cards,Production art,,1.5,No,Marcus,Lindqvist
+2026-08-28,Harbor Light Marine,Catalog 2026,Layout,,2.75,Yes,Rahul,Patel
+2026-08-28,Wren & Sparrow Bookshop,Author Event Posters,Prepress,,5.5,Yes,Wei,Tanaka
+2026-08-31,Everline Insurance,Annual Report 2026,Production art,,4.75,No,Marcus,Lindqvist
+2026-08-31,Lakeside Veterinary,Clinic Rebrand,Layout,,3.25,Yes,Sofia,Reyes
+2026-09-01,Tamarack Brewing,Fall Seasonal Can Labels,Project management,,1.75,Yes,Ines,Okafor
+2026-09-02,Harbor Light Marine,Catalog 2026,Client meeting,,0.25,Yes,Marcus,Lindqvist
+2026-09-02,Tamarack Brewing,Fall Seasonal Can Labels,Copy edits,,6:15,Yes,Marcus,Lindqvist
+2026-09-03,Everline Insurance,Annual Report 2026,Revisions (no charge),,3,No,Dana,Brooks
+2026-09-03,Lakeside Veterinary,Clinic Rebrand,Revisions (no charge),,6:15,No,Dana,Brooks
+2026-09-03,Driftwood Studio,Portfolio Site Refresh,Portfolio,,5.25,No,Ines,Okafor
+2026-09-03,Tamarack Brewing,Fall Seasonal Can Labels,Revisions (no charge),,1.25,No,Marcus,Lindqvist
+2026-09-03,Driftwood Studio,Portfolio Site Refresh,Admin,,2,No,Sofia,Reyes
+2026-09-03,Harbor Light Marine,Catalog 2026,Photography,,4.25,Yes,Wei,Tanaka
+2026-09-04,Lakeside Veterinary,Clinic Rebrand,Production art,,5,Yes,Chloe,Nguyen
+2026-09-04,Lakeside Veterinary,Appointment Cards,Client meeting,,3.25,Yes,Sofia,Reyes
+2026-09-07,Everline Insurance,Annual Report 2026,Layout,,2.25,Yes,Chloe,Nguyen
+2026-09-07,Everline Insurance,Annual Report 2026,Concept design,,0.75,Yes,Chloe,Nguyen
+2026-09-07,Lakeside Veterinary,Clinic Rebrand,Layout,,2.25,No,Chloe,Nguyen
+2026-09-07,Harbor Light Marine,Catalog 2026,Concept design,,6.5,Yes,Sofia,Reyes
+2026-09-08,Lakeside Veterinary,Appointment Cards,Production art,,4,No,Chloe,Nguyen
+2026-09-08,Everline Insurance,Annual Report 2026,Layout,,2,Yes,Marcus,Lindqvist
+2026-09-08,Everline Insurance,Annual Report 2026,Layout,,3,Yes,Sofia,Reyes
+2026-09-09,Lakeside Veterinary,Clinic Rebrand,Copy edits,,3.25,No,Ines,Okafor
+2026-09-09,Everline Insurance,Annual Report 2026,Copy edits,,2,Yes,Rahul,Patel
+2026-09-09,Harbor Light Marine,Boat Show Signage,Project management,,4.25,Yes,Sofia,Reyes
+2026-09-09,Lakeside Veterinary,Clinic Rebrand,Copy edits,,5.75,Yes,Wei,Tanaka
+2026-09-10,Everline Insurance,Annual Report 2026,Project management,,6:15,Yes,Sofia,Reyes
+2026-09-11,Harbor Light Marine,Catalog 2026,Revisions (no charge),,0.5,No,Dana,Brooks
+2026-09-11,Harbor Light Marine,Boat Show Signage,Revisions (no charge),,5.5,Yes,Ines,Okafor
+2026-09-11,Lakeside Veterinary,Clinic Rebrand,Copy edits,,3,Yes,Marcus,Lindqvist
+2026-09-11,Harbor Light Marine,Boat Show Signage,Prepress,,6.5,Yes,Rahul,Patel
+2026-09-14,Everline Insurance,Annual Report 2026,Layout,,6,Yes,Marcus,Lindqvist
+2026-09-15,Tamarack Brewing,Fall Seasonal Can Labels,Concept design,,0.75,Yes,Dana,Brooks
+2026-09-15,Driftwood Studio,Studio Admin,Team meeting,,1.75,No,Ines,Okafor
+2026-09-15,Everline Insurance,Annual Report 2026,Client meeting,,5.5,Yes,Marcus,Lindqvist
+2026-09-15,Driftwood Studio,Portfolio Site Refresh,Pitch deck,,5,No,Rahul,Patel
+2026-09-15,Everline Insurance,Annual Report 2026,Production art,,4.25,Yes,Rahul,Patel
+2026-09-15,Harbor Light Marine,Boat Show Signage,Project management,,2.5,Yes,Sofia,Reyes
+2026-09-17,Harbor Light Marine,Catalog 2026,Copy edits,,6:15,No,Chloe,Nguyen
+2026-09-17,Tamarack Brewing,Fall Seasonal Can Labels,Prepress,,3.75,Yes,Dana,Brooks
+2026-09-17,Wren & Sparrow Bookshop,Author Event Posters,Illustration,,6.5,No,Wei,Tanaka
+2026-09-18,Driftwood Studio,Studio Admin,Pitch deck,,2.25,No,Dana,Brooks
+2026-09-18,Harbor Light Marine,Boat Show Signage,Prepress,,6.5,Yes,Marcus,Lindqvist
+2026-09-18,Lakeside Veterinary,Appointment Cards,Project management,,2:45,Yes,Sofia,Reyes
+2026-09-18,Driftwood Studio,Studio Admin,Pitch deck,,5.75,No,Wei,Tanaka
+2026-09-21,Driftwood Studio,Studio Admin,Admin,,5,No,Chloe,Nguyen
+2026-09-21,Wren & Sparrow Bookshop,Author Event Posters,Client meeting,,4.5,Yes,Dana,Brooks
+2026-09-21,Everline Insurance,Annual Report 2026,Production art,,3.25,Yes,Ines,Okafor
+2026-09-21,Harbor Light Marine,Catalog 2026,Concept design,,2.5,Yes,Marcus,Lindqvist
+2026-09-21,Harbor Light Marine,Catalog 2026,Project management,,4.25,Yes,Sofia,Reyes
+2026-09-22,Driftwood Studio,New Business Pitches,Portfolio,,5,No,Dana,Brooks
+2026-09-22,Lakeside Veterinary,Appointment Cards,Project management,,0:30,Yes,Dana,Brooks
+2026-09-22,Harbor Light Marine,Boat Show Signage,Photography,,0.5,Yes,Ines,Okafor
+2026-09-22,Driftwood Studio,Studio Admin,Portfolio,,2.5,No,Rahul,Patel
+2026-09-22,Harbor Light Marine,Boat Show Signage,Layout,,3,Yes,Wei,Tanaka
+2026-09-23,Harbor Light Marine,Catalog 2026,Project management,,2.75,Yes,Chloe,Nguyen
+2026-09-23,Harbor Light Marine,Catalog 2026,Prepress,,6:30,Yes,Rahul,Patel
+2026-09-23,Harbor Light Marine,Boat Show Signage,Copy edits,,5,Yes,Rahul,Patel
+2026-09-24,Wren & Sparrow Bookshop,Author Event Posters,Layout,,2.5,Yes,Marcus,Lindqvist
+2026-09-25,Everline Insurance,Annual Report 2026,Photography,,0.25,Yes,Chloe,Nguyen
+2026-09-25,Driftwood Studio,Studio Admin,Pitch deck,,0.75,No,Wei,Tanaka
+2026-09-29,Everline Insurance,Annual Report 2026,Revisions (no charge),,2:45,Yes,Ines,Okafor
+2026-09-29,Harbor Light Marine,Boat Show Signage,Client meeting,,6.5,Yes,Ines,Okafor
+2026-09-29,Driftwood Studio,Studio Admin,Team meeting,,5.25,No,Rahul,Patel
+2026-09-29,Harbor Light Marine,Boat Show Signage,Prepress,,5.5,Yes,Wei,Tanaka
+2026-09-30,Driftwood Studio,New Business Pitches,Pitch deck,,3.25,No,Chloe,Nguyen

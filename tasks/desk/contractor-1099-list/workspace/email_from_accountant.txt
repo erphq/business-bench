@@ -1,0 +1,12 @@
+From: Nadia Haddad <nadia@mossbank.cpa>
+To: Rosa Ramirez <rosa@cedarpine.co>
+Date: Mon, 12 Jan 2026 10:05
+Subject: 1099-NECs for 2025
+
+Hi Rosa, time for the 1099s. Send me the Filewell import file and I will review and file.
+
+Who gets one: anyone you paid $600 or more for services during 2025. (The $2,000 threshold you may have read about applies to payments made from 2026 on, not to these.) Go by the date you paid, not the date of the bill, so something you paid in January 2026 for December work is next year's, and a December 2024 bill you paid in January 2025 counts for 2025.
+
+Corporations generally don't get one. Use the tax classification they ticked on the W-9 - and an LLC counts as a corporation only if they wrote C or S as its tax classification; a partnership LLC or a single-member LLC does get one. The exception is lawyers: legal fees get a 1099-NEC even when the firm is incorporated, so Copperfield Law, P.C. is in. We're a P.C. too but we are not lawyers, so leave Mossbank off.
+
+If a vendor refunded you money during the year, that comes off what you paid them. And your export lists the bills as well as the payments of those bills - only count the payments.

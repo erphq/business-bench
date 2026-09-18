@@ -1,0 +1,31 @@
+﻿Order,Created at,Customer,Fulfillment status,Tags,Lineitem name,Lineitem quantity,Lineitem price,Shipping
+GR-4631,2026-08-31 06:00,Amara Torres,IN_TRANSIT,,Fiddle leaf fig 10in,1,68.00,8.95
+GR-4632,2026-08-31 11:00,Jeffrey Lopez,DELIVERED,,Snake plant Laurentii 4in,1,18.00,8.95
+GR-4633,2026-08-31 16:00,Luis Mensah,FULFILLED,,Houseplant potting mix 8qt,1,13.00,8.95
+GR-4634,2026-08-31 21:00,Deborah Green,FULFILLED,gift,Monstera deliciosa 6in,1,34.00,8.95
+GR-4635,2026-09-01 02:00,Fatima Walker,FULFILLED,,Rubber plant Burgundy 8in,1,44.00,8.95
+GR-4636,2026-09-01 07:00,Donna White,DELIVERED,,Fiddle leaf fig 10in,1,68.00,8.95
+GR-4637,2026-09-01 12:00,Matthew White,IN_TRANSIT,gift,Rubber plant Burgundy 8in,1,44.00,8.95
+GR-4638,2026-09-01 17:00,John Ward,DELIVERED,gift,ZZ plant 6in,1,29.00,8.95
+GR-4639,2026-09-01 22:00,Dmitri King,DELIVERED,,Bird of paradise 10in,1,72.00,8.95
+GR-4640,2026-09-02 03:00,Jacob Rodriguez,DELIVERED,,Ceramic planter white 8in,1,24.00,8.95
+GR-4641,2026-09-02 08:00,Barbara Mendoza,DELIVERED,gift,Peace lily 6in,1,26.00,8.95
+GR-4642,2026-09-02 13:00,Thomas Martin,DELIVERED,,Snake plant Laurentii 4in,1,18.00,8.95
+GR-4643,2026-09-02 18:00,John Hernandez,IN_TRANSIT,,Rubber plant Burgundy 8in,1,44.00,8.95
+GR-4644,2026-09-02 23:00,Leila Cooper,FULFILLED,,Calathea orbifolia 6in,1,36.00,8.95
+GR-4645,2026-09-03 04:00,Nadia Gomez,DELIVERED,gift,Houseplant potting mix 8qt,1,13.00,8.95
+GR-4646,2026-09-03 09:00,Amara Torres,FULFILLED,,Snake plant Laurentii 4in,1,18.00,8.95
+GR-4647,2026-09-03 14:00,Jeffrey Lopez,DELIVERED,gift,Rubber plant Burgundy 8in,1,44.00,8.95
+GR-4648,2026-09-03 19:00,Luis Mensah,IN_TRANSIT,,Peace lily 6in,1,26.00,8.95
+GR-4649,2026-09-04 00:00,Deborah Green,FULFILLED,,Bird of paradise 10in,1,72.00,8.95
+GR-4650,2026-09-04 05:00,Fatima Walker,FULFILLED,,String of pearls 4in hanging,1,22.00,8.95
+GR-4651,2026-09-04 10:00,Donna White,FULFILLED,,Rubber plant Burgundy 8in,1,44.00,8.95
+GR-4652,2026-09-04 15:00,Matthew White,IN_TRANSIT,gift,Moisture meter,1,11.00,8.95
+GR-4653,2026-09-04 20:00,John Ward,IN_TRANSIT,,Houseplant potting mix 8qt,1,13.00,8.95
+GR-4654,2026-09-05 01:00,Dmitri King,FULFILLED,,Rubber plant Burgundy 8in,1,44.00,8.95
+GR-4655,2026-09-05 06:00,Jacob Rodriguez,DELIVERED,,Bird of paradise 10in,1,72.00,8.95
+GR-4656,2026-09-05 11:00,Barbara Mendoza,FULFILLED,,Hoya carnosa 4in,1,19.00,8.95
+GR-4657,2026-09-05 16:00,Thomas Martin,DELIVERED,,Moisture meter,1,11.00,8.95
+GR-4658,2026-09-05 21:00,John Hernandez,IN_TRANSIT,,Monstera deliciosa 6in,1,34.00,8.95
+GR-4659,2026-09-06 02:00,Leila Cooper,FULFILLED,,Terracotta pot 6in,1,9.00,8.95
+GR-4660,2026-09-06 07:00,Nadia Gomez,IN_TRANSIT,repeat customer,Moisture meter,1,11.00,8.95

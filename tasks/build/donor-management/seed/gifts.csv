@@ -1,0 +1,236 @@
+Gift ID,Donor ID,Donor,Gift Date,Amount,Program,Gift Type,Pledge ID,Payment Method,Acknowledged
+G-10001,D-00069,Kwame Turner,2025-01-15,500,Youth Literacy,Pledge payment,PL-0061,Online,Y
+G-10002,D-00073,Thomas Jones,17-Jan-2025,100.00,Food Pantry,One-time,,Credit card,n/a
+G-10003,D-72,Carol Rogers,2025-01-19,$300.00,Food Pantry,Pledge payment,PL-0043,ACH,Sent 02/04/2025
+G-10004,D-00150,"Ruiz, Rebecca",2025-01-23,100.00,Food Pantry,One-time,,Check,Sent 02/05/2025
+G-10005,D-2,"Collins, Paul",01/24/2025,"$2,500.00",Youth Literacy,One-time,,Credit card,Yes
+G-10006,D-00080,Donald Rodriguez,2025-01-24,100.00,Food Pantry,Pledge payment,PL-0059,Check,yes
+G-10007,D-00046,Margaret Young,29-Jan-2025,50.00,General Operating,One-time,,Check,N
+G-10008,D-00156,Sharon Cox,01/30/2025,50,General Operating ,One-time,,Credit card,N
+G-10009,D-00101,"Gonzalez, Jeffrey","February 05, 2025",500.00,Youth Literacy,One-time,,Credit card,Y
+G-10010,D-00084,Hiroshi Phillips,2025-02-07,$150.00,General Operating,One-time,,ACH,
+G-10011,176,Carol Richardson,02/10/2025,25.00,Youth Literacy,One-time,,Check,yes
+G-10012,D-00038,Elizabeth Young,12-Feb-2025,$200.00,Food Pantry,One-time,,Check,
+G-10013,D-00123,Amanda King,13-Feb-2025,500.00,Food Pantry,Pledge payment,PL-0025,Online,yes
+G-10014,D-00033,Hiroshi Tanaka,14-Feb-2025,1250.00,SENIOR MEALS,Pledge payment,42,Check,yes
+G-10015,110,Marcus Edwards,02/14/2025,250.00,Senior Meals,One-time,,Cash,Y
+G-10016,D-00175,Yuki Ross,"February 17, 2025",125.00,Food Pantry,Pledge payment,PL-36,ACH,N
+G-10017,103,Joseph Campbell,"February 21, 2025",750.00,Scholarships ,One-time,,Check,Yes
+G-10018,D-00066,Shirley Gonzalez,02/24/25,$50.00,Youth Literacy,One-time,,ACH,N
+G-10019,D-00115,Nancy Mensah,24-Feb-2025,500.00,youth literacy,One-time,,Check,yes
+G-10020,D-157,"Anderson, Chloe",02/24/25,125.00,General Operating,Pledge payment,PL-0001,Cash,n/a
+G-10021,D-00124,Jason Morales,03/05/2025,500.00,Youth Literacy ,One-time,,Online,Y
+G-10022,D-00154,Luis Myers,"March 07, 2025",500.00,Senior Meals,One-time,,Cash,Yes
+G-10023,D-00098,Kevin Baker,"March 13, 2025","2,500.00",food pantry,One-time,,ACH,Y
+G-10024,D-00174,Cynthia Allen,03/14/2025,$500.00,Senior Meals,Pledge payment,PL-45,Credit card,Yes
+G-10025,9,Jonathan Thompson,2025-03-16,500.00,YOUTH LITERACY,Pledge payment,PL-0023,Credit card,Yes
+G-10026,D-00037,Aisha Bennett,03/16/25,100,Food Pantry,Pledge payment,PL-0032,Credit card,n/a
+G-10027,D-00095,Rebecca Chavez,16-Mar-2025,5000.00,Senior Meals ,Pledge payment,PL-0041,Cash,yes
+G-10028,D-00115,Nancy Mensah,03/17/25,5000,Senior Meals,Pledge payment,46,ACH,Sent 03/23/2025
+G-10029,D-00134,Timothy Cooper,20-Mar-2025,200.00,Senior Meals,One-time,,Cash,
+G-10030,D-165,Patricia Thompson,21-Mar-2025,$50.00,Scholarships,One-time,,Credit card,yes
+G-10031,D-109,Donald Harris,2025-03-23,625,General Operating,Pledge payment,PL-0002,Credit card,Yes
+G-10032,D-00012,Sharon Rivera,03/31/2025,100.00,Youth Literacy,One-time,,Credit card,Y
+G-10033,D-00017,Ronald Diaz,04/01/2025,$50.00,Scholarships,One-time,,Cash,Sent 04/16/2025
+G-10034,D-00176,Carol Richardson,"April 01, 2025",50.00,General Operating,One-time,,Credit card,N
+G-10035,D-00129,Hiroshi Hernandez,10-Apr-2025,150.00,General Operating,One-time,,Cash,Yes
+G-10036,D-86,Amara Bennett,04/12/2025,$100.00,Senior Meals ,Pledge payment,PL-7,Check,n/a
+G-10037,132,Shirley Diaz,04/12/2025,300.00,General Operating,One-time,,ACH,yes
+G-10038,D-00138,Eric Lopez,04/12/25,$250.00,Senior Meals,Pledge payment,PL-0033,Cash,Yes
+G-10039,D-00072,Carol Rogers,"April 15, 2025",300.00,Food Pantry ,Pledge payment,PL-0043,Check,Y
+G-10040,158,Dorothy Anderson,2025-04-17,$100.00,Youth Literacy,Pledge payment,PL-0058,Cash,Sent 04/22/2025
+G-10041,D-00080,Donald Rodriguez,"April 18, 2025",100.00,Food Pantry,Pledge payment,PL-0059,Check,Sent 05/04/2025
+G-10042,D-00103,Joseph Campbell,04/22/25,25,senior meals,One-time,,Credit card,N
+G-10043,D-00135,Eric Lewis,"April 28, 2025",250.00,Youth Literacy,One-time,,Cash,Y
+G-10044,D-00115,Nancy Mensah,"May 01, 2025",$100.00,Youth Literacy,One-time,,Credit card,Sent 05/12/2025
+G-10045,40,Laura Phillips,05/03/2025,500.00,Food Pantry,One-time,,Cash,yes
+G-10046,D-00103,Joseph Campbell,04-May-2025,50.00,Food Pantry ,One-time,,Credit card,
+G-10047,D-00033,Hiroshi Tanaka,2025-05-12,"1,250.00",Senior Meals,Pledge payment,PL-0042,Credit card,yes
+G-10048,D-00173,"Lopez, Aisha",15-May-2025,250.00,Senior Meals,Pledge payment,PL-0035,ACH,Sent 06/01/2025
+G-10049,D-00098,Kevin Baker,05/20/25,5000.00,General Operating,Pledge payment,PL-11,ACH,Yes
+G-10050,D-101,Jeffrey Gonzalez,24-May-2025,625.00,Food Pantry,Pledge payment,PL-0057,Cash,Y
+G-10051,D-00024,Hiroshi Bailey,"June 05, 2025",1500,Youth Literacy,One-time,,Cash,Y
+G-10052,D-00020,Emily Lewis,08-Jun-2025,1000.00,Youth Literacy,One-time,,Online,Sent 06/20/2025
+G-10053,D-00024,Hiroshi Bailey,2025-06-13,"1,250.00",Senior Meals,Pledge payment,PL-0034,Cash,Sent 06/24/2025
+G-10054,D-37,Aisha Bennett,13-Jun-2025,$100.00,food pantry,Pledge payment,PL-0032,Cash,N
+G-10055,D-00109,Donald Harris,14-Jun-2025,625.00,General Operating,Pledge payment,PL-2,Check,yes
+G-10056,D-00173,Aisha Lopez,06/17/2025,750,Youth Literacy,One-time,,ACH,Yes
+G-10057,45,"Howard, Christopher",06/19/25,250,Scholarships,One-time,,Check,Y
+G-10058,D-00114,Mateo Hill,"June 20, 2025",$500.00,Senior Meals,Pledge payment,PL-0031,Cash,yes
+G-10059,D-00053,"Chavez, Dmitri","June 21, 2025",1000.00,Youth Literacy,Pledge payment,PL-0044,Check,Yes
+G-10060,D-40,"Phillips, Laura","June 22, 2025",2500.00,General Operating,Pledge payment,PL-0040,Cash,Sent 07/04/2025
+G-10061,D-00102,Ronald Johnson,"June 22, 2025",200.00,Senior Meals,One-time,,ACH,yes
+G-10062,D-81,Dmitri Collins,2025-06-23,$500.00,Senior Meals,Pledge payment,15,Check,Y
+G-10063,D-00028,Wei Jones,06/26/2025,50.00,Food Pantry,One-time,,Online,yes
+G-10064,D-00014,Yuki Ramirez,07/08/25,"2,500.00",Senior Meals,One-time,,ACH,Sent 07/21/2025
+G-10065,60,"King, Betty",2025-07-13,125.00,Food Pantry,Pledge payment,PL-0008,Credit card,
+G-10066,72,Carol Rogers,07/15/25,300.00,Food Pantry,Pledge payment,PL-0043,Cash,Y
+G-10067,D-00007,Carlos Sanchez,"July 17, 2025",100.00,Food Pantry,Pledge payment,PL-0051,Credit card,yes
+G-10068,D-00036,Andrew Lindqvist,07/17/25,100.00,youth literacy,One-time,,Credit card,N
+G-10069,D-00100,Jason Gomez,07/17/25,125.00,Senior Meals,Pledge payment,28,Check,n/a
+G-10070,D-00138,Eric Lopez,20-Jul-2025,250.00,Senior Meals,Pledge payment,33,Cash,Y
+G-10071,D-00102,Ronald Johnson,"July 24, 2025",500.00,Scholarships,Pledge payment,PL-38,Check,yes
+G-10072,165,Patricia Thompson,07/24/25,500.00,General Operating,Pledge payment,PL-0017,Credit card,Y
+G-10073,D-00048,Eric Tanaka,07/31/2025,125.00,Youth Literacy,One-time,,Online,
+G-10074,D-00164,"Long, Kenneth",31-Jul-2025,"$1,500.00",General Operating,One-time,,Cash,Y
+G-10075,105,Jonathan Rivera,08/14/25,$625.00,Food Pantry,Pledge payment,PL-0024,ACH,yes
+G-10076,D-00157,Chloe Anderson,08/14/25,125.00,General Operating,Pledge payment,PL-0001,Credit card,yes
+G-10077,D-00049,Sharon Diaz,"August 15, 2025",300.00,Scholarships,Pledge payment,PL-0037,ACH,Sent 08/21/2025
+G-10078,112,Amanda Lopez,08/16/2025,50.00,General Operating,One-time,,Credit card,Yes
+G-10079,D-00101,Jeffrey Gonzalez,"August 19, 2025",625.00,Food Pantry,Pledge payment,PL-0057,Check,yes
+G-10080,D-00123,Amanda King,08/19/25,500.00,food pantry,Pledge payment,PL-0025,Check,Y
+G-10081,D-00059,Edward Ruiz,08/20/2025,500.00,Food Pantry,Pledge payment,PL-0062,Online,Sent 08/26/2025
+G-10082,D-00175,"Ross, Yuki",08/20/2025,$125.00,Food Pantry,Pledge payment,PL-0036,Credit card,yes
+G-10083,D-00029,"Hernandez, Chloe","August 22, 2025",$125.00,Food Pantry,Pledge payment,63,Credit card,yes
+G-10084,D-00033,Hiroshi Tanaka,24-Aug-2025,1250,Senior Meals,Pledge payment,PL-0042,Credit card,Yes
+G-10085,D-00146,Leila Hughes,08/24/2025,100,General Operating,One-time,,ACH,Sent 08/27/2025
+G-10086,10,Rahul Evans,2025-09-02,500.00,Senior Meals,One-time,,Online,Y
+G-10087,D-00069,Kwame Turner,2025-09-06,250.00,Food Pantry,One-time,,Credit card,yes
+G-10088,38,Elizabeth Young,"September 13, 2025",750.00,YOUTH LITERACY,One-time,,Online,Sent 09/21/2025
+G-10089,D-00169,Jessica Jackson,09/14/25,300.00,Food Pantry,One-time,,Credit card,Y
+G-10090,D-00169,"Jackson, Jessica",15-Sep-2025,500.00,Food Pantry,Pledge payment,PL-0014,Cash,yes
+G-10091,D-37,"Bennett, Aisha",16-Sep-2025,100.00,Food Pantry,Pledge payment,PL-0032,Credit card,Yes
+G-10092,174,Cynthia Allen,09/17/25,500.00,Senior Meals,Pledge payment,PL-0045,Cash,Yes
+G-10093,D-00076,Donald Edwards,2025-09-18,500.00,Scholarships,Pledge payment,PL-48,Credit card,yes
+G-10094,19,Jacob Torres,21-Sep-2025,762.50,Youth Literacy,One-time,,Cash,Yes
+G-10095,D-00145,"Jones, Chloe",09/22/25,50.00,Youth Literacy,One-time,,ACH,
+G-10096,D-00168,James Carter,"September 22, 2025",250,Youth Literacy,One-time,,Credit card,Yes
+G-10097,D-00109,Donald Harris,24-Sep-2025,625.00,General Operating,Pledge payment,PL-0002,ACH,Yes
+G-10098,D-00068,Hiroshi Wilson,10/01/2025,125.00,Food Pantry,One-time,,Check,
+G-10099,D-00063,Leila Hall,2025-10-02,100.00,Senior Meals,One-time,,ACH,
+G-10100,D-00072,Carol Rogers,10/03/25,150.00,Scholarships,One-time,,Online,N
+G-10101,D-00015,"Walker, Carlos",2025-10-10,100.00,Food Pantry,One-time,,Cash,n/a
+G-10102,D-108,Timothy Peterson,2025-10-13,625.00,Food Pantry,Pledge payment,PL-0060,Online,yes
+G-10103,D-86,"Bennett, Amara",2025-10-14,$100.00,Senior Meals,Pledge payment,PL-0007,Cash,yes
+G-10104,D-158,Dorothy Anderson,10/18/2025,$100.00,Youth Literacy,Pledge payment,PL-0058,Online,N
+G-10105,D-00100,"Gomez, Jason",10/20/25,125.00,Senior Meals,Pledge payment,PL-0028,Online,N
+G-10106,D-00110,Marcus Edwards,"October 20, 2025",250.00,Youth Literacy,One-time,,Cash,Yes
+G-10107,D-00060,Betty King,10/21/25,125.00,Food Pantry,Pledge payment,PL-0008,Online,
+G-10108,D-00177,Carlos Sanchez,10/23/25,100.00,Food Pantry,Pledge payment,PL-0051,Cash,N
+G-10109,D-138,Eric Lopez,"October 24, 2025",250,Senior Meals,Pledge payment,PL-0033,Cash,Y
+G-10110,D-00084,Hiroshi Phillips,10/27/25,50.00,Youth Literacy,One-time,,Online,
+G-10111,D-00121,Gary Mendoza,03-Nov-2025,150.00,General Operating,One-time,,Credit card,n/a
+G-10112,D-00038,"Young, Elizabeth","November 09, 2025",212.50,Senior Meals,One-time,,Online,
+G-10113,D-00087,Christopher Kelly,11/11/25,50.00,Senior Meals,One-time,,Credit card,Yes
+G-10114,D-00126,"Morales, Amanda","November 12, 2025",250.00,Youth Literacy,One-time,,Credit card,yes
+G-10115,D-00033,Hiroshi Tanaka,2025-11-13,"1,250.00",Senior Meals,Pledge payment,PL-0042,Cash,Y
+G-10116,D-00139,Kenneth Miller,"November 13, 2025",50.00,Youth Literacy,One-time,,Check,Y
+G-10117,D-00029,Chloe Hernandez,2025-11-15,125.00,Food Pantry,Pledge payment,PL-63,Credit card,N
+G-10118,D-00101,Jeffrey Gonzalez,11/15/2025,$625.00,Food Pantry,Pledge payment,PL-57,Credit card,Sent 12/03/2025
+G-10119,D-173,Aisha Lopez,2025-11-15,250,SENIOR MEALS,Pledge payment,PL-0035,Check,yes
+G-10120,D-00116,Rahul Williams,2025-11-18,25.00,Senior Meals,One-time,,Online,Yes
+G-10121,D-00172,"Garcia, Emily",18-Nov-2025,100,General Operating,One-time,,Credit card,Y
+G-10122,D-00007,"Sanchez, Carlos",2025-11-21,25,Youth Literacy,One-time,,Credit card,Yes
+G-10123,D-00135,Eric Lewis,"November 21, 2025",150.00,Youth Literacy,One-time,,Check,n/a
+G-10124,165,Patricia Thompson,2025-11-21,25.50,Food Pantry,One-time,,Credit card,Sent 12/04/2025
+G-10125,D-00117,Matthew Gutierrez,2025-11-22,100,General Operating,One-time,,Check,yes
+G-10126,D-00105,Jonathan Rivera,11/24/2025,$625.00,Food Pantry,Pledge payment,PL-0024,Credit card,Sent 12/07/2025
+G-10127,D-00113,Mateo Cook,11/28/2025,75,Food Pantry,One-time,,Credit card,yes
+G-10128,26,Melissa King,"December 06, 2025",50.00,Food Pantry,One-time,,Credit card,Sent 12/12/2025
+G-10129,D-00130,James Roberts,12/09/25,1500.00,YOUTH LITERACY,One-time,,Credit card,yes
+G-10130,D-00082,Tomasz Diaz,12/10/25,125.00,Food Pantry,One-time,,ACH,n/a
+G-10131,D-00177,Carlos Sanchez,"December 12, 2025",$500.00,Senior Meals,One-time,,Credit card,Yes
+G-10132,D-00096,William Reed,"December 13, 2025",500.00,General Operating,One-time,,Online,Yes
+G-10133,D-00177,Carlos Sanchez,2025-12-18,500.00,General Operating ,One-time,,Online,Sent 01/07/2026
+G-10134,D-00016,Angela Brown,23-Dec-2025,2500.00,Youth Literacy,Pledge payment,PL-0053,Cash,Sent 01/05/2026
+G-10135,37,Aisha Bennett,12/23/2025,100.00,Food Pantry,Pledge payment,PL-32,Online,
+G-10136,D-00109,Donald Harris,12/23/2025,625.00,General Operating,Pledge payment,PL-0002,Cash,Yes
+G-10137,D-00114,Mateo Hill,"December 24, 2025",$500.00,senior meals,Pledge payment,PL-0031,Online,Y
+G-10138,D-00131,"Morris, Mary",2025-12-31,300.00,General Operating,One-time,,Credit card,Yes
+G-10139,D-23,Edward Cooper,01/09/26,300,General Operating,One-time,,Check,yes
+G-10140,D-00122,Christopher Cruz,09-Jan-2026,250.00,Senior Meals,One-time,,Cash,yes
+G-10141,D-160,Amy Wright,01/13/26,5000.00,youth literacy,Pledge payment,PL-22,Online,Y
+G-10142,D-00056,"Richardson, Ronald","January 15, 2026",250,Senior Meals,One-time,,Credit card,
+G-10143,D-00133,Jennifer Castillo,01/15/26,1250.00,food pantry,Pledge payment,PL-0049,Credit card,yes
+G-10144,D-43,Sofia Gutierrez,"January 16, 2026",2500.00,Food Pantry,Pledge payment,PL-0056,Online,yes
+G-10145,D-00094,Kenneth Walker,16-Jan-2026,1250.00,YOUTH LITERACY,Pledge payment,PL-0003,Credit card,Yes
+G-10146,60,Betty King,01/17/2026,125.00,Food Pantry,Pledge payment,PL-8,Online,n/a
+G-10147,70,Gary Okafor,01/17/2026,$500.00,food pantry,Pledge payment,PL-39,ACH,Yes
+G-10148,D-00028,Wei Jones,"January 18, 2026",50.00,scholarships,One-time,,ACH,Sent 02/01/2026
+G-10149,D-00135,Eric Lewis,01/18/26,120.00,Food Pantry,One-time,,Online,Yes
+G-10150,D-00177,Carlos Sanchez,01/20/26,100.00,Food Pantry,Pledge payment,PL-0051,Check,yes
+G-10151,D-00114,Mateo Hill,01/21/26,$625.00,Youth Literacy,Pledge payment,PL-10,Cash,yes
+G-10152,D-00059,Edward Ruiz,2026-01-22,25.00,Senior Meals,One-time,,Cash,n/a
+G-10153,60,Betty King,01/24/26,100.00,Youth Literacy,Pledge payment,PL-0005,Credit card,Y
+G-10154,D-00053,"Chavez, Dmitri",01/29/26,2500.00,Youth Literacy,One-time,,Credit card,Yes
+G-10155,D-00101,Jeffrey Gonzalez,2026-01-29,50,Youth Literacy,One-time,,Online,yes
+G-10156,D-28,Wei Jones,01/30/2026,300,Food Pantry,One-time,,Online,Sent 02/08/2026
+G-10156,D-28,Wei Jones,01/30/2026,300,Food Pantry,One-time,,Online,Sent 02/08/2026
+G-10157,D-00032,Kwame Alvarez,"February 03, 2026",750.00,youth literacy,One-time,,ACH,Y
+G-10158,D-00029,Chloe Hernandez,02/12/2026,125.00,Food Pantry,Pledge payment,PL-0063,Online,n/a
+G-10159,D-00113,Mateo Cook,14-Feb-2026,150,Youth Literacy,One-time,,ACH,
+G-10160,D-00142,Dorothy Taylor,2026-02-15,50.00,Senior Meals,One-time,,Online,
+G-10161,157,Chloe Anderson,18-Feb-2026,250.00,General Operating,One-time,,Credit card,Sent 03/09/2026
+G-10162,D-00105,"Rivera, Jonathan",02/20/2026,625.00,Food Pantry,Pledge payment,PL-0024,Credit card,Yes
+G-10163,D-76,Donald Edwards,02/21/2026,"5,000.00",general operating,Pledge payment,PL-0004,Credit card,yes
+G-10164,D-34,"Hughes, Dana",22-Feb-2026,100.00,Senior Meals,Pledge payment,PL-0052,Check,n/a
+G-10165,D-00061,Jacob Anderson,26-Feb-2026,"$2,500.00",Food Pantry,One-time,,Cash,yes
+G-10166,D-00157,"Anderson, Chloe",02/26/26,25.00,Youth Literacy,One-time,,Cash,yes
+G-10167,D-00176,Carol Richardson,02/27/2026,"$1,000.00",Senior Meals,One-time,,ACH,yes
+G-10168,105,"Rivera, Jonathan",02/28/2026,50.00,Youth Literacy,One-time,,Online,n/a
+G-10169,D-00017,Ronald Diaz,03/09/2026,250.00,general operating,One-time,,Check,
+G-10170,D-00065,Deborah Myers,03/11/26,250.00,Food Pantry ,One-time,,Credit card,
+G-10171,D-00134,Timothy Cooper,03/15/2026,$250.00,Youth Literacy,Pledge payment,PL-0016,Check,Y
+G-10172,D-00026,Melissa King,16-Mar-2026,200.50,Youth Literacy,One-time,,Cash,
+G-10173,D-22,Cynthia Walker,2026-03-22,50.00,Senior Meals,One-time,,Credit card,N
+G-10173,D-22,Cynthia Walker,2026-03-22,50.00,Senior Meals,One-time,,Credit card,N
+G-10174,D-87,Christopher Kelly,"March 22, 2026",250.00,Food Pantry,One-time,,Online,Yes
+G-10175,D-00169,"Jackson, Jessica",24-Mar-2026,500.00,Food Pantry,Pledge payment,PL-0014,Check,Yes
+G-10176,D-00129,Hiroshi Hernandez,03/25/2026,100,Food Pantry,One-time,,ACH,Y
+G-10176,D-00129,Hiroshi Hernandez,03/25/2026,100,Food Pantry,One-time,,ACH,Y
+G-10177,D-00004,Patricia Wright,03/29/26,$50.00,Senior Meals,One-time,,Cash,N
+G-10178,D-00145,"Jones, Chloe",2026-03-30,50.00,Youth Literacy,One-time,,Credit card,
+G-10178,D-00145,"Jones, Chloe",2026-03-30,50.00,Youth Literacy,One-time,,Credit card,
+G-10179,D-14,"Ramirez, Yuki","April 02, 2026",80.00,Senior Meals,One-time,,Online,Sent 04/17/2026
+G-10180,D-00171,Jennifer Garcia,04/06/26,50.00,Youth Literacy,One-time,,ACH,Yes
+G-10181,D-00007,Carlos Sanchez,2026-04-12,100,Food Pantry,Pledge payment,PL-0051,ACH,
+G-10182,D-00005,"Carter, Kenneth",14-Apr-2026,500.00,General Operating,Pledge payment,PL-0012,Credit card,
+G-10183,70,Gary Okafor,04/17/2026,500.00,Food Pantry,Pledge payment,PL-0039,Credit card,yes
+G-10184,108,Timothy Peterson,18-Apr-2026,625.00,Food Pantry,Pledge payment,PL-0060,Online,Yes
+G-10185,D-00109,Donald Harris,04/18/26,"$2,500.00",Senior Meals,One-time,,Credit card,Yes
+G-10186,D-133,"Castillo, Jennifer",19-Apr-2026,"1,250.00",Food Pantry,Pledge payment,PL-0049,ACH,N
+G-10187,D-00177,Carlos Sanchez,04/20/26,$100.00,Senior Meals,One-time,,Online,Yes
+G-10188,D-00057,Sandra Hughes,23-Apr-2026,$300.00,Scholarships,Pledge payment,PL-0021,Cash,Yes
+G-10189,D-00170,Nancy Morgan,04/23/26,100.00,Food Pantry,One-time,,Credit card,
+G-10189,D-00170,Nancy Morgan,04/23/26,100.00,Food Pantry,One-time,,Credit card,
+G-10190,D-00074,Mary Hughes,04/24/26,"$5,000.00",General Operating,Pledge payment,PL-0030,Online,Yes
+G-10191,D-00128,Dmitri Diaz,2026-04-29,1000.00,youth literacy,One-time,,ACH,Yes
+G-10192,D-113,Mateo Cook,05/03/2026,200.00,Food Pantry,One-time,,Check,Sent 05/14/2026
+G-10193,D-00023,Edward Cooper,05-May-2026,25.00,Senior Meals,One-time,,Check,yes
+G-10194,D-00039,Jonathan Garcia,2026-05-05,$50.00,Youth Literacy,One-time,,Credit card,Y
+G-10195,D-00009,Jonathan Thompson,05/09/26,1500.00,YOUTH LITERACY,One-time,,Credit card,Yes
+G-10196,D-00096,William Reed,2026-05-10,$250.00,Food Pantry,One-time,,Cash,
+G-10197,105,Jonathan Rivera,12-May-2026,625.00,Food Pantry,Pledge payment,PL-24,ACH,Yes
+G-10198,D-00034,Dana Hughes,"May 21, 2026",100.00,Scholarships,One-time,,ACH,n/a
+G-10199,D-00032,Kwame Alvarez,"May 24, 2026",625.00,Senior Meals,Pledge payment,PL-0054,Credit card,Y
+G-10200,D-00080,Donald Rodriguez,"May 26, 2026",$500.25,Food Pantry,One-time,,Online,Y
+G-10201,D-00175,Yuki Ross,"June 12, 2026",300.00,food pantry,One-time,,Online,Y
+G-10202,143,Sofia Bailey,"June 13, 2026",100.00,General Operating,One-time,,Credit card,
+G-10203,D-00005,Kenneth Carter,"June 17, 2026","$1,500.00",YOUTH LITERACY,One-time,,Credit card,Yes
+G-10204,D-00029,Chloe Hernandez,18-Jun-2026,$100.00,Food Pantry,One-time,,ACH,Y
+G-10205,D-00075,Anthony Torres,2026-06-25,1500.00,Food Pantry,One-time,,Credit card,
+G-10206,D-00002,Paul Collins,"June 30, 2026","$15,000.00",Scholarships,One-time,,Check,Sent 07/03/2026
+G-10207,D-00115,Nancy Mensah,07/04/26,300.00,Scholarships,One-time,,ACH,N
+G-10208,D-00105,Jonathan Rivera,"July 08, 2026",250.00,Senior Meals,One-time,,Online,Yes
+G-10209,D-00149,Paul King,"July 08, 2026",2500.00,Youth Literacy,One-time,,Credit card,Y
+G-10210,D-00070,Gary Okafor,2026-07-11,200,Youth Literacy,One-time,,Credit card,
+G-10210,D-00070,Gary Okafor,2026-07-11,200,Youth Literacy,One-time,,Credit card,
+G-10211,D-00171,"Garcia, Jennifer",11-Jul-2026,250.00,General Operating,One-time,,Credit card,
+G-10212,D-00005,Kenneth Carter,07/12/2026,$500.00,General Operating,Pledge payment,PL-0012,Online,Yes
+G-10213,D-94,Kenneth Walker,07/12/26,"$1,250.00",Youth Literacy,Pledge payment,3,Credit card,Sent 07/22/2026
+G-10214,D-00133,Jennifer Castillo,07/12/26,1250.00,Food Pantry,Pledge payment,PL-0049,Cash,Y
+G-10215,D-00057,Sandra Hughes,07/21/26,300.00,Scholarships,Pledge payment,PL-0021,Online,yes
+G-10216,D-00059,"Ruiz, Edward",2026-07-25,50.00,Senior Meals,One-time,,Check,N
+G-10216,D-00059,"Ruiz, Edward",2026-07-25,50.00,Senior Meals,One-time,,Check,N
+G-10217,D-00012,Sharon Rivera,30-Jul-2026,$500.00,Scholarships,One-time,,Online,Sent 08/10/2026
+G-10218,D-109,Donald Harris,08/02/26,"$1,000.00",Food Pantry,One-time,,ACH,Sent 08/13/2026
+G-10219,D-00018,Tomasz Cox,08/12/26,100,Food Pantry,One-time,,ACH,yes
+G-10220,D-34,Dana Hughes,08/13/2026,100.00,Senior Meals,Pledge payment,52,Check,yes
+G-10221,D-00055,Kwame Johnson,08/14/26,100.00,Food Pantry,One-time,,ACH,Sent 08/31/2026
+G-10222,D-00178,Nicholas Adams,"August 14, 2026",$500.00,Food Pantry,One-time,,Online,yes
+G-10223,D-00110,"Edwards, Marcus",15-Aug-2026,125.00,Youth Literacy,One-time,,Credit card,yes
+G-10224,D-31,Joseph Johnson,08/16/2026,750.00,Food Pantry,One-time,,Check,yes
+G-10225,D-00119,Anthony Martin,08/26/26,50.00,Food Pantry,One-time,,ACH,
+G-10226,D-00152,Ryan Wright,"August 30, 2026",100.00,Scholarships,One-time,,Credit card,n/a
+G-10227,44,Jennifer Hill,09/02/2026,200.00,Food Pantry,One-time,,Online,Sent 09/15/2026
+G-10228,173,Aisha Lopez,09/03/2026,"1,000.00",Youth Literacy ,One-time,,Online,Sent 09/21/2026

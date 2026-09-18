@@ -1,0 +1,220 @@
+﻿Order #,Order Date,Customer Email,Status,SKU,Qty,Unit Price,Shipping,Tax,Order Total
+#1001,07-Jan-2026,anna.clark32@gmail.com,Shipped,WHT-SILVER-4OZ,1,20.00,7.95,4.00,60.45
+#1001,07-Jan-2026,anna.clark32@gmail.com,Shipped,BLK-EARLGR-2OZ,3,9.50,7.95,4.00,60.45
+#1002,"January 09, 2026",eric.lindqvist19@outlook.com,DELIVERED,BLK-EARLGR-4OZ,1,17.00,7.95,3.75,57.20
+#1002,"January 09, 2026",eric.lindqvist19@outlook.com,DELIVERED,HRB-HIBISC-2OZ,3,9.50,7.95,3.75,57.20
+#1003,01/17/2026,steven.ramos79@outlook.com,Delivered,GRN-DRAGON-4OZ,1,24.50,0.00,8.25,108.25
+#1003,01/17/2026,steven.ramos79@outlook.com,Delivered,GRN-DRAGON-1LB,1,75.50,0.00,8.25,108.25
+#1004,2026-01-22,rebecca.rivera1@yahoo.com,delivered,PUR-SHOU-4OZ,2,20.00,0.00,6.35,83.35
+#1004,2026-01-22,rebecca.rivera1@yahoo.com,delivered,HRB-HIBISC-4OZ,1,17.00,0.00,6.35,83.35
+#1004,2026-01-22,rebecca.rivera1@yahoo.com,delivered,HRB-PEPMNT-4OZ,1,20.00,0.00,6.35,83.35
+#1005,01/24/2026,INGRID.CAMPBELL29@PROTON.ME,delivered,HRB-ROOIBO-4OZ,2,21.50,0.00,9.78,128.28
+#1005,01/24/2026,INGRID.CAMPBELL29@PROTON.ME,delivered,GRN-DRAGON-1LB,1,75.50,0.00,9.78,128.28
+#1006,2026-01-26,orders@marigoldkitchen.com,Delivered,BLK-DARJ-2OZ,18,5.70,15.00,0.00,1426.20
+1006,2026-01-26,orders@marigoldkitchen.com,Delivered,WHT-SILVER-1LB,19,57.60,15.00,0.00,1426.20
+#1006,2026-01-26,orders@marigoldkitchen.com,Delivered,HRB-HIBISC-4OZ,21,10.20,15.00,0.00,1426.20
+#1007,Jan 26 2026,orders@cedargrovegiftshop.com,Cancelled,BLK-EARLGR-1LB,12,31.80,15.00,101.03,1340.63
+#1007,Jan 26 2026,orders@cedargrovegiftshop.com,Cancelled,HRB-HIBISC-1LB,13,31.80,15.00,101.03,1340.63
+#1007,Jan 26 2026,orders@cedargrovegiftshop.com,Cancelled,GRN-JASMIN-2OZ,15,7.20,15.00,101.03,1340.63
+#1007,Jan 26 2026,orders@cedargrovegiftshop.com,Cancelled,BLK-ASSAM-1LB,8,40.20,15.00,101.03,1340.63
+#1008,01/30/2026,hello@evergreenhealthfoods.com,Delivered,BLK-DARJ-2OZ,7,5.70,15.00,0.00,289.50
+#1008,01/30/2026,hello@evergreenhealthfoods.com,Delivered,BLK-EARLGR-4OZ,23,10.20,15.00,0.00,289.50
+#1009,01/31/2026,jeffrey.baker47@yahoo.com,delivered,WHT-PEONY-2OZ,1,16.00,$7.95,$2.97,$46.92
+#1009,01/31/2026,jeffrey.baker47@yahoo.com,delivered,WHT-SILVER-4OZ,1,20.00,$7.95,$2.97,$46.92
+#1010,"January 31, 2026",maria.lopez@gmail.com,DELIVERED,BLK-CHAI-2OZ,1,12.00,$7.95,$0.99,$20.94
+#1011,02/04/2026,HELLO@VIOLETHOURBISTRO.COM,CANCELLED,OOL-DHP-4OZ,7,17.40,15.00,0.00,1220.40
+#1011,02/04/2026,HELLO@VIOLETHOURBISTRO.COM,CANCELLED,BLK-YUNNAN-4OZ,7,12.00,15.00,0.00,1220.40
+1011,02/04/2026,HELLO@VIOLETHOURBISTRO.COM,CANCELLED,WHT-PEONY-2OZ,12,9.60,15.00,0.00,1220.40
+#1011,02/04/2026,HELLO@VIOLETHOURBISTRO.COM,CANCELLED,BLK-CHAI-1LB,22,40.20,15.00,0.00,1220.40
+1012,02/07/2026,KAREN.HADDAD29@ICLOUD.COM,DELIVERED,HRB-PEPMNT-4OZ,2,20.00,7.95,3.30,51.25
+#1013,Feb 08 2026,DONNA.ADAMS51@OUTLOOK.COM,delivered,BLK-CHAI-2OZ,1,12.00,0.00,15.76,206.76
+#1013,Feb 08 2026,DONNA.ADAMS51@OUTLOOK.COM,delivered,WHT-PEONY-1LB,2,89.50,0.00,15.76,206.76
+1014,"February 08, 2026",orders@stonebridgecafe.com,Delivered,GRN-GENMAI-1LB,19,53.70,$15.00,$198.12,"$2,614.62"
+#1014,"February 08, 2026",orders@stonebridgecafe.com,Delivered,OOL-DHP-1LB,13,53.70,$15.00,$198.12,"$2,614.62"
+#1014,"February 08, 2026",orders@stonebridgecafe.com,Delivered,PUR-SHOU-2OZ,14,6.60,$15.00,$198.12,"$2,614.62"
+#1014,"February 08, 2026",orders@stonebridgecafe.com,Delivered,WHT-PEONY-1LB,11,53.70,$15.00,$198.12,"$2,614.62"
+#1015,02/09/26,sofia.nelson57@proton.me,SHIPPED,HRB-ROOIBO-1LB,3,21.00,0.00,19.72,258.72
+#1015,02/09/26,sofia.nelson57@proton.me,SHIPPED,HRB-HIBISC-4OZ,1,17.00,0.00,19.72,258.72
+#1015,02/09/26,sofia.nelson57@proton.me,SHIPPED,BLK-EARLGR-1LB,3,53.00,0.00,19.72,258.72
+#1016,2026-02-12,barbara.nguyen6@icloud.com,Delivered,GRN-JASMIN-2OZ,1,12.00,7.95,0.99,20.94
+#1017,2026-02-17,patricia.harris49@icloud.com,SHIPPED,BLK-CHAI-2OZ,3,12.00,$0.00,$11.67,$153.17
+#1017,2026-02-17,patricia.harris49@icloud.com,SHIPPED,WHT-PEONY-1LB,1,89.50,$0.00,$11.67,$153.17
+#1017,2026-02-17,patricia.harris49@icloud.com,SHIPPED,OOL-DHP-2OZ,1,16.00,$0.00,$11.67,$153.17
+#1018,02/26/2026,jacob.kelly46@icloud.com,Delivered,HRB-HIBISC-1LB,2,53.00,0.00,11.80,154.80
+#1018,02/26/2026,jacob.kelly46@icloud.com,Delivered,WHT-SILVER-4OZ,1,20.00,0.00,11.80,154.80
+#1018,02/26/2026,jacob.kelly46@icloud.com,Delivered,BLK-DARJ-4OZ,1,17.00,0.00,11.80,154.80
+#1019,"March 07, 2026",sandra.wood50@proton.me,Delivered,WHT-PEONY-2OZ,1,16.00,7.95,1.32,25.27
+#1020,Mar 08 2026,margaret.alvarez42@gmail.com,Delivered,BLK-YUNNAN-4OZ,1,20.00,7.95,1.65,29.60
+#1021,2026-03-09,joshua@zestorganicmarket.com,delivered,OOL-MILK-4OZ,24,14.70,$15.00,$0.00,$891.00
+#1021,2026-03-09,joshua@zestorganicmarket.com,delivered,HRB-PEPMNT-4OZ,21,12.00,$15.00,$0.00,$891.00
+#1021,2026-03-09,joshua@zestorganicmarket.com,delivered,BLK-EARLGR-2OZ,10,5.70,$15.00,$0.00,$891.00
+#1021,2026-03-09,joshua@zestorganicmarket.com,delivered,BLK-EARLGR-4OZ,21,10.20,$15.00,$0.00,$891.00
+#1022,03/15/2026,orders@harvestmoongrocers.com,Cancelled,BLK-EARLGR-1LB,11,31.80,15.00,0.00,1251.30
+#1022,03/15/2026,orders@harvestmoongrocers.com,Cancelled,WHT-SILVER-4OZ,18,12.00,15.00,0.00,1251.30
+#1022,03/15/2026,orders@harvestmoongrocers.com,Cancelled,OOL-TIEGUA-4OZ,21,14.70,15.00,0.00,1251.30
+#1022,03/15/2026,orders@harvestmoongrocers.com,Cancelled,BLK-ASSAM-1LB,9,40.20,15.00,0.00,1251.30
+1023,03/17/2026,orders@bluedoorcafe.com,Shipped,HRB-ROOIBO-4OZ,23,12.90,15.00,0.00,618.60
+#1023,03/17/2026,orders@bluedoorcafe.com,Shipped,HRB-ROOIBO-2OZ,7,7.20,15.00,0.00,618.60
+#1023,03/17/2026,orders@bluedoorcafe.com,Shipped,HRB-CHAMOM-2OZ,16,9.60,15.00,0.00,618.60
+#1023,03/17/2026,orders@bluedoorcafe.com,Shipped,OOL-MILK-4OZ,7,14.70,15.00,0.00,618.60
+#1024,18-Mar-2026,hello@littleferncoffee.com,delivered,OOL-DHP-1LB,7,53.70,$15.00,$0.00,"$1,275.30"
+#1024,18-Mar-2026,hello@littleferncoffee.com,delivered,BLK-CHAI-1LB,22,40.20,$15.00,$0.00,"$1,275.30"
+#1025,"March 23, 2026",orders@bluedoorcafe.com,Cancelled,BLK-DARJ-1LB,7,31.80,$15.00,$0.00,$367.20
+1025,"March 23, 2026",orders@bluedoorcafe.com,Cancelled,OOL-MILK-2OZ,16,8.10,$15.00,$0.00,$367.20
+#1026,"March 25, 2026",matthew@meadowlarkmarket.com,Delivered,BLK-DARJ-2OZ,13,5.70,15.00,0.00,89.10
+#1027,Mar 29 2026,orders@wildflowerwellnessspa.com,Delivered,MAT-CERMON-1LB,21,88.80,$15.00,$0.00,"$1,879.80"
+#1028,Mar 29 2026,margaret.alvarez42@gmail.com,delivered,BLK-EARLGR-4OZ,1,17.00,0.00,8.79,115.29
+#1028,Mar 29 2026,margaret.alvarez42@gmail.com,delivered,HRB-CHAMOM-1LB,1,89.50,0.00,8.79,115.29
+#1029,03/30/26,eric.collins44@yahoo.com,DELIVERED,BLK-EARLGR-1LB,1,53.00,0.00,26.15,343.15
+#1029,03/30/26,eric.collins44@yahoo.com,DELIVERED,BLK-ASSAM-1LB,3,67.00,0.00,26.15,343.15
+#1029,03/30/26,eric.collins44@yahoo.com,DELIVERED,HRB-ROOIBO-1LB,3,21.00,0.00,26.15,343.15
+#1030,"March 31, 2026",ryan.lewis96@yahoo.com,DELIVERED,HRB-HIBISC-1LB,1,53.00,7.95,4.37,65.32
+1031,"April 05, 2026",donald.lee57@proton.me,delivered,OOL-DHP-1LB,4,89.50,$0.00,$32.96,$432.46
+#1031,"April 05, 2026",donald.lee57@proton.me,delivered,HRB-HIBISC-4OZ,1,17.00,$0.00,$32.96,$432.46
+#1031,"April 05, 2026",donald.lee57@proton.me,delivered,OOL-MILK-4OZ,1,24.50,$0.00,$32.96,$432.46
+#1032,"April 11, 2026",george.williams87@outlook.com,Delivered,BLK-ASSAM-4OZ,1,18.00,0.00,7.22,94.72
+#1032,"April 11, 2026",george.williams87@outlook.com,Delivered,HRB-HIBISC-2OZ,1,9.50,0.00,7.22,94.72
+1032,"April 11, 2026",george.williams87@outlook.com,Delivered,HRB-PEPMNT-4OZ,3,20.00,0.00,7.22,94.72
+#1033,Apr 13 2026,hello@evergreenhealthfoods.com,Delivered,HRB-HIBISC-2OZ,15,5.70,$15.00,$0.00,$441.90
+1033,Apr 13 2026,hello@evergreenhealthfoods.com,Delivered,WHT-PEONY-4OZ,11,17.40,$15.00,$0.00,$441.90
+#1033,Apr 13 2026,hello@evergreenhealthfoods.com,Delivered,GRN-SENCHA-4OZ,10,15.00,$15.00,$0.00,$441.90
+#1034,14-Apr-2026,hello@hillcrestmarkethall.com,delivered,OOL-TIEGUA-2OZ,12,5.70,15.00,0.00,186.60
+#1034,14-Apr-2026,hello@hillcrestmarkethall.com,delivered,GRN-JASMIN-4OZ,8,12.90,15.00,0.00,186.60
+1035,04/19/26,nancy.white93@outlook.com,Delivered,HRB-PEPMNT-4OZ,1,20.00,0.00,16.42,215.42
+#1035,04/19/26,nancy.white93@outlook.com,Delivered,GRN-GENMAI-1LB,2,89.50,0.00,16.42,215.42
+1036,04/20/2026,orders@willowcreekgrocery.com,Shipped,HRB-HIBISC-4OZ,13,10.20,15.00,0.00,324.00
+#1036,04/20/2026,orders@willowcreekgrocery.com,Shipped,GRN-SENCHA-2OZ,21,8.40,15.00,0.00,324.00
+1037,04/21/2026,george.lewis81@outlook.com,Delivered,GRN-GENMAI-1LB,1,89.50,0.00,10.44,136.94
+#1037,04/21/2026,george.lewis81@outlook.com,Delivered,MAT-CERMON-4OZ,1,18.00,0.00,10.44,136.94
+#1037,04/21/2026,george.lewis81@outlook.com,Delivered,OOL-TIEGUA-2OZ,2,9.50,0.00,10.44,136.94
+#1038,2026-04-26,george.lewis81@outlook.com,shipped,HRB-ROOIBO-1LB,1,21.00,7.95,1.73,30.68
+#1039,"April 28, 2026",jacob.kelly46@icloud.com,Delivered,BLK-DARJ-4OZ,1,17.00,$7.95,$1.40,$26.35
+1040,2026-05-02,DMITRI.COOK85@PROTON.ME,DELIVERED,GRN-SENCHA-2OZ,1,14.00,7.95,2.93,46.38
+1040,2026-05-02,DMITRI.COOK85@PROTON.ME,DELIVERED,HRB-ROOIBO-4OZ,1,21.50,7.95,2.93,46.38
+#1041,May 04 2026,george.lewis81@outlook.com,DELIVERED,GRN-DRAGON-1LB,1,75.50,0.00,9.86,129.36
+#1041,May 04 2026,george.lewis81@outlook.com,DELIVERED,OOL-DHP-2OZ,2,16.00,0.00,9.86,129.36
+#1041,May 04 2026,george.lewis81@outlook.com,DELIVERED,GRN-JASMIN-2OZ,1,12.00,0.00,9.86,129.36
+#1042,04-May-2026,ronald.ward29@yahoo.com,Delivered,BLK-ASSAM-2OZ,3,12.00,$7.95,$2.97,$46.92
+#1043,2026-05-05,hello@littleferncoffee.com,Delivered,HRB-CHAMOM-1LB,6,53.70,15.00,0.00,504.90
+#1043,2026-05-05,hello@littleferncoffee.com,Delivered,BLK-CHAI-4OZ,13,12.90,15.00,0.00,504.90
+#1044,"May 06, 2026",joshua.perez9@proton.me,Shipped,WHT-PEONY-1LB,1,89.50,$0.00,$7.38,$96.88
+#1045,05/11/2026,carol.perez82@gmail.com,Delivered,OOL-TIEGUA-1LB,3,53.00,0.00,13.12,172.12
+#1046,"May 15, 2026",orders@brickovencollective.com,Shipped,WHT-SILVER-1LB,8,57.60,15.00,0.00,475.80
+#1047,2026-05-22,sharon@sundaysupplyco.com,Shipped,BLK-YUNNAN-1LB,7,36.90,$15.00,$0.00,"$1,752.00"
+#1047,2026-05-22,sharon@sundaysupplyco.com,Shipped,WHT-PEONY-1LB,15,53.70,$15.00,$0.00,"$1,752.00"
+#1047,2026-05-22,sharon@sundaysupplyco.com,Shipped,HRB-PEPMNT-1LB,15,36.90,$15.00,$0.00,"$1,752.00"
+1047,2026-05-22,sharon@sundaysupplyco.com,Shipped,BLK-EARLGR-2OZ,21,5.70,$15.00,$0.00,"$1,752.00"
+#1048,05/24/26,joshua.parker1@outlook.com,Delivered,HRB-CHAMOM-4OZ,3,29.00,0.00,7.18,94.18
+#1049,06/01/2026,ORDERS@PINECONEDELI.COM,DELIVERED,BLK-CHAI-2OZ,6,7.20,15.00,0.00,58.20
+#1050,06/07/26,mark.campbell92@outlook.com,Cancelled,GRN-JASMIN-2OZ,1,12.00,$0.00,$7.51,$98.51
+#1050,06/07/26,mark.campbell92@outlook.com,Cancelled,HRB-ROOIBO-4OZ,2,21.50,$0.00,$7.51,$98.51
+1050,06/07/26,mark.campbell92@outlook.com,Cancelled,MAT-CERMON-4OZ,2,18.00,$0.00,$7.51,$98.51
+#1051,Jun 08 2026,ASHLEY.BAILEY22@ICLOUD.COM,Shipped,PUR-SHOU-1LB,3,61.50,0.00,16.21,212.71
+#1051,Jun 08 2026,ASHLEY.BAILEY22@ICLOUD.COM,Shipped,BLK-ASSAM-2OZ,1,12.00,0.00,16.21,212.71
+#1052,2026-06-13,orders@bluedoorcafe.com,CANCELLED,GRN-JASMIN-2OZ,21,7.20,15.00,0.00,598.20
+#1052,2026-06-13,orders@bluedoorcafe.com,CANCELLED,BLK-ASSAM-2OZ,17,7.20,15.00,0.00,598.20
+1052,2026-06-13,orders@bluedoorcafe.com,CANCELLED,GRN-JASMIN-4OZ,24,12.90,15.00,0.00,598.20
+#1053,06/18/26,donna.adams51@outlook.com,canceled,PUR-SHOU-1LB,1,61.50,7.95,5.07,74.52
+#1054,Jun 24 2026,orders@brickovencollective.com,Cancelled,BLK-YUNNAN-4OZ,10,12.00,15.00,0.00,460.50
+#1054,Jun 24 2026,orders@brickovencollective.com,Cancelled,GRN-DRAGON-4OZ,17,14.70,15.00,0.00,460.50
+#1054,Jun 24 2026,orders@brickovencollective.com,Cancelled,GRN-SENCHA-2OZ,9,8.40,15.00,0.00,460.50
+#1055,06/26/26,CHLOE.TANAKA14@PROTON.ME,Delivered,BLK-YUNNAN-4OZ,1,20.00,7.95,4.95,72.90
+#1055,06/26/26,CHLOE.TANAKA14@PROTON.ME,Delivered,PUR-SHOU-4OZ,2,20.00,7.95,4.95,72.90
+#1056,06/28/26,margaret@morningglorybakehouse.com,Delivered,HRB-CHAMOM-2OZ,17,9.60,15.00,0.00,1705.80
+1056,06/28/26,margaret@morningglorybakehouse.com,Delivered,HRB-HIBISC-4OZ,22,10.20,15.00,0.00,1705.80
+1056,06/28/26,margaret@morningglorybakehouse.com,Delivered,WHT-PEONY-4OZ,24,17.40,15.00,0.00,1705.80
+#1056,06/28/26,margaret@morningglorybakehouse.com,Delivered,BLK-YUNNAN-1LB,24,36.90,15.00,0.00,1705.80
+#1057,06/29/2026,orders@sparrowstreetbooksandcafe.com,DELIVERED,GRN-DRAGON-1LB,17,45.30,15.00,76.01,1012.31
+#1057,06/29/2026,orders@sparrowstreetbooksandcafe.com,DELIVERED,GRN-JASMIN-2OZ,21,7.20,15.00,76.01,1012.31
+#1058,Jun 29 2026,steven.ramos79@outlook.com,Delivered,GRN-DRAGON-2OZ,1,13.50,7.95,1.94,33.39
+#1058,Jun 29 2026,steven.ramos79@outlook.com,Delivered,MAT-CERMON-2OZ,1,10.00,7.95,1.94,33.39
+#1059,07/04/2026,patricia.harris49@icloud.com,SHIPPED,WHT-SILVER-2OZ,1,11.00,$0.00,$19.59,$257.09
+#1059,07/04/2026,patricia.harris49@icloud.com,SHIPPED,GRN-DRAGON-1LB,3,75.50,$0.00,$19.59,$257.09
+#1060,07/05/26,patricia.murphy13@yahoo.com,Delivered,HRB-ROOIBO-1LB,3,21.00,7.95,5.20,76.15
+#1061,07/06/26,jeffrey.baker47@yahoo.com,Delivered,GRN-SENCHA-1LB,2,78.50,$0.00,$12.95,$169.95
+#1062,2026-07-08,orders@thedailygrind.com,Canceled,BLK-DARJ-1LB,23,31.80,15.00,147.19,1946.29
+1062,2026-07-08,orders@thedailygrind.com,Canceled,GRN-DRAGON-1LB,19,45.30,15.00,147.19,1946.29
+1062,2026-07-08,orders@thedailygrind.com,Canceled,WHT-PEONY-2OZ,20,9.60,15.00,147.19,1946.29
+#1063,Jul 10 2026,JOSHUA.CASTILLO1@YAHOO.COM,DELIVERED,OOL-DHP-2OZ,1,16.00,0.00,16.79,220.29
+#1063,Jul 10 2026,JOSHUA.CASTILLO1@YAHOO.COM,DELIVERED,HRB-PEPMNT-1LB,2,61.50,0.00,16.79,220.29
+#1063,Jul 10 2026,JOSHUA.CASTILLO1@YAHOO.COM,DELIVERED,HRB-ROOIBO-4OZ,3,21.50,0.00,16.79,220.29
+#1064,07/20/2026,ingrid@oldmillpantry.com,Delivered,BLK-ASSAM-2OZ,6,7.20,15.00,0.00,833.10
+#1064,07/20/2026,ingrid@oldmillpantry.com,Delivered,PUR-SHOU-1LB,21,36.90,15.00,0.00,833.10
+#1065,07/22/2026,orders@oakandanchorpub.com,DELIVERED,OOL-DHP-1LB,16,53.70,$15.00,$0.00,$874.20
+#1066,2026-07-22,kathleen.kim12@proton.me,Shipped,HRB-HIBISC-2OZ,3,9.50,7.95,2.35,38.80
+#1067,2026-07-26,charles.morgan38@proton.me,Shipped,MAT-CERMON-1LB,1,148.00,$0.00,$12.21,$160.21
+#1068,Jul 29 2026,laura.long94@icloud.com,Cancelled,BLK-YUNNAN-4OZ,1,20.00,7.95,1.65,29.60
+1069,"July 30, 2026",orders@stonebridgecafe.com,Delivered,WHT-PEONY-1LB,7,53.70,$15.00,$86.11,"$1,144.81"
+#1069,"July 30, 2026",orders@stonebridgecafe.com,Delivered,BLK-DARJ-1LB,21,31.80,$15.00,$86.11,"$1,144.81"
+1070,08/03/26,kwame.green72@yahoo.com,Shipped,HRB-PEPMNT-4OZ,1,20.00,7.95,1.65,29.60
+#1071,2026-08-04,fatima.evans67@gmail.com,Delivered,MAT-CERMON-4OZ,4,18.00,$7.95,$5.94,$85.89
+#1072,Aug 06 2026,edward.bailey20@icloud.com,delivered,BLK-CHAI-1LB,1,67.00,0.00,9.90,129.90
+#1072,Aug 06 2026,edward.bailey20@icloud.com,delivered,HRB-HIBISC-1LB,1,53.00,0.00,9.90,129.90
+1073,"August 08, 2026",JACOB.KELLY46@ICLOUD.COM,Delivered,BLK-CHAI-2OZ,1,12.00,$0.00,$17.57,$230.57
+1073,"August 08, 2026",JACOB.KELLY46@ICLOUD.COM,Delivered,BLK-CHAI-1LB,3,67.00,$0.00,$17.57,$230.57
+#1074,Aug 20 2026,KENNETH.RUIZ76@OUTLOOK.COM,new,BLK-YUNNAN-4OZ,1,20.00,7.95,1.65,29.60
+1075,"August 21, 2026",kenneth.ruiz76@outlook.com,Paid,GRN-JASMIN-1LB,1,67.00,0.00,6.64,87.14
+#1075,"August 21, 2026",kenneth.ruiz76@outlook.com,Paid,OOL-MILK-2OZ,1,13.50,0.00,6.64,87.14
+1076,21-Aug-2026,anthony.williams50@outlook.com,Packed,HRB-PEPMNT-1LB,1,61.50,$0.00,$6.56,$86.06
+#1076,21-Aug-2026,anthony.williams50@outlook.com,Packed,MAT-CERMON-4OZ,1,18.00,$0.00,$6.56,$86.06
+#1077,2026-08-22,fatima.evans67@gmail.com,New,HRB-CHAMOM-2OZ,1,16.00,7.95,2.97,46.92
+#1077,2026-08-22,fatima.evans67@gmail.com,New,PUR-SHOU-4OZ,1,20.00,7.95,2.97,46.92
+#1078,"August 23, 2026",george.williams87@outlook.com,Delivered,WHT-PEONY-2OZ,1,16.00,0.00,23.47,307.97
+#1078,"August 23, 2026",george.williams87@outlook.com,Delivered,WHT-PEONY-1LB,3,89.50,0.00,23.47,307.97
+#1079,08/24/26,charles.morgan38@proton.me,New,GRN-JASMIN-4OZ,3,21.50,7.95,5.32,77.77
+#1080,"August 24, 2026",carol.perez82@gmail.com,Paid,GRN-DRAGON-4OZ,1,24.50,7.95,2.02,34.47
+#1081,2026-08-24,fatima.evans67@gmail.com,New,OOL-DHP-4OZ,3,29.00,0.00,8.83,115.83
+1081,2026-08-24,fatima.evans67@gmail.com,New,HRB-PEPMNT-4OZ,1,20.00,0.00,8.83,115.83
+#1082,08/24/26,ingrid.campbell29@proton.me,New,HRB-ROOIBO-4OZ,2,21.50,7.95,3.55,54.50
+#1083,25-Aug-2026,KEVIN.TAYLOR67@YAHOO.COM,New,BLK-YUNNAN-2OZ,1,11.00,7.95,2.56,41.51
+#1083,25-Aug-2026,KEVIN.TAYLOR67@YAHOO.COM,New,WHT-SILVER-4OZ,1,20.00,7.95,2.56,41.51
+#1084,Aug 25 2026,EDWARD.DAVIS23@PROTON.ME,Paid,BLK-ASSAM-2OZ,2,12.00,0.00,9.36,122.86
+#1084,Aug 25 2026,EDWARD.DAVIS23@PROTON.ME,Paid,HRB-CHAMOM-1LB,1,89.50,0.00,9.36,122.86
+1085,"August 26, 2026",orders@oakandanchorpub.com,New,BLK-ASSAM-1LB,11,40.20,15.00,0.00,554.40
+1085,"August 26, 2026",orders@oakandanchorpub.com,New,OOL-MILK-2OZ,12,8.10,15.00,0.00,554.40
+#1086,Aug 26 2026,hello@wanderlustbooks.com,PAID,HRB-HIBISC-1LB,10,31.80,15.00,0.00,376.20
+#1086,Aug 26 2026,hello@wanderlustbooks.com,PAID,HRB-ROOIBO-2OZ,6,7.20,15.00,0.00,376.20
+#1087,08/26/26,kwame.garcia10@yahoo.com,New,BLK-ASSAM-2OZ,2,12.00,7.95,1.98,33.93
+#1088,27-Aug-2026,carol.perez82@gmail.com,Delivered,BLK-YUNNAN-2OZ,3,11.00,7.95,5.69,82.64
+#1088,27-Aug-2026,carol.perez82@gmail.com,Delivered,MAT-CERMON-4OZ,2,18.00,7.95,5.69,82.64
+#1089,08/28/2026,orders@saltboxprovisions.com,Packed,OOL-TIEGUA-2OZ,14,5.70,15.00,0.00,94.80
+#1090,Aug 28 2026,orders@willowcreekgrocery.com,Delivered,WHT-PEONY-4OZ,21,17.40,15.00,0.00,380.40
+#1091,29-Aug-2026,hello@hillcrestmarkethall.com,NEW,OOL-DHP-2OZ,20,9.60,15.00,0.00,207.00
+1092,08/29/2026,sofia.nelson57@proton.me,Paid,HRB-PEPMNT-4OZ,1,20.00,0.00,9.03,118.53
+1092,08/29/2026,sofia.nelson57@proton.me,Paid,OOL-DHP-1LB,1,89.50,0.00,9.03,118.53
+#1093,08/29/2026,kwame.garcia10@yahoo.com,paid,BLK-ASSAM-1LB,3,67.00,0.00,16.58,217.58
+#1094,"August 30, 2026",donna.reed87@outlook.com,Paid,HRB-ROOIBO-2OZ,3,12.00,7.95,2.97,46.92
+#1095,08/31/26,charles.murphy83@yahoo.com,Packed,PUR-SHOU-4OZ,2,20.00,7.95,4.08,61.53
+#1095,08/31/26,charles.murphy83@yahoo.com,Packed,BLK-EARLGR-2OZ,1,9.50,7.95,4.08,61.53
+#1096,"August 31, 2026",anna.cox83@icloud.com,New,GRN-GENMAI-4OZ,2,29.00,$0.00,$6.85,$89.85
+#1096,"August 31, 2026",anna.cox83@icloud.com,New,GRN-SENCHA-4OZ,1,25.00,$0.00,$6.85,$89.85
+1097,2026-08-31,karen.haddad29@icloud.com,Paid,OOL-TIEGUA-2OZ,3,9.50,0.00,14.31,187.81
+#1097,2026-08-31,karen.haddad29@icloud.com,Paid,GRN-GENMAI-4OZ,3,29.00,0.00,14.31,187.81
+1097,2026-08-31,karen.haddad29@icloud.com,Paid,HRB-CHAMOM-4OZ,2,29.00,0.00,14.31,187.81
+#1098,09/01/26,kwame.garcia10@yahoo.com,New,BLK-CHAI-1LB,3,67.00,0.00,16.58,217.58
+#1099,2026-09-03,rebecca.rivera1@yahoo.com,PAID,GRN-GENMAI-4OZ,1,29.00,0.00,10.97,143.97
+#1099,2026-09-03,rebecca.rivera1@yahoo.com,PAID,BLK-DARJ-2OZ,3,9.50,0.00,10.97,143.97
+#1099,2026-09-03,rebecca.rivera1@yahoo.com,PAID,OOL-MILK-1LB,1,75.50,0.00,10.97,143.97
+#1100,09/04/2026,george.williams87@outlook.com,New,OOL-MILK-2OZ,1,13.50,7.95,1.94,33.39
+#1100,09/04/2026,george.williams87@outlook.com,New,MAT-CERMON-2OZ,1,10.00,7.95,1.94,33.39
+#1101,09/06/2026,ORDERS@SALTBOXPROVISIONS.COM,Paid,BLK-DARJ-2OZ,6,5.70,15.00,0.00,374.40
+#1101,09/06/2026,ORDERS@SALTBOXPROVISIONS.COM,Paid,GRN-GENMAI-4OZ,13,17.40,15.00,0.00,374.40
+#1101,09/06/2026,ORDERS@SALTBOXPROVISIONS.COM,Paid,PUR-SHOU-2OZ,15,6.60,15.00,0.00,374.40
+1102,"September 08, 2026",rebecca.rivera1@yahoo.com,NEW,HRB-HIBISC-2OZ,2,9.50,$7.95,$1.57,$28.52
+#1103,Sep 08 2026,patricia.harris49@icloud.com,New,GRN-JASMIN-4OZ,1,21.50,7.95,3.75,57.20
+#1103,Sep 08 2026,patricia.harris49@icloud.com,New,HRB-ROOIBO-2OZ,2,12.00,7.95,3.75,57.20
+1104,09/08/2026,ORDERS@RIDGEVIEWSENIORLIVING.COM,paid,WHT-SILVER-2OZ,23,6.60,15.00,27.08,370.28
+1104,09/08/2026,ORDERS@RIDGEVIEWSENIORLIVING.COM,paid,OOL-MILK-4OZ,12,14.70,15.00,27.08,370.28
+#1105,Sep 08 2026,ashley.bailey22@icloud.com,New,GRN-SENCHA-2OZ,1,14.00,7.95,2.27,37.72
+1105,Sep 08 2026,ashley.bailey22@icloud.com,New,GRN-DRAGON-2OZ,1,13.50,7.95,2.27,37.72
+#1106,2026-09-09,orders@cedargrovegiftshop.com,Packed,BLK-EARLGR-2OZ,6,5.70,15.00,67.96,906.76
+#1106,2026-09-09,orders@cedargrovegiftshop.com,Packed,HRB-PEPMNT-1LB,9,36.90,15.00,67.96,906.76
+1106,2026-09-09,orders@cedargrovegiftshop.com,Packed,BLK-EARLGR-4OZ,8,10.20,15.00,67.96,906.76
+#1106,2026-09-09,orders@cedargrovegiftshop.com,Packed,WHT-PEONY-1LB,7,53.70,15.00,67.96,906.76
+#1107,09/09/26,JOSEPH.MOORE46@PROTON.ME,New,BLK-YUNNAN-1LB,1,61.50,7.95,5.07,74.52
+#1108,09/09/2026,joshua.perez9@proton.me,Packed,HRB-HIBISC-4OZ,1,17.00,7.95,1.40,26.35
+#1109,"September 09, 2026",kimberly.morris64@outlook.com,packed,GRN-GENMAI-1LB,1,89.50,$0.00,$21.74,$285.24
+#1109,"September 09, 2026",kimberly.morris64@outlook.com,packed,BLK-DARJ-4OZ,1,17.00,$0.00,$21.74,$285.24
+#1109,"September 09, 2026",kimberly.morris64@outlook.com,packed,GRN-SENCHA-1LB,2,78.50,$0.00,$21.74,$285.24
+1110,2026-09-09,rebecca.rivera1@yahoo.com,PAID,PUR-SHOU-2OZ,3,11.00,$7.95,$4.54,$67.49
+#1110,2026-09-09,rebecca.rivera1@yahoo.com,PAID,WHT-SILVER-2OZ,2,11.00,$7.95,$4.54,$67.49

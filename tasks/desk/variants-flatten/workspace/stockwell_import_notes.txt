@@ -1,0 +1,16 @@
+Stockwell - variant import, field notes
+
+Use stockwell_variant_template.csv as-is: same columns, same order, same header spelling.
+One row per sellable variant. A variant is one combination of option values (one size in one colour).
+
+product_code    the parent product's code. Every variant of a product repeats it.
+product_name    the parent product's name, repeated on every variant row.
+sku             unique per row.
+option1_name    the first option (e.g. Size). option1_value is that variant's value.
+option2_name    the second option if the product has one (e.g. Color), otherwise blank; same for option2_value.
+                A product with no options is a single row with all four option columns blank.
+price           the selling price of that variant as a plain number, two decimals, no currency sign.
+inventory_qty   whole units on hand, never negative. 0 when nothing is on the shelf.
+availability    in_stock when inventory_qty is above 0, otherwise out_of_stock.
+
+Rows with out_of_stock still import; customers see them as sold out.

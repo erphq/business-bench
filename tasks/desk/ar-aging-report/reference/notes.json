@@ -1,0 +1,50 @@
+{
+  "as_of": "2026-08-31",
+  "bucket_totals": {
+    "1-30 days": 166397.08,
+    "31-60 days": 49111.54,
+    "61-90 days": 26890.87,
+    "Current": 338936.39,
+    "Over 90 days": 40034.11
+  },
+  "fourth": {
+    "customer": "The Saltwater Grill",
+    "past_due": 26398.2
+  },
+  "naive": {
+    "invoice_date_buckets": {
+      "1-30 days": 313519.41,
+      "31-60 days": 174604.09,
+      "61-90 days": 63256.64,
+      "Current": 3401.42,
+      "Over 90 days": 66588.43
+    },
+    "total_from_export_balance": 666290.81
+  },
+  "partial_payment_invoice": "YS-31431",
+  "top3": [
+    {
+      "customer": "Riverbend Bistro",
+      "past_due": 56977.67
+    },
+    {
+      "customer": "Pier 9 Fish House",
+      "past_due": 39746.96
+    },
+    {
+      "customer": "Harborview Oyster Bar",
+      "past_due": 31301.04
+    }
+  ],
+  "total": 621369.99,
+  "total_past_due": 282433.6,
+  "unapplied_credit": {
+    "amount": 2259.54,
+    "cust": "Riverbend Bistro",
+    "date": "2026-08-18",
+    "inv": "",
+    "no": "CM-886",
+    "reason": "Spoiled delivery - goodwill credit",
+    "target": "YS-31252"
+  }
+}

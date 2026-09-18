@@ -1,0 +1,65 @@
+id: order-management
+track: build
+category: orders
+title: Retail and wholesale order management with tax and shipping rules, stock on ship, and backorders
+ask: |
+  We sell loose-leaf tea online to the public and wholesale to cafés and grocers, and I want our
+  orders, customers, and products in one place with a dashboard. Our customer list, product list with
+  stock, and this year's order lines are attached; retail customers pay the retail price plus $7.95
+  shipping (free once the tea comes to $75) and 8.25% sales tax on the tea, and wholesale accounts pay
+  the wholesale price and $15 flat shipping, with no tax if we hold their resale certificate. Orders go
+  New, Paid, Packed, Shipped, Delivered and can be cancelled until they ship; stock comes off when an
+  order ships, and an order we don't have enough stock for should show as backordered and not ship.
+  Each account manager should see only their own wholesale customers and those customers' orders, our
+  finance person needs to read everything without changing it, and I manage users and settings. Give
+  me an admin login and a login for Jonah Whitaker, one of our account managers.
+seed:
+  - seed/customers.csv
+  - seed/products.csv
+  - seed/order_lines.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for the account manager Jonah Whitaker.
+      password: That account manager's password.
+    notes: >
+      Free text. Must confirm the restricted login is Jonah Whitaker. May include a finance login,
+      how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "admin@example.com", "password": "..."},
+      "restricted": {"user": "jonah@example.com", "password": "..."},
+      "notes": "restricted login is Jonah Whitaker (Account Manager). Finance: finance@example.com / ... Restart: systemctl restart orders."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 21, 23]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - customers.csv has 5 exact duplicates and 3 rows repeating an email in other capitals (150 -> 142); the two Maria Lopez rows are different people, so a name dedupe gives 141 (item 15)
+  - Type written retail / WHOLESALE / "Wholesale ", account manager in lower case, upper case, or with a trailing space; a verbatim import splits Jonah Whitaker's 14 customers and breaks scope (items 6, 16, 26)
+  - Resale Certificate written Yes / Y / yes / On file for exempt and No / N / blank / Expired for taxed; treating any non-blank value as a certificate exempts Cedar Grove Gift Shop (items 16, 22)
+  - products.csv has 3 exact duplicates and OOL-MILK-2OZ repeated with a trailing space (64 -> 60); 15 prices are "$148.00"-style strings and a text sort puts WHT-SILVER-1LB first (item 17)
+  - HRB-PEPMNT-2OZ has stock -2; must be flagged or corrected, not silently kept (item 18)
+  - order_lines.csv is one row per line with a BOM; Order # is "#1006" on most lines and "1006" on 40, so grouping on the raw text splits orders (110 orders from 219 lines) (items 11, 19)
+  - status written in mixed case with Canceled / CANCELLED for Cancelled (items 10, 19)
+  - Shipping, Tax, and Order Total repeat on every line of an order; summing them per line gives shipped sales of 62,717.09 instead of 24,338.27 (items 8, 20)
+  - stock in products.csv is current; importing historical Shipped and Delivered orders through the ship automation takes HRB-HIBISC-4OZ from 91 to 32 (item 20)
+  - free shipping applies at goods of exactly 75.00 or more and tax is on goods only, not shipping; taxing shipping or using the wrong tier moves every new-order total (items 21, 22)
+  - stock must come off only at Shipped, once; decrementing at creation or again at Delivered fails (item 23)

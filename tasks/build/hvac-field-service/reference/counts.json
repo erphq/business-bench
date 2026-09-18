@@ -1,0 +1,282 @@
+{
+  "seed": 0,
+  "customers": {
+    "file_rows_excluding_header": 120,
+    "exact_duplicate_rows": 5,
+    "same_email_different_case_rows": 3,
+    "unique_customers_after_dedupe": 112,
+    "dedupe_rule": "Two rows are the same customer when their Email matches after trimming and lowercasing, or when Email is blank on both and Customer + Service Address match. Blank-email rows are all distinct customers and must not be collapsed into one.",
+    "rows_with_blank_email": 6,
+    "blank_email_customers": [
+      "Harold Hensley",
+      "Judith Fitzgerald",
+      "Omar Kaminski",
+      "Pamela Grimes",
+      "Robert Abernathy",
+      "Theresa Gaines"
+    ],
+    "all_caps_name_rows": 4,
+    "rows_with_unit_in_address": 23,
+    "rows_with_blank_last_service": 13,
+    "per_rep_after_dedupe": {
+      "Dana": 58,
+      "Marcus": 37,
+      "Priya": 17
+    },
+    "per_rep_file_rows": {
+      "Dana": 62,
+      "Marcus": 39,
+      "Priya": 19
+    },
+    "newest_last_service": {
+      "customer": "Marcus Haddad",
+      "rep": "Dana",
+      "file_value": "2026-09-03",
+      "iso": "2026-09-03"
+    },
+    "second_newest_last_service": {
+      "customer": "Irene Ibarra",
+      "file_value": "9/1/2026",
+      "iso": "2026-09-01"
+    },
+    "duplicate_groups": [
+      {
+        "customer": "Beavercreek Montessori",
+        "rep": "Priya",
+        "kind": "exact",
+        "emails_as_written": [
+          "office@beavercreekmontessori.org",
+          "office@beavercreekmontessori.org"
+        ],
+        "file_lines": [
+          9,
+          73
+        ]
+      },
+      {
+        "customer": "Cheryl Osei",
+        "rep": "Dana",
+        "kind": "exact",
+        "emails_as_written": [
+          "cherylosei60@gmail.com",
+          "cherylosei60@gmail.com"
+        ],
+        "file_lines": [
+          37,
+          54
+        ]
+      },
+      {
+        "customer": "Ernest Ortega",
+        "rep": "Dana",
+        "kind": "exact",
+        "emails_as_written": [
+          "ernest.ortega@yahoo.com",
+          "ernest.ortega@yahoo.com"
+        ],
+        "file_lines": [
+          58,
+          111
+        ]
+      },
+      {
+        "customer": "Hector Ortega",
+        "rep": "Dana",
+        "kind": "exact",
+        "emails_as_written": [
+          "hortega@gmail.com",
+          "hortega@gmail.com"
+        ],
+        "file_lines": [
+          28,
+          50
+        ]
+      },
+      {
+        "customer": "Gerald Mensah",
+        "rep": "Marcus",
+        "kind": "exact",
+        "emails_as_written": [
+          "geraldmensah88@woh.rr.com",
+          "geraldmensah88@woh.rr.com"
+        ],
+        "file_lines": [
+          55,
+          108
+        ]
+      },
+      {
+        "customer": "Pamela Brandt",
+        "rep": "Priya",
+        "kind": "same_email_different_case",
+        "emails_as_written": [
+          "pamela.brandt@icloud.com",
+          "pamela.brandt@ICLOUD.COM"
+        ],
+        "file_lines": [
+          95,
+          105
+        ]
+      },
+      {
+        "customer": "Ahmed Quintero",
+        "rep": "Dana",
+        "kind": "same_email_different_case",
+        "emails_as_written": [
+          "ahmedquintero75@gmail.com",
+          "AHMEDQUINTERO75@gmail.com"
+        ],
+        "file_lines": [
+          47,
+          116
+        ]
+      },
+      {
+        "customer": "Ruth Farrukh",
+        "rep": "Marcus",
+        "kind": "same_email_different_case",
+        "emails_as_written": [
+          "ruthfarrukh69@sbcglobal.net",
+          "RUTHFARRUKH69@sbcglobal.net"
+        ],
+        "file_lines": [
+          3,
+          16
+        ]
+      }
+    ],
+    "search_targets": {
+      "exact_duplicate_business": "Beavercreek Montessori",
+      "same_email_different_case": "Pamela Brandt"
+    }
+  },
+  "parts": {
+    "file_rows_excluding_header": 60,
+    "unique_skus_after_trim": 60,
+    "skus_with_trailing_space": [
+      "IGN-HSI-80V ",
+      "DISC-60A-NF "
+    ],
+    "currency_string_rows": 10,
+    "currency_string_skus": [
+      "MTR-ECM-12HP",
+      "TST-WIFI",
+      "REF-410A-25",
+      "REF-22-30",
+      "REF-454B-20",
+      "CMP-3T-R410A",
+      "CMP-2T-R410A",
+      "COIL-EVAP-3T",
+      "COIL-EVAP-2T",
+      "LS-38-34-25"
+    ],
+    "negative_on_hand": {
+      "sku": "FLT-16x25x1",
+      "on_hand": -3
+    },
+    "highest_sell_price": {
+      "sku": "CMP-3T-R410A",
+      "file_value": "$2,480.00",
+      "numeric": 2480.0
+    },
+    "invoice_check": {
+      "lines": [
+        {
+          "sku": "CAP-45-5-440",
+          "qty": 2,
+          "sell_price": 38.5,
+          "line_total": 77.0
+        },
+        {
+          "sku": "MTR-COND-14HP",
+          "qty": 1,
+          "sell_price": 289.0,
+          "line_total": 289.0
+        }
+      ],
+      "parts_total": 366.0,
+      "labor_hours": 2.5,
+      "labor_rate": 95.0,
+      "labor_total": 237.5,
+      "expected_invoice_total": 603.5
+    },
+    "on_hand_check": {
+      "sku": "CAP-45-5-440",
+      "before": 24,
+      "qty_used": 2,
+      "after": 22
+    }
+  },
+  "dashboard": {
+    "customers": 112,
+    "parts": 60,
+    "open_jobs_at_import": 0,
+    "invoiced_this_month_at_import": 0.0,
+    "note": "The seed has no jobs or invoices, so open jobs and this month's invoiced total start at 0 and 0.00; by item 28 they must equal the jobs list's not-closed jobs and the sum of invoices dated in the calendar month in which the tester reads the dashboard (items 14 to 19 create jobs; closing jobs in items 16 to 18 creates invoices, 603.50 among them).",
+    "scoped_customers": {
+      "Dana": 58,
+      "Marcus": 37,
+      "Priya": 17
+    }
+  },
+  "baseline": {
+    "STAFF_ROLE": "Sales rep",
+    "VIEWER_ROLE": "Read-only (the bookkeeper)",
+    "MAIN_ENTITY": "customer",
+    "MAIN_ENTITY_PLURAL": "customers",
+    "SCOPE_RULE": "the rep's customers",
+    "SCOPE_COUNT": {
+      "Dana": 58,
+      "Marcus": 37,
+      "Priya": 17
+    },
+    "OUT_OF_SCOPE_EXAMPLES": {
+      "Priya": "Beavercreek Montessori",
+      "Marcus": "Gerald Mensah",
+      "Dana": "Marcus Haddad"
+    },
+    "KPI_1": {
+      "name": "customers",
+      "value": 112,
+      "scoped_value": {
+        "Dana": 58,
+        "Marcus": 37,
+        "Priya": 17
+      }
+    },
+    "KPI_2": {
+      "name": "parts",
+      "value": 60
+    },
+    "KPI_3": {
+      "name": "open jobs",
+      "value_at_import": 0
+    },
+    "KPI_4": {
+      "name": "invoiced this month",
+      "value_at_import": 0.0
+    },
+    "SEARCH_TERM": "Ortega",
+    "SEARCH_COUNT": 3,
+    "search_hits": [
+      "Brenda Ortega",
+      "Ernest Ortega",
+      "Hector Ortega"
+    ],
+    "search_rows_in_file": 5,
+    "FILTER_FIELD": "Rep",
+    "FILTER_VALUE": "Priya",
+    "FILTER_COUNT": 17,
+    "SORT_FIELD": "Last Service",
+    "SORT_TOP": "Marcus Haddad",
+    "EXPORT_ROWS": 112,
+    "EXPORT_COLUMNS": [
+      "Customer",
+      "Phone",
+      "Email",
+      "Service Address",
+      "Rep"
+    ],
+    "REQUIRED_FIELD": "a customer name"
+  }
+}

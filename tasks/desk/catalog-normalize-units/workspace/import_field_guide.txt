@@ -1,0 +1,13 @@
+Fieldstone POS - product import field guide
+
+sku        Your item code. Must be unique.
+name       Product name as it should print on the receipt.
+category   Must match one of your store's categories exactly, including capital letters:
+           Beverages | Bulk | Dairy & Eggs | Home & Cleaning | Pantry | Personal Care | Snacks
+pack_qty   How many units are sold together as one item. A single item is 1.
+unit_size  The size of ONE unit, as a number only.
+unit       One of: ml | g | ea  (lower case). Volumes in millilitres, weights in grams.
+           For counted goods (tea bags, swabs, eggs) use ea and put the count in one package in unit_size.
+price      Selling price as a number, no currency symbol.
+
+Rows that do not match these rules are rejected by the importer.

@@ -1,0 +1,124 @@
+Ref No.,Type,Vendor,Invoice No.,Invoice Date,Due Date,Amount,Memo
+BILL-2001,Bill,Silverline Logistics,#25499,07/01/2026,07/16/2026,"1,196.95",Permit fees job 4438
+BILL-2002,Bill,kingfisher charters co.,No. 15736,07/01/2026,08/15/2026,2159.39,Job 4486 materials
+BILL-2003,Bill,Quarry Road Nursery,No. 3758,Jul 01 2026,Jul 31 2026,"$5,861.31",Job 4420 dumpster
+BILL-2004,Bill,Thistle & Thread Alterations Inc.,46005,Jul 02 2026,Jul 17 2026,"$ 8,151.07",Delivery to yard
+BILL-2005,Bill,Ironwood Fabrication,21284,"July 02, 2026","August 01, 2026","4,138.35 USD",Job 4456 dumpster
+BILL-2006,Bill,"Ironwood  Fabrication, LLC",21219,07/03/2026,08/02/2026,"$3,910.78",Job 4416 - shingles
+BILL-2007,Bill,Cedar & Pine Landscaping LLC,No. 57109,Jul 03 2026,Aug 02 2026,"$ 1,975.45",Job 4491 flashing and drip edge
+BILL-2008,Bill,Ivy Lane Florist Inc,No. 56969,"July 03, 2026","August 02, 2026","2,753.84",Job 4414 underlayment
+BILL-2009,Bill,Driftwood Studio,Inv #58516,"July 03, 2026","August 02, 2026","$7,191.42",Job 4490 - shingles
+BILL-2010,Bill,  Ivy Lane Florist Co.,57005,"July 06, 2026","August 05, 2026","8,307.39",Job 4483 gutters
+BILL-2011,Bill,Ivy Lane Florist LLC,56981,Jul 06 2026,Aug 05 2026,"$2,083.72",Equipment rental wk 32
+BILL-2012,Bill,Hollowell Electric LLC,Inv #27713,"July 06, 2026","July 21, 2026",$729.64,Job 4405 flashing and drip edge
+BILL-2013,Bill,Ivy Lane Florist Inc.,INV-57085,"July 06, 2026","August 05, 2026","2,704.38",Job 4474 flashing and drip edge
+BILL-2014,Bill,Northfield Auto Body Inc,Inv #41082,07/06/2026,08/05/2026,"$ 8,847.23",Job 4462 materials
+BILL-2015,Bill,COPPERFIELD LAW INC.,Inv #24833,2026-07-07,2026-07-22,"1,580.79",Equipment lease - lift
+BILL-2016,Bill,CEDAR & PINE LANDSCAPING,57212,"July 07, 2026","August 06, 2026","$ 1,643.55",Portable toilets - monthly
+BILL-2017,Bill,Kingfisher Charters,INV-15709,Jul 07 2026,Aug 21 2026,"$ 7,944.88",Safety supplies
+BILL-2018,Bill,Ivy Lane Florist,57123,Jul 08 2026,Aug 07 2026,2627.63,Equipment lease - lift
+BILL-2019,Bill,Cedar and Pine Landscaping,57085,"July 08, 2026","August 07, 2026",$ 638.66,Permit fees job 4486
+BILL-2020,Bill,Copperfield Law LLC,Inv #24781,Jul 09 2026,Jul 24 2026,7932.51,Delivery to yard
+BILL-2021,Bill,Thistle  & Thread Alterations,INV-45993,Jul 10 2026,Jul 25 2026,"1,264.19 USD",Job 4444 materials
+BILL-2022,Bill,HOLLOWELL ELECTRIC CO.,27775,Jul 10 2026,Jul 25 2026,7341.77,Delivery to yard
+BILL-2023,Bill,KINGFISHER CHARTERS,15776,07/13/2026,08/27/2026,"1,935.32 USD",Job 4483 gutters
+BILL-2024,Bill,Tamarack Brewing Inc.,No. 28813,07/14/2026,08/13/2026,"$9,690.12",Job 4418 underlayment
+BILL-2025,Bill,Tamarack Brewing,28803,07/14/2026,08/13/2026,"$ 2,008.28",Safety supplies
+BILL-2026,Bill,COPPERFIELD LAW LLC,No. 24714,2026-07-14,2026-07-29,"1,050.67 USD",Job 4460 underlayment
+BILL-2027,Bill,Blue Heron Consulting Inc,Inv #38240,2026-07-14,2026-08-28,"$3,013.56",Equipment rental wk 28
+BILL-2028,Bill,Tamarack Brewing Inc.,Inv #28813,Jul 14 2026,Aug 13 2026,"$ 9,690.12",Job 4418 underlayment
+BILL-2029,Bill,Tamarack Brewing,28776,2026-07-15,2026-08-14,705.38,Job 4467 materials
+BILL-2030,Bill,Tamarack Brewing Inc.  ,28803,"July 15, 2026","August 14, 2026","2,008.28 USD",Safety supplies
+BILL-2031,Bill,Copperfield Law,INV24736,"July 16, 2026","July 31, 2026","$4,739.33",Job 4454 underlayment
+BILL-2032,Bill,Cedar & Pine Landscaping Co.,INV57070,"July 16, 2026","August 15, 2026","3,885.60",Job 4414 dumpster
+BILL-2033,Bill,Tamarack Brewing Inc,#28789,2026-07-16,2026-08-15,4914.20,Equipment rental wk 27
+BILL-2034,Bill,Kingfisher Charters Co.,#15715,2026-07-17,2026-08-31,"$9,671.97",Safety supplies
+BILL-2035,Bill,"Quarry Road Nursery, LLC",3752,"July 17, 2026","August 16, 2026",7037.24,Safety supplies
+BILL-2036,Bill,"IRONWOOD FABRICATION, LLC",INV-21194,2026-07-17,2026-08-16,"$ 7,899.65",Job 4465 dumpster
+BILL-2037,Vendor Credit,Copperfield Law Inc.,INV-24781,"July 17, 2026","August 01, 2026","(7,932.51)",Credit against inv 24781 - damaged pallet
+BILL-2038,Bill,Copperfield Law LLC,No. 24688,"July 17, 2026","August 01, 2026","2,935.45 USD",Job 4493 underlayment
+BILL-2039,Bill,"Northfield Auto Body, LLC",INV-41043,2026-07-17,2026-08-16,"$9,396.53",Safety supplies
+BILL-2040,Bill,Westbrook Plumbing Inc,No. 40349,"July 17, 2026","August 31, 2026","$6,205.12",Job 4489 - shingles
+BILL-2041,Bill,Silverline Logistics,25422,2026-07-20,2026-08-04,"$7,814.81",Job 4451 underlayment
+BILL-2042,Bill,Silverline Logistics Inc,#25538,"July 20, 2026","August 04, 2026","$4,206.19",Job 4411 underlayment
+BILL-2043,Bill,Northfield Auto Body Inc.  ,INV41162,Jul 20 2026,Aug 19 2026,7218.52,Job 4457 materials
+BILL-2044,Bill,QUARRY ROAD NURSERY,3635,2026-07-21,2026-08-20,"3,410.57 USD",Equipment rental wk 36
+BILL-2045,Bill,"QUARRY ROAD NURSERY, LLC",3624,Jul 22 2026,Aug 21 2026,"$ 6,863.13",Delivery to yard
+BILL-2046,Bill,Driftwood Studio LLC,No. 58540,07/22/2026,08/21/2026,"$3,315.59",Job 4412 materials
+BILL-2047,Bill,Quarry Road Nursery,INV3664,07/23/2026,08/22/2026,$213.27,Permit fees job 4452
+BILL-2048,Bill,copperfield law inc,Inv #24692,07/23/2026,08/07/2026,"$ 8,411.11",Job 4438 - shingles
+BILL-2049,Bill,THISTLE & THREAD ALTERATIONS INC,#46055,Jul 24 2026,Aug 08 2026,"$ 4,496.08",Job 4444 underlayment
+BILL-2050,Bill,Ironwood  Fabrication Co.,INV-21210,2026-07-24,2026-08-23,"$2,912.64",Safety supplies
+BILL-2051,Bill,"Silverline Logistics, LLC",No. 25383,"July 24, 2026","August 08, 2026","$ 7,823.16",Equipment rental wk 35
+BILL-2052,Bill,Thistle & Thread Alterations Inc.,46064,"July 27, 2026","August 11, 2026","3,604.16 USD",Job 4437 underlayment
+BILL-2053,Bill,cedar & pine landscaping inc.,No. 57140,07/27/2026,08/26/2026,7149.31,Job 4486 materials
+BILL-2054,Bill,THISTLE & THREAD ALTERATIONS CO.,INV-46044,07/27/2026,08/11/2026,116.40 USD,Permit fees job 4486
+BILL-2055,Bill,Driftwood Studio Co.,No. 58479,Jul 28 2026,Aug 27 2026,"8,780.30 USD",Job 4453 gutters
+BILL-2056,Bill,Northfield Auto Body Inc.,41084,Jul 28 2026,Aug 27 2026,"2,316.10 USD",Permit fees job 4499
+BILL-2057,Bill,Tamarack Brewing LLC,No. 28748,2026-07-29,2026-08-28,"$9,687.88",Equipment rental wk 29
+BILL-2058,Bill,Blue Heron Consulting Inc.,38349,07/31/2026,09/14/2026,"$ 2,905.55",Delivery to yard
+BILL-2059,Bill,THISTLE & THREAD ALTERATIONS CO.,#46044,Aug 01 2026,Aug 16 2026,$ 161.40,Permit fees job 4486
+BILL-2060,Bill,Thistle & Thread Alterations Inc.,INV-46064,08/01/2026,08/16/2026,"$3,604.16",Job 4437 underlayment
+BILL-2061,Bill,blue heron consulting inc.,No. 38389,2026-08-03,2026-09-17,4714.50,Job 4486 - shingles
+BILL-2062,Bill,Quarry  Road Nursery Inc,Inv #3733,Aug 05 2026,Sep 04 2026,"$ 1,394.95",Job 4445 underlayment
+BILL-2063,Bill,Ironwood Fabrication Co.,No. 21299,2026-08-05,2026-09-04,"$ 2,912.64",Job 4438 gutters
+BILL-2064,Bill,kingfisher charters,15796,Aug 05 2026,Sep 19 2026,6774.17,Job 4412 flashing and drip edge
+BILL-2065,Bill,  Westbrook Plumbing Inc.,No. 40306,"August 06, 2026","September 20, 2026","$7,171.61",Job 4407 dumpster
+BILL-2066,Bill,Blue Heron Consulting  ,No. 38312,08/06/2026,09/20/2026,"$4,408.07",Job 4449 gutters
+BILL-2067,Bill,Cedar and Pine Landscaping Co.,INV57237,Aug 07 2026,Sep 06 2026,"$ 1,643.55",Portable toilets - monthly
+BILL-2068,Bill,Ivy Lane Florist LLC,57060,Aug 07 2026,Sep 06 2026,171.44 USD,Job 4434 flashing and drip edge
+BILL-2069,Bill,Thistle & Thread Alterations Inc.,46045,"August 07, 2026","August 22, 2026","3,671.10 USD",Job 4477 materials
+BILL-2070,Bill,Copperfield Law Inc.,INV24843,08/09/2026,08/24/2026,1580.79,Equipment lease - lift
+BILL-2071,Bill,THISTLE & THREAD ALTERATIONS,No. 46100,"August 11, 2026","August 26, 2026","$9,731.53",Job 4468 - shingles
+BILL-2072,Bill,HOLLOWELL ELECTRIC,Inv #27669,Aug 11 2026,Aug 26 2026,429.57,Job 4432 flashing and drip edge
+BILL-2073,Bill,Ivy Lane Florist,No. 57127,"August 11, 2026","September 10, 2026","2,627.63",Equipment lease - lift
+BILL-2074,Bill,"Driftwood Studio, LLC",No. 58503,"August 11, 2026","September 10, 2026","$ 6,038.19",Job 4475 underlayment
+BILL-2075,Bill,"Blue Heron Consulting, LLC",#38312,Aug 11 2026,Sep 25 2026,"$4,408.07",Job 4449 gutters
+BILL-2076,Bill,Copperfield Law Co.  ,24756,Aug 12 2026,Aug 27 2026,"$7,223.11",Job 4421 flashing and drip edge
+BILL-2077,Bill,Blue Heron Consulting LLC,No. 38276,2026-08-12,2026-09-26,"$ 7,997.55",Fuel - crew trucks
+BILL-2078,Bill,Northfield Auto Body LLC,41024,Aug 13 2026,Sep 12 2026,"6,404.34 USD",Permit fees job 4491
+BILL-2079,Bill,Blue Heron Consulting,#38276,2026-08-13,2026-09-27,"7,997.55",Fuel - crew trucks
+BILL-2080,Bill,cedar & pine landscaping inc,INV-57180,"August 14, 2026","September 13, 2026","$4,321.41",Job 4464 materials
+BILL-2081,Bill,Ivy Lane Florist Inc.,INV-56978,Aug 14 2026,Sep 13 2026,"$1,203.29",Job 4435 flashing and drip edge
+BILL-2082,Bill,Ivy Lane Florist,INV57082,08/17/2026,09/16/2026,"7,065.22 USD",Job 4499 dumpster
+BILL-2083,Bill,Hollowell Electric,27679,2026-08-18,2026-09-02,"$ 5,748.34",Job 4408 underlayment
+BILL-2084,Bill,Quarry Road Nursery Co.,3697,Aug 19 2026,Sep 18 2026,"$8,222.88",Equipment rental wk 35
+BILL-2085,Bill,Westbrook Plumbing Inc  ,40261,"August 19, 2026","October 03, 2026","$ 5,986.18",Delivery to yard
+BILL-2086,Bill,COPPERFIELD LAW LLC,No. 24785,2026-08-19,2026-09-03,161.27 USD,Safety supplies
+BILL-2087,Bill,WESTBROOK PLUMBING INC,#40372,2026-08-19,2026-10-03,"$7,695.90",Job 4414 underlayment
+BILL-2088,Bill,Westbrook Plumbing Co.,40347,"August 19, 2026","October 03, 2026",4543.04,Job 4460 - shingles
+BILL-2089,Bill,Westbrook  Plumbing Inc,No. 40290,"August 19, 2026","October 03, 2026",7954.51,Job 4420 materials
+BILL-2090,Bill,Quarry Road Nursery Co.,3587,"August 20, 2026","September 19, 2026","$2,021.74",Job 4493 dumpster
+BILL-2091,Bill,northfield auto body,41077,"August 20, 2026","September 19, 2026","4,404.09",Delivery to yard
+BILL-2092,Bill,Ivy Lane Florist,INV57082,2026-08-20,2026-09-19,"$ 7,065.22",Job 4499 dumpster
+BILL-2093,Bill,Kingfisher Charters LLC,INV15645,2026-08-21,2026-10-05,"$8,553.45",Job 4453 gutters
+BILL-2094,Bill,Kingfisher Charters LLC,Inv #15809,08/23/2026,10/07/2026,8553.45,Job 4453 gutters
+BILL-2095,Bill,Cedar & Pine Landscaping Inc.,57175,2026-08-24,2026-09-23,6114.13,Equipment rental wk 30
+BILL-2096,Bill,"Northfield Auto Body, LLC",41155,"August 24, 2026","September 23, 2026","9,050.78 USD",Job 4453 - shingles
+BILL-2097,Bill,  Silverline Logistics LLC,INV25449,08/25/2026,09/09/2026,1782.57,Job 4443 underlayment
+BILL-2098,Bill,Ivy  Lane Florist,INV-57035,Aug 25 2026,Sep 24 2026,"$3,703.34",Fuel - crew trucks
+BILL-2099,Bill,Ironwood Fabrication,21259,"August 26, 2026","September 25, 2026","6,232.45",Permit fees job 4467
+BILL-2100,Bill,kingfisher charters,#15656,2026-08-27,2026-10-11,$ 705.66,Job 4457 flashing and drip edge
+BILL-2101,Bill,Copperfield  Law Inc.,#24804,Aug 27 2026,Sep 11 2026,"$ 9,024.28",Job 4491 gutters
+BILL-2102,Vendor Credit,"CEDAR & PINE LANDSCAPING, LLC",CM-57240,Aug 27 2026,Sep 26 2026,"(6,114.13)",Credit - returned goods
+BILL-2103,Bill,Driftwood Studio Co.,INV-58497,2026-08-27,2026-09-26,"4,871.15",Permit fees job 4489
+BILL-2104,Bill,Hollowell Electric Co.,INV-27714,2026-08-27,2026-09-11,"$3,296.72",Job 4419 flashing and drip edge
+BILL-2105,Bill,"Quarry Road Nursery, LLC",3698,"August 28, 2026","September 27, 2026","7,289.40 USD",Job 4494 dumpster
+BILL-2106,Bill,SILVERLINE LOGISTICS,INV-25459,08/31/2026,09/15/2026,"7,420.17 USD",Equipment rental wk 34
+BILL-2107,Bill,Westbrook Plumbing Inc,40337,09/01/2026,10/16/2026,"$8,730.98",Job 4491 gutters
+BILL-2108,Bill,Hollowell Electric LLC,#27635,2026-09-02,2026-09-17,"$6,684.58",Job 4463 dumpster
+BILL-2109,Bill,"Thistle & Thread Alterations, LLC",Inv #45987,Sep 02 2026,Sep 17 2026,"$ 9,015.83",Job 4492 dumpster
+BILL-2110,Bill,northfield auto body,Inv #41118,"September 03, 2026","October 03, 2026","$3,051.10",Job 4418 - shingles
+BILL-2111,Bill,Hollowell Electric,INV-27738,09/03/2026,09/18/2026,"$3,798.39",Fuel - crew trucks
+BILL-2112,Bill,"Westbrook Plumbing, LLC",#40273,Sep 03 2026,Oct 18 2026,"$5,625.14",Job 4408 dumpster
+BILL-2113,Bill,SILVERLINE LOGISTICS,25581,2026-09-05,2026-09-20,"$ 7,420.17",Equipment rental wk 34
+BILL-2114,Bill,Copperfield Law LLC,No. 24852,09/06/2026,09/21/2026,"$1,580.79",Equipment lease - lift
+BILL-2115,Bill,CEDAR & PINE LANDSCAPING,INV-57057,2026-09-07,2026-10-07,"5,935.09 USD",Job 4403 - shingles
+BILL-2116,Bill,DRIFTWOOD STUDIO,58463,09/08/2026,10/08/2026,"6,725.19 USD",Fuel - crew trucks
+BILL-2117,Bill,BLUE HERON CONSULTING CO.,No. 38208,2026-09-08,2026-10-23,4437.02,Job 4440 - shingles
+BILL-2118,Bill,"Silverline  Logistics, LLC",Inv #25553,09/08/2026,09/23/2026,"$7,487.78",Equipment rental wk 27
+BILL-2119,Bill,"Northfield Auto Body, LLC",Inv #41155,Sep 08 2026,Oct 08 2026,"$9,050.78",Job 4453 - shingles
+BILL-2120,Bill,HOLLOWELL ELECTRIC,#27648,"September 08, 2026","September 23, 2026","$ 6,008.92",Delivery to yard
+BILL-2121,Bill,Ironwood  Fabrication,INV21239,Sep 09 2026,Oct 09 2026,"$4,133.72",Job 4475 flashing and drip edge
+BILL-2122,Bill,"kingfisher charters, llc",INV15688,Sep 10 2026,Oct 25 2026,"$5,952.64",Job 4404 materials
+,,TOTAL,,,,"$584,664.53",

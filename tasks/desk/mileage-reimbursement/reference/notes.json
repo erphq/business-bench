@@ -1,0 +1,10 @@
+{
+  "kinds": {
+    "commuter": "BH-918",
+    "odometer": "BH-201",
+    "personal": "BH-197",
+    "roundtrip": "BH-645"
+  },
+  "rate": "0.725",
+  "total_reimbursement": "4070.96"
+}

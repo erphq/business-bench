@@ -1,0 +1,64 @@
+Req ID,Title,Department,Hiring Manager,Location,Salary Min,Salary Max,Openings,Opened,Status,Filled On
+REQ-0101,Machine Learning Engineer,Engineering,Ken Okafor,Remote (US),"$165,000","$250,000",1,04-Mar-2025,Closed - filled,28-Oct-2025
+REQ-0102,Sales Manager,Sales,Maria Santos,Remote (US),130000,170k,1,2025-03-06,Closed - filled,25-May-2026
+REQ-0103,Data Engineer,Engineering,Ken Okafor,"Denver, CO",135k,175k,1,3/10/2025,Closed - filled,17-Oct-2025
+REQ-0104,Support Team Lead,Customer Success,J. Reyes,Remote (US),80000,"$90,000",1,14-Mar-2025,Filled,2025-08-21
+REQ-0105,Frontend Engineer,Engineering,Ken Okafor,"Denver, CO","$125,000",150000,1,3/23/2025,Filled,20-Aug-2026
+REQ-0106,UX Researcher,Product & Design,Aisha Bello,"Chicago, IL",115000,145000,1,29-Apr-2025,Closed - filled,22-Feb-2026
+REQ-0107,Support Specialist,Customer Success,J. Reyes,Remote (US),"$50,000",65000,2,2025-05-02,Cancelled,
+REQ-0108,Product Analyst,Product & Design,Aisha Bello,Remote (US),"$95,000",125000,1,"Jun 16, 2025",Filled,2026-08-24
+REQ-0109,Sales Development Rep,Sales,"Santos, Maria","Denver, CO",55k,75k,2,"Jul 11, 2025",Filled,"Jul 21, 2026"
+REQ-0110,Support Team Lead,Customer Success,Jordan Reyes,"Austin, TX","$75,000","$90,000",1,24-Aug-2025,Filled,07-Jan-2026
+REQ-0111,Engineering Manager,Engineering,Ken Okafor,"Austin, TX",180000,215000,1,05-Oct-2025,Filled,"Mar 19, 2026"
+REQ-0112,Staff Platform Engineer,Engineering,Ken Okafor,"Chicago, IL",190k,"$240,000",1,2025-10-06,Filled,"Jan 22, 2026"
+REQ-0113,Onboarding Specialist,Customer Success,J. Reyes,"Denver, CO",60k,75000,1,21-Oct-2025,Cancelled,
+REQ-0114,Enterprise Account Executive,Sales,Maria Santos,"Chicago, IL","$120,000","$150,000",1,2025-10-23,Filled,01-Dec-2025
+REQ-0115,Sales Manager,Sales,Maria Santos,"Austin, TX",130000,"$170,000",1,"Oct 28, 2025",Filled,2026-06-19
+REQ-0116,Engineering Manager,Engineering,Ken Okafor,"Denver, CO",180000,"$215,000",1,"Nov 22, 2025",Filled,2026-03-27
+REQ-0117,Onboarding Specialist,Customer Success,Jordan Reyes,Remote (US),"$60,000","$85,000",1,"Dec 1, 2025",Closed - filled,4/21/2026
+REQ-0118,Enterprise Account Executive,Sales,Maria Santos,"Denver, CO",125k,"$150,000",1,08-Dec-2025,Filled,"Sep 11, 2026"
+REQ-0119,Senior Backend Engineer,Engineering,K. Okafor,"Denver, CO","$150,000",195000,1,"Dec 14, 2025",Filled,4/20/2026
+REQ-0120,Product Analyst,Product & Design,Aisha Bello,Remote (US),"$95,000","$120,000",1,"Dec 19, 2025",Filled,"Sep 2, 2026"
+REQ-0121,Frontend Engineer,Engineering,Ken Okafor,"Austin, TX",125000,"$160,000",1,29-Dec-2025,Cancelled,
+REQ-0122,Sales Engineer,Sales,Maria Santos,"Denver, CO",130k,160k,1,05-Jan-2026,Cancelled,
+REQ-0123,Onboarding Specialist,Customer Success,J. Reyes,"Chicago, IL",60k,80k,1,"Jan 7, 2026",Filled,2026-05-03
+REQ-0124,Frontend Engineer,Engineering,K. Okafor,Remote (US),120k,"$160,000",1,2/8/2026,Filled,26-Jun-2026
+REQ-0125,Sales Engineer,Sales,Maria Santos,Remote (US),"$130,000",160000,1,2026-02-20,Filled,09-Apr-2026
+REQ-0126,Enterprise Account Executive,Sales,Maria Santos,Remote (US),120000,160k,1,2026-03-04,Closed - filled,19-Jul-2026
+REQ-0127,Implementation Consultant,Customer Success,J. Reyes,Remote (US),90k,115k,1,2026-03-17,Open,
+REQ-0128,Engineering Manager,Engineering,K. Okafor,"Denver, CO",185000,215000,1,3/28/2026,Filled,02-Jun-2026
+REQ-0129,Senior Product Designer,Product & Design,Aisha Bello,"Chicago, IL",135000,165k,1,3/29/2026,On hold,
+REQ-0129,Senior Product Designer,Product & Design,Aisha Bello,"Chicago, IL",135000,165k,1,3/29/2026,On hold,
+REQ-0130,Implementation Consultant,Customer Success,J. Reyes,"Austin, TX","$85,000",115000,1,"Apr 2, 2026",Filled,5/27/2026
+REQ-0131,Senior Backend Engineer,Engineering,"Okafor, Ken",Remote (US),155k,"$185,000",1,4/10/2026,Open,
+REQ-0132,Mobile Engineer,Engineering,Ken Okafor,"Denver, CO",125k,"$165,000",1,4/15/2026,Filled,"Aug 30, 2026"
+REQ-0133,Security Engineer,Engineering,Ken Okafor,"Chicago, IL",155k,"$200,000",1,"Apr 16, 2026",Closed - filled,08-Aug-2026
+REQ-0134,Mobile Engineer,Engineering,K. Okafor,"Chicago, IL","$125,000",165000,1,4/20/2026,Closed - filled,25-Jun-2026
+REQ-0135,Senior Backend Engineer,Engineering,Ken Okafor,"Austin, TX","$155,000",195000,1,23-Apr-2026,Open,
+REQ-0136,Implementation Consultant,Customer Success,Jordan Reyes,Remote (US),85000,"$120,000",1,2026-05-08,open,
+REQ-0137,Sales Engineer,Sales,Maria Santos,Remote (US),125k,160000,1,5/20/2026,Filled,06-Jul-2026
+REQ-0138,Staff Platform Engineer,Engineering,K. Okafor,Remote (US),"$185,000","$235,000",1,"May 29, 2026",open,
+REQ-0139,Sales Manager,Sales,Maria Santos,Remote (US),"$135,000",160000,1,30-Jun-2026,open,
+REQ-0140,Data Engineer,Engineering,Ken Okafor,Remote (US),140k,165000,1,7/1/2026,On hold,
+REQ-0141,Mobile Engineer,Engineering,Ken Okafor,Remote (US),125k,160000,1,7/5/2026,open,
+REQ-0142,QA Automation Engineer,Engineering,Ken Okafor,Remote (US),"$105,000",135000,1,7/9/2026,Open,
+REQ-0143,Product Manager,Product & Design,Aisha Bello,"Denver, CO",145k,"$175,000",1,7/9/2026,Open,
+REQ-0144,Mobile Engineer,Engineering,Ken Okafor,"Chicago, IL","$125,000",165000,1,7/22/2026,Open,
+REQ-0145,Technical Writer,Product & Design,Aisha Bello,"Austin, TX","$90,000",110000,1,2026-07-26,Open,
+REQ-0146,Support Specialist,Customer Success,Jordan Reyes,Remote (US),50000,65000,2,2026-07-28,Open,
+REQ-0147,Support Team Lead,Customer Success,Jordan Reyes,"Austin, TX",80k,"$100,000",1,02-Aug-2026,Closed - filled,11-Sep-2026
+REQ-0148,Enterprise Account Executive,Sales,Maria Santos,"Chicago, IL",120000,155000,1,02-Aug-2026,Filled,"Sep 11, 2026"
+REQ-0149,Product Manager,Product & Design,Aisha Bello,"Denver, CO","$145,000",185000,1,8/11/2026,open,
+REQ-0150,QA Automation Engineer,Engineering,"Okafor, Ken",Remote (US),105000,"$130,000",1,12-Aug-2026,Open,
+REQ-0151,DevOps Engineer,Engineering,Ken Okafor,"Austin, TX",135000,180k,1,8/15/2026,open,
+REQ-0152,Sales Manager,Sales,Maria Santos,Remote (US),"$130,000",165k,1,"Aug 17, 2026",Open,
+REQ-0153,Revenue Operations Analyst,Sales,M. Santos,"Chicago, IL","$85,000",105000,1,8/19/2026,Filled,"Sep 11, 2026"
+REQ-0154,Product Manager,Product & Design,Aisha Bello,"Chicago, IL","$145,000","$185,000",1,2026-08-20,Open,
+REQ-0155,Enterprise Account Executive,Sales,Maria Santos,"Chicago, IL",120000,160k,1,8/20/2026,On hold,
+REQ-0156,Onboarding Specialist,Customer Success,Jordan Reyes,Remote (US),65000,85000,1,8/20/2026,Open,
+REQ-0156,Onboarding Specialist,Customer Success,Jordan Reyes,Remote (US),65000,85000,1,8/20/2026,Open,
+REQ-0157,UX Researcher,Product & Design,Aisha Bello,"Denver, CO",115000,"$150,000",1,20-Aug-2026,On Hold,
+REQ-0158,Sales Development Rep,Sales,M. Santos,Remote (US),55k,80000,2,21-Aug-2026,Open,
+REQ-0159,Technical Writer,Product & Design,Aisha Bello,"Denver, CO","$85,000",115000,1,8/21/2026,open,
+REQ-0160,Revenue Operations Analyst,Sales,"Santos, Maria",Remote (US),"$80,000","$105,000",1,8/21/2026,On Hold,
+REQ-0161,Senior Backend Engineer,Engineering,"Okafor, Ken",Remote (US),150k,"$185,000",1,9/8/2026,Open,

@@ -1,0 +1,412 @@
+{
+  "seed": 0,
+  "firm": {
+    "people": 9,
+    "reps": [
+      "Tomasz Nowak",
+      "Leila Haddad",
+      "Rahul Patel"
+    ],
+    "restricted_rep": "Leila Haddad",
+    "other_rep": "Tomasz Nowak",
+    "roles": {
+      "admin": "Admin (managing partner)",
+      "staff": "Rep",
+      "viewer": "Analyst (read-only)"
+    }
+  },
+  "tester_records": {
+    "account": "Alder Street Clinics",
+    "owner": "Rahul Patel",
+    "contact": "Jennifer Peterson",
+    "stage": "Lead",
+    "amount": 10000.0,
+    "note": "deals the tester creates go on this account and are deleted when the item is done"
+  },
+  "accounts": {
+    "file_rows_excluding_header": 80,
+    "exact_duplicate_rows": 5,
+    "website_variant_duplicate_rows": 3,
+    "unique_accounts_after_dedupe": 72,
+    "dedupe_rule": "Two rows are the same account when Website matches after lowercasing and stripping http(s)://, www., and a trailing slash. Rows with a blank Website are distinct accounts (their names differ).",
+    "wrong_counts": {
+      "no_dedupe": 80,
+      "exact_rows_only": 75,
+      "blank_websites_collapsed_into_one": 69
+    },
+    "blank_website_accounts": [
+      "Foxhollow Veterinary Group",
+      "Pilgrim Freight Lines",
+      "Trailhead Bicycles",
+      "Xander Data Centers"
+    ],
+    "website_variant_groups": [
+      {
+        "account": "Zenith Precision Optics",
+        "owner": "Tomasz Nowak",
+        "websites_as_written": [
+          "https://zenithoptics.com",
+          "WWW.ZENITHOPTICS.COM"
+        ],
+        "names_as_written": [
+          "Zenith Precision Optics",
+          "ZENITH PRECISION OPTICS"
+        ]
+      },
+      {
+        "account": "Bellwether Logistics",
+        "owner": "Leila Haddad",
+        "websites_as_written": [
+          "https://www.bellwetherlogistics.com/",
+          "WWW.BELLWETHERLOGISTICS.COM"
+        ],
+        "names_as_written": [
+          "Bellwether Logistics",
+          "BELLWETHER LOGISTICS"
+        ]
+      },
+      {
+        "account": "Ashgrove Manufacturing",
+        "owner": "Leila Haddad",
+        "websites_as_written": [
+          "https://ashgrovemfg.com",
+          "http://www.ashgrovemfg.com/"
+        ],
+        "names_as_written": [
+          "Ashgrove Manufacturing",
+          "ASHGROVE MANUFACTURING"
+        ]
+      }
+    ],
+    "exact_duplicate_accounts": [
+      "Marlow & Finch LLP",
+      "Sable Point Lighthouse Foundation",
+      "Stonefield Auto Group",
+      "Ultramar Shipping",
+      "Underwood Paper Mills"
+    ],
+    "per_owner": {
+      "Tomasz Nowak": 28,
+      "Leila Haddad": 26,
+      "Rahul Patel": 18
+    },
+    "out_of_scope_account": {
+      "name": "Amberly Cosmetics",
+      "owner": "Tomasz Nowak"
+    }
+  },
+  "contacts": {
+    "file_rows_excluding_header": 150,
+    "exact_duplicate_rows": 2,
+    "email_case_duplicate_rows": 6,
+    "unique_contacts_after_dedupe": 142,
+    "dedupe_rule": "Two rows are the same contact when Email matches after trimming and lowercasing. Blank-email rows are distinct contacts. Two contacts share a name but have different emails and accounts: they are two people. Account links to accounts.csv by name after trimming, case-insensitive.",
+    "wrong_counts": {
+      "no_dedupe": 150,
+      "exact_rows_only": 148,
+      "blank_emails_collapsed_into_one": 138,
+      "same_name_merged": 141
+    },
+    "blank_email_contacts": [
+      "Amy Kim",
+      "Emily Castillo",
+      "Kenneth Thomas",
+      "Luis Tanaka",
+      "Nadia Perez"
+    ],
+    "email_case_groups": [
+      {
+        "contact": "Anthony Murphy",
+        "account": "Millbrook Orthopedics",
+        "emails_as_written": [
+          "anthony.murphy@millbrookortho.com",
+          "Anthony.Murphy@millbrookortho.com"
+        ]
+      },
+      {
+        "contact": "Dmitri King",
+        "account": "Ellery Textiles",
+        "emails_as_written": [
+          "dmitri.king@ellerytextiles.com",
+          "DMITRI.KING@ELLERYTEXTILES.COM"
+        ]
+      },
+      {
+        "contact": "Kathleen Stewart",
+        "account": "Umber Creative Agency",
+        "emails_as_written": [
+          "kathleen.stewart@umbercreative.com",
+          "KATHLEEN.STEWART@UMBERCREATIVE.COM"
+        ]
+      },
+      {
+        "contact": "Angela Okafor",
+        "account": "Norwich Tool & Die",
+        "emails_as_written": [
+          "angela.okafor@norwichtool.com",
+          "ANGELA.OKAFOR@NORWICHTOOL.COM"
+        ]
+      },
+      {
+        "contact": "Emily Carter",
+        "account": "Brightwater Utilities",
+        "emails_as_written": [
+          "emily.carter@brightwaterutil.com",
+          "EMILY.CARTER@BRIGHTWATERUTIL.COM"
+        ]
+      },
+      {
+        "contact": "Brian Diaz",
+        "account": "Brightwater Utilities",
+        "emails_as_written": [
+          "brian.diaz@brightwaterutil.com",
+          "BRIAN.DIAZ@BRIGHTWATERUTIL.COM"
+        ]
+      }
+    ],
+    "same_name_different_people": {
+      "name": "Nancy Clark",
+      "accounts": [
+        "Driftwood Studios",
+        "Pilgrim Freight Lines"
+      ]
+    },
+    "rows_with_trailing_space_in_account": 4,
+    "trailing_space_link_check": {
+      "account": "Millbrook Orthopedics",
+      "contacts_on_account": [
+        "Anthony Murphy",
+        "Jennifer Myers",
+        "Paul Watson"
+      ],
+      "contact_count": 3,
+      "contact_written_with_trailing_space": "Jennifer Myers"
+    },
+    "per_owner": {
+      "Tomasz Nowak": 57,
+      "Leila Haddad": 47,
+      "Rahul Patel": 38
+    }
+  },
+  "deals": {
+    "file_rows_excluding_header_and_preamble": 90,
+    "preamble_lines_before_header": 2,
+    "stage_order": [
+      "Lead",
+      "Qualified",
+      "Proposal",
+      "Negotiation",
+      "Won",
+      "Lost"
+    ],
+    "stage_probabilities": {
+      "Lead": 0.1,
+      "Qualified": 0.25,
+      "Proposal": 0.5,
+      "Negotiation": 0.75,
+      "Won": 1.0,
+      "Lost": 0.0
+    },
+    "per_stage_count": {
+      "Lead": 18,
+      "Qualified": 20,
+      "Proposal": 17,
+      "Negotiation": 12,
+      "Won": 13,
+      "Lost": 10
+    },
+    "stage_written_variants": "mixed case plus 'Closed Won' / 'Closed Lost'",
+    "open_deals": 67,
+    "open_pipeline_value": 4732000.0,
+    "weighted_pipeline": 1810800.0,
+    "won_value": 728000.0,
+    "won_deals": 13,
+    "lost_deals": 10,
+    "blank_amount_lead_deals": [
+      "Amberly Cosmetics - Strategy offsite",
+      "Brixton Fasteners - Supply chain review",
+      "Orchard Valley Farms Co-op - Board advisory",
+      "Whitlock Aerospace Components - Supply chain review"
+    ],
+    "currency_string_amount_rows": 21,
+    "negative_amount_deal": {
+      "deal": "Parkstone Engineering - Cost reduction program",
+      "owner": "Leila Haddad",
+      "stage": "Lost",
+      "file_value": "-4,500.00",
+      "note": "Lost, so it is outside every open-pipeline and won figure whether flagged, zeroed, or kept."
+    },
+    "highest_amount": {
+      "deal": "Sable Point Lighthouse Foundation - Data strategy",
+      "owner": "Tomasz Nowak",
+      "stage": "Negotiation",
+      "file_value": "$185,000.00",
+      "numeric": 185000.0,
+      "text_sort_would_put_first": "Mosaic Staffing - Sales playbook"
+    },
+    "latest_expected_close": {
+      "deal": "Riverlane Apartments - Succession planning",
+      "owner": "Leila Haddad",
+      "file_value": "Jun 30 2027",
+      "iso": "2027-06-30",
+      "text_sort_would_put_first": "Xander Data Centers - Process redesign",
+      "text_sort_first_file_value": "September 08, 2026"
+    },
+    "per_rep": {
+      "Tomasz Nowak": {
+        "accounts": 28,
+        "contacts": 57,
+        "deals": 33,
+        "open_deals": 25,
+        "open_pipeline_value": 2014500.0,
+        "weighted_pipeline": 860950.0,
+        "won_deals": 4,
+        "lost_deals": 4,
+        "won_value": 130000.0,
+        "win_rate_percent": 50.0
+      },
+      "Leila Haddad": {
+        "accounts": 26,
+        "contacts": 47,
+        "deals": 30,
+        "open_deals": 23,
+        "open_pipeline_value": 1433500.0,
+        "weighted_pipeline": 490300.0,
+        "won_deals": 4,
+        "lost_deals": 3,
+        "won_value": 218000.0,
+        "win_rate_percent": 57.1
+      },
+      "Rahul Patel": {
+        "accounts": 18,
+        "contacts": 38,
+        "deals": 27,
+        "open_deals": 19,
+        "open_pipeline_value": 1284000.0,
+        "weighted_pipeline": 459550.0,
+        "won_deals": 5,
+        "lost_deals": 3,
+        "won_value": 380000.0,
+        "win_rate_percent": 62.5
+      }
+    },
+    "search_check": {
+      "term": "Coppermine Analytics",
+      "expected_results": 2,
+      "deals": [
+        "Coppermine Analytics - Operations assessment",
+        "Coppermine Analytics - Succession planning"
+      ]
+    },
+    "filter_check": {
+      "field": "Stage",
+      "value": "Proposal",
+      "expected_results": 17
+    },
+    "sort_check": {
+      "field": "Amount",
+      "direction": "descending",
+      "first": "Sable Point Lighthouse Foundation - Data strategy"
+    },
+    "export_check": {
+      "rows": 90,
+      "columns": [
+        "Deal",
+        "Account",
+        "Owner",
+        "Stage",
+        "Amount",
+        "Expected Close"
+      ]
+    },
+    "out_of_scope_deal": {
+      "deal": "Dunmore Hospitality - Board advisory",
+      "owner": "Tomasz Nowak",
+      "stage": "Lead"
+    },
+    "weighted_move_check": {
+      "deal": "Ashgrove Manufacturing - Operations assessment",
+      "owner": "Leila Haddad",
+      "amount": 65000.0,
+      "from_stage": "Proposal",
+      "to_stage": "Negotiation",
+      "probability_change": 0.25,
+      "weighted_increase": 16250.0,
+      "company_weighted_after_if_nothing_else_changed": 1827050.0,
+      "restricted_weighted_before": 490300.0,
+      "restricted_weighted_after": 506550.0
+    }
+  },
+  "changes": {
+    "1_win_rate": {
+      "definition": "win rate = Won deals / (Won + Lost deals) per rep, as a percent to one decimal",
+      "per_rep": {
+        "Tomasz Nowak": {
+          "won": 4,
+          "lost": 4,
+          "win_rate_percent": 50.0
+        },
+        "Leila Haddad": {
+          "won": 4,
+          "lost": 3,
+          "win_rate_percent": 57.1
+        },
+        "Rahul Patel": {
+          "won": 5,
+          "lost": 3,
+          "win_rate_percent": 62.5
+        }
+      },
+      "company": {
+        "won": 13,
+        "lost": 10,
+        "win_rate_percent": 56.5
+      },
+      "company_won_after_mark_won": 14,
+      "company_win_rate_after_mark_won_percent": 58.3,
+      "mark_won_check": {
+        "deal": "Nightingale Home Care - Annual retainer",
+        "owner": "Leila Haddad",
+        "stage": "Negotiation",
+        "amount": 18000.0,
+        "restricted_won_after": 5,
+        "restricted_lost": 3,
+        "restricted_win_rate_after_percent": 62.5,
+        "restricted_won_value_after": 236000.0
+      }
+    },
+    "2_kickoff_task": {
+      "close_date": "2026-09-17",
+      "close_weekday": "Thursday",
+      "due_date": "2026-09-22",
+      "friday_close_date": "2026-09-18",
+      "friday_due_date": "2026-09-23",
+      "rule": "due three working days after the close date, skipping Saturday and Sunday"
+    },
+    "3_verbal_commit": {
+      "stage_order": [
+        "Lead",
+        "Qualified",
+        "Proposal",
+        "Negotiation",
+        "Verbal commit",
+        "Won",
+        "Lost"
+      ],
+      "verbal_commit_probability": 0.9,
+      "rep_won_limit": 50000.0,
+      "move_deal": "Ashgrove Manufacturing - Operations assessment",
+      "move_amount": 65000.0,
+      "weighted_increase_negotiation_to_verbal": 9750.0,
+      "won_value_increase_on_approval": 65000.0,
+      "boundary_test_amount": 50000.0,
+      "won_value_after_approval": 793000.0,
+      "activity_check": {
+        "deal": "Ashgrove Manufacturing - Operations assessment",
+        "type": "call",
+        "date": "2026-09-14",
+        "note": "Pricing follow-up"
+      }
+    }
+  }
+}

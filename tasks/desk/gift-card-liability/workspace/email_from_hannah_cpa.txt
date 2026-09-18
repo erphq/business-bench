@@ -1,0 +1,19 @@
+From: Hannah Reyes <hannah@reyesbooks.cpa>
+To: Olivia <olivia@lanternrowspa.com>
+Date: Tue, 1 Sep 2026 16:05
+Subject: gift card liability for the year-end file
+
+Hi Olivia,
+
+For the August 31 year end I need the gift card liability card by card. A few things from last year:
+
+- The liability is only what customers paid for and have not used. The bonus cards you give away in promotions are not a liability. Cedarline logs them as Promo Issue, although the front desk sometimes rang them up as an Activation on a $0.00 ticket instead.
+- When a card only covers part of a bill, Cedarline puts the whole bill in Ticket Total. What actually came off the card is the Card Amount.
+- The Balance Import lines on 1 April 2023 are the Oakleaf SpaBook balances being carried over, not new money. The dates those cards were sold and last reloaded are only in the Oakleaf SpaBook export.
+- A card whose five years have run out (see the terms) comes off the liability; I book that balance as breakage. A card that was used up is just zero.
+- Cedarline's own balance report is not good enough, it ignores expiry.
+
+Please send a CSV with one line per card you sold: card_last4, liability (what you still owe on it at 31 August), and status - active, redeemed or expired.
+
+Thanks,
+Hannah

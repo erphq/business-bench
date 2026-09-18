@@ -1,0 +1,73 @@
+id: project-budget-burn
+track: desk
+category: bookkeeping
+title: West Gallery budget burn for the capital committee
+ask: |
+  Alma needs the West Gallery budget burn for the capital committee - where each cost code stands. Her email explains how she counts it. Save it as burn.xlsx.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  invoices billed against PO-2026-025 are already inside the PO; adding them to spent and the PO's full value to committed counts the fabrication work twice (checks: exhibit fabrication committed; total committed)
+- |-
+  PO-2026-025 has two approved change orders, one of them a deduction, plus a pending and a rejected one that are not commitments (check: exhibit fabrication committed)
+- |-
+  Seaboard Mechanical's final invoice on PO-2026-024 includes the dehumidifier on a change order that is still pending, so its invoices exceed the PO: spent takes every posted invoice and committed stops at zero instead of going negative (check: HVAC remaining)
+- |-
+  PO-2026-018 was closed short after the final invoice; the unbilled balance is not committed, while the small open electrical PO still is (check: electrical remaining)
+- |-
+  one Lumenharbor Lighting invoice was entered twice and the copy voided, and the AP export writes PO references as 'PO-2026-028', '2026-028', 'PO 28' and 'PO#028' (check: gallery lighting spent)
+- |-
+  the architect's, engineer's and permit invoices have no PO and carry their cost code directly; a join through POs alone drops them (check: design fees spent)
+- |-
+  PO-2026-031 to the replaced AV integrator was cancelled and commits nothing; the change order log writes POs as 'PO 25' and the budget sheet has a static TOTAL row (checks: total committed; total remaining)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: burn.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: burn.xlsx
+- type: xlsx_value_present
+  name: exhibit fabrication committed
+  path: burn.xlsx
+  expected: 107950.0
+  rel_tol: 1.0e-07
+  near_text: fabrication
+- type: xlsx_value_present
+  name: HVAC remaining
+  path: burn.xlsx
+  expected: 15750.0
+  rel_tol: 1.0e-07
+  near_text: hvac
+- type: xlsx_value_present
+  name: electrical remaining
+  path: burn.xlsx
+  expected: 21520.0
+  rel_tol: 1.0e-07
+  near_text: electrical
+- type: xlsx_value_present
+  name: gallery lighting spent
+  path: burn.xlsx
+  expected: 38512.5
+  rel_tol: 1.0e-07
+  near_text: lighting
+- type: xlsx_value_present
+  name: design fees spent
+  path: burn.xlsx
+  expected: 56758.12
+  rel_tol: 1.0e-07
+  near_text: design
+- type: xlsx_value_present
+  name: total committed
+  path: burn.xlsx
+  expected: 235464.63
+  rel_tol: 1.0e-07
+  near_text: total
+- type: xlsx_value_present
+  name: total remaining
+  path: burn.xlsx
+  expected: 240686.3
+  rel_tol: 1.0e-07
+  near_text: total

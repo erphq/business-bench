@@ -1,0 +1,13 @@
+Hi,
+
+The permission slips for the pumpkin farm trip on October 9 are scanned in the permission_slips folder. The office needs a consents.csv with one row for every student on my roster, with these columns:
+
+student_id, student_name, guardian_name, guardian_phone, form_returned, permission, photo_release, signed, date_signed
+
+student_name the way it is on the roster (First Last). guardian_name is the parent or guardian who filled in the slip. form_returned, permission, photo_release and signed are yes or no. date_signed as YYYY-MM-DD.
+
+A slip only counts if a parent or guardian signed it: if it isn't signed, put no for permission and photo release and leave the date blank. If a family sent in more than one slip, the most recent one is the one that counts. For anyone who hasn't returned a slip, put no in the yes/no columns and leave guardian, phone and date blank.
+
+Thank you!
+Amara Osei
+Room 4

@@ -1,0 +1,32 @@
+From: Orders <orders@bsgcraftbrewing.com>
+To: Leila Haddad <leila@tamarackbrewing.com>
+Date: Thu, 4 Sep 2026 10:12
+Subject: Your PO #4461 - line change
+
+Hi Leila,
+
+The manufacturer has discontinued Keg cap, red (KEG-CAP). We have cancelled line 2 of your PO #4461 (6 BX). The rest of the order is unaffected.
+
+Sorry for the trouble.
+
+-----Original Message-----
+
+From: Orders <orders@promoprintco.com>
+To: Leila Haddad <leila@tamarackbrewing.com>
+Date: Mon, 8 Sep 2026 15:40
+Subject: PO 4470 backorder
+
+Leila - we could only ship 4 of the 8 boxes of coaster, logo on PO 4470. The balance is backordered until December, so we have closed it out on our side. Place a new order when you want them.
+
+-----Original Message-----
+
+From: Leila Haddad <leila@tamarackbrewing.com>
+To: you
+Date: Wed, 10 Sep 2026 08:05
+Subject: FW: PO changes - open PO list please
+
+Forwarding the two vendor emails above. Both of those are done as far as we are concerned - we are not waiting on anything more from those lines.
+
+Can you work out what is actually still coming on our open POs? The PO report doesn't know about receiving, the dock log does. The dock tablet counts eaches, so I want every quantity in eaches. When something gets sent back to the vendor it's on the log as a Return, and the vendor owes us that quantity again.
+
+Columns: PO line (as it is on the PO report, like 4461-01), item, ordered, received, open, flag. One row for each line that still has something to come. If we got more than we ordered, list the line too with open as 0 and OVER in the flag so I can call the vendor; otherwise leave the flag blank.

@@ -1,0 +1,55 @@
+id: sales-pivot-by-rep
+track: desk
+category: spreadsheet
+title: Rep by month sales table from the invoice export
+ask: |
+  Kwame needs January to June sales for each rep by month, with totals, from the invoice export in this folder. Save it as sales_by_rep.xlsx and keep it live. His note has what counts.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the order desk typed Dana Cruz four ways (Dana Cruz, D. Cruz, 'Cruz, Dana', DANA CRUZ) and Christopher Walker two ways; a group-by on the raw Sales Rep column splits both across several rows (checks: Cruz H1 total; Walker H1 total)
+- |-
+  credit memos are exported with a trailing minus ('182.00-'); stripping to digits books them as sales and a strict number parse silently drops them (checks: Walker January; H1 total, all reps)
+- |-
+  every keg line carries a KEG DEPOSIT line and empty shells come back as KEG DEPOSIT RETURN credits; the note says deposits are not sales, and a plain sum of Ext Amount keeps them (checks: Walker January; H1 total, all reps)
+- |-
+  Priya Patel was on leave in April and has no rows at all; a pivot leaves her April cell blank where the note wants a 0 (check: Patel April reads 0)
+- 'totals across and down must be live formulas, not pasted values (check: live formulas)'
+- |-
+  the export carries a two-line preamble, CRLF endings and text amounts with thousands separators, and last half-year's report with a departed rep sits beside it (check: H1 total, all reps)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: sales_by_rep.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: sales_by_rep.xlsx
+- type: xlsx_value_present
+  name: Cruz H1 total (four spellings merged)
+  path: sales_by_rep.xlsx
+  expected: 37849.33
+  rel_tol: 1.0e-05
+  near_text: cruz
+- type: xlsx_value_present
+  name: Walker H1 total (two spellings merged)
+  path: sales_by_rep.xlsx
+  expected: 46374.5
+  rel_tol: 1.0e-05
+  near_text: walker
+- type: xlsx_value_present
+  name: Walker January (credits netted, deposits out)
+  path: sales_by_rep.xlsx
+  expected: 8513.69
+  rel_tol: 0.0001
+  near_text: walker
+- type: xlsx_value_present
+  name: H1 total, all reps
+  path: sales_by_rep.xlsx
+  expected: 245492.01
+  rel_tol: 1.0e-06
+  near_text: total
+- type: custom
+  name: Patel April reads 0
+  module: check.py

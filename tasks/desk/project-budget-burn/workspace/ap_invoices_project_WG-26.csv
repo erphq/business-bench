@@ -1,0 +1,31 @@
+﻿Invoice #,Vendor,Invoice Date,PO Ref,Cost Code (non-PO),Amount,Status
+MPA-2314,Marlow Pike Architects,01/29/2026,,WG-08,"$9,336.29",Posted
+CDA-2208,Coastline Demolition & Abatement,02/11/2026,PO-2026-017,,"$25,500.00",Posted
+MPA-3133,Marlow Pike Architects,02/11/2026,,WG-08,"$7,648.82",Posted
+BLD-9071,City of Tidewater Permits,02/16/2026,,WG-09,"$3,542.89",Posted
+HF-9376,Harbor & Finch Builders,02/27/2026,PO 15,,"$11,050.00",Posted
+HSE-7871,Holloway Structural Engineers,03/08/2026,,WG-08,"$5,034.70",Posted
+CDA-6409,Coastline Demolition & Abatement,03/15/2026,PO 17,,"$17,000.00",Posted
+BW6180,Brightwire Electrical Contractors,03/16/2026,PO-2026-018,,"$35,700.00",Posted
+HF-7634,Harbor & Finch Builders,03/28/2026,PO 15,,"$11,050.00",Posted
+MPA-9549,Marlow Pike Architects,03/31/2026,,WG-08,"$17,201.11",Posted
+SM-6458,Seaboard Mechanical,04/19/2026,PO#024,,"$26,100.00",Posted
+HF-8808,Harbor & Finch Builders,04/27/2026,PO#015,,"$11,050.00",Posted
+BW8815,Brightwire Electrical Contractors,05/09/2026,PO-2026-018,,"$40,800.00",Posted
+KES-5769,Keelhaul Exhibit Studio,05/19/2026,PO-2026-025,,"$42,600.00",Posted
+HF-4578,Harbor & Finch Builders,05/27/2026,PO-2026-015,,"$11,050.00",Posted
+LH5712,Lumenharbor Lighting,06/11/2026,PO#028,,"$23,700.00",Posted
+SM-6328,Seaboard Mechanical,06/11/2026,2026-024,,"$39,150.00",Posted
+LH2501,Lumenharbor Lighting,06/15/2026,PO 28,,"$23,700.00",Void
+KES-3044,Keelhaul Exhibit Studio,06/24/2026,PO-2026-025,,"$46,860.00",Posted
+HF-5617,Harbor & Finch Builders,06/26/2026,PO#015,,"$11,050.00",Posted
+BW2528,Brightwire Electrical Contractors,07/08/2026,PO 21,,"$3,800.00",Posted
+MPA-7410,Marlow Pike Architects,07/13/2026,,WG-08,"$17,537.20",Posted
+BW9541,Brightwire Electrical Contractors,07/17/2026,PO#018,,"$19,380.00",Posted
+INSP-6855,City of Tidewater Permits,07/22/2026,,WG-09,$782.69,Posted
+HF-2553,Harbor & Finch Builders,07/26/2026,2026-015,,"$11,050.00",Posted
+SM-4130,Seaboard Mechanical,08/06/2026,PO#024,,"$34,000.00",Posted
+LH6194,Lumenharbor Lighting,08/15/2026,2026-028,,"$14,812.50",Posted
+STM-8807,Signal & Tide Media,08/18/2026,2026-030,,"$4,172.87",Posted
+KES-6451,Keelhaul Exhibit Studio,08/19/2026,PO#025,,"$38,340.00",Posted
+HF-9725,Harbor & Finch Builders,08/27/2026,PO#015,,"$11,050.00",Posted

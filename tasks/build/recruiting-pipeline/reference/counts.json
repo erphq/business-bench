@@ -1,0 +1,481 @@
+{
+  "seed": 0,
+  "attempt": 11,
+  "baseline": {
+    "STAFF_ROLE": "Hiring manager",
+    "VIEWER_ROLE": "Read-only (the CEO)",
+    "MAIN_ENTITY": "candidate",
+    "MAIN_ENTITY_PLURAL": "candidates",
+    "restricted_user": "Ken Okafor",
+    "SCOPE_COUNT": 87,
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "candidate": "Matthew Adams",
+      "req": "REQ-0139",
+      "title": "Sales Manager",
+      "manager": "Maria Santos"
+    },
+    "KPI_1": {
+      "name": "active candidates",
+      "value": 102,
+      "scoped_value": 45,
+      "definition": "people with at least one application at Applied, Screen, Interview, or Offer"
+    },
+    "KPI_2": {
+      "name": "open roles",
+      "value": 21
+    },
+    "KPI_3": {
+      "name": "offers out",
+      "value": 5
+    },
+    "KPI_4": {
+      "name": "average time to hire (days)",
+      "value": 33.6,
+      "hires_counted": 31,
+      "naive_including_impossible_row": 31.2
+    },
+    "SEARCH_TERM": "Mitchell",
+    "SEARCH_COUNT": 3,
+    "search_hits": [
+      "Jason Mitchell",
+      "Donna Mitchell",
+      "Brian Mitchell"
+    ],
+    "FILTER_FIELD": "source",
+    "FILTER_VALUE": "Agency",
+    "FILTER_COUNT": 21,
+    "SORT_FIELD": "expected salary",
+    "SORT_TOP": {
+      "candidate": "Jeffrey Gray",
+      "expected_salary": 266000,
+      "file_value": "$266,000"
+    },
+    "text_sort_top_would_be": {
+      "candidate": "Deborah Watson",
+      "file_value": "97000"
+    },
+    "EXPORT_ROWS": 196,
+    "EXPORT_COLUMNS": [
+      "name",
+      "email",
+      "role",
+      "stage",
+      "source"
+    ],
+    "REQUIRED_FIELD": "an email address"
+  },
+  "roles": {
+    "file_rows_excluding_header": 63,
+    "exact_duplicate_rows": 2,
+    "unique_roles": 61,
+    "by_status": {
+      "Open": 21,
+      "On hold": 5,
+      "Filled": 31,
+      "Cancelled": 4
+    },
+    "per_manager": {
+      "Ken Okafor": 23,
+      "Maria Santos": 16,
+      "Jordan Reyes": 12,
+      "Aisha Bello": 10
+    },
+    "manager_spellings_in_file": [
+      "Aisha Bello",
+      "J. Reyes",
+      "Jordan Reyes",
+      "K. Okafor",
+      "Ken Okafor",
+      "M. Santos",
+      "Maria Santos",
+      "Okafor, Ken",
+      "Santos, Maria"
+    ],
+    "ken_open_roles": 9,
+    "highest_salary_max": {
+      "req": "REQ-0101",
+      "title": "Machine Learning Engineer",
+      "salary_max": 250000,
+      "file_value": "$250,000",
+      "text_sort_top_would_be": {
+        "req": "REQ-0156",
+        "file_value": "85000"
+      }
+    },
+    "linked_role_example": {
+      "req": "REQ-0142",
+      "title": "QA Automation Engineer",
+      "manager": "Ken Okafor",
+      "applications": 11,
+      "id_forms_in_candidates_file": [
+        "142",
+        "REQ-0142",
+        "REQ-142"
+      ]
+    },
+    "status_words": {
+      "Open": [
+        "Open",
+        "open"
+      ],
+      "Filled": [
+        "Filled",
+        "Closed - filled"
+      ],
+      "On hold": [
+        "On hold",
+        "On Hold"
+      ],
+      "Cancelled": [
+        "Cancelled"
+      ]
+    },
+    "offer_band_test_role": {
+      "req": "REQ-0161",
+      "title": "Senior Backend Engineer",
+      "manager": "Ken Okafor",
+      "salary_min": 150000,
+      "salary_max": 185000,
+      "file_values": {
+        "Salary Min": "150k",
+        "Salary Max": "$185,000"
+      },
+      "openings": 1,
+      "applications": 0,
+      "over_band_offer": 190000
+    }
+  },
+  "candidates": {
+    "file_rows_excluding_header": 211,
+    "exact_duplicate_rows": 6,
+    "same_email_different_case_rows": 4,
+    "unique_candidates": 196,
+    "unique_applications": 201,
+    "dedupe_rule": "A candidate is a person, keyed by Email after trimming and lowercasing; each person keeps every distinct role they applied to. Rows repeating the same person and role collapse into one application. Same name with different emails = different people.",
+    "req_id_forms": [
+      "REQ-0131",
+      "131",
+      "REQ-131"
+    ],
+    "duplicate_rows": [
+      {
+        "candidate": "Carol Tanaka",
+        "email_as_written": "caroltanaka21@aol.com",
+        "kind": "exact_duplicate",
+        "file_line": 15
+      },
+      {
+        "candidate": "Jason Ross",
+        "email_as_written": "ross.jason@GMAIL.COM",
+        "kind": "same_email_different_case",
+        "file_line": 35
+      },
+      {
+        "candidate": "Donna Mitchell",
+        "email_as_written": "DONNAMITCHELL7@OUTLOOK.COM",
+        "kind": "same_email_different_case",
+        "file_line": 60
+      },
+      {
+        "candidate": "Amara Nelson",
+        "email_as_written": "amara.nelson@HOTMAIL.COM",
+        "kind": "same_email_different_case",
+        "file_line": 75
+      },
+      {
+        "candidate": "Yuki Murphy",
+        "email_as_written": "murphy.yuki@hotmail.com",
+        "kind": "exact_duplicate",
+        "file_line": 93
+      },
+      {
+        "candidate": "Dana Thompson",
+        "email_as_written": "dthompson@yahoo.com",
+        "kind": "exact_duplicate",
+        "file_line": 126
+      },
+      {
+        "candidate": "Linda Kim",
+        "email_as_written": "linda.kim@outlook.com",
+        "kind": "exact_duplicate",
+        "file_line": 175
+      },
+      {
+        "candidate": "Priya Myers",
+        "email_as_written": "priyamyers19@hotmail.com",
+        "kind": "exact_duplicate",
+        "file_line": 185
+      },
+      {
+        "candidate": "Steven Murphy",
+        "email_as_written": "stevenmurphy18@me.com",
+        "kind": "exact_duplicate",
+        "file_line": 191
+      },
+      {
+        "candidate": "Omar Nelson",
+        "email_as_written": "OMARNELSON97@GMAIL.COM",
+        "kind": "same_email_different_case",
+        "file_line": 203
+      }
+    ],
+    "dual_applicants": [
+      {
+        "candidate": "Brian Mitchell",
+        "email": "brian.mitchell@hotmail.com",
+        "roles": [
+          {
+            "req": "REQ-0136",
+            "title": "Implementation Consultant",
+            "manager": "Jordan Reyes",
+            "stage": "Applied"
+          },
+          {
+            "req": "REQ-0150",
+            "title": "QA Automation Engineer",
+            "manager": "Ken Okafor",
+            "stage": "Screen"
+          }
+        ]
+      },
+      {
+        "candidate": "Sofia Richardson",
+        "email": "srichardson@yahoo.com",
+        "roles": [
+          {
+            "req": "REQ-0113",
+            "title": "Onboarding Specialist",
+            "manager": "Jordan Reyes",
+            "stage": "Rejected"
+          },
+          {
+            "req": "REQ-0121",
+            "title": "Frontend Engineer",
+            "manager": "Ken Okafor",
+            "stage": "Withdrawn"
+          }
+        ]
+      },
+      {
+        "candidate": "Barbara Carter",
+        "email": "barbara.carter@aol.com",
+        "roles": [
+          {
+            "req": "REQ-0143",
+            "title": "Product Manager",
+            "manager": "Aisha Bello",
+            "stage": "Screen"
+          },
+          {
+            "req": "REQ-0138",
+            "title": "Staff Platform Engineer",
+            "manager": "Ken Okafor",
+            "stage": "Interview"
+          }
+        ]
+      },
+      {
+        "candidate": "Laura Ramos",
+        "email": "ramos.laura@protonmail.com",
+        "roles": [
+          {
+            "req": "REQ-0133",
+            "title": "Security Engineer",
+            "manager": "Ken Okafor",
+            "stage": "Withdrawn"
+          },
+          {
+            "req": "REQ-0108",
+            "title": "Product Analyst",
+            "manager": "Aisha Bello",
+            "stage": "Rejected"
+          }
+        ]
+      },
+      {
+        "candidate": "Richard Perez",
+        "email": "perez.richard@hotmail.com",
+        "roles": [
+          {
+            "req": "REQ-0135",
+            "title": "Senior Backend Engineer",
+            "manager": "Ken Okafor",
+            "stage": "Applied"
+          },
+          {
+            "req": "REQ-0143",
+            "title": "Product Manager",
+            "manager": "Aisha Bello",
+            "stage": "Applied"
+          }
+        ]
+      }
+    ],
+    "dual_active_with_ken_role": {
+      "candidate": "Brian Mitchell",
+      "email": "brian.mitchell@hotmail.com",
+      "roles": [
+        {
+          "req": "REQ-0136",
+          "title": "Implementation Consultant",
+          "manager": "Jordan Reyes",
+          "stage": "Applied"
+        },
+        {
+          "req": "REQ-0150",
+          "title": "QA Automation Engineer",
+          "manager": "Ken Okafor",
+          "stage": "Screen"
+        }
+      ]
+    },
+    "same_name_pair": {
+      "name": "Rebecca Phillips",
+      "first": {
+        "email": "rebecca.phillips@gmail.com",
+        "req": "REQ-0149",
+        "title": "Product Manager"
+      },
+      "second": {
+        "email": "rphillips69@outlook.com",
+        "req": "REQ-0145",
+        "title": "Technical Writer"
+      }
+    },
+    "k_salary_example": {
+      "candidate": "Susan Williams",
+      "file_value": "159k",
+      "value": 159000
+    },
+    "impossible_hire": {
+      "candidate": "Carol Alvarez",
+      "req": "REQ-0110",
+      "days": -43,
+      "applied": "2025-12-13",
+      "hired_on": "2025-10-31",
+      "file_values": {
+        "Applied": "2025-12-13",
+        "Hired On": "10/31/2025"
+      }
+    },
+    "stage_mapping": {
+      "Applied": [
+        "Applied",
+        "Applied",
+        "New applicant"
+      ],
+      "Screen": [
+        "Phone Screen",
+        "Screening"
+      ],
+      "Interview": [
+        "Interview",
+        "Onsite"
+      ],
+      "Offer": [
+        "Offer",
+        "Offer Extended"
+      ],
+      "Hired": [
+        "Hired"
+      ],
+      "Rejected": [
+        "Rejected",
+        "Rejected",
+        "Not selected"
+      ],
+      "Withdrawn": [
+        "Withdrawn"
+      ],
+      "Declined offer": [
+        "Offer declined"
+      ]
+    },
+    "by_stage_applications": {
+      "Applied": 51,
+      "Screen": 31,
+      "Interview": 18,
+      "Offer": 5,
+      "Hired": 32,
+      "Rejected": 48,
+      "Withdrawn": 14,
+      "Declined offer": 2
+    },
+    "naive_alternatives": {
+      "rows": 211,
+      "exact_repeats_removed": 205,
+      "one_per_application": 201,
+      "people_with_case_sensitive_email": 200,
+      "people_merged_by_name": 195
+    }
+  },
+  "time_to_hire": {
+    "definition": "days from Applied to Hired On, averaged over hired applications, excluding the impossible row",
+    "hires": 32,
+    "hires_counted": 31,
+    "average_days": 33.6,
+    "naive_including_impossible_row": 31.2,
+    "by_department": {
+      "Engineering": {
+        "hires": 12,
+        "average_days": 32.0
+      },
+      "Sales": {
+        "hires": 11,
+        "average_days": 33.4
+      },
+      "Customer Success": {
+        "hires": 5,
+        "average_days": 34.4
+      },
+      "Product & Design": {
+        "hires": 3,
+        "average_days": 39.7
+      }
+    }
+  },
+  "changes": {
+    "c1_pipeline_role": {
+      "req": "REQ-0142",
+      "title": "QA Automation Engineer",
+      "by_stage": {
+        "Applied": 1,
+        "Screen": 3,
+        "Interview": 4,
+        "Offer": 0,
+        "Hired": 0,
+        "Rejected": 1,
+        "Withdrawn": 2,
+        "Declined offer": 0
+      }
+    },
+    "c1_offer_acceptance": {
+      "hired": 32,
+      "declined": 2,
+      "rate_percent": 94.1
+    },
+    "c1_ken_roles": 23,
+    "c1_offer_acceptance_bounds_percent": [
+      94.0,
+      94.2
+    ]
+  },
+  "test_inputs": {
+    "role": "REQ-0161",
+    "candidates": [
+      "QA Alex Stone",
+      "QA Blair Stone"
+    ],
+    "interview": {
+      "interviewer": "Ken Okafor",
+      "first": "10:00 for 60 minutes",
+      "overlapping": "10:30 for 60 minutes",
+      "next_free": "11:00 for 60 minutes"
+    },
+    "offers": {
+      "approved_offer": 180000,
+      "over_band": 190000,
+      "at_band_max": 185000
+    }
+  }
+}

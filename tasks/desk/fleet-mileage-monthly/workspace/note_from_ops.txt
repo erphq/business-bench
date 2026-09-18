@@ -1,0 +1,15 @@
+Mileage for the insurance renewal
+
+The carrier wants miles driven per van for each month January through June. The only odometer we have is
+what the guys punch in at the pump, so it comes from the fuel card export. Go by the day they fueled, and a
+month's miles are the last reading in that month minus the last reading before it.
+
+If a van has no reading at all in a month, do not put 0 - the van was out working, we just don't have a
+number. Leave the miles empty and flag it. The next month with a reading then covers everything since
+the last one; flag that month too so nobody thinks it was a monster month.
+
+Anything the shop did that touches the odometer is in the shop log.
+
+One line per van per month please: vehicle (like VAN-01), month (2026-01), miles, flag.
+
+- Tom

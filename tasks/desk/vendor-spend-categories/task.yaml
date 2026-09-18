@@ -1,0 +1,60 @@
+id: vendor-spend-categories
+track: desk
+category: spreadsheet
+title: Year-to-date spend by vendor and category
+ask: |
+  The owners want to see what we've spent this year with each vendor, grouped into Deb's categories. Build vendor_spend.xlsx from the AP export and keep the totals live - the email thread has the details.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  vendor names are typed two to five ways ('Sysco Savannah', 'SYSCO SAVANNAH INC', 'Sysco  Savannah', 'sysco savannah llc'); a pivot on the raw Vendor column splits every vendor and matches few of them to Deb's list (checks: Sysco Savannah spend; total spend)
+- |-
+  vendor credits are exported with positive amounts and Type = Credit; summing the column adds them to spend instead of taking them off, most visibly for Coastal Linen Service (checks: Coastal Linen spend; total spend)
+- |-
+  Lowcountry Supply Co is on Deb's list twice, under Repairs & Maintenance first; a lookup takes the first row, and Deb's email puts the vendor under Housekeeping & Amenities (checks: Housekeeping & Amenities total; Repairs & Maintenance total)
+- |-
+  four bills are voided but stay in the export with their original amounts (check: total spend)
+- |-
+  amounts are text with thousands separators under a two-line preamble with a BOM and CRLF endings, and the category totals must be live formulas that recalculate clean (checks: live formulas; no error cells)
+checks:
+- type: file_exists
+  name: vendor_spend.xlsx exists
+  path: vendor_spend.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: vendor_spend.xlsx
+  min_count: 8
+- type: xlsx_no_errors
+  name: no error cells
+  path: vendor_spend.xlsx
+- type: xlsx_value_present
+  name: Sysco Savannah spend
+  path: vendor_spend.xlsx
+  expected: 32649.25
+  rel_tol: 1.0e-05
+  near_text: sysco
+- type: xlsx_value_present
+  name: Coastal Linen spend
+  path: vendor_spend.xlsx
+  expected: 24285.67
+  rel_tol: 1.0e-05
+  near_text: coastal linen
+- type: xlsx_value_present
+  name: Housekeeping & Amenities total
+  path: vendor_spend.xlsx
+  expected: 13621.28
+  rel_tol: 1.0e-05
+  near_text: housekeeping
+- type: xlsx_value_present
+  name: Repairs & Maintenance total
+  path: vendor_spend.xlsx
+  expected: 4094.27
+  rel_tol: 0.0001
+  near_text: repairs
+- type: xlsx_value_present
+  name: total spend
+  path: vendor_spend.xlsx
+  expected: 141529.47
+  rel_tol: 1.0e-06
+  near_text: total

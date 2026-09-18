@@ -1,0 +1,35 @@
+KEYSTONE MAILING SERVICES - address standards for client lists
+(condensed from USPS Publication 28; lists that do not meet this are returned or surcharged)
+
+1. Capital letters. No periods or commas anywhere in the address.
+2. Delivery Address is one line: number, pre-directional, street name, suffix,
+   post-directional, then the secondary unit. Anything on a second address line
+   (apartment, suite, unit) moves to the end of the Delivery Address.
+3. Street suffixes use the USPS abbreviation. Accepted spellings we see on client lists:
+  ST    Street, St, St., Str
+  AVE   Avenue, Ave, Ave., Av
+  RD    Road, Rd, Rd.
+  DR    Drive, Dr, Dr.
+  LN    Lane, Ln, Ln.
+  CT    Court, Ct, Ct.
+  BLVD  Boulevard, Blvd, Blvd.
+  PL    Place, Pl, Pl.
+  CIR   Circle, Cir, Cir.
+  PKWY  Parkway, Pkwy, Pky
+  TER   Terrace, Ter, Terr
+  TRL   Trail, Trl
+  WAY   Way
+4. Directionals: NORTH N, SOUTH S, EAST E, WEST W, NORTHEAST NE, NORTHWEST NW,
+   SOUTHEAST SE, SOUTHWEST SW, before or after the street name.
+   Exception: when the direction word IS the street name (the word right before the
+   suffix, e.g. 45 North Street), keep it spelled out: 45 NORTH ST.
+5. Secondary unit designators: APARTMENT APT, SUITE STE, UNIT UNIT, BUILDING BLDG,
+   FLOOR FL, ROOM RM. If the list only shows #, write # then a space then the number
+   (22 OAK ST # 5).
+6. Post office boxes: PO BOX 123.
+7. City in capitals. State as the two-letter postal code.
+8. ZIP Code: five digits, keeping leading zeros (05401). If the list has the ZIP+4, keep it
+   as 12345-6789.
+
+Import file columns, in this order: Customer ID, Full Name, Delivery Address, City, State,
+ZIP Code. Full Name in capitals.

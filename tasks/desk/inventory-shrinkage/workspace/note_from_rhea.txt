@@ -1,0 +1,18 @@
+Shrinkage for the insurance renewal and the accountant
+
+We counted the floor Sunday night after we closed at 5. I did not get the on-hand report out of the POS until
+Monday late morning, after we had opened, sold things and put away the Monday delivery - so the report is not what
+we had on the shelves when we counted. Anything that happened after 5 pm Sunday and before the report ran needs
+taking back out of it.
+
+The damaged stuff in the back room (torn bags, dented cans, the cracked tank) was pulled before the count, so it
+was not counted. Some of it I already wrote off in the POS, some I have not. Damage is not shrinkage - show it on its
+own line.
+
+The accountant wants shrinkage at our average cost, not retail, net by department (if we found extra of something,
+that offsets what is missing in the same department), as a positive dollar figure when we are short, and a total.
+Anything the count sheet left blank was not counted - leave it out, do not treat it as zero.
+
+Please make it shrinkage.xlsx with formulas so she can follow it.
+
+- Rhea

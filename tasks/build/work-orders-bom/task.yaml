@@ -1,0 +1,63 @@
+id: work-orders-bom
+track: build
+category: manufacturing
+title: Work orders against bills of materials for a small manufacturer, with availability checks, stock moves, WIP, and a dashboard
+ask: |
+  We make stainless steel work tables, carts, and shelving on three production lines, and I need to run
+  our work orders against our bills of materials. Before a work order starts, the app has to check that
+  we have enough of every component on the shelf; starting it takes those parts out of stock, and
+  finishing it puts the finished units into stock. Our parts list, bills of materials, and work orders
+  are attached; they came out of spreadsheets and aren't clean, so check them rather than trusting every
+  row. I want team logins with different access: each line supervisor sees and runs only their own
+  line's work orders, and our accountant can see everything but change nothing. Give me a dashboard
+  showing what's open and what we have tied up in work in progress, an admin login for me, and a login
+  for Sam Whitaker, who supervises Line 2.
+seed:
+  - seed/parts.csv
+  - seed/boms.csv
+  - seed/work_orders.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for Sam Whitaker, supervisor of Line 2.
+      password: Sam's password.
+    notes: >
+      Free text. Must say the restricted login is Sam Whitaker. May include other supervisor logins, how
+      to invite users, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "owner@example.com", "password": "..."},
+      "restricted": {"user": "sam@example.com", "password": "..."},
+      "notes": "restricted login is Sam Whitaker (Line 2 - Carts). Restart: systemctl restart shopfloor."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 21, 24]  # "first usable" = these pass
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - part numbers are six digits but 23 parts.csv rows and many boms.csv lines drop the leading zeros ("1040" for 001040); unpadded BOM lines must still link, or BOMs lose components and every cost is wrong (items 15, 16, 18)
+  - parts.csv repeats 3 rows and repeats 2 parts under the other form of their number ("2032" / "002032"), 93 rows -> 88 parts; 002041 and 002070 are among the repeats and are below their reorder points, so a naive count says 8 parts low instead of 6 (items 15, 8)
+  - on-hand quantities like "2,400" and "1,066" carry thousands separators (item 15, item 22)
+  - boms.csv repeats 4 lines, including CRT-BUS-3S's 003010 x 24 and TBL-2448's 003010 x 8; summing repeats gives 48 and a 280.00 roll-up instead of 276.16 (items 16, 18)
+  - SHF-WALL-36's BOM points at component 9950, which is not in the parts list; flag it, don't drop it or invent a part silently (item 17)
+  - unit costs mix "$165.28", "20.20", and "0.1" (items 18, 25)
+  - work_orders.csv repeats WO-3174 (in progress) and WO-3123 and exports WO-3131 as "3131"; counting the repeat gives WIP 68,266.24 instead of 65,174.24 and 10 in progress (items 8, 19, 25)
+  - line and status words come in several forms (L2, Carts, Line 2; WIP, Rel., Closed, Void, planned); an exact-string line filter under-counts Sam's 35 work orders (items 6, 10, 19)
+  - WO-3181 is due 9/17/2026 but starts 2026-09-20; dates mix ISO, US, "17-Sep-26", and "Sep 17 2026" (items 20, change item 28)
+  - availability is quantity per unit x work order quantity against on hand: CRT-2436-2S x 24 is short 8 casters; issuing on start and receiving on completion must each happen exactly once, and completing before starting or beyond the quantity must be refused (items 21 to 24)

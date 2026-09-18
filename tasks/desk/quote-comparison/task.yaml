@@ -1,0 +1,70 @@
+id: quote-comparison
+track: desk
+category: extraction
+title: Compare three laptop quotes (USD/EUR, hidden fees) and recommend one
+ask: 'Compare these three quotes for the 40 laptops and tell me which to pick. Put
+  the numbers in comparison.xlsx and a short recommendation in recommendation.md.
+
+  '
+followup: null
+timeout_s: 1200
+traps:
+- Kestrel GmbH quotes in EUR with a quantity-break price list and prints no extended
+  total. The 40+ tier (EUR 1.231,00 in German number format) applies; shipping is
+  included (DAP) and no VAT is charged on the export. Unconverted, EUR 49,240 looks
+  cheapest of all three; converted at the owner's 1.08 it is the most expensive (USD
+  53,179.20). Using the 1-19 or 20-39 tier also gives a wrong figure.
+- Bluepine has the lowest unit price and shows an "Equipment subtotal" of 47,800 prominently,
+  but a mandatory one-time onboarding & imaging fee (3,300) and freight (1,070) sit
+  under "Additional charges" with no grand total printed. Ignoring the fee makes Bluepine
+  look cheapest (48,870); including everything it is second (52,170).
+- Northstar's 3% early-payment discount lives in the terms text and applies only if
+  paid within 10 days. The reference delivered total is the quoted Net-30 total (50,835
+  incl. 635 freight); even if the discount were taken (49,329) Northstar stays cheapest,
+  so the ranking does not depend on it.
+- Cheapest delivered is Northstar; best value is Bluepine. The owner says warranty
+  matters. Bluepine is 36 months on-site next-business-day for about 2.6% more than
+  Northstar (24 months return-to-depot); Kestrel is the priciest and only 12 months
+  bring-in to Hamburg. The reference recommendation is Bluepine, with the 8-week lead
+  time flagged and Northstar named as the fallback if timing matters.
+- No text_not_contains check is used for a wrong recommendation - phrases like "recommend
+  Kestrel" appear naturally in correct memos ("I do not recommend Kestrel"), so it
+  would false-positive. Note that text_contains_all on the vendor name is a weak check
+  on its own since any comparison memo names all three vendors.
+- Expected values below are pinned to seed 0 (gen.py prints them for other seeds).
+- 'Verifier note: the pick itself is a judgment call (Bluepine on warranty vs Northstar
+  on price with a warranty upgrade); the memo is graded on stating the correct delivered
+  totals and weighing warranty, not on which vendor it names.'
+checks:
+- type: file_exists
+  name: comparison.xlsx exists
+  path: comparison.xlsx
+- type: xlsx_value_present
+  name: Northstar delivered total (incl. freight, no early-pay discount)
+  path: comparison.xlsx
+  expected: 50835.0
+  rel_tol: 0.01
+  near_text: northstar
+- type: xlsx_no_errors
+  name: no formula evaluates to an error
+  path: comparison.xlsx
+- type: xlsx_value_present
+  name: Kestrel delivered total in USD (40+ tier x 1.08, shipping included)
+  path: comparison.xlsx
+  expected: 53179.2
+  rel_tol: 0.01
+  near_text: kestrel
+- type: xlsx_value_present
+  name: Bluepine delivered total (incl. mandatory onboarding fee and freight)
+  path: comparison.xlsx
+  expected: 52170.0
+  rel_tol: 0.01
+  near_text: bluepine
+- type: custom
+  name: memo prices the vendor it recommends
+  module: check.py
+- type: text_contains_all
+  name: memo weighs warranty
+  path: recommendation.md
+  phrases:
+  - warranty

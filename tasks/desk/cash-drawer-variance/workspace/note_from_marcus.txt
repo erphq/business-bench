@@ -1,0 +1,22 @@
+Cash drawer check - August
+
+I think we are losing cash somewhere and I want to see it day by day before I talk to the closers.
+
+How closing works here:
+- Two drawers: the front desk (haircuts) and the retail counter (products). Both start the day with a $150 float that
+  stays in the drawer overnight.
+- At close, whoever is on pays the barbers their card tips in cash out of the front drawer. Cash tips go straight into
+  the barbers' pockets and never touch a drawer - the POS only records them for payroll.
+- Paid outs (towels, coffee and so on) come out of the drawer during the day and the POS already knows about them.
+- Then both drawers' cash, less the floats, goes in ONE bag, and the bag goes in the night drop at Summit the next
+  morning we are open. We are closed Mondays, so Sunday's bag goes in on Tuesday.
+- Card sales settle to the account by themselves, so ignore those.
+- Once in a while the credit union counts a bag differently and posts an adjustment a few days later that names the
+  deposit. That is still that bag.
+
+What I want back is drawer_variance.csv, one row for every day we were open in August: the date (like 2026-08-04),
+what should have gone in the bag (expected_deposit), what the bank actually credited for that day's bag after any
+adjustment (deposited), the variance (deposited minus expected, so short is negative), and a note on any day that is
+off saying what you found.
+
+- Marcus

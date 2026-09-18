@@ -1,0 +1,76 @@
+id: inventory-count-reconcile
+track: desk
+category: spreadsheet
+title: Reconcile the physical count against the system stock
+ask: |
+  We counted the warehouse on Saturday. Compare the two count sheets against the stock export and give me variances.csv; Rosa's email explains how the count went.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  counters wrote cases and eaches under five unit spellings (cs, CS, case, cases, ea, each, pcs, units); case lines convert with the export's case quantity (check: counted quantity in each)
+- |-
+  bin A14 is on both sheets, Maria in cases and Devon in eaches; counted once it matches the system, counted twice it becomes a false variance (check: items that are off)
+- |-
+  two SKUs have negative system stock; the variance is against the negative figure, not against zero (check: system quantity and variance)
+- |-
+  five of Maria's lines use old SKUs from the August relabel list; joined as written they look like unknown items and the real items look uncounted (check: items that are off)
+- |-
+  four bins were never counted, so those items are off by their full system quantity and must appear (check: items that are off)
+- |-
+  the stock export carries a BOM, CRLF line ends and a two-line preamble; two items sit in two bins and must be summed (check: system quantity and variance)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: variances.csv
+  columns:
+  - sku
+  - system_qty
+  - counted_qty
+  - variance
+- type: csv_set_equal
+  name: items that are off
+  path: variances.csv
+  column: sku
+  ref: variances.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: variances.csv
+  equals_ref: variances.csv
+- type: csv_values_match
+  name: counted quantity in each
+  path: variances.csv
+  ref: variances.csv
+  key: sku
+  columns:
+  - counted_qty
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+  must_match_keys:
+  - NJ-1103
+  - NJ-1110
+  - NJ-1123
+  - NJ-1206
+  - NJ-1245
+  - NJ-1263
+  - NJ-1282
+  - NJ-1294
+  - NJ-1340
+- type: csv_values_match
+  name: system quantity and variance
+  path: variances.csv
+  ref: variances.csv
+  key: sku
+  columns:
+  - system_qty
+  - variance
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+  must_match_keys:
+  - NJ-1123
+  - NJ-1110

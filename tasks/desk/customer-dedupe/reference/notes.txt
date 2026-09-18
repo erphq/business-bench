@@ -1,0 +1,3 @@
+seed=0
+vip_emails=['amy.n@juniperstreet.cafe', 'anthony_patel@gmail.com', 'ashleywilliams24@icloud.com', 'dbennett@gmail.com', 'elizabeth_ruiz@icloud.com', 'hiroshiking2@gmail.com', 'jacobrodriguez50@gmail.com', 'jennifer.cooper@gmail.com', 'jgray@everline.com', 'jkim@icloud.com', 'kevin_cooper@gmail.com', 'rebecca.g@acmeindustrial.com', 'richardlindqvist20@outlook.com', 'scottharris29@yahoo.com', 'stephen_ramos@gmail.com']
+must_match_keys=['amy.n@juniperstreet.cafe', 'anthony_patel@gmail.com', 'jacobrodriguez50@gmail.com', 'jgray@everline.com', 'kevin_cooper@gmail.com']

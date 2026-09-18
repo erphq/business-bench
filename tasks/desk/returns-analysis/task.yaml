@@ -1,0 +1,74 @@
+id: returns-analysis
+track: desk
+category: reports
+title: Q2 return rate by product and reason
+ask: |
+  Put together a Q2 returns report for me from the order and returns exports in this folder: return rate by product and a breakdown of why things come back. Mateo's note explains how we bucket the reasons. Save it as returns.xlsx with live formulas.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  exchanges and store credits are returns for the rate, but only refunds and store credits are refunded dollars; the export prints an amount on exchange rows too (checks: units returned for the jacket; return rates, quarter total and the jacket; refunded dollars)
+- |-
+  the Type column carries eleven spellings of three types ("Refund", "REFUND", "Exch", "Store credit", ...) (check: refunded dollars)
+- |-
+  reasons are free text; the note maps keywords to five buckets (checks: sizing units; damaged units)
+- |-
+  Camp Stove became Summit Stove on May 1 with the same SKU CS-01; both names appear in both exports (checks: renamed product units sold; renamed product units returned)
+- |-
+  the returns export has a two-line preamble, a BOM, CRLF line endings, US dates and "$12.00" text amounts (check: refunded dollars)
+- |-
+  a Q1 returns export sits in the folder as a distractor; only Q2 counts (checks: total units returned; return rates, quarter total and the jacket)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: returns.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no formula errors
+  path: returns.xlsx
+- type: xlsx_value_present
+  name: renamed product units sold
+  path: returns.xlsx
+  expected: 136
+  rel_tol: 0.001
+  near_text: summit stove
+- type: xlsx_value_present
+  name: renamed product units returned
+  path: returns.xlsx
+  expected: 8
+  rel_tol: 0.001
+  near_text: summit stove
+- type: xlsx_value_present
+  name: units returned for the jacket (exchanges count)
+  path: returns.xlsx
+  expected: 12
+  rel_tol: 0.001
+  near_text: trail jacket m
+- type: xlsx_value_present
+  name: refunded dollars
+  path: returns.xlsx
+  expected: 5093.0
+  rel_tol: 0.0001
+  near_text: refund
+- type: xlsx_value_present
+  name: total units returned
+  path: returns.xlsx
+  expected: 139
+  rel_tol: 0.001
+  near_text: total
+- type: custom
+  name: return rates, quarter total and the jacket
+  module: check.py
+- type: xlsx_value_present
+  name: sizing units
+  path: returns.xlsx
+  expected: 18
+  rel_tol: 0.001
+  near_text: sizing
+- type: xlsx_value_present
+  name: damaged units
+  path: returns.xlsx
+  expected: 42
+  rel_tol: 0.001
+  near_text: damaged

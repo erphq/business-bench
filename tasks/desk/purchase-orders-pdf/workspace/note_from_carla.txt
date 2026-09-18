@@ -1,0 +1,19 @@
+Order entry from customer POs
+
+Everything that came in this week is in customer_pos. The order system imports the template, one row per PO line:
+
+  po_line_ref   the PO number, a hyphen, and the line number exactly as the PO prints it
+  customer_id   from customer_list.csv
+  po_number     as printed
+  po_date       the date on the PO, YYYY-MM-DD
+  line          the customer's line number as printed
+  part_number   our part number (IF-...)
+  description   as printed
+  quantity      pieces
+  unit_price    price per piece
+  line_amount   quantity x unit price
+  need_by       when the customer needs that line, YYYY-MM-DD
+
+Customers send changes as a new revision of the same PO number - we build to the latest revision only, and its PO date is the date of that revision. A line that is struck out or marked cancelled is not ordered; leave it out and keep the other line numbers as they are.
+
+- Carla

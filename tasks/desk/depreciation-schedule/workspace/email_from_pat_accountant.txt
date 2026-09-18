@@ -1,0 +1,30 @@
+From: Pat Lindqvist <pat@lindqvistbooks.com>
+To: Hollis Grant <hollis@quillandink.print>
+Date: Wed, 6 Jan 2027 09:20
+Subject: 2026 book depreciation
+
+Hi Hollis,
+
+I need the 2026 book depreciation schedule before I can close the year. Bev's register should have everything. How we do it (same as always):
+
+1. Straight line by month: cost less salvage value, divided by the useful life in months.
+2. An asset starts depreciating the month after it is placed in service, whatever day of the month that was.
+3. When something is sold or scrapped there is no depreciation in that month or after it. Work out the gain or loss on the sale against its book value at that point.
+4. Book value never goes below salvage. Once an asset is fully depreciated it stops.
+5. Anything that cost under $2,500 we expense when we buy it. It does not belong on the schedule even if it made it into the register.
+
+What I need back: 2026 depreciation expense by month, one line per month with the year total, and the asset-by-asset detail behind it (cost, salvage, life, monthly amount, accumulated depreciation at the start and end of the year, book value, and the gain or loss on anything sold). Please leave the formulas in so I can follow the numbers.
+
+Thanks,
+Pat
+
+-----Original Message-----
+
+From: Hollis Grant <hollis@quillandink.print>
+To: Pat Lindqvist <pat@lindqvistbooks.com>
+Date: Wed, 6 Jan 2027 10:02
+Subject: RE: 2026 book depreciation
+
+Bev says the register is current as of this week, it is fixed_asset_register.xlsx. The 2024 file is just her old backup.
+
+Hollis

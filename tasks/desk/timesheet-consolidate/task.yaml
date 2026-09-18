@@ -1,0 +1,49 @@
+id: timesheet-consolidate
+track: desk
+category: spreadsheet
+title: Consolidate the crew timesheets for payroll
+ask: |
+  Can you pull the crew timesheets for this pay period into one table for payroll, overtime worked out? Save it as hours.csv. Rachel's note says how we count hours.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the install crew sheets use a 12-hour clock and the Saturday half days end at '12:15 PM' to '12:45 PM'; adding 12 to every PM time turns those into shifts ending after midnight (check: total hours per person-week)
+- |-
+  lunch is its own column on the install sheets (30, 45 or 0 minutes), absent on the maintenance grid where the note's 30-minute rule applies only to shifts over 6 hours (short Friday and Saturday shifts keep every minute), and already taken off on the irrigation sheets, so deducting it everywhere or nowhere moves most rows (check: total hours per person-week)
+- |-
+  the irrigation sheets write dates day-first (06/09/2026 is 6 September) and run Monday to Sunday: the first Sunday moves into the second payroll week and the last Sunday (13/09) is next pay period; filing each sheet as one payroll week puts both Sundays in the wrong place (checks: total hours per person-week; row count)
+- |-
+  Sarah White works Monday to Wednesday on the install crew and Thursday to Saturday on maintenance in the first week; neither sheet reaches 40 on its own but the week does, and the table needs one line per week for that person, not one per sheet (checks: overtime per person-week; row count)
+- |-
+  Melissa Wright works over 40 in the first week and under 40 in the second, under 80 for the period; a pay-period overtime reading pays no overtime at all (check: overtime per person-week)
+- |-
+  the maintenance grid has a two-line preamble, CRLF endings, ranges written '06:30-15:00' and '6:30 - 15:00', and a 'Crew total (hrs)' row that is not a person (checks: people on the table; row count)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: hours.csv
+  columns:
+  - employee
+  - week_ending
+  - regular_hours
+  - overtime_hours
+  - total_hours
+- type: csv_set_equal
+  name: people on the table
+  path: hours.csv
+  column: employee
+  ref: hours.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count (one line per person per week)
+  path: hours.csv
+  equals_ref: hours.csv
+- type: custom
+  name: total hours per person-week
+  module: check.py
+- type: custom
+  name: overtime per person-week
+  module: check_overtime.py

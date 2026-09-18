@@ -1,0 +1,24 @@
+Zendesk user import - rules (Amara, support lead)
+
+Template: zendesk_user_import_template.csv, same columns, same order. One row per person. Zendesk matches users on
+email, so a person listed twice in the CRM is still one user.
+
+name          First Last
+email         their email
+external_id   the CRM Contact ID. For someone listed on two accounts, the Contact ID from the account you file
+              them under.
+role          end-user for every client contact. The CRM's Portal Admin flag is about our client portal and has
+              nothing to do with Zendesk; agents and admins are our own staff and are not in this file.
+restriction   organization for each account's primary contact (they see every ticket from their company);
+              requested for everyone else (they see only their own tickets).
+organization  the organization name exactly as it is in Zendesk (see zendesk_organizations_export.csv). The CRM
+              spells accounts its own way and splits Brightwater Dental into two sites; Zendesk has one
+              organization per client company. Kingfisher Charters signed last week and is not set up in Zendesk
+              yet: import their people with organization blank and I will attach them later.
+              Our Zendesk plan allows one organization per user. The three people who are contacts on two accounts
+              have a note in the CRM on one of their rows saying where they belong.
+tags          one tag for the support plan of the organization they are filed under: plan_managed_pro,
+              plan_managed_essentials or plan_break_fix. Accounts still showing the old "Pro (legacy)" plan are on
+              Managed Pro.
+phone         as in the CRM
+notes         leave blank

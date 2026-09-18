@@ -1,0 +1,43 @@
+id: clock-punch-audit
+track: desk
+category: spreadsheet
+title: Weekly hours audit from time-clock punches
+ask: |
+  Bea needs last week's hours from the time clock before she runs payroll. Turn the punch export into hours_audit.csv; her note says how she counts shifts.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the night bakers clock in at 9-11pm and out after 6am, so grouping punches by calendar date splits every night shift into an in-only day and an out-only day; the shift belongs to the day it started (check: daily hours per person)
+- |-
+  the export opens with a Monday-morning out from last week's Sunday night shift and runs to noon on Monday 7 September, so it also holds the driver's first run and a counter clock-in from next week; none of these are this week's days (checks: daily hours per person; row count)
+- |-
+  four punches were recorded twice one to three minutes apart; pairing them in sequence creates zero-length shifts and throws every later pairing for that person off by one (check: daily hours per person)
+- |-
+  two people forgot to clock out; the posted schedule in the folder makes it easy to fill the out-punch in, but the note wants the day flagged MISSING OUT with no hours (check: missing punches flagged)
+- |-
+  the decorator forgot to clock in one day and only the out-punch exists (check: missing punches flagged)
+- |-
+  the delivery driver clocks out between the morning and afternoon runs; first-in to last-out on a driver day pays the three-hour gap (check: daily hours per person)
+- |-
+  times are 12-hour ('10:04 PM') under a two-line preamble, and one out-punch was added by a manager, which counts (check: daily hours per person)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: hours_audit.csv
+  columns:
+  - badge
+  - name
+  - date
+  - hours
+  - flag
+- type: csv_row_count
+  name: row count
+  path: hours_audit.csv
+  equals_ref: hours_audit.csv
+- type: custom
+  name: daily hours per person
+  module: check.py
+- type: custom
+  name: missing punches flagged
+  module: check_flags.py

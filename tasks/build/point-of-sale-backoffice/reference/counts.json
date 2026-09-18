@@ -1,0 +1,513 @@
+{
+  "seed": 0,
+  "attempt": 7,
+  "baseline": {
+    "STAFF_ROLE": "Store manager",
+    "VIEWER_ROLE": "Read-only (the bookkeeper)",
+    "MAIN_ENTITY": "daily sales entry",
+    "MAIN_ENTITY_PLURAL": "daily sales entries",
+    "restricted_user": "Owen Brooks",
+    "restricted_store": "Mill Road",
+    "SCOPE_COUNT": 53,
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "store": "Harbor Street",
+      "date": "2026-08-15"
+    },
+    "KPI_1": {
+      "name": "total net sales",
+      "value": 212983.94,
+      "scoped_value": 75463.45,
+      "definition": "sum of Gross Sales minus Discounts over all daily entries"
+    },
+    "KPI_2": {
+      "name": "August 2026 net sales",
+      "value": 105383.29
+    },
+    "KPI_3": {
+      "name": "August 2026 cash over or short",
+      "value": -42.18,
+      "definition": "sum over entries of Cash Counted - (Gross - Discounts - Card Sales)"
+    },
+    "KPI_4": {
+      "name": "August 2026 days more than 5.00 over or short",
+      "value": 7
+    },
+    "SEARCH_TERM": "Tomasz",
+    "SEARCH_COUNT": 7,
+    "FILTER_FIELD": "store",
+    "FILTER_VALUE": "Mill Road",
+    "FILTER_COUNT": 53,
+    "SORT_FIELD": "gross sales",
+    "SORT_TOP": {
+      "store": "Harbor Street",
+      "date": "2026-08-15",
+      "gross": 3612.75
+    },
+    "text_sort_top_would_be": {
+      "store": "Harbor Street",
+      "date": "2026-08-23",
+      "file_value": "3346.49"
+    },
+    "EXPORT_ROWS": 115,
+    "EXPORT_COLUMNS": [
+      "date",
+      "store",
+      "gross sales",
+      "discounts",
+      "card sales",
+      "cash counted"
+    ],
+    "REQUIRED_FIELD": "a store"
+  },
+  "items": {
+    "file_rows_excluding_header": 61,
+    "exact_duplicate_rows": 2,
+    "retyped_duplicate_rows": [
+      {
+        "code_written": "crs-alm",
+        "name_written": "Almond Croissant ",
+        "item": "CRS-ALM"
+      },
+      {
+        "code_written": "lat-16",
+        "name_written": "Latte 16 oz",
+        "item": "LAT-16"
+      }
+    ],
+    "unique_items": 57,
+    "sold_at_both": 51,
+    "harbor_only": 3,
+    "mill_only": 3,
+    "inactive": [
+      "OAT-BWL",
+      "PMP-SCN"
+    ],
+    "harbor_menu": 54,
+    "mill_menu": 54,
+    "highest_price": {
+      "code": "TUM-16",
+      "name": "Travel tumbler 16oz",
+      "price": 28.0,
+      "file_value": "$28.00",
+      "text_sort_top_would_be": {
+        "code": "TST-AVO",
+        "file_value": "9.50"
+      }
+    },
+    "negative_price": {
+      "code": "COO-CHO",
+      "name": "Chocolate chip cookie",
+      "file_value": "-2.75"
+    },
+    "audit_item": {
+      "code": "LAT-16",
+      "name": "Latte 16oz",
+      "price": 5.25,
+      "new_price": 5.5
+    }
+  },
+  "modifiers": {
+    "file_rows_excluding_header": 69,
+    "unique_modifiers": 32,
+    "groups": [
+      "Espresso",
+      "Extras",
+      "Food add-ons",
+      "Milk",
+      "Pastry",
+      "Syrup",
+      "Tea"
+    ],
+    "modifier_category_rows_unique": 66,
+    "repeated_rows": [
+      {
+        "written_as": "Oat Milk",
+        "applies_to": "Coffee",
+        "kind": "retyped_duplicate"
+      },
+      {
+        "written_as": "caramel",
+        "applies_to": "Cold Drinks",
+        "kind": "retyped_duplicate"
+      },
+      {
+        "written_as": "Soy milk",
+        "applies_to": "Coffee",
+        "kind": "exact_duplicate"
+      }
+    ],
+    "oat_milk": {
+      "price_change": 0.75,
+      "written_as": [
+        "+$0.75",
+        "75c"
+      ]
+    },
+    "coffee_item_modifiers": 20,
+    "coffee_item_modifier_names": [
+      "Whole milk",
+      "Skim milk",
+      "Oat milk",
+      "Almond milk",
+      "Soy milk",
+      "Half & half",
+      "Coconut milk",
+      "Vanilla",
+      "Caramel",
+      "Hazelnut",
+      "Sugar-free vanilla",
+      "Lavender",
+      "Pumpkin spice",
+      "Honey",
+      "Extra shot",
+      "Decaf",
+      "Half-caf",
+      "Whipped cream",
+      "Extra hot",
+      "Iced"
+    ]
+  },
+  "takings": {
+    "file_rows_excluding_header": 117,
+    "unique_entries": 115,
+    "harbor_entries": 62,
+    "mill_entries": 53,
+    "store_spellings": [
+      "Harbor Street",
+      "Harbor St",
+      "HARBOR ST.",
+      "Mill Road",
+      "Mill Rd",
+      "MILL RD"
+    ],
+    "repeated_rows": [
+      {
+        "store": "Mill Road",
+        "date": "2026-07-24"
+      },
+      {
+        "store": "Mill Road",
+        "date": "2026-07-29"
+      }
+    ],
+    "july_net_by_store": {
+      "Harbor Street": 69330.72,
+      "Mill Road": 38269.93
+    },
+    "naive_july_net_by_store_counting_repeats": {
+      "Harbor Street": 69330.72,
+      "Mill Road": 41202.6
+    },
+    "variance_example": {
+      "store": "Harbor Street",
+      "date": "2026-08-04",
+      "gross": 2395.17,
+      "discounts": 51.75,
+      "card": 1987.96,
+      "counted": 344.54,
+      "net": 2343.42,
+      "cash_expected": 355.46,
+      "variance": -10.92,
+      "file_values": {
+        "Date": "04-Aug-2026",
+        "Store": "Harbor Street",
+        "Gross Sales": "2,395.17",
+        "Discounts": "51.75",
+        "Card Sales": "1,987.96",
+        "Cash Counted": "$344.54"
+      }
+    },
+    "variance_test_entry": {
+      "gross": 1850.0,
+      "discounts": 42.5,
+      "card": 1402.3,
+      "counted": 398.0,
+      "net": 1807.5,
+      "cash_expected": 405.2,
+      "variance": -7.2
+    },
+    "variance_limit": 5.0,
+    "august_days_over_limit": [
+      {
+        "store": "Harbor Street",
+        "date": "2026-08-04",
+        "variance": -10.92
+      },
+      {
+        "store": "Mill Road",
+        "date": "2026-08-04",
+        "variance": 8.81
+      },
+      {
+        "store": "Mill Road",
+        "date": "2026-08-06",
+        "variance": -6.24
+      },
+      {
+        "store": "Mill Road",
+        "date": "2026-08-07",
+        "variance": 7.23
+      },
+      {
+        "store": "Harbor Street",
+        "date": "2026-08-11",
+        "variance": -9.29
+      },
+      {
+        "store": "Harbor Street",
+        "date": "2026-08-17",
+        "variance": -28.14
+      },
+      {
+        "store": "Mill Road",
+        "date": "2026-08-22",
+        "variance": -5.29
+      }
+    ]
+  },
+  "item_sales": {
+    "file_rows_excluding_header": 214,
+    "unique_rows": 212,
+    "repeated_rows": [
+      {
+        "month": 8,
+        "store": "Harbor Street",
+        "code": "MOC-12",
+        "net": 2515.12
+      },
+      {
+        "month": 7,
+        "store": "Harbor Street",
+        "code": "AMR-12",
+        "net": 2219.79
+      }
+    ],
+    "august_top5_both_stores": [
+      {
+        "code": "AMR-16",
+        "name": "Americano 16oz",
+        "qty": 1037,
+        "net": 4511.7
+      },
+      {
+        "code": "HOT-12",
+        "name": "Hot chocolate 12oz",
+        "qty": 936,
+        "net": 4296.27
+      },
+      {
+        "code": "MOC-16",
+        "name": "Mocha 16oz",
+        "qty": 672,
+        "net": 4173.63
+      },
+      {
+        "code": "CHA-12",
+        "name": "Chai latte 12oz",
+        "qty": 797,
+        "net": 4031.96
+      },
+      {
+        "code": "AMR-12",
+        "name": "Americano 12oz",
+        "qty": 955,
+        "net": 3679.64
+      }
+    ],
+    "august_6th_and_7th": [
+      {
+        "code": "SND-VEG",
+        "name": "Veggie wrap",
+        "net": 3507.03
+      },
+      {
+        "code": "MOC-12",
+        "name": "Mocha 12oz",
+        "net": 3414.89
+      }
+    ],
+    "naive_top5_counting_repeated_row": [
+      "MOC-12",
+      "AMR-16",
+      "HOT-12",
+      "MOC-16",
+      "CHA-12"
+    ],
+    "mill_road_august_top": {
+      "code": "CHA-16",
+      "name": "Chai latte 16oz",
+      "qty": 380,
+      "net": 2149.33
+    },
+    "mill_road_august_second": {
+      "code": "LAT-12",
+      "name": "Latte 12oz",
+      "net": 1812.19
+    },
+    "latte_16_august": {
+      "Harbor Street": {
+        "qty": 422,
+        "net": 2294.72
+      },
+      "Mill Road": {
+        "qty": 149,
+        "net": 807.38
+      }
+    }
+  },
+  "changes": {
+    "c1_august_average_ticket": {
+      "Harbor Street": 10.37,
+      "Mill Road": 10.4
+    },
+    "c1_august_transactions": {
+      "Harbor Street": 6574,
+      "Mill Road": 3575
+    },
+    "c1_august_net": {
+      "Harbor Street": 68189.77,
+      "Mill Road": 37193.52
+    },
+    "c1_august_weekday_average_net": {
+      "Harbor Street": {
+        "Saturday": 2921.55,
+        "Sunday": 2798.85,
+        "Monday": 1795.16,
+        "Tuesday": 1984.28,
+        "Wednesday": 1746.33,
+        "Thursday": 2113.67,
+        "Friday": 1808.71
+      },
+      "Mill Road": {
+        "Saturday": 1804.12,
+        "Sunday": 1742.03,
+        "Tuesday": 1327.76,
+        "Wednesday": 1212.72,
+        "Thursday": 1106.8,
+        "Friday": 1218.42
+      }
+    },
+    "c1_harbor_best_weekday": {
+      "day": "Saturday",
+      "average_net": 2921.55
+    },
+    "c1_mill_best_weekday": {
+      "day": "Saturday",
+      "average_net": 1804.12
+    },
+    "c2_follow_up_limit": 20.0,
+    "c2_import_days_short_over_limit": [
+      {
+        "store": "Mill Road",
+        "date": "2026-07-03",
+        "variance": -24.2
+      },
+      {
+        "store": "Mill Road",
+        "date": "2026-07-09",
+        "variance": -39.86
+      },
+      {
+        "store": "Harbor Street",
+        "date": "2026-07-10",
+        "variance": -43.9
+      },
+      {
+        "store": "Mill Road",
+        "date": "2026-07-10",
+        "variance": -35.45
+      },
+      {
+        "store": "Harbor Street",
+        "date": "2026-07-13",
+        "variance": -25.27
+      },
+      {
+        "store": "Harbor Street",
+        "date": "2026-07-19",
+        "variance": -40.89
+      },
+      {
+        "store": "Harbor Street",
+        "date": "2026-07-27",
+        "variance": -28.08
+      },
+      {
+        "store": "Harbor Street",
+        "date": "2026-08-17",
+        "variance": -28.14
+      }
+    ],
+    "c2_mill_road_days_short_over_limit": 3,
+    "c2_test_entries": [
+      {
+        "date": "2026-09-03",
+        "gross": 1000.0,
+        "discounts": 0.0,
+        "card": 800.0,
+        "counted": 175.0,
+        "variance": -25.0,
+        "on_list": true
+      },
+      {
+        "date": "2026-09-04",
+        "gross": 1000.0,
+        "discounts": 0.0,
+        "card": 800.0,
+        "counted": 180.0,
+        "variance": -20.0,
+        "on_list": false
+      }
+    ]
+  },
+  "naive_alternatives": {
+    "items_without_dedupe": 61,
+    "items_codes_case_sensitive": 59,
+    "modifiers_one_per_row": [
+      66,
+      69
+    ],
+    "oat_milk_if_75c_read_as_dollars": 75.0
+  },
+  "test_inputs": {
+    "default_entry": {
+      "store": "Harbor Street",
+      "gross": 1000.0,
+      "discounts": 0.0,
+      "card": 1000.0,
+      "counted": 0.0
+    },
+    "item_20": [
+      {
+        "store": "Mill Road",
+        "date": "2026-09-01",
+        "gross": 1200.0,
+        "discounts": 0.0,
+        "card": 900.0,
+        "counted": 292.0,
+        "variance": -8.0,
+        "needs_note": true
+      },
+      {
+        "store": "Mill Road",
+        "date": "2026-09-02",
+        "gross": 1200.0,
+        "discounts": 0.0,
+        "card": 900.0,
+        "counted": 305.0,
+        "variance": 5.0,
+        "needs_note": false
+      }
+    ],
+    "item_21": {
+      "duplicate": [
+        "Harbor Street",
+        "2026-08-10"
+      ],
+      "allowed": [
+        "Mill Road",
+        "2026-08-10"
+      ]
+    }
+  }
+}

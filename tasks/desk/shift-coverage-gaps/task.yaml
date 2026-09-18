@@ -1,0 +1,49 @@
+id: shift-coverage-gaps
+track: desk
+category: spreadsheet
+title: How short the published week is against minimum coverage
+ask: |
+  Before next week's schedule goes live, Gwen wants to know how many hours we're short each day against her minimums. Use the published schedule and her coverage sheet and save coverage_gaps.csv - her note says how to count.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  night shifts ('10:00 PM - 6:00 AM', '11:00 PM - 7:00 AM', '5:00 PM - 1:30 AM') cover the next calendar day; Sunday 4 October's night shifts are the only cover early on Monday 5 October, and cutting shifts at midnight or dropping the Sunday rows leaves Monday badly short (check: uncovered hours per day)
+- |-
+  a shift on 2026-10-08 still appears with its hours but the comment says it was cancelled with no cover (check: uncovered hours per day)
+- |-
+  split shifts on 2026-10-07, 2026-10-10 are one row with two pieces; reading first start to last end puts someone on the phones through the middle of the day (check: uncovered hours per day)
+- |-
+  a trainee shadows the 2026-10-09 evening and does not count, while supervisors do (check: uncovered hours per day)
+- |-
+  shortfall is per missing operator per half hour; netting a day's staffed hours against its required hours lets surplus in one band hide a gap in another, and the Paid Hours column deducts a half-hour break that does not leave the phones empty (check: uncovered hours per day)
+- |-
+  the export starts on Sunday 4 October for the night shift, so a day-per-row output that keeps that date has eight rows (checks: one row per day; row count)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: coverage_gaps.csv
+  columns:
+  - date
+  - uncovered_hours
+- type: csv_set_equal
+  name: one row per day
+  path: coverage_gaps.csv
+  column: date
+  ref: coverage_gaps.csv
+  normalize:
+  - strip
+- type: csv_row_count
+  name: row count
+  path: coverage_gaps.csv
+  equals_ref: coverage_gaps.csv
+- type: csv_values_match
+  name: uncovered hours per day
+  path: coverage_gaps.csv
+  ref: coverage_gaps.csv
+  key: date
+  columns:
+  - uncovered_hours
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

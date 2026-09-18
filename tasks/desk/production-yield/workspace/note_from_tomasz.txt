@@ -1,0 +1,22 @@
+August yield report
+
+I need yield and scrap for each line for August, and for the plant as a whole.
+
+Do it all by weight. Input is the kilograms of mix charged to the batch. The operators record good output and
+scrap the way their line counts them - cases, pieces, bags, kilograms or grams - so convert with the spec
+sheet (a case of bars is the units per case times the bar weight; a bag is its net weight).
+
+  yield      = good output kg / input kg
+  scrap rate = scrap kg / input kg
+
+Rework: when a batch has a lot of rejects we quarantine them and run them back through the line later as a
+Rework batch, which names the batch it came from. That material was already input on the original batch, so do
+not count a rework batch's input again. Whatever the rework batch turns into good product counts as good output
+for the line, and it is no longer scrap - take the rework input off the scrap. Anything the rework batch rejects
+again is scrap.
+
+Trial batches are R&D and not production. Leave them out.
+
+The totals need to stay as formulas so I can drop September's records in.
+
+Tomasz

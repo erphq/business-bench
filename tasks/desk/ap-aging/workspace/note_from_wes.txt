@@ -1,0 +1,16 @@
+The bank wants an AP aging as of August 31 for the line of credit review.
+
+- Age every bill from when it was due, not when it was dated. Terms are on the vendor list; a bill only has terms
+  in the export when we agreed something different for that bill, and then those win.
+- "Net 30 EOM" means 30 days after the end of the month the bill is dated. On the Cascade Glass terms the 2% is only
+  if we pay in 10 days - the bill is due at 30.
+- Buckets: current (not due yet), 1-30, 31-60, 61-90 and over 90 days past due.
+- Use what we still owe on each bill - some are partly paid.
+- Vendor credits that name a bill come off that bill. A credit that doesn't name a bill we still owe goes in current
+  as a negative for that vendor.
+- Drafts aren't approved bills. Leave them out.
+
+Put the aging by vendor, with totals, in ap_aging.xlsx with formulas, and write memo.md for the bank with the total we
+owe, how much of it is past due, and the bill that has been overdue the longest.
+
+- Wes

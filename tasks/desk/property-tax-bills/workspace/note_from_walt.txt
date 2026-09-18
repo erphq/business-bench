@@ -1,0 +1,15 @@
+Property taxes 2026-27
+
+The county bills came in (tax_bills_2026-27 folder). Please log them in tax_bills.csv so I can schedule the payments - one row per parcel we got a bill for:
+
+parcel_number: as it appears in parcels.csv
+county: Juniper or Keel
+assessed_value: the assessed value before exemptions (whole dollars)
+exemptions: total exemptions, 0 if none
+taxable_value: assessed value less exemptions
+total_tax: the whole bill for 2026-27, everything the county wants for the year
+first_installment, second_installment: the amounts
+first_due, second_due: the date each installment is due (YYYY-MM-DD) - I want the due date, not the last day before penalties
+prior_year_delinquent: yes if the county says we still owe anything from an earlier year on that parcel, otherwise no
+
+Walt

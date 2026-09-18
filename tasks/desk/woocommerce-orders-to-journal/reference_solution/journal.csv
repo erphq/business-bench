@@ -1,0 +1,197 @@
+Journal No,Journal Date,Account Code,Description,Debit,Credit
+WC-10887,2026-08-01,1000,Order #10887 - Direct bank transfer,25.13,
+WC-10887,2026-08-01,4000,Order #10887 - coffee sales,,16.50
+WC-10887,2026-08-01,4100,Order #10887 - shipping,,7.95
+WC-10887,2026-08-01,2200,Order #10887 - sales tax,,0.68
+WC-10888,2026-08-02,1210,Order #10888 - Credit Card (Stripe),102.54,
+WC-10888,2026-08-02,4000,Order #10888 - coffee sales,,19.50
+WC-10888,2026-08-02,4010,Order #10888 - equipment sales,,79.00
+WC-10888,2026-08-02,2200,Order #10888 - sales tax,,4.04
+WC-10889,2026-08-02,1210,Order #10889 - Credit Card (Stripe),25.95,
+WC-10889,2026-08-02,4020,Order #10889 - subscription sales,,18.00
+WC-10889,2026-08-02,4100,Order #10889 - shipping,,7.95
+WC-10891,2026-08-03,1210,Order #10891 - Credit Card (Stripe),180.00,
+WC-10891,2026-08-03,4900,Order #10891 - discount,20.00,
+WC-10891,2026-08-03,4000,Order #10891 - coffee sales,,38.00
+WC-10891,2026-08-03,4010,Order #10891 - equipment sales,,162.00
+WC-10892,2026-08-04,1220,Order #10892 - PayPal,109.00,
+WC-10892,2026-08-04,4000,Order #10892 - coffee sales,,91.00
+WC-10892,2026-08-04,4020,Order #10892 - subscription sales,,18.00
+WC-10893,2026-08-04,1210,Order #10893 - Credit Card (Stripe),200.50,
+WC-10893,2026-08-04,4000,Order #10893 - coffee sales,,166.50
+WC-10893,2026-08-04,4020,Order #10893 - subscription sales,,34.00
+WC-10894,2026-08-05,1210,Order #10894 - Credit Card (Stripe),63.95,
+WC-10894,2026-08-05,4020,Order #10894 - subscription sales,,34.00
+WC-10894,2026-08-05,4030,Order #10894 - merchandise sales,,22.00
+WC-10894,2026-08-05,4100,Order #10894 - shipping,,7.95
+WC-10895,2026-08-05,1210,Order #10895 - Credit Card (Stripe),42.30,
+WC-10895,2026-08-05,4000,Order #10895 - coffee sales,,33.00
+WC-10895,2026-08-05,4100,Order #10895 - shipping,,7.95
+WC-10895,2026-08-05,2200,Order #10895 - sales tax,,1.35
+WC-10895-R,2026-08-10,4950,Refund on order #10895,16.50,
+WC-10895-R,2026-08-10,1210,Refund on order #10895 - Credit Card (Stripe),,16.50
+WC-10897,2026-08-06,1220,Order #10897 - PayPal,97.85,
+WC-10897,2026-08-06,4000,Order #10897 - coffee sales,,94.00
+WC-10897,2026-08-06,2200,Order #10897 - sales tax,,3.85
+WC-10897-R,2026-08-11,4950,Refund on order #10897,18.00,
+WC-10897-R,2026-08-11,1220,Refund on order #10897 - PayPal,,18.00
+WC-10898,2026-08-07,1210,Order #10898 - Credit Card (Stripe),46.95,
+WC-10898,2026-08-07,4000,Order #10898 - coffee sales,,39.00
+WC-10898,2026-08-07,4100,Order #10898 - shipping,,7.95
+WC-10898-R,2026-08-10,4950,Refund on order #10898,46.95,
+WC-10898-R,2026-08-10,1210,Refund on order #10898 - Credit Card (Stripe),,46.95
+WC-10899,2026-08-07,1210,Order #10899 - Credit Card (Stripe),141.06,
+WC-10899,2026-08-07,4000,Order #10899 - coffee sales,,16.50
+WC-10899,2026-08-07,4010,Order #10899 - equipment sales,,119.00
+WC-10899,2026-08-07,2200,Order #10899 - sales tax,,5.56
+WC-10900,2026-08-08,1210,Order #10900 - Credit Card (Stripe),44.95,
+WC-10900,2026-08-08,4000,Order #10900 - coffee sales,,37.00
+WC-10900,2026-08-08,4100,Order #10900 - shipping,,7.95
+WC-10901,2026-08-08,1220,Order #10901 - PayPal,24.45,
+WC-10901,2026-08-08,4000,Order #10901 - coffee sales,,16.50
+WC-10901,2026-08-08,4100,Order #10901 - shipping,,7.95
+WC-10902,2026-08-09,1220,Order #10902 - PayPal,136.37,
+WC-10902,2026-08-09,4000,Order #10902 - coffee sales,,39.00
+WC-10902,2026-08-09,4010,Order #10902 - equipment sales,,92.00
+WC-10902,2026-08-09,2200,Order #10902 - sales tax,,5.37
+WC-10903,2026-08-09,1220,Order #10903 - PayPal,43.34,
+WC-10903,2026-08-09,4020,Order #10903 - subscription sales,,34.00
+WC-10903,2026-08-09,4100,Order #10903 - shipping,,7.95
+WC-10903,2026-08-09,2200,Order #10903 - sales tax,,1.39
+WC-10904,2026-08-10,1210,Order #10904 - Credit Card (Stripe),43.55,
+WC-10904,2026-08-10,4900,Order #10904 - discount,3.80,
+WC-10904,2026-08-10,4000,Order #10904 - coffee sales,,38.00
+WC-10904,2026-08-10,4100,Order #10904 - shipping,,7.95
+WC-10904,2026-08-10,2200,Order #10904 - sales tax,,1.40
+WC-10905,2026-08-10,1220,Order #10905 - PayPal,47.95,
+WC-10905,2026-08-10,4000,Order #10905 - coffee sales,,17.50
+WC-10905,2026-08-10,4010,Order #10905 - equipment sales,,22.50
+WC-10905,2026-08-10,4100,Order #10905 - shipping,,7.95
+WC-10906,2026-08-11,1210,Order #10906 - Credit Card (Stripe),136.50,
+WC-10906,2026-08-11,4000,Order #10906 - coffee sales,,17.50
+WC-10906,2026-08-11,4010,Order #10906 - equipment sales,,119.00
+WC-10907,2026-08-11,1210,Order #10907 - Credit Card (Stripe),29.81,
+WC-10907,2026-08-11,4000,Order #10907 - coffee sales,,21.00
+WC-10907,2026-08-11,4100,Order #10907 - shipping,,7.95
+WC-10907,2026-08-11,2200,Order #10907 - sales tax,,0.86
+WC-10908,2026-08-12,1210,Order #10908 - Credit Card (Stripe),55.20,
+WC-10908,2026-08-12,4900,Order #10908 - discount,5.25,
+WC-10908,2026-08-12,4000,Order #10908 - coffee sales,,52.50
+WC-10908,2026-08-12,4100,Order #10908 - shipping,,7.95
+WC-10909,2026-08-12,1210,Order #10909 - Credit Card (Stripe),166.04,
+WC-10909,2026-08-12,4000,Order #10909 - coffee sales,,131.50
+WC-10909,2026-08-12,4010,Order #10909 - equipment sales,,28.00
+WC-10909,2026-08-12,2200,Order #10909 - sales tax,,6.54
+WC-10910,2026-08-12,1210,Order #10910 - Credit Card (Stripe),145.74,
+WC-10910,2026-08-12,4000,Order #10910 - coffee sales,,21.00
+WC-10910,2026-08-12,4010,Order #10910 - equipment sales,,119.00
+WC-10910,2026-08-12,2200,Order #10910 - sales tax,,5.74
+WC-10912,2026-08-13,1210,Order #10912 - Credit Card (Stripe),58.54,
+WC-10912,2026-08-13,4900,Order #10912 - discount,5.40,
+WC-10912,2026-08-13,4000,Order #10912 - coffee sales,,36.00
+WC-10912,2026-08-13,4020,Order #10912 - subscription sales,,18.00
+WC-10912,2026-08-13,4100,Order #10912 - shipping,,7.95
+WC-10912,2026-08-13,2200,Order #10912 - sales tax,,1.99
+WC-10914,2026-08-14,1220,Order #10914 - PayPal,96.81,
+WC-10914,2026-08-14,4000,Order #10914 - coffee sales,,93.00
+WC-10914,2026-08-14,2200,Order #10914 - sales tax,,3.81
+WC-10915,2026-08-15,1210,Order #10915 - Credit Card (Stripe),85.00,
+WC-10915,2026-08-15,4000,Order #10915 - coffee sales,,33.00
+WC-10915,2026-08-15,4020,Order #10915 - subscription sales,,52.00
+WC-10916,2026-08-15,1210,Order #10916 - Credit Card (Stripe),33.15,
+WC-10916,2026-08-15,4900,Order #10916 - discount,2.80,
+WC-10916,2026-08-15,4010,Order #10916 - equipment sales,,28.00
+WC-10916,2026-08-15,4100,Order #10916 - shipping,,7.95
+WC-10918,2026-08-16,1210,Order #10918 - Credit Card (Stripe),69.75,
+WC-10918,2026-08-16,4000,Order #10918 - coffee sales,,36.00
+WC-10918,2026-08-16,4010,Order #10918 - equipment sales,,15.00
+WC-10918,2026-08-16,4030,Order #10918 - merchandise sales,,16.00
+WC-10918,2026-08-16,2200,Order #10918 - sales tax,,2.75
+WC-10920,2026-08-17,1220,Order #10920 - PayPal,63.95,
+WC-10920,2026-08-17,4020,Order #10920 - subscription sales,,34.00
+WC-10920,2026-08-17,4030,Order #10920 - merchandise sales,,22.00
+WC-10920,2026-08-17,4100,Order #10920 - shipping,,7.95
+WC-10921,2026-08-18,1210,Order #10921 - Credit Card (Stripe),45.43,
+WC-10921,2026-08-18,4900,Order #10921 - discount,4.00,
+WC-10921,2026-08-18,4020,Order #10921 - subscription sales,,18.00
+WC-10921,2026-08-18,4030,Order #10921 - merchandise sales,,22.00
+WC-10921,2026-08-18,4100,Order #10921 - shipping,,7.95
+WC-10921,2026-08-18,2200,Order #10921 - sales tax,,1.48
+WC-10921-R,2026-08-21,4950,Refund on order #10921,45.43,
+WC-10921-R,2026-08-21,1210,Refund on order #10921 - Credit Card (Stripe),,45.43
+WC-10922,2026-08-18,1210,Order #10922 - Credit Card (Stripe),130.13,
+WC-10922,2026-08-18,4000,Order #10922 - coffee sales,,21.00
+WC-10922,2026-08-18,4010,Order #10922 - equipment sales,,56.00
+WC-10922,2026-08-18,4030,Order #10922 - merchandise sales,,48.00
+WC-10922,2026-08-18,2200,Order #10922 - sales tax,,5.13
+WC-10923,2026-08-19,1210,Order #10923 - Credit Card (Stripe),25.13,
+WC-10923,2026-08-19,4000,Order #10923 - coffee sales,,16.50
+WC-10923,2026-08-19,4100,Order #10923 - shipping,,7.95
+WC-10923,2026-08-19,2200,Order #10923 - sales tax,,0.68
+WC-10924,2026-08-19,1220,Order #10924 - PayPal,23.95,
+WC-10924,2026-08-19,4030,Order #10924 - merchandise sales,,16.00
+WC-10924,2026-08-19,4100,Order #10924 - shipping,,7.95
+WC-10927,2026-08-21,1210,Order #10927 - Credit Card (Stripe),37.45,
+WC-10927,2026-08-21,4010,Order #10927 - equipment sales,,7.50
+WC-10927,2026-08-21,4030,Order #10927 - merchandise sales,,22.00
+WC-10927,2026-08-21,4100,Order #10927 - shipping,,7.95
+WC-10928,2026-08-21,1210,Order #10928 - Credit Card (Stripe),111.50,
+WC-10928,2026-08-21,4000,Order #10928 - coffee sales,,111.50
+WC-10929,2026-08-22,1210,Order #10929 - Credit Card (Stripe),43.34,
+WC-10929,2026-08-22,4020,Order #10929 - subscription sales,,34.00
+WC-10929,2026-08-22,4100,Order #10929 - shipping,,7.95
+WC-10929,2026-08-22,2200,Order #10929 - sales tax,,1.39
+WC-10930,2026-08-22,1210,Order #10930 - Credit Card (Stripe),59.96,
+WC-10930,2026-08-22,4900,Order #10930 - discount,6.40,
+WC-10930,2026-08-22,4010,Order #10930 - equipment sales,,64.00
+WC-10930,2026-08-22,2200,Order #10930 - sales tax,,2.36
+WC-10931,2026-08-23,1220,Order #10931 - PayPal,144.00,
+WC-10931,2026-08-23,4900,Order #10931 - discount,16.00,
+WC-10931,2026-08-23,4000,Order #10931 - coffee sales,,56.00
+WC-10931,2026-08-23,4010,Order #10931 - equipment sales,,56.00
+WC-10931,2026-08-23,4030,Order #10931 - merchandise sales,,48.00
+WC-10933,2026-08-24,1210,Order #10933 - Credit Card (Stripe),230.06,
+WC-10933,2026-08-24,4000,Order #10933 - coffee sales,,68.00
+WC-10933,2026-08-24,4010,Order #10933 - equipment sales,,119.00
+WC-10933,2026-08-24,4020,Order #10933 - subscription sales,,34.00
+WC-10933,2026-08-24,2200,Order #10933 - sales tax,,9.06
+WC-10934,2026-08-24,1210,Order #10934 - Credit Card (Stripe),120.50,
+WC-10934,2026-08-24,4000,Order #10934 - coffee sales,,70.50
+WC-10934,2026-08-24,4020,Order #10934 - subscription sales,,34.00
+WC-10934,2026-08-24,4030,Order #10934 - merchandise sales,,16.00
+WC-10935,2026-08-25,1220,Order #10935 - PayPal,46.95,
+WC-10935,2026-08-25,4000,Order #10935 - coffee sales,,39.00
+WC-10935,2026-08-25,4100,Order #10935 - shipping,,7.95
+WC-10936,2026-08-25,1210,Order #10936 - Credit Card (Stripe),57.95,
+WC-10936,2026-08-25,4020,Order #10936 - subscription sales,,34.00
+WC-10936,2026-08-25,4030,Order #10936 - merchandise sales,,16.00
+WC-10936,2026-08-25,4100,Order #10936 - shipping,,7.95
+WC-10937,2026-08-25,1220,Order #10937 - PayPal,177.50,
+WC-10937,2026-08-25,4000,Order #10937 - coffee sales,,58.50
+WC-10937,2026-08-25,4010,Order #10937 - equipment sales,,119.00
+WC-10939,2026-08-26,1210,Order #10939 - Credit Card (Stripe),90.00,
+WC-10939,2026-08-26,4000,Order #10939 - coffee sales,,18.00
+WC-10939,2026-08-26,4010,Order #10939 - equipment sales,,56.00
+WC-10939,2026-08-26,4030,Order #10939 - merchandise sales,,16.00
+WC-10940,2026-08-27,1210,Order #10940 - Credit Card (Stripe),90.00,
+WC-10940,2026-08-27,4010,Order #10940 - equipment sales,,56.00
+WC-10940,2026-08-27,4020,Order #10940 - subscription sales,,34.00
+WC-10941,2026-08-27,1210,Order #10941 - Credit Card (Stripe),43.45,
+WC-10941,2026-08-27,4000,Order #10941 - coffee sales,,35.50
+WC-10941,2026-08-27,4100,Order #10941 - shipping,,7.95
+WC-10942,2026-08-28,1210,Order #10942 - Credit Card (Stripe),25.50,
+WC-10942,2026-08-28,4900,Order #10942 - discount,1.95,
+WC-10942,2026-08-28,4000,Order #10942 - coffee sales,,19.50
+WC-10942,2026-08-28,4100,Order #10942 - shipping,,7.95
+WC-10944,2026-08-29,1210,Order #10944 - Credit Card (Stripe),29.95,
+WC-10944,2026-08-29,4030,Order #10944 - merchandise sales,,22.00
+WC-10944,2026-08-29,4100,Order #10944 - shipping,,7.95
+WC-10945,2026-08-29,1210,Order #10945 - Credit Card (Stripe),114.50,
+WC-10945,2026-08-29,4000,Order #10945 - coffee sales,,114.50
+WC-10946,2026-08-30,1220,Order #10946 - PayPal,36.45,
+WC-10946,2026-08-30,4000,Order #10946 - coffee sales,,21.00
+WC-10946,2026-08-30,4010,Order #10946 - equipment sales,,7.50
+WC-10946,2026-08-30,4100,Order #10946 - shipping,,7.95
+WC-10947,2026-08-30,1210,Order #10947 - Credit Card (Stripe),28.95,
+WC-10947,2026-08-30,4000,Order #10947 - coffee sales,,21.00
+WC-10947,2026-08-30,4100,Order #10947 - shipping,,7.95

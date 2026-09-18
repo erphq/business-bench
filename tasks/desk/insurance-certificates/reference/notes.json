@@ -1,0 +1,27 @@
+{
+  "active_late_sept": "WCP695078",
+  "day_before": "AU355759",
+  "expired": [
+    "UMB2044878",
+    "AU355759",
+    "BA 6243-0021"
+  ],
+  "first_insurer": {
+    "BAP-9467240": "Lantern Rock Insurance Company",
+    "UMB2044878": "Tri-State Specialty Insurance Company"
+  },
+  "letter_B_policies": [
+    "BAP-9467240",
+    "WC 89-938234-26",
+    "CA 5267-646678",
+    "BA 6243-0021"
+  ],
+  "old_certificate_policies": [
+    "GLP 9934935-87",
+    "BAP-2656973",
+    "WC 81-205592-25"
+  ],
+  "prod_agg_differs": "GLP 6088743-71",
+  "prod_agg_value": 1000000,
+  "slash_limits": "TSG-214355"
+}

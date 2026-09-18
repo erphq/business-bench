@@ -1,0 +1,200 @@
+﻿Juniper Hollow Inn
+Vendor Transactions: January 1 - August 31, 2026
+Type,Num,Date,Vendor,Memo,Amount,Status
+Bill,B-2600,01/01/2026,Tybee Pest Ctrl,,145.00,Paid
+Bill,B-2601,01/02/2026,Live Oak Grounds Care,,387.85,Paid
+Bill,B-2602,01/02/2026,Sysco  Savannah,,"1,342.60",Paid
+Bill,B-2603,01/03/2026,Coastal Linen Svc,,647.56,Paid
+Bill,B-2604,01/03/2026,Southern Coffee Roasting Company,,418.95,Paid
+Bill,B-2605,01/04/2026,Savannah Magazine,,862.68,Paid
+Bill,B-2606,01/05/2026,Hotel Amenity Group,,990.80,Paid
+Bill,B-2607,01/10/2026,COASTAL LINEN SERVICE LLC,,691.71,Paid
+Bill,B-2608,01/10/2026,Georgia Power Co,,"1,888.87",Paid
+Bill,B-2609,01/12/2026,Live Oak Grounds Care LLC,,427.32,Paid
+Bill,B-2610,01/14/2026,LOWCOUNTRY SUPPLY CO.,,393.05,Paid
+Bill,B-2611,01/15/2026,Comcast Business,,289.90,Paid
+Bill,B-2612,01/16/2026,sysco savannah llc,,708.82,Paid
+Bill,B-2613,01/16/2026,"Sysco Savannah, Inc.",,894.27,Paid
+Bill,B-2614,01/17/2026,City of Savannah Water,,422.37,Paid
+Bill,B-2615,01/17/2026,SYSCO SAVANNAH INC,,834.72,Paid
+Bill,B-2616,01/20/2026,Coastal Linen Svc,,618.43,Paid
+Bill,B-2617,01/21/2026,SOUTHERN COFFEE ROASTING,,266.16,Paid
+Bill,B-2618,01/22/2026,Coastal Linen Service,,687.91,Paid
+Bill,B-2619,01/23/2026,FORSYTH FLORALS,,86.26,Paid
+Bill,B-2620,01/24/2026,Booking.com,,"3,805.26",Paid
+Bill,B-2621,01/24/2026,Forsyth Florals,,200.33,Paid
+Bill,B-2622,01/28/2026,Chatham Plumbing & Heating,,241.01,Paid
+Bill,B-2623,02/02/2026,Live Oak Grounds Care,,378.32,Paid
+Bill,B-2624,02/02/2026,Savannah Magazine,,"1,077.98",Paid
+Bill,B-2625,02/04/2026,COASTAL LINEN SERVICE LLC,,782.84,Paid
+Bill,B-2626,02/04/2026,FORSYTH FLORALS,,109.83,Paid
+Bill,B-2627,02/07/2026,Coastal Linen Svc,,868.75,Paid
+Bill,B-2628,02/08/2026,Southern Coffee Roasting Co,,316.44,Paid
+Bill,B-2629,02/09/2026,BOOKING.COM BV,,"2,777.08",Paid
+Bill,B-2630,02/10/2026,SYSCO SAVANNAH INC,,"1,408.98",Paid
+Bill,B-2631,02/16/2026,COASTAL LINEN SERVICE LLC,,706.25,Paid
+Bill,B-2632,02/16/2026,GEORGIA POWER COMPANY,,"1,607.54",Paid
+Bill,B-2633,02/16/2026,Live Oak Grounds Care,,445.29,Paid
+Bill,B-2634,02/17/2026,Coastal Linen Service,,771.35,Paid
+Bill,B-2635,02/17/2026,LOWCOUNTRY SUPPLY CO.,,597.76,Paid
+Bill,B-2636,02/18/2026,COMCAST BUSINESS COMMUNICATIONS,,289.90,Paid
+Bill,B-2637,02/19/2026,Southern Coffee Roasting Company,,311.58,Paid
+Bill,B-2638,02/20/2026,Sysco Savannah,,737.93,Paid
+Bill,B-2639,02/23/2026,Lowcountry Supply Co,,161.97,Paid
+Bill,B-2640,02/23/2026,sysco savannah llc,,"1,395.24",Paid
+Bill,B-2641,02/26/2026,CITY OF SAVANNAH WATER & SEWER,,538.02,Paid
+Bill,B-2642,02/27/2026,Chatham Plumbing & Heating,,"1,216.45",Paid
+Bill,B-2643,02/28/2026,Forsyth Florals,,248.24,Paid
+Bill,B-2644,02/28/2026,Tybee Pest Ctrl,,145.00,Paid
+Bill,B-2645,03/04/2026,Georgia Power Co,,"1,938.77",Paid
+Bill,B-2646,03/04/2026,Lowcountry Supply Co,,559.35,Paid
+Bill,B-2647,03/05/2026,FORSYTH FLORALS,,145.28,Paid
+Bill,B-2648,03/06/2026,COASTAL LINEN SERVICE LLC,,631.48,Paid
+Bill,B-2649,03/08/2026,CITY OF SAVANNAH WATER & SEWER,,529.60,Paid
+Bill,B-2650,03/08/2026,Live Oak Grounds Care,,445.16,Paid
+Bill,B-2651,03/09/2026,Low Country Supply Company,,536.57,Paid
+Bill,B-2652,03/10/2026,FORSYTH FLORALS,,143.63,Paid
+Bill,B-2653,03/12/2026,Forsyth Florals,,89.89,Paid
+Bill,B-2654,03/14/2026,"Sysco Savannah, Inc.",,"1,090.96",Paid
+Bill,B-2655,03/15/2026,COASTAL LINEN SERVICE LLC,,702.75,Paid
+Bill,B-2656,03/16/2026,"Sysco Savannah, Inc.",,"1,306.89",Paid
+Bill,B-2657,03/17/2026,Coastal Linen Svc,,922.81,Paid
+Bill,B-2658,03/17/2026,Live Oak Grounds Care LLC,,324.02,Paid
+Credit,VC-2659,03/18/2026,COASTAL LINEN SERVICE LLC,Credit - stained king sheets returned,120.81,Applied
+Bill,B-2660,03/18/2026,SYSCO SAVANNAH INC,,781.57,Paid
+Bill,B-2661,03/20/2026,Comcast Business,,289.90,Paid
+Bill,B-2662,03/20/2026,Lowcountry Supply Co,,216.71,Paid
+Bill,B-2663,03/23/2026,CHATHAM PLUMBING,,"1,182.67",Paid
+Bill,B-2664,03/23/2026,Hotel Amenity Grp,,770.07,Paid
+Bill,B-2665,03/23/2026,Southern Coffee Roasting Co,,344.82,Paid
+Bill,B-2666,03/25/2026,Coastal Linen Service,,868.15,Paid
+Bill,B-2667,03/27/2026,Booking.com B.V.,,"2,090.30",Paid
+Credit,VC-2668,03/28/2026,Booking.com B.V.,Commission refund - cancelled stay,406.64,Applied
+Bill,B-2669,03/28/2026,Tybee Pest Control,,145.00,Paid
+Bill,B-2670,03/28/2026,Tybee Pest Control,VOID - entered in error,145.00,Voided
+Bill,B-2671,04/01/2026,sysco savannah llc,,459.10,Paid
+Bill,B-2672,04/03/2026,Live Oak Grounds Care LLC,,443.78,Paid
+Bill,B-2673,04/07/2026,Savannah Magazine,,707.91,Paid
+Bill,B-2674,04/09/2026,sysco savannah llc,,942.22,Paid
+Bill,B-2675,04/10/2026,COASTAL LINEN SERVICE LLC,,943.04,Paid
+Bill,B-2676,04/11/2026,Southern Coffee Roasting Co,,244.18,Paid
+Bill,B-2677,04/13/2026,Forsyth Florals,,186.65,Paid
+Bill,B-2678,04/14/2026,City of Savannah - Water,,583.13,Paid
+Bill,B-2679,04/14/2026,COASTAL LINEN SERVICE LLC,,614.89,Paid
+Bill,B-2680,04/14/2026,Georgia Power Co,,"1,618.21",Paid
+Bill,B-2681,04/14/2026,Live Oak Grounds Care,,451.82,Paid
+Bill,B-2682,04/15/2026,Low Country Supply Company,,207.18,Paid
+Bill,B-2683,04/17/2026,Chatham Plumbing & Heating,,294.14,Paid
+Bill,B-2684,04/17/2026,Tybee Pest Ctrl,,145.00,Paid
+Bill,B-2685,04/18/2026,Coastal Linen Service,,853.32,Paid
+Bill,B-2686,04/18/2026,Forsyth Florals,,258.77,Paid
+Bill,B-2687,04/19/2026,Comcast Business,,289.90,Paid
+Bill,B-2688,04/19/2026,Forsyth Florals,,196.29,Paid
+Bill,B-2689,04/20/2026,Sysco Savannah,,"1,427.55",Paid
+Bill,B-2690,04/21/2026,Low Country Supply Company,,655.28,Paid
+Bill,B-2691,04/23/2026,Sysco  Savannah,,498.46,Paid
+Bill,B-2692,04/26/2026,Booking.com B.V.,,"4,140.19",Paid
+Bill,B-2693,04/26/2026,Forsyth Florals,,242.09,Paid
+Bill,B-2694,04/26/2026,Forsyth Florals,VOID - entered in error,242.09,Voided
+Bill,B-2695,04/27/2026,Coastal Linen Svc,,850.11,Paid
+Bill,B-2696,05/02/2026,Hotel Amenity Group,,"1,158.09",Paid
+Bill,B-2697,05/04/2026,Savannah Magazine,,"1,080.88",Paid
+Bill,B-2698,05/05/2026,BOOKING.COM BV,,"2,080.55",Paid
+Bill,B-2699,05/07/2026,Sysco Savannah,,"1,307.45",Paid
+Bill,B-2700,05/08/2026,Forsyth Florals,,140.28,Paid
+Bill,B-2701,05/08/2026,SOUTHERN COFFEE ROASTING,,180.98,Paid
+Bill,B-2702,05/08/2026,"Sysco Savannah, Inc.",,"1,431.64",Paid
+Bill,B-2703,05/08/2026,SYSCO SAVANNAH INC,,"1,544.61",Paid
+Bill,B-2704,05/09/2026,COASTAL LINEN SERVICE LLC,,883.44,Paid
+Bill,B-2705,05/11/2026,Coastal Linen Service,,779.44,Paid
+Bill,B-2706,05/11/2026,Coastal Linen Service,VOID - entered in error,779.44,Voided
+Bill,B-2707,05/12/2026,Coastal Linen Svc,,659.89,Paid
+Bill,B-2708,05/12/2026,COASTAL LINEN SERVICE LLC,,835.75,Paid
+Bill,B-2709,05/12/2026,FORSYTH FLORALS,,217.10,Paid
+Bill,B-2710,05/14/2026,Live Oak Grounds Care,,372.35,Paid
+Credit,VC-2711,05/15/2026,Sysco Savannah,Credit - short shipped,176.48,Applied
+Bill,B-2712,05/17/2026,COMCAST BUSINESS COMMUNICATIONS,,289.90,Paid
+Bill,B-2713,05/19/2026,Tybee Pest Control,,145.00,Paid
+Bill,B-2714,05/21/2026,Lowcountry Supply Co,,659.59,Paid
+Bill,B-2715,05/22/2026,GEORGIA POWER COMPANY,,"1,887.76",Paid
+Bill,B-2716,05/26/2026,Live Oak Grounds Care,,426.07,Paid
+Bill,B-2717,05/26/2026,Southern Coffee Roasting Co,,368.46,Paid
+Bill,B-2718,05/26/2026,SYSCO SAVANNAH INC,,"1,400.25",Paid
+Bill,B-2719,05/27/2026,City of Savannah - Water,,508.31,Paid
+Bill,B-2720,06/01/2026,Live Oak Grounds Care LLC,,374.66,Paid
+Bill,B-2721,06/02/2026,Booking.com B.V.,,"2,732.56",Paid
+Bill,B-2722,06/02/2026,Lowcountry Supply Co,,653.72,Paid
+Bill,B-2723,06/03/2026,COASTAL LINEN SERVICE LLC,,763.33,Paid
+Bill,B-2724,06/04/2026,Sysco  Savannah,,"1,491.36",Paid
+Bill,B-2725,06/08/2026,Coastal Linen Service,,733.73,Paid
+Bill,B-2726,06/09/2026,Lowcountry Supply Co,,226.76,Paid
+Bill,B-2727,06/10/2026,FORSYTH FLORALS,,97.81,Paid
+Bill,B-2728,06/11/2026,Sysco Savannah,,948.92,Paid
+Bill,B-2729,06/12/2026,Hotel Amenity Grp,,622.56,Paid
+Bill,B-2730,06/12/2026,LOWCOUNTRY SUPPLY CO.,,634.02,Paid
+Credit,VC-2731,06/17/2026,LOWCOUNTRY SUPPLY CO.,Credit - returned case,70.32,Applied
+Bill,B-2732,06/18/2026,SOUTHERN COFFEE ROASTING,,368.79,Paid
+Bill,B-2733,06/19/2026,GEORGIA POWER COMPANY,,"2,783.55",Paid
+Bill,B-2734,06/20/2026,Forsyth Florals,,201.06,Paid
+Bill,B-2735,06/23/2026,Coastal Linen Service,,610.56,Paid
+Bill,B-2736,06/23/2026,Forsyth Florals,,88.60,Paid
+Bill,B-2737,06/23/2026,"Sysco Savannah, Inc.",,762.84,Paid
+Bill,B-2738,06/24/2026,Coastal Linen Svc,,874.78,Paid
+Bill,B-2739,06/24/2026,Live Oak Grounds Care LLC,,384.49,Paid
+Bill,B-2740,06/24/2026,Tybee Pest Control,,145.00,Paid
+Bill,B-2741,06/25/2026,CITY OF SAVANNAH WATER & SEWER,,687.99,Paid
+Bill,B-2742,06/26/2026,SYSCO SAVANNAH INC,,"1,551.26",Paid
+Bill,B-2743,06/27/2026,COMCAST BUSINESS COMMUNICATIONS,,289.90,Paid
+Bill,B-2744,06/27/2026,"Sysco Savannah, Inc.",,538.51,Paid
+Bill,B-2745,07/02/2026,COASTAL LINEN SERVICE LLC,,895.71,Paid
+Bill,B-2746,07/03/2026,FORSYTH FLORALS,,137.15,Paid
+Bill,B-2747,07/03/2026,GEORGIA POWER COMPANY,,"2,618.87",Paid
+Credit,VC-2748,07/04/2026,COASTAL LINEN SERVICE LLC,Credit - stained king sheets returned,157.60,Applied
+Bill,B-2749,07/04/2026,Live Oak Grounds Care,,321.78,Paid
+Bill,B-2750,07/05/2026,SYSCO SAVANNAH INC,,494.08,Paid
+Bill,B-2751,07/07/2026,SOUTHERN COFFEE ROASTING,,147.48,Paid
+Bill,B-2752,07/09/2026,CITY OF SAVANNAH WATER & SEWER,,429.24,Paid
+Bill,B-2753,07/10/2026,Hotel Amenity Group,,"1,340.69",Paid
+Bill,B-2754,07/10/2026,Tybee Pest Control,,145.00,Open
+Bill,B-2755,07/11/2026,LOWCOUNTRY SUPPLY CO.,,554.98,Paid
+Bill,B-2756,07/11/2026,Sysco  Savannah,,"1,137.28",Paid
+Bill,B-2757,07/12/2026,Live Oak Grounds Care LLC,,413.77,Paid
+Bill,B-2758,07/14/2026,Forsyth Florals,,150.88,Paid
+Bill,B-2759,07/15/2026,"Sysco Savannah, Inc.",,"1,074.98",Paid
+Credit,VC-2760,07/15/2026,Sysco Savannah,Credit - short shipped,280.97,Applied
+Bill,B-2761,07/16/2026,Booking.com,,"3,295.86",Paid
+Bill,B-2762,07/16/2026,Booking.com,VOID - entered in error,"3,295.86",Voided
+Bill,B-2763,07/16/2026,"Sysco Savannah, Inc.",,421.87,Paid
+Bill,B-2764,07/19/2026,COASTAL LINEN SERVICE LLC,,750.10,Open
+Bill,B-2765,07/19/2026,COASTAL LINEN SERVICE LLC,,621.67,Open
+Bill,B-2766,07/19/2026,Forsyth Florals,,157.93,Open
+Bill,B-2767,07/21/2026,COMCAST BUSINESS COMMUNICATIONS,,289.90,Paid
+Bill,B-2768,07/21/2026,FORSYTH FLORALS,,162.84,Paid
+Bill,B-2769,07/21/2026,Savannah Magazine,,987.88,Paid
+Bill,B-2770,07/23/2026,Coastal Linen Svc,,774.78,Paid
+Credit,VC-2771,07/27/2026,Coastal Linen Service,Credit - stained king sheets returned,122.20,Applied
+Bill,B-2772,07/27/2026,SYSCO SAVANNAH INC,,748.72,Paid
+Bill,B-2773,08/02/2026,Georgia Power,,"1,737.16",Open
+Bill,B-2774,08/02/2026,Southern Coffee Roasting Co,,165.63,Paid
+Bill,B-2775,08/03/2026,COASTAL LINEN SERVICE LLC,,679.56,Paid
+Bill,B-2776,08/06/2026,LOWCOUNTRY SUPPLY CO.,,376.02,Paid
+Bill,B-2777,08/07/2026,Live Oak Grounds Care,,320.58,Paid
+Bill,B-2778,08/09/2026,Forsyth Florals,,251.30,Paid
+Bill,B-2779,08/09/2026,sysco savannah llc,,"1,444.09",Paid
+Bill,B-2780,08/10/2026,Hotel Amenity Group,,"1,115.55",Paid
+Bill,B-2781,08/11/2026,Coastal Linen Svc,,937.03,Paid
+Bill,B-2782,08/11/2026,Comcast Business,,289.90,Paid
+Bill,B-2783,08/13/2026,Savannah Magazine,,"1,083.71",Paid
+Bill,B-2784,08/14/2026,Booking.com B.V.,,"4,249.84",Paid
+Bill,B-2785,08/16/2026,FORSYTH FLORALS,,120.70,Paid
+Bill,B-2786,08/18/2026,Coastal Linen Svc,,805.20,Paid
+Bill,B-2787,08/20/2026,City of Savannah - Water,,719.02,Paid
+Bill,B-2788,08/20/2026,Tybee Pest Ctrl,,145.00,Paid
+Bill,B-2789,08/21/2026,Low Country Supply Company,,573.17,Open
+Bill,B-2790,08/22/2026,sysco savannah llc,,"1,520.68",Open
+Bill,B-2791,08/23/2026,Southern Coffee Roasting Co,,194.49,Paid
+Bill,B-2792,08/26/2026,Coastal Linen Service,,919.96,Open
+Bill,B-2793,08/26/2026,Forsyth Florals,,182.68,Open
+Bill,B-2794,08/27/2026,Live Oak Grounds Care,,434.54,Paid
+Bill,B-2795,08/27/2026,sysco savannah llc,,"1,458.85",Open
+Bill,B-2796,08/28/2026,Lowcountry Supply Co,,687.71,Open

@@ -1,0 +1,12 @@
+Expo cards
+
+I scanned every business card we brought back from the expo (expo_cards folder, one scan per card - I may have run one through twice). Marketing needs contacts.csv for the CRM import, one row per person:
+
+email, first_name, last_name, title, company, office_phone, mobile_phone, country
+
+- Names as the person would write them: first name, last name, no Dr / Mr / Ms and no letters after the name.
+- Title is the job title on the card. Company is the company name without the tagline.
+- Phones in international format with the country code, like +13035550100 - no spaces, no (0). Office is the main, direct or landline number; mobile is the cell. Leave one blank if the card doesn't have it. We don't keep fax numbers.
+- Country written out in full (United States, United Kingdom, Canada, ...).
+
+Jess

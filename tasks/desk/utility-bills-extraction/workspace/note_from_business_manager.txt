@@ -1,0 +1,13 @@
+For the facilities budget I need July and August usage and charges for every utility account, one row per account per month, in utility_usage.csv:
+
+row_id - account number, underscore, month (e.g. 1234-5678_2026-07)
+account_number - as printed on the bill
+utility - electric or water
+service_month - YYYY-MM of the month the service period ends in (not the bill date)
+usage - electricity in kWh, water in gallons
+usage_unit - kWh or gallons
+read_type - actual or estimated (the current read for that period)
+current_charges - the charges for that period's service only: no late fees, no previous balance
+late_fee - any late payment charge on that account's bill for the month, 0 if none
+
+Thanks - Charles Flores, Business Manager

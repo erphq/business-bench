@@ -1,0 +1,17 @@
+Reading the stop file (please read this before you start)
+
+Scanned at is what the handheld sends, and the handheld talks UTC. Our hubs do not: in August
+Portland runs seven hours behind UTC, Denver six, Austin five. The promised window is what the
+customer was told, in their own time.
+
+Windows: AM is 08:00 to 12:00, PM is 12:00 to 17:00, All day is 08:00 to 17:00, and the rest are
+written out. A delivery is on time if it is in the window - the day alone is not good enough, that
+is the whole argument we keep having with the retailers.
+
+Big items go out on two trucks. Both stops carry the same shipment number. It is one delivery to
+the customer and it is only on time if the last piece is in the window.
+
+Attempted, refused and cancelled stops are not deliveries. Leave them out of the percentage.
+
+The drivers type the late reason however they like. We report five reasons - weather, mechanical,
+customer, address, route volume - and everything else, including the blanks, is not recorded.

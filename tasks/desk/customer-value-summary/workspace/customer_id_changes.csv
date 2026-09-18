@@ -1,0 +1,15 @@
+old_customer_id,new_customer_id,changed_on,reason
+SQ-00213,7301669174,2025-03-10,Migrated from old store
+SQ-00161,7391180437,2025-03-10,Migrated from old store
+SQ-00724,7304884456,2025-03-10,Migrated from old store
+SQ-00817,7303057825,2025-03-10,Migrated from old store
+SQ-00578,7340407795,2025-03-10,Migrated from old store
+SQ-00729,7333646685,2025-03-10,Migrated from old store
+SQ-00747,7316628927,2025-03-10,Migrated from old store
+SQ-00445,7336938170,2025-03-10,Migrated from old store
+SQ-00766,7315721498,2025-03-10,Migrated from old store
+7348124477,7363300491,2025-07-11,Merged duplicate account
+7311055915,7357194352,2025-10-07,Merged duplicate account
+7301669174,7391096787,2026-01-25,Merged duplicate account
+7371064827,7317762948,2026-03-23,Merged duplicate account
+7364669736,7375242487,2026-04-23,Merged duplicate account

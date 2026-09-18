@@ -1,0 +1,19 @@
+{
+  "draft_and_writeoff_total": 571591.77,
+  "negative_jobs": [
+    {
+      "code": "P-2409",
+      "margin": -46716.33,
+      "name": "Umber Ceramics Studio"
+    },
+    {
+      "code": "P-2405",
+      "margin": -20564.47,
+      "name": "Quarry Road Nursery"
+    }
+  ],
+  "unbilled_cost_total": 339739.0,
+  "vendor_credits": 57977.52,
+  "worst_job": "Umber Ceramics Studio",
+  "worst_margin": -46716.33
+}

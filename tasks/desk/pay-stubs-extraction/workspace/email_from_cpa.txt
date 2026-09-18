@@ -1,0 +1,13 @@
+From: Nadia Osei <nadia@mossbank.cpa>
+To: Office Manager
+Date: Tue, 8 Sep 2026 10:02
+Subject: August payroll detail
+
+Hi - since you switched providers mid-month I can't pull August from one register. Can you key every pay stub dated in August into a sheet, one row per stub (pay_stubs.csv), with these columns:
+
+stub_no (advice, voucher or check number as printed), employee_id, pay_date (YYYY-MM-DD), gross_pay, bonus_pay (0 if none), federal_income_tax (all federal income tax withheld on that stub), social_security, medicare, state_income_tax, pretax_401k, pretax_health (medical, dental and vision together), roth_401k (after-tax retirement), net_pay.
+
+Amounts for that pay period only, plain numbers. I'll tie it out to the bank.
+
+Thanks,
+Nadia

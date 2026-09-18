@@ -1,0 +1,33 @@
+line_ref,event_code,invoice_no,invoice_date,line_type,description,amount,tax,balance_due
+FCR-2026-0418-1,EV-2608,FCR-2026-0418,2026-08-21,charge,"Venue rental, Saturday evening",6500.00,585.00,31345.11
+FCR-2026-0418-2,EV-2608,FCR-2026-0418,2026-08-21,charge,"Plated dinner, three courses",12384.00,1362.24,31345.11
+FCR-2026-0418-3,EV-2608,FCR-2026-0418,2026-08-21,charge,"Bar package, four hours",6048.00,665.28,31345.11
+FCR-2026-0418-4,EV-2608,FCR-2026-0418,2026-08-21,charge,"Service charge, 22% of food and beverage",4055.04,446.05,31345.11
+FCR-2026-0418-5,EV-2608,FCR-2026-0418,2026-08-21,charge,Dance floor and uplighting,950.00,85.50,31345.11
+FCR-2026-0418-6,EV-2608,FCR-2026-0418,2026-08-21,charge,Event staff hours,1764.00,0.00,31345.11
+FCR-2026-0418-7,EV-2608,FCR-2026-0418,2026-08-21,deposit,Deposit applied,-3500.00,0.00,31345.11
+MH-7779-1,EV-2611,MH-7779,2026-09-01,charge,"Main hall rental, Friday",4100.00,369.00,11432.00
+MH-7779-2,EV-2611,MH-7779,2026-09-01,charge,"Buffet dinner, southern menu",5100.00,561.00,11432.00
+MH-7779-3,EV-2611,MH-7779,2026-09-01,charge,"Wine service, per guest",1800.00,198.00,11432.00
+MH-7779-4,EV-2611,MH-7779,2026-09-01,charge,"Projector, screen and wireless mics",420.00,37.80,11432.00
+MH-7779-5,EV-2611,MH-7779,2026-09-01,charge,Coat check attendant,150.00,0.00,11432.00
+MH-7779-6,EV-2611,MH-7779,2026-09-01,charge,"Linen upgrade, per table",180.00,16.20,11432.00
+MH-7779-7,EV-2611,MH-7779,2026-09-01,deposit,Deposit applied,-1500.00,0.00,11432.00
+HTH-51573-R1-1,EV-2607,HTH-51573-R1,2026-09-08,charge,"Private dining room, Friday",1200.00,108.00,7765.08
+HTH-51573-R1-2,EV-2607,HTH-51573-R1,2026-09-08,charge,Family-style dinner,3312.00,364.32,7765.08
+HTH-51573-R1-3,EV-2607,HTH-51573-R1,2026-09-08,charge,Beer and wine on consumption,2000.00,220.00,7765.08
+HTH-51573-R1-4,EV-2607,HTH-51573-R1,2026-09-08,charge,Service charge 20%,1062.40,116.86,7765.08
+HTH-51573-R1-5,EV-2607,HTH-51573-R1,2026-09-08,charge,Audio package,350.00,31.50,7765.08
+HTH-51573-R1-6,EV-2607,HTH-51573-R1,2026-09-08,deposit,Deposit applied,-1000.00,0.00,7765.08
+2342-1,EV-2614,2342,2026-09-01,charge,Barn and grounds rental,3200.00,288.00,7669.70
+2342-2,EV-2614,2342,2026-09-01,charge,Tables and chairs set,700.00,63.00,7669.70
+2342-3,EV-2614,2342,2026-09-01,charge,Farm brunch buffet,3895.00,428.45,7669.70
+2342-4,EV-2614,2342,2026-09-01,charge,Lawn games package,225.00,20.25,7669.70
+2342-5,EV-2614,2342,2026-09-01,charge,Cleanup crew,350.00,0.00,7669.70
+2342-6,EV-2614,2342,2026-09-01,deposit,Deposit applied,-1500.00,0.00,7669.70
+RG-26-0911-1,EV-2619,RG-26-0911,2026-09-07,charge,Garden pavilion rental,5750.00,517.50,32308.96
+RG-26-0911-2,EV-2619,RG-26-0911,2026-09-07,charge,"Passed hors d'oeuvres, per guest",4732.00,520.52,32308.96
+RG-26-0911-3,EV-2619,RG-26-0911,2026-09-07,charge,"Seated dinner, per guest",12506.00,1375.66,32308.96
+RG-26-0911-4,EV-2619,RG-26-0911,2026-09-07,charge,Tent and patio heaters,1990.00,179.10,32308.96
+RG-26-0911-5,EV-2619,RG-26-0911,2026-09-07,charge,Valet attendants,720.00,0.00,32308.96
+RG-26-0911-6,EV-2619,RG-26-0911,2026-09-07,charge,Service charge 21%,3619.98,398.20,32308.96

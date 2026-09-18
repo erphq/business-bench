@@ -1,0 +1,126 @@
+{
+  "file_total": 125371.53,
+  "multi_line_checks": {
+    "12098": [
+      48800
+    ],
+    "13856": [
+      48201,
+      48197,
+      48250
+    ],
+    "83149": [
+      48800
+    ]
+  },
+  "no_stub_lookalike_invoice": 48633,
+  "per_invoice": {
+    "48114": {
+      "applied": 6182.88,
+      "write_off": 0.0
+    },
+    "48195": {
+      "applied": 4655.08,
+      "write_off": 0.0
+    },
+    "48197": {
+      "applied": 9781.1,
+      "write_off": 0.0
+    },
+    "48201": {
+      "applied": 5617.81,
+      "write_off": 0.0
+    },
+    "48250": {
+      "applied": 3185.87,
+      "write_off": 0.0
+    },
+    "48365": {
+      "applied": 6850.2,
+      "write_off": 0.0
+    },
+    "48366": {
+      "applied": 5334.68,
+      "write_off": 8.4
+    },
+    "48410": {
+      "applied": 5882.76,
+      "write_off": 0.0
+    },
+    "48438": {
+      "applied": 621.07,
+      "write_off": 10.0
+    },
+    "48514": {
+      "applied": 6338.2,
+      "write_off": 0.0
+    },
+    "48544": {
+      "applied": 819.17,
+      "write_off": 0.0
+    },
+    "48583": {
+      "applied": 9212.55,
+      "write_off": 0.0
+    },
+    "48588": {
+      "applied": 6263.99,
+      "write_off": 0.0
+    },
+    "48616": {
+      "applied": 2160.56,
+      "write_off": 0.0
+    },
+    "48623": {
+      "applied": 6039.24,
+      "write_off": 0.0
+    },
+    "48697": {
+      "applied": 4792.0,
+      "write_off": 0.0
+    },
+    "48716": {
+      "applied": 4102.15,
+      "write_off": 0.0
+    },
+    "48800": {
+      "applied": 6756.12,
+      "write_off": 0.0
+    },
+    "48836": {
+      "applied": 6990.79,
+      "write_off": 0.0
+    },
+    "48873": {
+      "applied": 8630.69,
+      "write_off": 0.0
+    },
+    "48902": {
+      "applied": 2024.09,
+      "write_off": 0.0
+    },
+    "48918": {
+      "applied": 2524.22,
+      "write_off": 0.0
+    },
+    "48929": {
+      "applied": 8287.71,
+      "write_off": 0.0
+    }
+  },
+  "trap_invoices": [
+    48197,
+    48201,
+    48250,
+    48366,
+    48438,
+    48514,
+    48800
+  ],
+  "yesterday_check_numbers": [
+    "29476",
+    "35199",
+    "9370",
+    "27436"
+  ]
+}

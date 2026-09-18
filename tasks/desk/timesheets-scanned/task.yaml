@@ -1,0 +1,95 @@
+id: timesheets-scanned
+track: desk
+category: extraction
+title: Daily hours from the scanned caregiver time sheets
+ask: |
+  The caregivers' time sheets for this pay period are scanned in the folder. Can you turn them into timesheet_hours.csv for payroll? Gloria's note explains what the upload needs.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the old form ends with a TOTAL row and the visit log prints a DAY TOTAL line under each day's visits and a WEEK TOTAL at the end; adding every hours figure on a date doubles the visit-log days, and a total row read as a day adds a phantom line (checks: hours per day; one row per person per day)
+- |-
+  the second week of the new form has a blank 'Approved by (supervisor)' line; every line from that sheet is sheet_signed = no while the same caregiver's first week is yes (check: signature flag)
+- |-
+  the visit log has two or three visits on several days, which add into one line per day (checks: hours per day; row count)
+- |-
+  the new form prints start, end and unpaid break minutes but no hours, so hours are end minus start minus the break (check: hours per day)
+- |-
+  the new form lists weekday names only, Sunday first, under a week-ending Saturday; the first week's Sunday is 30 August, not 6 September (check: one row per person per day)
+- |-
+  an overnight visit 22:00-06:00 on 10 September counts 8 hours on the 10th, not split across two days (checks: hours per day; one row per person per day)
+- |-
+  last pay period's sheet (week ending 29 August) is in the folder and its days are outside the period (checks: one row per person per day; row count)
+- |-
+  every sheet is an image-only scan on one of three forms, one of them landscape (check: hours per day)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: timesheet_hours.csv
+  columns:
+  - entry_id
+  - employee_id
+  - employee_name
+  - work_date
+  - hours
+  - sheet_signed
+- type: csv_set_equal
+  name: one row per person per day
+  path: timesheet_hours.csv
+  column: entry_id
+  ref: timesheet_hours.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: timesheet_hours.csv
+  equals_ref: timesheet_hours.csv
+- type: csv_values_match
+  name: employee and date
+  path: timesheet_hours.csv
+  ref: timesheet_hours.csv
+  key: entry_id
+  columns:
+  - employee_id
+  - employee_name
+  - work_date
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: hours per day
+  path: timesheet_hours.csv
+  ref: timesheet_hours.csv
+  key: entry_id
+  columns:
+  - hours
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - HC-128_2026-08-31
+  - HC-128_2026-09-01
+  - HC-128_2026-09-03
+  - HC-128_2026-09-07
+  - HC-128_2026-09-10
+  - HC-175_2026-08-30
+  - HC-175_2026-08-31
+  - HC-175_2026-09-02
+  - HC-175_2026-09-03
+  - HC-175_2026-09-05
+- type: csv_values_match
+  name: signature flag
+  path: timesheet_hours.csv
+  ref: timesheet_hours.csv
+  key: entry_id
+  columns:
+  - sheet_signed
+  min_accuracy: 1.0
+  must_match_keys:
+  - HC-175_2026-09-07
+  - HC-175_2026-09-08
+  - HC-175_2026-09-10
+  - HC-175_2026-09-11
+  - HC-175_2026-08-30

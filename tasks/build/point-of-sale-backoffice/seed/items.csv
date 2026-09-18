@@ -1,0 +1,62 @@
+Item Code,Item Name,Category,Price,Cost,Sold At,Active
+AMR-12,Americano 12oz,Coffee,3.75,0.76,All stores,Y
+AMR-16,Americano 16oz,Coffee,4.25,0.82,Both,Y
+BRV-12,Breve 12oz,Coffee,5.00,1.48,Mill only,Y
+CAP-12,Cappuccino 12oz,Coffee,4.75,0.91,All stores,Y
+CHA-12,Chai latte 12oz,Coffee,4.95,1.04,Both,Y
+CHA-16,Chai latte 16oz,Coffee,5.45,1.32,All stores,Y
+COR-6,Cortado 6oz,Coffee,4.25,0.72,Both,Yes
+COR-6,Cortado 6oz,Coffee,4.25,0.72,Both,Yes
+DRP-12,Drip coffee 12oz,Coffee,$2.75,0.36,All stores,Y
+DRP-16,Drip coffee 16oz,Coffee,3.25,0.52,All stores,Y
+ESP-DBL,Espresso double,Coffee,3.50,0.64,All stores,Yes
+ESP-SGL,Espresso single,Coffee,3.00,0.40,All stores,Y
+FLW-8,Flat white 8oz,Coffee,4.50,0.98,Both,Yes
+HOT-12,Hot chocolate 12oz,Coffee,$4.25,1.09,Both,Y
+LAT-12,Latte 12oz,Coffee,4.75,1.08,All stores,Yes
+lat-16,Latte 16 oz,Coffee,$5.25,1.26,All stores,Y
+LAT-16,Latte 16oz,Coffee,$5.25,1.26,All stores,Y
+MAC-4,Macchiato 4oz,Coffee,3.75,0.62,Both,Yes
+MOC-12,Mocha 12oz,Coffee,5.25,1.21,All stores,Yes
+MOC-16,Mocha 16oz,Coffee,5.75,1.60,Both,Y
+CBR-16,Cold brew 16oz,Cold Drinks,4.75,0.84,All stores,Yes
+CBR-20,Cold brew 20oz,Cold Drinks,$5.25,0.95,Both,Yes
+ICL-16,Iced latte 16oz,Cold Drinks,$5.50,1.44,Both,Y
+ITE-16,Iced tea 16oz,Cold Drinks,3.50,0.39,Both,Y
+LEM-16,Lemonade 16oz,Cold Drinks,3.95,0.81,Both,Y
+NIT-16,Nitro cold brew 16oz,Cold Drinks,$5.75,0.91,Harbor St only,Y
+NIT-16,Nitro cold brew 16oz,Cold Drinks,$5.75,0.91,Harbor St only,Y
+SPK-12,Sparkling water 12oz,Cold Drinks,$2.95,0.93,Both,Yes
+BAG-LOX,Bagel with lox,Food,11.25,4.36,Harbor St only,Y
+BRK-SAN,Breakfast sandwich,Food,8.75,2.75,Both,Y
+GRN-YOG,Granola yogurt bowl,Food,7.25,2.29,Both,Yes
+OAT-BWL,Oatmeal bowl,Food,$6.25,1.59,Both,N
+QCH-SPN,Spinach quiche,Food,$7.95,2.56,Both,Yes
+SND-TUR,Turkey pesto sandwich,Food,$10.50,4.01,All stores,Yes
+SND-VEG,Veggie wrap,Food,$9.75,3.24,Both,Y
+SOU-DAY,Soup of the day,Food,6.5,1.74,Mill only,Y
+TST-AVO,Avocado toast,Food,9.50,$3.46,All stores,Yes
+BAN-BRD,Banana bread slice,Pastry,$3.75,0.95,All stores,Y
+BRN-SAL,Salted brownie,Pastry,3.95,1.03,Both,Y
+CIN-ROL,Cinnamon roll,Pastry,4.25,1.14,All stores,Y
+COO-CHO,Chocolate chip cookie,Pastry,-2.75,$0.72,All stores,Y
+crs-alm,Almond Croissant ,Pastry,4.5,1.59,All stores,Yes
+CRS-ALM,Almond croissant,Pastry,4.5,1.59,All stores,Yes
+CRS-BUT,Butter croissant,Pastry,$3.75,1.21,All stores,Y
+CRS-CHO,Chocolate croissant,Pastry,4.25,1.32,All stores,Yes
+DON-GLZ,Glazed doughnut,Pastry,2.95,0.81,Mill only,Yes
+KGA-MAN,Kouign-amann,Pastry,4.75,1.60,Harbor St only,Yes
+MUF-BLU,Blueberry muffin,Pastry,$3.50,0.92,All stores,Y
+PMP-SCN,Pumpkin scone,Pastry,4.25,1.11,Both,N
+SCN-CHE,Cheddar scone,Pastry,3.95,1.06,Both,Y
+BNS-DEC,Decaf beans 12oz,Retail,17.00,7.96,Both,Yes
+BNS-ETH,Ethiopia beans 12oz,Retail,19,8.50,Both,Yes
+BNS-HSE,House blend beans 12oz,Retail,16.00,6.62,All stores,Yes
+MUG-LOG,Logo mug,Retail,18,5.70,All stores,Y
+TUM-16,Travel tumbler 16oz,Retail,$28.00,$10.48,Both,Y
+MAT-12,Matcha latte 12oz,Tea,$5.25,1.50,All stores,Yes
+MAT-16,Matcha latte 16oz,Tea,5.75,$1.77,All stores,Yes
+TEA-CM,Chamomile tea,Tea,3.25,0.42,All stores,Y
+TEA-EB,English breakfast tea,Tea,3.25,0.32,Both,Y
+TEA-EG,Earl grey tea,Tea,3.25,0.33,All stores,Y
+TEA-GR,Sencha green tea,Tea,3.25,0.40,Both,Yes

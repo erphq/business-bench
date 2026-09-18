@@ -1,0 +1,34 @@
+{
+  "excluded": {
+    "april": 10,
+    "merged": 9,
+    "spam": 6
+  },
+  "export_time": "2026-06-01T07:45:00",
+  "holiday_weekend_tickets": [
+    "INC-20639",
+    "INC-20641",
+    "INC-20645"
+  ],
+  "naive_total_breaches": {
+    "calendar": 187,
+    "holiday": 63,
+    "old_policy": 64,
+    "open": 39,
+    "spelling": 44
+  },
+  "naive_total_tickets_all_rows": 280,
+  "open_breached": [
+    "INC-20551",
+    "INC-20554",
+    "INC-20562",
+    "INC-20569",
+    "INC-20576",
+    "INC-20629",
+    "INC-20632",
+    "INC-20634",
+    "INC-20672"
+  ],
+  "total_breaches": 48,
+  "total_tickets": 255
+}

@@ -1,0 +1,65 @@
+Room Code,Room,Building,Floor,Capacity,Setup,Accessible
+RM-361,Harbor Meeting Room 1,Harbor Hotel,1,14,Boardroom,Y
+RM-072,Lakeside Suite 1,Lakeside Hotel,4,96,Theatre,Y
+RM-105,Convention Boardroom 4,Convention Center,2,16,Theatre,N
+RM-170,Lakeside Suite 8,Lakeside Hotel,4,96 pax,U-shape,Y
+RM-245,Lakeside Meeting Room 1,Lakeside Hotel,1,60,Boardroom,Y
+RM-364,Convention Studio 3,Convention Center,1,28 seats,U-shape,Y
+RM-049,Lakeside Boardroom 1,Lakeside Hotel,2,80 pax,U-shape,Y
+RM-134,Convention Meeting Room 7,Convention Center,3,28 pax,Classroom,Y
+RM-156,Convention Suite 5,Convention Center,3,60,Boardroom,Y
+RM-314,Lakeside Boardroom 12,Lakeside Hotel,2,30,U-shape,Y
+RM-129,Harbor Hall 10,Harbor Hotel,4,150 seats,Theatre,Y
+RM-032,Lakeside Studio 2,Lakeside Hotel,2,36,Boardroom,N
+RM-287,Harbor Salon 6,Harbor Hotel,1,16,U-shape,Y
+RM-309,Harbor Hall 4,Harbor Hotel,1,100 seats,Classroom,Y
+RM-198,Grand Hall,Convention Center,3,"1,200",Classroom,Y
+RM-008,Lakeside Meeting Room 11,Lakeside Hotel,3,36 pax,Boardroom,N
+RM-001,Lakeside Breakout 7,Lakeside Hotel,4,30,Boardroom,Y
+RM-021,Lakeside Ballroom 4,Lakeside Hotel,1,300,Cabaret,Y
+RM-205,Lakeside Salon 12,Lakeside Hotel,4,40,Theatre,Y
+RM-253,Convention Meeting Room 5,Convention Center,3,24 seats,Boardroom,N
+RM-048,Lakeside Breakout 4,Lakeside Hotel,1,18,U-shape,Y
+RM-242,Harbor Breakout 5,Harbor Hotel,1,12,Classroom,Y
+RM343,HARBOR SUITE 8,Harbor Hotel,3,40 pax,Cabaret,N
+RM-033,Convention Breakout 10,Convention Center,2,30,U-shape,Y
+RM-133,Convention Ballroom 11,Convention Center,2,300 seats,Cabaret,Y
+RM-343,Harbor Suite 8,Harbor Hotel,3,40,Cabaret,N
+RM-317,Convention Suite 8,Convention Center,4,96,Cabaret,N
+RM-283,Convention Meeting Room 9,Convention Center,3,12 pax,Boardroom,N
+RM-259,Lakeside Breakout 5,Lakeside Hotel,3,96 pax,Boardroom,Y
+RM-281,Lakeside Breakout 8,Lakeside Hotel,2,20 seats,Cabaret,N
+RM-112,Convention Breakout 8,Convention Center,2,60 seats,Theatre,N
+RM-299,Convention Hall 11,Convention Center,2,150,Classroom,Y
+RM-159,Lakeside Breakout 10,Lakeside Hotel,1,96 pax,Classroom,Y
+RM-313,Convention Meeting Room 2,Convention Center,4,14,Boardroom,Y
+RM-208,Lakeside Hall 7,Lakeside Hotel,1,150 pax,U-shape,Y
+RM-171,Convention Studio 11,Convention Center,2,14,Classroom,Y
+RM-162,Harbor Boardroom 2,Harbor Hotel,4,14,Boardroom,Y
+RM-374,Lakeside Salon 8,Lakeside Hotel,1,80,U-shape,Y
+RM-321,Lakeside Boardroom 11,Lakeside Hotel,1,20,Boardroom,Y
+RM-125,Convention Boardroom 8,Convention Center,4,24,Classroom,N
+RM-328,Harbor Suite 11,Harbor Hotel,2,16,Classroom,N
+RM-369,Convention Breakout 3,Convention Center,3,18 seats,Cabaret,Y
+RM-051,Harbor Salon 12,Harbor Hotel,2,72 seats,Theatre,N
+RM-273,Convention Salon 12,Convention Center,2,60,Boardroom,N
+RM262,CONVENTION BALLROOM 2,Convention Center,1,600,Cabaret,Y
+RM-038,Convention Studio 5,Convention Center,1,72 pax,Theatre,Y
+RM-227,Harbor Boardroom 6,Harbor Hotel,2,14 seats,U-shape,Y
+RM-249,Convention Suite 2,Convention Center,4,72,Classroom,Y
+RM-267,Convention Salon 2,Convention Center,1,36 pax,Theatre,N
+RM-389,Convention Ballroom 12,Convention Center,3,300,Theatre,Y
+RM-351,Lakeside Salon 9,Lakeside Hotel,3,48 seats,U-shape,Y
+RM-262,Convention Ballroom 2,Convention Center,1,600 pax,Cabaret,Y
+RM-048,Lakeside Breakout 4,Lakeside Hotel,1,18,U-shape,Y
+RM-145,Lakeside Salon 3,Lakeside Hotel,2,60,Boardroom,Y
+RM-167,Lakeside Suite 3,Lakeside Hotel,3,40 seats,Boardroom,Y
+RM-038,Convention Studio 5,Convention Center,1,72 pax,Theatre,Y
+RM-184,Harbor Hall 12,Harbor Hotel,4,100 pax,Cabaret,Y
+RM-362,Convention Hall 8,Convention Center,3,120,U-shape,N
+RM-052,Harbor Studio 3,Harbor Hotel,3,18 pax,U-shape,N
+RM-182,Harbor Boardroom 8,Harbor Hotel,2,20 pax,Theatre,Y
+RM-387,Lakeside Hall 6,Lakeside Hotel,2,100 seats,U-shape,N
+RM-076,Lakeside Meeting Room 6,Lakeside Hotel,1,80,Classroom,Y
+RM-223,Lakeside Suite 2,Lakeside Hotel,3,30,Boardroom,Y
+RM-216,Convention Ballroom 6,Convention Center,4,450 pax,Theatre,Y

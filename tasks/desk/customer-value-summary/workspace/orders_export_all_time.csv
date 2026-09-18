@@ -1,0 +1,403 @@
+﻿Name,Email,Created at,Customer ID,Financial Status,Total,Refunded Amount,Tags,Lineitem name,Lineitem quantity,Lineitem price
+#1001,margaret.cook@aol.com,2024-01-08 12:30:49 -0700,SQ-00747,paid,79.00,0.00,,Pour-over kit,1,42.00
+#1001,margaret.cook@aol.com,2024-01-08 12:30:49 -0700,SQ-00747,,,,,Nightjar mug,1,16.00
+#1001,margaret.cook@aol.com,2024-01-08 12:30:49 -0700,SQ-00747,,,,,Ethiopia Guji 12oz,1,21.00
+#1002,watson.chloe@gmail.com,2024-01-09 07:35:25 -0700,7381891021,paid,42.00,0.00,,Ethiopia Guji 12oz,2,21.00
+#1003,matthewwhite81@yahoo.com,2024-01-09 13:01:28 -0700,7324826513,paid,84.00,0.00,,Pour-over kit,1,42.00
+#1003,matthewwhite81@yahoo.com,2024-01-09 13:01:28 -0700,7324826513,,,,,Colombia Huila 12oz,1,19.00
+#1003,matthewwhite81@yahoo.com,2024-01-09 13:01:28 -0700,7324826513,,,,,Kenya AA 12oz,1,23.00
+#1004,wilson.gary@hotmail.com,2024-01-11 10:16:30 -0700,7370033481,paid,35.00,0.00,,House Espresso 12oz,2,17.50
+#1005,krogers@icloud.com,2024-01-11 14:09:14 -0700,SQ-00724,paid,27.95,0.00,,Ethiopia Guji 12oz,1,21.00
+#1006,kimberly.davis@outlook.com,2024-01-11 14:14:27 -0700,7326117555,paid,20.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1007,calvarez@me.com,2024-01-12 14:18:23 -0700,7377303096,paid,40.00,0.00,,Guatemala Antigua 12oz,2,20.00
+#1008,jward@outlook.com,2024-01-14 14:38:59 -0700,7344999241,paid,117.00,0.00,,House Espresso 12oz,2,17.50
+#1008,jward@outlook.com,2024-01-14 14:38:59 -0700,7344999241,,,,,Pour-over kit,1,42.00
+#1008,jward@outlook.com,2024-01-14 14:38:59 -0700,7344999241,,,,,Guatemala Antigua 12oz,2,20.00
+#1009,luis.mensah@me.com,2024-01-17 09:53:33 -0700,7365289435,paid,137.00,0.00,,Espresso 5lb,1,78.00
+#1009,luis.mensah@me.com,2024-01-17 09:53:33 -0700,7365289435,,,,,Colombia Huila 12oz,2,19.00
+#1009,luis.mensah@me.com,2024-01-17 09:53:33 -0700,7365289435,,,,,Ethiopia Guji 12oz,1,21.00
+#1010,ops@nightjar.coffee,2024-02-04 12:40:00 -0700,7393861560,paid,42.00,0.00,,Pour-over kit,1,42.00
+#1011,barbara_hernandez@icloud.com,2024-02-05 08:12:19 -0700,7322739785,paid,74.00,0.00,,Colombia Huila 12oz,1,19.00
+#1011,barbara_hernandez@icloud.com,2024-02-05 08:12:19 -0700,7322739785,,,,,Guatemala Antigua 12oz,1,20.00
+#1011,barbara_hernandez@icloud.com,2024-02-05 08:12:19 -0700,7322739785,,,,,House Espresso 12oz,2,17.50
+#1012,ward.john@aol.com,2024-02-06 15:40:43 -0700,7361465572,paid,94.00,0.00,,Espresso 5lb,1,78.00
+#1012,ward.john@aol.com,2024-02-06 15:40:43 -0700,7361465572,,,,,Nightjar mug,1,16.00
+#1013,jessica_peterson@gmail.com,2024-02-08 08:03:09 -0700,7380058851,paid,62.50,0.00,,Nightjar mug,1,16.00
+#1013,jessica_peterson@gmail.com,2024-02-08 08:03:09 -0700,7380058851,,,,,Colombia Huila 12oz,2,19.00
+#1014,steven_morgan@icloud.com,2024-02-11 12:02:21 -0700,7364669736,paid,17.50,0.00,,House Espresso 12oz,1,17.50
+#1015,wilson.gary@hotmail.com,2024-02-16 16:51:10 -0700,7370033481,paid,120.00,0.00,,Pour-over kit,1,42.00
+#1015,wilson.gary@hotmail.com,2024-02-16 16:51:10 -0700,7370033481,,,,,Espresso 5lb,1,78.00
+#1016,amara_torres@yahoo.com,2024-02-17 14:24:43 -0700,7331608507,paid,77.50,0.00,,Nightjar mug,1,16.00
+#1016,amara_torres@yahoo.com,2024-02-17 14:24:43 -0700,7331608507,,,,,Pour-over kit,1,42.00
+#1016,amara_torres@yahoo.com,2024-02-17 14:24:43 -0700,7331608507,,,,,Decaf Swiss Water 12oz,1,19.50
+#1017,harris.david@protonmail.com,2024-02-24 10:26:31 -0700,7385060196,paid,82.00,0.00,,Ethiopia Guji 12oz,1,21.00
+#1017,harris.david@protonmail.com,2024-02-24 10:26:31 -0700,7385060196,,,,,Pour-over kit,1,42.00
+#1017,harris.david@protonmail.com,2024-02-24 10:26:31 -0700,7385060196,,,,,Colombia Huila 12oz,1,19.00
+#1018,wilson.gary@hotmail.com,2024-02-25 10:10:25 -0700,7370033481,paid,59.50,0.00,,Guatemala Antigua 12oz,2,20.00
+#1018,wilson.gary@hotmail.com,2024-02-25 10:10:25 -0700,7370033481,,,,,Decaf Swiss Water 12oz,1,19.50
+#1019,edwards.anna@protonmail.com,2024-03-13 07:50:51 -0700,7305186383,paid,39.00,0.00,,Colombia Huila 12oz,1,19.00
+#1019,edwards.anna@protonmail.com,2024-03-13 07:50:51 -0700,7305186383,,,,,Guatemala Antigua 12oz,1,20.00
+#1020,calvarez@me.com,2024-03-19 12:56:48 -0700,7377303096,paid,120.00,0.00,,Ethiopia Guji 12oz,2,21.00
+#1020,calvarez@me.com,2024-03-19 12:56:48 -0700,7377303096,,,,,Espresso 5lb,1,78.00
+#1021,johnson.priya@outlook.com,2024-03-28 15:12:46 -0700,7388263752,paid,65.00,0.00,,Nightjar mug,1,16.00
+#1021,johnson.priya@outlook.com,2024-03-28 15:12:46 -0700,7388263752,,,,,House Espresso 12oz,1,17.50
+#1021,johnson.priya@outlook.com,2024-03-28 15:12:46 -0700,7388263752,,,,,Kenya AA 12oz,1,23.00
+#1022,myers.richard@outlook.com,2024-03-31 12:11:33 -0700,7334914494,paid,48.95,0.00,,Pour-over kit,1,42.00
+#1023,rebecca.garcia@yahoo.com,2024-04-03 15:45:54 -0700,SQ-00161,paid,42.00,0.00,,Pour-over kit,1,42.00
+#1024,myers.richard@outlook.com,2024-04-04 16:37:27 -0700,7334914494,paid,103.00,0.00,,Colombia Huila 12oz,2,19.00
+#1024,myers.richard@outlook.com,2024-04-04 16:37:27 -0700,7334914494,,,,,Pour-over kit,1,42.00
+#1024,myers.richard@outlook.com,2024-04-04 16:37:27 -0700,7334914494,,,,,Kenya AA 12oz,1,23.00
+#1025,myers.richard@outlook.com,2024-04-18 09:40:44 -0700,7334914494,paid,16.00,0.00,,Nightjar mug,1,16.00
+#1026,amara_torres@yahoo.com,2024-04-21 16:31:57 -0700,7331608507,paid,129.00,0.00,,Espresso 5lb,1,78.00
+#1026,amara_torres@yahoo.com,2024-04-21 16:31:57 -0700,7331608507,,,,,House Espresso 12oz,2,17.50
+#1026,amara_torres@yahoo.com,2024-04-21 16:31:57 -0700,7331608507,,,,,Nightjar mug,1,16.00
+#1027,johnson.priya@outlook.com,2024-04-23 16:59:13 -0700,7388263752,paid,62.00,0.00,,Ethiopia Guji 12oz,2,21.00
+#1027,johnson.priya@outlook.com,2024-04-23 16:59:13 -0700,7388263752,,,,,Guatemala Antigua 12oz,1,20.00
+#1028,wilson.gary@hotmail.com,2024-05-01 16:28:02 -0700,7370033481,paid,194.00,0.00,,Espresso 5lb,2,78.00
+#1028,wilson.gary@hotmail.com,2024-05-01 16:28:02 -0700,7370033481,,,,,Colombia Huila 12oz,2,19.00
+#1029,stephanie_alvarez@yahoo.com,2024-05-05 10:31:57 -0700,7323463874,paid,20.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1030,myers.richard@outlook.com,2024-05-07 16:53:20 -0700,7334914494,partially_refunded,176.00,66.86,,Espresso 5lb,2,78.00
+#1030,myers.richard@outlook.com,2024-05-07 16:53:20 -0700,7334914494,,,,,Guatemala Antigua 12oz,1,20.00
+#1031,fatima_walker@outlook.com,2024-05-10 15:46:12 -0700,7329589712,voided,24.45,0.00,,House Espresso 12oz,1,17.50
+#1032,sarahtorres29@outlook.com,2024-05-24 07:02:03 -0700,SQ-00445,paid,26.95,0.00,,Guatemala Antigua 12oz,1,20.00
+#1033,donald.mensah@yahoo.com,2024-05-26 09:15:28 -0700,7366123086,paid,17.50,0.00,,House Espresso 12oz,1,17.50
+#1034,ops@nightjar.coffee,2024-05-28 08:26:00 -0700,7393861560,paid,42.00,0.00,,Pour-over kit,1,42.00
+#1035,jward@outlook.com,2024-06-01 16:14:42 -0700,7344999241,paid,66.50,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1035,jward@outlook.com,2024-06-01 16:14:42 -0700,7344999241,,,,,Ethiopia Guji 12oz,1,21.00
+#1035,jward@outlook.com,2024-06-01 16:14:42 -0700,7344999241,,,,,House Espresso 12oz,1,17.50
+#1036,fatima_walker@outlook.com,2024-06-13 08:55:48 -0700,7329589712,paid,44.95,0.00,,Colombia Huila 12oz,2,19.00
+#1037,donnaalvarez34@protonmail.com,2024-06-18 15:27:59 -0700,7328883828,paid,132.00,0.00,,Colombia Huila 12oz,1,19.00
+#1037,donnaalvarez34@protonmail.com,2024-06-18 15:27:59 -0700,7328883828,,,,,Espresso 5lb,1,78.00
+#1037,donnaalvarez34@protonmail.com,2024-06-18 15:27:59 -0700,7328883828,,,,,House Espresso 12oz,2,17.50
+#1038,kenneth_ward@me.com,2024-06-22 11:56:43 -0700,7378795832,refunded,133.50,133.50,,Espresso 5lb,1,78.00
+#1038,kenneth_ward@me.com,2024-06-22 11:56:43 -0700,7378795832,,,,,Colombia Huila 12oz,2,19.00
+#1038,kenneth_ward@me.com,2024-06-22 11:56:43 -0700,7378795832,,,,,House Espresso 12oz,1,17.50
+#1039,jessica_peterson@gmail.com,2024-06-25 12:31:43 -0700,7380058851,paid,56.50,0.00,,House Espresso 12oz,1,17.50
+#1039,jessica_peterson@gmail.com,2024-06-25 12:31:43 -0700,7380058851,,,,,Guatemala Antigua 12oz,1,20.00
+#1039,jessica_peterson@gmail.com,2024-06-25 12:31:43 -0700,7380058851,,,,,Colombia Huila 12oz,1,19.00
+#1040,richard.richardson@gmail.com,2024-06-28 10:10:23 -0700,7348124477,paid,82.00,0.00,,Pour-over kit,1,42.00
+#1040,richard.richardson@gmail.com,2024-06-28 10:10:23 -0700,7348124477,,,,,Guatemala Antigua 12oz,2,20.00
+#1041,johnson.priya@outlook.com,2024-06-28 15:53:22 -0700,7388263752,paid,63.50,0.00,,Kenya AA 12oz,2,23.00
+#1041,johnson.priya@outlook.com,2024-06-28 15:53:22 -0700,7388263752,,,,,House Espresso 12oz,1,17.50
+#1042,watson.chloe@gmail.com,2024-06-30 14:25:28 -0700,7381891021,paid,37.00,0.00,,Ethiopia Guji 12oz,1,21.00
+#1042,watson.chloe@gmail.com,2024-06-30 14:25:28 -0700,7381891021,,,,,Nightjar mug,1,16.00
+#1043,dorothy_howard@icloud.com,2024-07-15 12:54:29 -0700,SQ-00729,paid,45.95,0.00,,Decaf Swiss Water 12oz,2,19.50
+#1044,edwards.anna@protonmail.com,2024-07-21 08:09:14 -0700,7305186383,paid,48.95,0.00,,Pour-over kit,1,42.00
+#1045,calvarez@me.com,2024-07-21 08:48:09 -0700,7377303096,paid,77.00,0.00,,Pour-over kit,1,42.00
+#1045,calvarez@me.com,2024-07-21 08:48:09 -0700,7377303096,,,,,House Espresso 12oz,2,17.50
+#1046,donna.white@outlook.com,2024-07-31 13:29:45 -0700,7341801574,paid,27.50,0.00,,Colombia Huila 12oz,1,19.00
+#1047,dmitri_king@me.com,2024-08-01 15:13:57 -0700,7373057326,paid,28.50,0.00,,Guatemala Antigua 12oz,1,20.00
+#1048,ashley_myers@aol.com,2024-08-02 12:45:02 -0700,7376385018,paid,82.00,0.00,,Pour-over kit,1,42.00
+#1048,ashley_myers@aol.com,2024-08-02 12:45:02 -0700,7376385018,,,,,Guatemala Antigua 12oz,2,20.00
+#1049,krogers@icloud.com,2024-08-04 07:25:13 -0700,SQ-00724,paid,19.50,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1050,krogers@icloud.com,2024-08-07 08:54:26 -0700,SQ-00724,paid,35.00,0.00,,Colombia Huila 12oz,1,19.00
+#1050,krogers@icloud.com,2024-08-07 08:54:26 -0700,SQ-00724,,,,,Nightjar mug,1,16.00
+#1051,cflores@gmail.com,2024-08-09 16:36:55 -0700,7311055915,paid,28.00,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1052,marcus_cox@protonmail.com,2024-08-15 13:34:13 -0700,7371064827,paid,27.95,0.00,,Ethiopia Guji 12oz,1,21.00
+#1053,sfoster@aol.com,2024-08-18 07:42:08 -0700,SQ-00766,paid,130.00,0.00,,Espresso 5lb,1,78.00
+#1053,sfoster@aol.com,2024-08-18 07:42:08 -0700,SQ-00766,,,,,Nightjar mug,2,16.00
+#1053,sfoster@aol.com,2024-08-18 07:42:08 -0700,SQ-00766,,,,,Guatemala Antigua 12oz,1,20.00
+#1054,steven_morgan@icloud.com,2024-09-03 14:19:24 -0700,7364669736,paid,28.00,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1055,gonzalez.wei@me.com,2024-09-03 15:41:58 -0700,7319643903,paid,39.00,0.00,,Nightjar mug,1,16.00
+#1055,gonzalez.wei@me.com,2024-09-03 15:41:58 -0700,7319643903,,,,,Kenya AA 12oz,1,23.00
+#1056,kcooper@icloud.com,2024-09-04 15:34:04 -0700,7396383539,paid,198.00,0.00,,Espresso 5lb,2,78.00
+#1056,kcooper@icloud.com,2024-09-04 15:34:04 -0700,7396383539,,,,,Pour-over kit,1,42.00
+#1057,myers.richard@outlook.com,2024-09-10 08:38:46 -0700,7334914494,paid,218.00,0.00,,Kenya AA 12oz,1,23.00
+#1057,myers.richard@outlook.com,2024-09-10 08:38:46 -0700,7334914494,,,,,Decaf Swiss Water 12oz,2,19.50
+#1057,myers.richard@outlook.com,2024-09-10 08:38:46 -0700,7334914494,,,,,Espresso 5lb,2,78.00
+#1058,joshua_morris@hotmail.com,2024-09-18 14:48:00 -0700,SQ-00578,paid,124.50,0.00,,Ethiopia Guji 12oz,1,21.00
+#1058,joshua_morris@hotmail.com,2024-09-18 14:48:00 -0700,SQ-00578,,,,,Pour-over kit,2,42.00
+#1058,joshua_morris@hotmail.com,2024-09-18 14:48:00 -0700,SQ-00578,,,,,Decaf Swiss Water 12oz,1,19.50
+#1059,patel.barbara@hotmail.com,2024-09-24 10:26:39 -0700,7360473556,paid,104.00,0.00,,Kenya AA 12oz,1,23.00
+#1059,patel.barbara@hotmail.com,2024-09-24 10:26:39 -0700,7360473556,,,,,Decaf Swiss Water 12oz,2,19.50
+#1059,patel.barbara@hotmail.com,2024-09-24 10:26:39 -0700,7360473556,,,,,Pour-over kit,1,42.00
+#1060,marcus_cox@protonmail.com,2024-09-24 12:19:05 -0700,7371064827,paid,23.00,0.00,,Kenya AA 12oz,1,23.00
+#1061,margaret.cook@aol.com,2024-09-26 07:49:51 -0700,SQ-00747,paid,19.00,0.00,,Colombia Huila 12oz,1,19.00
+#1062,luis.mensah@me.com,2024-10-02 08:40:00 -0700,7365289435,paid,24.45,0.00,test order - ignore,House Espresso 12oz,1,17.50
+#1063,barbara_hernandez@icloud.com,2024-10-02 10:39:55 -0700,7322739785,paid,17.50,0.00,,House Espresso 12oz,1,17.50
+#1064,marcus_cox@protonmail.com,2024-10-06 07:37:55 -0700,7371064827,paid,50.50,0.00,,Pour-over kit,1,42.00
+#1065,amara_torres@yahoo.com,2024-10-09 15:23:09 -0700,7331608507,paid,40.50,0.00,,Nightjar mug,2,16.00
+#1066,donnaalvarez34@protonmail.com,2024-10-24 14:16:07 -0700,7328883828,paid,64.95,0.00,,Ethiopia Guji 12oz,1,21.00
+#1066,donnaalvarez34@protonmail.com,2024-10-24 14:16:07 -0700,7328883828,,,,,Decaf Swiss Water 12oz,1,19.50
+#1066,donnaalvarez34@protonmail.com,2024-10-24 14:16:07 -0700,7328883828,,,,,House Espresso 12oz,1,17.50
+#1067,fatima_walker@outlook.com,2024-11-01 16:28:17 -0700,7329589712,paid,60.50,0.00,,Guatemala Antigua 12oz,1,20.00
+#1067,fatima_walker@outlook.com,2024-11-01 16:28:17 -0700,7329589712,,,,,Nightjar mug,2,16.00
+#1068,gary_phillips@gmail.com,2024-11-02 10:24:24 -0700,SQ-00817,paid,36.50,0.00,,House Espresso 12oz,1,17.50
+#1068,gary_phillips@gmail.com,2024-11-02 10:24:24 -0700,SQ-00817,,,,,Colombia Huila 12oz,1,19.00
+#1069,gary_phillips@gmail.com,2024-11-06 15:59:21 -0700,SQ-00817,paid,46.00,0.00,,House Espresso 12oz,1,17.50
+#1069,gary_phillips@gmail.com,2024-11-06 15:59:21 -0700,SQ-00817,,,,,Guatemala Antigua 12oz,1,20.00
+#1070,kcooper@icloud.com,2024-11-15 10:52:37 -0700,7396383539,paid,61.00,0.00,,Pour-over kit,1,42.00
+#1070,kcooper@icloud.com,2024-11-15 10:52:37 -0700,7396383539,,,,,Colombia Huila 12oz,1,19.00
+#1071,pmorris@icloud.com,2024-11-22 11:59:05 -0700,7352507238,paid,156.00,0.00,,Espresso 5lb,2,78.00
+#1072,donald.mensah@yahoo.com,2024-11-27 07:09:20 -0700,7366123086,paid,60.00,0.00,,Decaf Swiss Water 12oz,2,19.50
+#1072,donald.mensah@yahoo.com,2024-11-27 07:09:20 -0700,7366123086,,,,,Ethiopia Guji 12oz,1,21.00
+#1073,anthonymensah37@gmail.com,2024-11-28 16:36:31 -0700,7383295518,paid,24.50,0.00,,Nightjar mug,1,16.00
+#1074,donna.white@outlook.com,2024-12-07 08:33:30 -0700,7341801574,paid,47.45,0.00,,Ethiopia Guji 12oz,1,21.00
+#1074,donna.white@outlook.com,2024-12-07 08:33:30 -0700,7341801574,,,,,Decaf Swiss Water 12oz,1,19.50
+#1075,okafor.deborah@protonmail.com,2024-12-08 07:07:27 -0700,SQ-00213,paid,172.00,0.00,,Nightjar mug,1,16.00
+#1075,okafor.deborah@protonmail.com,2024-12-08 07:07:27 -0700,SQ-00213,,,,,Espresso 5lb,2,78.00
+#1076,gonzalez.wei@me.com,2024-12-08 13:20:24 -0700,7319643903,paid,133.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1076,gonzalez.wei@me.com,2024-12-08 13:20:24 -0700,7319643903,,,,,Espresso 5lb,1,78.00
+#1076,gonzalez.wei@me.com,2024-12-08 13:20:24 -0700,7319643903,,,,,House Espresso 12oz,2,17.50
+#1077,stephanie_alvarez@yahoo.com,2024-12-10 16:42:59 -0700,7323463874,partially_refunded,78.00,27.76,,Espresso 5lb,1,78.00
+#1078,richard.richardson@gmail.com,2024-12-11 09:48:09 -0700,7348124477,paid,20.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1079,marcus_cox@protonmail.com,2024-12-18 07:07:45 -0700,7371064827,paid,66.45,0.00,,Guatemala Antigua 12oz,2,20.00
+#1079,marcus_cox@protonmail.com,2024-12-18 07:07:45 -0700,7371064827,,,,,Decaf Swiss Water 12oz,1,19.50
+#1080,fatima_walker@outlook.com,2024-12-25 13:15:02 -0700,7329589712,paid,35.50,0.00,,Nightjar mug,1,16.00
+#1080,fatima_walker@outlook.com,2024-12-25 13:15:02 -0700,7329589712,,,,,Decaf Swiss Water 12oz,1,19.50
+#1081,yukiclark87@me.com,2024-12-26 11:16:24 -0700,7398178821,refunded,74.00,74.00,,House Espresso 12oz,2,17.50
+#1081,yukiclark87@me.com,2024-12-26 11:16:24 -0700,7398178821,,,,,Decaf Swiss Water 12oz,2,19.50
+#1082,cflores@gmail.com,2024-12-27 08:22:18 -0700,7311055915,paid,107.00,0.00,,Kenya AA 12oz,1,23.00
+#1082,cflores@gmail.com,2024-12-27 08:22:18 -0700,7311055915,,,,,Pour-over kit,2,42.00
+#1083,ward.john@aol.com,2024-12-28 12:39:51 -0700,7361465572,paid,47.50,0.00,,Colombia Huila 12oz,1,19.00
+#1083,ward.john@aol.com,2024-12-28 12:39:51 -0700,7361465572,,,,,Guatemala Antigua 12oz,1,20.00
+#1084,deborah_green@gmail.com,2025-01-05 10:47:52 -0700,7321234402,paid,191.50,0.00,,Nightjar mug,1,16.00
+#1084,deborah_green@gmail.com,2025-01-05 10:47:52 -0700,7321234402,,,,,Decaf Swiss Water 12oz,1,19.50
+#1084,deborah_green@gmail.com,2025-01-05 10:47:52 -0700,7321234402,,,,,Espresso 5lb,2,78.00
+#1085,luis.mensah@me.com,2025-01-05 15:34:03 -0700,7365289435,paid,59.50,0.00,,Pour-over kit,1,42.00
+#1085,luis.mensah@me.com,2025-01-05 15:34:03 -0700,7365289435,,,,,House Espresso 12oz,1,17.50
+#1086,luis.mensah@me.com,2025-01-06 07:02:00 -0700,7365289435,paid,24.45,0.00,TEST,House Espresso 12oz,1,17.50
+#1087,pmorris@icloud.com,2025-01-08 12:32:35 -0700,7352507238,paid,105.00,0.00,,Ethiopia Guji 12oz,1,21.00
+#1087,pmorris@icloud.com,2025-01-08 12:32:35 -0700,7352507238,,,,,Pour-over kit,2,42.00
+#1088,calvarez@me.com,2025-01-11 07:10:58 -0700,7377303096,refunded,41.00,41.00,,Guatemala Antigua 12oz,1,20.00
+#1088,calvarez@me.com,2025-01-11 07:10:58 -0700,7377303096,,,,,Ethiopia Guji 12oz,1,21.00
+#1089,joshua_morris@hotmail.com,2025-01-20 14:52:01 -0700,SQ-00578,paid,175.50,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1089,joshua_morris@hotmail.com,2025-01-20 14:52:01 -0700,SQ-00578,,,,,Espresso 5lb,2,78.00
+#1090,kevinstewart49@outlook.com,2025-02-04 11:21:08 -0700,7315732041,paid,97.00,0.00,,Colombia Huila 12oz,1,19.00
+#1090,kevinstewart49@outlook.com,2025-02-04 11:21:08 -0700,7315732041,,,,,Espresso 5lb,1,78.00
+#1091,richard.richardson@gmail.com,2025-02-04 12:06:39 -0700,7348124477,paid,41.95,0.00,,House Espresso 12oz,2,17.50
+#1092,ops@nightjar.coffee,2025-02-05 14:56:00 -0700,7393861560,paid,42.00,0.00,test,Pour-over kit,1,42.00
+#1093,edwards.anna@protonmail.com,2025-02-07 15:26:50 -0700,7305186383,paid,56.00,0.00,,Guatemala Antigua 12oz,2,20.00
+#1093,edwards.anna@protonmail.com,2025-02-07 15:26:50 -0700,7305186383,,,,,Nightjar mug,1,16.00
+#1094,ingrid_peterson@protonmail.com,2025-02-08 08:16:36 -0700,7357125592,paid,22.95,0.00,,Nightjar mug,1,16.00
+#1095,steven_morgan@icloud.com,2025-02-08 08:33:04 -0700,7364669736,paid,26.95,0.00,,Guatemala Antigua 12oz,1,20.00
+#1096,charles_mensah@icloud.com,2025-02-09 16:08:31 -0700,7316065254,paid,17.50,0.00,,House Espresso 12oz,1,17.50
+#1097,joshua.peterson@me.com,2025-02-11 07:33:53 -0700,7364321652,paid,20.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1098,ashley_myers@aol.com,2025-02-18 10:22:06 -0700,7376385018,paid,47.45,0.00,,House Espresso 12oz,1,17.50
+#1098,ashley_myers@aol.com,2025-02-18 10:22:06 -0700,7376385018,,,,,Kenya AA 12oz,1,23.00
+#1099,margaret.cook@aol.com,2025-02-18 15:53:45 -0700,SQ-00747,paid,101.00,0.00,,Kenya AA 12oz,1,23.00
+#1099,margaret.cook@aol.com,2025-02-18 15:53:45 -0700,SQ-00747,,,,,Espresso 5lb,1,78.00
+#1100,dorothy_howard@icloud.com,2025-02-19 10:11:44 -0700,SQ-00729,paid,193.00,0.00,,House Espresso 12oz,1,17.50
+#1100,dorothy_howard@icloud.com,2025-02-19 10:11:44 -0700,SQ-00729,,,,,Espresso 5lb,2,78.00
+#1100,dorothy_howard@icloud.com,2025-02-19 10:11:44 -0700,SQ-00729,,,,,Decaf Swiss Water 12oz,1,19.50
+#1101,deborah_green@gmail.com,2025-02-21 10:25:12 -0700,7321234402,paid,120.00,0.00,,Espresso 5lb,1,78.00
+#1101,deborah_green@gmail.com,2025-02-21 10:25:12 -0700,7321234402,,,,,Pour-over kit,1,42.00
+#1102,barbara_hernandez@icloud.com,2025-02-22 16:44:47 -0700,7322739785,paid,42.00,0.00,,Pour-over kit,1,42.00
+#1103,watson.chloe@gmail.com,2025-02-24 14:22:10 -0700,7381891021,paid,85.00,0.00,,Pour-over kit,1,42.00
+#1103,watson.chloe@gmail.com,2025-02-24 14:22:10 -0700,7381891021,,,,,Kenya AA 12oz,1,23.00
+#1103,watson.chloe@gmail.com,2025-02-24 14:22:10 -0700,7381891021,,,,,Guatemala Antigua 12oz,1,20.00
+#1104,eruiz@me.com,2025-03-07 11:46:57 -0700,7394668208,paid,28.00,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1105,sfoster@aol.com,2025-03-08 12:35:54 -0700,SQ-00766,partially_refunded,24.50,9.65,,Nightjar mug,1,16.00
+#1106,dorothy_howard@icloud.com,2025-03-14 10:13:29 -0700,7333646685,paid,58.00,0.00,,Ethiopia Guji 12oz,2,21.00
+#1106,dorothy_howard@icloud.com,2025-03-14 10:13:29 -0700,7333646685,,,,,Nightjar mug,1,16.00
+#1107,dmitri_king@me.com,2025-03-14 12:08:17 -0700,7373057326,paid,60.95,0.00,,Colombia Huila 12oz,2,19.00
+#1107,dmitri_king@me.com,2025-03-14 12:08:17 -0700,7373057326,,,,,Nightjar mug,1,16.00
+#1108,rebecca.garcia@yahoo.com,2025-03-15 15:42:49 -0700,7391180437,paid,77.00,0.00,,House Espresso 12oz,2,17.50
+#1108,rebecca.garcia@yahoo.com,2025-03-15 15:42:49 -0700,7391180437,,,,,Ethiopia Guji 12oz,2,21.00
+#1109,amynelson6@gmail.com,2025-03-19 07:05:42 -0700,7384576944,paid,66.00,0.00,,Kenya AA 12oz,2,23.00
+#1109,amynelson6@gmail.com,2025-03-19 07:05:42 -0700,7384576944,,,,,Guatemala Antigua 12oz,1,20.00
+#1110,johnson.priya@outlook.com,2025-03-20 12:19:55 -0700,7388263752,paid,193.50,0.00,,Espresso 5lb,2,78.00
+#1110,johnson.priya@outlook.com,2025-03-20 12:19:55 -0700,7388263752,,,,,House Espresso 12oz,1,17.50
+#1110,johnson.priya@outlook.com,2025-03-20 12:19:55 -0700,7388263752,,,,,Guatemala Antigua 12oz,1,20.00
+#1111,jessica_peterson@gmail.com,2025-03-23 12:02:05 -0700,7380058851,paid,60.45,0.00,,House Espresso 12oz,1,17.50
+#1111,jessica_peterson@gmail.com,2025-03-23 12:02:05 -0700,7380058851,,,,,Nightjar mug,1,16.00
+#1111,jessica_peterson@gmail.com,2025-03-23 12:02:05 -0700,7380058851,,,,,Guatemala Antigua 12oz,1,20.00
+#1112,watson.chloe@gmail.com,2025-03-24 16:00:18 -0700,7381891021,paid,44.95,0.00,,Colombia Huila 12oz,2,19.00
+#1113,dorothy_howard@icloud.com,2025-03-25 08:10:45 -0700,7333646685,paid,65.00,0.00,,Colombia Huila 12oz,1,19.00
+#1113,dorothy_howard@icloud.com,2025-03-25 08:10:45 -0700,7333646685,,,,,Kenya AA 12oz,2,23.00
+#1114,myers.richard@outlook.com,2025-04-02 11:12:32 -0700,7334914494,paid,62.00,0.00,,Kenya AA 12oz,1,23.00
+#1114,myers.richard@outlook.com,2025-04-02 11:12:32 -0700,7334914494,,,,,Guatemala Antigua 12oz,1,20.00
+#1114,myers.richard@outlook.com,2025-04-02 11:12:32 -0700,7334914494,,,,,Colombia Huila 12oz,1,19.00
+#1115,joshua_morris@hotmail.com,2025-04-07 15:22:55 -0700,7340407795,partially_refunded,24.45,9.35,,House Espresso 12oz,1,17.50
+#1116,fatima_walker@outlook.com,2025-04-08 14:05:26 -0700,7329589712,paid,162.00,0.00,,Espresso 5lb,1,78.00
+#1116,fatima_walker@outlook.com,2025-04-08 14:05:26 -0700,7329589712,,,,,Pour-over kit,2,42.00
+#1117,amara_torres@yahoo.com,2025-04-18 15:34:53 -0700,7331608507,paid,58.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1117,amara_torres@yahoo.com,2025-04-18 15:34:53 -0700,7331608507,,,,,Colombia Huila 12oz,2,19.00
+#1118,richard.richardson@gmail.com,2025-04-23 13:07:05 -0700,7348124477,partially_refunded,100.00,18.37,,Pour-over kit,2,42.00
+#1118,richard.richardson@gmail.com,2025-04-23 13:07:05 -0700,7348124477,,,,,Nightjar mug,1,16.00
+#1119,jlopez@aol.com,2025-05-06 16:29:20 -0700,7336994985,paid,140.00,0.00,,Espresso 5lb,1,78.00
+#1119,jlopez@aol.com,2025-05-06 16:29:20 -0700,7336994985,,,,,Guatemala Antigua 12oz,1,20.00
+#1119,jlopez@aol.com,2025-05-06 16:29:20 -0700,7336994985,,,,,Pour-over kit,1,42.00
+#1120,marcus_cox@protonmail.com,2025-05-09 09:18:15 -0700,7371064827,paid,123.00,0.00,,Colombia Huila 12oz,1,19.00
+#1120,marcus_cox@protonmail.com,2025-05-09 09:18:15 -0700,7371064827,,,,,Guatemala Antigua 12oz,1,20.00
+#1120,marcus_cox@protonmail.com,2025-05-09 09:18:15 -0700,7371064827,,,,,Pour-over kit,2,42.00
+#1121,sfoster@aol.com,2025-05-10 13:43:44 -0700,7315721498,paid,27.95,0.00,,Ethiopia Guji 12oz,1,21.00
+#1122,amara_torres@yahoo.com,2025-05-13 11:02:01 -0700,7331608507,paid,29.95,0.00,,Kenya AA 12oz,1,23.00
+#1123,kenneth_ward@me.com,2025-05-14 07:40:54 -0700,7378795832,paid,65.00,0.00,,Kenya AA 12oz,1,23.00
+#1123,kenneth_ward@me.com,2025-05-14 07:40:54 -0700,7378795832,,,,,Pour-over kit,1,42.00
+#1124,anthonymensah37@gmail.com,2025-05-14 11:04:55 -0700,7383295518,paid,44.00,0.00,,Nightjar mug,1,16.00
+#1124,anthonymensah37@gmail.com,2025-05-14 11:04:55 -0700,7383295518,,,,,Decaf Swiss Water 12oz,1,19.50
+#1125,okafor.deborah@protonmail.com,2025-05-20 12:20:35 -0700,7301669174,partially_refunded,61.00,18.30,,Colombia Huila 12oz,1,19.00
+#1125,okafor.deborah@protonmail.com,2025-05-20 12:20:35 -0700,7301669174,,,,,Ethiopia Guji 12oz,2,21.00
+#1126,sfoster@aol.com,2025-05-22 11:03:50 -0700,7315721498,paid,59.00,0.00,,Ethiopia Guji 12oz,1,21.00
+#1126,sfoster@aol.com,2025-05-22 11:03:50 -0700,7315721498,,,,,Colombia Huila 12oz,2,19.00
+#1127,kenneth_ward@me.com,2025-05-28 10:54:56 -0700,7378795832,paid,78.00,0.00,,Espresso 5lb,1,78.00
+#1128,luis.mensah@me.com,2025-05-29 15:08:16 -0700,7365289435,paid,179.00,0.00,,Espresso 5lb,2,78.00
+#1128,luis.mensah@me.com,2025-05-29 15:08:16 -0700,7365289435,,,,,Kenya AA 12oz,1,23.00
+#1129,dmitri_king@me.com,2025-06-03 13:26:17 -0700,7373057326,paid,132.50,0.00,,Espresso 5lb,1,78.00
+#1129,dmitri_king@me.com,2025-06-03 13:26:17 -0700,7373057326,,,,,House Espresso 12oz,2,17.50
+#1129,dmitri_king@me.com,2025-06-03 13:26:17 -0700,7373057326,,,,,Decaf Swiss Water 12oz,1,19.50
+#1130,kimberly.davis@outlook.com,2025-06-03 16:03:50 -0700,7326117555,paid,37.00,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1130,kimberly.davis@outlook.com,2025-06-03 16:03:50 -0700,7326117555,,,,,House Espresso 12oz,1,17.50
+#1131,dmitri_king@me.com,2025-06-11 16:14:16 -0700,7373057326,paid,218.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1131,dmitri_king@me.com,2025-06-11 16:14:16 -0700,7373057326,,,,,Espresso 5lb,2,78.00
+#1131,dmitri_king@me.com,2025-06-11 16:14:16 -0700,7373057326,,,,,Pour-over kit,1,42.00
+#1132,lewis.carlos@gmail.com,2025-06-21 12:58:51 -0700,7302904003,paid,67.50,0.00,,Ethiopia Guji 12oz,1,21.00
+#1132,lewis.carlos@gmail.com,2025-06-21 12:58:51 -0700,7302904003,,,,,Colombia Huila 12oz,2,19.00
+#1133,sarahtorres29@outlook.com,2025-06-23 14:45:07 -0700,7336938170,paid,124.50,0.00,,Pour-over kit,2,42.00
+#1133,sarahtorres29@outlook.com,2025-06-23 14:45:07 -0700,7336938170,,,,,Kenya AA 12oz,1,23.00
+#1133,sarahtorres29@outlook.com,2025-06-23 14:45:07 -0700,7336938170,,,,,House Espresso 12oz,1,17.50
+#1134,matthewwhite81@yahoo.com,2025-06-23 15:31:56 -0700,7324826513,paid,74.00,0.00,,Pour-over kit,1,42.00
+#1134,matthewwhite81@yahoo.com,2025-06-23 15:31:56 -0700,7324826513,,,,,Nightjar mug,2,16.00
+#1135,sarahtorres29@outlook.com,2025-06-26 13:23:10 -0700,7336938170,paid,25.95,0.00,,Colombia Huila 12oz,1,19.00
+#1136,cflores@gmail.com,2025-06-28 15:03:14 -0700,7311055915,paid,40.50,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1136,cflores@gmail.com,2025-06-28 15:03:14 -0700,7311055915,,,,,Ethiopia Guji 12oz,1,21.00
+#1137,margaret.cook@aol.com,2025-06-29 14:24:01 -0700,7316628927,voided,44.95,0.00,,Colombia Huila 12oz,2,19.00
+#1138,gary_phillips@gmail.com,2025-07-27 10:05:19 -0700,7303057825,paid,26.45,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1139,kcooper@icloud.com,2025-07-29 08:52:11 -0700,7396383539,paid,28.50,0.00,,Guatemala Antigua 12oz,1,20.00
+#1140,jeffreygutierrez2@aol.com,2025-08-08 09:28:00 -0700,7308198675,paid,84.00,0.00,,Pour-over kit,2,42.00
+#1141,rebecca.garcia@yahoo.com,2025-08-09 08:33:15 -0700,7391180437,paid,37.00,0.00,,Ethiopia Guji 12oz,1,21.00
+#1141,rebecca.garcia@yahoo.com,2025-08-09 08:33:15 -0700,7391180437,,,,,Nightjar mug,1,16.00
+#1142,stephanie_alvarez@yahoo.com,2025-08-09 12:33:26 -0700,7323463874,paid,61.45,0.00,,Ethiopia Guji 12oz,1,21.00
+#1142,stephanie_alvarez@yahoo.com,2025-08-09 12:33:26 -0700,7323463874,,,,,House Espresso 12oz,1,17.50
+#1142,stephanie_alvarez@yahoo.com,2025-08-09 12:33:26 -0700,7323463874,,,,,Nightjar mug,1,16.00
+#1143,wilson.gary@hotmail.com,2025-08-16 14:18:17 -0700,7370033481,paid,32.00,0.00,,Nightjar mug,2,16.00
+#1144,sarahtorres29@outlook.com,2025-08-17 13:27:30 -0700,7336938170,paid,42.00,0.00,,Nightjar mug,1,16.00
+#1144,sarahtorres29@outlook.com,2025-08-17 13:27:30 -0700,7336938170,,,,,House Espresso 12oz,1,17.50
+#1145,jessica_peterson@gmail.com,2025-08-20 07:10:45 -0700,7380058851,paid,95.50,0.00,,House Espresso 12oz,1,17.50
+#1145,jessica_peterson@gmail.com,2025-08-20 07:10:45 -0700,7380058851,,,,,Espresso 5lb,1,78.00
+#1146,ward.john@aol.com,2025-08-26 15:22:12 -0700,7361465572,partially_refunded,35.00,13.37,,House Espresso 12oz,2,17.50
+#1147,donnaalvarez34@protonmail.com,2025-09-03 10:09:14 -0700,7328883828,paid,46.00,0.00,,Kenya AA 12oz,2,23.00
+#1148,johnson.priya@outlook.com,2025-09-11 11:50:09 -0700,7388263752,paid,63.00,0.00,,Pour-over kit,1,42.00
+#1148,johnson.priya@outlook.com,2025-09-11 11:50:09 -0700,7388263752,,,,,Ethiopia Guji 12oz,1,21.00
+#1149,watson.chloe@gmail.com,2025-09-14 09:35:16 -0700,7381891021,paid,63.00,0.00,,Kenya AA 12oz,1,23.00
+#1149,watson.chloe@gmail.com,2025-09-14 09:35:16 -0700,7381891021,,,,,Guatemala Antigua 12oz,2,20.00
+#1150,ops@nightjar.coffee,2025-09-21 07:49:00 -0700,7393861560,paid,42.00,0.00,test,Pour-over kit,1,42.00
+#1151,wilson.gary@hotmail.com,2025-09-25 15:01:11 -0700,7370033481,paid,61.95,0.00,,Decaf Swiss Water 12oz,2,19.50
+#1151,wilson.gary@hotmail.com,2025-09-25 15:01:11 -0700,7370033481,,,,,Nightjar mug,1,16.00
+#1152,amara_torres@yahoo.com,2025-10-03 10:55:52 -0700,7331608507,paid,26.00,0.00,,House Espresso 12oz,1,17.50
+#1153,joshua.peterson@me.com,2025-10-10 13:59:56 -0700,7364321652,paid,126.00,0.00,,Ethiopia Guji 12oz,2,21.00
+#1153,joshua.peterson@me.com,2025-10-10 13:59:56 -0700,7364321652,,,,,Pour-over kit,2,42.00
+#1154,joshua_morris@hotmail.com,2025-10-16 09:15:48 -0700,7340407795,paid,28.50,0.00,,Guatemala Antigua 12oz,1,20.00
+#1155,gary_phillips@gmail.com,2025-10-20 15:08:56 -0700,7303057825,paid,63.00,0.00,,Pour-over kit,1,42.00
+#1155,gary_phillips@gmail.com,2025-10-20 15:08:56 -0700,7303057825,,,,,Ethiopia Guji 12oz,1,21.00
+#1156,harris.david@protonmail.com,2025-10-26 16:43:10 -0700,7385060196,paid,66.45,0.00,,House Espresso 12oz,1,17.50
+#1156,harris.david@protonmail.com,2025-10-26 16:43:10 -0700,7385060196,,,,,Kenya AA 12oz,1,23.00
+#1156,harris.david@protonmail.com,2025-10-26 16:43:10 -0700,7385060196,,,,,Colombia Huila 12oz,1,19.00
+#1157,kevinstewart49@outlook.com,2025-10-29 10:33:49 -0700,7315732041,paid,28.00,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1158,kenneth_ward@me.com,2025-11-06 11:51:55 -0700,7378795832,paid,44.00,0.00,,Nightjar mug,1,16.00
+#1158,kenneth_ward@me.com,2025-11-06 11:51:55 -0700,7378795832,,,,,Decaf Swiss Water 12oz,1,19.50
+#1159,krogers@icloud.com,2025-11-12 07:46:29 -0700,7304884456,paid,26.45,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1160,kenneth_ward@me.com,2025-11-14 10:03:26 -0700,7378795832,paid,29.95,0.00,,Kenya AA 12oz,1,23.00
+#1161,gonzalez.wei@me.com,2025-11-28 09:24:32 -0700,7319643903,paid,17.50,0.00,,House Espresso 12oz,1,17.50
+#1162,kenneth.rogers@outlook.com,2025-12-11 13:13:24 -0700,7380099984,paid,44.45,0.00,,House Espresso 12oz,1,17.50
+#1162,kenneth.rogers@outlook.com,2025-12-11 13:13:24 -0700,7380099984,,,,,Guatemala Antigua 12oz,1,20.00
+#1163,sfoster@aol.com,2025-12-19 15:33:31 -0700,7315721498,paid,48.50,0.00,,Ethiopia Guji 12oz,1,21.00
+#1163,sfoster@aol.com,2025-12-19 15:33:31 -0700,7315721498,,,,,Colombia Huila 12oz,1,19.00
+#1164,harris.david@protonmail.com,2025-12-30 08:08:54 -0700,7385060196,paid,91.50,0.00,,Nightjar mug,2,16.00
+#1164,harris.david@protonmail.com,2025-12-30 08:08:54 -0700,7385060196,,,,,House Espresso 12oz,1,17.50
+#1164,harris.david@protonmail.com,2025-12-30 08:08:54 -0700,7385060196,,,,,Pour-over kit,1,42.00
+#1165,harris.david@protonmail.com,2026-01-10 08:00:47 -0700,7385060196,paid,80.50,0.00,,House Espresso 12oz,1,17.50
+#1165,harris.david@protonmail.com,2026-01-10 08:00:47 -0700,7385060196,,,,,Ethiopia Guji 12oz,1,21.00
+#1165,harris.david@protonmail.com,2026-01-10 08:00:47 -0700,7385060196,,,,,Pour-over kit,1,42.00
+#1166,richard.richardson@gmail.com,2026-01-10 08:34:00 -0700,7363300491,paid,24.50,0.00,,Nightjar mug,1,16.00
+#1167,johnson.priya@outlook.com,2026-01-12 10:47:25 -0700,7388263752,paid,121.00,0.00,,Nightjar mug,1,16.00
+#1167,johnson.priya@outlook.com,2026-01-12 10:47:25 -0700,7388263752,,,,,Ethiopia Guji 12oz,1,21.00
+#1167,johnson.priya@outlook.com,2026-01-12 10:47:25 -0700,7388263752,,,,,Pour-over kit,2,42.00
+#1168,anthonymensah37@gmail.com,2026-01-16 14:43:17 -0700,7383295518,paid,29.50,0.00,,Ethiopia Guji 12oz,1,21.00
+#1169,harris.david@protonmail.com,2026-01-17 13:22:42 -0700,7385060196,partially_refunded,44.00,17.67,,Decaf Swiss Water 12oz,1,19.50
+#1169,harris.david@protonmail.com,2026-01-17 13:22:42 -0700,7385060196,,,,,Nightjar mug,1,16.00
+#1170,donna.white@outlook.com,2026-01-19 13:16:46 -0700,7341801574,paid,78.50,0.00,,Ethiopia Guji 12oz,1,21.00
+#1170,donna.white@outlook.com,2026-01-19 13:16:46 -0700,7341801574,,,,,House Espresso 12oz,1,17.50
+#1170,donna.white@outlook.com,2026-01-19 13:16:46 -0700,7341801574,,,,,Guatemala Antigua 12oz,2,20.00
+#1171,eruiz@me.com,2026-01-27 08:57:48 -0700,7394668208,paid,40.00,0.00,,Guatemala Antigua 12oz,2,20.00
+#1172,kenneth_ward@me.com,2026-02-01 09:37:15 -0700,7378795832,paid,119.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1172,kenneth_ward@me.com,2026-02-01 09:37:15 -0700,7378795832,,,,,Ethiopia Guji 12oz,1,21.00
+#1172,kenneth_ward@me.com,2026-02-01 09:37:15 -0700,7378795832,,,,,Espresso 5lb,1,78.00
+#1173,kcooper@icloud.com,2026-02-03 10:54:02 -0700,7396383539,paid,26.95,0.00,,Guatemala Antigua 12oz,1,20.00
+#1174,sfoster@aol.com,2026-02-06 07:32:51 -0700,7315721498,paid,37.00,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1174,sfoster@aol.com,2026-02-06 07:32:51 -0700,7315721498,,,,,House Espresso 12oz,1,17.50
+#1175,kcooper@icloud.com,2026-02-07 08:44:28 -0700,7396383539,paid,80.50,0.00,,House Espresso 12oz,1,17.50
+#1175,kcooper@icloud.com,2026-02-07 08:44:28 -0700,7396383539,,,,,Pour-over kit,1,42.00
+#1175,kcooper@icloud.com,2026-02-07 08:44:28 -0700,7396383539,,,,,Ethiopia Guji 12oz,1,21.00
+#1176,jward@outlook.com,2026-02-14 10:28:45 -0700,7344999241,paid,40.50,0.00,,Ethiopia Guji 12oz,1,21.00
+#1176,jward@outlook.com,2026-02-14 10:28:45 -0700,7344999241,,,,,Decaf Swiss Water 12oz,1,19.50
+#1177,ashley_myers@aol.com,2026-02-26 09:38:40 -0700,7376385018,paid,46.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1177,ashley_myers@aol.com,2026-02-26 09:38:40 -0700,7376385018,,,,,House Espresso 12oz,1,17.50
+#1178,harris.david@protonmail.com,2026-02-28 15:18:00 -0700,7385060196,paid,24.50,0.00,,Nightjar mug,1,16.00
+#1179,dorothy_howard@icloud.com,2026-03-04 16:09:22 -0700,7333646685,paid,57.95,0.00,,Colombia Huila 12oz,1,19.00
+#1179,dorothy_howard@icloud.com,2026-03-04 16:09:22 -0700,7333646685,,,,,Nightjar mug,2,16.00
+#1180,parker.dorothy@protonmail.com,2026-03-11 12:23:53 -0700,7345085956,paid,46.45,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1180,parker.dorothy@protonmail.com,2026-03-11 12:23:53 -0700,7345085956,,,,,Guatemala Antigua 12oz,1,20.00
+#1181,wilson.gary@hotmail.com,2026-03-13 11:32:41 -0700,7370033481,paid,176.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1181,wilson.gary@hotmail.com,2026-03-13 11:32:41 -0700,7370033481,,,,,Espresso 5lb,2,78.00
+#1182,parker.dorothy@protonmail.com,2026-03-18 11:08:01 -0700,7345085956,paid,42.00,0.00,,House Espresso 12oz,1,17.50
+#1182,parker.dorothy@protonmail.com,2026-03-18 11:08:01 -0700,7345085956,,,,,Nightjar mug,1,16.00
+#1183,okafor.deborah@protonmail.com,2026-03-19 10:38:25 -0700,7391096787,paid,49.00,0.00,,Ethiopia Guji 12oz,1,21.00
+#1183,okafor.deborah@protonmail.com,2026-03-19 10:38:25 -0700,7391096787,,,,,Decaf Swiss Water 12oz,1,19.50
+#1184,watson.chloe@gmail.com,2026-03-19 14:51:46 -0700,7381891021,partially_refunded,101.00,37.78,,Kenya AA 12oz,1,23.00
+#1184,watson.chloe@gmail.com,2026-03-19 14:51:46 -0700,7381891021,,,,,Espresso 5lb,1,78.00
+#1185,barbara_hernandez@icloud.com,2026-03-20 12:30:19 -0700,7322739785,paid,56.50,0.00,,House Espresso 12oz,1,17.50
+#1185,barbara_hernandez@icloud.com,2026-03-20 12:30:19 -0700,7322739785,,,,,Guatemala Antigua 12oz,1,20.00
+#1185,barbara_hernandez@icloud.com,2026-03-20 12:30:19 -0700,7322739785,,,,,Colombia Huila 12oz,1,19.00
+#1186,barbara_hernandez@icloud.com,2026-03-27 14:08:30 -0700,7322739785,paid,63.00,0.00,,Pour-over kit,1,42.00
+#1186,barbara_hernandez@icloud.com,2026-03-27 14:08:30 -0700,7322739785,,,,,Ethiopia Guji 12oz,1,21.00
+#1187,jward@outlook.com,2026-03-28 11:51:44 -0700,7344999241,paid,59.50,0.00,,Colombia Huila 12oz,1,19.00
+#1187,jward@outlook.com,2026-03-28 11:51:44 -0700,7344999241,,,,,Nightjar mug,2,16.00
+#1188,charles_mensah@icloud.com,2026-04-02 12:22:54 -0700,7316065254,paid,45.50,0.00,,Ethiopia Guji 12oz,1,21.00
+#1188,charles_mensah@icloud.com,2026-04-02 12:22:54 -0700,7316065254,,,,,Nightjar mug,1,16.00
+#1189,joshua.peterson@me.com,2026-04-04 16:24:25 -0700,7364321652,paid,32.00,0.00,,Nightjar mug,2,16.00
+#1190,marcus_cox@protonmail.com,2026-04-12 16:25:44 -0700,7317762948,paid,50.95,0.00,,Kenya AA 12oz,1,23.00
+#1190,marcus_cox@protonmail.com,2026-04-12 16:25:44 -0700,7317762948,,,,,Ethiopia Guji 12oz,1,21.00
+#1191,kenneth_ward@me.com,2026-04-15 15:19:43 -0700,7378795832,paid,41.00,0.00,,Ethiopia Guji 12oz,1,21.00
+#1191,kenneth_ward@me.com,2026-04-15 15:19:43 -0700,7378795832,,,,,Guatemala Antigua 12oz,1,20.00
+#1192,anthonymensah37@gmail.com,2026-04-23 16:53:15 -0700,7383295518,paid,55.00,0.00,,Decaf Swiss Water 12oz,2,19.50
+#1192,anthonymensah37@gmail.com,2026-04-23 16:53:15 -0700,7383295518,,,,,Nightjar mug,1,16.00
+#1193,lewis.carlos@gmail.com,2026-04-27 10:27:13 -0700,7302904003,paid,110.00,0.00,,Nightjar mug,2,16.00
+#1193,lewis.carlos@gmail.com,2026-04-27 10:27:13 -0700,7302904003,,,,,Espresso 5lb,1,78.00
+#1194,amara_torres@yahoo.com,2026-05-10 11:32:10 -0700,7331608507,paid,20.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1195,jward@outlook.com,2026-05-22 15:08:51 -0700,7344999241,paid,26.45,0.00,,Decaf Swiss Water 12oz,1,19.50
+#1196,matthewwhite81@yahoo.com,2026-05-25 16:33:48 -0700,7324826513,partially_refunded,50.50,14.88,,Pour-over kit,1,42.00
+#1197,barbara_hernandez@icloud.com,2026-06-05 15:49:58 -0700,7322739785,paid,95.50,0.00,,Espresso 5lb,1,78.00
+#1197,barbara_hernandez@icloud.com,2026-06-05 15:49:58 -0700,7322739785,,,,,House Espresso 12oz,1,17.50
+#1198,barbara_hernandez@icloud.com,2026-06-08 15:53:52 -0700,7322739785,paid,41.95,0.00,,House Espresso 12oz,2,17.50
+#1199,johnson.priya@outlook.com,2026-06-11 11:27:19 -0700,7388263752,paid,103.00,0.00,,Colombia Huila 12oz,1,19.00
+#1199,johnson.priya@outlook.com,2026-06-11 11:27:19 -0700,7388263752,,,,,Pour-over kit,2,42.00
+#1200,donnaalvarez34@protonmail.com,2026-06-11 14:58:21 -0700,7328883828,paid,65.00,0.00,,Kenya AA 12oz,1,23.00
+#1200,donnaalvarez34@protonmail.com,2026-06-11 14:58:21 -0700,7328883828,,,,,Pour-over kit,1,42.00
+#1201,joshua.peterson@me.com,2026-06-14 14:58:41 -0700,7364321652,partially_refunded,156.00,55.53,,Espresso 5lb,2,78.00
+#1202,cflores@gmail.com,2026-06-16 15:03:50 -0700,7357194352,paid,62.95,0.00,,Nightjar mug,1,16.00
+#1202,cflores@gmail.com,2026-06-16 15:03:50 -0700,7357194352,,,,,Guatemala Antigua 12oz,2,20.00
+#1203,amara_torres@yahoo.com,2026-06-20 10:16:29 -0700,7331608507,paid,84.00,0.00,,Pour-over kit,2,42.00
+#1204,gary_phillips@gmail.com,2026-06-25 08:01:12 -0700,7303057825,paid,65.95,0.00,,Colombia Huila 12oz,1,19.00
+#1204,gary_phillips@gmail.com,2026-06-25 08:01:12 -0700,7303057825,,,,,Guatemala Antigua 12oz,2,20.00
+#1205,kenneth_ward@me.com,2026-06-26 16:06:54 -0700,7378795832,paid,78.00,0.00,,Espresso 5lb,1,78.00
+#1206,rebecca.garcia@yahoo.com,2026-07-09 11:50:00 -0700,7391180437,paid,45.95,0.00,,Colombia Huila 12oz,1,19.00
+#1206,rebecca.garcia@yahoo.com,2026-07-09 11:50:00 -0700,7391180437,,,,,Guatemala Antigua 12oz,1,20.00
+#1207,fatima_walker@outlook.com,2026-07-21 10:57:11 -0700,7329589712,paid,42.00,0.00,,Ethiopia Guji 12oz,2,21.00
+#1208,steven_morgan@icloud.com,2026-07-23 16:11:58 -0700,7375242487,paid,74.00,0.00,,Nightjar mug,2,16.00
+#1208,steven_morgan@icloud.com,2026-07-23 16:11:58 -0700,7375242487,,,,,Ethiopia Guji 12oz,2,21.00
+#1209,charles_mensah@icloud.com,2026-07-29 12:39:51 -0700,7316065254,voided,64.95,0.00,,Nightjar mug,1,16.00
+#1209,charles_mensah@icloud.com,2026-07-29 12:39:51 -0700,7316065254,,,,,Pour-over kit,1,42.00
+#1210,parker.dorothy@protonmail.com,2026-08-02 11:00:43 -0700,7345085956,paid,113.50,0.00,,Espresso 5lb,1,78.00
+#1210,parker.dorothy@protonmail.com,2026-08-02 11:00:43 -0700,7345085956,,,,,Nightjar mug,1,16.00
+#1210,parker.dorothy@protonmail.com,2026-08-02 11:00:43 -0700,7345085956,,,,,Decaf Swiss Water 12oz,1,19.50
+#1211,donnaalvarez34@protonmail.com,2026-08-05 07:01:38 -0700,7328883828,paid,26.00,0.00,,House Espresso 12oz,1,17.50
+#1212,ingrid_peterson@protonmail.com,2026-08-06 09:53:55 -0700,7357125592,paid,42.00,0.00,,Pour-over kit,1,42.00
+#1213,rebecca.garcia@yahoo.com,2026-08-10 11:52:15 -0700,7391180437,paid,38.50,0.00,,House Espresso 12oz,1,17.50
+#1213,rebecca.garcia@yahoo.com,2026-08-10 11:52:15 -0700,7391180437,,,,,Ethiopia Guji 12oz,1,21.00
+#1214,wilson.gary@hotmail.com,2026-08-12 12:54:22 -0700,7370033481,paid,31.50,0.00,,Kenya AA 12oz,1,23.00
+#1215,barbara_hernandez@icloud.com,2026-08-12 13:52:31 -0700,7322739785,paid,68.00,0.00,,House Espresso 12oz,1,17.50
+#1215,barbara_hernandez@icloud.com,2026-08-12 13:52:31 -0700,7322739785,,,,,Pour-over kit,1,42.00
+#1216,johnson.priya@outlook.com,2026-08-14 08:37:27 -0700,7388263752,paid,29.50,0.00,,Ethiopia Guji 12oz,1,21.00
+#1217,dorothy_howard@icloud.com,2026-08-15 08:44:01 -0700,7333646685,paid,27.50,0.00,,Colombia Huila 12oz,1,19.00
+#1218,amynelson6@gmail.com,2026-08-15 09:00:38 -0700,7384576944,paid,133.50,0.00,,Espresso 5lb,1,78.00
+#1218,amynelson6@gmail.com,2026-08-15 09:00:38 -0700,7384576944,,,,,Colombia Huila 12oz,2,19.00
+#1218,amynelson6@gmail.com,2026-08-15 09:00:38 -0700,7384576944,,,,,House Espresso 12oz,1,17.50
+#1219,jlopez@aol.com,2026-08-18 15:17:22 -0700,7336994985,paid,22.95,0.00,,Nightjar mug,1,16.00
+#1220,okafor.deborah@protonmail.com,2026-08-23 10:55:58 -0700,7391096787,paid,85.00,0.00,,Guatemala Antigua 12oz,1,20.00
+#1220,okafor.deborah@protonmail.com,2026-08-23 10:55:58 -0700,7391096787,,,,,Pour-over kit,1,42.00
+#1220,okafor.deborah@protonmail.com,2026-08-23 10:55:58 -0700,7391096787,,,,,Kenya AA 12oz,1,23.00
+#1221,gary_phillips@gmail.com,2026-08-24 13:12:20 -0700,7303057825,paid,124.50,0.00,,Pour-over kit,2,42.00
+#1221,gary_phillips@gmail.com,2026-08-24 13:12:20 -0700,7303057825,,,,,House Espresso 12oz,1,17.50
+#1221,gary_phillips@gmail.com,2026-08-24 13:12:20 -0700,7303057825,,,,,Kenya AA 12oz,1,23.00

@@ -1,0 +1,443 @@
+{
+  "seed": 0,
+  "shop": {
+    "account_managers": [
+      "Jonah Whitaker",
+      "Priya Raman",
+      "Carlos Mendes"
+    ],
+    "restricted_login": "Jonah Whitaker",
+    "other_manager": "Priya Raman",
+    "roles": {
+      "admin": "Admin (owner)",
+      "staff": "Account Manager",
+      "viewer": "Finance (read-only)"
+    },
+    "pricing_rules": {
+      "tax_rate_percent": 8.25,
+      "tax_on": "goods only (after any discount)",
+      "retail_shipping": 7.95,
+      "retail_free_shipping_at_goods": 75.0,
+      "wholesale_shipping": 15.0,
+      "wholesale_tax": "none when the resale certificate is Yes / Y / On file; Expired, No, N, or blank are taxed",
+      "rounding": "tax rounded half-up to the cent"
+    },
+    "status_flow": [
+      "New",
+      "Paid",
+      "Packed",
+      "Shipped",
+      "Delivered"
+    ],
+    "cancel_allowed_before": "Shipped"
+  },
+  "tester_records": {
+    "retail_customer": "Amanda Bennett",
+    "retail_customer_email": "amanda.bennett3@icloud.com",
+    "wholesale_exempt_customer": "Blue Door Cafe",
+    "wholesale_taxable_customer": "Cedar Grove Gift Shop",
+    "product_a": {
+      "sku": "BLK-ASSAM-4OZ",
+      "retail": 18.0,
+      "wholesale": 10.8,
+      "stock": 40
+    },
+    "product_b": {
+      "sku": "OOL-TIEGUA-4OZ",
+      "retail": 24.5,
+      "wholesale": 14.7,
+      "stock": 15
+    },
+    "note": "orders the tester creates use these and are deleted when the item is done"
+  },
+  "customers": {
+    "file_rows_excluding_header": 150,
+    "exact_duplicate_rows": 5,
+    "email_case_duplicate_rows": 3,
+    "unique_customers_after_dedupe": 142,
+    "dedupe_rule": "Two rows are the same customer when Email matches after trimming and lowercasing. The two Maria Lopez rows have different emails: two customers.",
+    "wrong_counts": {
+      "no_dedupe": 150,
+      "exact_rows_only": 145,
+      "name_dedupe": 141
+    },
+    "email_case_groups": [
+      {
+        "customer": "George Lewis",
+        "emails_as_written": [
+          "george.lewis81@outlook.com",
+          "George.lewis81@outlook.com"
+        ]
+      },
+      {
+        "customer": "Ingrid Edwards",
+        "emails_as_written": [
+          "ingrid.edwards60@yahoo.com",
+          "Ingrid.edwards60@yahoo.com"
+        ]
+      },
+      {
+        "customer": "Charles Murphy",
+        "emails_as_written": [
+          "charles.murphy83@yahoo.com",
+          "CHARLES.MURPHY83@YAHOO.COM"
+        ]
+      }
+    ],
+    "retail": 104,
+    "wholesale": 38,
+    "wholesale_with_valid_certificate": 27,
+    "wholesale_taxable": 11,
+    "certificate_written_expired": 1,
+    "per_account_manager": {
+      "Jonah Whitaker": 14,
+      "Priya Raman": 13,
+      "Carlos Mendes": 11
+    },
+    "restricted_customers": [
+      "Blue Door Cafe",
+      "Cedar Grove Gift Shop",
+      "Harvest Moon Grocers",
+      "Hillcrest Market Hall",
+      "Northside Co-op",
+      "Old Mill Pantry",
+      "Quiet Hours Yoga Studio",
+      "Ridgeview Senior Living",
+      "Stonebridge Cafe",
+      "Sunday Supply Co",
+      "Tidewater Hotel",
+      "Two Rivers Roasters",
+      "Wildflower Wellness Spa",
+      "Willow Creek Grocery"
+    ]
+  },
+  "products": {
+    "file_rows_excluding_header": 64,
+    "exact_duplicate_rows": 3,
+    "trailing_space_duplicate_rows": 1,
+    "trailing_space_sku": "OOL-MILK-2OZ",
+    "unique_products": 60,
+    "currency_string_price_rows": 15,
+    "highest_retail_price": {
+      "sku": "MAT-CERMON-1LB",
+      "file_value": "$148.00",
+      "numeric": 148.0,
+      "text_sort_would_put_first": "WHT-SILVER-1LB"
+    },
+    "negative_stock": {
+      "sku": "HRB-PEPMNT-2OZ",
+      "stock": -2
+    },
+    "low_stock_product": {
+      "sku": "WHT-SILVER-1LB",
+      "stock": 3,
+      "retail": 96.0
+    },
+    "stock_not_decremented_on_import": {
+      "sku": "HRB-HIBISC-4OZ",
+      "file_stock": 91,
+      "qty_on_imported_shipped_or_delivered_orders": 59,
+      "wrong_stock_if_import_decrements": 32
+    }
+  },
+  "orders": {
+    "file_lines_excluding_header": 219,
+    "orders": 110,
+    "grouping_rule": "lines belong to the same order when Order # matches after removing a leading '#'",
+    "lines_written_without_hash": 40,
+    "per_status": {
+      "New": 16,
+      "Paid": 12,
+      "Packed": 6,
+      "Shipped": 14,
+      "Delivered": 52,
+      "Cancelled": 10
+    },
+    "status_written_variants": "mixed case, and Canceled / CANCELLED for Cancelled",
+    "open_orders": 34,
+    "shipped_or_delivered_orders": 66,
+    "shipped_sales_total": 24338.27,
+    "shipped_sales_if_order_total_summed_per_line": 62717.09,
+    "shipped_sales_tax": 771.87,
+    "average_shipped_order_value": 368.76,
+    "restricted": {
+      "orders": 16,
+      "open_orders": 3,
+      "customers": 14
+    },
+    "check_order": {
+      "order": "#1006",
+      "customer": "Marigold Kitchen",
+      "status": "Delivered",
+      "lines": [
+        {
+          "sku": "BLK-DARJ-2OZ",
+          "qty": 18
+        },
+        {
+          "sku": "WHT-SILVER-1LB",
+          "qty": 19
+        },
+        {
+          "sku": "HRB-HIBISC-4OZ",
+          "qty": 21
+        }
+      ],
+      "goods": 1411.2,
+      "discount": 0.0,
+      "shipping": 15.0,
+      "tax": 0.0,
+      "total": 1426.2,
+      "note": "one of its lines is written without the #"
+    },
+    "largest_order": {
+      "order": "#1014",
+      "customer": "Stonebridge Cafe",
+      "total": 2614.62,
+      "text_sort_would_put_first": "#1089"
+    },
+    "search_check": {
+      "term": "Brick Oven Collective",
+      "expected_results": 2,
+      "orders": [
+        "#1046",
+        "#1054"
+      ]
+    },
+    "filter_check": {
+      "field": "Status",
+      "value": "Paid",
+      "expected_results": 12
+    },
+    "sort_check": {
+      "field": "Order Total",
+      "direction": "descending",
+      "first": "#1014"
+    },
+    "export_check": {
+      "rows": 110,
+      "columns": [
+        "Order #",
+        "Customer",
+        "Status",
+        "Order Date",
+        "Total"
+      ]
+    },
+    "out_of_scope_order": {
+      "order": "#1008",
+      "customer": "Evergreen Health Foods",
+      "account_manager": "Priya Raman"
+    },
+    "shipped_order_for_cancel_check": "#1001"
+  },
+  "checks": {
+    "retail_under_threshold": {
+      "customer": "Amanda Bennett",
+      "lines": [
+        [
+          "BLK-ASSAM-4OZ",
+          2
+        ],
+        [
+          "OOL-TIEGUA-4OZ",
+          1
+        ]
+      ],
+      "goods": 60.5,
+      "discount": 0.0,
+      "shipping": 7.95,
+      "tax": 4.99,
+      "total": 73.44
+    },
+    "retail_free_shipping": {
+      "customer": "Amanda Bennett",
+      "lines": [
+        [
+          "BLK-ASSAM-4OZ",
+          4
+        ],
+        [
+          "OOL-TIEGUA-4OZ",
+          1
+        ]
+      ],
+      "goods": 96.5,
+      "discount": 0.0,
+      "shipping": 0.0,
+      "tax": 7.96,
+      "total": 104.46
+    },
+    "wholesale_exempt": {
+      "customer": "Blue Door Cafe",
+      "lines": [
+        [
+          "BLK-ASSAM-4OZ",
+          12
+        ]
+      ],
+      "goods": 129.6,
+      "discount": 0.0,
+      "shipping": 15.0,
+      "tax": 0.0,
+      "total": 144.6
+    },
+    "wholesale_taxable": {
+      "customer": "Cedar Grove Gift Shop",
+      "certificate_written": "Expired",
+      "lines": [
+        [
+          "BLK-ASSAM-4OZ",
+          12
+        ]
+      ],
+      "goods": 129.6,
+      "discount": 0.0,
+      "shipping": 15.0,
+      "tax": 10.69,
+      "total": 155.29
+    },
+    "ship_decrement": {
+      "order": "the retail_under_threshold order",
+      "BLK-ASSAM-4OZ": {
+        "before": 40,
+        "after": 38
+      },
+      "OOL-TIEGUA-4OZ": {
+        "before": 15,
+        "after": 14
+      }
+    },
+    "backorder": {
+      "sku": "WHT-SILVER-1LB",
+      "stock": 3,
+      "order_qty": 5,
+      "customer": "Amanda Bennett",
+      "restock_to": 10,
+      "stock_after_ship": 5
+    }
+  },
+  "changes": {
+    "1_monthly_report": {
+      "report_month": "March 2026",
+      "month": {
+        "retail": {
+          "orders": 5,
+          "goods": 512.5,
+          "shipping": 23.85,
+          "tax": 42.28,
+          "total": 578.63
+        },
+        "wholesale": {
+          "orders": 5,
+          "goods": 4678.8,
+          "shipping": 75.0,
+          "tax": 0.0,
+          "total": 4753.8
+        }
+      },
+      "per_month_totals": {
+        "January": 2221.09,
+        "February": 3460.26,
+        "March": 5332.43,
+        "April": 1889.07,
+        "May": 3318.54,
+        "June": 3095.31,
+        "July": 3774.6,
+        "August": 1246.97
+      },
+      "year_total": 24338.27,
+      "cancelled_orders_in_month_excluded": [
+        {
+          "order": "#1022",
+          "total": 1251.3
+        },
+        {
+          "order": "#1025",
+          "total": 367.2
+        }
+      ],
+      "open_orders_in_month_excluded": 0,
+      "restricted_month_wholesale": {
+        "orders": 2,
+        "goods": 2468.4,
+        "shipping": 30.0,
+        "tax": 0.0,
+        "total": 2498.4
+      }
+    },
+    "2_wholesale_discount": {
+      "rule": "wholesale orders with goods of 1,000.00 or more get 5% off the goods; tax is on the discounted goods; shipping unchanged",
+      "over": {
+        "customer": "Cedar Grove Gift Shop",
+        "lines": [
+          [
+            "HRB-ROOIBO-1LB",
+            90
+          ]
+        ],
+        "goods": 1125.0,
+        "discount": 56.25,
+        "shipping": 15.0,
+        "tax": 88.17,
+        "total": 1171.92,
+        "goods_after_discount": 1068.75,
+        "wrong_tax_if_taxed_before_discount": 92.81
+      },
+      "at_threshold": {
+        "customer": "Blue Door Cafe",
+        "lines": [
+          [
+            "HRB-ROOIBO-1LB",
+            80
+          ]
+        ],
+        "goods": 1000.0,
+        "discount": 50.0,
+        "shipping": 15.0,
+        "tax": 0.0,
+        "total": 965.0
+      },
+      "below": {
+        "customer": "Blue Door Cafe",
+        "lines": [
+          [
+            "HRB-ROOIBO-1LB",
+            79
+          ]
+        ],
+        "goods": 987.5,
+        "discount": 0.0,
+        "shipping": 15.0,
+        "tax": 0.0,
+        "total": 1002.5
+      },
+      "retail_not_discounted": {
+        "customer": "Amanda Bennett",
+        "lines": [
+          [
+            "HRB-ROOIBO-1LB",
+            48
+          ]
+        ],
+        "goods": 1008.0,
+        "discount": 0.0,
+        "shipping": 0.0,
+        "tax": 83.16,
+        "total": 1091.16
+      },
+      "product_c": {
+        "sku": "HRB-ROOIBO-1LB",
+        "retail": 21.0,
+        "wholesale": 12.5,
+        "stock": 200
+      }
+    },
+    "3_on_hold": {
+      "order_to_hold": "#1104",
+      "customer": "Ridgeview Senior Living",
+      "status_before": "Paid",
+      "open_orders_unchanged": 34
+    }
+  }
+}

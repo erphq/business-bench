@@ -1,0 +1,88 @@
+id: commission-clawbacks
+track: desk
+category: bookkeeping
+title: Commission clawbacks on refunded deals since June
+ask: |
+  We haven't taken back any commissions for refunds since the June 15 statement. Colleen's note says what she needs, and the statements, refunds and plan are all in the folder. Save it as clawbacks.csv.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the rate is what the statement paid, not the plan document's current bands: RF-2221 was paid at 7% under the old plan, RF-2236's deal crossed the monthly band and carries a blended 4%/7% commission, and RF-2257 is a July deal under the new bands (check: clawback amounts)
+- |-
+  partial refunds take back the same share of that deal's commission; RF-2215 and RF-2242 are two partial refunds on one deal (check: clawback amounts)
+- |-
+  RF-2254 came more than 120 days after the sale and takes nothing back, while RF-2251 lands on day 120 and still counts (check: clawback amounts)
+- |-
+  four refunds are already on the June 15 clawback list and must not be taken twice, but RF-2203 from 19 April was missed and is still due although it predates the list (checks: which refunds; row count)
+- |-
+  Brian Foster left on 17 July; his clawbacks (RF-2218, RF-2233, RF-2245) come only out of the held $198.75 check, oldest refund first, and the rest is written off (checks: recovered from the rep; written off)
+- 'RF-2227 refunds a house deal that never paid commission (check: clawback amounts)'
+- |-
+  the refund export writes sales orders as ES-10452 where the statements say ES10452, under a two-line preamble (check: clawback amounts)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: clawbacks.csv
+  columns:
+  - refund_id
+  - rep
+  - clawback
+  - recovered
+  - written_off
+- type: csv_set_equal
+  name: which refunds
+  path: clawbacks.csv
+  column: refund_id
+  ref: clawbacks.csv
+  normalize:
+  - alnum
+- type: csv_row_count
+  name: row count
+  path: clawbacks.csv
+  equals_ref: clawbacks.csv
+- type: csv_values_match
+  name: clawback amounts
+  path: clawbacks.csv
+  ref: clawbacks.csv
+  key: refund_id
+  columns:
+  - clawback
+  numeric: true
+  tolerance: 0.011
+  min_accuracy: 1.0
+  must_match_keys:
+  - RF-2221
+  - RF-2236
+  - RF-2257
+  - RF-2215
+  - RF-2242
+  - RF-2254
+  - RF-2251
+  - RF-2227
+  - RF-2203
+- type: csv_values_match
+  name: recovered from the rep
+  path: clawbacks.csv
+  ref: clawbacks.csv
+  key: refund_id
+  columns:
+  - recovered
+  numeric: true
+  tolerance: 0.011
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - RF-2218
+  - RF-2233
+  - RF-2245
+- type: csv_values_match
+  name: written off
+  path: clawbacks.csv
+  ref: clawbacks.csv
+  key: refund_id
+  columns:
+  - written_off
+  numeric: true
+  tolerance: 0.011
+  min_accuracy: 1.0
+  must_match_keys: *id001

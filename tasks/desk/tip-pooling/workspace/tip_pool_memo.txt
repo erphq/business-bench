@@ -1,0 +1,23 @@
+KINJO RAMEN - HOW THE TIP POOL WORKS
+(posted by the office, from Hana - updated June 2026)
+
+1. Tips are pooled by shift. Lunch tips go to the people who worked lunch, dinner tips to the people who worked dinner.
+   The pool for a shift is the card tips on that shift's closed checks plus that shift's cash envelope. Voided checks
+   do not count. We pay card tips out in full and eat the card fee.
+
+2. The POS stamps each check with the time it was closed. Closed before 4:00 PM is lunch; 4:00 PM or later is dinner.
+   Checks closed after midnight belong to the dinner shift of the night before.
+
+3. Everyone hourly who worked the shift shares, front and back of house, including shift leads. Managers (anyone whose
+   job title says Manager) and I do not take from the pool, even on nights we run food or pour drinks.
+
+4. Your share is by the hours you worked on that shift, clock in to clock out. The Paid hours column on the clock
+   export is blank when you clock out after midnight; just count to your clock-out time. If you work lunch straight into
+   dinner without clocking out, your time before 4:00 PM counts for lunch and your time from 4:00 PM on counts for dinner.
+
+5. Rounding, so every shift pays out exactly what came in: work each share out exactly, cut it down to the cent, then
+   hand out the leftover cents one at a time, first to the person who lost the biggest fraction of a cent. If two people
+   lost the same fraction, the one with more hours on the shift goes first, then alphabetical by last name.
+
+6. The payout sheet for payroll: one line per person per shift, with the date, the shift (Lunch or Dinner), the
+   employee's name as it is on the time clock, their hours on that shift, and their tip share.

@@ -1,0 +1,14 @@
+Double bookings - next two weeks
+
+We've had two nights this month with two parties standing at the same table. Before it happens again, go through the reservations export for 15-27 September and find every booking that clashes with another booking on the same table.
+
+How to read the export:
+- A booking holds its table from its time for its duration. If one party's time is up at 7:30 and the next is booked for 7:30, that's fine - we turn it.
+- If Duration is blank, use our standard turn times: parties of 1-2 get 90 minutes, 3-4 get 1 hour 45, 5-6 get 2 hours, 7 or more get 2 and a half hours.
+- When a host moves a party, the system doesn't change the Table column. The host writes it in Notes ("moved to T9"). The note is where they're actually sitting.
+- Cancelled bookings don't hold a table.
+- We're closed Mondays, and Thursday the 24th is the Hartley wedding (whole restaurant). The online widget still lets people book those days - Sam is calling them, so leave those out of this list.
+
+What I want: conflicts.csv with one line per clashing booking - reservation number, date (2026-09-15 style), table, and the reservation number it clashes with. Both bookings in a clash get a line.
+
+- Marisol

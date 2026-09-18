@@ -1,0 +1,22 @@
+Square item import - how we're setting it up (Leila, 8 Sept)
+
+Fill in square_item_import_template.csv (delete the three Example rows). Square reads it one row per variation.
+
+Only what is on the September count sheet goes in. The RegisterOne export still has styles we retired; skip those.
+
+Token: leave blank, Square creates it for new items.
+Item Name: the product name as the customer sees it, WITHOUT the size (the count sheet sometimes has the size in
+  brackets after the name). Same Item Name on every row for that product so Square groups the sizes.
+Variation Name: the size, written XS, S, M, L, XL or XXL for clothing and the plain number for shoes (8, 9.5).
+  Products that don't come in sizes have one variation called Regular (that's Square's default name).
+Option Name 1 / Option Value 1: Size and the same size as Variation Name. Leave both blank for Regular.
+SKU: style number, a dash, then the size as above (TJ4410-M, RB2200-9.5). One-size products use the style number
+  on its own.
+Description: the short description is fine to leave blank, I'll add copy later.
+Category: our Square categories are Jackets & Outerwear (OUT), Base Layers (BASE), Footwear (FTW),
+  Camp & Kitchen (CAMP), Accessories (ACC). The old HIKE department was folded into Accessories.
+  On the count sheet the Dept is only written where a new department starts.
+Price: dollars and cents. Heads up, RegisterOne exports prices in CENTS (12900 = $129.00). Price is per style,
+  every size costs the same.
+New Quantity Granite Peak Outfitters: the On Hand count. Anything negative is stuff we sold before it was received into the old
+  system; put 0.

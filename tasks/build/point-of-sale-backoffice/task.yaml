@@ -1,0 +1,62 @@
+id: point-of-sale-backoffice
+track: build
+category: retail-back-office
+title: Back office for two cafes with menu items, modifiers, nightly cash-ups, item performance, price-change audit, and a dashboard
+ask: |
+  We own two cafes, Harbor Street and Mill Road, and I need a back office for them: our menu items with
+  their modifiers, and each store's daily takings. Every night the manager enters the day's gross sales,
+  discounts, card total, and the cash they counted; the app should work out whether the till is over or
+  short and make them explain anything more than $5 off. I want to see how each item is performing, and
+  only I change prices, with every price change on record: who changed it, from what, to what, and when.
+  Our menu, modifiers, daily takings, and item sales since July are attached, exported from two different
+  tills, so expect some mess. I want team logins with different access, where each store manager sees only
+  their own store and our bookkeeper sees everything but changes nothing, plus a dashboard, an admin login
+  for me, and a login for Owen Brooks, who manages Mill Road.
+seed:
+  - seed/items.csv
+  - seed/modifiers.csv
+  - seed/daily_takings.csv
+  - seed/item_sales.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for Owen Brooks, store manager for Mill Road.
+      password: Owen's password.
+    notes: >
+      Free text. Must say the restricted login is Owen Brooks. May include the Harbor Street manager's
+      login, how to invite users, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "owner@example.com", "password": "..."},
+      "restricted": {"user": "owen@example.com", "password": "..."},
+      "notes": "restricted login is Owen Brooks (Mill Road). Restart: systemctl restart backoffice."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 19, 23]  # "first usable" = these pass
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - items.csv repeats 2 rows and re-types 2 items with a lower-case code and a different name ("crs-alm" / "Almond Croissant ", "lat-16" / "Latte 16 oz"), 61 rows -> 57 items; "Both" and "All stores" mean the same (item 15)
+  - COO-CHO has price -2.75; flag it, don't import it silently (item 16)
+  - modifiers.csv is one row per modifier per category (69 rows -> 32 modifiers), with "Oat Milk" and "caramel" re-typed and prices written "+$0.75", "75c", "0.75", "free", "$0.00"; "75c" read as dollars makes oat milk 75.00 (item 17)
+  - daily_takings.csv spells each store three ways and exports Mill Road's 2026-07-24 and 2026-07-29 twice; money mixes "$1,575.23", "1,987.96", "2041.01" (items 6, 10, 18, 8)
+  - variance sign and limit: counted minus expected, "more than $5" means 5.00 exactly passes without a note (items 19, 20, change item 31)
+  - item_sales.csv writes the month three ways (Aug 2026, 2026-08, August 2026), lower-cases 15% of codes, and repeats Harbor Street's August MOC-12 row, which pushes MOC-12 from 7th to 1st if counted twice (item 22)
+  - gross sales mix currency strings and plain numbers; a text sort ranks Harbor Street 2026-08-23 ("3346.49") above the true top day 2026-08-15 ("$3,612.75") (item 10)
+  - dates mix 2026-08-04, 8/4/2026, 04-Aug-2026, and "Aug 4, 2026"; a day-first reading moves entries to the wrong weekday and month (items 18, change item 28)

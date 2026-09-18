@@ -1,0 +1,10 @@
+From: Ingrid Castillo <ingrid@fernwoodenv.com>
+To: ap@fernwoodenv.com
+Date: Fri, 4 Sep 2026 15:12
+Subject: August expense reports - audit before we pay
+
+Before the reports go to payroll next week, please audit every report that is still waiting for approval against the 2026 policy (the July report is only in the export because it overlaps; it has already been paid).
+
+I want violations.csv with one row for each expense line that breaks the policy: line_id, report_id, employee, the policy_section it breaks (like 3.1), amount_disallowed (only the part we should not pay) and a short reason. Lines that are fine stay off the list.
+
+Ingrid

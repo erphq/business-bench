@@ -1,0 +1,59 @@
+id: kpi-scorecard-page
+track: desk
+category: tooling
+title: August operations scorecard page
+ask: |
+  Ruth wants the August scorecard as a web page for Thursday's branch meeting. The numbers are in the tracker export and the targets workbook, and her note explains the rest. Save it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the note makes five metrics lower-is-better (turnover, complaints, callbacks, supply cost, injuries); a higher-is-better reading flips at least three results (check: page structure: met or missed)
+- |-
+  Callbacks for re-cleans lands exactly on its target, which the note counts as met (check: page structure: met or missed)
+- |-
+  rates are fractions in the tracker (0.943) and targets are '95%' text or 0.9 numbers in the workbook; the page shows percents (checks: rates shown as percents; page structure: figures)
+- |-
+  New client inquiries has no target (TBD in the workbook) and must read No target, not Met or Missed (check: page structure: no-target metric)
+- |-
+  the tracker still carries June rows for Carpet cleaning jobs, a service sold off with a branch; it has no target and no August figure and is off the scorecard (check: retired carpet metric left off)
+- |-
+  the tracker holds June, July and August, typed '2026-08', 'Aug-26' and '08/2026'; the page is August only (checks: page structure: figures; rates shown as percents)
+- |-
+  Inspection pass rate has two August rows; the later one is a revision that changes the result (checks: page structure: figures; page structure: met or missed)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: every metric listed
+  path: index.html
+  phrases:
+  - On-time arrival rate
+  - Inspection pass rate
+  - Client renewal rate
+  - Staff turnover
+  - Complaints per 100 visits
+  - Callbacks for re-cleans
+  - Supply cost per site
+  - Revenue per labor hour
+  - Lost-time injuries
+  - New client inquiries
+  - no target
+- type: text_not_contains
+  name: retired carpet metric left off
+  path: index.html
+  phrases:
+  - Carpet cleaning jobs
+- type: text_numbers_present
+  name: rates shown as percents
+  path: index.html
+  numbers:
+  - 98.4
+  - 92.9
+  - 92.7
+  - 4.3
+  rel_tol: 0.0004
+- type: custom
+  name: page structure
+  module: check.py

@@ -1,0 +1,91 @@
+id: card-expense-coding
+track: desk
+category: bookkeeping
+title: Code August company-card charges to the ledger by item type
+ask: |
+  Please code August's company card charges to our accounts following the card policy, and give me coded.csv for the import plus review.csv with everything I need to look at. Everything you need is in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the policy codes by merchant category and the memo, not by merchant name: Home Depot, Graybar or Grainger is 5100 when the memo carries a job number, otherwise 6120, or 1520 when a single charge is $2,500 or more; a merchant-name lookup cannot get all three (check: gl accounts)
+- |-
+  one shop tool costs exactly $2,500.00 and capitalises, a job box at just under stays 6120, and a switchgear order over $2,500 with a job number stays job materials (check: gl accounts)
+- |-
+  restaurant charges on approved trip days are travel meals capped at $70 per person per day and $52.50 on the departure and return days; meals on the same day are added together before the cap, and the excess is owed back (checks: gl accounts; employee owes)
+- |-
+  Deborah Okafor eats out the day after the Boise trip ends and that meal is ordinary 6400, uncapped; Gary Phillips's Portland trip in the travel file was never approved, so those meals are 6400 with nothing owed (checks: gl accounts; employee owes)
+- |-
+  bars, liquor stores and streaming are item types the policy never pays and a Target charge's memo says it was personal; all go to 1350, owed in full, and onto the review list (checks: gl accounts; employee owes; review list)
+- |-
+  general-merchandise merchants (Amazon, Costco) without a job number and two merchant categories the policy table does not cover get a blank account and go to review rather than a guess (checks: gl accounts; review list)
+- |-
+  three declined authorisations sit in the export with amounts; they never charged the card (checks: one row per charge; review list)
+checks:
+- type: csv_columns
+  name: import columns
+  path: coded.csv
+  columns:
+  - txn_id
+  - gl_account
+  - employee_owes
+- type: csv_row_count
+  name: one row per charge
+  path: coded.csv
+  equals_ref: coded.csv
+- type: csv_set_equal
+  name: every posted charge coded
+  path: coded.csv
+  column: txn_id
+  ref: coded.csv
+- type: csv_values_match
+  name: gl accounts
+  path: coded.csv
+  ref: coded.csv
+  key: txn_id
+  columns:
+  - gl_account
+  normalize:
+  - strip
+  - lower
+  min_accuracy: 0.97
+  must_match_keys:
+  - CX0MLL2Z9G
+  - CX48DXDF8E
+  - CX4TR2BFXE
+  - CX5BP3BEK5
+  - CX5PEGATCN
+  - CX5WDJ0UV0
+  - CX6KAQ98EL
+  - CX70JP1E9B
+  - CX8HNLT6JC
+  - CXA9VPYQZY
+  - CXC6TVMQAM
+  - CXEPWJA80Y
+  - CXHJUP8A77
+  - CXJUYVGHE1
+  - CXJZ8ZD6SR
+  - CXK9X3D1NW
+  - CXM7ZFA4SJ
+  - CXPZ3QS0SL
+  - CXQRV8KNWS
+  - CXQX73VM7J
+  - CXUDPJW5B6
+  - CXV7WNG81D
+  - CXXG1ZDE5Y
+  - CXYFFBJPS2
+  - CXYT37QH7N
+  - CXZ2CP5DZN
+  - CXZSYK79TT
+- type: custom
+  name: employee owes
+  module: check.py
+- type: custom
+  name: review list
+  module: check_review.py
+- type: csv_columns
+  name: review list says why
+  path: review.csv
+  columns:
+  - txn_id
+  - reason

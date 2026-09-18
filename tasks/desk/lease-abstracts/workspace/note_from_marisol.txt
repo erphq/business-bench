@@ -1,0 +1,17 @@
+Hi,
+
+Cascade Credit Union wants a lease abstract for every tenant currently in Hawthorn Commons before the refinance closes. All the leases I could find are in the leases folder. Please put them in lease_abstracts.csv, one row per suite, with these columns:
+
+suite - the suite number only (101, not Suite 101)
+tenant - the tenant's legal name as written in the lease
+commencement_date, expiration_date - YYYY-MM-DD
+monthly_base_rent - base rent per month in effect on October 1, 2026, after any increases that have already happened
+escalation_type - percent or fixed
+escalation_amount - for percent increases the percent as a number (3.5 for 3.5%); for fixed increases the dollar amount monthly rent goes up by each time
+renewal_options - how many renewal options the tenant has (0 if none)
+notice_deadline - the last day the tenant can give notice to exercise its next renewal option, YYYY-MM-DD, blank if no options
+cam_cap_pct - the cap on yearly increases in CAM charges as a percent (4 for 4%), 0 if uncapped
+
+Thanks,
+Marisol Reyes
+Redwood Property Mgmt

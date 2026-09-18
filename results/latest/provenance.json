@@ -1,0 +1,30 @@
+{
+  "campaign": "full-1",
+  "track": "desk",
+  "release_kind": "recorded scoring snapshot",
+  "exported_utc": "2026-09-18T00:13:21.392615+00:00",
+  "ledger_sha256": "ff632e2ba10b4905d23f81fa782b44f436b5cca91577672e122df4068d40a5a1",
+  "included_arms": [
+    "codex-sol",
+    "proto-deepseek",
+    "proto-glm",
+    "proto-qwen"
+  ],
+  "expected_tasks_per_arm": 187,
+  "repetitions": 3,
+  "launch_configuration": {
+    "image_tag": "business-bench:v38",
+    "runtime_revision_recorded_by_launcher": "53a303309",
+    "codex_cli_version_in_image_recipe": "0.154.0",
+    "reasoning_effort": "high",
+    "api_arm_parallelism": 5,
+    "codex_parallelism": 2,
+    "cpus_per_attempt": 2,
+    "memory_per_attempt": "6g",
+    "recalculation_image": "bench-recalc:v1"
+  },
+  "scorer_provenance": "Original result records lack per-attempt scorer hashes. No uniform immutable scorer identity is asserted. Results are exported as recorded, not rescored with release source.",
+  "runtime_provenance": "Image tag and short revision are launcher metadata, not a recovered image digest. Historical runtime binaries and credential-dependent skill installations are not distributed.",
+  "build_status": "No completed, fully acceptance-validated build campaign included.",
+  "exclusions": "Incomplete arms, development comparisons, pilots, tuning history, raw outputs, session traces, homes and credentials."
+}

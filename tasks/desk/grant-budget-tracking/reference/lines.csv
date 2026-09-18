@@ -1,0 +1,13 @@
+grant,line_code,budget_line,budget,allowable_spent,remaining,disallowed
+SCWF,SCWF-PER,Restoration personnel,38000.00,37316.32,683.68,0.00
+SCWF,SCWF-CON,Earthwork contractor,52000.00,35891.66,16108.34,0.00
+SCWF,SCWF-MAT,Restoration materials,18500.00,6555.38,11944.62,1657.71
+SCWF,SCWF-MIL,Field mileage,2400.00,1052.39,1347.61,0.00
+HFF,HFF-EDU,Education staff,24000.00,13948.54,10051.46,386.61
+HFF,HFF-SUP,Classroom kits,6200.00,2973.25,3226.75,0.00
+HFF,HFF-BUS,Student buses,4800.00,2721.87,2078.13,0.00
+HFF,HFF-PRT,Curriculum printing,2100.00,1086.14,1013.86,0.00
+CPCG,CPCG-STI,Coordinator stipend,9000.00,8155.98,844.02,0.00
+CPCG,CPCG-EQP,Monitoring equipment,5400.00,2196.95,3203.05,0.00
+CPCG,CPCG-VOL,Volunteer recognition,1500.00,306.01,1193.99,379.69
+CPCG,CPCG-OUT,Outreach printing,1200.00,774.14,425.86,0.00

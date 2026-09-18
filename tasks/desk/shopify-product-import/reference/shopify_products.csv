@@ -1,0 +1,45 @@
+Handle,Title,Body (HTML),Vendor,Product Category,Type,Tags,Published,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Variant SKU,Variant Grams,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Variant Barcode,Variant Weight Unit,Status
+mens-ridgeline-jacket,Men's Ridgeline Rain Jacket,,Granite Peak,,Jackets,,TRUE,Color,Blue,Size,S,GP1001-BLU-S,499,shopify,29,deny,manual,129.00,,TRUE,TRUE,615042224217,g,active
+mens-ridgeline-jacket,,,,,,,,,Blue,,M,GP1001-BLU-M,499,shopify,19,deny,manual,129.00,,TRUE,TRUE,693618120170,g,
+mens-ridgeline-jacket,,,,,,,,,Blue,,L,GP1001-BLU-L,517,shopify,26,deny,manual,129.00,,TRUE,TRUE,075211962201,g,
+mens-ridgeline-jacket,,,,,,,,,Blue,,XL,GP1001-BLU-XL,517,shopify,26,deny,manual,129.00,,TRUE,TRUE,816735176152,g,
+mens-ridgeline-jacket,,,,,,,,,Blue,,2XL,GP1001-BLU-2XL,517,shopify,32,deny,manual,134.00,,TRUE,TRUE,621266569508,g,
+mens-ridgeline-jacket,,,,,,,,,Black,,S,GP1001-BLK-S,499,shopify,27,deny,manual,129.00,,TRUE,TRUE,809225940036,g,
+mens-ridgeline-jacket,,,,,,,,,Black,,M,GP1001-BLK-M,499,shopify,8,deny,manual,129.00,,TRUE,TRUE,899808316372,g,
+mens-ridgeline-jacket,,,,,,,,,Black,,L,GP1001-BLK-L,517,shopify,4,deny,manual,129.00,,TRUE,TRUE,724732103357,g,
+mens-ridgeline-jacket,,,,,,,,,Black,,XL,GP1001-BLK-XL,517,shopify,23,deny,manual,129.00,,TRUE,TRUE,047652560636,g,
+womens-ridgeline-rain-jacket,Women's Ridgeline Rain Jacket,,Granite Peak,,Jackets,,TRUE,Color,Teal,Size,XS,GP1002-TEA-XS,431,shopify,12,deny,manual,129.00,,TRUE,TRUE,752993165524,g,active
+womens-ridgeline-rain-jacket,,,,,,,,,Teal,,S,GP1002-TEA-S,431,shopify,3,deny,manual,129.00,,TRUE,TRUE,801018998644,g,
+womens-ridgeline-rain-jacket,,,,,,,,,Teal,,M,GP1002-TEA-M,431,shopify,0,deny,manual,129.00,,TRUE,TRUE,793140161136,g,
+womens-ridgeline-rain-jacket,,,,,,,,,Teal,,L,GP1002-TEA-L,449,shopify,1,deny,manual,129.00,,TRUE,TRUE,855790297006,g,
+womens-ridgeline-rain-jacket,,,,,,,,,Plum,,XS,GP1002-PLM-XS,431,shopify,8,deny,manual,129.00,,TRUE,TRUE,036861136237,g,
+womens-ridgeline-rain-jacket,,,,,,,,,Plum,,S,GP1002-PLM-S,431,shopify,8,deny,manual,129.00,,TRUE,TRUE,752941172390,g,
+womens-ridgeline-rain-jacket,,,,,,,,,Plum,,M,GP1002-PLM-M,431,shopify,29,deny,manual,129.00,,TRUE,TRUE,073225323865,g,
+womens-ridgeline-rain-jacket,,,,,,,,,Plum,,L,GP1002-PLM-L,449,shopify,26,deny,manual,129.00,,TRUE,TRUE,716129833282,g,
+merino-hike-socks-3pk,Hike & Bike Merino Socks (3-Pack),,Thistle Wool Co.,,Socks,,TRUE,Size,S,,,GP2040-S,213,shopify,26,deny,manual,24.00,,TRUE,TRUE,825924175418,g,active
+merino-hike-socks-3pk,,,,,,,,,M,,,GP2040-M,213,shopify,0,deny,manual,24.00,,TRUE,TRUE,803124438199,g,
+merino-hike-socks-3pk,,,,,,,,,L,,,GP2040-L,221,shopify,20,deny,manual,24.00,,TRUE,TRUE,816751547172,g,
+trail-runner-2-0,Trail Runner 2.0,,Switchback,,Footwear,,TRUE,Color,Slate,Size,8,GP3100-SLT-8,620,shopify,14,deny,manual,139.95,,TRUE,TRUE,801408919204,g,active
+trail-runner-2-0,,,,,,,,,Slate,,9,GP3100-SLT-9,620,shopify,12,deny,manual,139.95,,TRUE,TRUE,088651133421,g,
+trail-runner-2-0,,,,,,,,,Slate,,10,GP3100-SLT-10,620,shopify,33,deny,manual,139.95,,TRUE,TRUE,641969972887,g,
+trail-runner-2-0,,,,,,,,,Slate,,11,GP3100-SLT-11,640,shopify,0,deny,manual,139.95,,TRUE,TRUE,682293941927,g,
+trail-runner-2-0,,,,,,,,,Moss,,8,GP3100-MOS-8,620,shopify,18,deny,manual,139.95,,TRUE,TRUE,020890976421,g,
+trail-runner-2-0,,,,,,,,,Moss,,9,GP3100-MOS-9,620,shopify,0,deny,manual,139.95,,TRUE,TRUE,899490703993,g,
+trail-runner-2-0,,,,,,,,,Moss,,10,GP3100-MOS-10,620,shopify,14,deny,manual,139.95,,TRUE,TRUE,875614475694,g,
+trail-runner-2-0,,,,,,,,,Moss,,11,GP3100-MOS-11,640,shopify,9,deny,manual,139.95,,TRUE,TRUE,736471566560,g,
+enamel-camp-mug,Café Enamel Camp Mug,,Granite Peak,,Camp Kitchen,,TRUE,Title,Default Title,,,GP4010,255,shopify,36,deny,manual,18.00,,TRUE,TRUE,831197833634,g,active
+summit-20l-daypack,Summit 20L Daypack,,Granite Peak,,Packs,,TRUE,Color,Red,,,GP5020-RED,635,shopify,25,deny,manual,69.00,89.00,TRUE,TRUE,687918830907,g,active
+summit-20l-daypack,,,,,,,,,Forest,,,GP5020-FOR,635,shopify,1,deny,manual,69.00,89.00,TRUE,TRUE,067884312018,g,
+summit-20l-daypack,,,,,,,,,Black,,,GP5020-BLK,635,shopify,26,deny,manual,69.00,89.00,TRUE,TRUE,682047408409,g,
+basecamp-4p-tent,Basecamp 4P Tent,,Ridgeway,,Tents,,TRUE,Color,Sand,,,GP6003-SND,4350,shopify,22,deny,manual,1249.00,,TRUE,TRUE,858961302547,g,active
+basecamp-4p-tent,,,,,,,,,Olive,,,GP6003-OLV,4350,shopify,5,deny,manual,1249.00,,TRUE,TRUE,095891397346,g,
+alpine-down-vest,Alpine Down Vest,,Granite Peak,,Jackets,,FALSE,Color,Black,Size,M,GP7001-BLK-M,318,shopify,30,deny,manual,149.00,,TRUE,TRUE,830171186582,g,draft
+alpine-down-vest,,,,,,,,,Black,,L,GP7001-BLK-L,330,shopify,15,deny,manual,149.00,,TRUE,TRUE,819565202138,g,
+alpine-down-vest,,,,,,,,,Black,,2XL,GP7001-BLK-2XL,330,shopify,20,deny,manual,154.00,,TRUE,TRUE,048786631346,g,
+alpine-down-vest,,,,,,,,,Rust,,M,GP7001-RST-M,318,shopify,32,deny,manual,149.00,,TRUE,TRUE,722047304612,g,
+alpine-down-vest,,,,,,,,,Rust,,L,GP7001-RST-L,330,shopify,38,deny,manual,149.00,,TRUE,TRUE,089823136721,g,
+alpine-down-vest,,,,,,,,,Rust,,2XL,GP7001-RST-2XL,330,shopify,12,deny,manual,154.00,,TRUE,TRUE,838733371162,g,
+kids-puddle-boots,Kids' Puddle Boots,,Switchback,,Footwear,,TRUE,Size,Toddler 8,,,GP8015-T8,363,shopify,6,deny,manual,39.50,,TRUE,TRUE,651766193132,g,active
+kids-puddle-boots,,,,,,,,,Toddler 9,,,GP8015-T9,363,shopify,26,deny,manual,39.50,,TRUE,TRUE,740023515425,g,
+kids-puddle-boots,,,,,,,,,Toddler 10,,,GP8015-T10,363,shopify,20,deny,manual,39.50,,TRUE,TRUE,888801465828,g,
+trekking-poles-pair,Trekking Poles – Pair,,Ridgeway,,Accessories,,TRUE,Title,Default Title,,,GP9002,540,shopify,2,deny,manual,79.00,,TRUE,TRUE,773665480943,g,active

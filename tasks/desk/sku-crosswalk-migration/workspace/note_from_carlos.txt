@@ -1,0 +1,14 @@
+Opening catalog for the new POS
+
+Coastline sent the final crosswalk on the 9th (ignore the July draft, they changed a few groups after we complained).
+The new system wants one line per SKU with both shops' stock added together. Columns: sku, description, on_hand,
+price, status.
+
+- Where several of our old codes become one new code, add their stock up and use the highest of the old prices so we
+  never undersell. Use Coastline's new description.
+- The crosswalk lists their whole range. Only put in what we actually carry - if we don't have any of the old codes
+  for a new SKU, it doesn't go in.
+- Anything of ours that isn't on the crosswalk (mostly our own Zephyr stuff) stays in under the old code and old
+  description with status unmapped so I can deal with it. Everything else is status mapped.
+
+Carlos

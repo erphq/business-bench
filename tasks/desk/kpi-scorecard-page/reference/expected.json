@@ -1,0 +1,76 @@
+{
+  "met_count": 6,
+  "metrics": [
+    {
+      "actual": 98.4,
+      "kind": "pct",
+      "met": true,
+      "name": "On-time arrival rate",
+      "target": 95.0
+    },
+    {
+      "actual": 92.9,
+      "kind": "pct",
+      "met": true,
+      "name": "Inspection pass rate",
+      "target": 92.0
+    },
+    {
+      "actual": 92.7,
+      "kind": "pct",
+      "met": true,
+      "name": "Client renewal rate",
+      "target": 90.0
+    },
+    {
+      "actual": 4.3,
+      "kind": "pct",
+      "met": false,
+      "name": "Staff turnover",
+      "target": 4.0
+    },
+    {
+      "actual": 1.1,
+      "kind": "num1",
+      "met": true,
+      "name": "Complaints per 100 visits",
+      "target": 1.5
+    },
+    {
+      "actual": 12,
+      "kind": "count",
+      "met": true,
+      "name": "Callbacks for re-cleans",
+      "target": 12
+    },
+    {
+      "actual": 183.13,
+      "kind": "usd",
+      "met": true,
+      "name": "Supply cost per site",
+      "target": 185.0
+    },
+    {
+      "actual": 35.05,
+      "kind": "usd",
+      "met": false,
+      "name": "Revenue per labor hour",
+      "target": 38.5
+    },
+    {
+      "actual": 1,
+      "kind": "count",
+      "met": false,
+      "name": "Lost-time injuries",
+      "target": 0
+    },
+    {
+      "actual": 38.0,
+      "kind": "count",
+      "met": null,
+      "name": "New client inquiries",
+      "target": null
+    }
+  ],
+  "scored": 9
+}

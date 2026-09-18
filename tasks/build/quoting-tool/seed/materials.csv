@@ -1,0 +1,63 @@
+Code,Material,Species,Thickness,Grade,Unit,Cost per Unit,Supplier,Price Updated
+WO-64-FAS,White Oak 6/4 FAS,White Oak,6/4,FAS,BF,10.50,Northland Hardwoods,05/30/26
+SAP-44-FAS,Sapele 4/4 FAS,Sapele,4/4,FAS,bf,10.20,Northland Hardwoods,2026-08-10
+CHE-44-FAS,Cherry 4/4 FAS,Cherry,4/4,FAS,BF,9.60,Appalachian Sawmill Supply,2026-02-05
+RO-44-FAS,Red Oak 4/4 FAS,Red Oak,4/4,FAS,BF,6.20,Northland Hardwoods,07-Jul-2026
+CHE-64-SEL,Cherry 6/4 Select,Cherry,6/4,Select,bf,$9.74,Keystone Lumber Co.,2026-02-24
+HIC-84-SEL,Hickory 8/4 Select,Hickory,8/4,Select,board ft,7.49,Appalachian Sawmill Supply,"August 04, 2026"
+WO-84-FAS,White Oak 8/4 FAS,White Oak,8/4,FAS,bf,11.75,Appalachian Sawmill Supply,02/27/26
+HM-44-FAS,Hard Maple 4/4 FAS,Hard Maple,4/4,FAS,BF,$7.40,Keystone Lumber Co.,"June 03, 2026"
+HIC-84-FAS,Hickory 8/4 FAS,Hickory,8/4,FAS,bf,8.71,Appalachian Sawmill Supply,07/15/2026
+RO-84-SEL,Red Oak 8/4 Select,Red Oak,8/4,Select,bf,7.04,Appalachian Sawmill Supply,"January 30, 2026"
+ASH-84-SEL,Ash 8/4 Select,Ash,8/4,Select,board ft,6.58,Northland Hardwoods,01/21/26
+RO-64-SEL,Red Oak 6/4 Select,Red Oak,6/4,Select,bf,$6.29,Keystone Lumber Co.,2026-05-07
+RO-64-FAS,Red Oak 6/4 FAS,Red Oak,6/4,FAS,BF,$7.32,Appalachian Sawmill Supply,04/07/26
+MAH-44-FAS,Mahogany 4/4 FAS,Mahogany,4/4,FAS,BF,13.80,Northland Hardwoods,04/20/26
+RO-44-SEL,Red Oak 4/4 Select,Red Oak,4/4,Select,bf,5.33,Riverside Timber,01/15/2026
+HM-84-SEL,Hard Maple 8/4 Select,Hard Maple,8/4,Select,bf,8.40,Appalachian Sawmill Supply,01/31/2026
+HM-44-SEL,Hard Maple 4/4 Select,Hard Maple,4/4,Select,bf,$6.36,Northland Hardwoods,01/21/26
+SAP-84-SEL,Sapele 8/4 Select,Sapele,8/4,Select,board ft,11.58,Northland Hardwoods,06/08/2026
+MAH-64-SEL,Mahogany 6/4 Select,Mahogany,6/4,Select,BF,$14.00,Appalachian Sawmill Supply,"February 23, 2026"
+ASH-64-SEL,Ash 6/4 Select,Ash,6/4,Select,bf,5.89,Keystone Lumber Co.,19-May-2026
+WAL-64-SEL,Walnut 6/4 Select,Walnut,6/4,Select,bf,$12.58,Riverside Timber,03/23/2026
+CHE-84-SEL,Cherry 8/4 Select,Cherry,8/4,Select,bf,10.90,Northland Hardwoods,23-Apr-2026
+MAH-64-FAS,Mahogany 6/4 FAS,Mahogany,6/4,FAS,bf,16.28,Keystone Lumber Co.,13-Jan-2026
+POP-44-FAS,Poplar 4/4 FAS,Poplar,4/4,FAS,bf,3.90,Riverside Timber,2026-04-14
+HIC-64-FAS,Hickory 6/4 FAS,Hickory,6/4,FAS,bf,7.79,Appalachian Sawmill Supply,21-Jun-2026
+CHE-44-SEL,Cherry 4/4 Select,Cherry,4/4,Select,board ft,8.26,Riverside Timber,14-Jan-2026
+WAL-64-FAS,Walnut 6/4 FAS,Walnut,6/4,FAS,bf,$14.63,Northland Hardwoods,08/03/2026
+ASH-64-FAS,Ash 6/4 FAS,Ash,6/4,FAS,bf,6.84,Riverside Timber,07-Jan-2026
+ASH-44-FAS,Ash 4/4 FAS,Ash,4/4,FAS,board ft,5.80,Appalachian Sawmill Supply,18-May-2026
+HIC-44-SEL,Hickory 4/4 Select,Hickory,4/4,Select,bf,$5.68,Appalachian Sawmill Supply,18-Jul-2026
+SAP-64-SEL,Sapele 6/4 Select,Sapele,6/4,Select,board ft,10.35,Keystone Lumber Co.,01/20/2026
+WAL-44-FAS,Walnut 4/4 FAS,Walnut,4/4,FAS,bf,$12.40,Keystone Lumber Co.,2026-08-07
+WO-84-SEL,White Oak 8/4 Select,White Oak,8/4,Select,bf,10.10,Riverside Timber,12-Feb-2026
+ASH-84-FAS,Ash 8/4 FAS,Ash,8/4,FAS,bf,7.66,Appalachian Sawmill Supply,08/08/26
+WO-64-SEL,White Oak 6/4 Select,White Oak,6/4,Select,board ft,9.03,Appalachian Sawmill Supply,17-Jun-2026
+SAP-64-FAS,Sapele 6/4 FAS,Sapele,6/4,FAS,BF,$12.04,Riverside Timber,"August 04, 2026"
+HIC-64-SEL,Hickory 6/4 Select,Hickory,6/4,Select,bf,6.70,Northland Hardwoods,05/31/26
+WO-44-SEL,White Oak 4/4 Select,White Oak,4/4,Select,bf,7.65,Keystone Lumber Co.,15-Jan-2026
+POP-44-SEL,Poplar 4/4 Select,Poplar,4/4,Select,bf,3.35,Appalachian Sawmill Supply,"January 14, 2026"
+CHE-84-FAS,Cherry 8/4 FAS,Cherry,8/4,FAS,bf,12.67,Riverside Timber,"April 15, 2026"
+POP-84-FAS,Poplar 8/4 FAS,Poplar,8/4,FAS,bf,5.15,Northland Hardwoods,03/04/26
+RO-84-FAS,Red Oak 8/4 FAS,Red Oak,8/4,FAS,bf,8.18,Appalachian Sawmill Supply,23-Mar-2026
+CHE-64-FAS,Cherry 6/4 FAS,Cherry,6/4,FAS,bf,11.33,Appalachian Sawmill Supply,2026-02-16
+ASH-44-SEL,Ash 4/4 Select,Ash,4/4,Select,board ft,4.99,Keystone Lumber Co.,06/16/26
+MAH-84-FAS,Mahogany 8/4 FAS,Mahogany,8/4,FAS,bf,$18.22,Appalachian Sawmill Supply,06/10/26
+MAH-84-SEL,Mahogany 8/4 Select,Mahogany,8/4,Select,BF,15.67,Northland Hardwoods,06/20/26
+SAP-44-SEL,Sapele 4/4 Select,Sapele,4/4,Select,BF,8.77,Riverside Timber,14-May-2026
+POP-84-SEL,Poplar 8/4 Select,Poplar,8/4,Select,board ft,4.43,Riverside Timber,2026-05-14
+HM-84-FAS,Hard Maple 8/4 FAS,Hard Maple,8/4,FAS,bf,$9.77,Appalachian Sawmill Supply,02-May-2026
+WAL-44-SEL,Walnut 4/4 Select,Walnut,4/4,Select,board ft,10.66,Northland Hardwoods,03/26/2026
+SAP-84-FAS,Sapele 8/4 FAS,Sapele,8/4,FAS,BF,$13.46,Northland Hardwoods,"January 19, 2026"
+WO-64-SEL,White Oak 6/4 Select,White Oak,6/4,Select,board ft,9.03,Appalachian Sawmill Supply,17-Jun-2026
+MAH-44-SEL,Mahogany 4/4 Select,Mahogany,4/4,Select,board ft,11.87,Northland Hardwoods,"January 17, 2026"
+POP-64-FAS,Poplar 6/4 FAS,Poplar,6/4,FAS,bf,4.60,Riverside Timber,2026-05-01
+HM-64-SEL,Hard Maple 6/4 Select,Hard Maple,6/4,Select,bf,7.51,Keystone Lumber Co.,07/28/26
+WAL-84-FAS,Walnut 8/4 FAS,Walnut,8/4,FAS,board ft,$16.37,Northland Hardwoods,2026-06-14
+HM-64-FAS,Hard Maple 6/4 FAS,Hard Maple,6/4,FAS,bf,8.73,Appalachian Sawmill Supply,"February 04, 2026"
+WO-44-FAS,White Oak 4/4 FAS,White Oak,4/4,FAS,BF,$8.90,Keystone Lumber Co.,03-Feb-2026
+WAL-84-SEL,Walnut 8/4 Select,Walnut,8/4,Select,board ft,14.08,Northland Hardwoods,28-Jul-2026
+HM-64-SEL,Hard Maple 6/4 Select,Hard Maple,6/4,Select,bf,7.51,Keystone Lumber Co.,07/28/26
+HIC-44-FAS,Hickory 4/4 FAS,Hickory,4/4,FAS,bf,6.60,Keystone Lumber Co.,01/21/2026
+POP-64-SEL,Poplar 6/4 Select,Poplar,6/4,Select,bf,3.96,Riverside Timber,2026-05-09

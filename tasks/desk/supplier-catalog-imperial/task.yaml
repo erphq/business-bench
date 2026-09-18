@@ -1,0 +1,110 @@
+id: supplier-catalog-imperial
+track: desk
+category: spreadsheet
+title: Metric supplier price list into our inch-and-pound catalog
+ask: |
+  Nordwerk sent their 2026 price list in metric. Turn it into our catalog format as catalog_us.csv - Josie's note has the details.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  lengths and widths are written in mm, cm or m and weights in g or kg, often mixed within one row (NW-4410-400 is '0.4 m' long and '45 mm' wide, NW-4410-550 is '55 cm' by '45 mm' weighing '1.446 kg'); reading every number as mm and grams shrinks those lengths and every kg weight (checks: length and width; weight per piece)
+- |-
+  the Price per column says what the price covers: a piece, the PU (10 slides, 25 dowels, 4 legs), 100 pieces (hinges, mounting plates and screws packed in 50, 100, 200 or 500), or 1,000 shelf pins; copying Price USD as the piece price or dividing every price by the PU is wrong (check: price each)
+- |-
+  the rounding rule: lengths and widths to the nearest sixteenth of an inch written as a decimal (1.75, 17.6875), weights to three decimals of a pound and prices to three decimals; two-decimal or unrounded inches miss the length check, and two-decimal weights or prices miss theirs (checks: length and width; weight per piece; price each)
+- |-
+  three articles are marked discontinued and stay out, while 'new 2026' articles stay in (checks: every current article; row count)
+- |-
+  the price list has a merged title row and a note row above the header, and last year's catalog sits in the folder with the old prices (check: price each)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: catalog_us.csv
+  columns:
+  - sku
+  - description
+  - length_in
+  - width_in
+  - weight_lb
+  - pack_qty
+  - price_each
+- type: csv_set_equal
+  name: every current article
+  path: catalog_us.csv
+  column: sku
+  ref: catalog_us.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: catalog_us.csv
+  equals_ref: catalog_us.csv
+- type: csv_values_match
+  name: length and width
+  path: catalog_us.csv
+  ref: catalog_us.csv
+  key: sku
+  columns:
+  - length_in
+  - width_in
+  numeric: true
+  tolerance: 0.001
+  min_accuracy: 1.0
+  must_match_keys:
+  - NW-4410-300
+  - NW-4410-400
+  - NW-4410-550
+  - NW-8008-8
+  - NW-8008-10
+  - NW-5710-01
+  - NW-3430-01
+  - NW-3550-01
+  - NW-9119-1200
+- type: csv_values_match
+  name: weight per piece
+  path: catalog_us.csv
+  ref: catalog_us.csv
+  key: sku
+  columns:
+  - weight_lb
+  numeric: true
+  tolerance: 0.0006
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: price each
+  path: catalog_us.csv
+  ref: catalog_us.csv
+  key: sku
+  columns:
+  - price_each
+  numeric: true
+  tolerance: 0.0006
+  min_accuracy: 1.0
+  must_match_keys:
+  - NW-4410-300
+  - NW-4410-350
+  - NW-4410-400
+  - NW-4410-500
+  - NW-4410-550
+  - NW-2210-01
+  - NW-2230-01
+  - NW-6105-01
+  - NW-8008-8
+  - NW-8008-10
+  - NW-8008-12
+  - NW-5710-01
+  - NW-3430-01
+  - NW-3550-01
+  - NW-5025-01
+- type: csv_values_match
+  name: pack quantity
+  path: catalog_us.csv
+  ref: catalog_us.csv
+  key: sku
+  columns:
+  - pack_qty
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0

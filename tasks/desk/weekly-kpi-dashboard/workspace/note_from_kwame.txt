@@ -1,0 +1,9 @@
+For Tuesday's staff meeting I want one page with the last six full weeks side by side, oldest on the left:
+store sales (net, from the till report), online sales, total sales, online orders, glasses jobs finished,
+staff hours, sales per staff hour (total sales divided by staff hours) and new newsletter subscribers.
+
+Our weeks run Monday to Sunday - that is how the till and the meeting think about it.
+Online only counts orders that were actually paid. A glasses job counts in the week the lab finished it.
+New subscribers are people still subscribed.
+
+Kwame

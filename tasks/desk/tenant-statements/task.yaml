@@ -1,0 +1,110 @@
+id: tenant-statements
+track: desk
+category: extraction
+title: Third-quarter ledger from the landlord statements
+ask: |
+  Can you turn the landlord statements for the studio and the storage unit into a ledger for Q3? Save it as tenant_ledger.csv - Camille's note says how she wants it.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  statement periods overlap: Tidewater's July-August and August-September statements both list every August line, and Wexford's August statement was re-cut to start on 20 July so it repeats the 22 July check payment; each entry once (checks: one row per entry; row count)
+- |-
+  the storage unit was prepaid in June and each month shows a 'Prepaid rent applied' credit beside the rent; those are not payments or credits in the quarter and have no row (checks: one row per entry; row count)
+- |-
+  late fees: Wexford's LF-242289 sits in the activity table and is waived by a credit on the September statement, and Tidewater's late charge is printed only in a 'Fees assessed this period' box under the activity table (checks: one row per entry; entry types; amounts)
+- |-
+  Wexford prints payments and credits in parentheses with a running balance, while Tidewater prints separate Charges and Credits columns with both positive (check: amounts)
+- |-
+  the July statement opens with a balance forward and a 29 June payment that falls before the quarter (checks: one row per entry; row count)
+- 'Wexford''s September statement is an image-only scan (checks: descriptions; amounts)'
+checks:
+- type: csv_columns
+  name: requested columns
+  path: tenant_ledger.csv
+  columns:
+  - entry_ref
+  - unit
+  - entry_date
+  - entry_type
+  - description
+  - amount
+- type: csv_set_equal
+  name: one row per entry
+  path: tenant_ledger.csv
+  column: entry_ref
+  ref: tenant_ledger.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: tenant_ledger.csv
+  equals_ref: tenant_ledger.csv
+- type: csv_values_match
+  name: unit and date
+  path: tenant_ledger.csv
+  ref: tenant_ledger.csv
+  key: entry_ref
+  columns:
+  - unit
+  - entry_date
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: entry types
+  path: tenant_ledger.csv
+  ref: tenant_ledger.csv
+  key: entry_ref
+  columns:
+  - entry_type
+  min_accuracy: 1.0
+  must_match_keys:
+  - PM-249558
+  - PM-248268
+  - LF-242289
+  - PM-241553
+  - PM-248725
+  - PM-245081
+  - CR-241618
+  - PM-245409
+  - '5537815'
+  - '5537253'
+- type: csv_values_match
+  name: descriptions
+  path: tenant_ledger.csv
+  ref: tenant_ledger.csv
+  key: entry_ref
+  columns:
+  - description
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - CH-249861
+  - CH-242407
+  - PM-245081
+  - CR-241618
+  - CH-241208
+  - PM-245409
+- type: csv_values_match
+  name: amounts
+  path: tenant_ledger.csv
+  ref: tenant_ledger.csv
+  key: entry_ref
+  columns:
+  - amount
+  must_match_keys:
+  - PM-249558
+  - PM-248268
+  - PM-241553
+  - PM-248725
+  - PM-245081
+  - CR-241618
+  - PM-245409
+  - '5537253'
+  - '5537815'
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

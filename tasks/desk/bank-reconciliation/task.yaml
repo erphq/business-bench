@@ -1,0 +1,44 @@
+id: bank-reconciliation
+track: desk
+category: bookkeeping
+title: August bank reconciliation for the checking account
+ask: |
+  Can you do the August bank reconciliation for our checking account? The bank export, the ledger and Alma's July rec are in the folder, and Dean's email says what he wants. Save it as reconciliation.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  check 5290 was outstanding on July's reconciliation and still has not cleared; it is not in August's ledger, so comparing only August's ledger with August's statement drops it from the outstanding list (checks: outstanding checks and deposits in transit totals; adjusted balance; both sides tie and items listed)
+- |-
+  July's other two outstanding checks and its deposit in transit clear on the August statement; they are old book entries, not bank items to book again (checks: adjusted balance; both sides tie and items listed)
+- |-
+  two customer receipts the books record separately on 19 August reached the bank as one deposit the next day; matching one to one by amount leaves both in transit and the combined deposit unexplained (check: outstanding checks and deposits in transit totals)
+- |-
+  check 5305 is in the books at 2,593.00 but cleared the bank at 5,293.00 (two digits swapped); Dean's email says the bank is right, so the books take a 2,700.00 correction and without it the reconciliation is off by that amount (checks: adjusted balance; both sides tie and items listed)
+- |-
+  the monthly fee, a bounced customer check, its returned-item fee and the interest credit are only on the statement and belong on the book side (checks: adjusted balance; both sides tie and items listed)
+- |-
+  the bank export has separate debit and credit columns, a running balance and an ending-balance line under a preamble; the ledger has a beginning-balance row and a total row that a plain column sum double counts (checks: adjusted balance; both sides tie and items listed)
+checks:
+- type: file_exists
+  name: reconciliation.xlsx exists
+  path: reconciliation.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: reconciliation.xlsx
+  min_count: 4
+- type: xlsx_no_errors
+  name: no error cells
+  path: reconciliation.xlsx
+- type: custom
+  name: outstanding checks and deposits in transit totals
+  module: check_totals.py
+- type: xlsx_value_present
+  name: adjusted balance
+  path: reconciliation.xlsx
+  expected: 20184.41
+  rel_tol: 4.95e-07
+  near_text: adjusted
+- type: custom
+  name: both sides tie and items listed
+  module: check.py

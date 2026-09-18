@@ -1,0 +1,14 @@
+Payroll for Aug 30 - Sep 12
+
+All six crew sheets for the pay period are in this folder. I key payroll from one table: one line per person
+per payroll week, with employee, week_ending (the Saturday), regular_hours, overtime_hours and total_hours.
+
+- Payroll weeks run Sunday to Saturday. Overtime is anything over 40 hours in a payroll week, counting every
+  crew the person worked on that week.
+- Pay is time worked less unpaid lunch. Cynthia writes the lunch actually taken in its own column (0 means they worked through).
+  Rahul's sheets are start and finish only, so take our standard 30 minute lunch off any shift
+  longer than 6 hours. William's hours already have lunch taken off.
+- William's sheets run Monday to Sunday because of the weekend irrigation starts. A Sunday on those sheets belongs to
+  the payroll week that starts that day; the last Sunday on the second one is next pay period, leave it for then.
+
+Rachel

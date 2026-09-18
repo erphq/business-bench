@@ -1,0 +1,14 @@
+Menu review for August
+
+I want to see every menu item for August with how many we sold, what it brought in, what it cost us, and the margin in dollars - ranked by how many we sold and ranked by margin, so I can see what to push and what to cut.
+
+How to read the POS export:
+- Modifiers print as their own lines (the ones starting with +). They are not menu items. What we charge for them and what they cost belong to the item they were added to - an oat milk latte is a latte.
+- Sales are what the customer actually paid, the Net Price. Staff meals are half price.
+- Comps are on the house: the food still went out, so count the item and its cost, but it earned nothing.
+- Voided lines were rung in by mistake and never made. Ignore them completely.
+- We renamed Avocado Toast to Smashed Avocado Toast on August 15 - same dish. Report it once under the new name; the cost sheet only has the new name.
+
+Plate costs are in the recipe sheet Rosa updated.
+
+- Marcus

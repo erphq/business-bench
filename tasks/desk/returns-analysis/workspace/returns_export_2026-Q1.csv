@@ -1,0 +1,44 @@
+﻿Returns report - Granite Peak Outfitters
+Exported 04/01/2026 by RMA module
+RMA,Return Date,Order,SKU,Product,Qty,Type,Reason,Amount
+RMA-6852,01/04/2026,ORD-29794,HL-300,Headlamp 300lm  ,1,refund,torn seam,$45.00
+RMA-6836,01/06/2026,ORD-29698,HL-300,Headlamp 300lm,1,Exchange,changed mind,$45.00
+RMA-6880,01/09/2026,ORD-29308,HL-300,Headlamp 300lm,1,Exchange,WRONG ITEM in the box,$45.00
+RMA-6801,01/10/2026,ORD-29385,HL-300,Headlamp  300lm,1,Store Credit,Ordered by mistake,$45.00
+RMA-6861,01/12/2026,ORD-29026,CS-01,Camp Stove,1,EXCHANGE,arrived broken,$89.00
+RMA-6841,01/13/2026,ORD-29719,DB-20,Dry Bag 20L,1,Store credit,not as described,$29.00
+RMA-6871,01/15/2026,ORD-29330,TJ-M-BLU,Trail Jacket M,1,store credit,no longer needed,$129.00
+RMA-6826,01/20/2026,ORD-29118,MC-01,Map Case,1,Store credit,Not what I expected,$14.00
+RMA-6869,01/24/2026,ORD-29267,TJ-M-BLU,Trail Jacket M,1,store credit,"DAMAGED box, item scratched",$129.00
+RMA-6875,01/24/2026,ORD-29419,CS-01,Camp Stove,1,Exchange,changed mind,$89.00
+RMA-6815,01/26/2026,ORD-29615,MC-01,Map Case,1,exchange,sent the wrong color,$14.00
+RMA-6832,01/26/2026,ORD-29599,DB-20,Dry Bag 20L,1,Refund ,Not what I expected,$29.00
+RMA-6865,01/26/2026,ORD-29109,WS-3PK,Wool Sock 3pk,1,exchange,didnt fit,$24.00
+RMA-6812,01/27/2026,ORD-29196,WB-1L,Water Bottle 1L,1,refund,Changed my mind,$32.00
+RMA-6834,01/29/2026,ORD-29452,TJ-L-BLU,Trail Jacket L,1,Store credit,torn seam,$129.00
+RMA-6844,01/30/2026,ORD-29884,WS-3PK,Wool Sock 3pk,1,Store Credit,WRONG ITEM in the box,$24.00
+RMA-6824,01/31/2026,ORD-29877,WS-3PK,Wool Sock 3pk,1,Refund ,Ordered by mistake,$24.00
+RMA-6842,02/01/2026,ORD-29977,TJ-L-BLU,Trail Jacket L,1,Exch,wrong item shipped,$129.00
+RMA-6859,02/09/2026,ORD-29242,TJ-L-BLU,Trail Jacket L,1,Store credit,Ordered by mistake,$129.00
+RMA-6822,02/13/2026,ORD-29846,HL-300,Headlamp 300lm,1,exchange,"Too small, need a larger one",$45.00
+RMA-6872,02/13/2026,ORD-29255,TP-PR,Trekking  Pole pair,1,EXCHANGE,zipper broken,$79.00
+RMA-6802,02/20/2026,ORD-29790,TP-PR,TREKKING POLE PAIR,1,store credit,WRONG ITEM in the box,$79.00
+RMA-6831,02/21/2026,ORD-29078,TJ-M-BLU,Trail Jacket M,1,Exch,cracked lid,$129.00
+RMA-6818,02/27/2026,ORD-29845,WB-1L,water bottle 1l,1,refund,got the wrong size sent,$32.00
+RMA-6851,02/28/2026,ORD-29260,TJ-M-BLU,Trail Jacket M,1,Store credit,lighter than described,$129.00
+RMA-6821,03/01/2026,ORD-29855,DB-20,Dry Bag 20L,1,Store credit,TOO SMALL,$29.00
+RMA-6806,03/02/2026,ORD-29099,WB-1L,WATER BOTTLE 1L,1,Store credit,changed mind,$32.00
+RMA-6867,03/05/2026,ORD-29135,DB-20,Dry Bag 20L,1,Store credit,Not what I expected,$29.00
+RMA-6838,03/06/2026,ORD-29030,WB-1L,Water Bottle 1L,1,store credit,WRONG ITEM in the box,$32.00
+RMA-6808,03/07/2026,ORD-29206,DB-20,Dry Bag 20L,1,refund,arrived broken,$29.00
+RMA-6855,03/09/2026,ORD-29997,WB-1L,Water Bottle 1L,1,REFUND,found it cheaper,$32.00
+RMA-6876,03/14/2026,ORD-29015,DB-20,DRY BAG 20L,1,store credit,zipper broken,$29.00
+RMA-6805,03/15/2026,ORD-29631,WS-3PK,WOOL SOCK 3PK,1,EXCHANGE,didnt fit,$24.00
+RMA-6849,03/16/2026,ORD-29042,HL-300,Headlamp 300lm,1,Store Credit,got the wrong size sent,$45.00
+RMA-6856,03/17/2026,ORD-29727,MC-01,Map Case,1,EXCHANGE,got the wrong size sent,$14.00
+RMA-6810,03/19/2026,ORD-29908,TP-PR,Trekking Pole pair,1,Store Credit,Changed my mind,$79.00
+RMA-6846,03/22/2026,ORD-29286,WS-3PK,Wool Sock 3pk,1,REFUND,sleeves too short - fit,$24.00
+RMA-6863,03/23/2026,ORD-29479,HL-300,  Headlamp 300lm,1,store credit,WRONG ITEM in the box,$45.00
+RMA-6817,03/24/2026,ORD-29787,TJ-M-BLU,Trail Jacket M,1,Refund,not as described,$129.00
+RMA-6879,03/26/2026,ORD-29652,DB-20,DRY BAG 20L,1,Store Credit,zipper broken,$29.00
+RMA-6828,03/30/2026,ORD-29205,TJ-L-BLU,Trail Jacket L,1,EXCHANGE,lighter than described,$129.00

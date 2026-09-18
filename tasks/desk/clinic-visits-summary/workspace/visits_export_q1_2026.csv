@@ -1,0 +1,816 @@
+﻿Riverbend Physio - appointment export
+01/01/2026 to 03/31/2026 (both schedulers)
+Appt ID,Date,Provider,Patient ID,Visit Type,Status,Duration (min)
+A-70638,Jan 01 2026,Jennifer Hernandez,PT-85955,Follow-up,Completed,30
+A-70434,Jan 01 2026,Matthew Alvarez,PT-89418,Re-evaluation,Completed,45
+A-70414,2026-01-01,Matthew Alvarez,PT-38251,Follow-up,Completed,45
+A-70457,01/01/2026,Matthew Alvarez,PT-79340,Initial evaluation,Cancelled by patient,45
+A-70613,01/01/2026,Jennifer Hernandez,PT-62376,Re-evaluation,Completed,45
+,2026-01-01,Jennifer Hernandez,PT-43372,Walk-in,Completed,45
+A-70022,01/01/2026,S. Mitchell,PT-17951,Follow-up,Completed,30
+A-70003,2026-01-01,"Mitchell, Sandra",PT-63433,Re-evaluation,Completed,60
+A-70226,01/01/2026,Timothy Taylor,PT-89602,Follow-up,Completed,45
+,Jan 01 2026,"Timothy Taylor, DPT",PT-82986,Walk-in,Arrived,45
+A-70274,01/02/2026,Timothy Taylor,PT-20635,Re-evaluation,Cancelled by patient,60
+A-70409,01/02/2026,Matthew Alvarez,PT-52422,Follow-up,Completed,45
+A-70667,01/02/2026,Jennifer Hernandez,PT-52432,Follow-up,Rescheduled,30
+A-70633,2026-01-02,Jennifer Hernandez,PT-53671,Follow-up,Completed,60
+A-70219,2026-01-02,"Timothy Taylor, DPT",PT-36760,Initial evaluation,Completed,60
+A-70268,01/02/2026,"Timothy Taylor, DPT",PT-39249,Re-evaluation,NOSHOW,60
+A-70053,Jan 02 2026,SANDRA MITCHELL,PT-33289,Re-evaluation,Cancelled,45
+A-70610,01/02/2026,Jennifer Hernandez,PT-48255,Initial evaluation,Completed,45
+A-70217,01/02/2026,"Timothy Taylor, DPT",PT-34381,Follow-up,Completed,45
+A-70028,01/02/2026,"Mitchell, Sandra",PT-24179,Initial evaluation,Completed,45
+A-70643,01/02/2026,Jennifer Hernandez,PT-47176,Follow-up,Completed,30
+A-70047,Jan 02 2026,S. Mitchell,PT-95674,Follow-up,No Show,45
+A-70669,2026-01-03,Jennifer Hernandez,PT-84931,Follow-up,Rescheduled,60
+A-70449,Jan 03 2026,Matthew Alvarez,PT-34561,Follow-up,No Show,60
+A-70052,01/03/2026,SANDRA MITCHELL,PT-54165,Follow-up,Cancelled by patient,45
+A-70048,2026-01-03,Sandra Mitchell,PT-88608,Initial evaluation,No-show,45
+A-70653,Jan 03 2026,Jennifer Hernandez,PT-94493,Follow-up,NOSHOW,30
+A-70046,01/03/2026,S. Mitchell,PT-56867,Re-evaluation,No-show,30
+A-70230,Jan 03 2026,"Timothy Taylor, DPT",PT-95412,Follow-up,Completed,45
+A-70239,Jan 03 2026,Timothy Taylor,PT-80496,Follow-up,Completed,60
+,01/03/2026,"Timothy Taylor, DPT",PT-70664,Walk-in,Completed,30
+A-70432,2026-01-03,Matthew Alvarez,PT-31434,Follow-up,Completed,45
+A-70213,2026-01-03,Timothy Taylor,PT-15489,Initial evaluation,Completed,60
+,2026-01-03,SANDRA MITCHELL,PT-45505,Walk-in,Arrived,60
+A-70024,2026-01-03,S. Mitchell,PT-39357,Re-evaluation,Completed,60
+A-70426,2026-01-03,Matthew Alvarez,PT-46826,Follow-up,Completed,45
+A-70045,2026-01-03,"Mitchell, Sandra",PT-70258,Follow-up,No Show,45
+A-70280,01/03/2026,Timothy Taylor,PT-79345,Follow-up,Rescheduled,45
+A-70242,Jan 04 2026,"Timothy Taylor, DPT",PT-29429,Follow-up,Completed,45
+A-70019,01/04/2026,SANDRA MITCHELL,PT-76181,Follow-up,Completed,60
+A-70215,Jan 05 2026,Timothy Taylor,PT-43256,Follow-up,Completed,45
+A-70454,01/05/2026,Matthew Alvarez,PT-59221,Follow-up,Cancelled - clinic,45
+A-70267,2026-01-05,"Timothy Taylor, DPT",PT-11551,Follow-up,No-show,60
+A-70408,2026-01-05,Matthew Alvarez,PT-81466,Follow-up,Completed,60
+A-70017,Jan 05 2026,S. Mitchell,PT-68465,Re-evaluation,Completed,60
+A-70008,Jan 05 2026,S. Mitchell,PT-68344,Re-evaluation,Completed,45
+A-70007,01/05/2026,"Mitchell, Sandra",PT-14910,Re-evaluation,Completed,60
+A-70656,Jan 06 2026,Jennifer Hernandez,PT-99515,Initial evaluation,No show,45
+A-70431,Jan 06 2026,Matthew Alvarez,PT-29006,Follow-up,Completed,45
+A-70284,Jan 06 2026,"Timothy Taylor, DPT",PT-12576,Follow-up,Rescheduled,30
+A-70455,Jan 06 2026,Matthew Alvarez,PT-76905,Follow-up,Cancelled - clinic,45
+A-70265,01/06/2026,Timothy Taylor,PT-35152,Follow-up,No Show,60
+A-70224,Jan 06 2026,"Timothy Taylor, DPT",PT-85271,Initial evaluation,Completed,45
+,01/07/2026,"Mitchell, Sandra",PT-79328,Walk-in,Arrived,30
+A-70622,01/07/2026,Jennifer Hernandez,PT-34731,Re-evaluation,Completed,60
+,01/07/2026,Timothy Taylor,PT-30173,Walk-in,Arrived,30
+A-70211,01/07/2026,Timothy Taylor,PT-67019,Follow-up,Completed,60
+A-70625,01/07/2026,Jennifer Hernandez,PT-73585,Initial evaluation,Completed,30
+,2026-01-07,Jennifer Hernandez,PT-27706,Walk-in,Completed,60
+A-70256,01/07/2026,"Timothy Taylor, DPT",PT-52399,Follow-up,Completed,30
+A-70452,Jan 08 2026,Matthew Alvarez,PT-75717,Follow-up,NOSHOW,45
+,01/08/2026,Sandra Mitchell,PT-76154,Walk-in,Completed,60
+A-70281,Jan 08 2026,Timothy Taylor,PT-50675,Follow-up,Rescheduled,45
+,Jan 08 2026,Timothy Taylor,PT-57447,Walk-in,Completed,60
+A-70013,01/08/2026,"Mitchell, Sandra",PT-65496,Initial evaluation,Completed,45
+A-70458,Jan 08 2026,Matthew Alvarez,PT-52734,Follow-up,Canceled,60
+A-70277,01/08/2026,"Timothy Taylor, DPT",PT-72740,Initial evaluation,Cancelled - clinic,30
+A-70435,2026-01-08,Matthew Alvarez,PT-64762,Follow-up,Completed,45
+A-70440,Jan 09 2026,Matthew Alvarez,PT-13268,Re-evaluation,Completed,45
+,01/09/2026,Matthew Alvarez,PT-95315,Walk-in,Arrived,45
+A-70637,01/09/2026,Jennifer Hernandez,PT-93635,Re-evaluation,Completed,45
+A-70255,2026-01-09,Timothy Taylor,PT-16083,Follow-up,Completed,30
+A-70429,2026-01-09,Matthew Alvarez,PT-23815,Follow-up,Completed,45
+A-70619,01/09/2026,Jennifer Hernandez,PT-17585,Initial evaluation,Completed,45
+A-70275,Jan 09 2026,Timothy Taylor,PT-76745,Follow-up,Cancelled - clinic,45
+A-70635,Jan 10 2026,Jennifer Hernandez,PT-25847,Follow-up,Completed,60
+A-70421,01/10/2026,Matthew Alvarez,PT-16790,Follow-up,Completed,45
+A-70212,Jan 10 2026,Timothy Taylor,PT-40100,Follow-up,Completed,45
+A-70244,01/10/2026,"Timothy Taylor, DPT",PT-83380,Initial evaluation,Completed,30
+A-70263,Jan 10 2026,Timothy Taylor,PT-93927,Re-evaluation,No show,45
+A-70227,Jan 10 2026,Timothy Taylor,PT-94133,Follow-up,Completed,60
+A-70054,2026-01-11,"Mitchell, Sandra",PT-75588,Follow-up,Cancelled by patient,60
+A-70631,01/11/2026,Jennifer Hernandez,PT-17853,Follow-up,Completed,45
+A-70010,01/11/2026,"Mitchell, Sandra",PT-76010,Follow-up,Completed,45
+A-70460,01/11/2026,Matthew Alvarez,PT-48622,Follow-up,Cancelled by patient,45
+A-70634,01/11/2026,Jennifer Hernandez,PT-29870,Follow-up,Completed,45
+A-70231,2026-01-11,Timothy Taylor,PT-28372,Initial evaluation,Completed,45
+A-70439,01/12/2026,Matthew Alvarez,PT-36452,Re-evaluation,Completed,45
+A-70617,Jan 12 2026,Jennifer Hernandez,PT-75181,Follow-up,Completed,30
+A-70646,01/12/2026,Jennifer Hernandez,PT-56824,Follow-up,Completed,60
+A-70035,Jan 12 2026,"Mitchell, Sandra",PT-50893,Re-evaluation,Completed,45
+A-70420,2026-01-12,Matthew Alvarez,PT-16615,Follow-up,Completed,45
+,Jan 12 2026,Matthew Alvarez,PT-18024,Walk-in,Arrived,60
+A-70222,2026-01-12,"Timothy Taylor, DPT",PT-94372,Initial evaluation,Completed,30
+A-70011,Jan 12 2026,SANDRA MITCHELL,PT-96121,Re-evaluation,Completed,30
+A-70665,Jan 12 2026,Jennifer Hernandez,PT-32943,Follow-up,Cancelled,60
+A-70461,Jan 12 2026,Matthew Alvarez,PT-36016,Initial evaluation,Cancelled,60
+A-70658,01/13/2026,Jennifer Hernandez,PT-10655,Follow-up,Canceled,45
+A-70412,01/13/2026,Matthew Alvarez,PT-58844,Follow-up,Completed,45
+A-70004,01/13/2026,S. Mitchell,PT-22735,Follow-up,Completed,30
+A-70660,2026-01-13,Jennifer Hernandez,PT-79510,Initial evaluation,Cancelled - clinic,45
+A-70051,2026-01-13,Sandra Mitchell,PT-18536,Follow-up,Canceled,30
+A-70273,2026-01-13,Timothy Taylor,PT-77557,Initial evaluation,Cancelled - clinic,45
+A-70251,Jan 13 2026,Timothy Taylor,PT-61393,Follow-up,Completed,30
+A-70623,Jan 13 2026,Jennifer Hernandez,PT-57369,Follow-up,Completed,30
+A-70043,01/13/2026,"Mitchell, Sandra",PT-84284,Follow-up,No Show,60
+A-70641,Jan 13 2026,Jennifer Hernandez,PT-64595,Follow-up,Completed,30
+A-70056,Jan 14 2026,S. Mitchell,PT-27698,Follow-up,Canceled,60
+A-70607,01/14/2026,Jennifer Hernandez,PT-91670,Follow-up,Completed,30
+A-70223,01/14/2026,Timothy Taylor,PT-15180,Follow-up,Completed,45
+,Jan 14 2026,Matthew Alvarez,PT-21987,Walk-in,Completed,60
+A-70413,Jan 14 2026,Matthew Alvarez,PT-64888,Follow-up,Completed,60
+A-70283,01/14/2026,Timothy Taylor,PT-44559,Follow-up,Rescheduled,45
+A-70250,01/14/2026,Timothy Taylor,PT-20417,Initial evaluation,Completed,45
+A-70033,2026-01-14,"Mitchell, Sandra",PT-77669,Follow-up,Completed,45
+A-70663,2026-01-14,Jennifer Hernandez,PT-66301,Follow-up,Cancelled,45
+A-70237,2026-01-14,"Timothy Taylor, DPT",PT-98970,Follow-up,Completed,45
+A-70627,2026-01-15,Jennifer Hernandez,PT-21759,Follow-up,Completed,45
+A-70253,01/15/2026,Timothy Taylor,PT-13803,Follow-up,Completed,45
+A-70425,Jan 15 2026,Matthew Alvarez,PT-45740,Follow-up,Completed,45
+,01/15/2026,Matthew Alvarez,PT-62243,Walk-in,Arrived,45
+A-70618,2026-01-15,Jennifer Hernandez,PT-82398,Initial evaluation,Completed,60
+A-70026,Jan 15 2026,Sandra Mitchell,PT-77434,Follow-up,Completed,30
+A-70624,2026-01-15,Jennifer Hernandez,PT-91174,Follow-up,Completed,45
+A-70027,2026-01-16,S. Mitchell,PT-69681,Follow-up,Completed,45
+A-70278,Jan 16 2026,Timothy Taylor,PT-61827,Initial evaluation,Cancelled,60
+A-70245,Jan 16 2026,Timothy Taylor,PT-69236,Follow-up,Completed,45
+A-70644,Jan 16 2026,Jennifer Hernandez,PT-94674,Follow-up,Completed,45
+A-70424,01/16/2026,Matthew Alvarez,PT-97780,Follow-up,Completed,45
+,Jan 17 2026,Sandra Mitchell,PT-46350,Walk-in,Arrived,60
+A-70415,01/17/2026,Matthew Alvarez,PT-17312,Initial evaluation,Completed,45
+A-70216,2026-01-17,"Timothy Taylor, DPT",PT-19848,Follow-up,Completed,30
+A-70220,01/17/2026,Timothy Taylor,PT-86663,Follow-up,Completed,60
+A-70279,2026-01-17,Timothy Taylor,PT-38080,Initial evaluation,Rescheduled,30
+A-70423,2026-01-17,Matthew Alvarez,PT-66850,Initial evaluation,Completed,30
+A-70616,01/17/2026,Jennifer Hernandez,PT-79205,Re-evaluation,Completed,60
+A-70061,01/17/2026,"Mitchell, Sandra",PT-77090,Re-evaluation,Rescheduled,45
+A-70248,Jan 17 2026,Timothy Taylor,PT-99751,Re-evaluation,Completed,45
+A-70232,01/18/2026,Timothy Taylor,PT-14334,Follow-up,Completed,45
+A-70419,Jan 18 2026,Matthew Alvarez,PT-60065,Re-evaluation,Completed,60
+A-70272,Jan 18 2026,Timothy Taylor,PT-41658,Follow-up,Cancelled,45
+A-70636,2026-01-18,Jennifer Hernandez,PT-16906,Re-evaluation,Completed,60
+A-70464,Jan 18 2026,Matthew Alvarez,PT-91181,Follow-up,Rescheduled,60
+A-70620,Jan 18 2026,Jennifer Hernandez,PT-24435,Initial evaluation,Completed,60
+A-70407,Jan 18 2026,Matthew Alvarez,PT-49941,Initial evaluation,Completed,45
+A-70668,Jan 18 2026,Jennifer Hernandez,PT-96641,Re-evaluation,Rescheduled,45
+A-70221,Jan 18 2026,Timothy Taylor,PT-87886,Initial evaluation,Completed,45
+A-70018,2026-01-19,"Mitchell, Sandra",PT-22466,Follow-up,Completed,30
+A-70463,01/19/2026,Matthew Alvarez,PT-39712,Re-evaluation,Rescheduled,30
+A-70002,Jan 19 2026,S. Mitchell,PT-21739,Follow-up,Completed,60
+A-70410,Jan 19 2026,Matthew Alvarez,PT-65900,Initial evaluation,Completed,45
+A-70062,Jan 19 2026,Sandra Mitchell,PT-61204,Re-evaluation,Rescheduled,45
+A-70433,01/20/2026,Matthew Alvarez,PT-33518,Follow-up,Completed,60
+A-70661,01/20/2026,Jennifer Hernandez,PT-71151,Follow-up,Cancelled - clinic,45
+A-70282,2026-01-20,"Timothy Taylor, DPT",PT-21638,Follow-up,Rescheduled,45
+A-70228,2026-01-20,"Timothy Taylor, DPT",PT-18615,Follow-up,Completed,60
+,01/20/2026,Jennifer Hernandez,PT-88169,Walk-in,Arrived,60
+A-70050,Jan 20 2026,S. Mitchell,PT-30937,Follow-up,Cancelled by patient,45
+A-70020,Jan 20 2026,SANDRA MITCHELL,PT-12220,Follow-up,Completed,45
+A-70652,01/20/2026,Jennifer Hernandez,PT-98011,Re-evaluation,No-show,60
+A-70662,Jan 20 2026,Jennifer Hernandez,PT-43213,Follow-up,Cancelled by patient,60
+A-70651,2026-01-20,Jennifer Hernandez,PT-90754,Re-evaluation,No Show,30
+A-70036,2026-01-20,S. Mitchell,PT-56633,Re-evaluation,Completed,45
+A-70427,01/20/2026,Matthew Alvarez,PT-29768,Follow-up,Completed,30
+A-70411,2026-01-20,Matthew Alvarez,PT-33880,Follow-up,Completed,60
+,2026-01-20,SANDRA MITCHELL,PT-48226,Walk-in,Arrived,45
+A-70437,Jan 20 2026,Matthew Alvarez,PT-20332,Follow-up,Completed,45
+A-70654,2026-01-20,Jennifer Hernandez,PT-85887,Follow-up,No Show,30
+,Jan 21 2026,Timothy Taylor,PT-61005,Walk-in,Completed,45
+A-70453,2026-01-21,Matthew Alvarez,PT-81840,Follow-up,No show,45
+A-70218,Jan 21 2026,"Timothy Taylor, DPT",PT-56208,Re-evaluation,Completed,45
+A-70234,2026-01-21,"Timothy Taylor, DPT",PT-38690,Follow-up,Completed,45
+A-70001,01/21/2026,SANDRA MITCHELL,PT-73884,Follow-up,Completed,60
+A-70612,2026-01-21,Jennifer Hernandez,PT-22267,Re-evaluation,Completed,60
+A-70640,01/21/2026,Jennifer Hernandez,PT-89893,Follow-up,Completed,45
+A-70270,2026-01-21,"Timothy Taylor, DPT",PT-18459,Initial evaluation,NOSHOW,30
+A-70609,2026-01-22,Jennifer Hernandez,PT-35588,Re-evaluation,Completed,45
+A-70441,2026-01-22,Matthew Alvarez,PT-14149,Follow-up,Completed,45
+A-70060,2026-01-22,"Mitchell, Sandra",PT-26762,Follow-up,Rescheduled,45
+A-70271,01/22/2026,"Timothy Taylor, DPT",PT-32402,Follow-up,Cancelled,30
+A-70247,01/22/2026,Timothy Taylor,PT-43907,Follow-up,Completed,45
+A-70021,2026-01-22,S. Mitchell,PT-56064,Follow-up,Completed,45
+A-70243,2026-01-23,"Timothy Taylor, DPT",PT-30352,Follow-up,Completed,45
+A-70240,2026-01-23,Timothy Taylor,PT-79858,Follow-up,Completed,45
+A-70639,2026-01-23,Jennifer Hernandez,PT-61679,Follow-up,Completed,45
+A-70235,01/23/2026,Timothy Taylor,PT-18555,Follow-up,Completed,45
+A-70059,Jan 23 2026,S. Mitchell,PT-58044,Follow-up,Rescheduled,45
+A-70606,2026-01-23,Jennifer Hernandez,PT-89189,Follow-up,Completed,60
+A-70055,01/23/2026,S. Mitchell,PT-27387,Follow-up,Cancelled,45
+A-70438,2026-01-23,Matthew Alvarez,PT-64528,Follow-up,Completed,45
+A-70621,2026-01-23,Jennifer Hernandez,PT-85573,Initial evaluation,Completed,60
+A-70006,2026-01-23,S. Mitchell,PT-95160,Follow-up,Completed,45
+A-70246,2026-01-23,Timothy Taylor,PT-57846,Follow-up,Completed,60
+A-70029,Jan 23 2026,SANDRA MITCHELL,PT-66678,Follow-up,Completed,30
+A-70032,Jan 24 2026,S. Mitchell,PT-39316,Follow-up,Completed,45
+A-70249,2026-01-24,Timothy Taylor,PT-99133,Follow-up,Completed,45
+A-70659,Jan 24 2026,Jennifer Hernandez,PT-29577,Follow-up,Cancelled,60
+A-70264,2026-01-24,"Timothy Taylor, DPT",PT-83369,Initial evaluation,No Show,45
+A-70238,01/24/2026,Timothy Taylor,PT-91091,Follow-up,Completed,45
+A-70030,2026-01-24,Sandra Mitchell,PT-40072,Re-evaluation,Completed,45
+A-70459,2026-01-24,Matthew Alvarez,PT-44453,Follow-up,Canceled,45
+A-70664,01/24/2026,Jennifer Hernandez,PT-15082,Follow-up,Cancelled - clinic,60
+A-70655,01/24/2026,Jennifer Hernandez,PT-91767,Follow-up,No show,45
+A-70031,01/24/2026,"Mitchell, Sandra",PT-47952,Initial evaluation,Completed,45
+A-70418,01/24/2026,Matthew Alvarez,PT-34035,Follow-up,Completed,45
+A-70049,01/24/2026,S. Mitchell,PT-18665,Follow-up,NOSHOW,30
+A-70269,Jan 25 2026,"Timothy Taylor, DPT",PT-79759,Follow-up,NOSHOW,60
+A-70276,2026-01-25,"Timothy Taylor, DPT",PT-85397,Initial evaluation,Cancelled - clinic,45
+A-70642,2026-01-25,Jennifer Hernandez,PT-94565,Re-evaluation,Completed,45
+,01/25/2026,Matthew Alvarez,PT-31268,Walk-in,Completed,45
+A-70645,2026-01-26,Jennifer Hernandez,PT-31456,Initial evaluation,Completed,45
+A-70428,Jan 26 2026,Matthew Alvarez,PT-87815,Follow-up,Completed,45
+A-70266,Jan 26 2026,"Timothy Taylor, DPT",PT-28987,Follow-up,No show,30
+A-70025,01/26/2026,S. Mitchell,PT-25993,Follow-up,Completed,30
+A-70044,Jan 26 2026,SANDRA MITCHELL,PT-89991,Initial evaluation,No-show,45
+A-70016,01/26/2026,S. Mitchell,PT-32302,Follow-up,Completed,60
+A-70632,Jan 26 2026,Jennifer Hernandez,PT-27782,Follow-up,Completed,45
+,Jan 27 2026,Jennifer Hernandez,PT-87105,Walk-in,Arrived,60
+A-70014,Jan 27 2026,"Mitchell, Sandra",PT-96172,Follow-up,Completed,60
+A-70450,2026-01-27,Matthew Alvarez,PT-83087,Initial evaluation,No Show,60
+A-70005,Jan 27 2026,"Mitchell, Sandra",PT-96618,Initial evaluation,Completed,30
+A-70233,Jan 27 2026,Timothy Taylor,PT-70648,Re-evaluation,Completed,45
+A-70417,2026-01-27,Matthew Alvarez,PT-67090,Re-evaluation,Completed,60
+A-70630,2026-01-27,Jennifer Hernandez,PT-27049,Follow-up,Completed,30
+A-70042,2026-01-27,S. Mitchell,PT-75096,Follow-up,No-show,30
+,2026-01-27,Timothy Taylor,PT-48235,Walk-in,Completed,30
+A-70657,2026-01-27,Jennifer Hernandez,PT-84747,Re-evaluation,No Show,45
+A-70611,Jan 27 2026,Jennifer Hernandez,PT-73921,Initial evaluation,Completed,45
+A-70451,01/28/2026,Matthew Alvarez,PT-29302,Follow-up,No-show,60
+A-70422,Jan 28 2026,Matthew Alvarez,PT-66938,Initial evaluation,Completed,45
+A-70614,Jan 28 2026,Jennifer Hernandez,PT-13675,Follow-up,Completed,30
+A-70012,2026-01-28,Sandra Mitchell,PT-41966,Follow-up,Completed,30
+A-70023,Jan 28 2026,S. Mitchell,PT-54239,Follow-up,Completed,60
+A-70009,2026-01-28,S. Mitchell,PT-30748,Follow-up,Completed,30
+,Jan 28 2026,Matthew Alvarez,PT-34215,Walk-in,Completed,45
+A-70236,Jan 29 2026,"Timothy Taylor, DPT",PT-62352,Initial evaluation,Completed,45
+A-70229,01/29/2026,"Timothy Taylor, DPT",PT-80403,Follow-up,Completed,45
+A-70629,Jan 29 2026,Jennifer Hernandez,PT-93956,Re-evaluation,Completed,30
+A-70252,2026-01-29,"Timothy Taylor, DPT",PT-42582,Initial evaluation,Completed,60
+A-70436,01/29/2026,Matthew Alvarez,PT-27083,Follow-up,Completed,30
+A-70615,2026-01-29,Jennifer Hernandez,PT-20300,Follow-up,Completed,30
+A-70057,2026-01-29,S. Mitchell,PT-86750,Follow-up,Rescheduled,45
+A-70241,01/29/2026,"Timothy Taylor, DPT",PT-12440,Follow-up,Completed,60
+A-70628,01/29/2026,Jennifer Hernandez,PT-95879,Follow-up,Completed,60
+A-70626,Jan 29 2026,Jennifer Hernandez,PT-78950,Initial evaluation,Completed,30
+A-70015,2026-01-30,"Mitchell, Sandra",PT-31060,Follow-up,Completed,45
+A-70416,Jan 30 2026,Matthew Alvarez,PT-37899,Follow-up,Completed,60
+A-70666,2026-01-30,Jennifer Hernandez,PT-79561,Re-evaluation,Cancelled by patient,45
+A-70254,Jan 30 2026,Timothy Taylor,PT-71679,Follow-up,Completed,45
+A-70225,2026-01-30,Timothy Taylor,PT-27390,Follow-up,Completed,45
+A-70058,01/30/2026,Sandra Mitchell,PT-85804,Follow-up,Rescheduled,45
+A-70034,01/31/2026,SANDRA MITCHELL,PT-95378,Follow-up,Completed,30
+A-70608,Jan 31 2026,Jennifer Hernandez,PT-91631,Follow-up,Completed,45
+A-70456,2026-01-31,Matthew Alvarez,PT-49120,Follow-up,Cancelled - clinic,30
+,01/31/2026,Matthew Alvarez,PT-45521,Walk-in,Arrived,45
+A-70214,01/31/2026,"Timothy Taylor, DPT",PT-38655,Follow-up,Completed,45
+A-70430,01/31/2026,Matthew Alvarez,PT-59386,Re-evaluation,Completed,45
+A-70462,2026-01-31,Matthew Alvarez,PT-74034,Follow-up,Rescheduled,45
+A-70334,02/01/2026,Timothy Taylor,PT-29350,Follow-up,Cancelled,45
+A-70099,2026-02-01,Sandra Mitchell,PT-81820,Follow-up,Arrived,45
+A-70698,Feb 01 2026,Jennifer Hernandez,PT-57636,Follow-up,Arrived,45
+A-70725,Feb 01 2026,Jennifer Hernandez,PT-46268,Follow-up,No-show,60
+,2026-02-01,Matthew Alvarez,PT-32365,Walk-in,Completed,45
+A-70331,02/01/2026,"Timothy Taylor, DPT",PT-68570,Initial evaluation,Cancelled,45
+A-70100,02/01/2026,SANDRA MITCHELL,PT-75597,Re-evaluation,Arrived,45
+A-70708,2026-02-01,Jennifer Hernandez,PT-79327,Follow-up,Completed,30
+A-70528,2026-02-01,Matthew Alvarez,PT-84270,Initial evaluation,Rescheduled,45
+A-70081,2026-02-01,SANDRA MITCHELL,PT-26796,Initial evaluation,Arrived,45
+A-70678,2026-02-01,Jennifer Hernandez,PT-35265,Follow-up,Completed,45
+A-70709,02/01/2026,Jennifer Hernandez,PT-56822,Re-evaluation,Arrived,30
+A-70082,02/01/2026,Sandra Mitchell,PT-53131,Follow-up,Completed,45
+A-70525,2026-02-01,Matthew Alvarez,PT-12219,Follow-up,Cancelled by patient,30
+A-70465,2026-02-01,Matthew Alvarez,PT-58215,Follow-up,Completed,45
+A-70131,Feb 02 2026,Sandra Mitchell,PT-98866,Re-evaluation,Rescheduled,30
+A-70679,02/02/2026,Jennifer Hernandez,PT-78125,Follow-up,Completed,45
+A-70519,2026-02-02,Matthew Alvarez,PT-43603,Re-evaluation,Cancelled,30
+,02/02/2026,"Timothy Taylor, DPT",PT-15569,Walk-in,Arrived,45
+A-70316,02/02/2026,"Timothy Taylor, DPT",PT-69923,Initial evaluation,Completed,30
+A-70480,2026-02-02,Matthew Alvarez,PT-31335,Follow-up,Arrived,45
+A-70063,2026-02-02,Sandra Mitchell,PT-76401,Follow-up,Completed,45
+A-70521,Feb 02 2026,Matthew Alvarez,PT-11482,Re-evaluation,Cancelled,45
+A-70514,02/02/2026,Matthew Alvarez,PT-63716,Follow-up,No Show,45
+A-70691,02/02/2026,Jennifer Hernandez,PT-64542,Follow-up,Completed,30
+A-70695,Feb 03 2026,Jennifer Hernandez,PT-96196,Follow-up,Arrived,45
+A-70676,02/03/2026,Jennifer Hernandez,PT-49141,Follow-up,Arrived,45
+A-70704,Feb 03 2026,Jennifer Hernandez,PT-18612,Re-evaluation,Arrived,30
+A-70734,Feb 03 2026,Jennifer Hernandez,PT-62980,Follow-up,Rescheduled,45
+A-70478,02/03/2026,Matthew Alvarez,PT-31137,Re-evaluation,Arrived,30
+A-70075,2026-02-03,Sandra Mitchell,PT-54698,Follow-up,Arrived,45
+A-70085,02/03/2026,"Mitchell, Sandra",PT-88282,Follow-up,Completed,60
+A-70739,02/03/2026,Jennifer Hernandez,PT-70794,Initial evaluation,Rescheduled,60
+A-70341,Feb 03 2026,Timothy Taylor,PT-74776,Re-evaluation,Rescheduled,45
+A-70686,Feb 03 2026,Jennifer Hernandez,PT-15041,Follow-up,Arrived,60
+A-70091,02/03/2026,S. Mitchell,PT-76328,Follow-up,Arrived,60
+A-70518,Feb 03 2026,Matthew Alvarez,PT-67347,Re-evaluation,NOSHOW,30
+A-70293,Feb 04 2026,"Timothy Taylor, DPT",PT-64376,Re-evaluation,Arrived,45
+A-70471,2026-02-04,Matthew Alvarez,PT-22727,Follow-up,Arrived,60
+A-70120,2026-02-04,Sandra Mitchell,PT-56193,Initial evaluation,Canceled,45
+A-70098,Feb 04 2026,S. Mitchell,PT-98856,Follow-up,Completed,60
+A-70732,2026-02-04,Jennifer Hernandez,PT-33793,Follow-up,Cancelled,60
+A-70694,02/04/2026,Jennifer Hernandez,PT-83387,Follow-up,Completed,45
+A-70119,Feb 04 2026,Sandra Mitchell,PT-73768,Follow-up,Cancelled,60
+A-70115,02/04/2026,Sandra Mitchell,PT-73619,Follow-up,No-show,45
+A-70702,2026-02-04,Jennifer Hernandez,PT-38344,Follow-up,Completed,60
+A-70285,2026-02-04,Timothy Taylor,PT-43310,Follow-up,Arrived,45
+A-70699,2026-02-04,Jennifer Hernandez,PT-58860,Follow-up,Arrived,45
+,Feb 04 2026,Matthew Alvarez,PT-37791,Walk-in,Arrived,60
+A-70286,02/05/2026,Timothy Taylor,PT-44386,Follow-up,Completed,45
+A-70524,Feb 05 2026,Matthew Alvarez,PT-27102,Follow-up,Canceled,30
+A-70692,Feb 05 2026,Jennifer Hernandez,PT-98303,Initial evaluation,Arrived,30
+A-70329,Feb 05 2026,Timothy Taylor,PT-64625,Initial evaluation,No show,45
+,02/05/2026,Jennifer Hernandez,PT-10355,Walk-in,Arrived,30
+A-70495,2026-02-05,Matthew Alvarez,PT-33477,Follow-up,Completed,45
+A-70493,02/05/2026,Matthew Alvarez,PT-43447,Re-evaluation,Arrived,45
+A-70504,2026-02-05,Matthew Alvarez,PT-27171,Follow-up,Arrived,30
+A-70736,02/06/2026,Jennifer Hernandez,PT-55545,Follow-up,Rescheduled,60
+A-70336,2026-02-06,"Timothy Taylor, DPT",PT-26304,Follow-up,Cancelled - clinic,30
+A-70065,Feb 06 2026,S. Mitchell,PT-26699,Re-evaluation,Arrived,60
+,Feb 06 2026,Matthew Alvarez,PT-64974,Walk-in,Arrived,45
+A-70491,Feb 06 2026,Matthew Alvarez,PT-48877,Initial evaluation,Arrived,45
+A-70094,02/06/2026,Sandra Mitchell,PT-38948,Follow-up,Arrived,60
+A-70072,2026-02-06,Sandra Mitchell,PT-94808,Follow-up,Arrived,45
+A-70707,Feb 06 2026,Jennifer Hernandez,PT-52784,Initial evaluation,Arrived,45
+A-70713,Feb 06 2026,Jennifer Hernandez,PT-42826,Follow-up,Arrived,60
+A-70520,02/07/2026,Matthew Alvarez,PT-80642,Re-evaluation,Canceled,60
+A-70340,02/07/2026,"Timothy Taylor, DPT",PT-72598,Follow-up,Rescheduled,30
+A-70123,2026-02-07,S. Mitchell,PT-83487,Re-evaluation,Cancelled by patient,45
+A-70475,02/07/2026,Matthew Alvarez,PT-69479,Follow-up,Arrived,45
+A-70492,2026-02-07,Matthew Alvarez,PT-12895,Follow-up,Completed,30
+A-70084,2026-02-07,Sandra Mitchell,PT-24665,Follow-up,Arrived,60
+,Feb 07 2026,"Mitchell, Sandra",PT-81813,Walk-in,Arrived,30
+A-70503,Feb 08 2026,Matthew Alvarez,PT-41908,Follow-up,Arrived,45
+A-70479,Feb 08 2026,Matthew Alvarez,PT-84999,Follow-up,Arrived,60
+A-70727,02/08/2026,Jennifer Hernandez,PT-37253,Initial evaluation,Cancelled by patient,30
+A-70726,2026-02-08,Jennifer Hernandez,PT-20110,Follow-up,NOSHOW,30
+A-70489,2026-02-08,Matthew Alvarez,PT-43638,Follow-up,Arrived,60
+A-70289,02/08/2026,Timothy Taylor,PT-19206,Initial evaluation,Arrived,30
+A-70300,2026-02-08,Timothy Taylor,PT-80880,Follow-up,Completed,45
+A-70071,Feb 08 2026,"Mitchell, Sandra",PT-73385,Follow-up,Arrived,45
+A-70127,02/08/2026,SANDRA MITCHELL,PT-30902,Initial evaluation,Rescheduled,45
+A-70710,Feb 08 2026,Jennifer Hernandez,PT-98034,Follow-up,Arrived,45
+A-70295,02/08/2026,"Timothy Taylor, DPT",PT-21069,Follow-up,Completed,60
+A-70481,02/08/2026,Matthew Alvarez,PT-44370,Follow-up,Completed,45
+A-70674,Feb 08 2026,Jennifer Hernandez,PT-40415,Follow-up,Arrived,60
+A-70106,02/08/2026,Sandra Mitchell,PT-77363,Initial evaluation,Arrived,60
+A-70086,Feb 09 2026,Sandra Mitchell,PT-13639,Follow-up,Arrived,45
+A-70304,02/09/2026,"Timothy Taylor, DPT",PT-39101,Follow-up,Arrived,45
+A-70712,02/09/2026,Jennifer Hernandez,PT-98962,Re-evaluation,Completed,60
+A-70671,Feb 09 2026,Jennifer Hernandez,PT-31091,Re-evaluation,Arrived,45
+A-70337,02/09/2026,"Timothy Taylor, DPT",PT-68668,Initial evaluation,Cancelled - clinic,45
+A-70105,2026-02-09,Sandra Mitchell,PT-72587,Initial evaluation,Arrived,60
+A-70502,02/09/2026,Matthew Alvarez,PT-60382,Follow-up,Arrived,30
+A-70498,2026-02-09,Matthew Alvarez,PT-41403,Initial evaluation,Completed,45
+A-70466,02/10/2026,Matthew Alvarez,PT-38871,Follow-up,Arrived,30
+A-70308,Feb 10 2026,Timothy Taylor,PT-76376,Follow-up,Completed,45
+A-70670,02/10/2026,Jennifer Hernandez,PT-25229,Initial evaluation,Arrived,60
+A-70488,Feb 10 2026,Matthew Alvarez,PT-30737,Follow-up,Arrived,30
+A-70729,2026-02-10,Jennifer Hernandez,PT-99064,Re-evaluation,Cancelled,45
+A-70333,2026-02-10,Timothy Taylor,PT-43420,Follow-up,Canceled,45
+,Feb 10 2026,Jennifer Hernandez,PT-12165,Walk-in,Arrived,30
+A-70700,02/10/2026,Jennifer Hernandez,PT-65867,Initial evaluation,Arrived,30
+A-70328,02/10/2026,Timothy Taylor,PT-10240,Re-evaluation,No Show,45
+A-70494,Feb 10 2026,Matthew Alvarez,PT-85340,Follow-up,Arrived,45
+A-70074,Feb 10 2026,S. Mitchell,PT-75170,Follow-up,Arrived,60
+,02/10/2026,Matthew Alvarez,PT-58229,Walk-in,Completed,60
+A-70129,2026-02-10,SANDRA MITCHELL,PT-60416,Initial evaluation,Rescheduled,60
+A-70320,Feb 10 2026,Timothy Taylor,PT-62563,Follow-up,Completed,45
+A-70730,02/11/2026,Jennifer Hernandez,PT-73966,Initial evaluation,Canceled,45
+A-70738,2026-02-11,Jennifer Hernandez,PT-75705,Follow-up,Rescheduled,60
+A-70317,Feb 11 2026,"Timothy Taylor, DPT",PT-71811,Follow-up,Arrived,30
+A-70121,02/11/2026,Sandra Mitchell,PT-24500,Re-evaluation,Cancelled - clinic,60
+A-70728,Feb 11 2026,Jennifer Hernandez,PT-52319,Re-evaluation,Cancelled by patient,45
+A-70096,2026-02-11,SANDRA MITCHELL,PT-96618,Follow-up,Arrived,45
+A-70307,02/11/2026,Timothy Taylor,PT-45212,Follow-up,Arrived,60
+A-70104,Feb 11 2026,"Mitchell, Sandra",PT-30739,Re-evaluation,Arrived,60
+A-70288,2026-02-12,"Timothy Taylor, DPT",PT-65783,Follow-up,Completed,30
+A-70705,2026-02-12,Jennifer Hernandez,PT-95621,Follow-up,Arrived,60
+A-70117,2026-02-12,S. Mitchell,PT-79081,Initial evaluation,NOSHOW,60
+A-70499,02/12/2026,Matthew Alvarez,PT-90057,Follow-up,Completed,30
+A-70327,2026-02-13,Timothy Taylor,PT-26303,Re-evaluation,No show,45
+,2026-02-13,"Timothy Taylor, DPT",PT-96118,Walk-in,Completed,60
+A-70339,2026-02-13,"Timothy Taylor, DPT",PT-44901,Follow-up,Rescheduled,30
+,02/13/2026,Sandra Mitchell,PT-68543,Walk-in,Completed,45
+,2026-02-13,Jennifer Hernandez,PT-99256,Walk-in,Arrived,45
+A-70515,Feb 13 2026,Matthew Alvarez,PT-57492,Follow-up,No Show,30
+A-70723,2026-02-13,Jennifer Hernandez,PT-60770,Follow-up,NOSHOW,45
+A-70097,02/13/2026,S. Mitchell,PT-62319,Follow-up,Completed,45
+A-70089,Feb 13 2026,SANDRA MITCHELL,PT-34769,Follow-up,Completed,30
+A-70487,02/13/2026,Matthew Alvarez,PT-46269,Follow-up,Arrived,30
+A-70672,2026-02-13,Jennifer Hernandez,PT-81596,Initial evaluation,Arrived,60
+A-70482,Feb 13 2026,Matthew Alvarez,PT-13861,Initial evaluation,Completed,45
+A-70126,2026-02-13,SANDRA MITCHELL,PT-87589,Initial evaluation,Rescheduled,30
+A-70130,02/14/2026,SANDRA MITCHELL,PT-73455,Follow-up,Rescheduled,45
+A-70687,2026-02-14,Jennifer Hernandez,PT-25713,Follow-up,Arrived,45
+A-70706,02/14/2026,Jennifer Hernandez,PT-34404,Follow-up,Completed,45
+A-70083,Feb 14 2026,S. Mitchell,PT-99330,Initial evaluation,Completed,30
+A-70290,Feb 14 2026,Timothy Taylor,PT-93415,Follow-up,Completed,30
+A-70522,2026-02-14,Matthew Alvarez,PT-85086,Follow-up,Canceled,30
+A-70714,2026-02-14,Jennifer Hernandez,PT-65089,Follow-up,Completed,30
+A-70080,Feb 15 2026,Sandra Mitchell,PT-51472,Follow-up,Arrived,45
+A-70292,02/15/2026,"Timothy Taylor, DPT",PT-49260,Follow-up,Arrived,30
+A-70102,2026-02-15,SANDRA MITCHELL,PT-81762,Initial evaluation,Arrived,30
+A-70483,2026-02-15,Matthew Alvarez,PT-67856,Re-evaluation,Arrived,45
+A-70505,02/15/2026,Matthew Alvarez,PT-99197,Follow-up,Arrived,30
+A-70696,2026-02-15,Jennifer Hernandez,PT-91483,Follow-up,Arrived,45
+A-70473,Feb 15 2026,Matthew Alvarez,PT-93683,Follow-up,Arrived,45
+,Feb 15 2026,Jennifer Hernandez,PT-22725,Walk-in,Completed,60
+A-70101,Feb 16 2026,SANDRA MITCHELL,PT-90139,Initial evaluation,Arrived,45
+A-70299,Feb 16 2026,"Timothy Taylor, DPT",PT-73820,Follow-up,Completed,45
+A-70305,Feb 16 2026,"Timothy Taylor, DPT",PT-22691,Re-evaluation,Arrived,30
+A-70338,Feb 16 2026,"Timothy Taylor, DPT",PT-13348,Re-evaluation,Canceled,30
+A-70087,2026-02-16,Sandra Mitchell,PT-39562,Follow-up,Arrived,30
+A-70093,2026-02-16,"Mitchell, Sandra",PT-77994,Follow-up,Completed,45
+A-70476,Feb 16 2026,Matthew Alvarez,PT-70857,Follow-up,Arrived,30
+A-70500,Feb 16 2026,Matthew Alvarez,PT-35096,Initial evaluation,Arrived,60
+A-70516,2026-02-16,Matthew Alvarez,PT-62219,Follow-up,NOSHOW,45
+,2026-02-16,Timothy Taylor,PT-12079,Walk-in,Arrived,30
+A-70291,2026-02-16,"Timothy Taylor, DPT",PT-36544,Follow-up,Arrived,30
+A-70125,Feb 17 2026,S. Mitchell,PT-64621,Re-evaluation,Cancelled by patient,45
+A-70318,2026-02-17,Timothy Taylor,PT-21238,Follow-up,Arrived,45
+A-70078,2026-02-17,"Mitchell, Sandra",PT-81853,Initial evaluation,Completed,45
+A-70677,Feb 17 2026,Jennifer Hernandez,PT-95402,Initial evaluation,Arrived,60
+,Feb 17 2026,"Timothy Taylor, DPT",PT-46326,Walk-in,Arrived,60
+,Feb 17 2026,Jennifer Hernandez,PT-71175,Walk-in,Arrived,45
+A-70523,02/17/2026,Matthew Alvarez,PT-77401,Re-evaluation,Canceled,45
+A-70680,Feb 17 2026,Jennifer Hernandez,PT-20476,Re-evaluation,Arrived,45
+A-70124,02/17/2026,"Mitchell, Sandra",PT-57857,Follow-up,Cancelled,30
+,2026-02-17,Jennifer Hernandez,PT-90595,Walk-in,Arrived,45
+,2026-02-17,S. Mitchell,PT-97624,Walk-in,Arrived,45
+A-70287,Feb 18 2026,Timothy Taylor,PT-75901,Follow-up,Arrived,45
+A-70294,2026-02-18,Timothy Taylor,PT-42831,Follow-up,Arrived,45
+A-70310,02/18/2026,"Timothy Taylor, DPT",PT-20271,Follow-up,Arrived,30
+A-70332,Feb 18 2026,"Timothy Taylor, DPT",PT-86079,Re-evaluation,Canceled,30
+A-70527,Feb 18 2026,Matthew Alvarez,PT-49409,Follow-up,Rescheduled,60
+A-70467,Feb 18 2026,Matthew Alvarez,PT-78108,Follow-up,Arrived,60
+A-70312,2026-02-18,"Timothy Taylor, DPT",PT-76266,Follow-up,Arrived,30
+A-70335,Feb 18 2026,Timothy Taylor,PT-69735,Follow-up,Cancelled,30
+A-70497,Feb 18 2026,Matthew Alvarez,PT-15430,Follow-up,Arrived,30
+A-70315,2026-02-19,"Timothy Taylor, DPT",PT-52343,Initial evaluation,Completed,60
+A-70735,2026-02-19,Jennifer Hernandez,PT-86828,Initial evaluation,Rescheduled,30
+A-70118,02/19/2026,S. Mitchell,PT-58253,Follow-up,Cancelled,45
+A-70468,2026-02-19,Matthew Alvarez,PT-69794,Follow-up,Arrived,45
+A-70469,02/19/2026,Matthew Alvarez,PT-10927,Follow-up,Arrived,45
+A-70697,02/19/2026,Jennifer Hernandez,PT-62126,Re-evaluation,Completed,45
+A-70301,02/19/2026,Timothy Taylor,PT-37429,Follow-up,Arrived,30
+,02/19/2026,S. Mitchell,PT-53204,Walk-in,Completed,45
+A-70309,2026-02-19,Timothy Taylor,PT-89845,Follow-up,Completed,60
+A-70069,2026-02-19,SANDRA MITCHELL,PT-66299,Follow-up,Arrived,45
+,2026-02-19,Matthew Alvarez,PT-84640,Walk-in,Arrived,30
+A-70077,Feb 19 2026,S. Mitchell,PT-81647,Follow-up,Arrived,45
+A-70470,Feb 19 2026,Matthew Alvarez,PT-26459,Follow-up,Arrived,30
+A-70066,2026-02-19,Sandra Mitchell,PT-75846,Follow-up,Completed,30
+A-70685,02/20/2026,Jennifer Hernandez,PT-96831,Re-evaluation,Completed,30
+A-70095,Feb 20 2026,SANDRA MITCHELL,PT-26830,Follow-up,Completed,45
+,2026-02-20,Jennifer Hernandez,PT-93433,Walk-in,Completed,45
+A-70688,02/20/2026,Jennifer Hernandez,PT-62312,Follow-up,Completed,45
+A-70330,2026-02-20,"Timothy Taylor, DPT",PT-96027,Re-evaluation,NOSHOW,60
+,Feb 20 2026,"Mitchell, Sandra",PT-19248,Walk-in,Arrived,45
+A-70472,02/20/2026,Matthew Alvarez,PT-13992,Re-evaluation,Arrived,45
+A-70703,02/20/2026,Jennifer Hernandez,PT-74748,Follow-up,Arrived,30
+,2026-02-20,Timothy Taylor,PT-87967,Walk-in,Arrived,30
+A-70314,Feb 20 2026,"Timothy Taylor, DPT",PT-29435,Follow-up,Arrived,30
+A-70079,02/21/2026,S. Mitchell,PT-35860,Follow-up,Arrived,30
+A-70114,2026-02-21,Sandra Mitchell,PT-33783,Initial evaluation,NOSHOW,60
+A-70526,02/21/2026,Matthew Alvarez,PT-99498,Initial evaluation,Rescheduled,45
+A-70733,02/21/2026,Jennifer Hernandez,PT-43921,Initial evaluation,Cancelled by patient,30
+A-70103,02/21/2026,S. Mitchell,PT-53953,Initial evaluation,Completed,45
+,Feb 21 2026,Matthew Alvarez,PT-84618,Walk-in,Completed,60
+A-70068,Feb 21 2026,Sandra Mitchell,PT-32248,Follow-up,Completed,45
+A-70681,2026-02-21,Jennifer Hernandez,PT-36578,Follow-up,Arrived,30
+A-70090,2026-02-21,SANDRA MITCHELL,PT-51220,Follow-up,Arrived,45
+A-70306,2026-02-21,"Timothy Taylor, DPT",PT-38893,Follow-up,Arrived,30
+A-70070,02/22/2026,S. Mitchell,PT-96901,Follow-up,Completed,45
+A-70689,Feb 22 2026,Jennifer Hernandez,PT-41102,Initial evaluation,Arrived,30
+A-70319,02/22/2026,Timothy Taylor,PT-93203,Follow-up,Arrived,30
+A-70122,Feb 22 2026,Sandra Mitchell,PT-19726,Follow-up,Cancelled - clinic,45
+A-70313,02/22/2026,Timothy Taylor,PT-30498,Follow-up,Arrived,30
+A-70684,2026-02-22,Jennifer Hernandez,PT-52597,Initial evaluation,Arrived,45
+A-70737,Feb 22 2026,Jennifer Hernandez,PT-63312,Follow-up,Rescheduled,30
+A-70490,02/22/2026,Matthew Alvarez,PT-55295,Follow-up,Completed,45
+A-70116,Feb 23 2026,Sandra Mitchell,PT-42752,Follow-up,No-show,60
+A-70064,02/23/2026,S. Mitchell,PT-28772,Re-evaluation,Completed,30
+A-70296,Feb 23 2026,"Timothy Taylor, DPT",PT-97727,Follow-up,Arrived,45
+A-70298,02/23/2026,"Timothy Taylor, DPT",PT-83631,Re-evaluation,Completed,60
+A-70701,Feb 23 2026,Jennifer Hernandez,PT-91951,Follow-up,Completed,45
+A-70675,2026-02-23,Jennifer Hernandez,PT-23136,Initial evaluation,Arrived,30
+A-70088,02/23/2026,Sandra Mitchell,PT-50337,Follow-up,Arrived,45
+,02/23/2026,SANDRA MITCHELL,PT-67451,Walk-in,Arrived,45
+A-70297,2026-02-23,Timothy Taylor,PT-52703,Follow-up,Arrived,45
+A-70724,02/23/2026,Jennifer Hernandez,PT-20365,Follow-up,No-show,60
+A-70501,2026-02-23,Matthew Alvarez,PT-87350,Follow-up,Completed,45
+A-70067,02/23/2026,"Mitchell, Sandra",PT-56941,Follow-up,Arrived,30
+A-70486,2026-02-24,Matthew Alvarez,PT-43663,Re-evaluation,Arrived,45
+A-70683,Feb 24 2026,Jennifer Hernandez,PT-82430,Re-evaluation,Arrived,45
+A-70496,02/24/2026,Matthew Alvarez,PT-21812,Re-evaluation,Arrived,60
+A-70076,02/24/2026,S. Mitchell,PT-88703,Follow-up,Completed,60
+,2026-02-24,S. Mitchell,PT-56284,Walk-in,Arrived,30
+,02/24/2026,Timothy Taylor,PT-13319,Walk-in,Completed,45
+A-70311,Feb 25 2026,"Timothy Taylor, DPT",PT-84469,Re-evaluation,Arrived,30
+A-70682,02/25/2026,Jennifer Hernandez,PT-94723,Follow-up,Arrived,45
+A-70477,2026-02-25,Matthew Alvarez,PT-63372,Initial evaluation,Arrived,60
+A-70517,02/25/2026,Matthew Alvarez,PT-49382,Re-evaluation,No show,60
+A-70690,2026-02-25,Jennifer Hernandez,PT-59358,Follow-up,Arrived,45
+A-70474,2026-02-25,Matthew Alvarez,PT-24363,Follow-up,Arrived,45
+A-70073,02/26/2026,"Mitchell, Sandra",PT-86553,Follow-up,Arrived,45
+A-70693,2026-02-26,Jennifer Hernandez,PT-68091,Follow-up,Arrived,60
+A-70711,2026-02-26,Jennifer Hernandez,PT-12712,Follow-up,Arrived,30
+A-70506,Feb 27 2026,Matthew Alvarez,PT-75039,Re-evaluation,Completed,30
+A-70302,Feb 27 2026,"Timothy Taylor, DPT",PT-84085,Re-evaluation,Arrived,45
+A-70731,Feb 27 2026,Jennifer Hernandez,PT-83961,Follow-up,Canceled,45
+,02/27/2026,Jennifer Hernandez,PT-26906,Walk-in,Arrived,45
+A-70303,2026-02-28,"Timothy Taylor, DPT",PT-75604,Re-evaluation,Completed,45
+A-70484,02/28/2026,Matthew Alvarez,PT-10932,Re-evaluation,Completed,45
+A-70485,Feb 28 2026,Matthew Alvarez,PT-94241,Follow-up,Completed,30
+,02/28/2026,Matthew Alvarez,PT-11414,Walk-in,Completed,60
+A-70128,Feb 28 2026,Sandra Mitchell,PT-60762,Re-evaluation,Rescheduled,30
+A-70673,02/28/2026,Jennifer Hernandez,PT-87706,Re-evaluation,Arrived,30
+A-70092,Feb 28 2026,Sandra Mitchell,PT-90947,Follow-up,Arrived,45
+A-70759,2026-03-01,Jennifer Hernandez,PT-98272,Follow-up,Completed,30
+A-70169,03/01/2026,S. Mitchell,PT-71355,Follow-up,Completed,45
+A-70159,2026-03-01,"Mitchell, Sandra",PT-64879,Follow-up,Arrived,60
+A-70132,2026-03-01,Sandra Mitchell,PT-58516,Follow-up,Arrived,30
+,03/01/2026,Jennifer Hernandez,PT-76460,Walk-in,Arrived,30
+A-70809,Mar 01 2026,Jennifer Hernandez,PT-27242,Re-evaluation,Rescheduled,60
+A-70548,Mar 01 2026,Matthew Alvarez,PT-81065,Follow-up,Completed,60
+,03/01/2026,"Timothy Taylor, DPT",PT-93818,Walk-in,Completed,30
+A-70556,03/01/2026,Matthew Alvarez,PT-89336,Initial evaluation,Arrived,60
+,03/02/2026,Matthew Alvarez,PT-27833,Walk-in,Completed,45
+A-70591,2026-03-02,Matthew Alvarez,PT-71109,Re-evaluation,Cancelled - clinic,30
+A-70554,Mar 02 2026,Matthew Alvarez,PT-35992,Follow-up,Completed,45
+A-70134,Mar 02 2026,SANDRA MITCHELL,PT-16892,Initial evaluation,Arrived,30
+A-70167,Mar 02 2026,"Mitchell, Sandra",PT-55470,Initial evaluation,Arrived,45
+A-70206,Mar 02 2026,SANDRA MITCHELL,PT-77489,Follow-up,Rescheduled,45
+A-70199,03/02/2026,S. Mitchell,PT-28200,Re-evaluation,Cancelled,60
+A-70601,03/02/2026,Matthew Alvarez,PT-49239,Follow-up,Rescheduled,45
+A-70549,2026-03-02,Matthew Alvarez,PT-23471,Re-evaluation,Completed,45
+A-70139,03/02/2026,Sandra Mitchell,PT-77149,Follow-up,Arrived,60
+A-70745,03/02/2026,Jennifer Hernandez,PT-28542,Follow-up,Completed,45
+A-70572,Mar 02 2026,Matthew Alvarez,PT-88677,Follow-up,Completed,60
+A-70208,03/03/2026,S. Mitchell,PT-37257,Re-evaluation,Rescheduled,30
+A-70775,03/03/2026,Jennifer Hernandez,PT-26196,Re-evaluation,Completed,45
+A-70406,03/03/2026,Timothy Taylor,PT-63599,Re-evaluation,Rescheduled,45
+A-70603,2026-03-03,Matthew Alvarez,PT-69652,Follow-up,Rescheduled,60
+A-70803,Mar 03 2026,Jennifer Hernandez,PT-78754,Follow-up,Cancelled - clinic,60
+A-70203,Mar 03 2026,"Mitchell, Sandra",PT-15388,Follow-up,Cancelled by patient,45
+A-70189,2026-03-03,S. Mitchell,PT-51324,Re-evaluation,NOSHOW,45
+A-70531,2026-03-03,Matthew Alvarez,PT-91721,Follow-up,Arrived,45
+A-70530,Mar 03 2026,Matthew Alvarez,PT-34123,Follow-up,Arrived,60
+A-70172,03/03/2026,S. Mitchell,PT-53220,Follow-up,Completed,45
+A-70356,Mar 03 2026,Timothy Taylor,PT-47039,Follow-up,Arrived,45
+A-70400,03/03/2026,Timothy Taylor,PT-66714,Re-evaluation,Cancelled by patient,45
+A-70590,Mar 04 2026,Matthew Alvarez,PT-31645,Initial evaluation,Cancelled,60
+A-70749,Mar 04 2026,Jennifer Hernandez,PT-55706,Follow-up,Arrived,45
+A-70188,Mar 04 2026,S. Mitchell,PT-74725,Re-evaluation,No-show,60
+A-70394,03/04/2026,"Timothy Taylor, DPT",PT-86673,Follow-up,No-show,60
+A-70765,2026-03-04,Jennifer Hernandez,PT-82144,Follow-up,Completed,45
+A-70374,Mar 05 2026,Timothy Taylor,PT-20999,Follow-up,Completed,60
+A-70347,Mar 05 2026,Timothy Taylor,PT-96132,Re-evaluation,Arrived,45
+A-70567,2026-03-05,Matthew Alvarez,PT-15427,Initial evaluation,Completed,45
+A-70566,Mar 05 2026,Matthew Alvarez,PT-49696,Follow-up,Arrived,45
+A-70205,03/05/2026,"Mitchell, Sandra",PT-83596,Follow-up,Rescheduled,60
+A-70547,03/05/2026,Matthew Alvarez,PT-54188,Follow-up,Arrived,45
+A-70358,03/05/2026,Timothy Taylor,PT-28682,Re-evaluation,Arrived,60
+A-70200,Mar 05 2026,Sandra Mitchell,PT-44350,Follow-up,Cancelled - clinic,60
+A-70209,Mar 05 2026,"Mitchell, Sandra",PT-82849,Follow-up,Rescheduled,45
+A-70164,Mar 05 2026,"Mitchell, Sandra",PT-20367,Follow-up,Arrived,45
+A-70140,Mar 06 2026,Sandra Mitchell,PT-93011,Follow-up,Arrived,45
+A-70561,2026-03-06,Matthew Alvarez,PT-43941,Follow-up,Completed,45
+A-70546,2026-03-06,Matthew Alvarez,PT-32010,Initial evaluation,Completed,30
+A-70395,Mar 06 2026,Timothy Taylor,PT-58059,Follow-up,Canceled,45
+,2026-03-06,Matthew Alvarez,PT-54421,Walk-in,Completed,45
+A-70569,Mar 06 2026,Matthew Alvarez,PT-66816,Re-evaluation,Completed,60
+A-70162,2026-03-06,Sandra Mitchell,PT-17962,Follow-up,Completed,60
+A-70544,03/06/2026,Matthew Alvarez,PT-70409,Initial evaluation,Arrived,30
+A-70545,Mar 06 2026,Matthew Alvarez,PT-94783,Follow-up,Arrived,30
+A-70784,03/06/2026,Jennifer Hernandez,PT-52899,Follow-up,Completed,60
+A-70133,03/06/2026,S. Mitchell,PT-81478,Initial evaluation,Arrived,60
+A-70777,2026-03-07,Jennifer Hernandez,PT-83103,Follow-up,Completed,60
+A-70596,Mar 07 2026,Matthew Alvarez,PT-99300,Follow-up,Cancelled by patient,30
+A-70604,03/07/2026,Matthew Alvarez,PT-15283,Follow-up,Rescheduled,45
+A-70741,2026-03-07,Jennifer Hernandez,PT-27627,Follow-up,Completed,45
+A-70785,Mar 07 2026,Jennifer Hernandez,PT-20895,Re-evaluation,Arrived,45
+A-70558,2026-03-07,Matthew Alvarez,PT-61896,Re-evaluation,Arrived,45
+,Mar 07 2026,Jennifer Hernandez,PT-60630,Walk-in,Arrived,45
+A-70574,03/07/2026,Matthew Alvarez,PT-83191,Follow-up,Arrived,30
+A-70763,03/08/2026,Jennifer Hernandez,PT-18842,Initial evaluation,Completed,45
+A-70761,Mar 08 2026,Jennifer Hernandez,PT-19890,Follow-up,Arrived,30
+A-70755,Mar 08 2026,Jennifer Hernandez,PT-54460,Initial evaluation,Arrived,60
+A-70136,03/08/2026,SANDRA MITCHELL,PT-76711,Follow-up,Arrived,45
+A-70163,03/08/2026,SANDRA MITCHELL,PT-26486,Initial evaluation,Arrived,45
+A-70781,03/08/2026,Jennifer Hernandez,PT-68322,Initial evaluation,Arrived,45
+A-70402,2026-03-08,"Timothy Taylor, DPT",PT-69527,Follow-up,Cancelled,30
+,2026-03-08,Sandra Mitchell,PT-44614,Walk-in,Completed,30
+A-70758,Mar 08 2026,Jennifer Hernandez,PT-81040,Follow-up,Arrived,45
+A-70192,2026-03-08,"Mitchell, Sandra",PT-38301,Re-evaluation,No show,45
+A-70135,2026-03-08,S. Mitchell,PT-75973,Follow-up,Arrived,45
+,2026-03-08,"Mitchell, Sandra",PT-50632,Walk-in,Arrived,30
+A-70560,Mar 09 2026,Matthew Alvarez,PT-96318,Initial evaluation,Arrived,60
+A-70747,2026-03-09,Jennifer Hernandez,PT-53205,Re-evaluation,Completed,45
+A-70808,03/09/2026,Jennifer Hernandez,PT-88846,Follow-up,Canceled,45
+A-70197,Mar 09 2026,SANDRA MITCHELL,PT-19366,Initial evaluation,Cancelled,45
+A-70168,2026-03-09,"Mitchell, Sandra",PT-17949,Re-evaluation,Completed,45
+A-70744,2026-03-09,Jennifer Hernandez,PT-89475,Follow-up,Arrived,45
+A-70349,03/09/2026,Timothy Taylor,PT-25459,Follow-up,Completed,45
+A-70387,2026-03-09,Timothy Taylor,PT-41421,Follow-up,NOSHOW,45
+A-70588,2026-03-09,Matthew Alvarez,PT-87246,Follow-up,Cancelled - clinic,45
+,2026-03-10,S. Mitchell,PT-71812,Walk-in,Arrived,60
+A-70179,Mar 10 2026,Sandra Mitchell,PT-40617,Re-evaluation,Arrived,45
+A-70380,Mar 10 2026,Timothy Taylor,PT-80301,Follow-up,Arrived,45
+A-70805,03/10/2026,Jennifer Hernandez,PT-74727,Follow-up,Canceled,45
+A-70364,03/10/2026,Timothy Taylor,PT-91669,Re-evaluation,Completed,60
+A-70346,03/10/2026,Timothy Taylor,PT-79066,Follow-up,Arrived,60
+A-70597,2026-03-10,Matthew Alvarez,PT-29182,Initial evaluation,Canceled,45
+A-70149,Mar 11 2026,S. Mitchell,PT-45837,Initial evaluation,Arrived,30
+A-70174,2026-03-11,Sandra Mitchell,PT-17749,Follow-up,Arrived,30
+A-70202,03/11/2026,Sandra Mitchell,PT-31453,Follow-up,Cancelled,60
+A-70540,2026-03-11,Matthew Alvarez,PT-62372,Follow-up,Arrived,30
+A-70599,Mar 11 2026,Matthew Alvarez,PT-81967,Follow-up,Cancelled,30
+A-70562,03/11/2026,Matthew Alvarez,PT-21545,Follow-up,Completed,30
+A-70158,Mar 11 2026,S. Mitchell,PT-82071,Follow-up,Completed,45
+A-70535,03/11/2026,Matthew Alvarez,PT-94173,Follow-up,Arrived,45
+A-70587,Mar 11 2026,Matthew Alvarez,PT-65291,Follow-up,No Show,30
+A-70776,Mar 11 2026,Jennifer Hernandez,PT-16720,Follow-up,Arrived,45
+A-70751,03/12/2026,Jennifer Hernandez,PT-70546,Re-evaluation,Arrived,60
+A-70743,Mar 12 2026,Jennifer Hernandez,PT-92297,Initial evaluation,Arrived,45
+A-70804,2026-03-12,Jennifer Hernandez,PT-49811,Initial evaluation,Cancelled by patient,45
+A-70800,Mar 12 2026,Jennifer Hernandez,PT-47078,Re-evaluation,Canceled,45
+A-70584,Mar 12 2026,Matthew Alvarez,PT-29995,Follow-up,No-show,45
+A-70773,Mar 13 2026,Jennifer Hernandez,PT-73115,Follow-up,Completed,60
+A-70376,03/13/2026,Timothy Taylor,PT-56786,Follow-up,Arrived,45
+A-70354,2026-03-13,Timothy Taylor,PT-57224,Follow-up,Completed,30
+A-70529,03/13/2026,Matthew Alvarez,PT-25722,Re-evaluation,Arrived,45
+A-70173,Mar 13 2026,"Mitchell, Sandra",PT-48419,Follow-up,Completed,45
+A-70154,03/13/2026,Sandra Mitchell,PT-86322,Re-evaluation,Arrived,60
+,03/13/2026,SANDRA MITCHELL,PT-98996,Walk-in,Arrived,60
+A-70191,Mar 13 2026,"Mitchell, Sandra",PT-25836,Initial evaluation,NOSHOW,30
+A-70357,2026-03-13,"Timothy Taylor, DPT",PT-29521,Re-evaluation,Completed,45
+A-70813,2026-03-14,Jennifer Hernandez,PT-37301,Initial evaluation,Rescheduled,60
+,Mar 14 2026,S. Mitchell,PT-63459,Walk-in,Arrived,30
+A-70764,Mar 14 2026,Jennifer Hernandez,PT-77102,Initial evaluation,Arrived,45
+A-70138,2026-03-14,SANDRA MITCHELL,PT-75545,Follow-up,Arrived,45
+A-70575,Mar 14 2026,Matthew Alvarez,PT-80226,Follow-up,Arrived,60
+A-70753,2026-03-14,Jennifer Hernandez,PT-77843,Follow-up,Arrived,45
+A-70594,2026-03-14,Matthew Alvarez,PT-20233,Follow-up,Cancelled,60
+A-70583,03/14/2026,Matthew Alvarez,PT-15672,Initial evaluation,No Show,60
+A-70361,03/14/2026,"Timothy Taylor, DPT",PT-40357,Follow-up,Arrived,30
+A-70365,Mar 14 2026,"Timothy Taylor, DPT",PT-75014,Re-evaluation,Arrived,45
+,Mar 14 2026,Jennifer Hernandez,PT-10692,Walk-in,Completed,30
+A-70196,03/15/2026,Sandra Mitchell,PT-56580,Follow-up,Cancelled,60
+A-70552,2026-03-15,Matthew Alvarez,PT-82306,Follow-up,Completed,60
+A-70177,2026-03-15,SANDRA MITCHELL,PT-14065,Initial evaluation,Arrived,45
+A-70794,Mar 15 2026,Jennifer Hernandez,PT-69065,Follow-up,No show,60
+A-70351,2026-03-15,"Timothy Taylor, DPT",PT-87660,Initial evaluation,Arrived,45
+A-70568,03/15/2026,Matthew Alvarez,PT-84299,Follow-up,Completed,45
+A-70752,Mar 15 2026,Jennifer Hernandez,PT-50357,Initial evaluation,Completed,45
+A-70150,2026-03-15,S. Mitchell,PT-92115,Follow-up,Arrived,45
+A-70605,Mar 16 2026,Matthew Alvarez,PT-55329,Follow-up,Rescheduled,60
+A-70399,2026-03-16,Timothy Taylor,PT-16827,Follow-up,Canceled,45
+A-70779,Mar 16 2026,Jennifer Hernandez,PT-30485,Initial evaluation,Arrived,45
+A-70593,Mar 16 2026,Matthew Alvarez,PT-36324,Follow-up,Cancelled,60
+A-70774,2026-03-16,Jennifer Hernandez,PT-76019,Initial evaluation,Arrived,60
+A-70543,2026-03-16,Matthew Alvarez,PT-13487,Follow-up,Arrived,45
+A-70767,Mar 16 2026,Jennifer Hernandez,PT-31170,Re-evaluation,Arrived,30
+A-70352,03/16/2026,"Timothy Taylor, DPT",PT-25124,Follow-up,Arrived,45
+A-70760,03/17/2026,Jennifer Hernandez,PT-82581,Re-evaluation,Arrived,30
+A-70555,2026-03-17,Matthew Alvarez,PT-99860,Follow-up,Arrived,60
+A-70771,2026-03-17,Jennifer Hernandez,PT-98613,Follow-up,Arrived,45
+A-70570,2026-03-17,Matthew Alvarez,PT-64408,Follow-up,Completed,45
+,03/17/2026,Jennifer Hernandez,PT-14885,Walk-in,Completed,45
+A-70798,2026-03-17,Jennifer Hernandez,PT-12677,Follow-up,No-show,60
+A-70571,03/17/2026,Matthew Alvarez,PT-36764,Follow-up,Arrived,45
+A-70793,03/17/2026,Jennifer Hernandez,PT-56692,Follow-up,No-show,30
+,Mar 18 2026,Matthew Alvarez,PT-71313,Walk-in,Arrived,45
+A-70786,2026-03-18,Jennifer Hernandez,PT-27375,Follow-up,Completed,60
+,03/18/2026,Timothy Taylor,PT-59432,Walk-in,Arrived,60
+A-70367,03/18/2026,"Timothy Taylor, DPT",PT-92153,Re-evaluation,Arrived,60
+A-70589,03/18/2026,Matthew Alvarez,PT-81314,Follow-up,Cancelled,45
+A-70401,Mar 18 2026,Timothy Taylor,PT-17847,Re-evaluation,Cancelled by patient,45
+A-70178,03/18/2026,SANDRA MITCHELL,PT-45488,Initial evaluation,Arrived,45
+,03/18/2026,"Timothy Taylor, DPT",PT-30287,Walk-in,Completed,45
+A-70397,03/18/2026,Timothy Taylor,PT-30502,Re-evaluation,Cancelled,60
+A-70153,2026-03-18,Sandra Mitchell,PT-74162,Follow-up,Arrived,60
+A-70148,03/18/2026,Sandra Mitchell,PT-97741,Re-evaluation,Arrived,30
+A-70783,2026-03-18,Jennifer Hernandez,PT-31922,Re-evaluation,Arrived,45
+A-70742,03/18/2026,Jennifer Hernandez,PT-52559,Follow-up,Arrived,30
+A-70748,03/19/2026,Jennifer Hernandez,PT-30640,Follow-up,Completed,60
+A-70602,Mar 19 2026,Matthew Alvarez,PT-41942,Re-evaluation,Rescheduled,45
+A-70806,Mar 19 2026,Jennifer Hernandez,PT-72468,Follow-up,Canceled,45
+A-70204,2026-03-19,S. Mitchell,PT-91096,Re-evaluation,Canceled,60
+A-70754,03/19/2026,Jennifer Hernandez,PT-77394,Initial evaluation,Completed,45
+A-70342,2026-03-19,"Timothy Taylor, DPT",PT-89099,Follow-up,Arrived,30
+A-70768,2026-03-19,Jennifer Hernandez,PT-58064,Follow-up,Arrived,30
+A-70810,2026-03-19,Jennifer Hernandez,PT-45920,Initial evaluation,Rescheduled,60
+A-70359,Mar 19 2026,"Timothy Taylor, DPT",PT-68421,Follow-up,Completed,30
+A-70542,Mar 19 2026,Matthew Alvarez,PT-78058,Follow-up,Completed,45
+A-70353,Mar 20 2026,Timothy Taylor,PT-71916,Follow-up,Arrived,60
+A-70536,Mar 20 2026,Matthew Alvarez,PT-83123,Follow-up,Completed,45
+A-70807,2026-03-20,Jennifer Hernandez,PT-27708,Follow-up,Cancelled by patient,45
+A-70143,Mar 20 2026,"Mitchell, Sandra",PT-28319,Initial evaluation,Completed,30
+A-70165,2026-03-20,"Mitchell, Sandra",PT-79378,Re-evaluation,Arrived,45
+A-70195,2026-03-20,Sandra Mitchell,PT-30658,Initial evaluation,Cancelled - clinic,30
+A-70762,2026-03-20,Jennifer Hernandez,PT-96549,Follow-up,Arrived,30
+A-70137,Mar 21 2026,"Mitchell, Sandra",PT-35149,Initial evaluation,Arrived,30
+A-70405,2026-03-21,"Timothy Taylor, DPT",PT-28735,Follow-up,Rescheduled,30
+A-70740,Mar 21 2026,Jennifer Hernandez,PT-28928,Re-evaluation,Completed,45
+A-70371,Mar 21 2026,"Timothy Taylor, DPT",PT-58563,Follow-up,Arrived,45
+A-70378,2026-03-21,Timothy Taylor,PT-96639,Follow-up,Completed,30
+A-70166,03/21/2026,SANDRA MITCHELL,PT-97074,Re-evaluation,Completed,45
+A-70797,Mar 21 2026,Jennifer Hernandez,PT-93608,Follow-up,NOSHOW,60
+A-70750,2026-03-21,Jennifer Hernandez,PT-19649,Initial evaluation,Completed,45
+A-70391,03/22/2026,Timothy Taylor,PT-76435,Initial evaluation,NOSHOW,45
+A-70796,03/22/2026,Jennifer Hernandez,PT-23172,Follow-up,NOSHOW,60
+A-70537,2026-03-22,Matthew Alvarez,PT-31346,Follow-up,Arrived,45
+A-70170,Mar 22 2026,SANDRA MITCHELL,PT-87421,Follow-up,Completed,60
+A-70393,2026-03-22,Timothy Taylor,PT-47710,Follow-up,No show,60
+A-70586,03/22/2026,Matthew Alvarez,PT-89216,Re-evaluation,No Show,45
+A-70404,Mar 22 2026,"Timothy Taylor, DPT",PT-93786,Follow-up,Rescheduled,45
+A-70146,Mar 22 2026,S. Mitchell,PT-69935,Follow-up,Completed,60
+A-70746,Mar 23 2026,Jennifer Hernandez,PT-71825,Follow-up,Arrived,45
+A-70390,2026-03-23,Timothy Taylor,PT-73941,Follow-up,No show,30
+A-70551,Mar 23 2026,Matthew Alvarez,PT-34978,Follow-up,Completed,45
+A-70360,2026-03-23,"Timothy Taylor, DPT",PT-66632,Initial evaluation,Arrived,60
+A-70557,Mar 23 2026,Matthew Alvarez,PT-58492,Follow-up,Completed,45
+A-70141,2026-03-23,S. Mitchell,PT-79185,Initial evaluation,Arrived,30
+A-70343,03/23/2026,Timothy Taylor,PT-77883,Initial evaluation,Completed,30
+A-70207,2026-03-23,"Mitchell, Sandra",PT-77100,Follow-up,Rescheduled,45
+A-70147,2026-03-23,Sandra Mitchell,PT-98407,Re-evaluation,Completed,45
+A-70541,03/23/2026,Matthew Alvarez,PT-79507,Initial evaluation,Arrived,60
+A-70151,03/23/2026,SANDRA MITCHELL,PT-92073,Follow-up,Completed,30
+A-70592,03/23/2026,Matthew Alvarez,PT-33503,Follow-up,Cancelled - clinic,30
+A-70398,Mar 24 2026,"Timothy Taylor, DPT",PT-69079,Follow-up,Cancelled,45
+A-70811,03/24/2026,Jennifer Hernandez,PT-43189,Re-evaluation,Rescheduled,60
+A-70155,Mar 24 2026,Sandra Mitchell,PT-79460,Follow-up,Completed,45
+A-70533,Mar 24 2026,Matthew Alvarez,PT-56617,Follow-up,Completed,30
+A-70802,03/24/2026,Jennifer Hernandez,PT-78309,Follow-up,Canceled,45
+A-70373,03/24/2026,Timothy Taylor,PT-66091,Follow-up,Arrived,45
+A-70369,2026-03-24,"Timothy Taylor, DPT",PT-58196,Follow-up,Completed,45
+A-70532,03/24/2026,Matthew Alvarez,PT-57438,Re-evaluation,Completed,30
+A-70539,Mar 24 2026,Matthew Alvarez,PT-56457,Re-evaluation,Completed,30
+A-70345,2026-03-24,"Timothy Taylor, DPT",PT-80855,Follow-up,Completed,45
+A-70564,2026-03-25,Matthew Alvarez,PT-32147,Follow-up,Arrived,60
+A-70585,2026-03-25,Matthew Alvarez,PT-21825,Initial evaluation,No-show,60
+,Mar 25 2026,Jennifer Hernandez,PT-43038,Walk-in,Completed,45
+,03/25/2026,Jennifer Hernandez,PT-96884,Walk-in,Completed,45
+A-70565,03/25/2026,Matthew Alvarez,PT-47358,Follow-up,Completed,60
+A-70144,2026-03-25,SANDRA MITCHELL,PT-56299,Follow-up,Arrived,45
+,03/25/2026,Matthew Alvarez,PT-76682,Walk-in,Arrived,45
+,Mar 25 2026,SANDRA MITCHELL,PT-64788,Walk-in,Arrived,45
+A-70175,03/25/2026,SANDRA MITCHELL,PT-39896,Follow-up,Completed,30
+A-70344,Mar 25 2026,"Timothy Taylor, DPT",PT-95463,Follow-up,Arrived,60
+A-70534,2026-03-25,Matthew Alvarez,PT-37494,Re-evaluation,Completed,45
+A-70600,2026-03-26,Matthew Alvarez,PT-35719,Follow-up,Rescheduled,60
+A-70348,2026-03-26,Timothy Taylor,PT-59564,Re-evaluation,Arrived,30
+A-70801,2026-03-26,Jennifer Hernandez,PT-86812,Follow-up,Canceled,30
+A-70377,Mar 26 2026,Timothy Taylor,PT-55977,Initial evaluation,Completed,45
+A-70396,2026-03-26,"Timothy Taylor, DPT",PT-92402,Follow-up,Canceled,30
+,03/26/2026,Matthew Alvarez,PT-88706,Walk-in,Arrived,60
+A-70389,Mar 26 2026,"Timothy Taylor, DPT",PT-41060,Re-evaluation,No show,60
+A-70403,03/26/2026,Timothy Taylor,PT-36319,Follow-up,Rescheduled,60
+A-70550,03/26/2026,Matthew Alvarez,PT-40267,Follow-up,Arrived,30
+A-70142,03/26/2026,S. Mitchell,PT-28445,Re-evaluation,Arrived,45
+,03/27/2026,Matthew Alvarez,PT-39914,Walk-in,Completed,45
+A-70176,Mar 27 2026,S. Mitchell,PT-90685,Follow-up,Completed,45
+A-70769,03/27/2026,Jennifer Hernandez,PT-13293,Follow-up,Completed,45
+A-70812,Mar 27 2026,Jennifer Hernandez,PT-56948,Initial evaluation,Rescheduled,45
+A-70381,2026-03-27,Timothy Taylor,PT-82363,Follow-up,Completed,45
+,2026-03-27,SANDRA MITCHELL,PT-54721,Walk-in,Arrived,60
+A-70372,2026-03-27,Timothy Taylor,PT-74517,Initial evaluation,Completed,60
+A-70157,03/27/2026,"Mitchell, Sandra",PT-40660,Follow-up,Arrived,45
+A-70152,Mar 27 2026,Sandra Mitchell,PT-92715,Re-evaluation,Arrived,45
+A-70156,2026-03-27,Sandra Mitchell,PT-59343,Re-evaluation,Arrived,30
+A-70392,Mar 28 2026,"Timothy Taylor, DPT",PT-54398,Re-evaluation,No-show,45
+A-70194,Mar 28 2026,SANDRA MITCHELL,PT-42435,Re-evaluation,Canceled,60
+A-70756,2026-03-28,Jennifer Hernandez,PT-72787,Follow-up,Completed,30
+A-70772,03/28/2026,Jennifer Hernandez,PT-39672,Initial evaluation,Arrived,45
+A-70193,03/28/2026,S. Mitchell,PT-43865,Follow-up,No Show,60
+A-70553,03/28/2026,Matthew Alvarez,PT-10012,Follow-up,Arrived,30
+A-70160,03/28/2026,Sandra Mitchell,PT-17999,Follow-up,Arrived,60
+A-70161,Mar 28 2026,"Mitchell, Sandra",PT-57010,Follow-up,Arrived,45
+A-70190,03/28/2026,SANDRA MITCHELL,PT-44328,Follow-up,No show,45
+A-70379,03/29/2026,"Timothy Taylor, DPT",PT-78865,Follow-up,Completed,60
+A-70795,2026-03-29,Jennifer Hernandez,PT-61114,Follow-up,No Show,45
+A-70198,2026-03-29,Sandra Mitchell,PT-52747,Follow-up,Canceled,30
+A-70388,03/29/2026,"Timothy Taylor, DPT",PT-46313,Follow-up,No show,45
+,Mar 29 2026,"Timothy Taylor, DPT",PT-97968,Walk-in,Completed,60
+A-70370,03/29/2026,Timothy Taylor,PT-89866,Follow-up,Arrived,45
+A-70799,03/29/2026,Jennifer Hernandez,PT-97343,Follow-up,No show,30
+A-70582,2026-03-29,Matthew Alvarez,PT-47950,Follow-up,No-show,45
+A-70573,2026-03-29,Matthew Alvarez,PT-60432,Re-evaluation,Arrived,45
+A-70368,Mar 29 2026,"Timothy Taylor, DPT",PT-53183,Follow-up,Arrived,45
+A-70538,03/29/2026,Matthew Alvarez,PT-97138,Follow-up,Arrived,45
+A-70780,2026-03-29,Jennifer Hernandez,PT-67176,Re-evaluation,Arrived,45
+A-70559,03/29/2026,Matthew Alvarez,PT-34885,Follow-up,Completed,45
+A-70598,03/29/2026,Matthew Alvarez,PT-43816,Follow-up,Cancelled - clinic,45
+A-70757,03/30/2026,Jennifer Hernandez,PT-79169,Follow-up,Arrived,45
+A-70782,Mar 30 2026,Jennifer Hernandez,PT-44914,Re-evaluation,Arrived,45
+A-70366,2026-03-30,Timothy Taylor,PT-66390,Initial evaluation,Completed,45
+A-70355,03/30/2026,Timothy Taylor,PT-31644,Follow-up,Completed,30
+A-70201,2026-03-30,S. Mitchell,PT-51674,Follow-up,Cancelled - clinic,45
+A-70770,Mar 30 2026,Jennifer Hernandez,PT-40100,Re-evaluation,Arrived,60
+,Mar 30 2026,"Mitchell, Sandra",PT-28071,Walk-in,Completed,30
+A-70363,2026-03-30,"Timothy Taylor, DPT",PT-84002,Re-evaluation,Completed,60
+A-70171,2026-03-30,Sandra Mitchell,PT-27486,Follow-up,Arrived,45
+A-70595,03/31/2026,Matthew Alvarez,PT-79164,Follow-up,Cancelled,60
+A-70375,2026-03-31,"Timothy Taylor, DPT",PT-39690,Re-evaluation,Arrived,30
+A-70350,Mar 31 2026,Timothy Taylor,PT-48079,Follow-up,Completed,45
+A-70563,Mar 31 2026,Matthew Alvarez,PT-91919,Initial evaluation,Completed,30
+A-70778,03/31/2026,Jennifer Hernandez,PT-47123,Follow-up,Arrived,45
+A-70210,2026-03-31,SANDRA MITCHELL,PT-30243,Follow-up,Rescheduled,60
+A-70145,03/31/2026,S. Mitchell,PT-55394,Follow-up,Arrived,45
+A-70382,03/31/2026,"Timothy Taylor, DPT",PT-62785,Re-evaluation,Completed,30
+A-70362,Mar 31 2026,"Timothy Taylor, DPT",PT-11892,Initial evaluation,Arrived,45
+A-70766,03/31/2026,Jennifer Hernandez,PT-43342,Follow-up,Arrived,30

@@ -1,0 +1,65 @@
+Employee ID,Name,Work Email,Department,Title,Grade,Manager Email,Start Date,Cost Center
+E-0003,Cynthia Parker,cynthia.parker@tallgrass.io,Finance & Operations,Office Manager,Staff,ELLEN.PARK@TALLGRASS.IO,08/04/20,120
+E-0007,Mateo Gray,mateo.gray@tallgrass.io,Customer Success,Support Specialist,Staff,hannah.weiss@tallgrass.io,07/21/23,220
+E-0036,Ellen Park,ellen.park@tallgrass.io,Finance & Operations,Finance Manager,Manager,victor.almeida@tallgrass.io,06/19/2019,120
+E-0057,Anthony Martin,anthony.martin@tallgrass.io,Customer Success,Support Specialist,Staff,hannah.weiss@tallgrass.io,"February 15, 2025",220
+E-0055,Ingrid Hill,ingrid.hill@tallgrass.io,Sales,Account Executive,staff,grace.liu@tallgrass.io,11/29/24,210
+E-0054,Joseph Okafor,joseph.okafor@tallgrass.io,Marketing,Demand Gen Specialist,staff,luis.moreno@tallgrass.io,2017-08-13,230
+E-53,STEPHANIE PATEL,STEPHANIE.PATEL@TALLGRASS.IO,Product,,Staff,priya.raman@tallgrass.io,"January 04, 2022",320
+E-0022,Samuel Okoye,samuel.okoye@tallgrass.io,Engineering,Engineering Manager,Manager,victor.almeida@tallgrass.io,"March 05, 2026",310
+E-0051,Margaret Torres,margaret.torres@tallgrass.io,Sales,Account Executive,Staff,grace.liu@tallgrass.io,04-Jun-2025,210
+E-0046,Joshua Castillo,joshua.castillo@tallgrass.io,Engineering,QA Engineer,Staff,samuel.okoye@tallgrass.io,12/07/2025,310
+E-0010,Michael Reed,michael.reed@tallgrass.io,Engineering,Software Engineer,staff,samuel.okoye@tallgrass.io,2022-09-02,310
+E-0009,Robert Morris,robert.morris@tallgrass.io,Sales,Account Executive,Staff,grace.liu@tallgrass.io,07/03/2019,210
+E-0027,Dmitri Scott,dmitri.scott@tallgrass.io,Product,Product Manager,Staff,priya.raman@tallgrass.io,"November 20, 2017",320
+E-0041,Charles Turner,charles.turner@tallgrass.io,Sales,Account Executive,Staff,Grace.Liu@Tallgrass.io,2025-11-17,210
+E-0038,Timothy Ruiz,timothy.ruiz@tallgrass.io,Sales,Sales Development Rep,Staff,grace.liu@tallgrass.io,08/31/2022,210
+E-0049,Hannah Weiss,hannah.weiss@tallgrass.io,Customer Success,Customer Success Manager,Manager,victor.almeida@tallgrass.io,06-Jun-2018,220
+E-12,WILLIAM DAVIS,WILLIAM.DAVIS@TALLGRASS.IO,Product,,Staff,priya.raman@tallgrass.io,"November 13, 2021",320
+E-0023,Donald Taylor,donald.taylor@tallgrass.io,Finance & Operations,Office Manager,staff,ellen.park@tallgrass.io,"July 16, 2021",120
+E-0011,Mark Ruiz,mark.ruiz@tallgrass.io,Marketing,Designer,staff,Luis.Moreno@Tallgrass.io,"January 17, 2020",230
+E-0044,Christopher Perez,christopher.perez@tallgrass.io,Engineering,Software Engineer,Staff,Samuel.Okoye@Tallgrass.io,"December 18, 2019",310
+E-0039,Karen Campbell,karen.campbell@tallgrass.io,Engineering,Senior Software Engineer,staff,SAMUEL.OKOYE@TALLGRASS.IO,2018-11-04,310
+E-0030,Mark Alvarez,mark.alvarez@tallgrass.io,Marketing,Content Marketer,Staff,luis.moreno@tallgrass.io,16-May-2021,230
+E-0031,Shirley Torres,shirley.torres@tallgrass.io,Customer Success,Implementation Lead,Staff,hannah.weiss@tallgrass.io,2022-10-15,220
+E-0004,William Kim,william.kim@tallgrass.io,Finance & Operations,Accountant,Staff,Ellen.Park@Tallgrass.io,03/25/24,120
+E-0013,Jennifer Howard,jennifer.howard@tallgrass.io,Engineering,Data Engineer,Staff,Samuel.Okoye@Tallgrass.io,08/13/2025,310
+E-0008,Betty Phillips,betty.phillips@tallgrass.io,Engineering,Data Engineer,Staff,samuel.okoye@tallgrass.io,"September 15, 2025",310
+E-0032,Stephanie Ortiz,stephanie.ortiz@tallgrass.io,Customer Success,Support Specialist,staff,hannah.weiss@tallgrass.io,10-Aug-2018,220
+E-0058,Priya Raman,priya.raman@tallgrass.io,Product,Product Manager,Manager,victor.almeida@tallgrass.io,26-Jul-2017,320
+E-0012,William Davis,william.davis@tallgrass.io,Product,UX Researcher,Staff,priya.raman@tallgrass.io,11/13/21,320
+E-0020,Kenneth Stewart,kenneth.stewart@tallgrass.io,Customer Success,Implementation Lead,Staff,hannah.weiss@tallgrass.io,2024-10-27,220
+E-0016,Luis Moreno,luis.moreno@tallgrass.io,Marketing,Marketing Manager,Manager,VICTOR.ALMEIDA@TALLGRASS.IO,05/25/21,230
+E-0048,Ryan Cook,ryan.cook@tallgrass.io,Finance & Operations,Office Manager,Staff,ellen.park@tallgrass.io,2021-04-19,120
+E-0050,Yuki Wilson,yuki.wilson@tallgrass.io,Marketing,Content Marketer,Staff,Luis.Moreno@Tallgrass.io,05/16/2021,230
+E-0025,Donald Peterson,donald.peterson@tallgrass.io,Sales,Solutions Consultant,Staff,grace.liu@tallgrass.io,2026-02-18,210
+E-0053,Stephanie Patel,stephanie.patel@tallgrass.io,Product,Product Designer,Staff,Priya.Raman@Tallgrass.io,"January 04, 2022",320
+E-0014,Jason Wright,jason.wright@tallgrass.io,Sales,Sales Development Rep,Staff,grace.liu@tallgrass.io,"May 29, 2023",210
+E-0024,Susan Gonzalez,susan.gonzalez@tallgrass.io,Customer Success,Implementation Lead,Staff,hannah.weiss@tallgrass.io,2017-08-19,220
+E-0043,Laura Edwards,laura.edwards@tallgrass.io,Engineering,Software Engineer,Staff,samuel.okoye@tallgrass.io,23-May-2018,310
+E-0033,Andrew Okafor,andrew.okafor@tallgrass.io,Sales,Solutions Consultant,Staff,Grace.Liu@Tallgrass.io,09/21/19,210
+E-0006,Betty Cox,betty.cox@tallgrass.io,Engineering,Data Engineer,staff,samuel.okoye@tallgrass.io,18-Dec-2019,310
+E-0019,Fatima Roberts,fatima.roberts@tallgrass.io,Marketing,Designer,Staff,Luis.Moreno@Tallgrass.io,"January 09, 2019",230
+E-0035,Anna Turner,anna.turner@tallgrass.io,Sales,Solutions Consultant,Staff,GRACE.LIU@TALLGRASS.IO,12/11/20,210
+E-0052,Barbara Ross,barbara.ross@tallgrass.io,Engineering,Senior Software Engineer,Staff,samuel.okoye@tallgrass.io,2025-06-25,310
+E-0002,Grace Liu,grace.liu@tallgrass.io,Sales,Sales Manager,manager,victor.almeida@tallgrass.io,"November 14, 2025",210
+E-0015,Stephanie Green,stephanie.green@tallgrass.io,Sales,Account Executive,Staff,Grace.Liu@Tallgrass.io,09-Nov-2022,210
+E-0026,John Johnson,john.johnson@tallgrass.io,Finance & Operations,People Partner,Staff,ELLEN.PARK@TALLGRASS.IO,01/11/2024,120
+E-0028,Thomas Ortiz,thomas.ortiz@tallgrass.io,Engineering,Software Engineer,Staff,samuel.okoye@tallgrass.io,2025-10-30,310
+E-0042,Sofia Garcia,sofia.garcia@tallgrass.io,Product,Product Designer,staff,priya.raman@tallgrass.io,"January 08, 2023",320
+E-56,NICHOLAS GREEN,NICHOLAS.GREEN@TALLGRASS.IO,Customer Success,,Staff,hannah.weiss@tallgrass.io,"September 19, 2020",220
+E-0018,Jonathan Davis,jonathan.davis@tallgrass.io,Engineering,Senior Software Engineer,Staff,Samuel.Okoye@Tallgrass.io,2020-03-16,310
+E-0008,Betty Phillips,betty.phillips@tallgrass.io,Engineering,Data Engineer,Staff,samuel.okoye@tallgrass.io,"September 15, 2025",310
+E-0060,Amara Lewis,amara.lewis@tallgrass.io,Engineering,Data Engineer,Staff,samuel.okoye@tallgrass.io,"August 30, 2018",310
+E-0047,Deborah Nelson,deborah.nelson@tallgrass.io,Customer Success,Support Specialist,Staff,hannah.weiss@tallgrass.io,"November 22, 2025",220
+E-0017,Kathleen Cox,kathleen.cox@tallgrass.io,Engineering,Software Engineer,staff,samuel.okoye@tallgrass.io,2022-07-05,310
+E-0059,Michelle Gutierrez,michelle.gutierrez@tallgrass.io,Marketing,Demand Gen Specialist,Staff,luis.moreno@tallgrass.io,2022-05-16,230
+E-0029,Andrew Hughes,andrew.hughes@tallgrass.io,Sales,Sales Development Rep,Staff,Grace.Liu@Tallgrass.io,2025-07-22,210
+E-0037,Nancy Cook,nancy.cook@tallgrass.io,Engineering,Data Engineer,Staff,samuel.okoye@tallgrass.io,2025-05-22,310
+E-0056,Nicholas Green,nicholas.green@tallgrass.io,Customer Success,Implementation Lead,Staff,hannah.weiss@tallgrass.io,2020-09-19,220
+E-0040,Jacob Howard,jacob.howard@tallgrass.io,Marketing,Content Marketer,Staff,luis.moreno@tallgrass.io,2022-05-30,230
+E-0045,Victor Almeida,victor.almeida@tallgrass.io,Executive,Chief Executive Officer,Executive,,03/25/2025,100
+E-0021,Brian Young,brian.young@tallgrass.io,Customer Success,Support Specialist,Staff,hannah.weiss@tallgrass.io,08/13/23,220
+E-0001,Melissa Hall,melissa.hall@tallgrass.io,Product,UX Researcher,Staff,priya.raman@tallgrass.io,"June 04, 2022",320
+E-0034,Margaret Phillips,margaret.phillips@tallgrass.io,Engineering,Software Engineer,staff,samuel.okoye@tallgrass.io,"February 28, 2025",310
+E-0005,Amanda Miller,amanda.miller@tallgrass.io,Sales,Solutions Consultant,Staff,Grace.Liu@Tallgrass.io,07/17/24,210

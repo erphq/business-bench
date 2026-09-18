@@ -1,0 +1,85 @@
+{
+  "naive": {
+    "rework_as_production": {
+      "Bar line": {
+        "good": 38122.8,
+        "inp": 41031.7,
+        "scrap": 2244.5,
+        "scrap_rate": 0.0547,
+        "yield": 0.9291
+      },
+      "Bites line": {
+        "good": 4945.43,
+        "inp": 5393.1,
+        "scrap": 342.5,
+        "scrap_rate": 0.0635,
+        "yield": 0.917
+      },
+      "Granola line": {
+        "good": 17777.82,
+        "inp": 19452.4,
+        "scrap": 599.7,
+        "scrap_rate": 0.0308,
+        "yield": 0.9139
+      }
+    },
+    "trials_counted_plant_input": 66025.0,
+    "units_ignored": {
+      "Bar line": {
+        "good": 315923.0,
+        "inp": 40812.0,
+        "scrap": 2024.8,
+        "scrap_rate": 0.0496,
+        "yield": 7.7409
+      },
+      "Bites line": {
+        "good": 385474.0,
+        "inp": 5355.0,
+        "scrap": 226178.3,
+        "scrap_rate": 42.2368,
+        "yield": 71.9839
+      },
+      "Granola line": {
+        "good": 33650.5,
+        "inp": 19434.0,
+        "scrap": 581.3,
+        "scrap_rate": 0.0299,
+        "yield": 1.7315
+      }
+    }
+  },
+  "plant": {
+    "good": 60846.05,
+    "inp": 65601.0,
+    "scrap": 2910.5,
+    "yield": 0.9275
+  },
+  "rework_batches": [
+    "BT0812-2",
+    "BR0814-3",
+    "BR0817-3",
+    "BR0817-4",
+    "BT0824-3",
+    "BR0826-3",
+    "BT0828-2",
+    "GR0828-3"
+  ],
+  "trial_batches": [
+    "BR0805-3",
+    "GR0812-2"
+  ],
+  "yield_pins": [
+    [
+      "Bar line",
+      0.9341
+    ],
+    [
+      "Granola line",
+      0.9148
+    ],
+    [
+      "Bites line",
+      0.9235
+    ]
+  ]
+}

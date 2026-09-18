@@ -1,0 +1,45 @@
+id: fundraising-appeal
+track: desk
+category: drafting
+title: Fall appeal letter for the Hatch Farm campaign
+ask: |
+  Please draft this fall's appeal letter for the Hatch Farm campaign. Shirley's campaign notes say what it needs, and the gift export and the foundation's letter are in the folder. Save it as appeal.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the notes open with a $450,000 goal; the July 22 entry raises it to $525,000 (checks: campaign figures; outdated figures absent)
+- |-
+  raised so far is $240,714.58 from the export: HATCH fund only, pledges out (their payments in), the returned check and the refunded duplicate charge out; the notes' 'about $259,000' (the August board report, pledges at face value) is stale, every row gives $293,973.56, adding pledges $278,714.58, adding the general fund $254,595.56 (check: campaign figures)
+- |-
+  left to raise is the new goal less raised so far, $284,285.42; against the old goal it would be $209,285.42 (check: campaign figures)
+- |-
+  the notes say the match runs through December 31; the foundation's letter says gifts received by November 30, 2026 (check: match amount and deadline)
+- |-
+  last year's appeal is in the folder with a $240,000 goal, $182,400 raised, a $25,000 Carver Fund match and a December 31, 2025 deadline (check: outdated figures absent)
+- |-
+  the export has a three-line report preamble, a BOM, CRLF endings and amounts as '$1,250.00' text (check: campaign figures)
+checks:
+- type: file_exists
+  name: appeal.md exists
+  path: appeal.md
+- type: text_numbers_present
+  name: campaign figures
+  path: appeal.md
+  numbers:
+  - 525000
+  - 240714.58
+  - 284285.42
+  rel_tol: 1.0e-06
+- type: text_not_contains
+  name: outdated figures absent
+  path: appeal.md
+  phrases:
+  - 450,000
+  - 259,000
+  - 182,400
+  - 240,000
+  - Carver
+- type: custom
+  name: match amount and deadline
+  module: check.py

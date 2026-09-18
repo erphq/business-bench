@@ -1,0 +1,67 @@
+id: fundraiser-progress-page
+track: desk
+category: tooling
+title: Boat campaign progress page with top donors
+ask: |
+  Could you build the progress page for our boat campaign from the donation export and the treasurer's check log? Dana's note has the rules. Save it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  refunded gifts keep their amount and only say Refunded - including a large one from Rahul Williams that would rank in the top five - and one gift is Partially refunded with the refunded amount in its own column (checks: total raised and progress; page structure: top donors)
+- |-
+  a check in the treasurer's log from Campbell, Kenneth bounced (note: returned - NSF) and is big enough to reach the top five (checks: total raised and progress; page structure: top donors)
+- |-
+  the export carries general fund and regatta entry gifts, among them a gift from Michelle Smith that would be the second-largest (checks: total raised and progress; page structure: top donors)
+- |-
+  Kwame Collins gave online and by check ('Collins, Kwame' in the log); only the two together make the top five in the right place (check: page structure: top donors)
+- |-
+  Priya Robinson ticked Hide my name online and also gave a check under their name; the combined total ranks in the top five as Anonymous and the name appears nowhere (checks: anonymous donors kept off; page structure: top donors)
+- |-
+  percent of goal, amount still to raise and the donor count (people, not gifts) all follow from the treasurer's goal and rules (checks: total raised and progress; page structure: progress figures)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: named top donors and the anonymous slot
+  path: index.html
+  phrases:
+  - Brian Morgan
+  - Kwame Collins
+  - Mary Gray
+  - Amanda Johnson
+  - anonymous
+- type: text_not_contains
+  name: anonymous donors kept off
+  path: index.html
+  phrases:
+  - Anna Taylor
+  - Priya Robinson
+  - Jacob Cooper
+  - Patricia Scott
+  - Nicholas Wright
+  - Rebecca Howard
+  - Taylor, Anna
+  - Robinson, Priya
+  - Cooper, Jacob
+  - Scott, Patricia
+  - Wright, Nicholas
+  - Howard, Rebecca
+  - taylor.anna@outlook.com
+  - priya_robinson@outlook.com
+  - cooper.jacob@protonmail.com
+  - patriciascott10@protonmail.com
+  - nwright@protonmail.com
+  - howard.rebecca@aol.com
+- type: text_numbers_present
+  name: total raised and progress
+  path: index.html
+  numbers:
+  - 27088.0
+  - 20912.0
+  - 56.4
+  rel_tol: 1.0e-07
+- type: custom
+  name: page structure
+  module: check.py

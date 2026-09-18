@@ -1,0 +1,17 @@
+From: Renata Szabo <rszabo@eastsidelearning.org>
+To: you
+Date: Mon, 9 Feb 2026 16:05
+Subject: fall vs spring numbers for the board
+
+For Thursday's board packet I need to show how each course held on to its students from fall to spring. The fall rosters are the instructors' workbook (a tab per section) and spring is the export from the new registration system.
+
+For every course we ran in either term: how many were enrolled in fall, how many in spring, how many were added (in the course in spring but not in fall) and how many dropped (in it in fall but not in spring). Count people per course, not seats - a section is just a time slot.
+
+Anyone who withdrew isn't enrolled, even if they're still listed. The instructors write that in the notes however they feel like it.
+
+Also, two of our students got married over the break and registered for spring under their new names: Deborah Evans is now Deborah Brennan, and Nancy Foster is now Nancy Castellano.
+
+Save it as a csv with columns course, fall_enrolled, spring_enrolled, added, dropped, using the course code (like ESL-101).
+
+Thank you!
+Renata

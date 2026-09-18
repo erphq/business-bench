@@ -1,0 +1,17 @@
+New vendor tax log
+
+Every vendor on new_vendor_requests.csv needs a row in vendor_tax.csv before we can pay them. Their tax forms are in vendor_tax_forms.
+
+Columns:
+  vendor_id     from the request list
+  legal_name    the name the vendor files taxes under
+  dba_name      business, trade or DBA name if different from the legal name, otherwise blank
+  entity_type   individual, c_corporation, s_corporation, partnership, trust_estate, llc_c, llc_s or llc_p
+  tin_type      SSN or EIN
+  tin_masked    last four digits only, masked like ***-**-1234 or **-***1234. Never type a full SSN or EIN into the log.
+  address, city, state, zip   the address on the tax form (not a remit-to address)
+  form_status   complete; incomplete if no tax classification is checked, the TIN is missing, or it isn't signed; missing if we have no form
+
+Fill in whatever a form does give you, even if it's incomplete. Leave fields blank when there is no form.
+
+- Thomas, AP

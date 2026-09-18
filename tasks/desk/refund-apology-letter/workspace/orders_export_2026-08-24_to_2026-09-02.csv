@@ -1,0 +1,34 @@
+﻿Name,Email,Financial Status,Paid at,Fulfillment Status,Accepts Marketing,Currency,Subtotal,Shipping,Taxes,Total,Discount Code,Discount Amount,Shipping Method,Created at,Lineitem quantity,Lineitem name,Lineitem price,Lineitem sku,Lineitem discount,Lineitem tax,Billing Name,Shipping City,Shipping Province
+CK-104593,kwame.ward@hotmail.com,paid,2026-08-24 08:15:45 -0700,fulfilled,no,USD,133.00,14.95,9.98,157.93,,0.00,Standard (5-7 business days),2026-08-24 08:15:45 -0700,1,Spice Jar Set 12,42.00,SJ-12,0.00,3.15,Kwame Ward,Asheville,NC
+CK-104593,kwame.ward@hotmail.com,,,,,,,,,,,,,,2,Bamboo Cutting Board L,36.00,BB-CBL,0.00,5.40,,,
+CK-104593,kwame.ward@hotmail.com,,,,,,,,,,,,,,1,Wooden Spoon Set 3pc,19.00,WS-3PC,0.00,1.43,,,
+CK-104618,david_davis@gmail.com,paid,2026-08-25 05:43:01 -0700,fulfilled,no,USD,287.00,24.95,21.54,333.49,,0.00,Express (2 business days),2026-08-25 05:43:01 -0700,1,Carbon Steel Wok 14in,79.00,CS-WK14,0.00,5.93,David Davis,Omaha,NE
+CK-104618,david_davis@gmail.com,,,,,,,,,,,,,,1,Chef Knife 8in,119.00,KN-CH8,0.00,8.93,,,
+CK-104618,david_davis@gmail.com,,,,,,,,,,,,,,1,Stainless Saucepan 3qt,89.00,TPS-SP3,0.00,6.68,,,
+CK-104582,jhughes@me.com,paid,2026-08-25 06:12:24 -0700,fulfilled,no,USD,30.60,9.95,2.30,42.85,LABORDAY15,5.40,Express (2 business days),2026-08-25 06:12:24 -0700,1,Bamboo Cutting Board L,36.00,BB-CBL,5.40,2.30,Jonathan Hughes,Boise,ID
+CK-104573,patricialindqvist2@hotmail.com,paid,2026-08-27 04:21:27 -0700,fulfilled,no,USD,287.30,9.95,21.55,318.80,LABORDAY15,50.70,Standard (5-7 business days),2026-08-27 04:21:27 -0700,2,Enameled Dutch Oven 5.5qt,169.00,EDO-55,50.70,21.55,Patricia Lindqvist,Sacramento,CA
+CK-104595,omar_wood@icloud.com,paid,2026-08-27 10:57:39 -0700,fulfilled,no,USD,390.15,0.00,29.27,419.42,LABORDAY15,68.85,Standard (5-7 business days),2026-08-27 10:57:39 -0700,2,Enameled Dutch Oven 5.5qt,149.00,EDO-55,44.70,19.00,Omar Wood,Boise,ID
+CK-104595,omar_wood@icloud.com,,,,,,,,,,,,,,1,Chef Knife 8in,119.00,KN-CH8,17.85,7.59,,,
+CK-104595,omar_wood@icloud.com,,,,,,,,,,,,,,1,Spice Jar Set 12,42.00,SJ-12,6.30,2.68,,,
+CK-104613,cynthiaadams22@me.com,paid,2026-08-27 11:05:35 -0700,fulfilled,no,USD,67.00,9.95,5.03,81.98,,0.00,Standard (5-7 business days),2026-08-27 11:05:35 -0700,1,Cast Iron Skillet 10in,48.00,CI-SK10,0.00,3.60,Cynthia Adams,Richmond,VA
+CK-104613,cynthiaadams22@me.com,,,,,,,,,,,,,,1,Wooden Spoon Set 3pc,19.00,WS-3PC,0.00,1.43,,,
+CK-104579,nancy_mensah@protonmail.com,paid,2026-08-27 15:19:13 -0700,fulfilled,no,USD,79.00,24.95,5.93,109.88,,0.00,Express (2 business days),2026-08-27 15:19:13 -0700,1,Carbon Steel Wok 14in,79.00,CS-WK14,0.00,5.93,Nancy Mensah,Denver,CO
+CK-104631,rogers.laura@icloud.com,paid,2026-08-27 20:41:47 -0700,fulfilled,no,USD,471.75,14.95,35.38,522.08,LABORDAY15,83.25,Standard (5-7 business days),2026-08-27 20:41:47 -0700,1,Tri-Ply Stainless 10-Piece Set,419.00,TPS-10PC,62.85,26.71,Laura Rogers,Burlington,VT
+CK-104631,rogers.laura@icloud.com,,,,,,,,,,,,,,2,Pre-Seasoned Cast Iron Skillet 12in,56.00,CI-SK12,16.80,7.14,,,
+CK-104631,rogers.laura@icloud.com,,,,,,,,,,,,,,1,Silicone Utensil Set 6pc,24.00,SIL-UT6,3.60,1.53,,,
+CK-104607,richardson.christopher@outlook.com,paid,2026-08-28 22:04:28 -0700,fulfilled,no,USD,161.00,0.00,12.08,173.08,,0.00,Standard (5-7 business days),2026-08-28 22:04:28 -0700,1,Spice Jar Set 12,42.00,SJ-12,0.00,3.15,Christopher Richardson,Richmond,VA
+CK-104607,richardson.christopher@outlook.com,,,,,,,,,,,,,,1,Chef Knife 8in,119.00,KN-CH8,0.00,8.93,,,
+CK-104651,garcia.yuki@icloud.com,paid,2026-08-29 11:52:04 -0700,fulfilled,no,USD,48.00,24.95,3.60,76.55,,0.00,Express (2 business days),2026-08-29 11:52:04 -0700,1,Cast Iron Skillet 10in,48.00,CI-SK10,0.00,3.60,Yuki Garcia,Providence,RI
+CK-104643,angela.stewart@gmail.com,paid,2026-08-29 23:28:16 -0700,fulfilled,no,USD,273.70,0.00,20.53,294.23,LABORDAY15,48.30,Express (2 business days),2026-08-29 23:28:16 -0700,1,Bamboo Cutting Board L,36.00,BB-CBL,5.40,2.30,Angela Stewart,Richmond,VA
+CK-104643,angela.stewart@gmail.com,,,,,,,,,,,,,,1,Cast Iron Skillet 10in,48.00,CI-SK10,7.20,3.06,,,
+CK-104643,angela.stewart@gmail.com,,,,,,,,,,,,,,2,Chef Knife 8in,119.00,KN-CH8,35.70,15.17,,,
+CK-104687,mortiz@yahoo.com,paid,2026-08-30 13:31:37 -0700,fulfilled,no,USD,206.00,0.00,15.45,221.45,,0.00,Express (2 business days),2026-08-30 13:31:37 -0700,1,Cast Iron Skillet 10in,48.00,CI-SK10,0.00,3.60,Mary Ortiz,Columbus,OH
+CK-104687,mortiz@yahoo.com,,,,,,,,,,,,,,2,Carbon Steel Wok 14in,79.00,CS-WK14,0.00,11.85,,,
+CK-104611,amara.harris@protonmail.com,paid,2026-08-31 13:50:50 -0700,fulfilled,no,USD,35.70,0.00,2.68,38.38,LABORDAY15,6.30,Express (2 business days),2026-08-31 13:50:50 -0700,1,Spice Jar Set 12,42.00,SJ-12,6.30,2.68,Amara Harris,Savannah,GA
+CK-104581,luisgomez51@protonmail.com,paid,2026-08-31 17:48:36 -0700,fulfilled,no,USD,228.00,24.95,17.11,270.06,,0.00,Express (2 business days),2026-08-31 17:48:36 -0700,1,Carbon Steel Wok 14in,79.00,CS-WK14,0.00,5.93,Luis Gomez,Sacramento,CA
+CK-104581,luisgomez51@protonmail.com,,,,,,,,,,,,,,1,Enameled Dutch Oven 5.5qt,149.00,EDO-55,0.00,11.18,,,
+CK-104594,charleslopez79@hotmail.com,paid,2026-08-31 19:53:11 -0700,fulfilled,no,USD,260.95,24.95,19.57,305.47,LABORDAY15,46.05,Standard (5-7 business days),2026-08-31 19:53:11 -0700,1,Enameled Dutch Oven 5.5qt,149.00,EDO-55,22.35,9.50,Charles Lopez,Denver,CO
+CK-104594,charleslopez79@hotmail.com,,,,,,,,,,,,,,2,Carbon Steel Wok 14in,79.00,CS-WK14,23.70,10.07,,,
+CK-104572,donald.kim@gmail.com,paid,2026-09-01 08:16:52 -0700,fulfilled,no,USD,411.00,14.95,30.83,456.78,,0.00,Standard (5-7 business days),2026-09-01 08:16:52 -0700,1,Enameled Dutch Oven 5.5qt,169.00,EDO-55,0.00,12.68,Donald Kim,Richmond,VA
+CK-104572,donald.kim@gmail.com,,,,,,,,,,,,,,2,Spice Jar Set 12,42.00,SJ-12,0.00,6.30,,,
+CK-104572,donald.kim@gmail.com,,,,,,,,,,,,,,2,Carbon Steel Wok 14in,79.00,CS-WK14,0.00,11.85,,,

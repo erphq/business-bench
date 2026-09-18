@@ -1,0 +1,66 @@
+{
+  "files": {
+    "A": "Foundry_CooperRiver_FCR-2026-0418.pdf",
+    "B": "MagnoliaHall_invoice_7779.pdf",
+    "C": "Harborview_HTH-51573-R1.pdf",
+    "C0": "Harborview_HTH-51573.pdf",
+    "D": "scan_oldmillbarn_0901.pdf",
+    "E": "Rosewater_RG-26-0911.pdf"
+  },
+  "scan_figures": {
+    "venue_invoices/scan_oldmillbarn_0901.pdf": [
+      "2342",
+      "7669.70",
+      "799.70",
+      "1500.00",
+      "Barn and grounds rental",
+      "Tables and chairs set",
+      "Farm brunch buffet",
+      "Lawn games package",
+      "Cleanup crew",
+      "3200.00",
+      "700.00",
+      "3895.00",
+      "225.00",
+      "350.00",
+      "288.00",
+      "63.00",
+      "428.45",
+      "20.25",
+      "0.00"
+    ]
+  },
+  "superseded": "HTH-51573",
+  "totals": {
+    "A": {
+      "balance": 31345.11,
+      "no": "FCR-2026-0418",
+      "total": 34845.11
+    },
+    "B": {
+      "balance": 11432.0,
+      "no": "MH-7779",
+      "total": 12932.0
+    },
+    "C": {
+      "balance": 7765.08,
+      "no": "HTH-51573-R1",
+      "total": 8765.08
+    },
+    "C0": {
+      "balance": 9386.13,
+      "no": "HTH-51573",
+      "total": 10386.13
+    },
+    "D": {
+      "balance": 7669.7,
+      "no": "2342",
+      "total": 9169.7
+    },
+    "E": {
+      "balance": 32308.96,
+      "no": "RG-26-0911",
+      "total": 32308.96
+    }
+  }
+}

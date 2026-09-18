@@ -1,0 +1,19 @@
+From: Omar Haddad <omar@redwoodpm.com>
+To: you
+Date: Mon, 6 Jul 2026 08:30
+Subject: electricity by month, first half
+
+The owners want electricity use by building, month by month, for January to June. All I have is what the meter reader writes down, which is the number on the register - the running total on the meter, not what the building used.
+
+He never gets round on the first of the month, so the reads land wherever they land. Spread the usage between two reads evenly across the days between them: count from the day after the earlier read up to and including the day of the later read. It is what the utility does and the owners are used to seeing it that way.
+
+-----Original Message-----
+
+From: Omar Haddad <omar@redwoodpm.com>
+To: you
+Date: Mon, 6 Jul 2026 08:52
+Subject: RE: electricity by month, first half
+
+Two things about the meters. Mill Street had its meter changed out in March - the old one was read and pulled the same day and the new one started from zero, so do not let the numbers frighten you. And Riverside is two meters, one per building; the owners see Riverside as one property.
+
+If there is a month you cannot work out, leave it blank and say so in the memo. I would rather have a hole in the table than a number somebody invented - we bill tenants off this.

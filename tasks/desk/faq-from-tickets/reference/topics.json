@@ -1,0 +1,37 @@
+{
+  "counts_per_customer": {
+    "canada": 9,
+    "cancel": 17,
+    "damaged": 28,
+    "deadline": 22,
+    "decaf": 4,
+    "freeship": 13,
+    "gift": 6,
+    "grind": 7,
+    "pause": 34
+  },
+  "counts_per_ticket": {
+    "canada": 20,
+    "cancel": 25,
+    "damaged": 30,
+    "deadline": 24,
+    "decaf": 4,
+    "freeship": 14,
+    "gift": 7,
+    "grind": 7,
+    "pause": 37
+  },
+  "not_in_faq": [
+    "canada",
+    "grind",
+    "gift",
+    "decaf"
+  ],
+  "top5_in_order": [
+    "pause",
+    "damaged",
+    "deadline",
+    "cancel",
+    "freeship"
+  ]
+}

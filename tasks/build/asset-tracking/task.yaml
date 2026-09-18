@@ -1,0 +1,61 @@
+id: asset-tracking
+track: build
+category: it-assets
+title: IT asset register with padded tags, assignment history, warranty alerts, disposal rules, and site-scoped access
+ask: |
+  I run IT for a freight company with offices in Denver, Salt Lake City, Boise, and Omaha, and I need
+  to track every laptop, monitor, phone, and piece of network kit we own. I've attached our asset
+  register and the assignment history; our asset tags are IT- followed by six digits, but some came
+  through with the zeros stripped or the prefix missing. I want to see who has each asset now and who
+  had it before, a list of warranties running out in the next 60 days, and a dashboard with the total
+  value of what we own (purchase cost, not counting anything disposed of). Nothing can be disposed of
+  while it's still assigned to someone, and laptops and phones need a confirmed data wipe first. Each
+  site manager should see only their own site's assets, our auditor needs a read-only login, and I want
+  an admin login for me and a login for Owen Pratt, our Boise site manager.
+seed:
+  - seed/assets.csv
+  - seed/assignments.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for Owen Pratt, the Boise site manager.
+      password: That site manager's password.
+    notes: >
+      Free text. Must say the restricted login is Owen Pratt (Boise). May include the read-only
+      login, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "it-admin@example.com", "password": "..."},
+      "restricted": {"user": "owen.pratt@example.com", "password": "..."},
+      "notes": "restricted login is Owen Pratt, Boise site manager. Auditor: audit@example.com / ... Restart: systemctl restart assets."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 20, 23]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - "tags are written IT-002955, IT-2955, 2955, and 002955; 6 assets appear twice under two spellings and 4 rows are exact copies: 250 rows -> 240 assets, and a text join drops history rows written 1053 (items 11, 15, 18)"
+  - "sites are spelled Denver HQ, DENVER, SLC, salt lake city, Boise with a trailing space, omaha; grouping on the raw text splits every site-scoped count and value (items 6, 9, 16)"
+  - "warranty lengths are 24, 36 months, 3 years, 5 yr, blank, or none; treating the column as a number or as months only gets the ends wrong and counts no-warranty docks as expired (items 8, 17, 26)"
+  - "27 disposed assets stay in the register; including them gives value 294,969.00 instead of 268,866.00 and 176 expired warranties instead of 154 (items 8, 16, 26)"
+  - "purchase costs are $18,450.00, 1389, and 1,249.00; a text sort does not put the R760 server first (item 10)"
+  - "assignment dates mix February 22, 2021, 07/17/2022, 2023-04-23; a text sort scrambles the history (item 18)"
+  - "assignments.csv line 149 returns IT-673 on 21-Nov-2021, before its 24-Jul-2023 assignment; it must be flagged (item 19)"
+  - "reassignment must close the previous open assignment automatically; appending a new row leaves two open assignments (items 20, 21)"
+  - "warranty ends in the seed skip 2026-09-01..2027-04-30, so the 60-day alert holds no imported asset during the valid test window and the expired count is stable (items 22, 26)"

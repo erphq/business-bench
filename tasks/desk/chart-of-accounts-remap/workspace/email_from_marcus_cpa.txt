@@ -1,0 +1,18 @@
+From: Marcus Bell <marcus@mossgielcpa.com>
+To: Dee Tanager <dee@tanagerelectric.com>
+Date: Thu, 3 Sep 2026 16:20
+Subject: Crosswalk for the new books
+
+Dee,
+
+The crosswalk is attached - use the v2 final tab. v1 was my first pass before we talked, a few of those accounts changed.
+
+What I need back is every line from the January-August detail report restated on the new codes, one row per line, on the template I sent (remapped.csv is fine as a name).
+
+- Map on the account the line was actually posted to. QuickBooks shows sub-accounts as Parent:Child, so the child is the one that counts; a few lines were posted straight to a parent account, which has its own row on the crosswalk.
+- Old 6180 Tools & Equipment splits. Any single line of $2,500.00 or more is capitalized: 1520 Tools & Equipment. Anything under $2,500.00 goes to 6150 Small Tools & Supplies.
+- If an old account isn't on the crosswalk at all, don't guess and don't drop the line. Leave New Account and New Account Name empty and put NEEDS MAPPING in Mapping Note. Otherwise leave Mapping Note empty.
+- Amount: same sign as the report, as a plain number.
+
+Thanks,
+Marcus

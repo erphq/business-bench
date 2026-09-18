@@ -1,0 +1,5 @@
+From Leila:
+
+I keyed June by hand (transactions_2026-06.csv). Can you do July and August the same way into transactions.csv? The statements folder has everything: Cascade CU (closed at the end of July), the new Harbor Trust checking that started in August, and the Northgate savings statement that came in the mail.
+
+Same columns as June. txn_ref is the trace, reference, check or sequence number printed for that transaction, account is the last four digits of the account, money in is positive and money out is negative, and balance is the running balance printed after that transaction.

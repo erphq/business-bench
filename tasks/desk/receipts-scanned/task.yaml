@@ -1,0 +1,90 @@
+id: receipts-scanned
+track: desk
+category: extraction
+title: Expense table from scanned trip receipts
+ask: |
+  Dana scanned all her Denver trip receipts. Please turn them into expenses.csv for reimbursement - finance's instructions and template are in the folder.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the four restaurant slips print an AMOUNT before tip and the tip is written in by hand; on the Snooze and Tavernetta slips only the tip is written and the total line is blank, so the charge is amount plus tip; the cab tip is also written in (check: tips and totals)
+- |-
+  the Rio Grande Cantina check 1991 was scanned twice, a merchant copy with the tip and a customer copy with blank tip and total lines; one row, carrying the tip (checks: one row per receipt; row count; tips and totals)
+- |-
+  card slips date as MM/DD/YY and the hotel, shops and parking as "11 SEP 2026"; the template wants YYYY-MM-DD and the hotel wants its checkout date, not arrival (check: dates)
+- |-
+  the hotel folio repeats nightly room and lodging-tax lines above its totals, and parking and fuel print only a total with no separate tax (check: subtotals and tax)
+- |-
+  every receipt is an image-only scan at a slight skew with dust; the text layer is empty (checks: merchants; one row per receipt)
+checks:
+- type: csv_columns
+  name: template columns
+  path: expenses.csv
+  columns:
+  - receipt_no
+  - date
+  - merchant
+  - subtotal
+  - tax
+  - tip
+  - total
+- type: csv_set_equal
+  name: one row per receipt
+  path: expenses.csv
+  column: receipt_no
+  ref: expenses.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: expenses.csv
+  equals_ref: expenses.csv
+- type: csv_values_match
+  name: merchants
+  path: expenses.csv
+  ref: expenses.csv
+  key: receipt_no
+  columns:
+  - merchant
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: dates
+  path: expenses.csv
+  ref: expenses.csv
+  key: receipt_no
+  columns:
+  - date
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: subtotals and tax
+  path: expenses.csv
+  ref: expenses.csv
+  key: receipt_no
+  columns:
+  - subtotal
+  - tax
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: tips and totals
+  path: expenses.csv
+  ref: expenses.csv
+  key: receipt_no
+  columns:
+  - tip
+  - total
+  must_match_keys:
+  - '5497'
+  - '1991'
+  - '746930'
+  - '2516'
+  - '3818'
+  - '4075'
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

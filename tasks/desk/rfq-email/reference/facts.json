@@ -1,0 +1,51 @@
+{
+  "benches": 36,
+  "dock_by": "2026-11-13",
+  "lines": [
+    {
+      "no": "TP-EXT-1530-96",
+      "old": 120,
+      "per": 4,
+      "qty": 144
+    },
+    {
+      "no": "TP-EXT-1515-45",
+      "old": 180,
+      "per": 6,
+      "qty": 216
+    },
+    {
+      "no": "TP-BRK-90G",
+      "old": 360,
+      "per": 12,
+      "qty": 432
+    },
+    {
+      "no": "TP-RLR-1315",
+      "old": 60,
+      "per": 2,
+      "qty": 72
+    },
+    {
+      "no": "TP-EXM-4896",
+      "old": 30,
+      "per": 1,
+      "qty": 36
+    },
+    {
+      "no": "TP-CAP-1515",
+      "old": 240,
+      "per": 8,
+      "qty": 288
+    },
+    {
+      "no": "TP-HND-CRK",
+      "old": 30,
+      "per": 1,
+      "qty": 36
+    }
+  ],
+  "quote_due": "2026-10-02",
+  "ship": "2026-12-01",
+  "stock_part": "TP-FST-516K"
+}

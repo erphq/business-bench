@@ -1,0 +1,15 @@
+Item,Description,Stock UoM,Purchase UoM,Units per Purchase UoM,Default Vendor
+CAR-4PK,"4-pack can carrier, black",EA,BX,250,Pacific Packaging
+LID-202,"202 can end, silver",EA,BX,500,Northwest Can Supply
+CAN-16,"16oz can, bright",EA,BX,200,Northwest Can Supply
+TRY-4X6,"Corrugated tray, 4x6",EA,BX,50,Pacific Packaging
+KEG-CAP,"Keg cap, red",EA,BX,100,BSG Craft Brewing
+GLS-PNT,"Pint glass, logo",EA,BX,24,Promo Print Co
+CST-LOGO,"Coaster, logo",EA,BX,500,Promo Print Co
+LBL-HAZY,"Shrink sleeve, Hazy IPA",EA,BX,1000,Pacific Packaging
+HOP-CIT,Citra hop pellets 11 lb,EA,EA,1,BSG Craft Brewing
+MLT-2ROW,2-row base malt 55 lb bag,EA,EA,1,BSG Craft Brewing
+YST-US05,Dry yeast US-05 500 g,EA,EA,1,BSG Craft Brewing
+CLN-PBW,PBW cleaner 50 lb pail,EA,EA,1,BSG Craft Brewing
+TSH-M,"T-shirt, logo, M",EA,EA,1,Promo Print Co
+TSH-L,"T-shirt, logo, L",EA,EA,1,Promo Print Co

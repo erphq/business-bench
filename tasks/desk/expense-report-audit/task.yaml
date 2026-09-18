@@ -1,0 +1,57 @@
+id: expense-report-audit
+track: desk
+category: bookkeeping
+title: Audit August expense reports against the travel policy
+ask: |
+  Please audit the expense reports waiting for approval before we pay them - Ingrid's email says what she needs, and the policy and trip log are in the folder. Save the list as violations.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  EXL-58235 claims the $79.00 Tier A per diem on a trip to a standard city; only the $18.00 above the $61.00 rate is disallowed, not the whole line (check: amount disallowed per line)
+- |-
+  EXL-58321 is a per diem on a trip that left and returned the same day, and EXL-58310 is a per diem the day after an approved trip ended; neither is over any rate, so only the trip log shows them (checks: flagged lines; policy section per flagged line)
+- |-
+  EXL-58267 is a dinner receipt on a day the same technician claimed per diem; two client lunches in Boise on days without a per diem are fine (checks: flagged lines; policy section per flagged line)
+- |-
+  the receipt rule is $75.00 or more: EXL-58312 at exactly $75.00 without a receipt fails, a $74.99 line passes, and every per diem line shows Receipt Attached = No but needs none (checks: flagged lines; row count)
+- |-
+  EXL-58332 is a standard-city hotel night above the $165.00 cap, which loses only the excess, while a Tier A night at exactly $245.00 and Tier A nights around $200 are within their cap (checks: amount disallowed per line; flagged lines)
+- |-
+  EXL-58221 re-submits a hotel night already paid on the July report, and EXL-58283 re-claims a rental car from the same employee's first August report; two colleagues at the same hotel on the same nights and daily site parking at the same amount are not duplicates (checks: flagged lines; amount disallowed per line)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: violations.csv
+  columns:
+  - line_id
+  - report_id
+  - policy_section
+  - amount_disallowed
+- type: csv_set_equal
+  name: flagged lines
+  path: violations.csv
+  column: line_id
+  ref: violations.csv
+- type: csv_row_count
+  name: row count
+  path: violations.csv
+  equals_ref: violations.csv
+- type: csv_values_match
+  name: amount disallowed per line
+  path: violations.csv
+  ref: violations.csv
+  key: line_id
+  columns:
+  - amount_disallowed
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - EXL-58235
+  - EXL-58332
+  - EXL-58221
+  - EXL-58283
+- type: custom
+  name: policy section per flagged line
+  module: check.py

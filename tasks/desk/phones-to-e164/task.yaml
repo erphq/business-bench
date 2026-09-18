@@ -1,0 +1,139 @@
+id: phones-to-e164
+track: desk
+category: reformatting
+title: Convert the CRM contact phones to the new phone system's import file
+ask: |
+  We are moving our phones to Ringline and they need every contact's number in their import format; their template and notes are in the folder. Convert contacts_export.xlsx and save the result as contacts_e164.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the Country column is blank on about half the rows; city, state/province and postcode decide it, and Perth "WA" with a four-digit postcode is Australia, not Washington (check: country codes)
+- |-
+  GB, AU and DE numbers carry a trunk 0 that E.164 drops; some are written "+44 (0)20 ...", "0044 ..." or "030/1234567" (check: e164 numbers)
+- |-
+  twelve numbers carry extensions in six spellings (x204, ext. 12, #3, ", extension 45"); the extension goes to its own column and never into the number (check: e164 numbers; extensions)
+- |-
+  seven contacts have unusable numbers (7 digits, 9 digits, 11 digits not starting with 1, an email address, "TBD", blank, "call the office"); they stay in the file with a blank number and status invalid (check: import status; one row per contact)
+- |-
+  the xlsx has a merged title row and an export-date line above the header (check: one row per contact)
+- |-
+  US and Canadian numbers both map to +1, but the country column must say US or CA from the address (check: country codes)
+- |-
+  the template's six columns in exact order and the template's status spellings ok / invalid (check: template columns; import status)
+checks:
+- type: csv_columns
+  name: template columns
+  path: contacts_e164.csv
+  columns:
+  - contact_id
+  - display_name
+  - e164_number
+  - extension
+  - country
+  - import_status
+  exact: true
+- type: csv_set_equal
+  name: one row per contact
+  path: contacts_e164.csv
+  column: contact_id
+  ref: contacts_e164.csv
+- type: csv_row_count
+  name: row count
+  path: contacts_e164.csv
+  equals_ref: contacts_e164.csv
+- type: csv_values_match
+  name: e164 numbers
+  path: contacts_e164.csv
+  ref: contacts_e164.csv
+  key: contact_id
+  columns:
+  - e164_number
+  min_accuracy: 1.0
+  must_match_keys:
+  - C-1001
+  - C-1003
+  - C-1004
+  - C-1006
+  - C-1007
+  - C-1008
+  - C-1009
+  - C-1011
+  - C-1012
+  - C-1013
+  - C-1014
+  - C-1015
+  - C-1016
+  - C-1017
+  - C-1018
+  - C-1019
+  - C-1020
+  - C-1021
+  - C-1022
+  - C-1023
+  - C-1024
+  - C-1025
+  - C-1026
+  - C-1028
+  - C-1029
+  - C-1030
+  - C-1031
+  - C-1032
+  - C-1033
+  - C-1037
+  - C-1039
+  - C-1040
+  - C-1041
+  - C-1042
+  - C-1043
+  - C-1046
+  - C-1047
+  - C-1048
+  - C-1049
+  - C-1050
+  - C-1051
+  - C-1052
+  - C-1053
+  - C-1054
+  - C-1056
+  - C-1057
+  - C-1058
+  - C-1059
+  - C-1060
+  - C-1062
+  - C-1063
+  - C-1064
+  - C-1065
+  - C-1066
+  - C-1067
+  - C-1069
+  - C-1070
+  - C-1071
+  - C-1072
+  - C-1073
+  - C-1074
+  - C-1075
+- type: csv_values_match
+  name: extensions
+  path: contacts_e164.csv
+  ref: contacts_e164.csv
+  key: contact_id
+  columns:
+  - extension
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: country codes
+  path: contacts_e164.csv
+  ref: contacts_e164.csv
+  key: contact_id
+  columns:
+  - country
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: import status
+  path: contacts_e164.csv
+  ref: contacts_e164.csv
+  key: contact_id
+  columns:
+  - import_status
+  min_accuracy: 1.0

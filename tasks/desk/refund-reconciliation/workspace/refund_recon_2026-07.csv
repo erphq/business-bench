@@ -1,0 +1,12 @@
+refund_id,booking_ref,pms_amount,processor_amount,difference,status
+RF-10386,LH-23855,320.00,320.00,0.00,matched
+RF-10390,LH-23789,430.00,430.00,0.00,matched
+RF-10394,LH-23756,100.00,100.00,0.00,matched
+RF-10397,LH-23896,350.00,350.00,0.00,matched
+RF-10401,LH-23956,290.00,290.00,0.00,matched
+RF-10406,LH-23770,440.00,440.00,0.00,matched
+RF-10408,LH-23771,210.00,210.00,0.00,matched
+RF-10411,LH-24061,430.00,430.00,0.00,matched
+RF-10417,LH-24051,220.00,220.00,0.00,matched
+RF-10437,LH-24379,240.00,240.00,0.00,timing - settled in August
+RF-10439,LH-24391,300.00,300.00,0.00,timing - settled in August

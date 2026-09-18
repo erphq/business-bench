@@ -1,0 +1,10 @@
+vendor_id,legal_name,dba_name,entity_type,tin_type,tin_masked,address,city,state,zip,form_status
+V-2034,Ruiz and Lund Refrigeration,,partnership,EIN,**-***4900,8908 Union St Unit 449,Raleigh,NC,27601,complete
+V-2035,Sarah Torres,Torres Pest Solutions LLC,individual,EIN,**-***5580,6318 Main St,Providence,RI,02903,complete
+V-2053,Deborah Okafor,Okafor Tile and Stone,individual,SSN,***-**-2618,30 Bridge St,Savannah,GA,31401,complete
+V-2054,Current Craft Electric LLC,,llc_s,EIN,**-***9790,4008 Main St,Boulder,CO,80302,complete
+V-2063,Kettle Creek Signs Inc.,KC Sign Works,s_corporation,EIN,**-***2896,8028 Willow Way,Sacramento,CA,95814,complete
+V-2073,,,,,,,,,,missing
+V-2090,Riverside Linen Supply LLC,,,EIN,**-***6862,2056 Church St,Ann Arbor,MI,48104,incomplete
+V-2095,Howard Family Trust,Howard Properties,trust_estate,EIN,**-***4878,3341 Alder St,Columbus,OH,43215,complete
+V-2098,"Clearview Services Group, Inc.",Clearview Window Washing,c_corporation,EIN,**-***9485,3142 Magnolia Dr,Denver,CO,80202,complete

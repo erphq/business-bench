@@ -1,0 +1,20 @@
+Coverage check before the week of October 5
+
+The schedule for Monday 5 October to Sunday 11 October is published. Before it goes live I want to know
+how short we are each day against the minimums on my coverage sheet.
+
+How to count it:
+- Work through each day in half hours. For every half hour, compare how many people are on the phones
+  with the minimum for that time. Each missing person for a half hour is half an uncovered hour - if we
+  need 4 and have 2, that half hour is a whole uncovered hour. Having extra people at one time doesn't
+  make up for being short at another.
+- Hours belong to the calendar day they fall on. Night shifts run past midnight, so a shift that starts
+  Sunday night covers Monday morning. The export starts with Sunday the 4th for that reason.
+- Operators and supervisors both take calls. Trainees are shadowing and don't count.
+- Some people work a split day; the app puts both pieces in one row. They're off between the pieces.
+- If a comment says a shift was cancelled, it isn't happening, even if the app still shows it.
+
+Save it as coverage_gaps.csv with one line per day, Monday to Sunday: date (like 2026-10-05) and
+uncovered_hours.
+
+Gwen

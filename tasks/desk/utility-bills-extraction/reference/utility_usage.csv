@@ -1,0 +1,9 @@
+row_id,account_number,utility,service_month,usage,usage_unit,read_type,current_charges,late_fee
+3349-7890-01_2026-07,3349-7890-01,electric,2026-07,4594,kWh,actual,596.39,0.00
+3349-7890-01_2026-08,3349-7890-01,electric,2026-08,4047,kWh,actual,530.46,0.00
+3349-7890-02_2026-07,3349-7890-02,electric,2026-07,1616,kWh,actual,219.15,9.75
+3349-7890-02_2026-08,3349-7890-02,electric,2026-08,1342,kWh,estimated,186.12,0.00
+7705-5242-75_2026-07,7705-5242-75,electric,2026-07,892,kWh,actual,119.20,0.00
+7705-5242-75_2026-08,7705-5242-75,electric,2026-08,795,kWh,actual,107.50,7.50
+WTR-47961_2026-07,WTR-47961,water,2026-07,23936,gallons,estimated,324.12,0.00
+WTR-47961_2026-08,WTR-47961,water,2026-08,21692,gallons,actual,296.19,0.00

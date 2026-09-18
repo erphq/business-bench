@@ -1,0 +1,110 @@
+id: vendor-price-sheets
+track: desk
+category: extraction
+title: Load the fall supplier price sheets for the ordering guide
+ask: |
+  The suppliers sent their fall price sheets. Get the prices for everything on our ordering guide into prices.csv so Rosa can load them - her note says what she needs.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  Pacific Packaging's superseded March list sits in the folder as PPS_pricelist_FINAL.pdf with lower prices and 10-49 / 50+ breaks; the October list says it supersedes all earlier lists (checks: unit price at our order quantity; next price break)
+- |-
+  the mill quotes flour per hundredweight with a per-cwt volume allowance; a 50 lb bag is half a cwt after the allowance, and the rye comes in 25 lb bags (check: unit price at our order quantity)
+- |-
+  the dairy sheet prints list prices only; the 5% (24-71) and 8% (72+) quantity discounts are in a footnote under the table (checks: unit price at our order quantity; order total)
+- |-
+  the 12in cake boxes are ordered 10 cases at a time, exactly on the 10-24 break, and items already on the top tier carry 0 as the next break (check: next price break)
+- |-
+  the dairy's butter lines are market priced and take effect 10/01, while the rest of the sheet takes effect 10/05; the mill's date is in its covering prose (check: effective dates)
+- 'the coffee roaster''s list is an image-only fax (checks: one row per item; vendor names)'
+checks:
+- type: csv_columns
+  name: requested columns
+  path: prices.csv
+  columns:
+  - sku
+  - vendor
+  - unit_price
+  - order_total
+  - next_break_qty
+  - effective_date
+- type: csv_set_equal
+  name: one row per item
+  path: prices.csv
+  column: sku
+  ref: prices.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: prices.csv
+  equals_ref: prices.csv
+- type: csv_values_match
+  name: vendor names
+  path: prices.csv
+  ref: prices.csv
+  key: sku
+  columns:
+  - vendor
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - NJ-01
+- type: csv_values_match
+  name: unit price at our order quantity
+  path: prices.csv
+  ref: prices.csv
+  key: sku
+  columns:
+  - unit_price
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - PPS-4410
+  - CMG-101
+  - CMG-230
+  - BD-3104
+  - BD-2215
+  - NJ-01
+- type: csv_values_match
+  name: order total
+  path: prices.csv
+  ref: prices.csv
+  key: sku
+  columns:
+  - order_total
+  numeric: true
+  tolerance: 0.05
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: next price break
+  path: prices.csv
+  ref: prices.csv
+  key: sku
+  columns:
+  - next_break_qty
+  numeric: true
+  tolerance: 0.0
+  min_accuracy: 1.0
+  must_match_keys:
+  - PPS-4410
+  - PPS-4412
+  - PPS-7708
+  - BD-3104
+- type: csv_values_match
+  name: effective dates
+  path: prices.csv
+  ref: prices.csv
+  key: sku
+  columns:
+  - effective_date
+  min_accuracy: 1.0
+  must_match_keys:
+  - BD-2210
+  - BD-2215
+  - BD-4001
+  - CMG-104

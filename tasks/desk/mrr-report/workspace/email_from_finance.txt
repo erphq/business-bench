@@ -1,0 +1,21 @@
+From: Marcus Lindqvist <marcus@kestrelanalytics.io>
+To: you
+Date: Thu, 2 Jul 2026 09:20
+Subject: MRR schedule for the board pack
+
+The board wants MRR by month for the first half and a clear view of what we lost to churn. Everything is in the billing event log; the December book is there as the starting point.
+
+MRR is what the active subscriptions are worth on the last day of the month. Annual contracts are written at the yearly amount in the log - they count at a twelfth of that.
+
+-----Original Message-----
+
+From: Marcus Lindqvist <marcus@kestrelanalytics.io>
+To: you
+Date: Thu, 2 Jul 2026 09:41
+Subject: RE: MRR schedule for the board pack
+
+Two things the log does not make obvious. When somebody moves plan, the amount on that row is the new price they pay from that day - it is not the increase. And a cancellation ends on its effective date, not the day support logged it; the big ones give us notice, so the money keeps coming until the effective date.
+
+Trials are on list price in the log but we do not bill them. They are not revenue until the account converts.
+
+In the memo, tell me which month the churn landed in and what it cost us.

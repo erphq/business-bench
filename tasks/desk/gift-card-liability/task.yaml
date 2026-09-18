@@ -1,0 +1,86 @@
+id: gift-card-liability
+track: desk
+category: bookkeeping
+title: Gift card liability per card at year end
+ask: |
+  Hannah needs our gift card liability as of August 31 for the year-end file. Everything from the old Oakleaf SpaBook system and Cedarline is in the folder, along with her email. Save it as gift_cards.csv.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  a redemption's Ticket Total is the whole bill while Card Amount is what came off the card; card 5801 paid part of a bigger bill and is used up, and subtracting Ticket Total drives several cards negative (check: liability per card)
+- |-
+  expiry runs five years from the last load, and for migrated cards the sale and reload dates exist only in the Oakleaf SpaBook workbook: 7772 and 1984 have expired (the second after a 2024 partial redemption, which does not restart the clock), 8486 was reloaded in Oakleaf SpaBook in 2022 and 6072 in Cedarline in 2025 so both are active, and 8106 was sold 14 September 2021 and is still active on 31 August (checks: liability per card; card status)
+- |-
+  the 2023-04-01 Balance Import rows carry the Oakleaf SpaBook balances; treating them as loads means nothing ever expires, and adding the Oakleaf SpaBook Balance column on top doubles every migrated card (checks: liability per card; card status)
+- |-
+  promo bonus cards are logged as Promo Issue or as an Activation on a $0.00 ticket, and card 1146 was activated and voided the same morning; none of them were sold (check: every card we sold, once)
+- |-
+  a redemption reversal puts money back on 2936 without being a load (check: liability per card)
+- |-
+  Cedarline's June balance report is stale and ignores expiry; 4702 was used again in July (check: liability per card)
+checks:
+- type: csv_columns
+  name: schedule columns
+  path: gift_cards.csv
+  columns:
+  - card_last4
+  - liability
+  - status
+- type: csv_set_equal
+  name: every card we sold, once
+  path: gift_cards.csv
+  column: card_last4
+  ref: gift_cards.csv
+  normalize:
+  - digits
+- type: csv_row_count
+  name: row count
+  path: gift_cards.csv
+  equals_ref: gift_cards.csv
+- type: csv_values_match
+  name: liability per card
+  path: gift_cards.csv
+  ref: gift_cards.csv
+  key: card_last4
+  columns:
+  - liability
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - '1984'
+  - '6072'
+  - '8486'
+  - '8106'
+  - '7363'
+  - '5801'
+  - '8271'
+  - '2936'
+  - '4702'
+  - '4757'
+- type: csv_values_match
+  name: card status
+  path: gift_cards.csv
+  ref: gift_cards.csv
+  key: card_last4
+  columns:
+  - status
+  min_accuracy: 1.0
+  must_match_keys:
+  - '7772'
+  - '1984'
+  - '8486'
+  - '6072'
+  - '8106'
+  - '5801'
+- type: text_not_contains
+  name: promo and voided cards left out
+  path: gift_cards.csv
+  phrases:
+  - '5388'
+  - '5592'
+  - '2309'
+  - '2049'
+  - '6988'
+  - '1146'

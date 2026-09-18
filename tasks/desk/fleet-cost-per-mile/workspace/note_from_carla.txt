@@ -1,0 +1,14 @@
+Cost per mile, January to June
+
+For each vehicle I want miles driven, fuel and what we paid the shops, and the cost per mile, plus gallons and MPG so
+Dave can see which vans are thirsty. Fleet total at the bottom.
+
+- Miles come from the odometer tab: the 31 Dec reading to the 30 Jun reading. Van 24 went to the dealer in April, and
+  Van 30 replaced it; the Fleet tab has the odometer on the bill of sale and the miles Van 30 was delivered with.
+- Fuel is the fuel card. Only count the fuel itself - the card also gets used for car washes and the odd coffee and
+  snacks, and those are not what it costs to run the van.
+- When Luc's crew works the Quebec jobs they fill up over the border and WEX shows those in litres. The dollar amounts
+  are already in US dollars.
+- Shop cost is the invoice total. Champlain Fleet writes the licence plate instead of the unit number on some invoices.
+
+Carla

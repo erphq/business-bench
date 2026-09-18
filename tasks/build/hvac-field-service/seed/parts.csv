@@ -1,0 +1,61 @@
+SKU,Description,Unit Cost,Sell Price,On Hand
+CAP-45-5-440,Run capacitor 45/5 MFD 440V dual,9.80,38.50,24
+CAP-35-5-440,Run capacitor 35/5 MFD 440V dual,8.90,36.00,18
+CAP-40-5-440,Run capacitor 40/5 MFD 440V dual,9.20,37.00,15
+CAP-5-370,Run capacitor 5 MFD 370V,3.10,19.00,30
+CAP-7.5-370,Run capacitor 7.5 MFD 370V,3.40,21.00,22
+CTR-1P-30A,Contactor 1 pole 30A 24V coil,11.50,42.00,20
+CTR-2P-30A,Contactor 2 pole 30A 24V coil,13.75,48.00,16
+CTR-2P-40A,Contactor 2 pole 40A 24V coil,16.20,55.00,9
+MTR-COND-14HP,Condenser fan motor 1/4 HP 1075 RPM,118.00,289.00,6
+MTR-COND-13HP,Condenser fan motor 1/3 HP 1075 RPM,132.00,315.00,4
+MTR-BLW-12HP,Blower motor 1/2 HP PSC 115V,164.00,389.00,5
+MTR-BLW-34HP,Blower motor 3/4 HP PSC 115V,189.00,445.00,3
+MTR-ECM-12HP,ECM blower motor 1/2 HP with module,$412.00,$895.00,2
+MTR-IND-80,Draft inducer motor assembly 80% furnace,148.00,349.00,5
+MTR-IND-90,Draft inducer motor assembly 90% furnace,176.00,399.00,3
+IGN-HSI-80V ,Hot surface igniter 80V silicon nitride,22.00,79.00,14
+IGN-HSI-120V,Hot surface igniter 120V silicon carbide,18.50,69.00,11
+FLM-SENSOR,Flame sensor universal,6.40,45.00,26
+PSW-SNGL,Pressure switch single -0.60 WC,19.80,74.00,12
+PSW-DUAL,Pressure switch dual stage,34.00,118.00,6
+LSW-ROLLOUT,Rollout limit switch 350F,8.20,44.00,15
+LSW-HIGH-L190,High limit switch L190,12.40,58.00,9
+GV-24V-1STG,Gas valve 24V single stage NG,74.00,219.00,5
+GV-24V-2STG,Gas valve 24V two stage NG,98.00,279.00,3
+CB-FURN-UNIV,Furnace control board universal,88.00,249.00,6
+CB-HP-DEFROST,Heat pump defrost control board,64.00,189.00,4
+XFMR-40VA,Transformer 40VA 120/24V,14.60,52.00,17
+XFMR-75VA,Transformer 75VA 120/24V,22.30,72.00,6
+RLY-DPDT-24V,Relay DPDT 24V coil,7.10,29.00,21
+TST-PRO-1,Thermostat programmable 1H/1C,34.00,129.00,12
+TST-PRO-2,Thermostat programmable 2H/2C,48.00,169.00,7
+TST-WIFI,Thermostat Wi-Fi color touchscreen,$129.00,$299.00,5
+TST-NONPRO,Thermostat non-programmable 1H/1C,19.00,79.00,15
+REF-410A-25,Refrigerant R-410A 25 lb cylinder,$210.00,$640.00,4
+REF-22-30,Refrigerant R-22 30 lb cylinder (reclaimed),$690.00,"$1,450.00",1
+REF-454B-20,Refrigerant R-454B 20 lb cylinder,$285.00,$795.00,2
+FLT-16x25x1,Pleated filter 16x25x1 MERV 8 (case of 12),28.00,58.00,-3
+FLT-20x25x1,Pleated filter 20x25x1 MERV 8 (case of 12),30.00,62.00,8
+FLT-16x20x1,Pleated filter 16x20x1 MERV 8 (case of 12),26.00,54.00,11
+FLT-20x25x4,Media filter 20x25x4 MERV 11,21.00,49.00,14
+FLT-16x25x4,Media filter 16x25x4 MERV 11,20.00,47.00,9
+TXV-3T-410A,TXV valve 3 ton R-410A,62.00,179.00,4
+TXV-2T-410A,TXV valve 2 ton R-410A,58.00,169.00,3
+CMP-3T-R410A,Scroll compressor 3 ton R-410A,"$1,240.00","$2,480.00",2
+CMP-2T-R410A,Scroll compressor 2 ton R-410A,$980.00,"$1,960.00",1
+COIL-EVAP-3T,Evaporator coil 3 ton cased,$640.00,"$1,380.00",2
+COIL-EVAP-2T,Evaporator coil 2 ton cased,$560.00,"$1,220.00",1
+PMP-COND-115,Condensate pump 115V,31.00,98.00,9
+FSW-FLOAT,Condensate float safety switch,9.40,39.00,19
+DRN-PVC-34-10,PVC drain line 3/4 in x 10 ft,4.10,14.00,28
+DISC-60A-NF ,Disconnect box 60A non-fused,12.90,44.00,12
+WHIP-6FT,Whip 6 ft liquid-tight with fittings,10.20,34.00,16
+LS-38-34-25,Line set 3/8 x 3/4 x 25 ft,$98.00,$245.00,5
+LS-38-78-30,Line set 3/8 x 7/8 x 30 ft,136.00,329.00,3
+PAD-36x36,Equipment pad 36x36x3,38.00,89.00,6
+TAPE-FOIL-3,Foil tape 3 in x 50 yd,9.60,24.00,22
+MASTIC-1GAL,Duct mastic 1 gal,17.00,42.00,7
+UV-BULB-24,UV lamp replacement bulb 24 in,44.00,129.00,4
+HUM-PAD-35,Humidifier water panel #35,8.80,32.00,13
+SURGE-AC-1P,Surge protector for condenser 1 phase,41.00,139.00,6

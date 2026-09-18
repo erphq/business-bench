@@ -1,0 +1,20 @@
+{
+  "cancelled": [
+    "RC-26109",
+    "RC-26193",
+    "RC-26222",
+    "RC-26259",
+    "RC-26306"
+  ],
+  "open_contracts": [
+    "RC-26326",
+    "RC-26336",
+    "RC-26341"
+  ],
+  "renamed": {
+    "date": "2026-04-13",
+    "new": "Bobcat T76 Track Loader",
+    "old": "Skid Steer #2",
+    "tag": "SS-02"
+  }
+}

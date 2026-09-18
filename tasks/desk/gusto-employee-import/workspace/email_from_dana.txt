@@ -1,0 +1,42 @@
+From: Gusto Onboarding <onboarding@gusto-partners.example>
+To: Dana Morgan <dana@tamarackbrewing.com>
+Date: Thu, 3 Sep 2026 10:02
+Subject: Your employee upload file
+
+Hi Dana,
+
+When you are ready to bring your team over, use the upload template attached (one row per employee, same columns in the same order, keep the header row, delete our sample row).
+
+A few things that trip people up:
+- Start Date is MM/DD/YYYY. It is the date the person started this current stretch of employment, so for a rehire it is the rehire date, not the original hire date.
+- Employee Type must be exactly one of these three values:
+    Paid by the hour
+    Salary/No overtime
+    Salary/Eligible for overtime
+- Rate is a plain number. Hourly employees get their hourly rate with Payment Unit Hour. Salaried employees get their annual salary with Payment Unit Year, even if you think of their pay per paycheck or per month.
+- SSN: only fill it in if you have the full nine digits. A partial or masked number fails validation and blocks the whole upload. Leave it blank and each employee enters it themselves during onboarding.
+- Work Address has to match one of your company work addresses in Gusto character for character. For anyone who works fully remote, Gusto needs their home address as the work address instead.
+- Contractors are added separately in the Contractors section, so do not include them here, and only include people you are still paying (people on leave count).
+
+Thanks,
+The Gusto onboarding team
+
+-----Original Message-----
+
+From: Dana Morgan <dana@tamarackbrewing.com>
+To: you
+Date: Mon, 8 Sep 2026 16:40
+Subject: FW: Your employee upload file
+
+Can you build the Gusto upload from my roster? A few things only I know:
+
+Our work addresses as they are set up in Gusto:
+  Pearl Street taproom   1850 Pearl St, Boulder, CO 80302
+  Brewhouse              6400 Arapahoe Rd Unit 4, Boulder, CO 80303
+  Old Market taproom     455 Walnut St, Fort Collins, CO 80524
+Gusto still lists 212 Walnut St, Fort Collins, CO 80524 too but that is the old Old Market space we left in March, it is marked inactive, do not use it.
+
+Office people sit at the brewhouse. Production and delivery are brewhouse too.
+On the roster, OT Exempt = Y means the salaried person does not get overtime, N means they do. Pay Type is blank on a few rows where I never filled it in; the Per column tells you how they are paid.
+
+Dana

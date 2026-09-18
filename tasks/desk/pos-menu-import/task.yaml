@@ -1,0 +1,131 @@
+id: pos-menu-import
+track: desk
+category: reformatting
+title: Load the fall menu into the new POS with modifiers
+ask: |
+  We go live on TillTap next week. Can you turn our fall menu workbook into their menu import, modifiers included, and save it as pos_menu.csv? Kwame's notes from the setup call and their template are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  modifier groups and their options are rows of their own (MODIFIER_GROUP and MODIFIER); on the Modifiers sheet the group code, name and rule sit only on each group's first row, so options further down have a blank group and need it filled down into Parent Code (check: record type, name, parent and category)
+- |-
+  pick rules become Min/Max (Pick 1 = 1/1, Up to 3 = 0/3, Optional = 0/1), and each item's Modifier groups cell lists group NAMES that must become codes joined with | in the listed order (check: min, max and group codes)
+- |-
+  menu prices are '$5.25', '$ 5.00', '5.5' and upcharges '+$0.75', '+.6', 'free', '-' or blank; copying the text leaves $ and + in a numeric field and free options without 0.00 (check: prices as plain numbers)
+- |-
+  4 items and 2 options are 86'd, written '86', "86'd", '86 - out til Oct' and "86'd (supplier)"; they stay out (checks: one row per item, group and modifier; row count)
+- |-
+  the Taro Add-ins group is not 86'd itself, but its only item (Taro Milk Tea) is, so the group and both of its options stay out as unused (checks: one row per item, group and modifier; row count)
+- |-
+  category comes from plural section rows (MILK TEAS, FRUIT TEAS, SLUSHES, SNACKS) above each block, not a column; TillTap's picklist is Milk Tea, Fruit Tea, Slush, Snacks (check: record type, name, parent and category)
+checks:
+- type: csv_columns
+  name: TillTap template columns, exact order
+  path: pos_menu.csv
+  columns:
+  - Record Type
+  - Code
+  - Name
+  - Parent Code
+  - Category
+  - Price
+  - Min Select
+  - Max Select
+  - Modifier Groups
+  exact: true
+- type: csv_set_equal
+  name: one row per item, group and modifier
+  path: pos_menu.csv
+  column: Code
+  ref: pos_menu.csv
+- type: csv_row_count
+  name: row count
+  path: pos_menu.csv
+  equals_ref: pos_menu.csv
+- type: csv_values_match
+  name: record type, name, parent and category
+  path: pos_menu.csv
+  ref: pos_menu.csv
+  key: Code
+  columns:
+  - Record Type
+  - Name
+  - Parent Code
+  - Category
+  min_accuracy: 1.0
+  must_match_keys:
+  - DZ-NUT
+  - F201
+  - F202
+  - F204
+  - F205
+  - ICE-HOT
+  - ICE-LESS
+  - ICE-NO
+  - ICE-REG
+  - K401
+  - K402
+  - K403
+  - MK-ALM
+  - MK-LF
+  - MK-OAT
+  - S301
+  - S302
+  - S303
+  - SC-CHILI
+  - SC-MAYO
+  - SC-PLUM
+  - SW-0
+  - SW-100
+  - SW-25
+  - SW-50
+  - SW-75
+  - SZ-LG
+  - SZ-REG
+  - T101
+  - T102
+  - T103
+  - T105
+  - T106
+  - T108
+  - TP-CRYS
+  - TP-FOAM
+  - TP-LYCH
+  - TP-PEARL
+  - TP-PUD
+  - TP-RBEAN
+- type: csv_values_match
+  name: min, max and group codes
+  path: pos_menu.csv
+  ref: pos_menu.csv
+  key: Code
+  columns:
+  - Min Select
+  - Max Select
+  - Modifier Groups
+  normalize:
+  - strip
+  - lower
+  min_accuracy: 1.0
+  must_match_keys:
+  - F201
+  - F202
+  - F204
+  - F205
+  - MG-DRIZ
+  - MG-ICE
+  - MG-MILK
+  - MG-SAUCE
+  - MG-SIZE
+  - MG-SWEET
+  - MG-TOP
+  - T101
+  - T102
+  - T103
+  - T105
+  - T106
+  - T108
+- type: custom
+  name: prices as plain numbers
+  module: check.py

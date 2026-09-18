@@ -1,0 +1,562 @@
+{
+  "seed": 0,
+  "company": "Tallgrass Analytics",
+  "admin": "Ellen Park (finance manager)",
+  "restricted_login": "Grace Liu (Sales manager)",
+  "receipt_threshold": 75.0,
+  "baseline": {
+    "staff_role": "Manager",
+    "viewer_role": "Viewer",
+    "main_entity": "claim",
+    "main_entity_plural": "claims",
+    "scope_rule": "Grace Liu's own claims and her direct reports' claims",
+    "scope_count": 28,
+    "out_of_scope_example": {
+      "claim": "C-1078",
+      "employee": "Laura Edwards",
+      "employee_id": "E-0043",
+      "grade": "Staff",
+      "department": "Engineering",
+      "status": "Submitted",
+      "total": 353.56,
+      "file_lines": [
+        138,
+        139,
+        140,
+        141
+      ]
+    },
+    "kpis": [
+      {
+        "name": "Claims awaiting approval (status Submitted)",
+        "value": 30
+      },
+      {
+        "name": "Approved, awaiting reimbursement",
+        "value": 3248.63
+      },
+      {
+        "name": "Reimbursed in 2026 (status Paid)",
+        "value": 12913.16
+      },
+      {
+        "name": "Submitted claims over policy",
+        "value": 5
+      }
+    ],
+    "scoped_kpi_1": 7,
+    "scope_count_if_manager_email_matched_case_sensitively": 18,
+    "search": {
+      "term": "Hall",
+      "employee": "Melissa Hall",
+      "count": 3,
+      "claims": [
+        "C-1056",
+        "C-1069",
+        "C-1090"
+      ]
+    },
+    "filter": {
+      "field": "Status",
+      "value": "Paid",
+      "count": 58,
+      "line_rows_with_status_paid_as_written": 93
+    },
+    "sort": {
+      "field": "Total",
+      "top": {
+        "claim": "C-1092",
+        "employee": "Sofia Garcia",
+        "employee_id": "E-0042",
+        "grade": "Staff",
+        "department": "Product",
+        "status": "Submitted",
+        "total": 2908.34,
+        "file_lines": [
+          160,
+          161,
+          162
+        ]
+      },
+      "top_line_file_value": "$1,405.59",
+      "top_if_currency_strings_unread": {
+        "claim": "C-1106",
+        "total": 1955.16
+      }
+    },
+    "export": {
+      "rows": 112,
+      "columns": [
+        "Claim No",
+        "Employee",
+        "Submitted",
+        "Status",
+        "Total"
+      ]
+    },
+    "required_field": "Purpose"
+  },
+  "employees": {
+    "file_rows_excluding_header": 64,
+    "exact_duplicate_rows": 1,
+    "reimported_rows": 3,
+    "unique_employees": 60,
+    "dedupe_rule": "Same person when Work Email matches after lowercasing (the re-imported rows also carry the unpadded employee id).",
+    "wrong_counts": {
+      "no_dedupe": 64,
+      "exact_rows_only": 63
+    },
+    "per_grade": {
+      "Staff": 53,
+      "Manager": 6,
+      "Executive": 1
+    },
+    "restricted_direct_reports": 12,
+    "restricted_reports_with_case_variant_manager_email": [
+      "Amanda Miller",
+      "Andrew Hughes",
+      "Andrew Okafor",
+      "Anna Turner",
+      "Charles Turner",
+      "Stephanie Green"
+    ],
+    "restricted_reports_if_manager_email_matched_exactly": 6,
+    "reimported_employees": [
+      {
+        "name": "William Davis",
+        "id": "E-0012",
+        "file_lines": [
+          18,
+          30
+        ]
+      },
+      {
+        "name": "Nicholas Green",
+        "id": "E-0056",
+        "file_lines": [
+          50,
+          59
+        ]
+      },
+      {
+        "name": "Stephanie Patel",
+        "id": "E-0053",
+        "file_lines": [
+          8,
+          36
+        ]
+      }
+    ],
+    "exact_duplicate_employee": {
+      "name": "Betty Phillips",
+      "file_lines": [
+        27,
+        52
+      ]
+    },
+    "employee_login_for_item_21": {
+      "name": "Robert Morris",
+      "id": "E-0009",
+      "email": "robert.morris@tallgrass.io",
+      "claims": 5
+    }
+  },
+  "policy": {
+    "file_rows_excluding_header": 60,
+    "categories": 20,
+    "limits": {
+      "Airfare": {
+        "Staff": 600,
+        "Manager": 900,
+        "Executive": null
+      },
+      "Hotel": {
+        "Staff": 250,
+        "Manager": 325,
+        "Executive": 450
+      },
+      "Meals - Travel": {
+        "Staff": 60,
+        "Manager": 75,
+        "Executive": 100
+      },
+      "Client Entertainment": {
+        "Staff": 150,
+        "Manager": 300,
+        "Executive": 600
+      },
+      "Mileage": {
+        "Staff": 300,
+        "Manager": 300,
+        "Executive": 300
+      },
+      "Taxi & Rideshare": {
+        "Staff": 80,
+        "Manager": 100,
+        "Executive": 150
+      },
+      "Parking & Tolls": {
+        "Staff": 50,
+        "Manager": 50,
+        "Executive": 75
+      },
+      "Rail & Bus": {
+        "Staff": 200,
+        "Manager": 250,
+        "Executive": 300
+      },
+      "Car Rental": {
+        "Staff": 120,
+        "Manager": 150,
+        "Executive": 200
+      },
+      "Conference Fees": {
+        "Staff": 1500,
+        "Manager": 2000,
+        "Executive": 3500
+      },
+      "Training & Courses": {
+        "Staff": 1200,
+        "Manager": 1500,
+        "Executive": 2500
+      },
+      "Books & Subscriptions": {
+        "Staff": 100,
+        "Manager": 150,
+        "Executive": 250
+      },
+      "Software": {
+        "Staff": 200,
+        "Manager": 300,
+        "Executive": 500
+      },
+      "Office Supplies": {
+        "Staff": 100,
+        "Manager": 150,
+        "Executive": 200
+      },
+      "Home Office Equipment": {
+        "Staff": 400,
+        "Manager": 500,
+        "Executive": 750
+      },
+      "Phone & Internet": {
+        "Staff": 90,
+        "Manager": 120,
+        "Executive": 150
+      },
+      "Client Gifts": {
+        "Staff": 75,
+        "Manager": 150,
+        "Executive": 250
+      },
+      "Team Events": {
+        "Staff": 150,
+        "Manager": 500,
+        "Executive": 1000
+      },
+      "Postage & Shipping": {
+        "Staff": 100,
+        "Manager": 150,
+        "Executive": 200
+      },
+      "Visa & Passport": {
+        "Staff": 250,
+        "Manager": 250,
+        "Executive": 400
+      }
+    },
+    "category_name_variant_rows": 5
+  },
+  "claims": {
+    "file_rows_excluding_header": 211,
+    "duplicate_line_rows": 6,
+    "unique_lines": 205,
+    "claims": 112,
+    "per_status": {
+      "Paid": 58,
+      "Approved": 14,
+      "Submitted": 30,
+      "Rejected": 10
+    },
+    "wrong_counts": {
+      "line_rows_as_claims": 211,
+      "unique_lines_as_claims": 205
+    },
+    "item17_claim_with_duplicated_line": {
+      "claim": "C-1096",
+      "employee": "Ryan Cook",
+      "employee_id": "E-0048",
+      "grade": "Staff",
+      "department": "Finance & Operations",
+      "status": "Approved",
+      "total": 667.91,
+      "file_lines": [
+        170,
+        171,
+        172
+      ],
+      "total_with_duplicate_kept": 1206.23,
+      "duplicated_line": {
+        "category": "Training & Courses",
+        "amount": 538.32
+      }
+    },
+    "expense_after_submission": {
+      "claim": "C-1076",
+      "employee": "Mark Ruiz",
+      "employee_id": "E-0011",
+      "grade": "Staff",
+      "department": "Marketing",
+      "status": "Submitted",
+      "total": 121.96,
+      "file_lines": [
+        133,
+        134
+      ],
+      "submitted": "2026-08-21",
+      "expense_date": "2027-08-16",
+      "category": "Team Events",
+      "file_values": [
+        "08/21/2026",
+        "August 16, 2027"
+      ]
+    },
+    "awaiting_reimbursement": {
+      "claims": 14,
+      "total": 3248.63,
+      "total_with_duplicates_kept": 3871.55,
+      "employee_with_two_approved_claims": {
+        "name": "Melissa Hall",
+        "claims": [
+          "C-1069",
+          "C-1090"
+        ],
+        "owed": 106.75
+      }
+    },
+    "reimbursed_2026_after_batch": 16161.79,
+    "over_policy_submitted_claims": [
+      {
+        "claim": "C-1075",
+        "employee": "Betty Phillips",
+        "employee_id": "E-0008",
+        "grade": "Staff",
+        "department": "Engineering",
+        "status": "Submitted",
+        "total": 289.0,
+        "file_lines": [
+          132
+        ],
+        "over_line": {
+          "category": "Hotel",
+          "amount": 289.0,
+          "limit": 250
+        }
+      },
+      {
+        "claim": "C-1084",
+        "employee": "Susan Gonzalez",
+        "employee_id": "E-0024",
+        "grade": "Staff",
+        "department": "Customer Success",
+        "status": "Submitted",
+        "total": 86.25,
+        "file_lines": [
+          149
+        ],
+        "over_line": {
+          "category": "Meals - Travel",
+          "amount": 86.25,
+          "limit": 60
+        }
+      },
+      {
+        "claim": "C-1086",
+        "employee": "Donald Taylor",
+        "employee_id": "E-0023",
+        "grade": "Staff",
+        "department": "Finance & Operations",
+        "status": "Submitted",
+        "total": 529.99,
+        "file_lines": [
+          151
+        ],
+        "over_line": {
+          "category": "Home Office Equipment",
+          "amount": 529.99,
+          "limit": 400
+        }
+      },
+      {
+        "claim": "C-1097",
+        "employee": "Jason Wright",
+        "employee_id": "E-0014",
+        "grade": "Staff",
+        "department": "Sales",
+        "status": "Submitted",
+        "total": 947.79,
+        "file_lines": [
+          173,
+          174
+        ],
+        "over_line": {
+          "category": "Airfare",
+          "amount": 742.0,
+          "limit": 600
+        }
+      },
+      {
+        "claim": "C-1110",
+        "employee": "Andrew Okafor",
+        "employee_id": "E-0033",
+        "grade": "Staff",
+        "department": "Sales",
+        "status": "Submitted",
+        "total": 551.59,
+        "file_lines": [
+          207,
+          208,
+          209,
+          210
+        ],
+        "over_line": {
+          "category": "Hotel",
+          "amount": 312.4,
+          "limit": 250
+        }
+      }
+    ],
+    "grade_trap_not_over": {
+      "claim": "C-1074",
+      "employee": "Priya Raman",
+      "employee_id": "E-0058",
+      "grade": "Manager",
+      "department": "Product",
+      "status": "Submitted",
+      "total": 519.05,
+      "file_lines": [
+        130,
+        131
+      ],
+      "line": {
+        "category": "Hotel",
+        "amount": 312.4,
+        "limit": 325,
+        "staff_limit": 250
+      }
+    },
+    "no_limit_trap_not_over": {
+      "claim": "C-1072",
+      "employee": "Victor Almeida",
+      "employee_id": "E-0045",
+      "grade": "Executive",
+      "department": "Executive",
+      "status": "Submitted",
+      "total": 1850.0,
+      "file_lines": [
+        128
+      ],
+      "line": {
+        "category": "Airfare",
+        "amount": 1850.0,
+        "limit": "no limit"
+      }
+    },
+    "restricted_own_submitted_claim": {
+      "claim": "C-1087",
+      "employee": "Grace Liu",
+      "employee_id": "E-0002",
+      "grade": "Manager",
+      "department": "Sales",
+      "status": "Submitted",
+      "total": 46.8,
+      "file_lines": [
+        152
+      ]
+    }
+  },
+  "app_items": {
+    "receipt_test": {
+      "category": "Client Entertainment",
+      "staff_limit": 150,
+      "rejected_without_receipt": 75.01,
+      "accepted_without_receipt": 75.0
+    },
+    "cap_test": {
+      "employee": "Robert Morris",
+      "grade": "Staff",
+      "lines": [
+        {
+          "category": "Hotel",
+          "amount": 300.0,
+          "receipt": true,
+          "limit": 250,
+          "reimbursable": 250
+        },
+        {
+          "category": "Meals - Travel",
+          "amount": 48.5,
+          "receipt": false,
+          "limit": 60,
+          "reimbursable": 48.5
+        },
+        {
+          "category": "Taxi & Rideshare",
+          "amount": 92.0,
+          "receipt": true,
+          "limit": 80,
+          "reimbursable": 80
+        }
+      ],
+      "claimed": 440.5,
+      "reimbursable": 378.5
+    },
+    "awaiting_after_cap_claim_approved": 378.5
+  },
+  "changes": {
+    "1_paid_plus_approved_by_department": {
+      "Executive": 427.89,
+      "Sales": 5447.94,
+      "Engineering": 2158.37,
+      "Customer Success": 2362.57,
+      "Marketing": 2475.64,
+      "Finance & Operations": 2162.7,
+      "Product": 1126.68
+    },
+    "1_sales_after_cap_claim": 5826.44,
+    "1_per_extra_cap_claim": {
+      "sales": 378.5,
+      "hotel_lines": 1,
+      "taxi_lines": 1,
+      "restricted_lines": 2
+    },
+    "1_over_limit_lines_by_category_imported": {
+      "Airfare": 1,
+      "Home Office Equipment": 1,
+      "Hotel": 2,
+      "Meals - Travel": 1
+    },
+    "1_over_limit_lines_by_category_with_cap_claim": {
+      "Airfare": 1,
+      "Home Office Equipment": 1,
+      "Hotel": 3,
+      "Meals - Travel": 1,
+      "Taxi & Rideshare": 1
+    },
+    "1_restricted_over_limit_lines": 4,
+    "2_mileage_rate": 0.7,
+    "2_mileage_tests": {
+      "120_miles": 84.0,
+      "500_miles_claimed": 350.0,
+      "500_miles_reimbursable": 300.0,
+      "200_miles_no_receipt": 140.0,
+      "taxi_line_without_receipt_blocked": 76.0
+    },
+    "3_second_approval_over": 1000.0,
+    "3_tests": {
+      "over": 1250.0,
+      "boundary": 1000.0
+    }
+  }
+}

@@ -1,0 +1,5 @@
+plan_code,display_name,monthly_price_usd,annual_price_usd
+solo,Solo,39.00,390.00
+studio,Studio,119.00,1190.00
+studio_plus,Studio Plus,189.00,1890.00
+multi,Multi-site,289.00,2890.00

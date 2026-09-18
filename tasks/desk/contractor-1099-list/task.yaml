@@ -1,0 +1,95 @@
+id: contractor-1099-list
+track: desk
+category: reformatting
+title: 2025 1099-NEC recipients into the e-file service's import file
+ask: |
+  Nadia needs our 2025 1099 list in the Filewell import format - their template and notes are in the folder, and her email says who gets one. Save it as 1099_vendors.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  corporations are left out by the tax classification on the W-9 roster, and an LLC is a corporation only when its LLC tax classification is C or S; the partnership LLC and the single-member LLC stay (check: who gets a 1099)
+- |-
+  Copperfield Law, P.C. is an S corporation but legal fees are always reported, while the accountant's own P.C. is left off (check: who gets a 1099)
+- |-
+  the threshold comes from the email as $600 or more (not the $2,000 that applies from 2026): one vendor totals exactly $600.00 and is in, another $587.50 and is out (check: who gets a 1099)
+- |-
+  vendor refunds are Deposit rows with negative amounts: one vendor's $640.00 less a $75.00 refund falls to $565.00 and drops out, another stays with a lower box 1 (checks: who gets a 1099; box 1 amounts)
+- |-
+  the export runs December 2024 to January 2026; a December 2024 payment is not 2025 and a January 2026 payment pushes one vendor over $600 if counted, while a December 2024 bill paid in January 2025 does count (checks: who gets a 1099; box 1 amounts)
+- |-
+  the transaction list carries each Bill as well as its Bill Payment for the same amount; summing the vendor's rows roughly doubles box 1 (check: box 1 amounts)
+- |-
+  the template wants the W-9 line 1 name rather than the QuickBooks vendor name, line 2 as dba_name, the TIN as nine digits with SSN or EIN by its W-9 format, and line 6 split into city, state and a ZIP that keeps its leading zero (checks: template columns; W-9 names and TIN type; mailing address)
+checks:
+- type: csv_columns
+  name: template columns
+  path: 1099_vendors.csv
+  columns:
+  - recipient_name
+  - dba_name
+  - tin_type
+  - recipient_tin
+  - address
+  - city
+  - state
+  - zip
+  - box1_nonemployee_comp
+  exact: true
+- type: csv_set_equal
+  name: who gets a 1099
+  path: 1099_vendors.csv
+  column: recipient_tin
+  ref: 1099_vendors.csv
+  normalize:
+  - digits
+- type: csv_row_count
+  name: row count
+  path: 1099_vendors.csv
+  equals_ref: 1099_vendors.csv
+- type: csv_values_match
+  name: box 1 amounts
+  path: 1099_vendors.csv
+  ref: 1099_vendors.csv
+  key: recipient_tin
+  columns:
+  - box1_nonemployee_comp
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - '116442919'
+  - '223455487'
+  - '378036754'
+  - '473093976'
+  - '546332000'
+  - '792303653'
+  - '795129916'
+- type: csv_values_match
+  name: W-9 names and TIN type
+  path: 1099_vendors.csv
+  ref: 1099_vendors.csv
+  key: recipient_tin
+  columns:
+  - recipient_name
+  - dba_name
+  - tin_type
+  min_accuracy: 1.0
+  must_match_keys:
+  - '116442919'
+  - '257811203'
+  - '792303653'
+  - '795129916'
+- type: csv_values_match
+  name: mailing address
+  path: 1099_vendors.csv
+  ref: 1099_vendors.csv
+  key: recipient_tin
+  columns:
+  - address
+  - city
+  - state
+  - zip
+  min_accuracy: 1.0
+  must_match_keys:
+  - '582977715'

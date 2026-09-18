@@ -1,0 +1,30 @@
+From: Dana Whitfield <dana@cascadedatasummit.org>
+To: you
+Date: Mon, 21 Sep 2026 16:40
+Subject: summit wrap-up numbers
+
+The board meets Thursday and wants the summit numbers by ticket type. Everything is in the folder: the registration export, the badge scanner log for both days, and the refund report from the payment processor.
+
+Attendance means the person scanned in at least once - it does not matter which day or how many times they came through the doors.
+
+-----Original Message-----
+
+From: Dana Whitfield <dana@cascadedatasummit.org>
+To: you
+Date: Mon, 21 Sep 2026 17:05
+Subject: RE: summit wrap-up numbers
+
+Two things I forgot. Comp passes (speakers, sponsors, the volunteer crew) pay nothing, but they are real registrations and they count as attendance when they scan in - the board always asks how many comps we gave out. And our own staff badges start with STF, they are working the event, not attending it.
+
+The cancellations in the export were refunded in full before the doors opened. Leave them out of the counts and out of the revenue completely.
+
+-----Original Message-----
+
+From: Dana Whitfield <dana@cascadedatasummit.org>
+To: you
+Date: Tue, 22 Sep 2026 08:12
+Subject: RE: summit wrap-up numbers
+
+Last thing - the processor sent through a batch of refunds in the week after the event and they are in refunds_after_event.csv. Those have to come off the revenue or we will report a number we do not have.
+
+In the memo give me the attendance rate and what the revenue came to net of the refunds.

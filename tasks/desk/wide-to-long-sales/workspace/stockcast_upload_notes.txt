@@ -1,0 +1,19 @@
+Stockcast - sales history upload (from our onboarding call, 2 Sept)
+
+Stockcast already has everything through June 2025 - that went in last summer
+(stockcast_upload_2025-06.csv). This upload is July 2025 onwards, straight from the
+by-month sales report.
+
+Use the template columns in that order. One row per customer per calendar month.
+
+  Record ID      customer code, a dash, then year and month run together:
+                 EMB-1234-202510 for October 2025. Stockcast uses it to update a month
+                 instead of adding it twice if we upload again.
+  Customer Code  the EMB- code from the report
+  Month          YYYY-MM
+  Net Sales      plain number, two decimals, no $ or commas. A month where returns beat
+                 sales goes in negative.
+
+Only months where the customer actually had sales. Stockcast reads a missing month as zero,
+so do not add rows of 0 for the empty cells. No total or subtotal lines - it only wants
+customers.

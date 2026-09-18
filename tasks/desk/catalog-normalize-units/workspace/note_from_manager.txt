@@ -1,0 +1,10 @@
+Catalog move - notes
+
+The new POS uses the new department names from the board meeting: Household is now Home & Cleaning,
+Dairy is now Dairy & Eggs, and Grocery is now Pantry. Everything else keeps its name.
+
+Anything marked DISC in ShopKeep is gone from the shelves, don't bring it over.
+
+Bulk bins are priced per kilo in ShopKeep, so treat those as 1000 g.
+
+- Teodora

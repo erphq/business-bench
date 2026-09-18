@@ -1,0 +1,201 @@
+﻿Quarry Road Nursery - Sales detail with tax
+04/01/2026 - 06/30/2026
+
+Invoice,Date,Customer ID,Customer,Fulfillment,Ship-to town,Ship-to ZIP,Items,Net sales,Tax exempt,Tax collected,Status
+QR-24001,04/01/2026,L-2226,Oak County Parks Dept,Pickup - Millbrook yard,,,Topsoil blend (yd); Perennial flat,390.60,Y,0.00,Posted
+QR-24002,04/01/2026,,Walk-in,Pickup - Cedar Falls yard,,,Arborvitae 6ft,298.00,N,21.61,Posted
+QR-24003,04/01/2026,,Walk-in,Pickup - Cedar Falls yard,,,Bark mulch (yd),42.00,N,3.05,Posted
+QR-24004,04/02/2026,L-2226,Oak County Parks Dept,Pickup - Cedar Falls yard,,,Arborvitae 6ft,$298.00,Y,0.00,Posted
+QR-24005,04/02/2026,H-3022,Kimberly Davis,Delivery,Cedar Falls,98012,Arborvitae 6ft; Topsoil blend (yd),538.00,N,39.01,Posted
+QR-24006,04/02/2026,L-2207,Greenway Grounds LLC,Pickup - Millbrook yard,,,River rock (ton),$330.00,Y,0.00,Posted
+QR-24007,04/02/2026,,Walk-in,Pickup - Cedar Falls yard,,,Flagstone (ton),$346.50,N,25.12,Posted
+QR-24008,04/03/2026,,Walk-in,Pickup - Cedar Falls yard,,,Arborvitae 6ft; Topsoil blend (yd); Perennial flat,$315.90,N,22.90,VOID
+QR-24009,04/04/2026,,Walk-in,Pickup - Cedar Falls yard,,,Topsoil blend (yd); Drip irrigation kit; River rock (ton),542.00,N,39.30,Posted
+QR-24010,04/06/2026,L-2201,Cedar & Pine Landscaping,Pickup - Millbrook yard,,,Perennial flat; Flagstone (ton),$745.20,Y,0.00,Posted
+QR-24011,04/07/2026,H-3025,Stephanie Alvarez,Delivery,Millbrook,98031,Boxwood 3gal; Drip irrigation kit,348.00,N,26.97,VOID
+QR-24012,04/08/2026,L-2201,Cedar & Pine Landscaping,Delivery,Cedar Falls,98013,Boxwood 3gal,153.00,Y,0.00,Posted
+QR-24013,04/08/2026,H-3028,Amy Nelson,Delivery,Cedar Falls,98013,Drip irrigation kit,$534.00,N,34.71,Posted
+QR-24014,04/09/2026,H-3024,Barbara Patel,Delivery,Millbrook,98033,Compost (yd),210.60,N,13.69,Posted
+QR-24015,04/09/2026,H-3021,Jeffrey Gutierrez,Delivery,Cedar Falls,98011,Japanese maple 5gal; Flagstone (ton); River rock (ton),"$1,358.00",N,98.46,Posted
+QR-24016,04/09/2026,H-3039,Joshua Peterson,Delivery,Cedar Falls,98013,Japanese maple 5gal; Perennial flat; Compost (yd),$343.80,N,22.35,Posted
+QR-24017,04/10/2026,,Walk-in,Pickup - Cedar Falls yard,,,Drip irrigation kit; Perennial flat; Compost (yd),555.00,N,40.24,Posted
+QR-24018,04/10/2026,L-2201,Cedar & Pine Landscaping,Pickup - Cedar Falls yard,,,Flagstone (ton); Drip irrigation kit,"1,215.00",Y,0.00,Posted
+QR-24019,04/10/2026,,Walk-in,Pickup - Cedar Falls yard,,,Boxwood 3gal; Japanese maple 5gal,265.00,N,19.21,Posted
+QR-24020,04/11/2026,,Walk-in,Pickup - Cedar Falls yard,,,Flagstone (ton); Bark mulch (yd); Perennial flat,$858.60,N,62.25,Posted
+QR-24021,04/11/2026,H-3000,Deborah Okafor,Delivery,Pine Ridge,98060,Topsoil blend (yd); River rock (ton); Arborvitae 6ft,$632.70,N,41.13,Posted
+QR-24022,04/11/2026,L-2201,Cedar & Pine Landscaping,Pickup - Millbrook yard,,,Topsoil blend (yd); Bark mulch (yd); Japanese maple 5gal,442.80,Y,0.00,Posted
+QR-24023,04/11/2026,H-3022,Kimberly Davis,Delivery,Cedar Falls,98012,Japanese maple 5gal,116.10,N,8.42,Posted
+QR-24024,04/13/2026,H-3035,Anna Edwards,Delivery,Pine Ridge,98045,Arborvitae 6ft; Bark mulch (yd),550.00,N,37.68,Posted
+QR-24025,04/13/2026,H-3027,James Ward,Delivery,Pine Ridge,98045,Flagstone (ton); River rock (ton); Perennial flat,945.90,N,64.79,Posted
+QR-24026,04/14/2026,,Walk-in,Pickup - Millbrook yard,,,Topsoil blend (yd); Boxwood 3gal; Bark mulch (yd),$210.60,N,16.32,Posted
+QR-24027,04/14/2026,H-3023,Priya Johnson,Delivery,Pine Ridge,98046,Flagstone (ton); Japanese maple 5gal; Topsoil blend (yd),947.00,N,64.87,Posted
+QR-24028,04/14/2026,L-2201,Cedar & Pine Landscaping,Pickup - Millbrook yard,,,Perennial flat; Topsoil blend (yd),298.00,Y,0.00,Posted
+QR-24029,04/15/2026,,Walk-in,Pickup - Millbrook yard,,,Drip irrigation kit,89.00,N,6.90,Posted
+QR-24030,04/15/2026,,Walk-in,Pickup - Millbrook yard,,,Flagstone (ton); Arborvitae 6ft,827.10,N,64.10,Posted
+QR-24031,04/15/2026,,Walk-in,Pickup - Cedar Falls yard,,,Perennial flat,52.20,N,3.78,Posted
+QR-24032,04/15/2026,H-3018,Kenneth Ward,Delivery,Lake Haven,98052,Arborvitae 6ft; River rock (ton),463.00,N,32.87,Posted
+QR-24033,04/16/2026,H-3010,Steven Morgan,Delivery,Pine Ridge,98046,Boxwood 3gal,$30.60,N,2.10,Posted
+QR-24034,04/16/2026,L-2201,Cedar & Pine Landscaping,Delivery,Millbrook,98033,River rock (ton); Topsoil blend (yd); Drip irrigation kit,652.00,Y,0.00,Posted
+QR-24035,04/16/2026,L-2207,Greenway Grounds LLC,Delivery,Cedar Falls,98011,Drip irrigation kit,356.00,Y,0.00,Posted
+QR-24036,04/17/2026,,Walk-in,Pickup - Millbrook yard,,,Arborvitae 6ft,$298.00,N,23.10,Posted
+QR-24037,04/17/2026,,Walk-in,Pickup - Millbrook yard,,,Boxwood 3gal; Drip irrigation kit; Compost (yd),816.00,N,63.24,Posted
+QR-24038,04/18/2026,,Walk-in,Pickup - Millbrook yard,,,Bark mulch (yd); Compost (yd),201.00,N,15.58,Posted
+QR-24039,04/18/2026,,Walk-in,Pickup - Millbrook yard,,,Japanese maple 5gal; Drip irrigation kit; Topsoil blend (yd),559.80,N,43.38,Posted
+QR-24040,04/20/2026,,Walk-in,Pickup - Cedar Falls yard,,,Boxwood 3gal; Flagstone (ton),838.00,N,60.76,Posted
+QR-24041,04/20/2026,H-3033,Donald Mensah,Delivery,Pine Ridge,98060,Arborvitae 6ft,$149.00,N,9.69,Posted
+QR-24042,04/21/2026,H-3013,Richard Myers,Delivery,Millbrook,98033,Arborvitae 6ft; Perennial flat; Drip irrigation kit,$929.70,N,60.43,Posted
+QR-24043,04/22/2026,H-3000,Deborah Okafor,Delivery,Cedar Falls,98013,Compost (yd); Japanese maple 5gal,246.00,N,15.99,Posted
+QR-24044,04/23/2026,L-2214,Ridgeback Hardscapes,Delivery,Millbrook,98033,Bark mulch (yd); Flagstone (ton),573.30,Y,0.00,Posted
+QR-24045,04/23/2026,H-3021,Jeffrey Gutierrez,Delivery,Cedar Falls,98011,Drip irrigation kit,$320.40,N,23.23,Posted
+QR-24046,04/23/2026,L-2226,Oak County Parks Dept,Delivery,Lake Haven,98052,Flagstone (ton); Boxwood 3gal; Perennial flat,787.00,Y,0.00,Posted
+QR-24047,04/24/2026,,Walk-in,Pickup - Cedar Falls yard,,,Bark mulch (yd),210.00,N,15.23,Posted
+QR-24048,04/25/2026,,Walk-in,Pickup - Millbrook yard,,,Perennial flat,208.80,N,16.18,Posted
+QR-24049,04/25/2026,,Walk-in,Pickup - Millbrook yard,,,Boxwood 3gal; Topsoil blend (yd); Japanese maple 5gal,$518.00,N,40.15,Posted
+QR-24050,04/25/2026,L-2201,Cedar & Pine Landscaping,Delivery,Pine Ridge,98060,Bark mulch (yd),$168.00,Y,0.00,Posted
+QR-24051,04/27/2026,H-3004,Joshua Morris,Delivery,Cedar Falls,98011,Drip irrigation kit,267.00,N,19.36,Posted
+QR-24052,04/27/2026,L-2226,Oak County Parks Dept,Delivery,Cedar Falls,98013,Topsoil blend (yd),$288.00,Y,0.00,Posted
+QR-24053,04/28/2026,H-3007,Sarah Torres,Delivery,Cedar Falls,98013,Arborvitae 6ft; Perennial flat,207.00,N,13.46,Posted
+QR-24054,04/28/2026,,Walk-in,Pickup - Cedar Falls yard,,,Bark mulch (yd); Drip irrigation kit; Perennial flat,666.00,N,48.29,Posted
+QR-24055,04/28/2026,L-2214,Ridgeback Hardscapes,Delivery,Cedar Falls,98011,Topsoil blend (yd); Arborvitae 6ft,293.00,Y,0.00,Posted
+QR-24056,04/28/2026,,Walk-in,Pickup - Cedar Falls yard,,,Topsoil blend (yd); Flagstone (ton),432.90,N,31.39,Posted
+QR-24057,04/29/2026,H-3018,Kenneth Ward,Delivery,Pine Ridge,98045,Bark mulch (yd); River rock (ton); Flagstone (ton),799.00,N,54.73,Posted
+QR-24058,04/30/2026,,Walk-in,Pickup - Cedar Falls yard,,,Boxwood 3gal; Drip irrigation kit,369.00,N,26.75,Posted
+QR-24059,04/30/2026,L-2214,Ridgeback Hardscapes,Pickup - Cedar Falls yard,,,Compost (yd),$195.00,Y,0.00,Posted
+QR-24060,04/30/2026,,Walk-in,Pickup - Cedar Falls yard,,,River rock (ton),330.00,N,23.93,Posted
+QR-24061,05/01/2026,L-2214,Ridgeback Hardscapes,Pickup - Cedar Falls yard,,,Arborvitae 6ft,149.00,Y,0.00,Posted
+QR-24062,05/01/2026,H-3008,Sarah Foster,Delivery,Pine Ridge,98046,Compost (yd); Perennial flat,$350.00,N,23.98,Posted
+QR-24063,05/02/2026,H-3005,Dorothy Howard,Delivery,Millbrook,98031,Boxwood 3gal; Compost (yd),190.00,N,14.73,Posted
+QR-24064,05/02/2026,,Walk-in,Pickup - Millbrook yard,,,River rock (ton); Boxwood 3gal,419.40,N,32.50,Posted
+QR-24065,05/02/2026,,Walk-in,Pickup - Cedar Falls yard,,,Topsoil blend (yd); Compost (yd),426.60,N,30.93,Posted
+QR-24066,05/04/2026,L-2207,Greenway Grounds LLC,Delivery,Millbrook,98033,River rock (ton),$330.00,Y,0.00,Posted
+QR-24067,05/04/2026,H-3022,Kimberly Davis,Delivery,Lake Haven,98052,Topsoil blend (yd); Drip irrigation kit; River rock (ton),563.00,N,39.97,Posted
+QR-24068,05/04/2026,,Walk-in,Pickup - Millbrook yard,,,Japanese maple 5gal,129.00,N,10.00,Posted
+QR-24069,05/04/2026,L-2201,Cedar & Pine Landscaping,Delivery,Pine Ridge,98060,Compost (yd),140.40,Y,0.00,VOID
+QR-24070,05/04/2026,,Walk-in,Pickup - Millbrook yard,,,Flagstone (ton),"$1,245.00",N,96.49,Posted
+QR-24071,05/05/2026,,Walk-in,Pickup - Cedar Falls yard,,,Japanese maple 5gal,$258.00,N,18.71,Posted
+QR-24072,05/06/2026,,Walk-in,Pickup - Millbrook yard,,,Japanese maple 5gal; River rock (ton),264.60,N,20.51,Posted
+QR-24073,05/06/2026,,Walk-in,Pickup - Millbrook yard,,,Compost (yd),$78.00,N,6.05,Posted
+QR-24074,05/06/2026,L-2201,Cedar & Pine Landscaping,Pickup - Millbrook yard,,,Compost (yd); Flagstone (ton),580.00,Y,0.00,Posted
+QR-24075,05/06/2026,,Walk-in,Pickup - Millbrook yard,,,Japanese maple 5gal; Arborvitae 6ft; Drip irrigation kit,$526.50,N,40.80,Posted
+QR-24076,05/06/2026,H-3001,Rebecca Garcia,Delivery,Millbrook,98031,Topsoil blend (yd); Bark mulch (yd),1033.00,N,80.06,Posted
+QR-24077,05/07/2026,,Walk-in,Pickup - Millbrook yard,,,Compost (yd),210.60,N,16.32,Posted
+QR-24078,05/08/2026,H-3013,Richard Myers,Delivery,Lake Haven,98052,Compost (yd); Boxwood 3gal,$360.00,N,25.56,Posted
+QR-24079,05/08/2026,,Walk-in,Pickup - Cedar Falls yard,,,Drip irrigation kit; Bark mulch (yd); River rock (ton),545.00,N,39.51,Posted
+QR-24080,05/08/2026,L-2226,Oak County Parks Dept,Delivery,Lake Haven,98052,Perennial flat,58.00,Y,0.00,Posted
+QR-24081,05/08/2026,,Walk-in,Pickup - Cedar Falls yard,,,Japanese maple 5gal; River rock (ton),$413.10,N,29.95,Posted
+QR-24082,05/09/2026,H-3021,Jeffrey Gutierrez,Delivery,Pine Ridge,98046,Boxwood 3gal,$136.00,N,9.32,Posted
+QR-24083,05/09/2026,H-3009,Richard Richardson,Delivery,Lake Haven,98052,Flagstone (ton); Compost (yd); Boxwood 3gal,531.00,N,37.70,Posted
+QR-24084,05/09/2026,L-2219,Blue Heron Garden Design,Pickup - Millbrook yard,,,River rock (ton); Arborvitae 6ft,479.00,N,38.32,Posted
+QR-24085,05/09/2026,,Walk-in,Pickup - Millbrook yard,,,River rock (ton),$165.00,N,13.20,Posted
+QR-24086,05/11/2026,,Walk-in,Pickup - Cedar Falls yard,,,Arborvitae 6ft,298.00,N,21.61,Posted
+QR-24087,05/11/2026,H-3032,Carlos Lewis,Delivery,Millbrook,98033,Perennial flat; Drip irrigation kit,592.00,N,38.48,Posted
+QR-24088,05/11/2026,H-3035,Anna Edwards,Delivery,Pine Ridge,98046,Drip irrigation kit; Arborvitae 6ft; Japanese maple 5gal,961.00,N,65.83,Posted
+QR-24089,05/12/2026,,Walk-in,Pickup - Cedar Falls yard,,,Bark mulch (yd); Japanese maple 5gal,342.90,N,24.86,Posted
+QR-24090,05/13/2026,H-3038,Gary Wilson,Delivery,Pine Ridge,98046,River rock (ton); Drip irrigation kit; Arborvitae 6ft,$924.00,N,63.29,Posted
+QR-24091,05/13/2026,,Walk-in,Pickup - Millbrook yard,,,Compost (yd); Drip irrigation kit,345.60,N,27.65,VOID
+QR-24092,05/13/2026,,Walk-in,Pickup - Millbrook yard,,,River rock (ton),$297.00,N,23.76,Posted
+QR-24093,05/13/2026,,Walk-in,Pickup - Millbrook yard,,,Compost (yd); Perennial flat,349.00,N,27.92,Posted
+QR-24094,05/14/2026,,Walk-in,Pickup - Cedar Falls yard,,,Drip irrigation kit,356.00,N,25.81,Posted
+QR-24095,05/14/2026,,Walk-in,Pickup - Millbrook yard,,,Drip irrigation kit; Arborvitae 6ft,214.20,N,17.14,Posted
+QR-24096,05/15/2026,L-2207,Greenway Grounds LLC,Pickup - Cedar Falls yard,,,Arborvitae 6ft; Topsoil blend (yd),538.00,Y,0.00,Posted
+QR-24097,05/16/2026,,Walk-in,Pickup - Cedar Falls yard,,,Drip irrigation kit,160.20,N,11.61,Posted
+QR-24098,05/16/2026,L-2214,Ridgeback Hardscapes,Pickup - Millbrook yard,,,Compost (yd),$117.00,Y,0.00,Posted
+QR-24099,05/16/2026,L-2214,Ridgeback Hardscapes,Delivery,Pine Ridge,98045,Drip irrigation kit; Compost (yd); Japanese maple 5gal,$426.60,Y,0.00,Posted
+QR-24100,05/16/2026,L-2201,Cedar & Pine Landscaping,Pickup - Millbrook yard,,,River rock (ton),$330.00,Y,0.00,Posted
+QR-24101,05/18/2026,H-3032,Carlos Lewis,Delivery,Pine Ridge,98046,Topsoil blend (yd),192.00,N,13.15,Posted
+QR-24102,05/19/2026,L-2226,Oak County Parks Dept,Pickup - Millbrook yard,,,River rock (ton),165.00,Y,0.00,Posted
+QR-24103,05/20/2026,,Walk-in,Pickup - Millbrook yard,,,Arborvitae 6ft; Flagstone (ton),$534.00,N,42.72,Posted
+QR-24104,05/20/2026,,Walk-in,Pickup - Cedar Falls yard,,,Perennial flat,116.00,N,8.41,Posted
+QR-24105,05/20/2026,H-3004,Joshua Morris,Delivery,Cedar Falls,98013,Drip irrigation kit,$445.00,N,28.93,Posted
+QR-24106,05/20/2026,L-2207,Greenway Grounds LLC,Delivery,Pine Ridge,98045,Flagstone (ton); River rock (ton),2740.00,Y,0.00,Posted
+QR-24107,05/21/2026,,Walk-in,Pickup - Cedar Falls yard,,,Perennial flat,174.00,N,12.62,Posted
+QR-24108,05/21/2026,,Walk-in,Pickup - Millbrook yard,,,Arborvitae 6ft,149.00,N,11.92,Posted
+QR-24109,05/22/2026,H-3019,Yuki Clark,Delivery,Cedar Falls,98011,Compost (yd),210.60,N,15.27,Posted
+QR-24110,05/22/2026,L-2219,Blue Heron Garden Design,Delivery,Lake Haven,98052,Japanese maple 5gal,$129.00,N,9.16,Posted
+QR-24111,05/22/2026,H-3020,Priya Morris,Delivery,Millbrook,98033,Bark mulch (yd); River rock (ton),372.00,N,24.18,Posted
+QR-24112,05/23/2026,,Walk-in,Pickup - Millbrook yard,,,River rock (ton); Japanese maple 5gal; Boxwood 3gal,457.00,N,36.56,Posted
+QR-24113,05/23/2026,H-3009,Richard Richardson,Delivery,Pine Ridge,98045,Drip irrigation kit,480.60,N,32.92,Posted
+QR-24114,05/25/2026,,Walk-in,Pickup - Cedar Falls yard,,,Boxwood 3gal; Topsoil blend (yd); Bark mulch (yd),502.20,N,36.41,Posted
+QR-24115,05/25/2026,L-2219,Blue Heron Garden Design,Pickup - Millbrook yard,,,Flagstone (ton); Boxwood 3gal,815.40,N,65.23,Posted
+QR-24116,05/26/2026,H-3029,Ashley Myers,Delivery,Cedar Falls,98011,Topsoil blend (yd); Perennial flat; Compost (yd),314.10,N,22.77,Posted
+QR-24117,05/26/2026,L-2226,Oak County Parks Dept,Delivery,Lake Haven,98052,Topsoil blend (yd),129.60,Y,0.00,Posted
+QR-24118,05/26/2026,L-2207,Greenway Grounds LLC,Pickup - Cedar Falls yard,,,Compost (yd),78.00,Y,0.00,Posted
+QR-24119,05/27/2026,L-2226,Oak County Parks Dept,Pickup - Millbrook yard,,,Flagstone (ton); Bark mulch (yd); Japanese maple 5gal,1152.00,Y,0.00,Posted
+QR-24120,05/27/2026,L-2201,Cedar & Pine Landscaping,Pickup - Millbrook yard,,,Flagstone (ton); Drip irrigation kit,830.00,Y,0.00,Posted
+QR-24121,05/27/2026,H-3025,Stephanie Alvarez,Delivery,Pine Ridge,98045,Drip irrigation kit; Perennial flat,$263.00,N,18.02,Posted
+QR-24122,05/27/2026,,Walk-in,Pickup - Millbrook yard,,,Compost (yd),195.00,N,15.60,Posted
+QR-24123,05/28/2026,H-3007,Sarah Torres,Delivery,Pine Ridge,98046,Drip irrigation kit; Bark mulch (yd),$215.00,N,14.73,Posted
+QR-24124,05/29/2026,,Walk-in,Pickup - Millbrook yard,,,River rock (ton); Compost (yd); Boxwood 3gal,463.50,N,37.08,Posted
+QR-24125,05/30/2026,L-2207,Greenway Grounds LLC,Delivery,Lake Haven,98052,Boxwood 3gal; Flagstone (ton); Compost (yd),$682.00,Y,0.00,Posted
+QR-24126,05/30/2026,H-3022,Kimberly Davis,Delivery,Pine Ridge,98045,Japanese maple 5gal; Boxwood 3gal,$394.00,N,26.99,Posted
+QR-24127,05/30/2026,L-2201,Cedar & Pine Landscaping,Delivery,Pine Ridge,98045,Drip irrigation kit,$178.00,Y,0.00,Posted
+QR-24128,06/01/2026,L-2219,Blue Heron Garden Design,Delivery,Lake Haven,98052,Japanese maple 5gal; River rock (ton); Topsoil blend (yd),684.00,N,48.56,Posted
+QR-24129,06/02/2026,H-3010,Steven Morgan,Delivery,Cedar Falls,98012,Compost (yd); Perennial flat; Arborvitae 6ft,530.10,N,38.43,Posted
+QR-24130,06/03/2026,L-2226,Oak County Parks Dept,Delivery,Millbrook,98031,River rock (ton); Perennial flat,223.00,Y,0.00,Posted
+QR-24131,06/03/2026,,Walk-in,Pickup - Millbrook yard,,,Drip irrigation kit; Bark mulch (yd),613.00,N,49.04,Posted
+QR-24132,06/03/2026,L-2207,Greenway Grounds LLC,Delivery,Millbrook,98031,Flagstone (ton); River rock (ton); Boxwood 3gal,"1,139.00",Y,0.00,Posted
+QR-24133,06/04/2026,,Walk-in,Pickup - Millbrook yard,,,Arborvitae 6ft,$268.20,N,21.46,Posted
+QR-24134,06/04/2026,H-3032,Carlos Lewis,Delivery,Cedar Falls,98012,Flagstone (ton),770.00,N,55.83,Posted
+QR-24135,06/05/2026,H-3017,Dorothy Parker,Delivery,Millbrook,98033,Boxwood 3gal; Arborvitae 6ft,298.80,N,19.42,Posted
+QR-24136,06/05/2026,,Walk-in,Pickup - Millbrook yard,,,Perennial flat,232.00,N,18.56,Posted
+QR-24137,06/05/2026,H-3024,Barbara Patel,Delivery,Cedar Falls,98011,Drip irrigation kit; Boxwood 3gal; Flagstone (ton),1419.00,N,102.88,Posted
+QR-24138,06/05/2026,,Walk-in,Pickup - Millbrook yard,,,Flagstone (ton); Bark mulch (yd); Topsoil blend (yd),849.60,N,67.97,Posted
+QR-24139,06/06/2026,H-3030,Carol Alvarez,Delivery,Cedar Falls,98011,Bark mulch (yd); Boxwood 3gal,236.00,N,17.11,Posted
+QR-24140,06/08/2026,,Walk-in,Pickup - Cedar Falls yard,,,Flagstone (ton); Perennial flat; Japanese maple 5gal,$630.00,N,45.68,Posted
+QR-24141,06/08/2026,L-2201,Cedar & Pine Landscaping,Delivery,Pine Ridge,98045,Compost (yd),234.00,Y,0.00,Posted
+QR-24142,06/08/2026,H-3011,Marcus Cox,Delivery,Pine Ridge,98045,Topsoil blend (yd); Arborvitae 6ft; Flagstone (ton),"$1,063.00",N,72.82,Posted
+QR-24143,06/09/2026,L-2226,Oak County Parks Dept,Delivery,Cedar Falls,98013,Compost (yd); Flagstone (ton),$424.00,Y,0.00,Posted
+QR-24144,06/09/2026,,Walk-in,Pickup - Millbrook yard,,,River rock (ton),330.00,N,26.40,Posted
+QR-24145,06/09/2026,L-2226,Oak County Parks Dept,Pickup - Millbrook yard,,,Flagstone (ton); Drip irrigation kit; Bark mulch (yd),860.40,Y,0.00,Posted
+QR-24146,06/10/2026,,Walk-in,Pickup - Millbrook yard,,,Drip irrigation kit; Boxwood 3gal; Perennial flat,805.50,N,64.44,Posted
+QR-24147,06/11/2026,L-2207,Greenway Grounds LLC,Delivery,Cedar Falls,98011,Arborvitae 6ft; River rock (ton),479.00,Y,0.00,Posted
+QR-24148,06/11/2026,H-3024,Barbara Patel,Delivery,Cedar Falls,98011,Flagstone (ton); Boxwood 3gal; Topsoil blend (yd),$996.00,N,72.21,Posted
+QR-24149,06/11/2026,L-2214,Ridgeback Hardscapes,Delivery,Pine Ridge,98045,Perennial flat; Flagstone (ton),$828.00,Y,0.00,Posted
+QR-24150,06/11/2026,L-2207,Greenway Grounds LLC,Pickup - Cedar Falls yard,,,Arborvitae 6ft,"$1,265.00",Y,0.00,Posted
+QR-24151,06/12/2026,L-2201,Cedar & Pine Landscaping,Pickup - Cedar Falls yard,,,Boxwood 3gal,$30.60,Y,0.00,Posted
+QR-24152,06/12/2026,H-3000,Deborah Okafor,Delivery,Pine Ridge,98045,Compost (yd); Drip irrigation kit,$245.00,N,16.78,Posted
+QR-24153,06/13/2026,L-2214,Ridgeback Hardscapes,Pickup - Cedar Falls yard,,,Boxwood 3gal,102.00,Y,0.00,Posted
+QR-24154,06/13/2026,H-3002,Kimberly Rogers,Delivery,Cedar Falls,98013,Japanese maple 5gal; Bark mulch (yd); Compost (yd),462.00,N,30.03,VOID
+QR-24155,06/13/2026,H-3010,Steven Morgan,Delivery,Cedar Falls,98013,River rock (ton),330.00,N,21.45,Posted
+QR-24156,06/13/2026,H-3025,Stephanie Alvarez,Delivery,Cedar Falls,98011,River rock (ton),330.00,N,23.93,Posted
+QR-24157,06/15/2026,,Walk-in,Pickup - Cedar Falls yard,,,Drip irrigation kit; Boxwood 3gal,513.00,N,37.19,Posted
+QR-24158,06/15/2026,L-2207,Greenway Grounds LLC,Delivery,Cedar Falls,98011,Perennial flat; Flagstone (ton); Compost (yd),$560.00,Y,0.00,Posted
+QR-24159,06/16/2026,,Walk-in,Pickup - Cedar Falls yard,,,Arborvitae 6ft; Flagstone (ton); Compost (yd),$839.00,N,60.83,Posted
+QR-24160,06/17/2026,H-3008,Sarah Foster,Delivery,Pine Ridge,98045,River rock (ton); Compost (yd); Perennial flat,475.00,N,32.54,Posted
+QR-24161,06/17/2026,,Walk-in,Pickup - Cedar Falls yard,,,Perennial flat; River rock (ton),505.80,N,36.67,Posted
+QR-24162,06/17/2026,,Walk-in,Pickup - Millbrook yard,,,Arborvitae 6ft; Topsoil blend (yd),442.00,N,35.36,VOID
+QR-24163,06/18/2026,H-3038,Gary Wilson,Delivery,Lake Haven,98052,Japanese maple 5gal,129.00,N,9.16,Posted
+QR-24164,06/18/2026,L-2219,Blue Heron Garden Design,Delivery,Cedar Falls,98011,Bark mulch (yd); Flagstone (ton); Perennial flat,"1,160.00",N,84.10,Posted
+QR-24165,06/18/2026,,Walk-in,Pickup - Cedar Falls yard,,,Drip irrigation kit; Arborvitae 6ft; Flagstone (ton),1246.00,N,90.34,Posted
+QR-24166,06/19/2026,L-2201,Cedar & Pine Landscaping,Delivery,Millbrook,98031,Boxwood 3gal,136.00,Y,0.00,Posted
+QR-24167,06/19/2026,L-2207,Greenway Grounds LLC,Delivery,Millbrook,98031,Arborvitae 6ft,268.20,Y,0.00,Posted
+QR-24168,06/19/2026,H-3018,Kenneth Ward,Delivery,Pine Ridge,98060,Bark mulch (yd); Perennial flat,358.00,N,23.27,Posted
+QR-24169,06/20/2026,,Walk-in,Pickup - Cedar Falls yard,,,Boxwood 3gal; Flagstone (ton); Bark mulch (yd),966.60,N,70.08,Posted
+QR-24170,06/20/2026,H-3004,Joshua Morris,Delivery,Pine Ridge,98046,Compost (yd); Flagstone (ton); Arborvitae 6ft,$550.80,N,37.73,Posted
+QR-24171,06/20/2026,H-3031,David Harris,Delivery,Pine Ridge,98045,Japanese maple 5gal; Boxwood 3gal; Topsoil blend (yd),456.00,N,31.24,Posted
+QR-24172,06/22/2026,H-3009,Richard Richardson,Delivery,Pine Ridge,98046,Compost (yd); Japanese maple 5gal; River rock (ton),744.00,N,50.96,Posted
+QR-24173,06/22/2026,H-3026,Chloe Watson,Delivery,Pine Ridge,98046,Flagstone (ton),346.50,N,23.74,Posted
+QR-24174,06/22/2026,H-3033,Donald Mensah,Delivery,Cedar Falls,98012,River rock (ton); Compost (yd); Topsoil blend (yd),852.00,N,61.77,Posted
+QR-24175,06/23/2026,,Walk-in,Pickup - Cedar Falls yard,,,Topsoil blend (yd),144.00,N,10.44,Posted
+QR-24176,06/23/2026,H-3006,Margaret Cook,Delivery,Lake Haven,98052,Arborvitae 6ft; Japanese maple 5gal,$427.00,N,30.32,Posted
+QR-24177,06/23/2026,H-3004,Joshua Morris,Delivery,Pine Ridge,98060,Bark mulch (yd),252.00,N,16.38,Posted
+QR-24178,06/23/2026,L-2226,Oak County Parks Dept,Pickup - Cedar Falls yard,,,Perennial flat; Japanese maple 5gal,$187.00,Y,0.00,Posted
+QR-24179,06/24/2026,L-2226,Oak County Parks Dept,Pickup - Millbrook yard,,,Arborvitae 6ft,298.00,Y,0.00,Posted
+QR-24180,06/24/2026,H-3029,Ashley Myers,Delivery,Cedar Falls,98011,Arborvitae 6ft; Topsoil blend (yd),$538.00,N,39.01,Posted
+QR-24181,06/25/2026,H-3011,Marcus Cox,Delivery,Millbrook,98031,Boxwood 3gal; Flagstone (ton); Japanese maple 5gal,731.70,N,58.54,Posted
+QR-24182,06/25/2026,,Walk-in,Pickup - Millbrook yard,,,Perennial flat; Compost (yd); Topsoil blend (yd),426.00,N,34.08,Posted
+QR-24183,06/25/2026,,Walk-in,Pickup - Millbrook yard,,,Flagstone (ton),385.00,N,30.80,Posted
+QR-24184,06/25/2026,,Walk-in,Pickup - Cedar Falls yard,,,Bark mulch (yd),$168.00,N,12.18,Posted
+QR-24185,06/26/2026,H-3006,Margaret Cook,Delivery,Lake Haven,98052,Boxwood 3gal; Arborvitae 6ft; Topsoil blend (yd),$404.10,N,28.69,Posted
+QR-24186,06/26/2026,L-2214,Ridgeback Hardscapes,Pickup - Cedar Falls yard,,,Boxwood 3gal; Compost (yd),126.90,Y,0.00,Posted
+QR-24187,06/26/2026,H-3014,Elizabeth Ruiz,Delivery,Pine Ridge,98045,Flagstone (ton); River rock (ton),935.00,N,64.05,Posted
+QR-24188,06/26/2026,H-3022,Kimberly Davis,Delivery,Millbrook,98033,Arborvitae 6ft; Flagstone (ton),919.00,N,59.74,Posted
+QR-24189,06/27/2026,,Walk-in,Pickup - Millbrook yard,,,Boxwood 3gal; Perennial flat; Japanese maple 5gal,$592.00,N,47.36,Posted
+QR-24190,06/27/2026,H-3018,Kenneth Ward,Delivery,Cedar Falls,98012,Flagstone (ton); Boxwood 3gal,530.10,N,38.43,Posted
+QR-24191,06/27/2026,L-2219,Blue Heron Garden Design,Pickup - Millbrook yard,,,Drip irrigation kit; Compost (yd),551.00,N,44.08,Posted
+QR-24192,06/27/2026,,Walk-in,Pickup - Millbrook yard,,,Japanese maple 5gal; Drip irrigation kit; River rock (ton),781.20,N,62.50,Posted
+QR-24193,06/29/2026,,Walk-in,Pickup - Cedar Falls yard,,,Bark mulch (yd); Arborvitae 6ft,$285.30,N,20.68,Posted
+QR-24194,06/29/2026,H-3011,Marcus Cox,Delivery,Cedar Falls,98012,Boxwood 3gal,30.60,N,2.22,Posted
+QR-24195,06/29/2026,,Walk-in,Pickup - Millbrook yard,,,Bark mulch (yd); Flagstone (ton); Topsoil blend (yd),643.00,N,51.44,Posted
+QR-24196,06/30/2026,L-2226,Oak County Parks Dept,Delivery,Pine Ridge,98060,Topsoil blend (yd); Compost (yd),$156.60,Y,0.00,Posted
+QR-24197,06/30/2026,,Walk-in,Pickup - Millbrook yard,,,Perennial flat,$116.00,N,9.28,Posted

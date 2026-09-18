@@ -1,0 +1,60 @@
+id: retention-cohorts
+track: desk
+category: reports
+title: Customer cohort retention table for the first half
+ask: |
+  Build me a cohort retention table for January to June this year from the shop order exports, cohort months down the side written like 2026-01. My notes in the folder explain what I mean. Save it as cohorts.xlsx with the counts as formulas.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the cohort is the month of the first EVER order; last year's export (different column names, US dates, CRLF) is in the folder and its customers who reorder in 2026 are not new (check: January new customers)
+- |-
+  fully refunded orders (Refunded equals Total, status Refunded) and Cancelled orders never happened; eight customers' first orders are fully refunded so their cohort shifts or disappears, six later-month orders are refunded so a retention cell changes (checks: January new customers; February new customers)
+- 'partial refunds still count as orders (check: February new customers)'
+- |-
+  the same customer's email appears in different case and with stray spaces; a raw group-by splits customers (check: total new customers)
+- |-
+  customers place two or three orders in an active month; counting orders instead of customers inflates the later-month cells (check: January cohort month 1)
+- 'the summary counts must be live formulas over cleaned data (check: live formulas)'
+checks:
+- type: file_exists
+  name: cohorts.xlsx exists
+  path: cohorts.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: cohorts.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: cohorts.xlsx
+- type: xlsx_value_present
+  name: January new customers
+  path: cohorts.xlsx
+  expected: 33
+  rel_tol: 0.001
+  near_text: 2026-01
+- type: xlsx_value_present
+  name: February new customers
+  path: cohorts.xlsx
+  expected: 37
+  rel_tol: 0.001
+  near_text: 2026-02
+- type: xlsx_value_present
+  name: January cohort month 1
+  path: cohorts.xlsx
+  expected: 19
+  rel_tol: 0.001
+  near_text: 2026-01
+- type: xlsx_value_present
+  name: March cohort month 2
+  path: cohorts.xlsx
+  expected: 13
+  rel_tol: 0.001
+  near_text: 2026-03
+- type: xlsx_value_present
+  name: total new customers
+  path: cohorts.xlsx
+  expected: 169
+  rel_tol: 0.001
+  near_text: total

@@ -1,0 +1,12 @@
+From: Aisha Okafor <aisha@ironwoodfab.com>
+To: you
+Date: Wed, 8 Jul 2026 07:55
+Subject: half-year safety summary
+
+I need the half-year safety numbers for the board and for the insurer: how many incidents at each of our four sites, broken out by type. Our sites are Plant 1, Plant 2, East Fab and the Warehouse - the crews write them down however they feel like it (PLANT 2, Plant #2, Plant Two, it is all the same place), and the type column is half legend codes and half whatever they typed. The legend sheet in the workbook says what the codes mean.
+
+Near misses are not incidents. They matter, so give them their own line, but they never go into the incident count - the insurer reads that number literally.
+
+Anything marked voided or reported in error is not an incident either. And every site goes on the report, even a site that had a clean half.
+
+In the memo tell me which site had the most incidents this half.

@@ -1,0 +1,4 @@
+Customer,Plan Start,Installment,Frequency,Next Installment Due,Remaining,Status
+Copperfield Law,02/01/2026,$300.00,Monthly,,$0.00,Completed 06/01/2026
+Larkspur Yoga,07/15/2026,$350.00,Monthly,10/15/2026,"$5,084.42",Active
+Kingfisher Charters,09/05/2026,$250.00,Monthly,10/05/2026,"$2,717.45",Active

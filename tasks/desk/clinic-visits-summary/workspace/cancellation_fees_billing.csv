@@ -1,0 +1,85 @@
+Billing export - patient fees
+Not a visit list
+Fee ID,Service Date,Provider,Patient,Fee,Reason
+F-30470,01/03/2026,Mitchell S,PT-56867,$50.00,No-show fee
+F-35021,01/03/2026,Mitchell S,PT-70258,$50.00,No-show fee
+F-33032,01/05/2026,Taylor T,PT-11551,$50.00,No-show fee
+F-37873,01/06/2026,Hernandez J,PT-99515,$50.00,No-show fee
+F-33854,01/08/2026,Alvarez M,PT-75717,$50.00,No-show fee
+F-37945,01/08/2026,Taylor T,PT-72740,$75.00,Late cancellation fee
+F-35366,01/10/2026,Taylor T,PT-93927,$75.00,No-show fee
+F-31907,01/11/2026,Mitchell S,PT-75588,$75.00,Late cancellation fee
+F-32628,01/11/2026,Alvarez M,PT-48622,$75.00,Late cancellation fee
+F-30329,01/12/2026,Alvarez M,PT-36016,$50.00,Late cancellation fee
+F-357810,01/13/2026,Hernandez J,PT-10655,$35.00,Late cancellation fee
+F-383911,01/13/2026,Hernandez J,PT-79510,$75.00,Late cancellation fee
+F-362412,01/18/2026,Taylor T,PT-41658,$50.00,Late cancellation fee
+F-337014,01/20/2026,Hernandez J,PT-43213,$35.00,Late cancellation fee
+F-362713,01/20/2026,Hernandez J,PT-98011,$50.00,No-show fee
+F-365916,01/20/2026,Hernandez J,PT-85887,$50.00,No-show fee
+F-370015,01/20/2026,Hernandez J,PT-90754,$75.00,No-show fee
+F-371817,01/21/2026,Taylor T,PT-18459,$50.00,No-show fee
+F-374218,01/22/2026,Taylor T,PT-32402,$35.00,Late cancellation fee
+F-345820,01/24/2026,Hernandez J,PT-91767,$50.00,No-show fee
+F-355719,01/24/2026,Hernandez J,PT-15082,$35.00,Late cancellation fee
+F-322521,01/27/2026,Hernandez J,PT-84747,$35.00,No-show fee
+F-392922,01/28/2026,Alvarez M,PT-29302,$50.00,No-show fee
+F-305023,01/30/2026,Hernandez J,PT-79561,$50.00,Late cancellation fee
+F-335724,02/01/2026,Taylor T,PT-29350,$50.00,Late cancellation fee
+F-351525,02/01/2026,Hernandez J,PT-46268,$35.00,No-show fee
+F-379326,02/02/2026,Alvarez M,PT-43603,$50.00,Late cancellation fee
+F-361927,02/03/2026,Alvarez M,PT-67347,$50.00,No-show fee
+F-375829,02/04/2026,Mitchell S,PT-73768,$50.00,Late cancellation fee
+F-379428,02/04/2026,Mitchell S,PT-56193,$50.00,Late cancellation fee
+F-357630,02/05/2026,Alvarez M,PT-27102,$35.00,Late cancellation fee
+F-319431,02/07/2026,Alvarez M,PT-80642,$75.00,Late cancellation fee
+F-301532,02/09/2026,Taylor T,PT-68668,$50.00,Late cancellation fee
+F-314233,02/10/2026,Taylor T,PT-43420,$75.00,Late cancellation fee
+F-310834,02/11/2026,Hernandez J,PT-73966,$50.00,Late cancellation fee
+F-340035,02/11/2026,Mitchell S,PT-24500,$35.00,Late cancellation fee
+F-371536,02/11/2026,Hernandez J,PT-52319,$50.00,Late cancellation fee
+F-348337,02/12/2026,Mitchell S,PT-79081,$50.00,No-show fee
+F-315938,02/13/2026,Taylor T,PT-26303,$75.00,No-show fee
+F-374239,02/13/2026,Alvarez M,PT-57492,$75.00,No-show fee
+F-368840,02/16/2026,Alvarez M,PT-62219,$50.00,No-show fee
+F-312841,02/17/2026,Alvarez M,PT-77401,$50.00,Late cancellation fee
+F-357443,02/18/2026,Taylor T,PT-69735,$50.00,Late cancellation fee
+F-362042,02/18/2026,Taylor T,PT-86079,$50.00,Late cancellation fee
+F-350444,02/19/2026,Mitchell S,PT-58253,$35.00,Late cancellation fee
+F-323745,02/20/2026,Taylor T,PT-96027,$35.00,No-show fee
+F-370446,02/21/2026,Mitchell S,PT-33783,$50.00,No-show fee
+F-383947,02/22/2026,Mitchell S,PT-19726,$35.00,Late cancellation fee
+F-397648,02/23/2026,Mitchell S,PT-42752,$35.00,No-show fee
+F-387449,02/25/2026,Alvarez M,PT-49382,$75.00,No-show fee
+F-354750,03/02/2026,Alvarez M,PT-71109,$35.00,Late cancellation fee
+F-358651,03/03/2026,Hernandez J,PT-78754,$50.00,Late cancellation fee
+F-382252,03/03/2026,Mitchell S,PT-51324,$50.00,No-show fee
+F-391553,03/04/2026,Taylor T,PT-86673,$75.00,No-show fee
+F-378754,03/06/2026,Taylor T,PT-58059,$35.00,Late cancellation fee
+F-380555,03/07/2026,Alvarez M,PT-99300,$35.00,Late cancellation fee
+F-366158,03/09/2026,Taylor T,PT-41421,$50.00,No-show fee
+F-371556,03/09/2026,Hernandez J,PT-88846,$75.00,Late cancellation fee
+F-383057,03/09/2026,Mitchell S,PT-19366,$75.00,Late cancellation fee
+F-391459,03/09/2026,Alvarez M,PT-87246,$50.00,Late cancellation fee
+F-320060,03/10/2026,Hernandez J,PT-74727,$50.00,Late cancellation fee
+F-304361,03/11/2026,Alvarez M,PT-81967,$35.00,Late cancellation fee
+F-348662,03/12/2026,Hernandez J,PT-47078,$75.00,Late cancellation fee
+F-316663,03/13/2026,Mitchell S,PT-25836,$50.00,No-show fee
+F-360064,03/14/2026,Alvarez M,PT-15672,$75.00,No-show fee
+F-366566,03/16/2026,Alvarez M,PT-36324,$50.00,Late cancellation fee
+F-371465,03/16/2026,Taylor T,PT-16827,$50.00,Late cancellation fee
+F-361868,03/17/2026,Hernandez J,PT-56692,$50.00,No-show fee
+F-373667,03/17/2026,Hernandez J,PT-12677,$50.00,No-show fee
+F-347169,03/18/2026,Taylor T,PT-30502,$50.00,Late cancellation fee
+F-338471,03/19/2026,Mitchell S,PT-91096,$50.00,Late cancellation fee
+F-380070,03/19/2026,Hernandez J,PT-72468,$50.00,Late cancellation fee
+F-361872,03/20/2026,Hernandez J,PT-27708,$50.00,Late cancellation fee
+F-320473,03/21/2026,Hernandez J,PT-93608,$50.00,No-show fee
+F-344774,03/22/2026,Alvarez M,PT-89216,$35.00,No-show fee
+F-319275,03/24/2026,Taylor T,PT-69079,$50.00,Late cancellation fee
+F-341776,03/25/2026,Alvarez M,PT-21825,$50.00,No-show fee
+F-378577,03/26/2026,Hernandez J,PT-86812,$75.00,Late cancellation fee
+F-381678,03/26/2026,Taylor T,PT-92402,$50.00,Late cancellation fee
+F-382479,03/26/2026,Taylor T,PT-41060,$50.00,No-show fee
+F-390680,03/28/2026,Mitchell S,PT-42435,$50.00,Late cancellation fee
+F-309381,03/30/2026,Mitchell S,PT-51674,$50.00,Late cancellation fee

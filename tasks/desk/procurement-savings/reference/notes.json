@@ -1,0 +1,47 @@
+{
+  "cancelled": [
+    "PO-5317",
+    "PO-5350"
+  ],
+  "naive": {
+    "cancelled_in": {
+      "Cleaning & sanitation": 911.57,
+      "Hops": 1213.27,
+      "Lab & QA": 39.49,
+      "Malt & grain": 1691.49,
+      "Packaging": 1558.7
+    },
+    "floor": {
+      "Cleaning & sanitation": 1140.12,
+      "Hops": 1244.23,
+      "Lab & QA": 39.49,
+      "Malt & grain": 1660.03,
+      "Packaging": 1510.3
+    },
+    "last_rev": {
+      "Cleaning & sanitation": -228.55,
+      "Hops": 276.91,
+      "Lab & QA": 39.49,
+      "Malt & grain": 250.04,
+      "Packaging": 0.0
+    },
+    "no_fx": {
+      "Cleaning & sanitation": 911.57,
+      "Hops": -640.2,
+      "Lab & QA": 39.49,
+      "Malt & grain": 9093.7,
+      "Packaging": 1510.3
+    },
+    "quote_qty": {
+      "Cleaning & sanitation": 911.57,
+      "Hops": 1213.27,
+      "Lab & QA": 44.14,
+      "Malt & grain": 1737.23,
+      "Packaging": 1347.4
+    }
+  },
+  "surcharge_po": [
+    "PO-5311"
+  ],
+  "total": 5334.66
+}

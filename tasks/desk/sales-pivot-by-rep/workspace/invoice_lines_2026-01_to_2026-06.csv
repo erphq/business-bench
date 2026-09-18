@@ -1,0 +1,1432 @@
+Tamarack Brewing - Invoice line detail
+Doc dates 01/01/2026 - 06/30/2026
+Doc Type,Doc No,Doc Date,Account,Sales Rep,Item,Qty,Ext Amount
+CRM,CRM-26059,01/01/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26003,01/01/2026,Willow Taproom,Dana Cruz,Tamarack IPA 1/2 bbl keg,3,555.09
+INV,INV-26003,01/01/2026,Willow Taproom,Dana Cruz,KEG DEPOSIT,3,90.00
+INV,INV-26003,01/01/2026,Willow Taproom,Dana Cruz,Stout No. 9 1/2 bbl keg,2,334.26
+INV,INV-26003,01/01/2026,Willow Taproom,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26003,01/01/2026,Willow Taproom,Dana Cruz,Cedar Sour case 24x12oz cans,3,115.44
+CRM,CRM-26029,01/01/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26080,01/01/2026,Driftwood Pub,Margaret Cook,Cedar Sour 1/6 bbl keg,4,340.40
+INV,INV-26080,01/01/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26041,01/01/2026,North End Tavern,Priya Patel,Cedar Sour 1/2 bbl keg,2,330.30
+INV,INV-26041,01/01/2026,North End Tavern,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26078,01/01/2026,Driftwood Pub,Margaret Cook,Lakeshore Pilsner case 24x12oz cans,3,121.32
+INV,INV-26083,01/01/2026,Driftwood Pub,Margaret Cook,Pint glasses (dozen),2,108.00
+INV,INV-26083,01/01/2026,Driftwood Pub,Margaret Cook,Lakeshore Pilsner 1/6 bbl keg,2,186.84
+INV,INV-26083,01/01/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26015,01/01/2026,Harbor Market,"Walker, Christopher",Tamarack IPA 1/2 bbl keg,1,198.71
+INV,INV-26015,01/01/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26015,01/01/2026,Harbor Market,"Walker, Christopher",Lakeshore Pilsner case 24x12oz cans,10,490.20
+INV,INV-26067,01/02/2026,Birchwood Taproom,Joshua Morris,Hazy Hollow 1/2 bbl keg,2,335.98
+INV,INV-26067,01/02/2026,Birchwood Taproom,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26054,01/02/2026,Red Door Bistro,Gary Phillips,Cedar Sour case 24x12oz cans,8,368.00
+INV,INV-26054,01/02/2026,Red Door Bistro,Gary Phillips,Tamarack IPA 1/6 bbl keg,2,172.58
+INV,INV-26054,01/02/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26054,01/02/2026,Red Door Bistro,Gary Phillips,Tap handle,2,84.00
+INV,INV-26033,01/02/2026,North End Tavern,Priya Patel,Tamarack IPA case 24x12oz cans,7,273.00
+CRM,CRM-26028,01/03/2026,Anchor Alehouse,"Walker, Christopher",KEG DEPOSIT RETURN,1,30.00-
+CRM,CRM-26027,01/03/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26037,01/03/2026,Birchwood Kitchen,Priya Patel,Cedar Sour 1/2 bbl keg,2,351.58
+INV,INV-26037,01/03/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,2,60.00
+CRM,CRM-26075,01/04/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26016,01/04/2026,Saltbox Social Club,"Walker, Christopher",Hazy Hollow 1/2 bbl keg,1,187.35
+INV,INV-26016,01/04/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26016,01/04/2026,Saltbox Social Club,"Walker, Christopher",Tamarack IPA 1/2 bbl keg,3,623.85
+INV,INV-26016,01/04/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,3,90.00
+CRM,CRM-26061,01/05/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26035,01/05/2026,Saltbox Bottle Shop,Priya Patel,Hazy Hollow 1/6 bbl keg,2,162.40
+INV,INV-26035,01/05/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26035,01/05/2026,Saltbox Bottle Shop,Priya Patel,Ridgeline Amber 1/2 bbl keg,4,775.48
+INV,INV-26035,01/05/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26035,01/05/2026,Saltbox Bottle Shop,Priya Patel,Lakeshore Pilsner case 24x12oz cans,6,313.14
+INV,INV-26051,01/05/2026,Thistle Pub,Gary Phillips,Hazy Hollow 1/6 bbl keg,4,304.76
+INV,INV-26051,01/05/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26051,01/05/2026,Thistle Pub,Gary Phillips,Cedar Sour case 24x12oz cans,4,177.60
+INV,INV-26088,01/06/2026,Elm Street Bistro,Margaret Cook,Stout No. 9 1/6 bbl keg,4,289.40
+INV,INV-26088,01/06/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26088,01/06/2026,Elm Street Bistro,Margaret Cook,Stout No. 9 case 24x12oz cans,9,500.31
+CRM,CRM-26046,01/06/2026,Copper Social Club,Priya Patel,Credit - short ship,1,496.64-
+CRM,CRM-26045,01/06/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26053,01/07/2026,Lantern Social Club,Gary Phillips,Hazy Hollow case 24x12oz cans,4,182.56
+INV,INV-26053,01/07/2026,Lantern Social Club,Gary Phillips,Hazy Hollow 1/6 bbl keg,2,170.10
+INV,INV-26053,01/07/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26053,01/07/2026,Lantern Social Club,Gary Phillips,Cedar Sour 1/2 bbl keg,1,177.69
+INV,INV-26053,01/07/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26022,01/07/2026,Lantern Social Club,"Walker, Christopher",Tap handle,3,126.00
+INV,INV-26022,01/07/2026,Lantern Social Club,"Walker, Christopher",Cedar Sour 1/6 bbl keg,4,363.68
+INV,INV-26022,01/07/2026,Lantern Social Club,"Walker, Christopher",KEG DEPOSIT,4,120.00
+INV,INV-26007,01/07/2026,Elm Street Bistro,"Cruz, Dana",Lakeshore Pilsner case 24x12oz cans,4,202.24
+INV,INV-26007,01/07/2026,Elm Street Bistro,"Cruz, Dana",Ridgeline Amber 1/2 bbl keg,2,409.46
+INV,INV-26007,01/07/2026,Elm Street Bistro,"Cruz, Dana",KEG DEPOSIT,2,60.00
+INV,INV-26007,01/07/2026,Elm Street Bistro,"Cruz, Dana",Tamarack IPA 1/2 bbl keg,4,785.12
+INV,INV-26007,01/07/2026,Elm Street Bistro,"Cruz, Dana",KEG DEPOSIT,4,120.00
+INV,INV-26005,01/07/2026,Pine Knot Alehouse,DANA CRUZ,Stout No. 9 1/2 bbl keg,1,190.58
+INV,INV-26005,01/07/2026,Pine Knot Alehouse,DANA CRUZ,KEG DEPOSIT,1,30.00
+INV,INV-26005,01/07/2026,Pine Knot Alehouse,DANA CRUZ,Cedar Sour 1/6 bbl keg,1,77.30
+INV,INV-26005,01/07/2026,Pine Knot Alehouse,DANA CRUZ,KEG DEPOSIT,1,30.00
+INV,INV-26004,01/07/2026,North End Taproom,DANA CRUZ,Tamarack IPA 1/6 bbl keg,1,72.87
+INV,INV-26004,01/07/2026,North End Taproom,DANA CRUZ,KEG DEPOSIT,1,30.00
+INV,INV-26043,01/08/2026,North End Tavern,Priya Patel,Lakeshore Pilsner case 24x12oz cans,6,242.04
+INV,INV-26072,01/08/2026,Pine Knot Market,Joshua Morris,Ridgeline Amber 1/6 bbl keg,4,298.28
+INV,INV-26072,01/08/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26072,01/08/2026,Pine Knot Market,Joshua Morris,Stout No. 9 1/2 bbl keg,3,604.62
+INV,INV-26072,01/08/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26086,01/08/2026,Crow's Nest Kitchen,Margaret Cook,Tamarack IPA case 24x12oz cans,10,410.30
+INV,INV-26070,01/09/2026,Pine Knot Market,Joshua Morris,Hazy Hollow 1/6 bbl keg,1,72.22
+INV,INV-26070,01/09/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26070,01/09/2026,Pine Knot Market,Joshua Morris,Hazy Hollow 1/2 bbl keg,4,844.04
+INV,INV-26070,01/09/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26070,01/09/2026,Pine Knot Market,Joshua Morris,Lakeshore Pilsner 1/2 bbl keg,1,176.33
+INV,INV-26070,01/09/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,1,30.00
+CRM,CRM-26060,01/09/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26056,01/10/2026,Birchwood Taproom,Gary Phillips,Cedar Sour case 24x12oz cans,3,136.17
+INV,INV-26056,01/10/2026,Birchwood Taproom,Gary Phillips,Ridgeline Amber case 24x12oz cans,6,259.56
+INV,INV-26056,01/10/2026,Birchwood Taproom,Gary Phillips,Tamarack IPA 1/2 bbl keg,2,341.60
+INV,INV-26056,01/10/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26006,01/10/2026,Elm Street Bistro,DANA CRUZ,Hazy Hollow 1/2 bbl keg,1,197.87
+INV,INV-26006,01/10/2026,Elm Street Bistro,DANA CRUZ,KEG DEPOSIT,1,30.00
+INV,INV-26020,01/10/2026,Anchor Alehouse,Christopher Walker,Tap handle,2,84.00
+INV,INV-26020,01/10/2026,Anchor Alehouse,Christopher Walker,Hazy Hollow 1/2 bbl keg,1,191.36
+INV,INV-26020,01/10/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26020,01/10/2026,Anchor Alehouse,Christopher Walker,Cedar Sour 1/6 bbl keg,1,83.50
+INV,INV-26020,01/10/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,1,30.00
+CRM,CRM-26047,01/11/2026,Fox & Hound Pub,Priya Patel,Credit - short ship,1,191.76-
+INV,INV-26019,01/11/2026,Crow's Nest Bottle Shop,Christopher Walker,Lakeshore Pilsner case 24x12oz cans,2,77.48
+INV,INV-26019,01/11/2026,Crow's Nest Bottle Shop,Christopher Walker,Stout No. 9 case 24x12oz cans,6,267.00
+INV,INV-26019,01/11/2026,Crow's Nest Bottle Shop,Christopher Walker,Tamarack IPA 1/2 bbl keg,4,797.32
+INV,INV-26019,01/11/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26009,01/12/2026,North End Taproom,DANA CRUZ,Hazy Hollow case 24x12oz cans,4,203.52
+INV,INV-26009,01/12/2026,North End Taproom,DANA CRUZ,Lakeshore Pilsner case 24x12oz cans,3,114.09
+INV,INV-26057,01/13/2026,Magnolia Taproom,Gary Phillips,Cedar Sour 1/6 bbl keg,3,261.51
+INV,INV-26057,01/13/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26048,01/14/2026,Thistle Pub,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,1,88.85
+INV,INV-26048,01/14/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26087,01/14/2026,Fox & Hound Grill,Margaret Cook,Cedar Sour 1/2 bbl keg,1,176.87
+INV,INV-26087,01/14/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26087,01/14/2026,Fox & Hound Grill,Margaret Cook,Ridgeline Amber 1/2 bbl keg,1,188.33
+INV,INV-26087,01/14/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26087,01/14/2026,Fox & Hound Grill,Margaret Cook,Ridgeline Amber 1/2 bbl keg,4,704.40
+INV,INV-26087,01/14/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26071,01/14/2026,Anchor Market,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,8,309.68
+INV,INV-26058,01/14/2026,Fox & Hound Market,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,1,82.66
+INV,INV-26058,01/14/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26058,01/14/2026,Fox & Hound Market,Gary Phillips,Hazy Hollow 1/2 bbl keg,2,332.40
+INV,INV-26058,01/14/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26058,01/14/2026,Fox & Hound Market,Gary Phillips,Tamarack IPA 1/2 bbl keg,1,197.28
+INV,INV-26058,01/14/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26049,01/14/2026,Lantern Social Club,Gary Phillips,Ridgeline Amber case 24x12oz cans,8,346.88
+INV,INV-26049,01/14/2026,Lantern Social Club,Gary Phillips,Stout No. 9 1/6 bbl keg,3,261.87
+INV,INV-26049,01/14/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26049,01/14/2026,Lantern Social Club,Gary Phillips,Tap handle,1,42.00
+INV,INV-26039,01/14/2026,North End Tavern,Priya Patel,Ridgeline Amber 1/6 bbl keg,4,290.88
+INV,INV-26039,01/14/2026,North End Tavern,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26050,01/14/2026,Thistle Pub,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,4,296.76
+INV,INV-26050,01/14/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26050,01/14/2026,Thistle Pub,Gary Phillips,Cedar Sour 1/6 bbl keg,1,85.40
+INV,INV-26050,01/14/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26084,01/15/2026,Willow Bottle Shop,Margaret Cook,Hazy Hollow 1/6 bbl keg,4,324.72
+INV,INV-26084,01/15/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26084,01/15/2026,Willow Bottle Shop,Margaret Cook,Cedar Sour case 24x12oz cans,10,524.80
+CRM,CRM-26012,01/15/2026,Juniper Market,Dana Cruz,KEG DEPOSIT RETURN,2,60.00-
+CRM,CRM-26013,01/15/2026,North End Taproom,D. Cruz,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26021,01/16/2026,Harbor Market,Christopher Walker,Hazy Hollow 1/2 bbl keg,2,388.92
+INV,INV-26021,01/16/2026,Harbor Market,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26021,01/16/2026,Harbor Market,Christopher Walker,Tamarack IPA case 24x12oz cans,3,117.57
+INV,INV-26034,01/16/2026,Copper Social Club,Priya Patel,Ridgeline Amber case 24x12oz cans,4,210.36
+INV,INV-26034,01/16/2026,Copper Social Club,Priya Patel,Tamarack IPA case 24x12oz cans,9,404.64
+INV,INV-26034,01/16/2026,Copper Social Club,Priya Patel,Stout No. 9 1/2 bbl keg,1,166.53
+INV,INV-26034,01/16/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,1,30.00
+CRM,CRM-26044,01/16/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26008,01/16/2026,Willow Taproom,DANA CRUZ,Cedar Sour 1/6 bbl keg,3,243.99
+INV,INV-26008,01/16/2026,Willow Taproom,DANA CRUZ,KEG DEPOSIT,3,90.00
+INV,INV-26008,01/16/2026,Willow Taproom,DANA CRUZ,Tamarack IPA case 24x12oz cans,2,92.48
+INV,INV-26008,01/16/2026,Willow Taproom,DANA CRUZ,Hazy Hollow 1/2 bbl keg,3,514.02
+INV,INV-26008,01/16/2026,Willow Taproom,DANA CRUZ,KEG DEPOSIT,3,90.00
+INV,INV-26064,01/17/2026,Harbor Pub,Joshua Morris,Hazy Hollow 1/6 bbl keg,4,365.44
+INV,INV-26064,01/17/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26031,01/17/2026,Birchwood Kitchen,Priya Patel,Lakeshore Pilsner case 24x12oz cans,3,154.35
+INV,INV-26031,01/17/2026,Birchwood Kitchen,Priya Patel,Hazy Hollow case 24x12oz cans,8,422.88
+INV,INV-26031,01/17/2026,Birchwood Kitchen,Priya Patel,Tamarack IPA 1/6 bbl keg,2,184.86
+INV,INV-26031,01/17/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26025,01/18/2026,Anchor Alehouse,Christopher Walker,Hazy Hollow 1/2 bbl keg,4,780.00
+INV,INV-26025,01/18/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26025,01/18/2026,Anchor Alehouse,Christopher Walker,Hazy Hollow 1/6 bbl keg,3,276.00
+INV,INV-26025,01/18/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26025,01/18/2026,Anchor Alehouse,Christopher Walker,Cedar Sour 1/2 bbl keg,2,330.92
+INV,INV-26025,01/18/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26055,01/18/2026,Lantern Social Club,Gary Phillips,Ridgeline Amber 1/2 bbl keg,1,184.50
+INV,INV-26055,01/18/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26077,01/18/2026,Elm Street Bistro,Margaret Cook,Cedar Sour 1/2 bbl keg,1,189.35
+INV,INV-26077,01/18/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26077,01/18/2026,Elm Street Bistro,Margaret Cook,Lakeshore Pilsner 1/6 bbl keg,4,315.52
+INV,INV-26077,01/18/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26077,01/18/2026,Elm Street Bistro,Margaret Cook,Cedar Sour 1/2 bbl keg,3,546.75
+INV,INV-26077,01/18/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26089,01/19/2026,Fox & Hound Grill,Margaret Cook,Tap handle,3,126.00
+INV,INV-26089,01/19/2026,Fox & Hound Grill,Margaret Cook,Ridgeline Amber 1/6 bbl keg,4,292.92
+INV,INV-26089,01/19/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26089,01/19/2026,Fox & Hound Grill,Margaret Cook,Stout No. 9 1/2 bbl keg,3,590.97
+INV,INV-26089,01/19/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,3,90.00
+CRM,CRM-26091,01/19/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26073,01/20/2026,Pine Knot Market,Joshua Morris,Cedar Sour 1/2 bbl keg,1,193.90
+INV,INV-26073,01/20/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26073,01/20/2026,Pine Knot Market,Joshua Morris,Ridgeline Amber case 24x12oz cans,8,339.84
+INV,INV-26066,01/21/2026,Saltbox Alehouse,Joshua Morris,Ridgeline Amber 1/2 bbl keg,3,603.78
+INV,INV-26066,01/21/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26066,01/21/2026,Saltbox Alehouse,Joshua Morris,Hazy Hollow 1/2 bbl keg,4,769.24
+INV,INV-26066,01/21/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26066,01/21/2026,Saltbox Alehouse,Joshua Morris,Tamarack IPA 1/6 bbl keg,2,160.18
+INV,INV-26066,01/21/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26052,01/21/2026,Red Door Bistro,Gary Phillips,Tamarack IPA case 24x12oz cans,9,442.26
+INV,INV-26082,01/22/2026,Driftwood Pub,Margaret Cook,Tamarack IPA 1/2 bbl keg,3,575.88
+INV,INV-26082,01/22/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26082,01/22/2026,Driftwood Pub,Margaret Cook,Cedar Sour 1/2 bbl keg,3,498.09
+INV,INV-26082,01/22/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26082,01/22/2026,Driftwood Pub,Margaret Cook,Pint glasses (dozen),1,54.00
+INV,INV-26023,01/22/2026,Anchor Alehouse,Christopher Walker,Ridgeline Amber 1/6 bbl keg,2,164.70
+INV,INV-26023,01/22/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26023,01/22/2026,Anchor Alehouse,Christopher Walker,Hazy Hollow case 24x12oz cans,2,108.50
+INV,INV-26032,01/22/2026,Birchwood Kitchen,Priya Patel,Ridgeline Amber 1/6 bbl keg,3,220.71
+INV,INV-26032,01/22/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26032,01/22/2026,Birchwood Kitchen,Priya Patel,Hazy Hollow 1/6 bbl keg,4,324.88
+INV,INV-26032,01/22/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26042,01/22/2026,Saltbox Bottle Shop,Priya Patel,Stout No. 9 1/6 bbl keg,3,265.65
+INV,INV-26042,01/22/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26068,01/22/2026,Anchor Market,Joshua Morris,Stout No. 9 1/2 bbl keg,4,696.24
+INV,INV-26068,01/22/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26068,01/22/2026,Anchor Market,Joshua Morris,Hazy Hollow 1/2 bbl keg,3,540.54
+INV,INV-26068,01/22/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26010,01/23/2026,Elm Street Bistro,Dana Cruz,Cedar Sour 1/6 bbl keg,4,291.04
+INV,INV-26010,01/23/2026,Elm Street Bistro,Dana Cruz,KEG DEPOSIT,4,120.00
+CRM,CRM-26062,01/23/2026,Lantern Social Club,Gary Phillips,Credit - damaged,1,162.35-
+INV,INV-26085,01/23/2026,Willow Bottle Shop,Margaret Cook,Stout No. 9 1/6 bbl keg,4,304.44
+INV,INV-26085,01/23/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26085,01/23/2026,Willow Bottle Shop,Margaret Cook,Cedar Sour case 24x12oz cans,10,531.20
+INV,INV-26085,01/23/2026,Willow Bottle Shop,Margaret Cook,Lakeshore Pilsner 1/6 bbl keg,2,184.32
+INV,INV-26085,01/23/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26090,01/23/2026,Pine Knot Alehouse,Margaret Cook,Ridgeline Amber case 24x12oz cans,7,314.65
+INV,INV-26040,01/24/2026,Old Mill Alehouse,Priya Patel,Lakeshore Pilsner case 24x12oz cans,2,88.44
+CRM,CRM-26076,01/24/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT RETURN,1,30.00-
+CRM,CRM-26074,01/24/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26065,01/24/2026,Anchor Market,Joshua Morris,Tamarack IPA case 24x12oz cans,2,108.60
+INV,INV-26065,01/24/2026,Anchor Market,Joshua Morris,Cedar Sour 1/2 bbl keg,2,364.18
+INV,INV-26065,01/24/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26024,01/25/2026,Lantern Social Club,Christopher Walker,Lakeshore Pilsner 1/2 bbl keg,1,211.86
+INV,INV-26024,01/25/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26024,01/25/2026,Lantern Social Club,Christopher Walker,Ridgeline Amber 1/2 bbl keg,2,373.10
+INV,INV-26024,01/25/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26038,01/25/2026,Fox & Hound Pub,Priya Patel,Stout No. 9 1/2 bbl keg,2,370.04
+INV,INV-26038,01/25/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26038,01/25/2026,Fox & Hound Pub,Priya Patel,Tamarack IPA 1/2 bbl keg,1,184.54
+INV,INV-26038,01/25/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,1,30.00
+CRM,CRM-26011,01/25/2026,Willow Taproom,D. Cruz,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26014,01/25/2026,Red Door Pub,Christopher Walker,Hazy Hollow 1/6 bbl keg,1,91.42
+INV,INV-26014,01/25/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26014,01/25/2026,Red Door Pub,Christopher Walker,Lakeshore Pilsner case 24x12oz cans,3,159.21
+INV,INV-26079,01/26/2026,Willow Bottle Shop,Margaret Cook,Hazy Hollow 1/2 bbl keg,2,406.72
+INV,INV-26079,01/26/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26079,01/26/2026,Willow Bottle Shop,Margaret Cook,Tamarack IPA case 24x12oz cans,4,197.28
+INV,INV-26079,01/26/2026,Willow Bottle Shop,Margaret Cook,Ridgeline Amber 1/2 bbl keg,3,563.97
+INV,INV-26079,01/26/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26001,01/27/2026,Pine Knot Alehouse,Dana Cruz,Lakeshore Pilsner 1/2 bbl keg,1,196.90
+INV,INV-26001,01/27/2026,Pine Knot Alehouse,Dana Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26001,01/27/2026,Pine Knot Alehouse,Dana Cruz,Stout No. 9 1/2 bbl keg,1,207.21
+INV,INV-26001,01/27/2026,Pine Knot Alehouse,Dana Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26001,01/27/2026,Pine Knot Alehouse,Dana Cruz,Lakeshore Pilsner case 24x12oz cans,10,429.60
+INV,INV-26017,01/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Lakeshore Pilsner case 24x12oz cans,7,280.49
+INV,INV-26017,01/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Cedar Sour 1/2 bbl keg,1,166.91
+INV,INV-26017,01/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26017,01/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Tamarack IPA 1/6 bbl keg,3,283.56
+INV,INV-26017,01/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26081,01/28/2026,Crow's Nest Kitchen,Margaret Cook,Hazy Hollow 1/2 bbl keg,3,605.73
+INV,INV-26081,01/28/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26081,01/28/2026,Crow's Nest Kitchen,Margaret Cook,Cedar Sour 1/2 bbl keg,1,179.81
+INV,INV-26081,01/28/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26081,01/28/2026,Crow's Nest Kitchen,Margaret Cook,Cedar Sour 1/6 bbl keg,4,352.16
+INV,INV-26081,01/28/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,4,120.00
+CRM,CRM-26030,01/28/2026,Lantern Social Club,Christopher Walker,Credit - damaged,1,506.50-
+INV,INV-26002,01/28/2026,Pine Knot Alehouse,Dana Cruz,Cedar Sour 1/6 bbl keg,3,248.43
+INV,INV-26002,01/28/2026,Pine Knot Alehouse,Dana Cruz,KEG DEPOSIT,3,90.00
+INV,INV-26002,01/28/2026,Pine Knot Alehouse,Dana Cruz,Stout No. 9 case 24x12oz cans,7,276.36
+INV,INV-26002,01/28/2026,Pine Knot Alehouse,Dana Cruz,Lakeshore Pilsner case 24x12oz cans,7,372.47
+INV,INV-26018,01/28/2026,Lantern Social Club,Christopher Walker,Ridgeline Amber case 24x12oz cans,9,445.68
+INV,INV-26018,01/28/2026,Lantern Social Club,Christopher Walker,Ridgeline Amber 1/2 bbl keg,2,365.30
+INV,INV-26018,01/28/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26018,01/28/2026,Lantern Social Club,Christopher Walker,Pint glasses (dozen),2,108.00
+INV,INV-26069,01/29/2026,Harbor Pub,Joshua Morris,Tap handle,1,42.00
+INV,INV-26069,01/29/2026,Harbor Pub,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,7,289.66
+INV,INV-26069,01/29/2026,Harbor Pub,Joshua Morris,Hazy Hollow case 24x12oz cans,6,261.72
+CRM,CRM-26063,01/29/2026,Thistle Pub,Gary Phillips,Credit - damaged,1,153.65-
+INV,INV-26036,01/31/2026,Copper Social Club,Priya Patel,Lakeshore Pilsner case 24x12oz cans,3,142.02
+INV,INV-26036,01/31/2026,Copper Social Club,Priya Patel,Tap handle,2,84.00
+INV,INV-26036,01/31/2026,Copper Social Club,Priya Patel,Cedar Sour 1/2 bbl keg,4,727.04
+INV,INV-26036,01/31/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26026,01/31/2026,Lantern Social Club,"Walker, Christopher",Pint glasses (dozen),2,108.00
+INV,INV-26026,01/31/2026,Lantern Social Club,"Walker, Christopher",Cedar Sour 1/2 bbl keg,4,769.60
+INV,INV-26026,01/31/2026,Lantern Social Club,"Walker, Christopher",KEG DEPOSIT,4,120.00
+INV,INV-26118,02/01/2026,Red Door Pub,Christopher Walker,Hazy Hollow 1/2 bbl keg,2,393.32
+INV,INV-26118,02/01/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26135,02/01/2026,Birchwood Taproom,Gary Phillips,Tamarack IPA 1/6 bbl keg,1,93.99
+INV,INV-26135,02/01/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26135,02/01/2026,Birchwood Taproom,Gary Phillips,Hazy Hollow 1/6 bbl keg,3,232.77
+INV,INV-26135,02/01/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26094,02/01/2026,Willow Taproom,Dana Cruz,Hazy Hollow 1/6 bbl keg,2,147.38
+INV,INV-26094,02/01/2026,Willow Taproom,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26094,02/01/2026,Willow Taproom,Dana Cruz,Cedar Sour 1/2 bbl keg,2,335.94
+INV,INV-26094,02/01/2026,Willow Taproom,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26094,02/01/2026,Willow Taproom,Dana Cruz,Ridgeline Amber 1/2 bbl keg,4,801.88
+INV,INV-26094,02/01/2026,Willow Taproom,Dana Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26174,02/01/2026,Pine Knot Alehouse,Margaret Cook,Tamarack IPA 1/2 bbl keg,3,616.98
+INV,INV-26174,02/01/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26109,02/01/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Coasters (500),1,36.00
+INV,INV-26108,02/02/2026,Saltbox Social Club,"Walker, Christopher",Ridgeline Amber 1/2 bbl keg,1,185.10
+INV,INV-26108,02/02/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26108,02/02/2026,Saltbox Social Club,"Walker, Christopher",Cedar Sour 1/6 bbl keg,4,337.20
+INV,INV-26108,02/02/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,4,120.00
+INV,INV-26108,02/02/2026,Saltbox Social Club,"Walker, Christopher",Lakeshore Pilsner 1/6 bbl keg,1,76.38
+INV,INV-26108,02/02/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,1,30.00
+CRM,CRM-26148,02/02/2026,Red Door Bistro,Gary Phillips,Credit - damaged,1,319.87-
+INV,INV-26123,02/02/2026,Fox & Hound Pub,Priya Patel,Hazy Hollow 1/2 bbl keg,1,171.78
+INV,INV-26123,02/02/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26123,02/02/2026,Fox & Hound Pub,Priya Patel,Tap handle,3,126.00
+INV,INV-26136,02/02/2026,Magnolia Taproom,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,4,333.36
+INV,INV-26136,02/02/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26136,02/02/2026,Magnolia Taproom,Gary Phillips,Stout No. 9 1/6 bbl keg,2,158.52
+INV,INV-26136,02/02/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26171,02/03/2026,Fox & Hound Grill,Margaret Cook,Cedar Sour 1/2 bbl keg,3,508.65
+INV,INV-26171,02/03/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26160,02/03/2026,Anchor Market,Joshua Morris,Lakeshore Pilsner 1/6 bbl keg,4,355.96
+INV,INV-26160,02/03/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26145,02/03/2026,Magnolia Taproom,Gary Phillips,Tamarack IPA 1/6 bbl keg,1,85.81
+INV,INV-26145,02/03/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26098,02/03/2026,North End Taproom,D. Cruz,Lakeshore Pilsner case 24x12oz cans,3,165.72
+INV,INV-26098,02/03/2026,North End Taproom,D. Cruz,Ridgeline Amber 1/2 bbl keg,4,779.32
+INV,INV-26098,02/03/2026,North End Taproom,D. Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26098,02/03/2026,North End Taproom,D. Cruz,Tamarack IPA 1/6 bbl keg,3,222.54
+INV,INV-26098,02/03/2026,North End Taproom,D. Cruz,KEG DEPOSIT,3,90.00
+CRM,CRM-26163,02/03/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26113,02/04/2026,Red Door Pub,"Walker, Christopher",Cedar Sour 1/2 bbl keg,2,415.46
+INV,INV-26113,02/04/2026,Red Door Pub,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26166,02/04/2026,Fox & Hound Grill,Margaret Cook,Lakeshore Pilsner case 24x12oz cans,10,546.90
+CRM,CRM-26147,02/04/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT RETURN,2,60.00-
+CRM,CRM-26120,02/05/2026,Crow's Nest Bottle Shop,Christopher Walker,Credit - short ship,1,319.34-
+INV,INV-26127,02/05/2026,North End Tavern,Priya Patel,Cedar Sour 1/6 bbl keg,4,332.48
+INV,INV-26127,02/05/2026,North End Tavern,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26127,02/05/2026,North End Tavern,Priya Patel,Stout No. 9 case 24x12oz cans,3,156.00
+INV,INV-26142,02/05/2026,Red Door Bistro,Gary Phillips,Ridgeline Amber 1/2 bbl keg,3,584.13
+INV,INV-26142,02/05/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26142,02/05/2026,Red Door Bistro,Gary Phillips,Cedar Sour 1/6 bbl keg,4,361.68
+INV,INV-26142,02/05/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26142,02/05/2026,Red Door Bistro,Gary Phillips,Tamarack IPA 1/2 bbl keg,4,829.88
+INV,INV-26142,02/05/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,4,120.00
+CRM,CRM-26103,02/05/2026,Pine Knot Alehouse,Dana Cruz,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26126,02/06/2026,Saltbox Bottle Shop,Priya Patel,Tamarack IPA 1/2 bbl keg,3,572.76
+INV,INV-26126,02/06/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26126,02/06/2026,Saltbox Bottle Shop,Priya Patel,Ridgeline Amber 1/6 bbl keg,4,357.88
+INV,INV-26126,02/06/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26172,02/07/2026,Driftwood Pub,Margaret Cook,Ridgeline Amber case 24x12oz cans,9,398.43
+INV,INV-26169,02/09/2026,Willow Bottle Shop,Margaret Cook,Stout No. 9 case 24x12oz cans,5,257.05
+INV,INV-26169,02/09/2026,Willow Bottle Shop,Margaret Cook,Hazy Hollow 1/6 bbl keg,1,75.87
+INV,INV-26169,02/09/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,1,30.00
+CRM,CRM-26146,02/09/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26095,02/10/2026,Elm Street Bistro,Dana Cruz,Lakeshore Pilsner 1/6 bbl keg,3,287.28
+INV,INV-26095,02/10/2026,Elm Street Bistro,Dana Cruz,KEG DEPOSIT,3,90.00
+INV,INV-26095,02/10/2026,Elm Street Bistro,Dana Cruz,Stout No. 9 1/6 bbl keg,2,184.54
+INV,INV-26095,02/10/2026,Elm Street Bistro,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26095,02/10/2026,Elm Street Bistro,Dana Cruz,Tamarack IPA case 24x12oz cans,8,356.00
+CRM,CRM-26162,02/10/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26165,02/10/2026,Crow's Nest Kitchen,Margaret Cook,Ridgeline Amber 1/2 bbl keg,3,516.63
+INV,INV-26165,02/10/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26101,02/11/2026,Juniper Market,D. Cruz,Tamarack IPA 1/2 bbl keg,3,545.91
+INV,INV-26101,02/11/2026,Juniper Market,D. Cruz,KEG DEPOSIT,3,90.00
+INV,INV-26101,02/11/2026,Juniper Market,D. Cruz,Tamarack IPA 1/2 bbl keg,4,668.12
+INV,INV-26101,02/11/2026,Juniper Market,D. Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26101,02/11/2026,Juniper Market,D. Cruz,Lakeshore Pilsner 1/2 bbl keg,3,552.30
+INV,INV-26101,02/11/2026,Juniper Market,D. Cruz,KEG DEPOSIT,3,90.00
+INV,INV-26152,02/11/2026,Anchor Market,Joshua Morris,Hazy Hollow 1/2 bbl keg,4,683.40
+INV,INV-26152,02/11/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26152,02/11/2026,Anchor Market,Joshua Morris,Ridgeline Amber 1/6 bbl keg,3,225.27
+INV,INV-26152,02/11/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26152,02/11/2026,Anchor Market,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,10,440.40
+CRM,CRM-26177,02/11/2026,Fox & Hound Grill,Margaret Cook,Credit - price adj,1,110.83-
+INV,INV-26161,02/12/2026,Saltbox Alehouse,Joshua Morris,Cedar Sour 1/6 bbl keg,4,339.92
+INV,INV-26161,02/12/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26161,02/12/2026,Saltbox Alehouse,Joshua Morris,Coasters (500),1,36.00
+INV,INV-26112,02/12/2026,Red Door Pub,Christopher Walker,Stout No. 9 1/2 bbl keg,3,559.35
+INV,INV-26112,02/12/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26112,02/12/2026,Red Door Pub,Christopher Walker,Tamarack IPA case 24x12oz cans,9,419.22
+INV,INV-26112,02/12/2026,Red Door Pub,Christopher Walker,Stout No. 9 1/6 bbl keg,3,218.01
+INV,INV-26112,02/12/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26151,02/12/2026,Harbor Pub,Joshua Morris,Tamarack IPA case 24x12oz cans,3,127.59
+INV,INV-26151,02/12/2026,Harbor Pub,Joshua Morris,Stout No. 9 1/6 bbl keg,1,88.62
+INV,INV-26151,02/12/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26151,02/12/2026,Harbor Pub,Joshua Morris,Cedar Sour 1/2 bbl keg,4,698.92
+INV,INV-26151,02/12/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26097,02/12/2026,Willow Taproom,Dana Cruz,Hazy Hollow 1/2 bbl keg,2,355.80
+INV,INV-26097,02/12/2026,Willow Taproom,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26129,02/12/2026,Fox & Hound Pub,Priya Patel,Hazy Hollow case 24x12oz cans,3,157.35
+INV,INV-26129,02/12/2026,Fox & Hound Pub,Priya Patel,Stout No. 9 1/6 bbl keg,2,160.44
+INV,INV-26129,02/12/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26129,02/12/2026,Fox & Hound Pub,Priya Patel,Cedar Sour case 24x12oz cans,4,217.68
+INV,INV-26144,02/13/2026,Magnolia Taproom,Gary Phillips,Stout No. 9 case 24x12oz cans,5,250.80
+INV,INV-26144,02/13/2026,Magnolia Taproom,Gary Phillips,Tamarack IPA 1/2 bbl keg,3,568.02
+INV,INV-26144,02/13/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,3,90.00
+CRM,CRM-26102,02/13/2026,Elm Street Bistro,Dana Cruz,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26122,02/13/2026,North End Tavern,Priya Patel,Stout No. 9 1/2 bbl keg,3,635.70
+INV,INV-26122,02/13/2026,North End Tavern,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26122,02/13/2026,North End Tavern,Priya Patel,Ridgeline Amber 1/2 bbl keg,4,824.84
+INV,INV-26122,02/13/2026,North End Tavern,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26150,02/14/2026,Anchor Market,Joshua Morris,Cedar Sour 1/6 bbl keg,1,85.99
+INV,INV-26150,02/14/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26111,02/14/2026,Red Door Pub,Christopher Walker,Hazy Hollow 1/6 bbl keg,3,256.53
+INV,INV-26111,02/14/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26111,02/14/2026,Red Door Pub,Christopher Walker,Lakeshore Pilsner 1/2 bbl keg,4,810.84
+INV,INV-26111,02/14/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26111,02/14/2026,Red Door Pub,Christopher Walker,Tamarack IPA 1/2 bbl keg,3,508.59
+INV,INV-26111,02/14/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26175,02/14/2026,Fox & Hound Grill,Margaret Cook,Lakeshore Pilsner case 24x12oz cans,9,503.46
+INV,INV-26175,02/14/2026,Fox & Hound Grill,Margaret Cook,Ridgeline Amber case 24x12oz cans,8,401.04
+CRM,CRM-26119,02/14/2026,Saltbox Social Club,Christopher Walker,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26143,02/15/2026,Fox & Hound Market,Gary Phillips,Cedar Sour 1/6 bbl keg,4,309.96
+INV,INV-26143,02/15/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26153,02/15/2026,Anchor Market,Joshua Morris,Coasters (500),1,36.00
+INV,INV-26153,02/15/2026,Anchor Market,Joshua Morris,Ridgeline Amber 1/6 bbl keg,2,164.62
+INV,INV-26153,02/15/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26116,02/15/2026,Crow's Nest Bottle Shop,Christopher Walker,Tamarack IPA 1/2 bbl keg,2,417.44
+INV,INV-26116,02/15/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26154,02/16/2026,Pine Knot Market,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,9,439.11
+INV,INV-26154,02/16/2026,Pine Knot Market,Joshua Morris,Stout No. 9 case 24x12oz cans,3,124.14
+INV,INV-26125,02/16/2026,Copper Social Club,Priya Patel,Cedar Sour 1/2 bbl keg,3,543.69
+INV,INV-26125,02/16/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26125,02/16/2026,Copper Social Club,Priya Patel,Ridgeline Amber 1/6 bbl keg,1,76.70
+INV,INV-26125,02/16/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26099,02/16/2026,Juniper Market,"Cruz, Dana",Cedar Sour 1/6 bbl keg,4,362.44
+INV,INV-26099,02/16/2026,Juniper Market,"Cruz, Dana",KEG DEPOSIT,4,120.00
+INV,INV-26138,02/16/2026,Fox & Hound Market,Gary Phillips,Tamarack IPA 1/2 bbl keg,2,391.90
+INV,INV-26138,02/16/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26138,02/16/2026,Fox & Hound Market,Gary Phillips,Hazy Hollow 1/2 bbl keg,2,330.66
+INV,INV-26138,02/16/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,2,60.00
+CRM,CRM-26134,02/17/2026,Copper Social Club,Priya Patel,Credit - short ship,1,278.42-
+INV,INV-26096,02/18/2026,Harbor Grill,DANA CRUZ,Cedar Sour 1/6 bbl keg,2,176.66
+INV,INV-26096,02/18/2026,Harbor Grill,DANA CRUZ,KEG DEPOSIT,2,60.00
+INV,INV-26139,02/18/2026,Thistle Pub,Gary Phillips,Ridgeline Amber 1/2 bbl keg,4,765.20
+INV,INV-26139,02/18/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26139,02/18/2026,Thistle Pub,Gary Phillips,Hazy Hollow case 24x12oz cans,2,84.70
+INV,INV-26141,02/19/2026,Magnolia Taproom,Gary Phillips,Lakeshore Pilsner 1/2 bbl keg,2,357.06
+INV,INV-26141,02/19/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26141,02/19/2026,Magnolia Taproom,Gary Phillips,Stout No. 9 1/6 bbl keg,3,236.37
+INV,INV-26141,02/19/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26121,02/19/2026,Saltbox Bottle Shop,Priya Patel,Lakeshore Pilsner 1/6 bbl keg,2,166.62
+INV,INV-26121,02/19/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26168,02/19/2026,Fox & Hound Grill,Margaret Cook,Tamarack IPA 1/6 bbl keg,4,358.00
+INV,INV-26168,02/19/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26168,02/19/2026,Fox & Hound Grill,Margaret Cook,Tamarack IPA case 24x12oz cans,4,206.84
+INV,INV-26168,02/19/2026,Fox & Hound Grill,Margaret Cook,Ridgeline Amber 1/6 bbl keg,2,145.52
+INV,INV-26168,02/19/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26092,02/19/2026,Willow Taproom,D. Cruz,Cedar Sour 1/2 bbl keg,2,361.08
+INV,INV-26092,02/19/2026,Willow Taproom,D. Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26092,02/19/2026,Willow Taproom,D. Cruz,Ridgeline Amber case 24x12oz cans,2,96.34
+INV,INV-26092,02/19/2026,Willow Taproom,D. Cruz,Hazy Hollow case 24x12oz cans,6,262.86
+INV,INV-26149,02/20/2026,Anchor Market,Joshua Morris,Lakeshore Pilsner 1/2 bbl keg,4,672.56
+INV,INV-26149,02/20/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26149,02/20/2026,Anchor Market,Joshua Morris,Tamarack IPA 1/2 bbl keg,4,731.80
+INV,INV-26149,02/20/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26131,02/20/2026,Saltbox Bottle Shop,Priya Patel,Stout No. 9 case 24x12oz cans,5,243.60
+INV,INV-26131,02/20/2026,Saltbox Bottle Shop,Priya Patel,Stout No. 9 1/2 bbl keg,3,592.08
+INV,INV-26131,02/20/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26131,02/20/2026,Saltbox Bottle Shop,Priya Patel,Ridgeline Amber 1/2 bbl keg,1,165.49
+INV,INV-26131,02/20/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26158,02/20/2026,Pine Knot Market,Joshua Morris,Hazy Hollow case 24x12oz cans,9,347.31
+INV,INV-26158,02/20/2026,Pine Knot Market,Joshua Morris,Tamarack IPA 1/6 bbl keg,2,144.02
+INV,INV-26158,02/20/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26158,02/20/2026,Pine Knot Market,Joshua Morris,Tamarack IPA 1/6 bbl keg,2,175.72
+INV,INV-26158,02/20/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26093,02/20/2026,Harbor Grill,"Cruz, Dana",Ridgeline Amber case 24x12oz cans,2,91.90
+INV,INV-26155,02/21/2026,Saltbox Alehouse,Joshua Morris,Lakeshore Pilsner 1/2 bbl keg,3,617.67
+INV,INV-26155,02/21/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26107,02/21/2026,Saltbox Social Club,"Walker, Christopher",Tap handle,1,42.00
+INV,INV-26107,02/21/2026,Saltbox Social Club,"Walker, Christopher",Stout No. 9 1/6 bbl keg,2,182.98
+INV,INV-26107,02/21/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26107,02/21/2026,Saltbox Social Club,"Walker, Christopher",Stout No. 9 1/6 bbl keg,2,166.88
+INV,INV-26107,02/21/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26115,02/21/2026,Lantern Social Club,Christopher Walker,Cedar Sour 1/2 bbl keg,4,840.20
+INV,INV-26115,02/21/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26115,02/21/2026,Lantern Social Club,Christopher Walker,Ridgeline Amber 1/2 bbl keg,2,352.58
+INV,INV-26115,02/21/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26115,02/21/2026,Lantern Social Club,Christopher Walker,Hazy Hollow 1/2 bbl keg,3,526.86
+INV,INV-26115,02/21/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26100,02/22/2026,Harbor Grill,"Cruz, Dana",Ridgeline Amber 1/6 bbl keg,2,171.10
+INV,INV-26100,02/22/2026,Harbor Grill,"Cruz, Dana",KEG DEPOSIT,2,60.00
+INV,INV-26117,02/22/2026,Harbor Market,"Walker, Christopher",Stout No. 9 1/2 bbl keg,1,203.73
+INV,INV-26117,02/22/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26105,02/23/2026,Lantern Social Club,Christopher Walker,Lakeshore Pilsner case 24x12oz cans,3,118.35
+INV,INV-26110,02/23/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Tamarack IPA case 24x12oz cans,4,177.76
+CRM,CRM-26104,02/24/2026,North End Taproom,D. Cruz,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26128,02/24/2026,Fox & Hound Pub,Priya Patel,Hazy Hollow 1/2 bbl keg,1,189.69
+INV,INV-26128,02/24/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26130,02/24/2026,Fox & Hound Pub,Priya Patel,Hazy Hollow 1/6 bbl keg,3,285.45
+INV,INV-26130,02/24/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26130,02/24/2026,Fox & Hound Pub,Priya Patel,Stout No. 9 case 24x12oz cans,4,162.64
+INV,INV-26173,02/24/2026,Pine Knot Alehouse,Margaret Cook,Lakeshore Pilsner 1/2 bbl keg,4,815.72
+INV,INV-26173,02/24/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26173,02/24/2026,Pine Knot Alehouse,Margaret Cook,Ridgeline Amber case 24x12oz cans,2,79.00
+INV,INV-26173,02/24/2026,Pine Knot Alehouse,Margaret Cook,Stout No. 9 case 24x12oz cans,7,270.41
+CRM,CRM-26164,02/25/2026,Birchwood Taproom,Joshua Morris,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26156,02/25/2026,Pine Knot Market,Joshua Morris,Ridgeline Amber 1/2 bbl keg,2,366.74
+INV,INV-26156,02/25/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26157,02/25/2026,Saltbox Alehouse,Joshua Morris,Cedar Sour 1/2 bbl keg,4,688.60
+INV,INV-26157,02/25/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,4,120.00
+CRM,CRM-26133,02/25/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26114,02/26/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Lakeshore Pilsner 1/2 bbl keg,2,345.10
+INV,INV-26114,02/26/2026,Crow's Nest Bottle Shop,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26106,02/27/2026,Crow's Nest Bottle Shop,Christopher Walker,Stout No. 9 case 24x12oz cans,6,312.48
+INV,INV-26106,02/27/2026,Crow's Nest Bottle Shop,Christopher Walker,Tamarack IPA 1/2 bbl keg,4,763.92
+INV,INV-26106,02/27/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26167,02/27/2026,Fox & Hound Grill,Margaret Cook,Tap handle,3,126.00
+INV,INV-26140,02/27/2026,Lantern Social Club,Gary Phillips,Ridgeline Amber case 24x12oz cans,7,277.55
+INV,INV-26137,02/27/2026,Fox & Hound Market,Gary Phillips,Ridgeline Amber case 24x12oz cans,8,384.08
+INV,INV-26132,02/27/2026,Saltbox Bottle Shop,Priya Patel,Lakeshore Pilsner 1/6 bbl keg,3,264.00
+INV,INV-26132,02/27/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26170,02/27/2026,Crow's Nest Kitchen,Margaret Cook,Hazy Hollow 1/6 bbl keg,1,86.72
+INV,INV-26170,02/27/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26170,02/27/2026,Crow's Nest Kitchen,Margaret Cook,Stout No. 9 1/2 bbl keg,3,575.43
+INV,INV-26170,02/27/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,3,90.00
+CRM,CRM-26176,02/27/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT RETURN,1,30.00-
+CRM,CRM-26178,02/28/2026,Elm Street Bistro,Margaret Cook,Credit - short ship,1,201.62-
+INV,INV-26159,02/28/2026,Elm Street Bottle Shop,Joshua Morris,Lakeshore Pilsner 1/6 bbl keg,3,251.52
+INV,INV-26159,02/28/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26159,02/28/2026,Elm Street Bottle Shop,Joshua Morris,Hazy Hollow case 24x12oz cans,7,356.44
+INV,INV-26159,02/28/2026,Elm Street Bottle Shop,Joshua Morris,Hazy Hollow case 24x12oz cans,7,372.61
+INV,INV-26124,02/28/2026,Copper Social Club,Priya Patel,Ridgeline Amber case 24x12oz cans,9,368.10
+INV,INV-26260,03/01/2026,Fox & Hound Grill,Margaret Cook,Cedar Sour 1/2 bbl keg,4,699.24
+INV,INV-26260,03/01/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26181,03/01/2026,Elm Street Bistro,D. Cruz,Hazy Hollow 1/6 bbl keg,3,235.35
+INV,INV-26181,03/01/2026,Elm Street Bistro,D. Cruz,KEG DEPOSIT,3,90.00
+INV,INV-26223,03/01/2026,Lantern Social Club,Gary Phillips,Cedar Sour case 24x12oz cans,6,236.82
+INV,INV-26223,03/01/2026,Lantern Social Club,Gary Phillips,Cedar Sour case 24x12oz cans,6,313.50
+INV,INV-26205,03/01/2026,Saltbox Bottle Shop,Priya Patel,Lakeshore Pilsner 1/2 bbl keg,1,195.06
+INV,INV-26205,03/01/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26205,03/01/2026,Saltbox Bottle Shop,Priya Patel,Tamarack IPA case 24x12oz cans,4,219.56
+INV,INV-26205,03/01/2026,Saltbox Bottle Shop,Priya Patel,Ridgeline Amber 1/2 bbl keg,3,613.11
+INV,INV-26205,03/01/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26238,03/02/2026,Anchor Market,Joshua Morris,Hazy Hollow 1/2 bbl keg,2,408.02
+INV,INV-26238,03/02/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26238,03/02/2026,Anchor Market,Joshua Morris,Hazy Hollow case 24x12oz cans,4,215.08
+INV,INV-26207,03/03/2026,Birchwood Kitchen,Priya Patel,Stout No. 9 case 24x12oz cans,9,431.28
+INV,INV-26207,03/03/2026,Birchwood Kitchen,Priya Patel,Pint glasses (dozen),1,54.00
+INV,INV-26235,03/03/2026,Fox & Hound Market,Gary Phillips,Lakeshore Pilsner 1/2 bbl keg,1,187.79
+INV,INV-26235,03/03/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26235,03/03/2026,Fox & Hound Market,Gary Phillips,Lakeshore Pilsner case 24x12oz cans,7,359.17
+INV,INV-26226,03/04/2026,Lantern Social Club,Gary Phillips,Hazy Hollow 1/6 bbl keg,2,157.72
+INV,INV-26226,03/04/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26226,03/04/2026,Lantern Social Club,Gary Phillips,Tap handle,1,42.00
+INV,INV-26247,03/04/2026,Pine Knot Market,Joshua Morris,Ridgeline Amber case 24x12oz cans,6,325.56
+INV,INV-26247,03/04/2026,Pine Knot Market,Joshua Morris,Cedar Sour 1/2 bbl keg,4,664.92
+INV,INV-26247,03/04/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26231,03/04/2026,Birchwood Taproom,Gary Phillips,Tamarack IPA 1/2 bbl keg,2,351.90
+INV,INV-26231,03/04/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26231,03/04/2026,Birchwood Taproom,Gary Phillips,Stout No. 9 1/6 bbl keg,1,93.30
+INV,INV-26231,03/04/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26231,03/04/2026,Birchwood Taproom,Gary Phillips,Lakeshore Pilsner 1/2 bbl keg,2,376.22
+INV,INV-26231,03/04/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26249,03/04/2026,Pine Knot Market,Joshua Morris,Lakeshore Pilsner 1/6 bbl keg,3,253.11
+INV,INV-26249,03/04/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26186,03/04/2026,Pine Knot Alehouse,D. Cruz,Pint glasses (dozen),1,54.00
+INV,INV-26186,03/04/2026,Pine Knot Alehouse,D. Cruz,Ridgeline Amber 1/2 bbl keg,4,744.68
+INV,INV-26186,03/04/2026,Pine Knot Alehouse,D. Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26186,03/04/2026,Pine Knot Alehouse,D. Cruz,Tamarack IPA 1/6 bbl keg,4,312.80
+INV,INV-26186,03/04/2026,Pine Knot Alehouse,D. Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26255,03/05/2026,Crow's Nest Kitchen,Margaret Cook,Cedar Sour 1/6 bbl keg,4,310.80
+INV,INV-26255,03/05/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26255,03/05/2026,Crow's Nest Kitchen,Margaret Cook,Ridgeline Amber 1/6 bbl keg,1,88.21
+INV,INV-26255,03/05/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26255,03/05/2026,Crow's Nest Kitchen,Margaret Cook,Stout No. 9 1/6 bbl keg,3,253.92
+INV,INV-26255,03/05/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,3,90.00
+CRM,CRM-26221,03/05/2026,Saltbox Bottle Shop,Priya Patel,Credit - price adj,1,177.91-
+INV,INV-26188,03/05/2026,Elm Street Bistro,DANA CRUZ,Hazy Hollow 1/6 bbl keg,3,225.63
+INV,INV-26188,03/05/2026,Elm Street Bistro,DANA CRUZ,KEG DEPOSIT,3,90.00
+INV,INV-26188,03/05/2026,Elm Street Bistro,DANA CRUZ,Ridgeline Amber 1/2 bbl keg,4,723.80
+INV,INV-26188,03/05/2026,Elm Street Bistro,DANA CRUZ,KEG DEPOSIT,4,120.00
+CRM,CRM-26220,03/05/2026,North End Tavern,Priya Patel,KEG DEPOSIT RETURN,2,60.00-
+CRM,CRM-26219,03/06/2026,North End Tavern,Priya Patel,KEG DEPOSIT RETURN,3,90.00-
+CRM,CRM-26265,03/07/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT RETURN,3,90.00-
+CRM,CRM-26237,03/07/2026,Lantern Social Club,Gary Phillips,Credit - damaged,1,369.94-
+INV,INV-26234,03/08/2026,Magnolia Taproom,Gary Phillips,Cedar Sour case 24x12oz cans,6,270.36
+INV,INV-26234,03/08/2026,Magnolia Taproom,Gary Phillips,Tamarack IPA case 24x12oz cans,6,322.74
+INV,INV-26234,03/08/2026,Magnolia Taproom,Gary Phillips,Cedar Sour 1/6 bbl keg,3,260.10
+INV,INV-26234,03/08/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26183,03/08/2026,Elm Street Bistro,DANA CRUZ,Cedar Sour 1/6 bbl keg,1,76.35
+INV,INV-26183,03/08/2026,Elm Street Bistro,DANA CRUZ,KEG DEPOSIT,1,30.00
+INV,INV-26224,03/08/2026,Red Door Bistro,Gary Phillips,Lakeshore Pilsner case 24x12oz cans,2,91.06
+INV,INV-26239,03/09/2026,Saltbox Alehouse,Joshua Morris,Tamarack IPA case 24x12oz cans,8,438.88
+INV,INV-26245,03/09/2026,Saltbox Alehouse,Joshua Morris,Tamarack IPA case 24x12oz cans,5,209.10
+CRM,CRM-26250,03/09/2026,Anchor Market,Joshua Morris,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26216,03/10/2026,Saltbox Bottle Shop,Priya Patel,Tamarack IPA case 24x12oz cans,8,311.84
+INV,INV-26216,03/10/2026,Saltbox Bottle Shop,Priya Patel,Stout No. 9 1/6 bbl keg,2,180.62
+INV,INV-26216,03/10/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26240,03/10/2026,Pine Knot Market,Joshua Morris,Stout No. 9 1/2 bbl keg,1,188.23
+INV,INV-26240,03/10/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26240,03/10/2026,Pine Knot Market,Joshua Morris,Coasters (500),3,108.00
+INV,INV-26240,03/10/2026,Pine Knot Market,Joshua Morris,Cedar Sour 1/2 bbl keg,4,814.44
+INV,INV-26240,03/10/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26190,03/10/2026,Willow Taproom,DANA CRUZ,Stout No. 9 1/2 bbl keg,4,700.68
+INV,INV-26190,03/10/2026,Willow Taproom,DANA CRUZ,KEG DEPOSIT,4,120.00
+INV,INV-26190,03/10/2026,Willow Taproom,DANA CRUZ,Ridgeline Amber 1/2 bbl keg,4,832.40
+INV,INV-26190,03/10/2026,Willow Taproom,DANA CRUZ,KEG DEPOSIT,4,120.00
+INV,INV-26190,03/10/2026,Willow Taproom,DANA CRUZ,Lakeshore Pilsner 1/6 bbl keg,1,90.95
+INV,INV-26190,03/10/2026,Willow Taproom,DANA CRUZ,KEG DEPOSIT,1,30.00
+CRM,CRM-26253,03/11/2026,Pine Knot Market,Joshua Morris,Credit - short ship,1,503.71-
+CRM,CRM-26251,03/11/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT RETURN,2,60.00-
+CRM,CRM-26236,03/11/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26263,03/12/2026,Willow Bottle Shop,Margaret Cook,Hazy Hollow 1/2 bbl keg,1,211.16
+INV,INV-26263,03/12/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26263,03/12/2026,Willow Bottle Shop,Margaret Cook,Cedar Sour 1/2 bbl keg,2,406.74
+INV,INV-26263,03/12/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26263,03/12/2026,Willow Bottle Shop,Margaret Cook,Hazy Hollow case 24x12oz cans,4,154.36
+INV,INV-26261,03/13/2026,Driftwood Pub,Margaret Cook,Tamarack IPA 1/6 bbl keg,2,164.42
+INV,INV-26261,03/13/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26261,03/13/2026,Driftwood Pub,Margaret Cook,Stout No. 9 case 24x12oz cans,5,215.50
+INV,INV-26261,03/13/2026,Driftwood Pub,Margaret Cook,Cedar Sour case 24x12oz cans,9,484.65
+INV,INV-26215,03/13/2026,Old Mill Alehouse,Priya Patel,Lakeshore Pilsner 1/6 bbl keg,1,73.04
+INV,INV-26215,03/13/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26215,03/13/2026,Old Mill Alehouse,Priya Patel,Stout No. 9 1/2 bbl keg,4,675.20
+INV,INV-26215,03/13/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26179,03/14/2026,Elm Street Bistro,Dana Cruz,Cedar Sour case 24x12oz cans,9,486.09
+INV,INV-26179,03/14/2026,Elm Street Bistro,Dana Cruz,Lakeshore Pilsner 1/6 bbl keg,2,169.00
+INV,INV-26179,03/14/2026,Elm Street Bistro,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26184,03/14/2026,Willow Taproom,D. Cruz,Stout No. 9 1/2 bbl keg,2,400.02
+INV,INV-26184,03/14/2026,Willow Taproom,D. Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26257,03/15/2026,Driftwood Pub,Margaret Cook,Hazy Hollow 1/6 bbl keg,2,189.00
+INV,INV-26257,03/15/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26257,03/15/2026,Driftwood Pub,Margaret Cook,Pint glasses (dozen),1,54.00
+INV,INV-26257,03/15/2026,Driftwood Pub,Margaret Cook,Stout No. 9 1/2 bbl keg,3,571.80
+INV,INV-26257,03/15/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26189,03/15/2026,Pine Knot Alehouse,Dana Cruz,Cedar Sour case 24x12oz cans,7,309.96
+INV,INV-26189,03/15/2026,Pine Knot Alehouse,Dana Cruz,Stout No. 9 1/6 bbl keg,4,354.76
+INV,INV-26189,03/15/2026,Pine Knot Alehouse,Dana Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26248,03/15/2026,Birchwood Taproom,Joshua Morris,Stout No. 9 1/6 bbl keg,4,346.68
+INV,INV-26248,03/15/2026,Birchwood Taproom,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26248,03/15/2026,Birchwood Taproom,Joshua Morris,Ridgeline Amber 1/2 bbl keg,2,408.72
+INV,INV-26248,03/15/2026,Birchwood Taproom,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26225,03/16/2026,Birchwood Taproom,Gary Phillips,Cedar Sour case 24x12oz cans,4,184.88
+INV,INV-26225,03/16/2026,Birchwood Taproom,Gary Phillips,Lakeshore Pilsner 1/2 bbl keg,3,590.22
+INV,INV-26225,03/16/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26210,03/16/2026,Birchwood Kitchen,Priya Patel,Stout No. 9 1/2 bbl keg,1,210.80
+INV,INV-26210,03/16/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26210,03/16/2026,Birchwood Kitchen,Priya Patel,Hazy Hollow 1/6 bbl keg,2,160.36
+INV,INV-26210,03/16/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26210,03/16/2026,Birchwood Kitchen,Priya Patel,Lakeshore Pilsner 1/6 bbl keg,1,91.47
+INV,INV-26210,03/16/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26182,03/16/2026,Willow Taproom,"Cruz, Dana",Lakeshore Pilsner case 24x12oz cans,7,291.48
+INV,INV-26229,03/17/2026,Red Door Bistro,Gary Phillips,Cedar Sour 1/6 bbl keg,2,181.06
+INV,INV-26229,03/17/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26229,03/17/2026,Red Door Bistro,Gary Phillips,Hazy Hollow 1/2 bbl keg,1,179.35
+INV,INV-26229,03/17/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26230,03/17/2026,Birchwood Taproom,Gary Phillips,Hazy Hollow 1/6 bbl keg,1,74.34
+INV,INV-26230,03/17/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26206,03/19/2026,Birchwood Kitchen,Priya Patel,Stout No. 9 1/6 bbl keg,4,333.16
+INV,INV-26206,03/19/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26246,03/19/2026,Saltbox Alehouse,Joshua Morris,Hazy Hollow 1/6 bbl keg,1,90.37
+INV,INV-26246,03/19/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26246,03/19/2026,Saltbox Alehouse,Joshua Morris,Cedar Sour case 24x12oz cans,4,203.16
+INV,INV-26246,03/19/2026,Saltbox Alehouse,Joshua Morris,Ridgeline Amber case 24x12oz cans,8,437.04
+CRM,CRM-26204,03/19/2026,Harbor Market,Christopher Walker,Credit - price adj,1,205.18-
+INV,INV-26241,03/19/2026,Harbor Pub,Joshua Morris,Stout No. 9 case 24x12oz cans,3,150.66
+INV,INV-26241,03/19/2026,Harbor Pub,Joshua Morris,Cedar Sour case 24x12oz cans,4,220.72
+INV,INV-26195,03/20/2026,Saltbox Social Club,Christopher Walker,Lakeshore Pilsner 1/6 bbl keg,2,159.32
+INV,INV-26195,03/20/2026,Saltbox Social Club,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26195,03/20/2026,Saltbox Social Club,Christopher Walker,Lakeshore Pilsner 1/2 bbl keg,4,770.32
+INV,INV-26195,03/20/2026,Saltbox Social Club,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26195,03/20/2026,Saltbox Social Club,Christopher Walker,Tamarack IPA 1/2 bbl keg,4,828.72
+INV,INV-26195,03/20/2026,Saltbox Social Club,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26211,03/21/2026,Saltbox Bottle Shop,Priya Patel,Cedar Sour case 24x12oz cans,4,218.40
+INV,INV-26211,03/21/2026,Saltbox Bottle Shop,Priya Patel,Cedar Sour case 24x12oz cans,4,212.00
+INV,INV-26211,03/21/2026,Saltbox Bottle Shop,Priya Patel,Tamarack IPA case 24x12oz cans,9,376.47
+CRM,CRM-26203,03/21/2026,Anchor Alehouse,"Walker, Christopher",KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26196,03/21/2026,Lantern Social Club,Christopher Walker,Cedar Sour 1/6 bbl keg,3,239.88
+INV,INV-26196,03/21/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26208,03/21/2026,Copper Social Club,Priya Patel,Hazy Hollow 1/2 bbl keg,2,344.66
+INV,INV-26208,03/21/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26208,03/21/2026,Copper Social Club,Priya Patel,Stout No. 9 1/2 bbl keg,1,189.64
+INV,INV-26208,03/21/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26208,03/21/2026,Copper Social Club,Priya Patel,Ridgeline Amber case 24x12oz cans,9,407.16
+INV,INV-26256,03/22/2026,Elm Street Bistro,Margaret Cook,Tap handle,2,84.00
+CRM,CRM-26252,03/22/2026,Birchwood Taproom,Joshua Morris,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26259,03/22/2026,Driftwood Pub,Margaret Cook,Stout No. 9 case 24x12oz cans,4,183.68
+CRM,CRM-26191,03/23/2026,Juniper Market,D. Cruz,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26233,03/23/2026,Thistle Pub,Gary Phillips,Lakeshore Pilsner case 24x12oz cans,5,264.30
+CRM,CRM-26266,03/23/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26180,03/23/2026,Harbor Grill,D. Cruz,Hazy Hollow 1/2 bbl keg,2,414.98
+INV,INV-26180,03/23/2026,Harbor Grill,D. Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26214,03/23/2026,Saltbox Bottle Shop,Priya Patel,Stout No. 9 case 24x12oz cans,4,195.24
+INV,INV-26214,03/23/2026,Saltbox Bottle Shop,Priya Patel,Ridgeline Amber 1/2 bbl keg,4,830.08
+INV,INV-26214,03/23/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26199,03/23/2026,Harbor Market,"Walker, Christopher",Cedar Sour case 24x12oz cans,8,414.32
+INV,INV-26199,03/23/2026,Harbor Market,"Walker, Christopher",Cedar Sour 1/2 bbl keg,1,204.42
+INV,INV-26199,03/23/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26212,03/23/2026,Copper Social Club,Priya Patel,Ridgeline Amber case 24x12oz cans,4,196.04
+INV,INV-26212,03/23/2026,Copper Social Club,Priya Patel,Hazy Hollow 1/6 bbl keg,2,168.60
+INV,INV-26212,03/23/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26212,03/23/2026,Copper Social Club,Priya Patel,Ridgeline Amber 1/6 bbl keg,3,233.31
+INV,INV-26212,03/23/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26217,03/24/2026,Fox & Hound Pub,Priya Patel,Cedar Sour 1/6 bbl keg,3,231.87
+INV,INV-26217,03/24/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26217,03/24/2026,Fox & Hound Pub,Priya Patel,Tamarack IPA 1/2 bbl keg,1,188.79
+INV,INV-26217,03/24/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26217,03/24/2026,Fox & Hound Pub,Priya Patel,Cedar Sour case 24x12oz cans,10,439.60
+INV,INV-26198,03/24/2026,Crow's Nest Bottle Shop,Christopher Walker,Tamarack IPA 1/6 bbl keg,3,280.50
+INV,INV-26198,03/24/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26198,03/24/2026,Crow's Nest Bottle Shop,Christopher Walker,Stout No. 9 1/2 bbl keg,1,189.08
+INV,INV-26198,03/24/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26194,03/24/2026,Crow's Nest Bottle Shop,Christopher Walker,Tamarack IPA 1/2 bbl keg,1,201.10
+INV,INV-26194,03/24/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26209,03/24/2026,Saltbox Bottle Shop,Priya Patel,Ridgeline Amber 1/2 bbl keg,1,199.08
+INV,INV-26209,03/24/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26209,03/24/2026,Saltbox Bottle Shop,Priya Patel,Tamarack IPA case 24x12oz cans,2,85.00
+INV,INV-26244,03/25/2026,Harbor Pub,Joshua Morris,Ridgeline Amber 1/2 bbl keg,4,671.00
+INV,INV-26244,03/25/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26185,03/25/2026,Elm Street Bistro,Dana Cruz,Lakeshore Pilsner case 24x12oz cans,9,469.98
+INV,INV-26185,03/25/2026,Elm Street Bistro,Dana Cruz,Pint glasses (dozen),2,108.00
+INV,INV-26185,03/25/2026,Elm Street Bistro,Dana Cruz,Hazy Hollow 1/2 bbl keg,4,760.24
+INV,INV-26185,03/25/2026,Elm Street Bistro,Dana Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26258,03/25/2026,Pine Knot Alehouse,Margaret Cook,Tamarack IPA 1/6 bbl keg,1,77.90
+INV,INV-26258,03/25/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26254,03/25/2026,Elm Street Bistro,Margaret Cook,Hazy Hollow 1/6 bbl keg,4,369.52
+INV,INV-26254,03/25/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26254,03/25/2026,Elm Street Bistro,Margaret Cook,Hazy Hollow 1/2 bbl keg,1,191.21
+INV,INV-26254,03/25/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,1,30.00
+CRM,CRM-26222,03/27/2026,Saltbox Bottle Shop,Priya Patel,Credit - damaged,1,508.85-
+INV,INV-26218,03/27/2026,Fox & Hound Pub,Priya Patel,Cedar Sour 1/2 bbl keg,1,203.71
+INV,INV-26218,03/27/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26218,03/27/2026,Fox & Hound Pub,Priya Patel,Stout No. 9 case 24x12oz cans,8,406.24
+INV,INV-26218,03/27/2026,Fox & Hound Pub,Priya Patel,Lakeshore Pilsner case 24x12oz cans,10,552.50
+INV,INV-26243,03/28/2026,Elm Street Bottle Shop,Joshua Morris,Stout No. 9 1/2 bbl keg,3,582.84
+INV,INV-26243,03/28/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT,3,90.00
+CRM,CRM-26192,03/28/2026,Elm Street Bistro,DANA CRUZ,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26262,03/29/2026,Pine Knot Alehouse,Margaret Cook,Tamarack IPA 1/2 bbl keg,4,720.84
+INV,INV-26262,03/29/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26201,03/29/2026,Red Door Pub,"Walker, Christopher",Hazy Hollow 1/6 bbl keg,2,148.08
+INV,INV-26201,03/29/2026,Red Door Pub,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26201,03/29/2026,Red Door Pub,"Walker, Christopher",Hazy Hollow case 24x12oz cans,5,194.40
+INV,INV-26228,03/29/2026,Thistle Pub,Gary Phillips,Hazy Hollow 1/6 bbl keg,4,381.52
+INV,INV-26228,03/29/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26187,03/29/2026,Pine Knot Alehouse,DANA CRUZ,Tamarack IPA 1/2 bbl keg,1,189.03
+INV,INV-26187,03/29/2026,Pine Knot Alehouse,DANA CRUZ,KEG DEPOSIT,1,30.00
+INV,INV-26187,03/29/2026,Pine Knot Alehouse,DANA CRUZ,Cedar Sour 1/2 bbl keg,4,793.52
+INV,INV-26187,03/29/2026,Pine Knot Alehouse,DANA CRUZ,KEG DEPOSIT,4,120.00
+INV,INV-26187,03/29/2026,Pine Knot Alehouse,DANA CRUZ,Stout No. 9 case 24x12oz cans,10,432.00
+INV,INV-26264,03/29/2026,Willow Bottle Shop,Margaret Cook,Lakeshore Pilsner 1/2 bbl keg,2,336.40
+INV,INV-26264,03/29/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26264,03/29/2026,Willow Bottle Shop,Margaret Cook,Stout No. 9 case 24x12oz cans,10,504.80
+INV,INV-26202,03/30/2026,Red Door Pub,"Walker, Christopher",Stout No. 9 case 24x12oz cans,6,271.92
+INV,INV-26202,03/30/2026,Red Door Pub,"Walker, Christopher",Tap handle,3,126.00
+INV,INV-26197,03/30/2026,Saltbox Social Club,Christopher Walker,Cedar Sour 1/2 bbl keg,3,633.03
+INV,INV-26197,03/30/2026,Saltbox Social Club,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26242,03/30/2026,Saltbox Alehouse,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,4,214.24
+INV,INV-26232,03/30/2026,Red Door Bistro,Gary Phillips,Hazy Hollow case 24x12oz cans,10,495.00
+INV,INV-26232,03/30/2026,Red Door Bistro,Gary Phillips,Hazy Hollow case 24x12oz cans,6,300.66
+INV,INV-26232,03/30/2026,Red Door Bistro,Gary Phillips,Lakeshore Pilsner case 24x12oz cans,2,88.62
+INV,INV-26200,03/31/2026,Harbor Market,"Walker, Christopher",Tamarack IPA 1/6 bbl keg,3,235.89
+INV,INV-26200,03/31/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26200,03/31/2026,Harbor Market,"Walker, Christopher",Tamarack IPA case 24x12oz cans,10,524.30
+INV,INV-26200,03/31/2026,Harbor Market,"Walker, Christopher",Pint glasses (dozen),1,54.00
+INV,INV-26213,03/31/2026,North End Tavern,Priya Patel,Lakeshore Pilsner 1/2 bbl keg,3,582.99
+INV,INV-26213,03/31/2026,North End Tavern,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26213,03/31/2026,North End Tavern,Priya Patel,Stout No. 9 1/2 bbl keg,3,572.61
+INV,INV-26213,03/31/2026,North End Tavern,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26193,03/31/2026,Anchor Alehouse,Christopher Walker,Cedar Sour 1/6 bbl keg,1,88.19
+INV,INV-26193,03/31/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26193,03/31/2026,Anchor Alehouse,Christopher Walker,Coasters (500),1,36.00
+INV,INV-26193,03/31/2026,Anchor Alehouse,Christopher Walker,Hazy Hollow 1/6 bbl keg,2,162.86
+INV,INV-26193,03/31/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,2,60.00
+INV,INV-26227,03/31/2026,Birchwood Taproom,Gary Phillips,Ridgeline Amber 1/2 bbl keg,4,687.12
+INV,INV-26227,03/31/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,4,120.00
+CRM,CRM-26309,04/02/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26317,04/02/2026,Pine Knot Market,Joshua Morris,Hazy Hollow case 24x12oz cans,10,512.70
+INV,INV-26317,04/02/2026,Pine Knot Market,Joshua Morris,Ridgeline Amber 1/6 bbl keg,3,232.32
+INV,INV-26317,04/02/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26317,04/02/2026,Pine Knot Market,Joshua Morris,Hazy Hollow 1/2 bbl keg,1,210.84
+INV,INV-26317,04/02/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,1,30.00
+CRM,CRM-26307,04/02/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26331,04/03/2026,Fox & Hound Grill,Margaret Cook,Coasters (500),3,108.00
+INV,INV-26331,04/03/2026,Fox & Hound Grill,Margaret Cook,Hazy Hollow 1/2 bbl keg,3,590.91
+INV,INV-26331,04/03/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26320,04/03/2026,Elm Street Bottle Shop,Joshua Morris,Hazy Hollow 1/6 bbl keg,4,320.84
+INV,INV-26320,04/03/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26320,04/03/2026,Elm Street Bottle Shop,Joshua Morris,Stout No. 9 1/6 bbl keg,3,247.95
+INV,INV-26320,04/03/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26338,04/03/2026,Crow's Nest Kitchen,Margaret Cook,Stout No. 9 1/2 bbl keg,3,599.67
+INV,INV-26338,04/03/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26334,04/03/2026,Willow Bottle Shop,Margaret Cook,Ridgeline Amber case 24x12oz cans,4,217.32
+INV,INV-26334,04/03/2026,Willow Bottle Shop,Margaret Cook,Lakeshore Pilsner case 24x12oz cans,7,389.83
+INV,INV-26334,04/03/2026,Willow Bottle Shop,Margaret Cook,Hazy Hollow 1/2 bbl keg,2,340.56
+INV,INV-26334,04/03/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,2,60.00
+CRM,CRM-26291,04/04/2026,Anchor Alehouse,"Walker, Christopher",KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26315,04/04/2026,Harbor Pub,Joshua Morris,Ridgeline Amber 1/2 bbl keg,2,388.00
+INV,INV-26315,04/04/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26299,04/05/2026,Fox & Hound Market,Gary Phillips,Stout No. 9 1/2 bbl keg,4,748.52
+INV,INV-26299,04/05/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26299,04/05/2026,Fox & Hound Market,Gary Phillips,Stout No. 9 1/2 bbl keg,4,765.88
+INV,INV-26299,04/05/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26281,04/05/2026,Lantern Social Club,"Walker, Christopher",Hazy Hollow case 24x12oz cans,5,221.75
+INV,INV-26327,04/05/2026,Driftwood Pub,Margaret Cook,Lakeshore Pilsner 1/2 bbl keg,1,182.70
+INV,INV-26327,04/05/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26327,04/05/2026,Driftwood Pub,Margaret Cook,Stout No. 9 case 24x12oz cans,5,244.65
+INV,INV-26327,04/05/2026,Driftwood Pub,Margaret Cook,Hazy Hollow case 24x12oz cans,6,238.32
+INV,INV-26280,04/06/2026,Red Door Pub,"Walker, Christopher",Lakeshore Pilsner 1/2 bbl keg,3,631.17
+INV,INV-26280,04/06/2026,Red Door Pub,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26280,04/06/2026,Red Door Pub,"Walker, Christopher",Ridgeline Amber 1/2 bbl keg,3,609.66
+INV,INV-26280,04/06/2026,Red Door Pub,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26280,04/06/2026,Red Door Pub,"Walker, Christopher",Hazy Hollow case 24x12oz cans,3,141.09
+CRM,CRM-26311,04/07/2026,Thistle Pub,Gary Phillips,Credit - price adj,1,453.42-
+INV,INV-26286,04/08/2026,Saltbox Social Club,"Walker, Christopher",Stout No. 9 1/2 bbl keg,2,372.66
+INV,INV-26286,04/08/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26300,04/09/2026,Red Door Bistro,Gary Phillips,Tamarack IPA 1/6 bbl keg,1,79.92
+INV,INV-26300,04/09/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26329,04/09/2026,Elm Street Bistro,Margaret Cook,Hazy Hollow 1/6 bbl keg,1,90.11
+INV,INV-26329,04/09/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26329,04/09/2026,Elm Street Bistro,Margaret Cook,Pint glasses (dozen),2,108.00
+CRM,CRM-26289,04/09/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26274,04/10/2026,Juniper Market,Dana Cruz,Coasters (500),1,36.00
+INV,INV-26274,04/10/2026,Juniper Market,Dana Cruz,Cedar Sour 1/2 bbl keg,2,331.90
+INV,INV-26274,04/10/2026,Juniper Market,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26274,04/10/2026,Juniper Market,Dana Cruz,Stout No. 9 1/2 bbl keg,1,198.32
+INV,INV-26274,04/10/2026,Juniper Market,Dana Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26272,04/10/2026,Willow Taproom,Dana Cruz,Hazy Hollow case 24x12oz cans,6,263.82
+INV,INV-26272,04/10/2026,Willow Taproom,Dana Cruz,Coasters (500),3,108.00
+INV,INV-26305,04/10/2026,Lantern Social Club,Gary Phillips,Lakeshore Pilsner case 24x12oz cans,6,297.06
+CRM,CRM-26292,04/11/2026,Saltbox Social Club,"Walker, Christopher",Credit - damaged,1,300.91-
+INV,INV-26270,04/11/2026,Pine Knot Alehouse,DANA CRUZ,Tamarack IPA 1/2 bbl keg,4,824.92
+INV,INV-26270,04/11/2026,Pine Knot Alehouse,DANA CRUZ,KEG DEPOSIT,4,120.00
+INV,INV-26270,04/11/2026,Pine Knot Alehouse,DANA CRUZ,Lakeshore Pilsner case 24x12oz cans,2,84.24
+INV,INV-26270,04/11/2026,Pine Knot Alehouse,DANA CRUZ,Coasters (500),3,108.00
+INV,INV-26333,04/11/2026,Pine Knot Alehouse,Margaret Cook,Hazy Hollow 1/2 bbl keg,3,622.95
+INV,INV-26333,04/11/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26333,04/11/2026,Pine Knot Alehouse,Margaret Cook,Lakeshore Pilsner 1/6 bbl keg,2,189.70
+INV,INV-26333,04/11/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26321,04/11/2026,Pine Knot Market,Joshua Morris,Cedar Sour 1/6 bbl keg,1,77.14
+INV,INV-26321,04/11/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26321,04/11/2026,Pine Knot Market,Joshua Morris,Cedar Sour 1/6 bbl keg,4,329.16
+INV,INV-26321,04/11/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26297,04/11/2026,Magnolia Taproom,Gary Phillips,Stout No. 9 1/6 bbl keg,4,320.76
+INV,INV-26297,04/11/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26337,04/12/2026,Elm Street Bistro,Margaret Cook,Tamarack IPA case 24x12oz cans,4,214.28
+INV,INV-26337,04/12/2026,Elm Street Bistro,Margaret Cook,Hazy Hollow 1/2 bbl keg,2,417.10
+INV,INV-26337,04/12/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26314,04/12/2026,Anchor Market,Joshua Morris,Tap handle,2,84.00
+INV,INV-26271,04/14/2026,Willow Taproom,D. Cruz,Lakeshore Pilsner 1/6 bbl keg,1,75.83
+INV,INV-26271,04/14/2026,Willow Taproom,D. Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26271,04/14/2026,Willow Taproom,D. Cruz,Cedar Sour 1/2 bbl keg,1,187.26
+INV,INV-26271,04/14/2026,Willow Taproom,D. Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26330,04/14/2026,Driftwood Pub,Margaret Cook,Hazy Hollow 1/6 bbl keg,1,83.56
+INV,INV-26330,04/14/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26330,04/14/2026,Driftwood Pub,Margaret Cook,Lakeshore Pilsner 1/6 bbl keg,1,80.28
+INV,INV-26330,04/14/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26303,04/15/2026,Lantern Social Club,Gary Phillips,Cedar Sour 1/2 bbl keg,4,843.44
+INV,INV-26303,04/15/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26303,04/15/2026,Lantern Social Club,Gary Phillips,Stout No. 9 1/2 bbl keg,4,689.00
+INV,INV-26303,04/15/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,4,120.00
+CRM,CRM-26308,04/15/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26325,04/16/2026,Crow's Nest Kitchen,Margaret Cook,Tamarack IPA 1/2 bbl keg,1,204.65
+INV,INV-26325,04/16/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,1,30.00
+CRM,CRM-26342,04/16/2026,Crow's Nest Kitchen,Margaret Cook,Credit - spoiled,1,368.99-
+CRM,CRM-26324,04/17/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26294,04/17/2026,Red Door Bistro,Gary Phillips,Cedar Sour case 24x12oz cans,5,227.95
+INV,INV-26294,04/17/2026,Red Door Bistro,Gary Phillips,Hazy Hollow 1/6 bbl keg,1,95.17
+INV,INV-26294,04/17/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26294,04/17/2026,Red Door Bistro,Gary Phillips,Cedar Sour 1/6 bbl keg,1,72.70
+INV,INV-26294,04/17/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,1,30.00
+CRM,CRM-26277,04/17/2026,Elm Street Bistro,DANA CRUZ,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26312,04/17/2026,Pine Knot Market,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,8,341.60
+INV,INV-26312,04/17/2026,Pine Knot Market,Joshua Morris,Stout No. 9 case 24x12oz cans,3,125.43
+INV,INV-26326,04/17/2026,Crow's Nest Kitchen,Margaret Cook,Stout No. 9 case 24x12oz cans,3,161.67
+INV,INV-26304,04/19/2026,Birchwood Taproom,Gary Phillips,Ridgeline Amber case 24x12oz cans,7,286.58
+INV,INV-26304,04/19/2026,Birchwood Taproom,Gary Phillips,Ridgeline Amber 1/2 bbl keg,1,182.81
+INV,INV-26304,04/19/2026,Birchwood Taproom,Gary Phillips,KEG DEPOSIT,1,30.00
+CRM,CRM-26323,04/20/2026,Anchor Market,Joshua Morris,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26301,04/20/2026,Thistle Pub,Gary Phillips,Tamarack IPA case 24x12oz cans,7,288.75
+INV,INV-26301,04/20/2026,Thistle Pub,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,4,326.84
+INV,INV-26301,04/20/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26301,04/20/2026,Thistle Pub,Gary Phillips,Hazy Hollow 1/6 bbl keg,4,329.48
+INV,INV-26301,04/20/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26296,04/20/2026,Lantern Social Club,Gary Phillips,Pint glasses (dozen),1,54.00
+INV,INV-26296,04/20/2026,Lantern Social Club,Gary Phillips,Hazy Hollow 1/6 bbl keg,2,191.18
+INV,INV-26296,04/20/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,2,60.00
+CRM,CRM-26293,04/20/2026,Crow's Nest Bottle Shop,Christopher Walker,Credit - price adj,1,198.55-
+CRM,CRM-26310,04/20/2026,Red Door Bistro,Gary Phillips,Credit - price adj,1,125.19-
+INV,INV-26267,04/20/2026,Elm Street Bistro,"Cruz, Dana",Tamarack IPA case 24x12oz cans,6,234.96
+INV,INV-26267,04/20/2026,Elm Street Bistro,"Cruz, Dana",Cedar Sour 1/6 bbl keg,4,324.56
+INV,INV-26267,04/20/2026,Elm Street Bistro,"Cruz, Dana",KEG DEPOSIT,4,120.00
+INV,INV-26279,04/20/2026,Harbor Market,Christopher Walker,Tamarack IPA 1/6 bbl keg,3,217.50
+INV,INV-26279,04/20/2026,Harbor Market,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26279,04/20/2026,Harbor Market,Christopher Walker,Lakeshore Pilsner case 24x12oz cans,5,248.70
+INV,INV-26319,04/20/2026,Saltbox Alehouse,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,2,97.46
+INV,INV-26319,04/20/2026,Saltbox Alehouse,Joshua Morris,Lakeshore Pilsner 1/6 bbl keg,1,81.96
+INV,INV-26319,04/20/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26284,04/21/2026,Red Door Pub,Christopher Walker,Cedar Sour case 24x12oz cans,3,136.02
+INV,INV-26285,04/22/2026,Red Door Pub,Christopher Walker,Hazy Hollow 1/2 bbl keg,3,519.24
+INV,INV-26285,04/22/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26287,04/22/2026,Harbor Market,"Walker, Christopher",Tamarack IPA 1/6 bbl keg,3,224.43
+INV,INV-26287,04/22/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26287,04/22/2026,Harbor Market,"Walker, Christopher",Lakeshore Pilsner 1/2 bbl keg,4,823.44
+INV,INV-26287,04/22/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,4,120.00
+INV,INV-26316,04/22/2026,Pine Knot Market,Joshua Morris,Tamarack IPA 1/6 bbl keg,3,271.71
+INV,INV-26316,04/22/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26316,04/22/2026,Pine Knot Market,Joshua Morris,Stout No. 9 case 24x12oz cans,4,171.56
+INV,INV-26316,04/22/2026,Pine Knot Market,Joshua Morris,Tamarack IPA 1/2 bbl keg,3,557.01
+INV,INV-26316,04/22/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26268,04/23/2026,Willow Taproom,"Cruz, Dana",Cedar Sour 1/6 bbl keg,1,87.07
+INV,INV-26268,04/23/2026,Willow Taproom,"Cruz, Dana",KEG DEPOSIT,1,30.00
+INV,INV-26268,04/23/2026,Willow Taproom,"Cruz, Dana",Hazy Hollow 1/6 bbl keg,2,163.16
+INV,INV-26268,04/23/2026,Willow Taproom,"Cruz, Dana",KEG DEPOSIT,2,60.00
+INV,INV-26288,04/24/2026,Lantern Social Club,Christopher Walker,Tamarack IPA case 24x12oz cans,8,414.08
+INV,INV-26288,04/24/2026,Lantern Social Club,Christopher Walker,Hazy Hollow 1/2 bbl keg,4,737.72
+INV,INV-26288,04/24/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26288,04/24/2026,Lantern Social Club,Christopher Walker,Hazy Hollow case 24x12oz cans,8,358.88
+INV,INV-26298,04/24/2026,Fox & Hound Market,Gary Phillips,Cedar Sour 1/6 bbl keg,4,366.08
+INV,INV-26298,04/24/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26298,04/24/2026,Fox & Hound Market,Gary Phillips,Stout No. 9 1/2 bbl keg,3,621.09
+INV,INV-26298,04/24/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26336,04/24/2026,Willow Bottle Shop,Margaret Cook,Lakeshore Pilsner case 24x12oz cans,7,303.03
+INV,INV-26336,04/24/2026,Willow Bottle Shop,Margaret Cook,Tamarack IPA case 24x12oz cans,6,249.54
+INV,INV-26275,04/25/2026,Willow Taproom,DANA CRUZ,Cedar Sour 1/6 bbl keg,1,74.76
+INV,INV-26275,04/25/2026,Willow Taproom,DANA CRUZ,KEG DEPOSIT,1,30.00
+CRM,CRM-26340,04/25/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT RETURN,2,60.00-
+CRM,CRM-26339,04/25/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26282,04/25/2026,Red Door Pub,"Walker, Christopher",Tamarack IPA 1/2 bbl keg,3,527.64
+INV,INV-26282,04/25/2026,Red Door Pub,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26282,04/25/2026,Red Door Pub,"Walker, Christopher",Lakeshore Pilsner 1/6 bbl keg,3,272.04
+INV,INV-26282,04/25/2026,Red Door Pub,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26318,04/26/2026,Anchor Market,Joshua Morris,Ridgeline Amber 1/2 bbl keg,1,167.58
+INV,INV-26318,04/26/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26318,04/26/2026,Anchor Market,Joshua Morris,Cedar Sour 1/2 bbl keg,1,200.64
+INV,INV-26318,04/26/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26318,04/26/2026,Anchor Market,Joshua Morris,Stout No. 9 1/6 bbl keg,4,382.72
+INV,INV-26318,04/26/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26295,04/26/2026,Magnolia Taproom,Gary Phillips,Cedar Sour case 24x12oz cans,9,432.09
+INV,INV-26295,04/26/2026,Magnolia Taproom,Gary Phillips,Tamarack IPA 1/6 bbl keg,2,182.70
+INV,INV-26295,04/26/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26273,04/27/2026,Elm Street Bistro,D. Cruz,Tamarack IPA case 24x12oz cans,5,224.00
+INV,INV-26273,04/27/2026,Elm Street Bistro,D. Cruz,Ridgeline Amber 1/2 bbl keg,1,182.34
+INV,INV-26273,04/27/2026,Elm Street Bistro,D. Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26313,04/27/2026,Harbor Pub,Joshua Morris,Hazy Hollow case 24x12oz cans,3,131.94
+INV,INV-26313,04/27/2026,Harbor Pub,Joshua Morris,Lakeshore Pilsner 1/6 bbl keg,4,365.64
+INV,INV-26313,04/27/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26328,04/27/2026,Crow's Nest Kitchen,Margaret Cook,Ridgeline Amber 1/2 bbl keg,2,416.92
+INV,INV-26328,04/27/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26332,04/28/2026,Elm Street Bistro,Margaret Cook,Hazy Hollow 1/6 bbl keg,4,315.20
+INV,INV-26332,04/28/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26332,04/28/2026,Elm Street Bistro,Margaret Cook,Ridgeline Amber 1/6 bbl keg,1,75.16
+INV,INV-26332,04/28/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26306,04/28/2026,Birchwood Taproom,Gary Phillips,Coasters (500),2,72.00
+CRM,CRM-26341,04/28/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26276,04/28/2026,Harbor Grill,D. Cruz,Ridgeline Amber case 24x12oz cans,3,121.47
+INV,INV-26276,04/28/2026,Harbor Grill,D. Cruz,Stout No. 9 1/6 bbl keg,2,147.88
+INV,INV-26276,04/28/2026,Harbor Grill,D. Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26276,04/28/2026,Harbor Grill,D. Cruz,Cedar Sour case 24x12oz cans,10,424.70
+INV,INV-26302,04/29/2026,Magnolia Taproom,Gary Phillips,Lakeshore Pilsner case 24x12oz cans,5,214.10
+INV,INV-26335,04/29/2026,Elm Street Bistro,Margaret Cook,Ridgeline Amber 1/2 bbl keg,4,722.00
+INV,INV-26335,04/29/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26335,04/29/2026,Elm Street Bistro,Margaret Cook,Hazy Hollow 1/6 bbl keg,1,79.48
+INV,INV-26335,04/29/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26335,04/29/2026,Elm Street Bistro,Margaret Cook,Stout No. 9 1/2 bbl keg,4,662.80
+INV,INV-26335,04/29/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,4,120.00
+CRM,CRM-26290,04/30/2026,Saltbox Social Club,Christopher Walker,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26283,04/30/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Cedar Sour 1/6 bbl keg,4,288.76
+INV,INV-26283,04/30/2026,Crow's Nest Bottle Shop,"Walker, Christopher",KEG DEPOSIT,4,120.00
+INV,INV-26283,04/30/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Stout No. 9 case 24x12oz cans,4,170.24
+CRM,CRM-26278,04/30/2026,Elm Street Bistro,Dana Cruz,KEG DEPOSIT RETURN,4,120.00-
+CRM,CRM-26322,04/30/2026,Anchor Market,Joshua Morris,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26269,04/30/2026,Harbor Grill,Dana Cruz,Ridgeline Amber 1/6 bbl keg,4,340.56
+INV,INV-26269,04/30/2026,Harbor Grill,Dana Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26269,04/30/2026,Harbor Grill,Dana Cruz,Hazy Hollow case 24x12oz cans,4,176.96
+INV,INV-26269,04/30/2026,Harbor Grill,Dana Cruz,Lakeshore Pilsner 1/6 bbl keg,3,220.74
+INV,INV-26269,04/30/2026,Harbor Grill,Dana Cruz,KEG DEPOSIT,3,90.00
+CRM,CRM-26353,05/01/2026,Elm Street Bistro,Dana Cruz,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26422,05/01/2026,Fox & Hound Grill,Margaret Cook,Tamarack IPA case 24x12oz cans,2,104.80
+INV,INV-26422,05/01/2026,Fox & Hound Grill,Margaret Cook,Coasters (500),3,108.00
+INV,INV-26380,05/01/2026,Old Mill Alehouse,Priya Patel,Ridgeline Amber 1/2 bbl keg,4,799.28
+INV,INV-26380,05/01/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26374,05/01/2026,North End Tavern,Priya Patel,Tamarack IPA case 24x12oz cans,2,79.30
+INV,INV-26388,05/02/2026,Red Door Bistro,Gary Phillips,Ridgeline Amber case 24x12oz cans,6,314.64
+INV,INV-26388,05/02/2026,Red Door Bistro,Gary Phillips,Tamarack IPA 1/6 bbl keg,3,240.09
+INV,INV-26388,05/02/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26388,05/02/2026,Red Door Bistro,Gary Phillips,Tamarack IPA 1/2 bbl keg,4,758.40
+INV,INV-26388,05/02/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26382,05/03/2026,North End Tavern,Priya Patel,Stout No. 9 1/6 bbl keg,2,178.06
+INV,INV-26382,05/03/2026,North End Tavern,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26382,05/03/2026,North End Tavern,Priya Patel,Tamarack IPA 1/6 bbl keg,3,250.26
+INV,INV-26382,05/03/2026,North End Tavern,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26373,05/03/2026,North End Tavern,Priya Patel,Hazy Hollow case 24x12oz cans,6,230.22
+INV,INV-26373,05/03/2026,North End Tavern,Priya Patel,Hazy Hollow 1/6 bbl keg,2,151.70
+INV,INV-26373,05/03/2026,North End Tavern,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26409,05/03/2026,Elm Street Bottle Shop,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,7,377.86
+INV,INV-26409,05/03/2026,Elm Street Bottle Shop,Joshua Morris,Pint glasses (dozen),2,108.00
+CRM,CRM-26385,05/04/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26416,05/04/2026,Crow's Nest Kitchen,Margaret Cook,Ridgeline Amber 1/6 bbl keg,1,77.77
+INV,INV-26416,05/04/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26416,05/04/2026,Crow's Nest Kitchen,Margaret Cook,Lakeshore Pilsner 1/2 bbl keg,1,183.40
+INV,INV-26416,05/04/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26405,05/04/2026,Harbor Pub,Joshua Morris,Lakeshore Pilsner 1/6 bbl keg,2,151.86
+INV,INV-26405,05/04/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26419,05/04/2026,Willow Bottle Shop,Margaret Cook,Cedar Sour 1/6 bbl keg,2,182.64
+INV,INV-26419,05/04/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26419,05/04/2026,Willow Bottle Shop,Margaret Cook,Ridgeline Amber 1/2 bbl keg,4,725.96
+INV,INV-26419,05/04/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26419,05/04/2026,Willow Bottle Shop,Margaret Cook,Lakeshore Pilsner 1/2 bbl keg,4,680.68
+INV,INV-26419,05/04/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26357,05/04/2026,Crow's Nest Bottle Shop,Christopher Walker,Tamarack IPA case 24x12oz cans,3,162.54
+INV,INV-26355,05/04/2026,Lantern Social Club,Christopher Walker,Cedar Sour 1/6 bbl keg,1,95.90
+INV,INV-26355,05/04/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26355,05/04/2026,Lantern Social Club,Christopher Walker,Lakeshore Pilsner 1/6 bbl keg,2,188.00
+INV,INV-26355,05/04/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,2,60.00
+CRM,CRM-26427,05/05/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT RETURN,1,30.00-
+CRM,CRM-26411,05/05/2026,Birchwood Taproom,Joshua Morris,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26350,05/06/2026,North End Taproom,"Cruz, Dana",Ridgeline Amber 1/6 bbl keg,3,239.76
+INV,INV-26350,05/06/2026,North End Taproom,"Cruz, Dana",KEG DEPOSIT,3,90.00
+INV,INV-26392,05/06/2026,Magnolia Taproom,Gary Phillips,Tamarack IPA case 24x12oz cans,2,84.54
+INV,INV-26392,05/06/2026,Magnolia Taproom,Gary Phillips,Stout No. 9 1/6 bbl keg,3,222.21
+INV,INV-26392,05/06/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26364,05/06/2026,Lantern Social Club,Christopher Walker,Stout No. 9 1/2 bbl keg,3,545.52
+INV,INV-26364,05/06/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26414,05/07/2026,Pine Knot Alehouse,Margaret Cook,Cedar Sour 1/2 bbl keg,3,528.24
+INV,INV-26414,05/07/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26414,05/07/2026,Pine Knot Alehouse,Margaret Cook,Hazy Hollow 1/2 bbl keg,2,415.82
+INV,INV-26414,05/07/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26414,05/07/2026,Pine Knot Alehouse,Margaret Cook,Ridgeline Amber 1/2 bbl keg,1,210.13
+INV,INV-26414,05/07/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26356,05/08/2026,Anchor Alehouse,"Walker, Christopher",Ridgeline Amber 1/6 bbl keg,2,190.58
+INV,INV-26356,05/08/2026,Anchor Alehouse,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26356,05/08/2026,Anchor Alehouse,"Walker, Christopher",Cedar Sour 1/2 bbl keg,1,190.13
+INV,INV-26356,05/08/2026,Anchor Alehouse,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26365,05/08/2026,Harbor Market,"Walker, Christopher",Cedar Sour 1/2 bbl keg,3,520.56
+INV,INV-26365,05/08/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26365,05/08/2026,Harbor Market,"Walker, Christopher",Ridgeline Amber 1/6 bbl keg,2,148.94
+INV,INV-26365,05/08/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26365,05/08/2026,Harbor Market,"Walker, Christopher",Stout No. 9 1/2 bbl keg,1,199.53
+INV,INV-26365,05/08/2026,Harbor Market,"Walker, Christopher",KEG DEPOSIT,1,30.00
+CRM,CRM-26426,05/08/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT RETURN,1,30.00-
+CRM,CRM-26368,05/09/2026,Harbor Market,Christopher Walker,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26390,05/09/2026,Fox & Hound Market,Gary Phillips,Lakeshore Pilsner case 24x12oz cans,7,344.89
+INV,INV-26390,05/09/2026,Fox & Hound Market,Gary Phillips,Stout No. 9 1/2 bbl keg,1,171.38
+INV,INV-26390,05/09/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26390,05/09/2026,Fox & Hound Market,Gary Phillips,Stout No. 9 case 24x12oz cans,4,153.40
+CRM,CRM-26396,05/09/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26384,05/10/2026,Old Mill Alehouse,Priya Patel,Hazy Hollow 1/2 bbl keg,3,611.91
+INV,INV-26384,05/10/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26384,05/10/2026,Old Mill Alehouse,Priya Patel,Ridgeline Amber 1/2 bbl keg,3,621.75
+INV,INV-26384,05/10/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26384,05/10/2026,Old Mill Alehouse,Priya Patel,Lakeshore Pilsner 1/6 bbl keg,1,82.69
+INV,INV-26384,05/10/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26379,05/11/2026,Fox & Hound Pub,Priya Patel,Tamarack IPA case 24x12oz cans,2,109.72
+INV,INV-26387,05/11/2026,Red Door Bistro,Gary Phillips,Cedar Sour 1/2 bbl keg,2,373.74
+INV,INV-26387,05/11/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26387,05/11/2026,Red Door Bistro,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,1,78.34
+INV,INV-26387,05/11/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26367,05/11/2026,Anchor Alehouse,Christopher Walker,Hazy Hollow case 24x12oz cans,3,157.38
+INV,INV-26367,05/11/2026,Anchor Alehouse,Christopher Walker,Cedar Sour 1/2 bbl keg,1,185.64
+INV,INV-26367,05/11/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26403,05/13/2026,Saltbox Alehouse,Joshua Morris,Ridgeline Amber 1/2 bbl keg,3,629.94
+INV,INV-26403,05/13/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26403,05/13/2026,Saltbox Alehouse,Joshua Morris,Hazy Hollow case 24x12oz cans,5,261.55
+CRM,CRM-26397,05/14/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26415,05/14/2026,Elm Street Bistro,Margaret Cook,Cedar Sour case 24x12oz cans,7,373.17
+INV,INV-26415,05/14/2026,Elm Street Bistro,Margaret Cook,Lakeshore Pilsner 1/6 bbl keg,2,167.94
+INV,INV-26415,05/14/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26415,05/14/2026,Elm Street Bistro,Margaret Cook,Cedar Sour case 24x12oz cans,3,128.34
+INV,INV-26398,05/14/2026,Saltbox Alehouse,Joshua Morris,Hazy Hollow 1/2 bbl keg,3,514.23
+INV,INV-26398,05/14/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26398,05/14/2026,Saltbox Alehouse,Joshua Morris,Hazy Hollow case 24x12oz cans,3,159.42
+INV,INV-26398,05/14/2026,Saltbox Alehouse,Joshua Morris,Cedar Sour case 24x12oz cans,5,228.80
+INV,INV-26360,05/14/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Ridgeline Amber 1/2 bbl keg,4,813.60
+INV,INV-26360,05/14/2026,Crow's Nest Bottle Shop,"Walker, Christopher",KEG DEPOSIT,4,120.00
+INV,INV-26362,05/15/2026,Saltbox Social Club,"Walker, Christopher",Hazy Hollow 1/2 bbl keg,3,583.23
+INV,INV-26362,05/15/2026,Saltbox Social Club,"Walker, Christopher",KEG DEPOSIT,3,90.00
+INV,INV-26401,05/16/2026,Saltbox Alehouse,Joshua Morris,Lakeshore Pilsner 1/6 bbl keg,4,380.08
+INV,INV-26401,05/16/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26343,05/16/2026,Willow Taproom,DANA CRUZ,Stout No. 9 case 24x12oz cans,3,122.13
+INV,INV-26343,05/16/2026,Willow Taproom,DANA CRUZ,Stout No. 9 1/2 bbl keg,3,587.43
+INV,INV-26343,05/16/2026,Willow Taproom,DANA CRUZ,KEG DEPOSIT,3,90.00
+INV,INV-26361,05/17/2026,Anchor Alehouse,Christopher Walker,Ridgeline Amber 1/6 bbl keg,3,275.16
+INV,INV-26361,05/17/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26361,05/17/2026,Anchor Alehouse,Christopher Walker,Tamarack IPA 1/6 bbl keg,1,81.86
+INV,INV-26361,05/17/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26376,05/17/2026,Birchwood Kitchen,Priya Patel,Tamarack IPA 1/2 bbl keg,1,171.60
+INV,INV-26376,05/17/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26376,05/17/2026,Birchwood Kitchen,Priya Patel,Hazy Hollow 1/2 bbl keg,4,745.20
+INV,INV-26376,05/17/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26376,05/17/2026,Birchwood Kitchen,Priya Patel,Ridgeline Amber case 24x12oz cans,10,492.60
+INV,INV-26425,05/17/2026,Fox & Hound Grill,Margaret Cook,Cedar Sour 1/2 bbl keg,4,789.92
+INV,INV-26425,05/17/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26358,05/17/2026,Harbor Market,Christopher Walker,Cedar Sour 1/2 bbl keg,3,598.17
+INV,INV-26358,05/17/2026,Harbor Market,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26358,05/17/2026,Harbor Market,Christopher Walker,Lakeshore Pilsner 1/2 bbl keg,4,829.12
+INV,INV-26358,05/17/2026,Harbor Market,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26354,05/17/2026,Saltbox Social Club,Christopher Walker,Stout No. 9 1/2 bbl keg,3,514.41
+INV,INV-26354,05/17/2026,Saltbox Social Club,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26354,05/17/2026,Saltbox Social Club,Christopher Walker,Tamarack IPA 1/6 bbl keg,3,272.13
+INV,INV-26354,05/17/2026,Saltbox Social Club,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26354,05/17/2026,Saltbox Social Club,Christopher Walker,Cedar Sour case 24x12oz cans,6,248.88
+INV,INV-26348,05/18/2026,Juniper Market,Dana Cruz,Tamarack IPA 1/6 bbl keg,2,184.42
+INV,INV-26348,05/18/2026,Juniper Market,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26418,05/18/2026,Driftwood Pub,Margaret Cook,Ridgeline Amber 1/2 bbl keg,3,519.63
+INV,INV-26418,05/18/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26395,05/18/2026,Thistle Pub,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,4,313.16
+INV,INV-26395,05/18/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26395,05/18/2026,Thistle Pub,Gary Phillips,Ridgeline Amber 1/6 bbl keg,1,79.61
+INV,INV-26395,05/18/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26395,05/18/2026,Thistle Pub,Gary Phillips,Tamarack IPA 1/2 bbl keg,3,558.12
+INV,INV-26395,05/18/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26421,05/18/2026,Crow's Nest Kitchen,Margaret Cook,Cedar Sour case 24x12oz cans,6,276.90
+INV,INV-26407,05/19/2026,Harbor Pub,Joshua Morris,Ridgeline Amber 1/6 bbl keg,1,81.93
+INV,INV-26407,05/19/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26346,05/19/2026,Harbor Grill,"Cruz, Dana",Cedar Sour case 24x12oz cans,9,429.12
+INV,INV-26399,05/20/2026,Anchor Market,Joshua Morris,Hazy Hollow 1/6 bbl keg,4,382.36
+INV,INV-26399,05/20/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26399,05/20/2026,Anchor Market,Joshua Morris,Pint glasses (dozen),1,54.00
+INV,INV-26420,05/20/2026,Pine Knot Alehouse,Margaret Cook,Lakeshore Pilsner 1/6 bbl keg,4,371.48
+INV,INV-26420,05/20/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26420,05/20/2026,Pine Knot Alehouse,Margaret Cook,Tamarack IPA 1/6 bbl keg,3,217.77
+INV,INV-26420,05/20/2026,Pine Knot Alehouse,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26420,05/20/2026,Pine Knot Alehouse,Margaret Cook,Cedar Sour case 24x12oz cans,2,96.60
+CRM,CRM-26371,05/21/2026,Saltbox Social Club,Christopher Walker,Credit - price adj,1,262.21-
+CRM,CRM-26369,05/21/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26389,05/22/2026,Magnolia Taproom,Gary Phillips,Tamarack IPA 1/2 bbl keg,1,191.39
+INV,INV-26389,05/22/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26389,05/22/2026,Magnolia Taproom,Gary Phillips,Cedar Sour case 24x12oz cans,7,284.83
+INV,INV-26389,05/22/2026,Magnolia Taproom,Gary Phillips,Hazy Hollow 1/6 bbl keg,4,329.60
+INV,INV-26389,05/22/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26393,05/22/2026,Thistle Pub,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,3,273.60
+INV,INV-26393,05/22/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26349,05/22/2026,Elm Street Bistro,"Cruz, Dana",Cedar Sour case 24x12oz cans,7,341.11
+INV,INV-26349,05/22/2026,Elm Street Bistro,"Cruz, Dana",Tap handle,3,126.00
+INV,INV-26349,05/22/2026,Elm Street Bistro,"Cruz, Dana",Cedar Sour 1/2 bbl keg,2,361.80
+INV,INV-26349,05/22/2026,Elm Street Bistro,"Cruz, Dana",KEG DEPOSIT,2,60.00
+INV,INV-26375,05/22/2026,North End Tavern,Priya Patel,Stout No. 9 case 24x12oz cans,7,358.82
+INV,INV-26375,05/22/2026,North End Tavern,Priya Patel,Stout No. 9 case 24x12oz cans,9,501.93
+INV,INV-26377,05/23/2026,Fox & Hound Pub,Priya Patel,Tamarack IPA 1/6 bbl keg,4,345.12
+INV,INV-26377,05/23/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26377,05/23/2026,Fox & Hound Pub,Priya Patel,Ridgeline Amber case 24x12oz cans,5,273.30
+INV,INV-26377,05/23/2026,Fox & Hound Pub,Priya Patel,Stout No. 9 1/6 bbl keg,1,91.71
+INV,INV-26377,05/23/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26408,05/23/2026,Elm Street Bottle Shop,Joshua Morris,Cedar Sour 1/2 bbl keg,1,166.39
+INV,INV-26408,05/23/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26408,05/23/2026,Elm Street Bottle Shop,Joshua Morris,Stout No. 9 1/6 bbl keg,3,280.08
+INV,INV-26408,05/23/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26408,05/23/2026,Elm Street Bottle Shop,Joshua Morris,Cedar Sour 1/2 bbl keg,4,739.32
+INV,INV-26408,05/23/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26378,05/23/2026,Old Mill Alehouse,Priya Patel,Ridgeline Amber 1/6 bbl keg,1,93.99
+INV,INV-26378,05/23/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26378,05/23/2026,Old Mill Alehouse,Priya Patel,Cedar Sour 1/2 bbl keg,4,822.80
+INV,INV-26378,05/23/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26378,05/23/2026,Old Mill Alehouse,Priya Patel,Pint glasses (dozen),3,162.00
+INV,INV-26423,05/25/2026,Elm Street Bistro,Margaret Cook,Stout No. 9 1/2 bbl keg,1,204.21
+INV,INV-26423,05/25/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26423,05/25/2026,Elm Street Bistro,Margaret Cook,Coasters (500),3,108.00
+INV,INV-26423,05/25/2026,Elm Street Bistro,Margaret Cook,Tamarack IPA 1/6 bbl keg,1,74.60
+INV,INV-26423,05/25/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26347,05/25/2026,Juniper Market,DANA CRUZ,Cedar Sour 1/6 bbl keg,2,179.24
+INV,INV-26347,05/25/2026,Juniper Market,DANA CRUZ,KEG DEPOSIT,2,60.00
+INV,INV-26351,05/26/2026,Pine Knot Alehouse,"Cruz, Dana",Tamarack IPA 1/2 bbl keg,4,809.96
+INV,INV-26351,05/26/2026,Pine Knot Alehouse,"Cruz, Dana",KEG DEPOSIT,4,120.00
+INV,INV-26351,05/26/2026,Pine Knot Alehouse,"Cruz, Dana",Lakeshore Pilsner 1/6 bbl keg,2,182.04
+INV,INV-26351,05/26/2026,Pine Knot Alehouse,"Cruz, Dana",KEG DEPOSIT,2,60.00
+INV,INV-26351,05/26/2026,Pine Knot Alehouse,"Cruz, Dana",Hazy Hollow 1/6 bbl keg,2,170.88
+INV,INV-26351,05/26/2026,Pine Knot Alehouse,"Cruz, Dana",KEG DEPOSIT,2,60.00
+INV,INV-26344,05/26/2026,Pine Knot Alehouse,D. Cruz,Ridgeline Amber 1/6 bbl keg,1,79.89
+INV,INV-26344,05/26/2026,Pine Knot Alehouse,D. Cruz,KEG DEPOSIT,1,30.00
+CRM,CRM-26386,05/26/2026,Copper Social Club,Priya Patel,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26404,05/26/2026,Anchor Market,Joshua Morris,Cedar Sour 1/6 bbl keg,1,89.68
+INV,INV-26404,05/26/2026,Anchor Market,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26404,05/26/2026,Anchor Market,Joshua Morris,Hazy Hollow case 24x12oz cans,6,302.52
+INV,INV-26394,05/27/2026,Birchwood Taproom,Gary Phillips,Stout No. 9 case 24x12oz cans,3,131.22
+INV,INV-26410,05/27/2026,Harbor Pub,Joshua Morris,Cedar Sour case 24x12oz cans,8,381.60
+INV,INV-26410,05/27/2026,Harbor Pub,Joshua Morris,Ridgeline Amber case 24x12oz cans,10,414.70
+INV,INV-26345,05/27/2026,Elm Street Bistro,D. Cruz,Cedar Sour 1/6 bbl keg,1,89.36
+INV,INV-26345,05/27/2026,Elm Street Bistro,D. Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26345,05/27/2026,Elm Street Bistro,D. Cruz,Hazy Hollow 1/6 bbl keg,1,82.37
+INV,INV-26345,05/27/2026,Elm Street Bistro,D. Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26400,05/28/2026,Harbor Pub,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,8,336.80
+INV,INV-26400,05/28/2026,Harbor Pub,Joshua Morris,Ridgeline Amber 1/6 bbl keg,3,250.56
+INV,INV-26400,05/28/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26400,05/28/2026,Harbor Pub,Joshua Morris,Tamarack IPA 1/2 bbl keg,3,575.04
+INV,INV-26400,05/28/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26381,05/28/2026,Fox & Hound Pub,Priya Patel,Hazy Hollow case 24x12oz cans,8,390.88
+INV,INV-26381,05/28/2026,Fox & Hound Pub,Priya Patel,Cedar Sour 1/2 bbl keg,3,510.06
+INV,INV-26381,05/28/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26372,05/28/2026,Birchwood Kitchen,Priya Patel,Stout No. 9 1/2 bbl keg,1,195.85
+INV,INV-26372,05/28/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26372,05/28/2026,Birchwood Kitchen,Priya Patel,Stout No. 9 1/2 bbl keg,3,529.17
+INV,INV-26372,05/28/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26424,05/28/2026,Driftwood Pub,Margaret Cook,Tamarack IPA case 24x12oz cans,6,271.20
+INV,INV-26406,05/28/2026,Elm Street Bottle Shop,Joshua Morris,Pint glasses (dozen),2,108.00
+CRM,CRM-26413,05/29/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26352,05/29/2026,North End Taproom,Dana Cruz,Stout No. 9 case 24x12oz cans,10,421.00
+INV,INV-26352,05/29/2026,North End Taproom,Dana Cruz,Lakeshore Pilsner 1/2 bbl keg,1,190.39
+INV,INV-26352,05/29/2026,North End Taproom,Dana Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26402,05/30/2026,Birchwood Taproom,Joshua Morris,Hazy Hollow 1/6 bbl keg,2,181.00
+INV,INV-26402,05/30/2026,Birchwood Taproom,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26402,05/30/2026,Birchwood Taproom,Joshua Morris,Cedar Sour case 24x12oz cans,9,400.50
+INV,INV-26402,05/30/2026,Birchwood Taproom,Joshua Morris,Stout No. 9 case 24x12oz cans,4,154.20
+INV,INV-26417,05/30/2026,Pine Knot Alehouse,Margaret Cook,Stout No. 9 case 24x12oz cans,2,92.84
+CRM,CRM-26370,05/30/2026,Lantern Social Club,Christopher Walker,Credit - damaged,1,176.58-
+CRM,CRM-26412,05/30/2026,Birchwood Taproom,Joshua Morris,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26366,05/30/2026,Red Door Pub,Christopher Walker,Stout No. 9 case 24x12oz cans,9,388.44
+INV,INV-26366,05/30/2026,Red Door Pub,Christopher Walker,Cedar Sour 1/2 bbl keg,4,708.68
+INV,INV-26366,05/30/2026,Red Door Pub,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26391,05/30/2026,Fox & Hound Market,Gary Phillips,Pint glasses (dozen),3,162.00
+INV,INV-26383,05/30/2026,Saltbox Bottle Shop,Priya Patel,Tap handle,2,84.00
+INV,INV-26383,05/30/2026,Saltbox Bottle Shop,Priya Patel,Cedar Sour 1/6 bbl keg,3,220.11
+INV,INV-26383,05/30/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26383,05/30/2026,Saltbox Bottle Shop,Priya Patel,Stout No. 9 1/6 bbl keg,4,292.24
+INV,INV-26383,05/30/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26359,05/31/2026,Saltbox Social Club,"Walker, Christopher",Pint glasses (dozen),2,108.00
+INV,INV-26363,05/31/2026,Lantern Social Club,"Walker, Christopher",Cedar Sour 1/2 bbl keg,1,184.00
+INV,INV-26363,05/31/2026,Lantern Social Club,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26363,05/31/2026,Lantern Social Club,"Walker, Christopher",Lakeshore Pilsner 1/6 bbl keg,2,186.58
+INV,INV-26363,05/31/2026,Lantern Social Club,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26433,06/01/2026,North End Taproom,Dana Cruz,Hazy Hollow 1/6 bbl keg,4,365.20
+INV,INV-26433,06/01/2026,North End Taproom,Dana Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26436,06/01/2026,Harbor Grill,Dana Cruz,Cedar Sour 1/6 bbl keg,4,365.52
+INV,INV-26436,06/01/2026,Harbor Grill,Dana Cruz,KEG DEPOSIT,4,120.00
+INV,INV-26436,06/01/2026,Harbor Grill,Dana Cruz,Ridgeline Amber 1/2 bbl keg,1,189.52
+INV,INV-26436,06/01/2026,Harbor Grill,Dana Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26436,06/01/2026,Harbor Grill,Dana Cruz,Hazy Hollow 1/6 bbl keg,1,94.85
+INV,INV-26436,06/01/2026,Harbor Grill,Dana Cruz,KEG DEPOSIT,1,30.00
+INV,INV-26464,06/02/2026,Birchwood Kitchen,Priya Patel,Tamarack IPA 1/6 bbl keg,1,83.86
+INV,INV-26464,06/02/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26464,06/02/2026,Birchwood Kitchen,Priya Patel,Cedar Sour 1/2 bbl keg,3,597.24
+INV,INV-26464,06/02/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,3,90.00
+CRM,CRM-26513,06/02/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26450,06/02/2026,Harbor Market,Christopher Walker,Tamarack IPA 1/2 bbl keg,4,703.52
+INV,INV-26450,06/02/2026,Harbor Market,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26434,06/02/2026,Elm Street Bistro,DANA CRUZ,Tamarack IPA case 24x12oz cans,2,108.66
+INV,INV-26434,06/02/2026,Elm Street Bistro,DANA CRUZ,Cedar Sour case 24x12oz cans,10,422.60
+INV,INV-26434,06/02/2026,Elm Street Bistro,DANA CRUZ,Hazy Hollow 1/2 bbl keg,3,626.64
+INV,INV-26434,06/02/2026,Elm Street Bistro,DANA CRUZ,KEG DEPOSIT,3,90.00
+INV,INV-26443,06/04/2026,Lantern Social Club,"Walker, Christopher",Cedar Sour 1/6 bbl keg,2,169.88
+INV,INV-26443,06/04/2026,Lantern Social Club,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26481,06/04/2026,Magnolia Taproom,Gary Phillips,Stout No. 9 1/6 bbl keg,4,288.52
+INV,INV-26481,06/04/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26481,06/04/2026,Magnolia Taproom,Gary Phillips,Pint glasses (dozen),1,54.00
+INV,INV-26438,06/04/2026,North End Taproom,D. Cruz,Lakeshore Pilsner case 24x12oz cans,8,350.32
+INV,INV-26438,06/04/2026,North End Taproom,D. Cruz,Ridgeline Amber 1/2 bbl keg,3,629.97
+INV,INV-26438,06/04/2026,North End Taproom,D. Cruz,KEG DEPOSIT,3,90.00
+INV,INV-26438,06/04/2026,North End Taproom,D. Cruz,Tamarack IPA case 24x12oz cans,4,159.72
+INV,INV-26469,06/04/2026,Old Mill Alehouse,Priya Patel,Ridgeline Amber 1/2 bbl keg,1,184.21
+INV,INV-26469,06/04/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26469,06/04/2026,Old Mill Alehouse,Priya Patel,Lakeshore Pilsner 1/2 bbl keg,2,376.00
+INV,INV-26469,06/04/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26480,06/05/2026,Thistle Pub,Gary Phillips,Tamarack IPA 1/6 bbl keg,1,80.99
+INV,INV-26480,06/05/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26480,06/05/2026,Thistle Pub,Gary Phillips,Stout No. 9 case 24x12oz cans,2,110.24
+INV,INV-26480,06/05/2026,Thistle Pub,Gary Phillips,Pint glasses (dozen),2,108.00
+INV,INV-26510,06/06/2026,Willow Bottle Shop,Margaret Cook,Cedar Sour 1/2 bbl keg,2,385.70
+INV,INV-26510,06/06/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26510,06/06/2026,Willow Bottle Shop,Margaret Cook,Tamarack IPA case 24x12oz cans,4,185.12
+INV,INV-26447,06/07/2026,Crow's Nest Bottle Shop,Christopher Walker,Lakeshore Pilsner 1/6 bbl keg,4,300.60
+INV,INV-26447,06/07/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26447,06/07/2026,Crow's Nest Bottle Shop,Christopher Walker,Tamarack IPA 1/2 bbl keg,4,715.36
+INV,INV-26447,06/07/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26491,06/07/2026,Saltbox Alehouse,Joshua Morris,Stout No. 9 1/2 bbl keg,2,345.04
+INV,INV-26491,06/07/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26470,06/07/2026,Birchwood Kitchen,Priya Patel,Lakeshore Pilsner 1/2 bbl keg,2,389.90
+INV,INV-26470,06/07/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26470,06/07/2026,Birchwood Kitchen,Priya Patel,Stout No. 9 1/2 bbl keg,3,629.85
+INV,INV-26470,06/07/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26470,06/07/2026,Birchwood Kitchen,Priya Patel,Lakeshore Pilsner 1/6 bbl keg,1,87.03
+INV,INV-26470,06/07/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26490,06/07/2026,Elm Street Bottle Shop,Joshua Morris,Tamarack IPA case 24x12oz cans,8,349.84
+INV,INV-26498,06/07/2026,Elm Street Bottle Shop,Joshua Morris,Tamarack IPA case 24x12oz cans,8,320.96
+INV,INV-26435,06/08/2026,Willow Taproom,Dana Cruz,Cedar Sour 1/2 bbl keg,2,331.24
+INV,INV-26435,06/08/2026,Willow Taproom,Dana Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26451,06/08/2026,Harbor Market,Christopher Walker,Ridgeline Amber 1/2 bbl keg,3,595.11
+INV,INV-26451,06/08/2026,Harbor Market,Christopher Walker,KEG DEPOSIT,3,90.00
+INV,INV-26451,06/08/2026,Harbor Market,Christopher Walker,Hazy Hollow case 24x12oz cans,5,216.85
+INV,INV-26451,06/08/2026,Harbor Market,Christopher Walker,Hazy Hollow case 24x12oz cans,7,277.27
+INV,INV-26507,06/08/2026,Elm Street Bistro,Margaret Cook,Cedar Sour case 24x12oz cans,7,385.77
+INV,INV-26507,06/08/2026,Elm Street Bistro,Margaret Cook,Cedar Sour case 24x12oz cans,10,507.10
+CRM,CRM-26515,06/08/2026,Willow Bottle Shop,Margaret Cook,KEG DEPOSIT RETURN,4,120.00-
+INV,INV-26462,06/09/2026,Birchwood Kitchen,Priya Patel,Pint glasses (dozen),2,108.00
+INV,INV-26462,06/09/2026,Birchwood Kitchen,Priya Patel,Lakeshore Pilsner 1/6 bbl keg,2,186.82
+INV,INV-26462,06/09/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26462,06/09/2026,Birchwood Kitchen,Priya Patel,Hazy Hollow 1/2 bbl keg,1,167.89
+INV,INV-26462,06/09/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26484,06/09/2026,Magnolia Taproom,Gary Phillips,Coasters (500),2,72.00
+INV,INV-26499,06/09/2026,Harbor Pub,Joshua Morris,Stout No. 9 1/2 bbl keg,1,193.10
+INV,INV-26499,06/09/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,1,30.00
+INV,INV-26499,06/09/2026,Harbor Pub,Joshua Morris,Cedar Sour 1/6 bbl keg,4,314.16
+INV,INV-26499,06/09/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,4,120.00
+CRM,CRM-26439,06/09/2026,Harbor Grill,D. Cruz,KEG DEPOSIT RETURN,3,90.00-
+CRM,CRM-26441,06/10/2026,North End Taproom,D. Cruz,Credit - spoiled,1,113.50-
+INV,INV-26453,06/10/2026,Lantern Social Club,Christopher Walker,Coasters (500),3,108.00
+INV,INV-26430,06/10/2026,Pine Knot Alehouse,DANA CRUZ,Lakeshore Pilsner 1/6 bbl keg,3,269.52
+INV,INV-26430,06/10/2026,Pine Knot Alehouse,DANA CRUZ,KEG DEPOSIT,3,90.00
+INV,INV-26430,06/10/2026,Pine Knot Alehouse,DANA CRUZ,Lakeshore Pilsner 1/6 bbl keg,3,230.04
+INV,INV-26430,06/10/2026,Pine Knot Alehouse,DANA CRUZ,KEG DEPOSIT,3,90.00
+INV,INV-26476,06/10/2026,Lantern Social Club,Gary Phillips,Lakeshore Pilsner 1/6 bbl keg,2,175.82
+INV,INV-26476,06/10/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26476,06/10/2026,Lantern Social Club,Gary Phillips,Tamarack IPA case 24x12oz cans,7,305.97
+INV,INV-26495,06/11/2026,Saltbox Alehouse,Joshua Morris,Tamarack IPA case 24x12oz cans,9,488.34
+INV,INV-26495,06/11/2026,Saltbox Alehouse,Joshua Morris,Ridgeline Amber case 24x12oz cans,6,298.14
+INV,INV-26429,06/11/2026,Willow Taproom,D. Cruz,Cedar Sour 1/6 bbl keg,2,160.32
+INV,INV-26429,06/11/2026,Willow Taproom,D. Cruz,KEG DEPOSIT,2,60.00
+INV,INV-26466,06/12/2026,Copper Social Club,Priya Patel,Cedar Sour 1/6 bbl keg,1,85.57
+INV,INV-26466,06/12/2026,Copper Social Club,Priya Patel,KEG DEPOSIT,1,30.00
+CRM,CRM-26475,06/12/2026,North End Tavern,Priya Patel,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26444,06/12/2026,Lantern Social Club,"Walker, Christopher",Hazy Hollow 1/2 bbl keg,1,209.25
+INV,INV-26444,06/12/2026,Lantern Social Club,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26444,06/12/2026,Lantern Social Club,"Walker, Christopher",Tamarack IPA 1/2 bbl keg,4,746.36
+INV,INV-26444,06/12/2026,Lantern Social Club,"Walker, Christopher",KEG DEPOSIT,4,120.00
+INV,INV-26444,06/12/2026,Lantern Social Club,"Walker, Christopher",Lakeshore Pilsner case 24x12oz cans,9,477.45
+CRM,CRM-26489,06/12/2026,Fox & Hound Market,Gary Phillips,Credit - spoiled,1,226.20-
+INV,INV-26452,06/12/2026,Anchor Alehouse,"Walker, Christopher",Ridgeline Amber 1/6 bbl keg,4,370.32
+INV,INV-26452,06/12/2026,Anchor Alehouse,"Walker, Christopher",KEG DEPOSIT,4,120.00
+CRM,CRM-26488,06/12/2026,Magnolia Taproom,Gary Phillips,Credit - price adj,1,93.04-
+INV,INV-26504,06/12/2026,Crow's Nest Kitchen,Margaret Cook,Stout No. 9 1/6 bbl keg,3,232.02
+INV,INV-26504,06/12/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26504,06/12/2026,Crow's Nest Kitchen,Margaret Cook,Ridgeline Amber case 24x12oz cans,3,162.93
+INV,INV-26505,06/13/2026,Pine Knot Alehouse,Margaret Cook,Ridgeline Amber case 24x12oz cans,8,379.84
+INV,INV-26445,06/13/2026,Lantern Social Club,Christopher Walker,Lakeshore Pilsner 1/6 bbl keg,4,314.72
+INV,INV-26445,06/13/2026,Lantern Social Club,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26445,06/13/2026,Lantern Social Club,Christopher Walker,Ridgeline Amber case 24x12oz cans,9,430.47
+INV,INV-26445,06/13/2026,Lantern Social Club,Christopher Walker,Cedar Sour case 24x12oz cans,5,240.45
+INV,INV-26485,06/13/2026,Magnolia Taproom,Gary Phillips,Coasters (500),1,36.00
+INV,INV-26485,06/13/2026,Magnolia Taproom,Gary Phillips,Ridgeline Amber 1/6 bbl keg,2,177.22
+INV,INV-26485,06/13/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26485,06/13/2026,Magnolia Taproom,Gary Phillips,Stout No. 9 case 24x12oz cans,4,183.44
+INV,INV-26432,06/13/2026,Juniper Market,"Cruz, Dana",Stout No. 9 1/2 bbl keg,2,390.04
+INV,INV-26432,06/13/2026,Juniper Market,"Cruz, Dana",KEG DEPOSIT,2,60.00
+INV,INV-26432,06/13/2026,Juniper Market,"Cruz, Dana",Lakeshore Pilsner 1/6 bbl keg,1,81.37
+INV,INV-26432,06/13/2026,Juniper Market,"Cruz, Dana",KEG DEPOSIT,1,30.00
+INV,INV-26431,06/14/2026,North End Taproom,DANA CRUZ,Ridgeline Amber 1/6 bbl keg,2,157.18
+INV,INV-26431,06/14/2026,North End Taproom,DANA CRUZ,KEG DEPOSIT,2,60.00
+INV,INV-26454,06/14/2026,Anchor Alehouse,Christopher Walker,Lakeshore Pilsner case 24x12oz cans,8,378.80
+INV,INV-26454,06/14/2026,Anchor Alehouse,Christopher Walker,Hazy Hollow 1/2 bbl keg,4,673.92
+INV,INV-26454,06/14/2026,Anchor Alehouse,Christopher Walker,KEG DEPOSIT,4,120.00
+INV,INV-26448,06/14/2026,Harbor Market,Christopher Walker,Lakeshore Pilsner case 24x12oz cans,3,133.83
+CRM,CRM-26487,06/14/2026,Lantern Social Club,Gary Phillips,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26471,06/15/2026,Fox & Hound Pub,Priya Patel,Stout No. 9 1/6 bbl keg,2,160.88
+INV,INV-26471,06/15/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26471,06/15/2026,Fox & Hound Pub,Priya Patel,Hazy Hollow case 24x12oz cans,2,105.28
+INV,INV-26460,06/16/2026,Old Mill Alehouse,Priya Patel,Stout No. 9 case 24x12oz cans,4,222.72
+INV,INV-26460,06/16/2026,Old Mill Alehouse,Priya Patel,Stout No. 9 1/2 bbl keg,2,398.58
+INV,INV-26460,06/16/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26460,06/16/2026,Old Mill Alehouse,Priya Patel,Stout No. 9 case 24x12oz cans,10,551.00
+INV,INV-26463,06/16/2026,Old Mill Alehouse,Priya Patel,Coasters (500),3,108.00
+INV,INV-26461,06/16/2026,Old Mill Alehouse,Priya Patel,Tamarack IPA 1/6 bbl keg,3,237.72
+INV,INV-26461,06/16/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26461,06/16/2026,Old Mill Alehouse,Priya Patel,Cedar Sour 1/2 bbl keg,1,176.69
+INV,INV-26461,06/16/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26461,06/16/2026,Old Mill Alehouse,Priya Patel,Tamarack IPA 1/6 bbl keg,4,345.32
+INV,INV-26461,06/16/2026,Old Mill Alehouse,Priya Patel,KEG DEPOSIT,4,120.00
+INV,INV-26503,06/16/2026,Elm Street Bistro,Margaret Cook,Tamarack IPA 1/2 bbl keg,3,525.81
+INV,INV-26503,06/16/2026,Elm Street Bistro,Margaret Cook,KEG DEPOSIT,3,90.00
+INV,INV-26497,06/16/2026,Elm Street Bottle Shop,Joshua Morris,Stout No. 9 1/2 bbl keg,3,567.60
+INV,INV-26497,06/16/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26508,06/16/2026,Crow's Nest Kitchen,Margaret Cook,Stout No. 9 1/2 bbl keg,4,785.04
+INV,INV-26508,06/16/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,4,120.00
+INV,INV-26508,06/16/2026,Crow's Nest Kitchen,Margaret Cook,Ridgeline Amber 1/2 bbl keg,1,210.93
+INV,INV-26508,06/16/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26508,06/16/2026,Crow's Nest Kitchen,Margaret Cook,Lakeshore Pilsner 1/6 bbl keg,2,167.68
+INV,INV-26508,06/16/2026,Crow's Nest Kitchen,Margaret Cook,KEG DEPOSIT,2,60.00
+INV,INV-26465,06/17/2026,Saltbox Bottle Shop,Priya Patel,Ridgeline Amber case 24x12oz cans,5,240.50
+INV,INV-26465,06/17/2026,Saltbox Bottle Shop,Priya Patel,Tamarack IPA 1/2 bbl keg,2,363.24
+INV,INV-26465,06/17/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26465,06/17/2026,Saltbox Bottle Shop,Priya Patel,Tamarack IPA 1/6 bbl keg,3,254.16
+INV,INV-26465,06/17/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26500,06/18/2026,Saltbox Alehouse,Joshua Morris,Lakeshore Pilsner 1/2 bbl keg,4,799.00
+INV,INV-26500,06/18/2026,Saltbox Alehouse,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26478,06/18/2026,Thistle Pub,Gary Phillips,Lakeshore Pilsner 1/2 bbl keg,2,337.14
+INV,INV-26478,06/18/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26506,06/18/2026,Driftwood Pub,Margaret Cook,Cedar Sour 1/6 bbl keg,1,88.60
+INV,INV-26506,06/18/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26482,06/20/2026,Fox & Hound Market,Gary Phillips,Hazy Hollow 1/2 bbl keg,1,208.72
+INV,INV-26482,06/20/2026,Fox & Hound Market,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26428,06/20/2026,Pine Knot Alehouse,DANA CRUZ,Hazy Hollow case 24x12oz cans,8,326.32
+INV,INV-26428,06/20/2026,Pine Knot Alehouse,DANA CRUZ,Hazy Hollow 1/2 bbl keg,1,206.21
+INV,INV-26428,06/20/2026,Pine Knot Alehouse,DANA CRUZ,KEG DEPOSIT,1,30.00
+INV,INV-26428,06/20/2026,Pine Knot Alehouse,DANA CRUZ,Hazy Hollow case 24x12oz cans,9,438.66
+INV,INV-26512,06/20/2026,Elm Street Bistro,Margaret Cook,Coasters (500),2,72.00
+INV,INV-26512,06/20/2026,Elm Street Bistro,Margaret Cook,Tamarack IPA case 24x12oz cans,10,509.40
+INV,INV-26496,06/20/2026,Pine Knot Market,Joshua Morris,Cedar Sour 1/2 bbl keg,3,590.70
+INV,INV-26496,06/20/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26496,06/20/2026,Pine Knot Market,Joshua Morris,Cedar Sour 1/2 bbl keg,4,761.84
+INV,INV-26496,06/20/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26496,06/20/2026,Pine Knot Market,Joshua Morris,Pint glasses (dozen),3,162.00
+INV,INV-26493,06/21/2026,Elm Street Bottle Shop,Joshua Morris,Stout No. 9 case 24x12oz cans,6,249.36
+INV,INV-26493,06/21/2026,Elm Street Bottle Shop,Joshua Morris,Lakeshore Pilsner case 24x12oz cans,7,304.43
+CRM,CRM-26456,06/21/2026,Harbor Market,Christopher Walker,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26455,06/21/2026,Lantern Social Club,Christopher Walker,Lakeshore Pilsner case 24x12oz cans,7,323.40
+INV,INV-26455,06/21/2026,Lantern Social Club,Christopher Walker,Ridgeline Amber case 24x12oz cans,8,311.36
+INV,INV-26455,06/21/2026,Lantern Social Club,Christopher Walker,Hazy Hollow case 24x12oz cans,6,319.20
+INV,INV-26509,06/21/2026,Elm Street Bistro,Margaret Cook,Ridgeline Amber case 24x12oz cans,10,464.40
+INV,INV-26509,06/21/2026,Elm Street Bistro,Margaret Cook,Ridgeline Amber case 24x12oz cans,2,88.26
+INV,INV-26509,06/21/2026,Elm Street Bistro,Margaret Cook,Hazy Hollow case 24x12oz cans,6,233.52
+CRM,CRM-26514,06/22/2026,Driftwood Pub,Margaret Cook,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26473,06/22/2026,North End Tavern,Priya Patel,Ridgeline Amber 1/2 bbl keg,2,348.18
+INV,INV-26473,06/22/2026,North End Tavern,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26446,06/22/2026,Red Door Pub,"Walker, Christopher",Stout No. 9 case 24x12oz cans,10,453.50
+INV,INV-26446,06/22/2026,Red Door Pub,"Walker, Christopher",Stout No. 9 case 24x12oz cans,5,273.45
+CRM,CRM-26440,06/23/2026,North End Taproom,"Cruz, Dana",KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26468,06/23/2026,Birchwood Kitchen,Priya Patel,Pint glasses (dozen),2,108.00
+INV,INV-26468,06/23/2026,Birchwood Kitchen,Priya Patel,Stout No. 9 1/6 bbl keg,1,93.44
+INV,INV-26468,06/23/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26492,06/23/2026,Pine Knot Market,Joshua Morris,Hazy Hollow 1/2 bbl keg,2,391.00
+INV,INV-26492,06/23/2026,Pine Knot Market,Joshua Morris,KEG DEPOSIT,2,60.00
+INV,INV-26492,06/23/2026,Pine Knot Market,Joshua Morris,Pint glasses (dozen),2,108.00
+INV,INV-26437,06/24/2026,North End Taproom,D. Cruz,Tap handle,2,84.00
+INV,INV-26437,06/24/2026,North End Taproom,D. Cruz,Stout No. 9 1/2 bbl keg,1,205.43
+INV,INV-26437,06/24/2026,North End Taproom,D. Cruz,KEG DEPOSIT,1,30.00
+CRM,CRM-26457,06/24/2026,Harbor Market,Christopher Walker,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26467,06/24/2026,Fox & Hound Pub,Priya Patel,Tamarack IPA 1/2 bbl keg,1,209.05
+INV,INV-26467,06/24/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26467,06/24/2026,Fox & Hound Pub,Priya Patel,Cedar Sour 1/6 bbl keg,1,87.13
+INV,INV-26467,06/24/2026,Fox & Hound Pub,Priya Patel,KEG DEPOSIT,1,30.00
+INV,INV-26494,06/25/2026,Harbor Pub,Joshua Morris,Lakeshore Pilsner 1/6 bbl keg,4,369.72
+INV,INV-26494,06/25/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,4,120.00
+INV,INV-26494,06/25/2026,Harbor Pub,Joshua Morris,Cedar Sour 1/2 bbl keg,3,602.82
+INV,INV-26494,06/25/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,3,90.00
+INV,INV-26494,06/25/2026,Harbor Pub,Joshua Morris,Hazy Hollow 1/6 bbl keg,4,293.92
+INV,INV-26494,06/25/2026,Harbor Pub,Joshua Morris,KEG DEPOSIT,4,120.00
+CRM,CRM-26459,06/25/2026,Harbor Market,"Walker, Christopher",Credit - damaged,1,241.25-
+INV,INV-26472,06/25/2026,Saltbox Bottle Shop,Priya Patel,Ridgeline Amber 1/6 bbl keg,2,150.38
+INV,INV-26472,06/25/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,2,60.00
+INV,INV-26472,06/25/2026,Saltbox Bottle Shop,Priya Patel,Cedar Sour 1/6 bbl keg,3,267.15
+INV,INV-26472,06/25/2026,Saltbox Bottle Shop,Priya Patel,KEG DEPOSIT,3,90.00
+INV,INV-26442,06/25/2026,Crow's Nest Bottle Shop,Christopher Walker,Ridgeline Amber case 24x12oz cans,6,258.12
+INV,INV-26442,06/25/2026,Crow's Nest Bottle Shop,Christopher Walker,Stout No. 9 1/2 bbl keg,1,195.23
+INV,INV-26442,06/25/2026,Crow's Nest Bottle Shop,Christopher Walker,KEG DEPOSIT,1,30.00
+INV,INV-26501,06/25/2026,Harbor Pub,Joshua Morris,Hazy Hollow case 24x12oz cans,7,284.76
+INV,INV-26511,06/26/2026,Fox & Hound Grill,Margaret Cook,Cedar Sour 1/2 bbl keg,1,204.30
+INV,INV-26511,06/26/2026,Fox & Hound Grill,Margaret Cook,KEG DEPOSIT,1,30.00
+INV,INV-26511,06/26/2026,Fox & Hound Grill,Margaret Cook,Stout No. 9 case 24x12oz cans,10,539.90
+CRM,CRM-26502,06/27/2026,Elm Street Bottle Shop,Joshua Morris,KEG DEPOSIT RETURN,2,60.00-
+INV,INV-26449,06/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Cedar Sour 1/2 bbl keg,1,180.40
+INV,INV-26449,06/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",KEG DEPOSIT,1,30.00
+INV,INV-26449,06/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Tap handle,2,84.00
+INV,INV-26449,06/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",Stout No. 9 1/2 bbl keg,2,383.40
+INV,INV-26449,06/28/2026,Crow's Nest Bottle Shop,"Walker, Christopher",KEG DEPOSIT,2,60.00
+INV,INV-26483,06/29/2026,Magnolia Taproom,Gary Phillips,Stout No. 9 1/6 bbl keg,3,260.28
+INV,INV-26483,06/29/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26483,06/29/2026,Magnolia Taproom,Gary Phillips,Cedar Sour 1/2 bbl keg,2,384.08
+INV,INV-26483,06/29/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,2,60.00
+INV,INV-26483,06/29/2026,Magnolia Taproom,Gary Phillips,Hazy Hollow 1/2 bbl keg,4,751.24
+INV,INV-26483,06/29/2026,Magnolia Taproom,Gary Phillips,KEG DEPOSIT,4,120.00
+CRM,CRM-26474,06/29/2026,Birchwood Kitchen,Priya Patel,KEG DEPOSIT RETURN,1,30.00-
+INV,INV-26477,06/30/2026,Thistle Pub,Gary Phillips,Ridgeline Amber 1/2 bbl keg,1,198.48
+INV,INV-26477,06/30/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26477,06/30/2026,Thistle Pub,Gary Phillips,Cedar Sour 1/2 bbl keg,1,197.82
+INV,INV-26477,06/30/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,1,30.00
+CRM,CRM-26458,06/30/2026,Harbor Market,Christopher Walker,KEG DEPOSIT RETURN,3,90.00-
+INV,INV-26479,06/30/2026,Thistle Pub,Gary Phillips,Ridgeline Amber 1/6 bbl keg,1,79.13
+INV,INV-26479,06/30/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,1,30.00
+INV,INV-26479,06/30/2026,Thistle Pub,Gary Phillips,Ridgeline Amber 1/2 bbl keg,3,582.03
+INV,INV-26479,06/30/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26479,06/30/2026,Thistle Pub,Gary Phillips,Cedar Sour 1/2 bbl keg,4,833.04
+INV,INV-26479,06/30/2026,Thistle Pub,Gary Phillips,KEG DEPOSIT,4,120.00
+INV,INV-26486,06/30/2026,Red Door Bistro,Gary Phillips,Lakeshore Pilsner 1/2 bbl keg,3,610.77
+INV,INV-26486,06/30/2026,Red Door Bistro,Gary Phillips,KEG DEPOSIT,3,90.00
+INV,INV-26486,06/30/2026,Red Door Bistro,Gary Phillips,Hazy Hollow case 24x12oz cans,8,420.40

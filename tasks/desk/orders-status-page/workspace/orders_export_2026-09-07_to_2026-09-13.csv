@@ -1,0 +1,87 @@
+﻿Order,Created at,Customer,Fulfillment status,Tags,Lineitem name,Lineitem quantity,Lineitem price,Shipping
+GR-4661,2026-09-07 06:01,Dorothy Parker,DELIVERED,,Pothos Marble Queen 4in,2,14.00,0.00
+GR-4661,2026-09-07 06:01,Dorothy Parker,DELIVERED,,Hoya carnosa 4in,2,19.00,0.00
+GR-4661,2026-09-07 06:01,Dorothy Parker,DELIVERED,,Moisture meter,3,11.00,0.00
+GR-4662,2026-09-07 11:04,Chloe Watson,DELIVERED,,Houseplant potting mix 8qt,1,13.00,12.95
+GR-4663,2026-09-07 11:54,Deborah Okafor,IN_TRANSIT,,Houseplant potting mix 8qt,1,13.00,8.95
+GR-4664,2026-09-07 17:28,Amy Nelson,CANCELLED,,Calathea orbifolia 6in,3,36.00,0.00
+GR-4665,2026-09-08 03:35,Richard Richardson,FULFILLED,,Hoya carnosa 4in,1,19.00,12.95
+GR-4666,2026-09-08 09:08,Barbara Hernandez,VOIDED,,Houseplant potting mix 8qt,1,13.00,8.95
+GR-4666,2026-09-08 09:08,Barbara Hernandez,VOIDED,,ZZ plant 6in,2,29.00,8.95
+GR-4667,2026-09-08 09:33,Joshua Morris,DELIVERED,,Pothos Marble Queen 4in,1,14.00,8.95
+GR-4667,2026-09-08 09:33,Joshua Morris,DELIVERED,,Hoya carnosa 4in,2,19.00,8.95
+GR-4668,2026-09-08 15:56,Kenneth Rogers,IN_TRANSIT,,Moisture meter,2,11.00,12.95
+GR-4668,2026-09-08 15:56,Kenneth Rogers,IN_TRANSIT,,Rubber plant Burgundy 8in,1,44.00,12.95
+GR-4669,2026-09-08 18:49,Steven Morgan,DELIVERED,,Terracotta pot 6in,1,9.00,12.95
+GR-4670,2026-09-09 01:42,Richard Myers,CANCELLED,,String of pearls 4in hanging,1,22.00,0.00
+GR-4670,2026-09-09 01:42,Richard Myers,CANCELLED,repeat customer,Monstera deliciosa 6in,3,34.00,0.00
+GR-4670,2026-09-09 01:42,Richard Myers,CANCELLED,,Fiddle leaf fig 10in,1,68.00,0.00
+GR-4671,2026-09-09 11:49,Hana Okafor,PAID_UNFULFILLED,test,Peace lily 6in,1,26.00,8.95
+GR-4672,2026-09-09 13:32,Dorothy Howard,IN_TRANSIT,,String of pearls 4in hanging,1,22.00,8.95
+GR-4672,2026-09-09 13:32,Dorothy Howard,IN_TRANSIT,,ZZ plant 6in,1,29.00,8.95
+GR-4672,2026-09-09 13:32,Dorothy Howard,IN_TRANSIT,,Moisture meter,2,11.00,8.95
+GR-4673,2026-09-09 15:30,Rebecca Garcia,FULFILLED,gift,Pothos Marble Queen 4in,1,14.00,12.95
+GR-4674,2026-09-09 18:21,Donna Alvarez,FULFILLED,,Ceramic planter white 8in,1,24.00,8.95
+GR-4674,2026-09-09 18:21,Donna Alvarez,FULFILLED,,Snake plant Laurentii 4in,1,18.00,8.95
+GR-4675,2026-09-09 23:27,Charles Mensah,DELIVERED,repeat customer,Hoya carnosa 4in,1,19.00,12.95
+GR-4675,2026-09-09 23:27,Charles Mensah,DELIVERED,,ZZ plant 6in,1,29.00,12.95
+GR-4676,2026-09-10 02:31,Sarah Foster,FULFILLED,,Bird of paradise 10in,1,72.00,12.95
+GR-4677,2026-09-10 04:47,Wei Gonzalez,IN_TRANSIT,,Ceramic planter white 8in,1,24.00,8.95
+GR-4677,2026-09-10 04:47,Wei Gonzalez,IN_TRANSIT,,Pothos Marble Queen 4in,2,14.00,8.95
+GR-4678,2026-09-10 04:58,Kimberly Rogers,PAID_UNFULFILLED,,Ceramic planter white 8in,1,24.00,8.95
+GR-4678,2026-09-10 04:58,Kimberly Rogers,PAID_UNFULFILLED,gift,Moisture meter,1,11.00,8.95
+GR-4678,2026-09-10 04:58,Kimberly Rogers,PAID_UNFULFILLED,,Hoya carnosa 4in,2,19.00,8.95
+GR-4679,2026-09-10 05:14,Anthony Mensah,DELIVERED,gift,Bird of paradise 10in,1,72.00,0.00
+GR-4679,2026-09-10 05:14,Anthony Mensah,DELIVERED,,String of pearls 4in hanging,1,22.00,0.00
+GR-4679,2026-09-10 05:14,Anthony Mensah,DELIVERED,,Calathea orbifolia 6in,1,36.00,0.00
+GR-4680,2026-09-10 12:36,Marcus Cox,AWAITING_PAYMENT,,Ceramic planter white 8in,2,24.00,12.95
+GR-4681,2026-09-10 16:34,Kimberly Davis,AWAITING_PAYMENT,,Snake plant Laurentii 4in,1,18.00,8.95
+GR-4682,2026-09-10 16:38,Anna Edwards,IN_TRANSIT,gift,ZZ plant 6in,1,29.00,8.95
+GR-4683,2026-09-10 20:20,Priya Morris,DELIVERED,repeat customer,Snake plant Laurentii 4in,1,18.00,0.00
+GR-4683,2026-09-10 20:20,Priya Morris,DELIVERED,repeat customer,Monstera deliciosa 6in,2,34.00,0.00
+GR-4683,2026-09-10 20:20,Priya Morris,DELIVERED,gift,Bird of paradise 10in,2,72.00,0.00
+GR-4684,2026-09-11 01:02,David Harris,FULFILLED,,ZZ plant 6in,1,29.00,12.95
+GR-4684,2026-09-11 01:02,David Harris,FULFILLED,,Pothos Marble Queen 4in,1,14.00,12.95
+GR-4685,2026-09-11 01:29,Gary Wilson,DELIVERED,gift,Snake plant Laurentii 4in,2,18.00,12.95
+GR-4685,2026-09-11 01:29,Gary Wilson,DELIVERED,,String of pearls 4in hanging,1,22.00,12.95
+GR-4686,2026-09-11 02:21,Carlos Lewis,PAID_UNFULFILLED,,Ceramic planter white 8in,1,24.00,8.95
+GR-4687,2026-09-11 04:46,Stephanie Alvarez,PARTIALLY_FULFILLED,,Ceramic planter white 8in,1,24.00,0.00
+GR-4687,2026-09-11 04:46,Stephanie Alvarez,PARTIALLY_FULFILLED,,Houseplant potting mix 8qt,1,13.00,0.00
+GR-4687,2026-09-11 04:46,Stephanie Alvarez,PARTIALLY_FULFILLED,,Pothos Marble Queen 4in,3,14.00,0.00
+GR-4688,2026-09-11 05:39,Gary Phillips,DELIVERED,repeat customer,Fiddle leaf fig 10in,1,68.00,12.95
+GR-4689,2026-09-11 08:33,Donald Mensah,FULFILLED,,Peace lily 6in,1,26.00,12.95
+GR-4689,2026-09-11 08:33,Donald Mensah,FULFILLED,,Monstera deliciosa 6in,1,34.00,12.95
+GR-4689,2026-09-11 08:33,Donald Mensah,FULFILLED,,Pothos Marble Queen 4in,1,14.00,12.95
+GR-4690,2026-09-11 12:33,Carol Alvarez,FULFILLED,gift,String of pearls 4in hanging,1,22.00,0.00
+GR-4690,2026-09-11 12:33,Carol Alvarez,FULFILLED,repeat customer,Houseplant potting mix 8qt,3,13.00,0.00
+GR-4690,2026-09-11 12:33,Carol Alvarez,FULFILLED,repeat customer,Pothos Marble Queen 4in,1,14.00,0.00
+GR-4691,2026-09-11 13:23,Elizabeth Ruiz,DELIVERED,,Fiddle leaf fig 10in,2,68.00,0.00
+GR-4692,2026-09-11 15:57,Charles Flores,AWAITING_PAYMENT,,Calathea orbifolia 6in,3,36.00,0.00
+GR-4692,2026-09-11 15:57,Charles Flores,AWAITING_PAYMENT,gift,Moisture meter,3,11.00,0.00
+GR-4692,2026-09-11 15:57,Charles Flores,AWAITING_PAYMENT,,Pothos Marble Queen 4in,1,14.00,0.00
+GR-4693,2026-09-11 17:32,Jessica Peterson,VOIDED,,String of pearls 4in hanging,1,22.00,8.95
+GR-4694,2026-09-12 06:46,Margaret Cook,PAID_UNFULFILLED,gift,Monstera deliciosa 6in,1,34.00,0.00
+GR-4694,2026-09-12 06:46,Margaret Cook,PAID_UNFULFILLED,repeat customer,Houseplant potting mix 8qt,1,13.00,0.00
+GR-4694,2026-09-12 06:46,Margaret Cook,PAID_UNFULFILLED,,Calathea orbifolia 6in,3,36.00,0.00
+GR-4694,2026-09-12 06:46,Margaret Cook,PAID_UNFULFILLED,,ZZ plant 6in,1,29.00,0.00
+GR-4695,2026-09-12 09:41,Barbara Patel,PAID_UNFULFILLED,,Moisture meter,2,11.00,0.00
+GR-4695,2026-09-12 09:41,Barbara Patel,PAID_UNFULFILLED,,Bird of paradise 10in,1,72.00,0.00
+GR-4695,2026-09-12 09:41,Barbara Patel,PAID_UNFULFILLED,repeat customer,Monstera deliciosa 6in,1,34.00,0.00
+GR-4696,2026-09-12 11:14,Ashley Myers,PAID_UNFULFILLED,,Terracotta pot 6in,3,9.00,0.00
+GR-4696,2026-09-12 11:14,Ashley Myers,PAID_UNFULFILLED,,Bird of paradise 10in,2,72.00,0.00
+GR-4697,2026-09-12 11:27,Hana Okafor,CANCELLED,test,Pothos Marble Queen 4in,1,14.00,8.95
+GR-4698,2026-09-12 13:29,Kenneth Ward,PARTIALLY_FULFILLED,,Rubber plant Burgundy 8in,1,44.00,12.95
+GR-4699,2026-09-12 15:52,Priya Johnson,PAID_UNFULFILLED,gift,Terracotta pot 6in,1,9.00,8.95
+GR-4700,2026-09-13 00:52,Sarah Torres,ON_HOLD,,Pothos Marble Queen 4in,1,14.00,0.00
+GR-4700,2026-09-13 00:52,Sarah Torres,ON_HOLD,repeat customer,Rubber plant Burgundy 8in,2,44.00,0.00
+GR-4700,2026-09-13 00:52,Sarah Torres,ON_HOLD,,Moisture meter,3,11.00,0.00
+GR-4701,2026-09-13 06:16,Jeffrey Gutierrez,PAID_UNFULFILLED,gift,Fiddle leaf fig 10in,1,68.00,8.95
+GR-4702,2026-09-13 11:47,Yuki Clark,IN_TRANSIT,,Ceramic planter white 8in,2,24.00,8.95
+GR-4703,2026-09-13 14:28,James Ward,FULFILLED,repeat customer,Monstera deliciosa 6in,1,34.00,12.95
+GR-4704,2026-09-13 16:08,Joshua Peterson,ON_HOLD,gift,Bird of paradise 10in,1,72.00,0.00
+GR-4704,2026-09-13 16:08,Joshua Peterson,ON_HOLD,repeat customer,Moisture meter,1,11.00,0.00
+GR-4705,2026-09-13 16:57,Kevin Stewart,DELIVERED,,Moisture meter,3,11.00,0.00
+GR-4705,2026-09-13 16:57,Kevin Stewart,DELIVERED,repeat customer,Houseplant potting mix 8qt,2,13.00,0.00
+GR-4705,2026-09-13 16:57,Kevin Stewart,DELIVERED,,Monstera deliciosa 6in,2,34.00,0.00
+GR-4706,2026-09-13 21:42,Kevin Cooper,FULFILLED,,Hoya carnosa 4in,1,19.00,0.00
+GR-4706,2026-09-13 21:42,Kevin Cooper,FULFILLED,,Rubber plant Burgundy 8in,2,44.00,0.00

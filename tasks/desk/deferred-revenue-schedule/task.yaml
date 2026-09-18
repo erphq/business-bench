@@ -1,0 +1,70 @@
+id: deferred-revenue-schedule
+track: desk
+category: bookkeeping
+title: 2026 deferred revenue schedule for the annual plans
+ask: |
+  Graham needs the 2026 deferred revenue schedule for the year-end file, and his email in the folder says how he wants it done. Save it as deferred_revenue.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  TD-2115 starts 2026-04-20, after the 15th, so it earns from the following month; counting the start month moves a twelfth of its fee into 2026 (check: late-start contract)
+- |-
+  TD-2119 started 2025-11-17 and is mid-term on 1 January; under the 15th rule its first month is December 2025, so eleven months land in 2026 and its unearned balance opens the year (check: carried-over contract)
+- |-
+  TD-2114 upgraded on 2026-08-18; the 2,800.00 add-on is earned over the 7 months left in the term, most of them in 2027, not all at once and not over twelve months (check: upgraded contract)
+- |-
+  TD-2086 cancelled on 2026-09-06; recognition stops, the refund leaves deferred revenue, and the kept $250 fee from the second email is revenue in the cancellation month, so a schedule that just stops (or keeps running) is wrong (check: cancelled contract)
+- |-
+  TD-2067 is a renewal invoiced 2026-12-13 for a 1 January 2027 start; it earns nothing in 2026 but its full fee is in the year-end deferred balance (check: deferred balance at year end)
+- |-
+  the export also holds an unsigned quote and two monthly-billed customers whose contract value is a monthly price; none of them belong on the schedule (checks: total recognized in 2026; deferred balance at year end)
+- |-
+  contract values are text ('$5,988.00', '$249.00 / mo') under a merged title and a preamble row, the change log has a two-line preamble, CRLF endings, a no-charge seat change and a card update (checks: total recognized in 2026; revenue recognized, one line per month)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: deferred_revenue.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no formula errors
+  path: deferred_revenue.xlsx
+- type: custom
+  name: revenue recognized, one line per month
+  module: check.py
+- type: xlsx_value_present
+  name: total recognized in 2026
+  path: deferred_revenue.xlsx
+  expected: 76320.0
+  rel_tol: 1.0e-06
+  near_text: total
+- type: xlsx_value_present
+  name: deferred balance at year end
+  path: deferred_revenue.xlsx
+  expected: 40837.0
+  rel_tol: 1.0e-06
+  near_text: deferred
+- type: xlsx_value_present
+  name: late-start contract
+  path: deferred_revenue.xlsx
+  expected: 1992.0
+  rel_tol: 1.0e-06
+  near_text: td-2115
+- type: xlsx_value_present
+  name: carried-over contract
+  path: deferred_revenue.xlsx
+  expected: 9889.0
+  rel_tol: 1.0e-06
+  near_text: td-2119
+- type: xlsx_value_present
+  name: upgraded contract
+  path: deferred_revenue.xlsx
+  expected: 6091.0
+  rel_tol: 1.0e-06
+  near_text: td-2114
+- type: xlsx_value_present
+  name: cancelled contract
+  path: deferred_revenue.xlsx
+  expected: 10743.0
+  rel_tol: 1.0e-06
+  near_text: td-2086

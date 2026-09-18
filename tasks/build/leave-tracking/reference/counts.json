@@ -1,0 +1,357 @@
+{
+  "seed": 0,
+  "company": {
+    "people": 40,
+    "departments": [
+      "Operations",
+      "Engineering",
+      "Customer Support",
+      "Sales",
+      "Finance",
+      "People & Admin"
+    ],
+    "managers": {
+      "Operations": "Helen Marsh",
+      "Engineering": "Rafael Ortiz",
+      "Customer Support": "Grace Oduya",
+      "Sales": "Martin Keane",
+      "Finance": "Lena Fischer",
+      "People & Admin": "Samir Qureshi"
+    },
+    "restricted_login": "Grace Oduya",
+    "restricted_department": "Customer Support",
+    "roles": {
+      "admin": "Admin (HR)",
+      "staff": "Manager",
+      "viewer": "Payroll (read-only)",
+      "extra": "Employee"
+    },
+    "team_rule": "a manager's team is the staff whose Manager is that person",
+    "day_rule": "leave days are working days from Start to End inclusive, excluding Saturdays, Sundays, and holidays on their observed date",
+    "today": "2026-09-13"
+  },
+  "staff": {
+    "file_rows_excluding_header": 60,
+    "unique_employee_ids": 56,
+    "exact_duplicate_rows": 2,
+    "email_case_duplicate_rows": 2,
+    "former_staff_with_past_end_date": 16,
+    "active_staff": 40,
+    "dedupe_rule": "One person per Employee ID. Active means End Date blank or after today (2026-09-13). Daniel Kim has two IDs: E0060 left 2024-06-28, E0064 is active and reuses the same email.",
+    "wrong_counts": {
+      "all_rows": 60,
+      "ignoring_end_date": 56,
+      "email_dedupe_keeping_the_leaver_row": 39,
+      "future_end_date_treated_as_left": 39
+    },
+    "email_case_groups": [
+      {
+        "name": "Wei Hall",
+        "emails_as_written": [
+          "wei.hall@northgate-analytics.com",
+          "Wei.Hall@northgate-analytics.com"
+        ]
+      },
+      {
+        "name": "William Collins",
+        "emails_as_written": [
+          "william.collins@northgate-analytics.com",
+          "WILLIAM.COLLINS@NORTHGATE-ANALYTICS.COM"
+        ]
+      }
+    ],
+    "future_leaver": {
+      "name": "Owen Pratt",
+      "end_date": "2026-10-30"
+    },
+    "rehire": {
+      "name": "Daniel Kim",
+      "old_id": "E0060",
+      "new_id": "E0064",
+      "email": "daniel.kim@northgate-analytics.com"
+    },
+    "example_former_staff": [
+      "Angela Chavez",
+      "Lisa Walker",
+      "Sofia Williams"
+    ],
+    "per_department": {
+      "Operations": 5,
+      "Engineering": 10,
+      "Customer Support": 9,
+      "Sales": 7,
+      "Finance": 4,
+      "People & Admin": 5
+    },
+    "team_sizes": {
+      "Helen Marsh": 9,
+      "Rafael Ortiz": 9,
+      "Grace Oduya": 8,
+      "Martin Keane": 6,
+      "Lena Fischer": 3,
+      "Samir Qureshi": 4
+    },
+    "annual_leave_remaining_total": 492.5,
+    "balance_examples": {
+      "B": {
+        "name": "Susan Parker",
+        "file_value": "3 days",
+        "balance": 3.0
+      },
+      "highest": {
+        "name": "Kwame Campbell",
+        "file_value": "27.5 days",
+        "balance": 27.5
+      },
+      "P_not_double_deducted": {
+        "name": "Mateo Mensah",
+        "balance": 15.5,
+        "approved_annual_days_in_file": 30
+      }
+    }
+  },
+  "requests": {
+    "file_rows_excluding_header": 153,
+    "exact_duplicate_rows": 3,
+    "unique_requests": 150,
+    "per_status": {
+      "Approved": 104,
+      "Pending": 10,
+      "Rejected": 12,
+      "Cancelled": 24
+    },
+    "per_type": {
+      "Annual": 115,
+      "Sick": 25,
+      "Unpaid": 10
+    },
+    "rows_written_vacation": 24,
+    "employee_id_rule": "Employee ID written E0042, 42, or E42 all mean E0042",
+    "id_link_check": {
+      "name": "Joshua Wright",
+      "id": "E0055",
+      "requests": 6,
+      "id_written_as": [
+        "55",
+        "E0055",
+        "E55"
+      ]
+    },
+    "approved_annual_days_2026": 317,
+    "end_before_start": {
+      "request": "LR-2026-0131",
+      "employee": "Jessica Parker",
+      "start": "2026-10-23",
+      "end": "2026-10-21",
+      "status": "Cancelled"
+    },
+    "day_checks": {
+      "P": {
+        "name": "Mateo Mensah",
+        "request": "LR-2026-0149",
+        "start": "2026-12-21",
+        "end": "2026-12-31",
+        "days": 6
+      },
+      "Q": {
+        "name": "Luis Haddad",
+        "request": "LR-2026-0083",
+        "start": "2026-06-29",
+        "end": "2026-07-06",
+        "days": 5,
+        "days_if_july_4_used_instead_of_observed_july_3": 6
+      }
+    },
+    "restricted": {
+      "requests": 27,
+      "pending": 2
+    },
+    "pending_total": 10,
+    "search_check": {
+      "term": "Paul Perez",
+      "expected_results": 3
+    },
+    "filter_check": {
+      "field": "Status",
+      "value": "Pending",
+      "expected_results": 10
+    },
+    "sort_check": {
+      "field": "Start",
+      "direction": "descending",
+      "first": "James Bennett 2026-12-28",
+      "request": "LR-2026-0150",
+      "file_value": "Dec 28 2026",
+      "text_sort_would_put_first": "Michael Mendoza (September 14, 2026)"
+    },
+    "export_check": {
+      "rows": 150,
+      "columns": [
+        "Employee",
+        "Type",
+        "Start",
+        "End",
+        "Days",
+        "Status"
+      ]
+    },
+    "out_of_scope_request": {
+      "request": "LR-2026-0132",
+      "employee": "Dmitri Walker",
+      "department": "Engineering",
+      "start": "2026-10-26",
+      "end": "2026-10-30",
+      "status": "Pending"
+    }
+  },
+  "dashboard": {
+    "pending_requests": 10,
+    "active_staff": 40,
+    "annual_leave_remaining_days": 492.5,
+    "approved_annual_days_2026": 317,
+    "restricted_pending": 2
+  },
+  "tester_records": {
+    "employee": "Anna Green",
+    "type": "Annual",
+    "start": "2026-11-16",
+    "end": "2026-11-16",
+    "status": "Pending",
+    "note": "leave requests the tester creates without a named person use this and are deleted when the item is done"
+  },
+  "checks": {
+    "approval": {
+      "employee": "Anna Green",
+      "balance_before": 14.0,
+      "start": "2026-10-05",
+      "end": "2026-10-09",
+      "days": 5,
+      "balance_after": 9.0
+    },
+    "holiday_request": {
+      "employee": "Anna Green",
+      "start": "2026-11-23",
+      "end": "2026-11-27",
+      "days": 3,
+      "balance_after": 6.0
+    },
+    "overlap": {
+      "requester": "Chloe Hughes",
+      "date": "2026-10-14",
+      "warns_about": "Jacob Okafor",
+      "teammate_request": "LR-2026-0124 2026-10-13 to 2026-10-14 (Approved)",
+      "control_employee": "Jonathan Chavez",
+      "control_department": "Finance",
+      "finance_off_on_date": []
+    },
+    "cancel_restores": {
+      "after_cancelling_5_day_request": 11.0,
+      "after_cancelling_both": 14.0
+    },
+    "sick": {
+      "employee": "Anna Green",
+      "start": "2026-10-19",
+      "end": "2026-10-20",
+      "days": 2,
+      "balance_after": 14.0
+    },
+    "permission": {
+      "own_request_dates": [
+        "2026-11-02",
+        "2026-11-03"
+      ],
+      "other_team_request": "LR-2026-0132"
+    }
+  },
+  "changes": {
+    "1_whos_off": {
+      "date": "2026-10-14",
+      "approved_off": [
+        "Barbara Sanchez",
+        "Cynthia Rogers",
+        "Jacob Okafor"
+      ],
+      "departments": {
+        "Barbara Sanchez": "Engineering",
+        "Cynthia Rogers": "Sales",
+        "Jacob Okafor": "Customer Support"
+      },
+      "pending_on_date": [
+        "Eric Gutierrez"
+      ],
+      "rejected_on_date": [
+        "Deborah Thomas"
+      ],
+      "range": [
+        "2026-10-12",
+        "2026-10-16"
+      ],
+      "approved_in_range": [
+        "Barbara Sanchez",
+        "Cynthia Rogers",
+        "Jacob Okafor"
+      ],
+      "days_in_range": {
+        "Barbara Sanchez": 5,
+        "Jacob Okafor": 2,
+        "Cynthia Rogers": 1
+      },
+      "customer_support_on_date": [
+        "Jacob Okafor"
+      ],
+      "restricted_view_on_date": [
+        "Jacob Okafor"
+      ]
+    },
+    "2_balance_block": {
+      "low_balance": {
+        "name": "Susan Parker",
+        "balance": 3.0,
+        "refused": {
+          "start": "2026-10-19",
+          "end": "2026-10-22",
+          "days": 4
+        },
+        "accepted": {
+          "start": "2026-10-19",
+          "end": "2026-10-21",
+          "days": 3
+        }
+      },
+      "pending_counts": {
+        "name": "Dorothy Edwards",
+        "pending_request": "LR-2026-0135",
+        "balance": 10.0,
+        "pending_days": 6,
+        "available": 4.0,
+        "refused": {
+          "start": "2026-11-16",
+          "end": "2026-11-20",
+          "days": 5
+        },
+        "accepted": {
+          "start": "2026-11-16",
+          "end": "2026-11-19",
+          "days": 4
+        }
+      }
+    },
+    "3_hr_signoff": {
+      "threshold_rule": "more than 10 working days needs HR (admin) approval after the manager",
+      "long": {
+        "employee": "Anna Green",
+        "start": "2026-10-05",
+        "end": "2026-10-19",
+        "days": 11,
+        "balance_after_hr": 3.0
+      },
+      "ten_days": {
+        "employee": "Anna Green",
+        "start": "2026-11-02",
+        "end": "2026-11-13",
+        "days": 10,
+        "balance_after_manager": 4.0
+      }
+    }
+  }
+}

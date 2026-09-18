@@ -1,0 +1,46 @@
+﻿Meter reading export
+Registers as read on site - cumulative totals
+Reading ID,Site,Meter,Read date,Register (kWh),Read type,Read by
+RD-31000,Depot Lane Storage,MTR-8806,12/31/2025,"395,195",Actual,M. Tanaka
+RD-31001,hawthorn court,MTR-8801,31-Dec-2025,523958,Actual,M. Tanaka
+RD-31002,Mill Street Lofts  ,MTR-8802,2025-12-31,"788,361",Actual,R. Haddad
+RD-31003,Riverside Business Park,MTR-8804,12/31/2025,572687,Actual,M. Tanaka
+RD-31004,Riverside Business Park,MTR-8805,31-Dec-2025,"209,774",Actual,M. Tanaka
+RD-31005,Union  Square Retail,MTR-8803,2025-12-31,509359,Actual,R. Haddad
+RD-31006,Mill Street Lofts,MTR-8802,01/27/2026,"798,548",Actual,M. Tanaka
+RD-31007,Riverside Business Park,MTR-8804,28-Jan-2026,590368,Estimated,M. Tanaka
+RD-31008,Riverside Business Park,MTR-8805,2026-01-28,"217,865",Estimated,R. Haddad
+RD-31009,Hawthorn  Court,MTR-8801,01/29/2026,538768,Actual,M. Tanaka
+RD-31010,depot lane storage,MTR-8806,30-Jan-2026,400669,Actual,M. Tanaka
+RD-31011,Union Square Retail  ,MTR-8803,2026-02-02,"537,500",Actual,R. Haddad
+RD-31012,Riverside Business Park,MTR-8804,02/24/2026,606726,Actual,M. Tanaka
+RD-31013,Riverside Business Park,MTR-8805,24-Feb-2026,"225,424",Actual,M. Tanaka
+RD-31014,Hawthorn  Court,MTR-8801,2026-02-25,551671,Actual,R. Haddad
+RD-31015,Mill Street Lofts,MTR-8802,02/26/2026,"809,169",Estimated,M. Tanaka
+RD-31016,Depot Lane Storage,MTR-8806,27-Feb-2026,405442,Actual,M. Tanaka
+RD-31017,Union Square Retail,MTR-8803,2026-03-03,"560,249",Actual,R. Haddad
+RD-31018,Mill  Street Lofts,MTR-8802,03/18/2026,815139,Final read - meter removed,M. Tanaka
+RD-31019,  Mill Street Lofts,MTR-9317,18-Mar-2026,0,Install - new meter,M. Tanaka
+RD-31020,Riverside Business Park  ,MTR-8804,2026-03-25,"622,332",Actual,R. Haddad
+RD-31021,Riverside Business Park,MTR-8805,03/25/2026,232663,Actual,M. Tanaka
+RD-31022,Depot Lane Storage,MTR-8806,26-Mar-2026,"409,524",Actual,M. Tanaka
+RD-31023,Hawthorn  Court,MTR-8801,2026-03-26,564215,Actual,R. Haddad
+RD-31024,Mill Street Lofts,MTR-9317,03/26/2026,"2,705",Actual,M. Tanaka
+RD-31025,Union Square Retail,MTR-8803,31-Mar-2026,580381,Actual,M. Tanaka
+RD-31026,Hawthorn Court,MTR-8801,2026-04-23,"575,103",Estimated,R. Haddad
+RD-31027,Depot  Lane Storage,MTR-8806,04/25/2026,413675,Actual,M. Tanaka
+RD-31028,  Mill Street Lofts,MTR-9317,27-Apr-2026,"11,752",Estimated,M. Tanaka
+RD-31029,RIVERSIDE BUSINESS PARK,MTR-8804,2026-04-28,638803,Estimated,R. Haddad
+RD-31030,Riverside Business Park,MTR-8805,04/28/2026,240272,Estimated,M. Tanaka
+RD-31031,Union Square Retail,MTR-8803,29-Apr-2026,"598,687",Actual,M. Tanaka
+RD-31032,Mill  Street Lofts,MTR-9317,2026-05-26,20211,Estimated,R. Haddad
+RD-31033,Hawthorn Court,MTR-8801,05/27/2026,"588,255",Estimated,M. Tanaka
+RD-31034,Riverside Business Park,MTR-8804,28-May-2026,653605,Actual,M. Tanaka
+RD-31035,Riverside Business Park,MTR-8805,2026-05-28,"247,171",Actual,R. Haddad
+RD-31036,Depot  Lane Storage,MTR-8806,05/31/2026,418768,Actual,M. Tanaka
+RD-31037,  Union Square Retail,MTR-8803,01-Jun-2026,"620,676",Actual,M. Tanaka
+RD-31038,RIVERSIDE BUSINESS PARK,MTR-8804,2026-07-01,673009,Actual,R. Haddad
+RD-31039,RIVERSIDE BUSINESS PARK,MTR-8805,07/01/2026,"256,154",Actual,M. Tanaka
+RD-31040,Hawthorn Court,MTR-8801,02-Jul-2026,"604,412",Actual,M. Tanaka
+RD-31041,Mill  Street Lofts,MTR-9317,2026-07-03,33243,Actual,R. Haddad
+RD-31042,Union Square Retail,MTR-8803,07/06/2026,"647,614",Actual,M. Tanaka

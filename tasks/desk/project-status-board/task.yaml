@@ -1,0 +1,78 @@
+id: project-status-board
+track: desk
+category: tooling
+title: Kitchen job task board for the crew wall
+ask: |
+  Please make the Alder Street crew board from this morning's task export - Rosa's note has how she wants it. I need it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  statuses are typed freely (WIP, Started, Doing, todo, Open, Complete, Finished, Closed and mixed case); grouping on the exact text leaves cards in odd columns or off the board (checks: page structure: column per card; page structure: column counts)
+- |-
+  'Countertop install' is On hold, which the note puts under In progress, and 'Tile backsplash' has a blank status, which the note calls Not started (checks: page structure: column per card; page structure: column counts)
+- |-
+  three tasks have two people on them and come out once per assignee, so counting export rows inflates the columns and a row-per-card board shows them twice (checks: page structure: one card per task; page structure: column counts)
+- |-
+  blocked means waiting on a task that is not Done; several open tasks list dependencies that are finished but spelled Complete, Finished or Closed, so flagging every task with a Depends on value, or reading only 'Done' as done, marks them BLOCKED wrongly (check: page structure: BLOCKED marks)
+- |-
+  an In progress task can still be blocked, and BLOCKED cards stay in their own column rather than a fourth one (checks: page structure: BLOCKED marks; page structure: column per card)
+- |-
+  the Hillcrest bathroom job's tasks are mixed into the same export, dates sorted together (checks: bathroom job left off; page structure: one card per task)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: every kitchen task on the board
+  path: index.html
+  phrases:
+  - Sign contract and collect deposit
+  - Pull building permit
+  - Protect floors and hang dust walls
+  - Demo upper and lower cabinets
+  - Remove soffit over sink wall
+  - Haul demo debris
+  - Rough plumbing for island sink
+  - Rough electrical and new circuits
+  - Rough-in inspection
+  - Insulate exterior wall
+  - Hang and tape drywall
+  - Prime and paint walls
+  - Order cabinets
+  - Cabinet delivery
+  - Install base cabinets
+  - Install wall cabinets
+  - Countertop template visit
+  - Countertop install
+  - Tile backsplash
+  - Install sink and faucet
+  - Connect dishwasher
+  - Install range hood
+  - Under-cabinet lighting
+  - Patch hardwood floor
+  - Final electrical inspection
+  - Homeowner walkthrough
+- type: text_not_contains
+  name: bathroom job left off
+  path: index.html
+  phrases:
+  - Remove tub surround
+  - Set shower pan
+  - Install vanity
+  - Tile shower walls
+  - Replace exhaust fan
+  - Order glass shower door
+  - Paint bathroom ceiling
+  - Plumbing inspection for bath
+- type: text_numbers_present
+  name: column counts present
+  path: index.html
+  numbers:
+  - 5
+  - 6
+  - 15
+  rel_tol: 0
+- type: custom
+  name: page structure
+  module: check.py

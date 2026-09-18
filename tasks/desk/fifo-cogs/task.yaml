@@ -1,0 +1,68 @@
+id: fifo-cogs
+track: desk
+category: bookkeeping
+title: First-half FIFO cost of goods sold
+ask: |
+  Mensah needs our cost of goods sold for January to June on FIFO for the mid-year review. His email says how he wants it. Save it as cogs.xlsx.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  each item starts from the CPA's two 2025 layers and each receipt adds a dearer layer, so a sale late in a layer is split across two costs and months carry layers forward; costing at the latest or an average price moves every month (checks: dog food COGS; total COGS; cost of goods sold, one line per month)
+- |-
+  2 cat food returns went back on the shelf; each comes off COGS at the cost the original receipt went out at and re-enters stock as a new layer dated the return, not at the shelf price and not at the newest cost (check: cat food COGS)
+- |-
+  the litter return on 2026-04-02 was damaged and thrown away; it does not come off COGS or go back into stock, although the till shows it as a negative line (check: litter COGS)
+- |-
+  the tug toy and salmon oil are received by the case of 12 and 6; the receiving log's quantity and cost are per case (check: tug toy COGS)
+- |-
+  a supplier price list dated July sits in the folder with list costs about 9% above what was paid (check: total COGS)
+- |-
+  the receiving log also holds a dog food receipt dated 2026-07-03 and a backordered dog food line with nothing received; neither belongs in June 30 stock (check: dog food on hand at June 30)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: cogs.xlsx
+  min_count: 10
+- type: xlsx_no_errors
+  name: no formula errors
+  path: cogs.xlsx
+- type: custom
+  name: cost of goods sold, one line per month
+  module: check.py
+- type: xlsx_value_present
+  name: total COGS
+  path: cogs.xlsx
+  expected: 24060.31
+  rel_tol: 1.0e-06
+  near_text: total
+- type: xlsx_value_present
+  name: dog food COGS
+  path: cogs.xlsx
+  expected: 11636.79
+  rel_tol: 1.0e-06
+  near_text: dog-sr25
+- type: xlsx_value_present
+  name: cat food COGS
+  path: cogs.xlsx
+  expected: 4858.42
+  rel_tol: 1.0e-06
+  near_text: cat-wf12
+- type: xlsx_value_present
+  name: litter COGS
+  path: cogs.xlsx
+  expected: 3247.54
+  rel_tol: 1.0e-06
+  near_text: lit-cc35
+- type: xlsx_value_present
+  name: tug toy COGS
+  path: cogs.xlsx
+  expected: 423.04
+  rel_tol: 1.0e-06
+  near_text: toy-tr-l
+- type: xlsx_value_present
+  name: dog food on hand at June 30
+  path: cogs.xlsx
+  expected: 1056.72
+  rel_tol: 1.0e-06
+  near_text: dog-sr25

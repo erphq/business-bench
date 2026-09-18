@@ -1,0 +1,147 @@
+{
+  "buildings": [
+    {
+      "contact_phone": "3035559924",
+      "days": [
+        {
+          "date": "2026-10-14",
+          "end": [
+            12,
+            0
+          ],
+          "start": [
+            8,
+            0
+          ]
+        }
+      ],
+      "gets_notice": true,
+      "key": "aspen",
+      "name": "Aspen House",
+      "stale_dates": [],
+      "stale_times": [],
+      "wrong_phones": [
+        "7205557535",
+        "8025558626",
+        "4155559124",
+        "6175559703",
+        "8025558738",
+        "9715555395"
+      ]
+    },
+    {
+      "contact_phone": "9715555395",
+      "days": [
+        {
+          "date": "2026-10-15",
+          "end": [
+            15,
+            0
+          ],
+          "start": [
+            8,
+            0
+          ]
+        }
+      ],
+      "gets_notice": true,
+      "key": "birch",
+      "name": "Birch House",
+      "stale_dates": [],
+      "stale_times": [
+        [
+          9,
+          0
+        ],
+        [
+          13,
+          0
+        ]
+      ],
+      "wrong_phones": [
+        "7205557535",
+        "3035559924",
+        "4155559124",
+        "6175559703",
+        "8025558738",
+        "8025558626"
+      ]
+    },
+    {
+      "contact_phone": "4155559124",
+      "days": [
+        {
+          "date": "2026-10-27",
+          "end": [
+            12,
+            30
+          ],
+          "start": [
+            8,
+            30
+          ]
+        }
+      ],
+      "gets_notice": true,
+      "key": "cypress",
+      "name": "Cypress House",
+      "stale_dates": [
+        "2026-10-20"
+      ],
+      "stale_times": [],
+      "wrong_phones": [
+        "7205557535",
+        "3035559924",
+        "8025558626",
+        "6175559703",
+        "8025558738",
+        "9715555395"
+      ]
+    },
+    {
+      "contact_phone": "6175559703",
+      "days": [
+        {
+          "date": "2026-10-21",
+          "end": [
+            14,
+            0
+          ],
+          "start": [
+            9,
+            0
+          ]
+        },
+        {
+          "date": "2026-10-22",
+          "end": [
+            11,
+            30
+          ],
+          "start": [
+            9,
+            0
+          ]
+        }
+      ],
+      "gets_notice": true,
+      "key": "dogwood",
+      "name": "Dogwood House",
+      "stale_dates": [],
+      "stale_times": [],
+      "wrong_phones": [
+        "7205557535",
+        "3035559924",
+        "8025558626",
+        "4155559124",
+        "8025558738",
+        "9715555395"
+      ]
+    },
+    {
+      "gets_notice": false,
+      "key": "elm",
+      "name": "Elm House"
+    }
+  ]
+}

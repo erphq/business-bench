@@ -1,0 +1,80 @@
+id: tenant-ledger-balances
+track: desk
+category: bookkeeping
+title: August resident balances with late fees
+ask: |
+  The late fees did not run in August and the owners want everyone's balance. Denise's email and the community rules explain it. Save it as tenant_balances.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  lot C-10 paid in the drop box on 5 August, which is on time; lot B-02 paid in full on the 6th and owes 10% of its lot rent (check: late fee per lot)
+- |-
+  lot C-01's mailed check was received on 2026-08-04 but posted days later; judging by the posted date charges a fee the rules do not allow (check: late fee per lot)
+- |-
+  lot B-07 carried 52.00 from July and paid exactly the lot rent on time; the payment clears July first, so 52.00 of August rent is unpaid after the 5th and the $15.00 minimum applies (check: late fee per lot)
+- |-
+  lot A-03 paid part of its rent by the 5th and the rest later; the fee is 10% of the part still unpaid, not of the whole rent (check: late fee per lot)
+- |-
+  lot A-10 paid its lot rent on time but not water, sewer or trash, which never earn a late fee (checks: late fee per lot; balance per lot)
+- |-
+  lots B-10 and C-03 moved out on 2026-08-11 and 2026-08-22 but were billed a full month: B-10 had prepaid and is owed a credit, and C-03 paid its prorated rent only on moving out, so its late fee is 10% of the prorated rent (checks: balance per lot; late fee per lot)
+- |-
+  lot C-04's payment was received on 31 August and posted in September, so it counts for August, while lot A-04's was received on 1 September and does not; lot B-05 carries a July credit (check: balance per lot)
+- |-
+  the ledger export runs to 3 September under a three-line preamble with a BOM and CRLF endings, credits sit in the Payment column, and the roster writes rent as '$585.00/mo' and lists four vacant lots (check: balance per lot)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: tenant_balances.csv
+  columns:
+  - lot
+  - resident
+  - late_fee
+  - balance
+- type: csv_set_equal
+  name: every August resident
+  path: tenant_balances.csv
+  column: lot
+  ref: tenant_balances.csv
+- type: csv_row_count
+  name: row count
+  path: tenant_balances.csv
+  equals_ref: tenant_balances.csv
+- type: csv_values_match
+  name: late fee per lot
+  path: tenant_balances.csv
+  ref: tenant_balances.csv
+  key: lot
+  columns:
+  - late_fee
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - C-10
+  - B-02
+  - C-01
+  - B-07
+  - A-03
+  - A-10
+  - C-03
+  - C-04
+- type: csv_values_match
+  name: balance per lot
+  path: tenant_balances.csv
+  ref: tenant_balances.csv
+  key: lot
+  columns:
+  - balance
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - B-10
+  - C-03
+  - B-05
+  - A-04
+  - C-04
+  - A-10
+  - B-07

@@ -1,0 +1,18 @@
+TillTap menu import - notes from the onboarding call (Kwame, 10 Sept)
+
+One file, TillTap's template columns in order, example rows deleted. Three kinds of row:
+  ITEM            one per menu item. Code = PLU. Category = TillTap category. Price = menu price.
+                  Modifier Groups = the group CODES the item uses, in the order the menu sheet lists
+                  them, separated by | (no spaces). Blank if the item has no modifiers.
+  MODIFIER_GROUP  one per group. Code = group code. Min Select / Max Select from the rule:
+                  Pick 1 = 1 and 1, Up to N = 0 and N, Optional = 0 and 1. Price blank.
+  MODIFIER        one per option. Code = option code. Parent Code = the group's code. Price = the
+                  upcharge (0.00 when it's free or blank). Category blank.
+
+Prices: numbers only - no $, no +, two decimals is fine (5.25, 0.75, 0.00).
+
+TillTap categories (spell them exactly like this): Milk Tea, Fruit Tea, Slush, Snacks.
+
+Anything 86'd on the fall sheet does NOT go in - items or options, however it's written in
+the 86 column. And don't load a modifier group that no item on the import uses, TillTap shows
+empty groups on the screen.

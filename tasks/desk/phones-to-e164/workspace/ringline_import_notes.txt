@@ -1,0 +1,19 @@
+Ringline contact import - file notes (from your onboarding specialist)
+
+Use ringline_import_template.csv exactly: same six columns, same order, same spelling of the header. One row per
+contact in your export, including contacts we will not be able to dial.
+
+contact_id      your CRM id, unchanged.
+display_name    First Last.
+e164_number     the full international number in E.164: a plus sign, the country calling code, then the national
+                number with no spaces, dashes, brackets or trunk zero (so 020 7946 0958 in the UK becomes
+                +442079460958 and (02) 5550 1234 in Australia becomes +61255501234). Never include an extension
+                here. Leave it blank when import_status is invalid.
+extension       digits only, blank when the contact has no extension.
+country         two-letter ISO code of the contact's address (US, CA, GB, AU, DE, ...). We use it to pick the
+                calling code and to validate the number, so fill it in even when your export left it blank.
+import_status   ok when the number is complete and dialable, invalid when it is not (missing digits, extra digits,
+                not a phone number at all). A complete national number is 10 digits for US and CA, 10 for GB after
+                the leading zero, 9 for AU, and 9 to 11 for DE.
+
+Rows marked invalid still import as name-only contacts, so keep them in the file.

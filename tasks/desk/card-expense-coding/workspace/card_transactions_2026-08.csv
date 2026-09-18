@@ -1,0 +1,84 @@
+Transaction ID,Date,Cardholder,Merchant,MCC,Merchant Category,Amount,Status,Memo
+CX545CE3Q0,2026-08-01,Deborah Okafor,ALASKA AIR 0272154488213,4511,"Airlines, Air Carriers",268.71,Posted,flight to Boise
+CX6RZJUXDT,2026-08-03,Gary Phillips,GRAINGER 912,5085,Industrial Supplies,641.89,Posted,J-4529 panel parts
+CX5PEGATCN,2026-08-03,Gary Phillips,THE HOME DEPOT #4402,5200,Home Supply Warehouse Stores,2500.00,Posted,Milwaukee cable puller - shop
+CX741ZUC7X,2026-08-03,Joshua Morris,RED ROBIN #212,5812,"Eating Places, Restaurants",75.44,Posted,breakfast
+CXRGD2D96C,2026-08-03,Rebecca Garcia,CED CONSOLIDATED ELEC,5065,Electrical Parts and Equipment,73.87,Posted,replacement fish tape
+CXVQP96X9R,2026-08-03,Rebecca Garcia,LOWES #01872,5200,Home Supply Warehouse Stores,388.89,Posted,
+CXTZXLXXCE,2026-08-04,Joshua Morris,GRAINGER 912,5085,Industrial Supplies,537.93,Posted,replacement fish tape
+CX0MLL2Z9G,2026-08-04,Joshua Morris,PAYPAL *KLINEMARKET,5999,Miscellaneous and Specialty Retail,115.45,Posted,misc
+CX9QJW45Z2,2026-08-04,Rebecca Garcia,PLATT ELECTRIC SUPPLY,5065,Electrical Parts and Equipment,599.29,Posted,J-4455
+CX4E82K0UM,2026-08-04,Rebecca Garcia,RED ROBIN #212,5812,"Eating Places, Restaurants",97.53,Posted,
+CXA9VPYQZY,2026-08-04,Rebecca Garcia,TARGET 00012345,5310,Discount Stores,47.95,Posted,"personal - sorry, grabbed the wrong card, will pay back"
+CX25Z4TDJS,2026-08-05,Kimberly Rogers,OLIVE GARDEN 1120,5812,"Eating Places, Restaurants",45.86,Posted,dinner
+CXWQE10BKY,2026-08-06,Joshua Morris,JIFFY LUBE #1442,7538,Automotive Service Shops,101.17,Posted,van 3 oil change
+CXGM4XGKSQ,2026-08-06,Joshua Morris,OLIVE GARDEN 1120,5812,"Eating Places, Restaurants",45.61,Posted,breakfast
+CXQ3A8FJM3,2026-08-06,Kimberly Rogers,AUTODESK *ACAD LT,5734,Computer Software Stores,222.56,Posted,
+CX2WS9X59N,2026-08-06,Kimberly Rogers,PROCORE TECHNOLOGIES,7372,"Computer Programming, Data Processing",324.35,Declined,
+CXS2VQV36W,2026-08-06,Rebecca Garcia,MAVERIK #412,5542,Automated Fuel Dispensers,49.06,Posted,
+CX9128L6NC,2026-08-07,Rebecca Garcia,CITY OF BOISE PERMITS,9399,Government Services,125.83,Posted,permit
+CXQX73VM7J,2026-08-10,Deborah Okafor,BOISE FRY CO,5814,Fast Food Restaurants,24.08,Posted,
+CX8QJ7ZC2R,2026-08-10,Deborah Okafor,HAMPTON INN BOISE DT,7011,"Hotels, Motels, Resorts",646.11,Posted,Boise job - 3 nights
+CXUPCVN422,2026-08-10,Gary Phillips,SHELL OIL 57444,5541,Service Stations,76.75,Declined,
+CXXG1ZDE5Y,2026-08-10,Joshua Morris,WALMART #3401,5311,Department Stores,79.43,Posted,J-4529 extension cords + work lights
+CXZSYK79TT,2026-08-10,Kimberly Rogers,AMAZON MKTPL*2K4JR7,5399,Misc. General Merchandise,67.71,Posted,
+CX56S46S91,2026-08-10,Rebecca Garcia,THE HOME DEPOT #4402,5200,Home Supply Warehouse Stores,132.37,Posted,replacement fish tape
+CXUTS1XLG5,2026-08-11,Deborah Okafor,CED CONSOLIDATED ELEC,5065,Electrical Parts and Equipment,1175.47,Posted,breakers J-4455
+CXN47N1NNB,2026-08-11,Deborah Okafor,HAMPTON INN BOISE DT,7011,"Hotels, Motels, Resorts",198.37,Declined,
+CX0EP49D0D,2026-08-11,Deborah Okafor,SHELL OIL 57444,5541,Service Stations,90.36,Posted,
+CX70JP1E9B,2026-08-11,Deborah Okafor,SQ *BASQUE MARKET BOISE,5812,"Eating Places, Restaurants",15.90,Posted,
+CXV7WNG81D,2026-08-11,Deborah Okafor,TST* FORK BOISE,5812,"Eating Places, Restaurants",65.70,Posted,
+CXPMWJJLB5,2026-08-11,Gary Phillips,THE HOME DEPOT #4402,5200,Home Supply Warehouse Stores,283.05,Posted,van restock
+CX6KAQ98EL,2026-08-11,Kimberly Rogers,AMAZON MKTPL*8Q1ZM3,5399,Misc. General Merchandise,55.91,Posted,label tape for J-4435 panel schedule
+CXYFFBJPS2,2026-08-11,Kimberly Rogers,NETFLIX.COM,4899,"Cable, Satellite and Other Pay Television",22.99,Posted,
+CX81R448SK,2026-08-11,Kimberly Rogers,PROCORE TECHNOLOGIES,7372,"Computer Programming, Data Processing",160.11,Posted,
+CXS9TKN5FU,2026-08-11,Rebecca Garcia,CHEVRON 0204377,5541,Service Stations,107.12,Posted,
+CXPZ3QS0SL,2026-08-12,Deborah Okafor,BARDENAY BOISE,5812,"Eating Places, Restaurants",60.76,Posted,lunch
+CXUDPJW5B6,2026-08-12,Deborah Okafor,THE TAPROOM BOISE,5813,Drinking Places (Alcoholic Beverages),69.80,Posted,
+CXH79URBST,2026-08-12,Gary Phillips,PACIFIC PRIDE 118,5542,Automated Fuel Dispensers,95.22,Posted,
+CXBFVMZ9NV,2026-08-13,Deborah Okafor,CHEVRON 0204377,5541,Service Stations,63.95,Posted,
+CX5WDJ0UV0,2026-08-13,Deborah Okafor,SQ *BASQUE MARKET BOISE,5812,"Eating Places, Restaurants",57.89,Posted,dinner
+CXDK7K9TW5,2026-08-13,Gary Phillips,PLATT ELECTRIC SUPPLY,5065,Electrical Parts and Equipment,1598.11,Posted,J-4491
+CXXERH17H2,2026-08-13,Joshua Morris,CHEVRON 0204377,5541,Service Stations,117.74,Posted,
+CX0GRZRU6G,2026-08-13,Joshua Morris,PACIFIC PRIDE 118,5542,Automated Fuel Dispensers,107.88,Posted,
+CXNJC524GK,2026-08-13,Rebecca Garcia,OLIVE GARDEN 1120,5812,"Eating Places, Restaurants",178.31,Posted,
+CXM7ZFA4SJ,2026-08-14,Deborah Okafor,OLIVE GARDEN 1120,5812,"Eating Places, Restaurants",109.19,Posted,
+CXJZ8ZD6SR,2026-08-14,Deborah Okafor,THE HOME DEPOT #4402,5200,Home Supply Warehouse Stores,2401.46,Posted,rolling job box + gang box
+CXHJUP8A77,2026-08-17,Gary Phillips,COSTCO WHSE #0891,5300,Wholesale Clubs,169.30,Posted,crew water + snacks
+CXQRV8KNWS,2026-08-17,Rebecca Garcia,GRAYBAR ELECTRIC 0412,5065,Electrical Parts and Equipment,3921.11,Posted,J-4549 switchgear order
+CXDWXYLX3U,2026-08-18,Deborah Okafor,CED CONSOLIDATED ELEC,5065,Electrical Parts and Equipment,1867.95,Posted,J-4435 panel parts
+CXK9X3D1NW,2026-08-18,Gary Phillips,TST* PINE STATE PDX,5812,"Eating Places, Restaurants",61.72,Posted,breakfast
+CXR0Z45R0P,2026-08-18,Kimberly Rogers,DROPBOX*7HQ2KD,5817,Digital Goods: Applications,295.85,Posted,
+CX270HJE9J,2026-08-18,Rebecca Garcia,CHEVRON 0204377,5541,Service Stations,103.27,Posted,
+CXC6TVMQAM,2026-08-19,Gary Phillips,DESCHUTES PUB PDX,5812,"Eating Places, Restaurants",85.07,Posted,breakfast
+CXST9U9ZL8,2026-08-20,Joshua Morris,CHEVRON 0204377,5541,Service Stations,63.38,Posted,
+CXDBUNQTXQ,2026-08-20,Joshua Morris,GRAYBAR ELECTRIC 0412,5065,Electrical Parts and Equipment,1583.62,Posted,wire for J-4491
+CXECUD3Q2E,2026-08-21,Joshua Morris,CHEVRON 0204377,5541,Service Stations,83.85,Posted,
+CX5BP3BEK5,2026-08-21,Joshua Morris,GRAINGER 912,5085,Industrial Supplies,3297.28,Posted,thermal imaging camera
+CXYJNSV3ZT,2026-08-21,Rebecca Garcia,MAVERIK #412,5542,Automated Fuel Dispensers,76.57,Posted,
+CXVXGWDMH2,2026-08-24,Deborah Okafor,GRAINGER 912,5085,Industrial Supplies,220.28,Posted,drill bits
+CX23AN0J08,2026-08-24,Deborah Okafor,GRAYBAR ELECTRIC 0412,5065,Electrical Parts and Equipment,540.54,Posted,"shop stock - wire nuts, tape"
+CX4TEREVCM,2026-08-24,Gary Phillips,THE HOME DEPOT #4402,5200,Home Supply Warehouse Stores,186.59,Posted,van restock
+CX65LLVLG1,2026-08-24,Joshua Morris,GRAINGER 912,5085,Industrial Supplies,516.06,Posted,van restock
+CXZ2CP5DZN,2026-08-24,Rebecca Garcia,DAVENPORT GRILL SPOKANE,5812,"Eating Places, Restaurants",56.60,Posted,breakfast
+CXCCGKKZQG,2026-08-24,Rebecca Garcia,ENTERPRISE RENT-A-CAR,7512,Car Rental Agencies,221.42,Posted,
+CXWNF2K40V,2026-08-24,Rebecca Garcia,MARRIOTT SPOKANE DT,7011,"Hotels, Motels, Resorts",388.40,Posted,training hotel
+CXXU3SXVU7,2026-08-25,Gary Phillips,CHEVRON 0204377,5541,Service Stations,124.25,Posted,
+CX55F69SDU,2026-08-25,Gary Phillips,OREILLY AUTO 3321,5533,Automotive Parts and Accessories Stores,185.68,Posted,van 7 brake light + fuses
+CX4TR2BFXE,2026-08-25,Rebecca Garcia,DAVENPORT GRILL SPOKANE,5812,"Eating Places, Restaurants",68.43,Posted,breakfast
+CX8HNLT6JC,2026-08-25,Rebecca Garcia,SQ *ROCKET BAKERY SPOK,5814,Fast Food Restaurants,18.39,Posted,dinner
+CXJUYVGHE1,2026-08-25,Rebecca Garcia,WENDYS #3312 SPOKANE,5814,Fast Food Restaurants,9.81,Posted,
+CX76BSFDJ0,2026-08-26,Kimberly Rogers,L&I ELECTRICAL PERMIT,9399,Government Services,360.61,Posted,J-4455 permit
+CXYT37QH7N,2026-08-26,Kimberly Rogers,SQ *JMR SERVICES,7399,Business Services - Not Elsewhere Classified,243.71,Posted,
+CXEJEF4ZKL,2026-08-26,Rebecca Garcia,ACE HARDWARE #7714,5251,Hardware Stores,1049.05,Posted,wire for J-4549
+CXEPWJA80Y,2026-08-26,Rebecca Garcia,DAVENPORT GRILL SPOKANE,5812,"Eating Places, Restaurants",33.67,Posted,lunch
+CXLP18R9BY,2026-08-27,Deborah Okafor,PACIFIC PRIDE 118,5542,Automated Fuel Dispensers,120.18,Posted,
+CX48DXDF8E,2026-08-27,Gary Phillips,TOTAL WINE #1102,5921,"Package Stores - Beer, Wine, Liquor",77.87,Posted,crew bbq
+CXQN8X61ZN,2026-08-27,Gary Phillips,TRUE VALUE 2231,5251,Hardware Stores,1806.46,Posted,J-4549
+CXXVK0EAXW,2026-08-27,Joshua Morris,ACE HARDWARE #7714,5251,Hardware Stores,1106.54,Posted,wire for J-4472
+CXL5G8RCLJ,2026-08-27,Joshua Morris,GRAINGER 912,5085,Industrial Supplies,1863.72,Posted,J-4491 panel parts
+CXQ3D2LFMU,2026-08-27,Rebecca Garcia,CED CONSOLIDATED ELEC,5065,Electrical Parts and Equipment,1755.23,Posted,J-4435 panel parts
+CXEGNAK1N3,2026-08-28,Deborah Okafor,GRAINGER 912,5085,Industrial Supplies,342.28,Posted,
+CX9N1X31F2,2026-08-28,Deborah Okafor,LOWES #01872,5200,Home Supply Warehouse Stores,1311.58,Posted,J-4491 conduit + boxes
+CX0EL43NT8,2026-08-31,Deborah Okafor,SHELL OIL 57444,5541,Service Stations,109.39,Posted,
+CXDUT9NKBM,2026-08-31,Joshua Morris,GRAYBAR ELECTRIC 0412,5065,Electrical Parts and Equipment,621.77,Posted,van restock

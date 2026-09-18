@@ -1,0 +1,15 @@
+From: Hannah Brooks <hannah@wrensparrowbooks.com>
+To: you
+Date: Tue, 2 Sep 2026 09:40
+Subject: August promo codes
+
+Could you pull together how our promo codes did in August? For each code: how many orders used it and how much revenue those orders brought in. By revenue I mean what we took for the books - subtotal less the discount. Shipping and tax aren't ours.
+
+Things to know:
+- Codes aren't case sensitive and the till ignores spaces, so 'summer reads15' is SUMMERREADS15. Please report the codes in capitals as they appear on marketing's list.
+- People can stack codes. If an order used two codes, count it under both.
+- Cancelled orders don't count.
+- SUMMERREADS15 ended on 15 August (the end date is the last good day) but Tom didn't switch it off on the website for another week. Orders that used it after the 15th don't count for the campaign.
+- The till lets staff type anything. If a code is on the list but finished before August, mark it EXPIRED. If it isn't on the list at all, mark it UNKNOWN - I want to see those with their orders and revenue so I can talk to the team. Everything else is OK.
+
+Save it as promo_summary.csv with code, orders, revenue, status - one row per code used in August.

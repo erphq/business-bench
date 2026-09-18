@@ -1,0 +1,914 @@
+{
+  "assets": {
+    "exact_duplicate_example": {
+      "cost": "1,389.00",
+      "file_cost": "$1,389.00",
+      "file_lines": [
+        137,
+        156
+      ],
+      "file_purchased": "11/26/24",
+      "file_tags": [
+        "IT-003504"
+      ],
+      "file_warranty": "3 years",
+      "model": "Lenovo ThinkPad T14",
+      "purchased": "2024-11-26",
+      "site": "Denver",
+      "status": "In stock",
+      "tag": "IT-003504",
+      "type": "Laptop",
+      "warranty_end": "2027-11-26",
+      "warranty_months": 36
+    },
+    "exact_duplicate_rows": 4,
+    "file_rows_excluding_header": 250,
+    "no_warranty": 16,
+    "per_site": {
+      "Boise": 42,
+      "Denver": 100,
+      "Omaha": 40,
+      "Salt Lake City": 58
+    },
+    "per_status": {
+      "Assigned": 139,
+      "Disposed": 27,
+      "In repair": 8,
+      "In service": 25,
+      "In stock": 41
+    },
+    "per_type": {
+      "Dock": 28,
+      "Laptop": 95,
+      "Monitor": 60,
+      "Phone": 32,
+      "Printer": 8,
+      "Server": 5,
+      "Switch": 12
+    },
+    "same_tag_example": {
+      "cost": "389.00",
+      "file_cost": "$389.00",
+      "file_lines": [
+        33,
+        251
+      ],
+      "file_purchased": "06/12/2019",
+      "file_tags": [
+        "IT-002955",
+        "IT-2955"
+      ],
+      "file_warranty": "36",
+      "model": "Dell P2723DE",
+      "purchased": "2019-06-12",
+      "site": "Omaha",
+      "status": "Assigned",
+      "tag": "IT-002955",
+      "type": "Monitor",
+      "warranty_end": "2022-06-12",
+      "warranty_months": 36
+    },
+    "same_tag_example_2": {
+      "cost": "389.00",
+      "file_cost": "$389.00",
+      "file_lines": [
+        155,
+        231
+      ],
+      "file_purchased": "03/07/22",
+      "file_tags": [
+        "IT-000704",
+        "IT-704"
+      ],
+      "file_warranty": "36 months",
+      "model": "Dell P2723DE",
+      "purchased": "2022-03-07",
+      "site": "Boise",
+      "status": "Assigned",
+      "tag": "IT-000704",
+      "type": "Monitor",
+      "warranty_end": "2025-03-07",
+      "warranty_months": 36
+    },
+    "same_tag_rows": 6,
+    "site_spellings": {
+      "Boise": [
+        "BOISE",
+        "Boise",
+        "Boise "
+      ],
+      "Denver": [
+        "DENVER",
+        "Denver",
+        "Denver HQ"
+      ],
+      "Omaha": [
+        "Omaha",
+        "Omaha ",
+        "omaha"
+      ],
+      "Salt Lake City": [
+        "SLC",
+        "Salt Lake City",
+        "salt lake city"
+      ]
+    },
+    "top_cost": {
+      "cost": "18,450.00",
+      "file_cost": "$18,450.00",
+      "file_lines": [
+        88
+      ],
+      "file_purchased": "2024-02-05",
+      "file_tags": [
+        "IT-002158"
+      ],
+      "file_warranty": "5 years",
+      "model": "Dell PowerEdge R760",
+      "purchased": "2024-02-05",
+      "site": "Omaha",
+      "status": "In service",
+      "tag": "IT-002158",
+      "type": "Server",
+      "warranty_end": "2029-02-05",
+      "warranty_months": 60
+    },
+    "unique_assets": 240,
+    "value_per_site": {
+      "Boise": "51,865.00",
+      "Denver": "87,544.00",
+      "Omaha": "51,267.00",
+      "Salt Lake City": "78,190.00"
+    },
+    "warranty_examples": [
+      {
+        "cost": "799.00",
+        "file_cost": "799.00",
+        "file_lines": [
+          110
+        ],
+        "file_purchased": "October 25, 2021",
+        "file_tags": [
+          "1291"
+        ],
+        "file_warranty": "24",
+        "model": "Apple iPhone 15",
+        "purchased": "2021-10-25",
+        "site": "Denver",
+        "status": "In stock",
+        "tag": "IT-001291",
+        "type": "Phone",
+        "warranty_end": "2023-10-25",
+        "warranty_months": 24
+      },
+      {
+        "cost": "1,389.00",
+        "file_cost": "1389",
+        "file_lines": [
+          243
+        ],
+        "file_purchased": "06/20/2019",
+        "file_tags": [
+          "IT-003223"
+        ],
+        "file_warranty": "36 months",
+        "model": "Lenovo ThinkPad T14",
+        "purchased": "2019-06-20",
+        "site": "Boise",
+        "status": "Disposed",
+        "tag": "IT-003223",
+        "type": "Laptop",
+        "warranty_end": "2022-06-20",
+        "warranty_months": 36
+      },
+      {
+        "cost": "1,389.00",
+        "file_cost": "$1,389.00",
+        "file_lines": [
+          66
+        ],
+        "file_purchased": "04/22/2022",
+        "file_tags": [
+          "IT-003501"
+        ],
+        "file_warranty": "3 years",
+        "model": "Lenovo ThinkPad T14",
+        "purchased": "2022-04-22",
+        "site": "Denver",
+        "status": "Disposed",
+        "tag": "IT-003501",
+        "type": "Laptop",
+        "warranty_end": "2025-04-22",
+        "warranty_months": 36
+      },
+      {
+        "cost": "3,150.00",
+        "file_cost": "3,150.00",
+        "file_lines": [
+          52
+        ],
+        "file_purchased": "02/23/25",
+        "file_tags": [
+          "1030"
+        ],
+        "file_warranty": "5 yr",
+        "model": "Cisco C9200L-24P",
+        "purchased": "2025-02-23",
+        "site": "Boise",
+        "status": "In service",
+        "tag": "IT-001030",
+        "type": "Switch",
+        "warranty_end": "2030-02-23",
+        "warranty_months": 60
+      }
+    ],
+    "wrong_count_only_exact_duplicates_removed": 246,
+    "wrong_expired_including_disposed": 176,
+    "wrong_value_including_disposed": "294,969.00"
+  },
+  "assignments": {
+    "file_rows_excluding_header": 284,
+    "history_asset": {
+      "cost": "2,199.00",
+      "current_holder": "Nadia Lee",
+      "file_cost": "2199",
+      "file_lines": [
+        245
+      ],
+      "file_purchased": "02/19/2021",
+      "file_tags": [
+        "IT-001053"
+      ],
+      "file_warranty": "3 yr",
+      "history": [
+        {
+          "assigned_on": "2021-02-22",
+          "email": "ncarter@calderfreight.com",
+          "employee": "Nancy Carter",
+          "file_assigned_on": "February 22, 2021",
+          "file_line": 58,
+          "file_returned_on": "2022-05-07",
+          "file_tag": "1053",
+          "returned_on": "2022-05-07"
+        },
+        {
+          "assigned_on": "2022-07-17",
+          "email": "eyoung@calderfreight.com",
+          "employee": "Edward Young",
+          "file_assigned_on": "07/17/2022",
+          "file_line": 109,
+          "file_returned_on": "04/22/2023",
+          "file_tag": "1053",
+          "returned_on": "2023-04-22"
+        },
+        {
+          "assigned_on": "2023-04-23",
+          "email": "nlee@calderfreight.com",
+          "employee": "Nadia Lee",
+          "file_assigned_on": "2023-04-23",
+          "file_line": 141,
+          "file_returned_on": "",
+          "file_tag": "IT-001053",
+          "returned_on": null
+        }
+      ],
+      "model": "Apple MacBook Pro 14",
+      "purchased": "2021-02-19",
+      "site": "Salt Lake City",
+      "status": "Assigned",
+      "tag": "IT-001053",
+      "type": "Laptop",
+      "warranty_end": "2024-02-19",
+      "warranty_months": 36
+    },
+    "impossible_row": {
+      "asset": "IT-000673",
+      "assigned_on": "2023-07-24",
+      "email": "awright@calderfreight.com",
+      "employee": "Amanda Wright",
+      "file_assigned_on": "24-Jul-2023",
+      "file_line": 149,
+      "file_returned_on": "21-Nov-2021",
+      "file_tag": "IT-673",
+      "note": "returned before assigned",
+      "returned_on": "2025-03-25"
+    },
+    "new_holder": {
+      "email": "rharris@calderfreight.com",
+      "name": "Ryan Harris",
+      "site": "Salt Lake City"
+    },
+    "open": 139
+  },
+  "baseline": {
+    "EXPORT_COLUMNS": [
+      "Asset Tag",
+      "Type",
+      "Site",
+      "Status",
+      "Purchase Cost",
+      "Warranty End"
+    ],
+    "EXPORT_ROWS": 240,
+    "FILTER_COUNT": 60,
+    "FILTER_FIELD": "Type",
+    "FILTER_VALUE": "Monitor",
+    "KPI_1": "Asset value",
+    "KPI_1_VALUE": "268,866.00",
+    "KPI_2": "Assets assigned to people",
+    "KPI_2_VALUE": 139,
+    "KPI_3": "Warranties expired",
+    "KPI_3_VALUE": 154,
+    "KPI_4": "Assets in stock",
+    "KPI_4_VALUE": 41,
+    "MAIN_ENTITY": "asset",
+    "MAIN_ENTITY_PLURAL": "assets",
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "cost": "2,199.00",
+      "file_cost": "2199",
+      "file_lines": [
+        244
+      ],
+      "file_purchased": "07/14/2025",
+      "file_tags": [
+        "000555"
+      ],
+      "file_warranty": "3 yr",
+      "model": "Apple MacBook Pro 14",
+      "purchased": "2025-07-14",
+      "site": "Denver",
+      "status": "Assigned",
+      "tag": "IT-000555",
+      "type": "Laptop",
+      "warranty_end": "2028-07-14",
+      "warranty_months": 36
+    },
+    "REQUIRED_FIELD": "Site",
+    "SCOPED_KPI_1_VALUE": "51,865.00",
+    "SCOPE_COUNT": 42,
+    "SCOPE_RULE": "assets at the Boise site",
+    "SEARCH_COUNT": 19,
+    "SEARCH_TERM": "Latitude 7440",
+    "SORT_FIELD": "Purchase Cost",
+    "SORT_TOP": {
+      "cost": "18,450.00",
+      "file_cost": "$18,450.00",
+      "file_lines": [
+        88
+      ],
+      "file_purchased": "2024-02-05",
+      "file_tags": [
+        "IT-002158"
+      ],
+      "file_warranty": "5 years",
+      "model": "Dell PowerEdge R760",
+      "purchased": "2024-02-05",
+      "site": "Omaha",
+      "status": "In service",
+      "tag": "IT-002158",
+      "type": "Server",
+      "warranty_end": "2029-02-05",
+      "warranty_months": 60
+    },
+    "STAFF_ROLE": "Site manager",
+    "VIEWER_ROLE": "Read-only"
+  },
+  "change_1_by_type_site": {
+    "Boise": {
+      "Dock": {
+        "count": 1,
+        "value": "249.00"
+      },
+      "Laptop": {
+        "count": 14,
+        "value": "22,176.00"
+      },
+      "Monitor": {
+        "count": 9,
+        "value": "5,091.00"
+      },
+      "Phone": {
+        "count": 5,
+        "value": "4,055.00"
+      },
+      "Printer": {
+        "count": 1,
+        "value": "699.00"
+      },
+      "Server": {
+        "count": 1,
+        "value": "9,800.00"
+      },
+      "Switch": {
+        "count": 7,
+        "value": "9,795.00"
+      }
+    },
+    "Denver": {
+      "Dock": {
+        "count": 16,
+        "value": "3,784.00"
+      },
+      "Laptop": {
+        "count": 32,
+        "value": "49,758.00"
+      },
+      "Monitor": {
+        "count": 23,
+        "value": "12,337.00"
+      },
+      "Phone": {
+        "count": 11,
+        "value": "8,969.00"
+      },
+      "Printer": {
+        "count": 3,
+        "value": "2,197.00"
+      },
+      "Server": {
+        "count": 1,
+        "value": "9,800.00"
+      },
+      "Switch": {
+        "count": 1,
+        "value": "699.00"
+      }
+    },
+    "Omaha": {
+      "Dock": {
+        "count": 3,
+        "value": "727.00"
+      },
+      "Laptop": {
+        "count": 13,
+        "value": "18,357.00"
+      },
+      "Monitor": {
+        "count": 11,
+        "value": "5,929.00"
+      },
+      "Phone": {
+        "count": 4,
+        "value": "3,256.00"
+      },
+      "Printer": {
+        "count": 2,
+        "value": "1,398.00"
+      },
+      "Server": {
+        "count": 1,
+        "value": "18,450.00"
+      },
+      "Switch": {
+        "count": 1,
+        "value": "3,150.00"
+      }
+    },
+    "Salt Lake City": {
+      "Dock": {
+        "count": 5,
+        "value": "1,205.00"
+      },
+      "Laptop": {
+        "count": 24,
+        "value": "39,546.00"
+      },
+      "Monitor": {
+        "count": 9,
+        "value": "5,271.00"
+      },
+      "Phone": {
+        "count": 8,
+        "value": "6,572.00"
+      },
+      "Printer": {
+        "count": 2,
+        "value": "1,448.00"
+      },
+      "Server": {
+        "count": 2,
+        "value": "19,600.00"
+      },
+      "Switch": {
+        "count": 3,
+        "value": "4,548.00"
+      }
+    }
+  },
+  "change_2_wipe": {
+    "cost": "1,689.00",
+    "file_cost": "1,689.00",
+    "file_lines": [
+      213
+    ],
+    "file_purchased": "05-Aug-2022",
+    "file_tags": [
+      "2841"
+    ],
+    "file_warranty": "36",
+    "holder": "Steven Brooks",
+    "model": "Dell Latitude 7440",
+    "purchased": "2022-08-05",
+    "site": "Omaha",
+    "status": "Assigned",
+    "tag": "IT-002841",
+    "type": "Laptop",
+    "warranty_end": "2025-08-05",
+    "warranty_months": 36
+  },
+  "change_3_disposal_request": {
+    "approve": {
+      "cost": "389.00",
+      "file_cost": "389.00",
+      "file_lines": [
+        218
+      ],
+      "file_purchased": "07/22/2021",
+      "file_tags": [
+        "3354"
+      ],
+      "file_warranty": "3 years",
+      "model": "Dell P2723DE",
+      "purchased": "2021-07-22",
+      "site": "Boise",
+      "status": "In stock",
+      "tag": "IT-003354",
+      "type": "Monitor",
+      "warranty_end": "2024-07-22",
+      "warranty_months": 36
+    },
+    "boise_value_after_approval": "51,476.00",
+    "reject": {
+      "cost": "899.00",
+      "file_cost": "899.00",
+      "file_lines": [
+        209
+      ],
+      "file_purchased": "2020-12-17",
+      "file_tags": [
+        "IT-000852"
+      ],
+      "file_warranty": "36",
+      "model": "Dell U3423WE",
+      "purchased": "2020-12-17",
+      "site": "Boise",
+      "status": "In stock",
+      "tag": "IT-000852",
+      "type": "Monitor",
+      "warranty_end": "2023-12-17",
+      "warranty_months": 36
+    }
+  },
+  "date_dependence": "No imported warranty ends between 2026-09-01 and 2027-04-30: the expired count holds and no imported asset is inside a 60-day expiry alert for any test date in the valid window.",
+  "dispose_check": {
+    "asset": {
+      "cost": "1,389.00",
+      "file_cost": "1389",
+      "file_lines": [
+        89
+      ],
+      "file_purchased": "2021-10-23",
+      "file_tags": [
+        "003055"
+      ],
+      "file_warranty": "3 yr",
+      "model": "Lenovo ThinkPad T14",
+      "purchased": "2021-10-23",
+      "site": "Denver",
+      "status": "Assigned",
+      "tag": "IT-003055",
+      "type": "Laptop",
+      "warranty_end": "2024-10-23",
+      "warranty_months": 36
+    },
+    "denver_value_after": "86,155.00",
+    "holder": "Cynthia Parker",
+    "value_drop": "1,389.00"
+  },
+  "expired_list": {
+    "count": 154,
+    "count_after_dispose_check": 153,
+    "excludes_disposed": {
+      "cost": "1,329.00",
+      "file_cost": "$1,329.00",
+      "file_lines": [
+        129
+      ],
+      "file_purchased": "01/21/2020",
+      "file_tags": [
+        "IT-2418"
+      ],
+      "file_warranty": "3 yr",
+      "model": "HP EliteBook 840",
+      "purchased": "2020-01-21",
+      "site": "Omaha",
+      "status": "Disposed",
+      "tag": "IT-002418",
+      "type": "Laptop",
+      "warranty_end": "2023-01-21",
+      "warranty_months": 36
+    },
+    "excludes_no_warranty": {
+      "cost": "229.00",
+      "file_cost": "229.00",
+      "file_lines": [
+        164
+      ],
+      "file_purchased": "01-Jul-2023",
+      "file_tags": [
+        "IT-004080"
+      ],
+      "file_warranty": "",
+      "model": "Dell WD19S",
+      "purchased": "2023-07-01",
+      "site": "Denver",
+      "status": "Assigned",
+      "tag": "IT-004080",
+      "type": "Dock",
+      "warranty_end": null,
+      "warranty_months": 0
+    },
+    "includes": {
+      "cost": "249.00",
+      "file_cost": "$249.00",
+      "file_lines": [
+        79
+      ],
+      "file_purchased": "25-Mar-2019",
+      "file_tags": [
+        "IT-003469"
+      ],
+      "file_warranty": "1 yr",
+      "model": "Lenovo ThinkPad USB-C Dock",
+      "purchased": "2019-03-25",
+      "site": "Denver",
+      "status": "In stock",
+      "tag": "IT-003469",
+      "type": "Dock",
+      "warranty_end": "2020-03-25",
+      "warranty_months": 12
+    }
+  },
+  "reassign_check": {
+    "asset": "IT-001053",
+    "from": "Nadia Lee",
+    "history_rows_after": 4,
+    "to": "Ryan Harris"
+  },
+  "restricted_return": {
+    "cost": "899.00",
+    "file_cost": "$899.00",
+    "file_lines": [
+      130
+    ],
+    "file_purchased": "2025-12-26",
+    "file_tags": [
+      "IT-001925"
+    ],
+    "file_warranty": "3 years",
+    "holder": "Leila Morris",
+    "model": "Dell U3423WE",
+    "purchased": "2025-12-26",
+    "site": "Boise",
+    "status": "Assigned",
+    "tag": "IT-001925",
+    "type": "Monitor",
+    "warranty_end": "2028-12-26",
+    "warranty_months": 36
+  },
+  "roles": {
+    "boise_return": {
+      "cost": "899.00",
+      "file_cost": "$899.00",
+      "file_lines": [
+        130
+      ],
+      "file_purchased": "2025-12-26",
+      "file_tags": [
+        "IT-001925"
+      ],
+      "file_warranty": "3 years",
+      "model": "Dell U3423WE",
+      "purchased": "2025-12-26",
+      "site": "Boise",
+      "status": "Assigned",
+      "tag": "IT-001925",
+      "type": "Monitor",
+      "warranty_end": "2028-12-26",
+      "warranty_months": 36
+    },
+    "dispose": {
+      "cost": "1,389.00",
+      "file_cost": "1389",
+      "file_lines": [
+        89
+      ],
+      "file_purchased": "2021-10-23",
+      "file_tags": [
+        "003055"
+      ],
+      "file_warranty": "3 yr",
+      "model": "Lenovo ThinkPad T14",
+      "purchased": "2021-10-23",
+      "site": "Denver",
+      "status": "Assigned",
+      "tag": "IT-003055",
+      "type": "Laptop",
+      "warranty_end": "2024-10-23",
+      "warranty_months": 36
+    },
+    "disposed_old": {
+      "cost": "1,329.00",
+      "file_cost": "$1,329.00",
+      "file_lines": [
+        129
+      ],
+      "file_purchased": "01/21/2020",
+      "file_tags": [
+        "IT-2418"
+      ],
+      "file_warranty": "3 yr",
+      "model": "HP EliteBook 840",
+      "purchased": "2020-01-21",
+      "site": "Omaha",
+      "status": "Disposed",
+      "tag": "IT-002418",
+      "type": "Laptop",
+      "warranty_end": "2023-01-21",
+      "warranty_months": 36
+    },
+    "expired_in_stock": {
+      "cost": "249.00",
+      "file_cost": "$249.00",
+      "file_lines": [
+        79
+      ],
+      "file_purchased": "25-Mar-2019",
+      "file_tags": [
+        "IT-003469"
+      ],
+      "file_warranty": "1 yr",
+      "model": "Lenovo ThinkPad USB-C Dock",
+      "purchased": "2019-03-25",
+      "site": "Denver",
+      "status": "In stock",
+      "tag": "IT-003469",
+      "type": "Dock",
+      "warranty_end": "2020-03-25",
+      "warranty_months": 12
+    },
+    "history": {
+      "cost": "2,199.00",
+      "file_cost": "2199",
+      "file_lines": [
+        245
+      ],
+      "file_purchased": "02/19/2021",
+      "file_tags": [
+        "IT-001053"
+      ],
+      "file_warranty": "3 yr",
+      "model": "Apple MacBook Pro 14",
+      "purchased": "2021-02-19",
+      "site": "Salt Lake City",
+      "status": "Assigned",
+      "tag": "IT-001053",
+      "type": "Laptop",
+      "warranty_end": "2024-02-19",
+      "warranty_months": 36
+    },
+    "no_warranty": {
+      "cost": "229.00",
+      "file_cost": "229.00",
+      "file_lines": [
+        164
+      ],
+      "file_purchased": "01-Jul-2023",
+      "file_tags": [
+        "IT-004080"
+      ],
+      "file_warranty": "",
+      "model": "Dell WD19S",
+      "purchased": "2023-07-01",
+      "site": "Denver",
+      "status": "Assigned",
+      "tag": "IT-004080",
+      "type": "Dock",
+      "warranty_end": null,
+      "warranty_months": 0
+    },
+    "out_of_scope": {
+      "cost": "2,199.00",
+      "file_cost": "2199",
+      "file_lines": [
+        244
+      ],
+      "file_purchased": "07/14/2025",
+      "file_tags": [
+        "000555"
+      ],
+      "file_warranty": "3 yr",
+      "model": "Apple MacBook Pro 14",
+      "purchased": "2025-07-14",
+      "site": "Denver",
+      "status": "Assigned",
+      "tag": "IT-000555",
+      "type": "Laptop",
+      "warranty_end": "2028-07-14",
+      "warranty_months": 36
+    },
+    "repair": {
+      "cost": "389.00",
+      "file_cost": "389.00",
+      "file_lines": [
+        185
+      ],
+      "file_purchased": "01/14/2026",
+      "file_tags": [
+        "IT-3655"
+      ],
+      "file_warranty": "3 years",
+      "model": "Dell P2723DE",
+      "purchased": "2026-01-14",
+      "site": "Salt Lake City",
+      "status": "In repair",
+      "tag": "IT-003655",
+      "type": "Monitor",
+      "warranty_end": "2029-01-14",
+      "warranty_months": 36
+    },
+    "request_disposal": {
+      "cost": "389.00",
+      "file_cost": "389.00",
+      "file_lines": [
+        218
+      ],
+      "file_purchased": "07/22/2021",
+      "file_tags": [
+        "3354"
+      ],
+      "file_warranty": "3 years",
+      "model": "Dell P2723DE",
+      "purchased": "2021-07-22",
+      "site": "Boise",
+      "status": "In stock",
+      "tag": "IT-003354",
+      "type": "Monitor",
+      "warranty_end": "2024-07-22",
+      "warranty_months": 36
+    },
+    "request_reject": {
+      "cost": "899.00",
+      "file_cost": "899.00",
+      "file_lines": [
+        209
+      ],
+      "file_purchased": "2020-12-17",
+      "file_tags": [
+        "IT-000852"
+      ],
+      "file_warranty": "36",
+      "model": "Dell U3423WE",
+      "purchased": "2020-12-17",
+      "site": "Boise",
+      "status": "In stock",
+      "tag": "IT-000852",
+      "type": "Monitor",
+      "warranty_end": "2023-12-17",
+      "warranty_months": 36
+    },
+    "wipe_return": {
+      "cost": "1,689.00",
+      "file_cost": "1,689.00",
+      "file_lines": [
+        213
+      ],
+      "file_purchased": "05-Aug-2022",
+      "file_tags": [
+        "2841"
+      ],
+      "file_warranty": "36",
+      "model": "Dell Latitude 7440",
+      "purchased": "2022-08-05",
+      "site": "Omaha",
+      "status": "Assigned",
+      "tag": "IT-002841",
+      "type": "Laptop",
+      "warranty_end": "2025-08-05",
+      "warranty_months": 36
+    }
+  },
+  "rules": {
+    "alert": "warranty ends within the next 60 days",
+    "disposal": "not while assigned; laptops and phones need a confirmed data wipe",
+    "tag": "IT- followed by six digits; 418, IT-418 and 000418 are IT-000418",
+    "value": "sum of purchase cost over assets that are not disposed",
+    "warranty_end": "purchase date plus the warranty length; blank or 'none' means no warranty",
+    "warranty_expired": "not disposed, has a warranty, warranty end before the test date"
+  },
+  "seed": 0,
+  "valid_test_dates": [
+    "2026-09-01",
+    "2027-02-28"
+  ]
+}

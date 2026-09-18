@@ -1,0 +1,261 @@
+Ticket #,Created,Client,Contact Email,Subject,Priority,Status,Assigned To,First Response,Resolved,Resolution Note
+HD-12614,07/01/26 07:00,Harlow Pediatric Dentistry,abrooks@harlowpeds.com,MFA reset,P2,resolved,kate morrison,07/01/26 08:22,07/02/26 19:26,Replaced toner and cleared queue.
+HD-11904,7/1/2026 8:09 AM,Hollowell Electric,mtanaka@hollowellelectric.com,Teams audio not working,p3,closed,Priya Nair,7/1/2026 8:29 AM,7/1/2026 4:44 PM,Adjusted firewall rule; site loads.
+HD-12021,07/01/26 09:53,Kingfisher Charters,pwright@kingfishercharters.com,MFA reset,p2,In Progress,Jordan Blake,07/01/26 10:17,,
+HD-10946,7/1/2026 10:52 AM,Ivy Lane Florist,afoster@ivylaneflorist.com,Backup job failed,p4,Resolved,Sam Delgado,7/1/2026 3:54 PM,7/3/2026 11:52 PM,Reset credentials and confirmed with user.
+HD-12692,2026-07-01 17:39,Bramble & Birch Florals,bmurphy@bramblebirch.com,Door badge reader offline,P2,Resolved,Priya Nair,2026-07-01 19:44,2026-07-01 20:16,Re-imaged device and restored profile.
+HD-12440,07/01/26 18:23,Westbrook Plumbing,nkim@westbrookplumbing.com,MFA reset,P2,Closed,Priya Nair,07/01/26 19:50,07/04/26 10:24,Freed 40 GB on data volume; alert cleared.
+#10764,2026-07-02 09:32,Pemberton HVAC,sstewart@pembertonhvac.com,Scan to email broken,3 - Normal,closed,Sam Delgado,2026-07-02 16:37,2026-07-05 14:29,Reset credentials and confirmed with user.
+HD-12103,02-Jul-2026 10:38,Harbor Light Marine,nmorales@harborlightmarine.com,Calendar sharing not working,P3,resolved,Sam Delgado,02-Jul-2026 15:08,03-Jul-2026 17:20,Adjusted firewall rule; site loads.
+11628,2026-07-02 11:10,Westbrook Plumbing,nkim@westbrookplumbing.com,Laptop running slow,P3,Closed,Priya Nair,2026-07-02 11:31,2026-07-02 18:18,"Confirmed phishing, blocked sender."
+HD-10362,07/02/26 11:51,Tallgrass Veterinary,ryoung@tallgrassvet.com,Server disk space alert,p3,Closed,Jordan Blake,07/02/26 17:42,07/03/26 00:52,Re-enrolled MFA device.
+HD-11927,7/2/2026 4:59 PM,Meridian Title,smitchell@meridiantitle.com,Firewall blocking website,4 - Low,Closed,Mei Chen,7/3/2026 12:17 AM,7/5/2026 8:12 AM,Re-enrolled MFA device.
+HD-12807,02-Jul-2026 17:25,Yellowtail Seafood,sortiz@yellowtailseafood.com,Domain renewal,4 - Low,Resolved,Sam Delgado,03-Jul-2026 00:59,03-Jul-2026 19:01,Replaced toner and cleared queue.
+10597,07/03/26 07:59,Quill & Ink Print Shop,amorales@quillandink.print,Monitor flickering,4 - Low,Resolved,Priya Nair,07/03/26 10:24,07/05/26 11:20,Replaced toner and cleared queue.
+HD-12651,07/03/26 08:02,Uptown Fitness,callen@uptownfit.com,Teams audio not working,3 - Normal,Resolved,Kate Morrison,07/03/26 12:52,07/04/26 14:22,Renewed license and emailed confirmation.
+#10415,7/3/2026 8:18 AM,Fernbrook Montessori,NJONES@FERNBROOKMONTESSORI.ORG,Server disk space alert,P3,Closed,Priya Nair,7/3/2026 2:05 PM,7/4/2026 9:25 PM,Freed 40 GB on data volume; alert cleared.
+HD-10541,07/03/26 11:08,Pinewood Property Group,ahill@pinewoodpg.com,Outlook keeps asking for password,p4,closed,Mei Chen,07/03/26 13:43,07/05/26 00:40,"Confirmed phishing, blocked sender."
+HD-10640,2026-07-03 12:07,Vantage Point Media,ywood@vantagepointmedia.com,License renewal question,p2,Closed,Mei Chen,2026-07-03 12:41,2026-07-05 18:32,Adjusted firewall rule; site loads.
+HD-12326,7/3/2026 12:23 PM,,DMOORE@GLASSWORKSOPTICAL.COM,Suspicious login alert,p3,resolved,Priya Nair,7/3/2026 2:48 PM,7/6/2026 7:43 AM,Re-enrolled MFA device.
+hd-11420,07/03/26 14:42,Wren & Sparrow Bookshop,mlindqvist@wrensparrowbooks.com,New starter laptop setup,P4 (Low),Closed,Kate Morrison,07/04/26 13:29,07/07/26 01:50,Re-enrolled MFA device.
+HD-12410,03-Jul-2026 14:45,Redwood Property Mgmt,JWOOD@REDWOODPM.COM,Mailbox full,P2,resolved,Andre Silva,03-Jul-2026 20:24,05-Jul-2026 22:35,Updated VPN client to current version.
+HD-11073,07/03/26 14:56,Pemberton HVAC,ecruz@pembertonhvac.com,Accounting software won't open,P2,resolved,Sam Delgado,07/03/26 18:28,07/04/26 08:36,Adjusted firewall rule; site loads.
+10114,03-Jul-2026 15:45,Lantern Hill Winery,dturner@lanternhillwine.com,Monitor flickering,3 - Normal,closed,Sam Delgado,03-Jul-2026 20:41,05-Jul-2026 14:41,Re-imaged device and restored profile.
+11323,7/3/2026 5:49 PM,Juniper Street Cafe,ralvarez@juniperstreet.cafe,MFA reset,P3 (Normal),Closed,Mei Chen,7/4/2026 3:17 AM,7/4/2026 2:56 PM,Granted access via security group.
+hd-11842,2026-07-06 13:36,Uptown Fitness,lmartin@uptownfit.com,Shared drive access request,P3 (Normal),Open,kate morrison,2026-07-06 13:46,,
+HD-10627,2026-07-06 13:54,Blue Heron Consulting,jfoster@blueheronconsulting.com,Suspicious login alert,P3 (Normal),resolved,Andre Silva,2026-07-06 15:04,2026-07-06 18:56,Freed 40 GB on data volume; alert cleared.
+HD-12532,2026-07-06 13:57,Harlow Pediatric Dentistry,abrooks@harlowpeds.com,MFA reset,3 - Normal,Closed,Kate Morrison,2026-07-06 15:00,2026-07-08 18:12,Replaced toner and cleared queue.
+HD-12236,06-Jul-2026 14:08,Kingfisher Charters,rross@kingfishercharters.com,MFA reset,P4 (Low),Resolved,Priya Nair,09-Jul-2026 11:47,11-Jul-2026 09:56,Adjusted firewall rule; site loads.
+HD-12893,07/06/26 15:47,Meridian Title,slindqvist@meridiantitle.com,Offboarding user,3 - Normal,Resolved,Jordan Blake,07/06/26 22:52,07/07/26 03:10,Renewed license and emailed confirmation.
+HD-10999,06-Jul-2026 17:17,Glassworks Optical,ijones@glassworksoptical.com,VPN won't connect,4 - Low,Closed,Andre Silva,06-Jul-2026 18:41,09-Jul-2026 05:03,Updated VPN client to current version.
+HD-11536,7/6/2026 6:36 PM,Blue Heron Consulting,jfoster@blueheronconsulting.com,Suspicious login alert,3 - Normal,Closed,Mei Chen,7/7/2026 1:07 AM,7/8/2026 1:24 AM,Replaced toner and cleared queue.
+#10514,2026-08-21 14:43,Vantage Point Media,ywood@vantagepointmedia.com,Firewall blocking website,P3 (Normal),Closed,Mei Chen,2026-08-21 15:17,2026-08-23 02:47,Updated VPN client to current version.
+11036,07/07/26 07:48,Ironwood Fabrication,RMILLER@IRONWOODFAB.COM,Firewall blocking website,P3 (Normal),Closed,Jordan Blake,07/07/26 09:20,07/08/26 01:05,Replaced toner and cleared queue.
+12279,7/7/2026 2:50 PM,Seaside Realty Partners,amitchell@seasiderp.com,Shared drive access request,p3,resolved,Andre Silva,7/7/2026 4:06 PM,7/7/2026 7:32 PM,"Confirmed phishing, blocked sender."
+HD-11418,7/7/2026 6:21 PM,Willowbrook Senior Care,ssanchez@willowbrookcare.org,Domain renewal,4 - Low,In Progress,Andre Silva,7/8/2026 3:02 AM,,
+HD-10191,07-Jul-2026 18:24,Meridian Title,smitchell@meridiantitle.com,Mailbox full,P3 (Normal),Closed,Jordan Blake,07-Jul-2026 21:12,09-Jul-2026 12:09,Re-imaged device and restored profile.
+HD-10634,07/08/26 10:10,Tallgrass Veterinary,ryoung@tallgrassvet.com,Laptop running slow,P3,resolved,Sam Delgado,07/08/26 10:18,07/11/26 05:39,Adjusted firewall rule; site loads.
+HD-10170,07/08/26 12:08,,rross@kingfishercharters.com,VPN slow from home office,p3,resolved,Jordan Blake,07/08/26 15:33,07/09/26 04:33,"Confirmed phishing, blocked sender."
+HD-10374,7/8/2026 5:14 PM,Saltmarsh Kayaks,kmorgan@saltmarshkayaks.com,Scan to email broken,p3,closed,Jordan Blake,7/8/2026 8:09 PM,7/11/2026 11:39 AM,Freed 40 GB on data volume; alert cleared.
+HD-10441,7/9/2026 7:39 AM,Meridian Title,SMITCHELL@MERIDIANTITLE.COM,VPN won't connect,P3,Closed,Jordan Blake,7/9/2026 2:17 PM,7/9/2026 5:25 PM,Adjusted firewall rule; site loads.
+HD-10823,07/09/26 13:11,Fernbrook Montessori,njones@fernbrookmontessori.org,VPN won't connect,P4 (Low),closed,Priya Nair,07/09/26 20:59,07/12/26 12:58,Freed 40 GB on data volume; alert cleared.
+HD-11339,09-Jul-2026 16:33,Hollowell Electric,mtanaka@hollowellelectric.com,Wi-Fi drops in conference room,p3,Closed,Priya Nair,09-Jul-2026 21:38,10-Jul-2026 18:41,"Confirmed phishing, blocked sender."
+HD-12256,2026-07-09 16:41,Seaside Realty Partners,nross@seasiderp.com,Firewall blocking website,P3,Closed,Sam Delgado,2026-07-10 14:45,2026-07-12 15:00,Re-enrolled MFA device.
+HD-11390,2026-07-10 07:52,Thistle & Thread Alterations,dmorris@thistlethread.com,VPN won't connect,3 - Normal,Resolved,Andre Silva,2026-07-10 15:11,2026-07-12 18:10,Freed 40 GB on data volume; alert cleared.
+HD-10401,2026-07-10 09:51,Quill & Ink Print Shop,enelson@quillandink.print,Laptop running slow,3 - Normal,closed,Priya Nair,2026-07-10 13:07,2026-07-13 11:18,Re-enrolled MFA device.
+HD-12723,07/10/26 13:07,Bramble & Birch Florals,BMURPHY@BRAMBLEBIRCH.COM,VPN won't connect,p4,Closed,mei chen,07/11/26 10:55,07/12/26 09:32,Adjusted firewall rule; site loads.
+hd-11773,2026-07-10 13:11,Uptown Fitness,callen@uptownfit.com,Accounting software won't open,4 - Low,closed,Kate Morrison,2026-07-10 17:16,2026-07-10 19:08,Granted access via security group.
+10636,2026-07-10 13:51,Orchard Hill Dental,MNELSON@ORCHARDHILLDENTAL.COM,Outlook keeps asking for password,P4 (Low),Closed,Priya Nair,2026-07-11 03:25,2026-07-12 15:37,Re-enrolled MFA device.
+HD-12828,07/10/26 14:06,Acme Industrial,cfoster@acmeindustrial.com,Door badge reader offline,p4,Closed,Kate Morrison,07/11/26 08:14,07/11/26 14:52,Renewed license and emailed confirmation.
+HD-12750,2026-07-10 17:23,Juniper Street Cafe,omorris@juniperstreet.cafe,Monitor flickering,p4,closed,Mei Chen,2026-07-13 13:25,2026-07-15 23:30,"Confirmed phishing, blocked sender."
+#10319,7/11/2026 8:25 AM,Summit Ridge Surveying,rmensah@summitridgesurvey.com,Offboarding user,p3,Closed,Mei Chen,7/11/2026 1:07 PM,7/13/2026 5:30 AM,Updated VPN client to current version.
+HD-11265,11-Jul-2026 09:06,Tallgrass Veterinary,ryoung@tallgrassvet.com,Scan to email broken,p2,Resolved,Priya Nair,11-Jul-2026 10:12,11-Jul-2026 19:41,Granted access via security group.
+HD-12120,2026-07-12 13:44,Umber Ceramics,jmartinez@umberceramics.com,Shared drive access request,3 - Normal,Resolved,Andre Silva,2026-07-12 20:27,2026-07-14 15:20,Granted access via security group.
+HD-12188,7/12/2026 6:19 PM,Tallgrass Veterinary,ryoung@tallgrassvet.com,Calendar sharing not working,3 - Normal,closed,Priya Nair,7/13/2026 8:08 AM,7/15/2026 6:18 AM,"Confirmed phishing, blocked sender."
+HD-12836,13-Jul-2026 07:32,Kestrel Analytics,kchavez@kestrelanalytics.io,Phishing email reported,p4,Closed,Kate Morrison,13-Jul-2026 15:20,15-Jul-2026 22:20,Re-imaged device and restored profile.
+HD-10807,2026-07-13 09:25,Northgate Chiropractic,lclark@northgatechiro.com,VPN won't connect,P2 (High),closed,Sam Delgado,2026-07-13 12:32,2026-07-13 13:32,Replaced toner and cleared queue.
+HD-12811,2026-07-13 12:22,Lantern Hill Winery,dturner@lanternhillwine.com,Password reset,P3 (Normal),Closed,Kate Morrison,2026-07-13 13:56,2026-07-16 09:29,Renewed license and emailed confirmation.
+HD-11655,7/13/2026 1:11 PM,Yellowtail Seafood,kcox@yellowtailseafood.com,Domain renewal,P1 (Critical),Closed,Sam Delgado,7/13/2026 3:35 PM,7/14/2026 9:04 AM,Re-enrolled MFA device.
+HD-10447,7/13/2026 2:51 PM,Yellowtail Seafood,sortiz@yellowtailseafood.com,Backup job failed,P3,Closed,Andre Silva,7/14/2026 10:19 AM,7/16/2026 4:11 AM,Renewed license and emailed confirmation.
+#11792,07/13/26 16:00,Umber Ceramics,MREED@UMBERCERAMICS.COM,Phishing email reported,3 - Normal,Closed,Andre Silva,07/13/26 22:59,07/15/26 02:49,Replaced toner and cleared queue.
+HD-12651,07/03/26 08:02,Uptown Fitness,callen@uptownfit.com,Teams audio not working,3 - Normal,Resolved,Kate Morrison,07/03/26 12:52,07/04/26 14:22,Renewed license and emailed confirmation.
+HD-12598,2026-07-13 16:36,Blue Heron Consulting,kwright@blueheronconsulting.com,VPN won't connect,p3,Resolved,Mei Chen,2026-07-13 19:52,2026-07-14 09:28,Renewed license and emailed confirmation.
+HD-10132,07/14/26 08:12,Summit Ridge Surveying,rmensah@summitridgesurvey.com,VPN slow from home office,p2,Closed,Mei Chen,07/14/26 09:17,07/15/26 14:12,"Confirmed phishing, blocked sender."
+HD-10352,7/14/2026 8:15 AM,Glassworks Optical,ijones@glassworksoptical.com,Monitor flickering,P2 (High),closed,priya nair,7/14/2026 9:10 AM,7/15/2026 2:11 PM,Updated VPN client to current version.
+10695,2026-07-14 09:54,Yellowtail Seafood,KCOX@YELLOWTAILSEAFOOD.COM,Phishing email reported,P4,Closed,Sam Delgado,2026-07-15 06:30,2026-07-17 12:53,"Confirmed phishing, blocked sender."
+HD-10995,7/14/2026 10:18 AM,Dorsey Freight,ledwards@dorseyfreight.com,Wi-Fi drops in conference room,p4,Closed,Priya Nair,7/15/2026 4:21 AM,7/15/2026 1:41 PM,Re-enrolled MFA device.
+HD-12674,7/14/2026 2:12 PM,Quarry Road Nursery,LWRIGHT@QUARRYROAD.COM,Firewall blocking website,3 - Normal,Closed,Andre Silva,7/14/2026 3:20 PM,7/15/2026 2:37 AM,Reset credentials and confirmed with user.
+HD-12056,7/14/2026 3:42 PM,Copperfield Law,jgarcia@copperfieldlaw.com,Firewall blocking website,4 - Low,Closed,Sam Delgado,7/15/2026 5:59 AM,7/17/2026 1:48 AM,"Confirmed phishing, blocked sender."
+hd-10906,2026-07-14 16:35,Seaside Realty Partners,amitchell@seasiderp.com,Laptop running slow,P2 (High),Closed,Andre Silva,2026-07-14 19:14,2026-07-17 00:47,"Confirmed phishing, blocked sender."
+#10374,7/8/2026 5:14 PM,Saltmarsh Kayaks,kmorgan@saltmarshkayaks.com,Scan to email broken,p3,closed,Jordan Blake,7/8/2026 8:09 PM,7/11/2026 11:39 AM,Freed 40 GB on data volume; alert cleared.
+hd-12083,7/14/2026 5:54 PM,Dorsey Freight,ledwards@dorseyfreight.com,Shared drive access request,p4,closed,priya nair,7/15/2026 6:46 AM,7/15/2026 11:34 PM,"Confirmed phishing, blocked sender."
+hd-10406,2026-07-15 07:04,Foxglove Interiors,kcox@foxgloveinteriors.com,Accounting software won't open,3 - Normal,Closed,Mei Chen,2026-07-15 08:27,2026-07-16 01:43,Reset credentials and confirmed with user.
+10390,15-Jul-2026 13:45,Tallgrass Veterinary,ryoung@tallgrassvet.com,Calendar sharing not working,P3,Resolved,priya nair,15-Jul-2026 16:32,16-Jul-2026 09:47,"Confirmed phishing, blocked sender."
+HD-12165,07/15/26 13:49,Seaside Realty Partners,nross@seasiderp.com,Suspicious login alert,p3,resolved,Andre Silva,07/16/26 00:20,07/18/26 16:25,Granted access via security group.
+#11772,07/15/26 15:53,Zephyr Bike Works,chaddad@zephyrbikes.com,Outlook keeps asking for password,p4,Resolved,Priya Nair,07/15/26 16:04,07/17/26 01:53,Renewed license and emailed confirmation.
+HD-12253,07/16/26 07:28,Kingfisher Charters,rross@kingfishercharters.com,VPN won't connect,3 - Normal,Closed,Kate Morrison,07/16/26 10:21,07/18/26 17:11,Replaced toner and cleared queue.
+HD-11894,7/16/2026 7:41 AM,Ivy Lane Florist,MMENSAH@IVYLANEFLORIST.COM,Laptop running slow,p3,Closed,Sam Delgado,7/16/2026 2:56 PM,7/18/2026 10:57 PM,"Confirmed phishing, blocked sender."
+10831,16-Jul-2026 16:01,Pemberton HVAC,kthomas@pembertonhvac.com,VPN slow from home office,P2,Closed,Priya Nair,16-Jul-2026 16:39,16-Jul-2026 17:50,Re-imaged device and restored profile.
+HD-11314,2026-07-17 07:15,Ellington Bakeries,mgutierrez@ellingtonbakes.com,Outlook keeps asking for password,P3,closed,Jordan Blake,2026-07-17 12:53,2026-07-20 03:22,"Confirmed phishing, blocked sender."
+HD-11596,7/17/2026 10:01 AM,Kingfisher Charters,pwright@kingfishercharters.com,Password reset,P4,Closed,Jordan Blake,7/17/2026 10:48 AM,7/18/2026 5:53 PM,"Confirmed phishing, blocked sender."
+11689,2026-07-17 12:43,,ghaddad@seasiderp.com,Phishing email reported,P3 (Normal),Closed,Andre Silva,2026-07-17 17:39,2026-07-19 04:07,Updated VPN client to current version.
+HD-10675,7/17/2026 2:49 PM,Everline Insurance,kking@everline.com,MFA reset,p3,Closed,Priya Nair,7/18/2026 3:46 AM,7/20/2026 3:38 PM,Re-enrolled MFA device.
+HD-11258,2026-07-17 17:19,Cedar & Pine Landscaping,FBROWN@CEDARPINE.CO,Scan to email broken,3 - Normal,Resolved,Priya Nair,2026-07-18 14:35,2026-07-20 19:07,"Confirmed phishing, blocked sender."
+HD-11331,07/18/26 08:09,Ellington Bakeries,slee@ellingtonbakes.com,VPN won't connect,P3,Closed,Priya Nair,07/18/26 14:21,07/19/26 22:19,Granted access via security group.
+HD-11170,07/19/26 16:25,Northfield Auto Body,wreyes@northfieldauto.com,Shared drive access request,p4,Closed,Jordan Blake,07/20/26 00:40,07/22/26 10:28,Updated VPN client to current version.
+HD-10905,2026-07-20 09:08,Tallgrass Veterinary,mharris@tallgrassvet.com,MFA reset,P2 (High),Closed,Priya Nair,2026-07-20 09:13,2026-07-22 18:10,Re-enrolled MFA device.
+HD-10912,20-Jul-2026 14:26,Ironwood Fabrication,KALLEN@IRONWOODFAB.COM,License renewal question,P4,closed,Jordan Blake,21-Jul-2026 05:09,22-Jul-2026 01:08,"Confirmed phishing, blocked sender."
+HD-10679,7/20/2026 3:14 PM,Tallgrass Veterinary,ryoung@tallgrassvet.com,MFA reset,P1,Closed,Priya Nair,7/20/2026 3:23 PM,7/20/2026 10:29 PM,Updated VPN client to current version.
+HD-11678,20-Jul-2026 16:35,Riverbend Physio,OHERNANDEZ@RIVERBENDPHYSIO.COM,Door badge reader offline,P2 (High),Closed,Andre Silva,20-Jul-2026 17:52,21-Jul-2026 00:28,"Confirmed phishing, blocked sender."
+#11698,7/21/2026 7:31 AM,Glassworks Optical,ijones@glassworksoptical.com,Monitor flickering,P3 (Normal),resolved,Mei Chen,7/21/2026 1:55 PM,7/21/2026 4:54 PM,Renewed license and emailed confirmation.
+HD-12066,7/21/2026 4:49 PM,Lantern Hill Winery,dturner@lanternhillwine.com,Calendar sharing not working,P2,closed,Kate Morrison,7/21/2026 10:47 PM,7/23/2026 5:35 PM,Re-enrolled MFA device.
+HD-10283,7/22/2026 7:27 AM,Glassworks Optical,dmoore@glassworksoptical.com,Firewall blocking website,P4,Closed,Priya Nair,7/22/2026 5:20 PM,7/24/2026 1:12 AM,Granted access via security group.
+HD-12484,07/22/26 08:39,Hollowell Electric,mtanaka@hollowellelectric.com,New starter laptop setup,p2,Closed,Sam Delgado,07/22/26 08:51,07/24/26 13:21,Updated VPN client to current version.
+HD-11743,2026-07-22 08:55,Redwood Property Mgmt,asmith@redwoodpm.com,License renewal question,P3 (Normal),closed,Kate Morrison,2026-07-22 11:47,2026-07-22 16:47,Granted access via security group.
+HD-10296,22-Jul-2026 13:53,Juniper Street Cafe,RALVAREZ@JUNIPERSTREET.CAFE,License renewal question,3 - Normal,closed,Mei Chen,22-Jul-2026 20:30,23-Jul-2026 00:42,Re-imaged device and restored profile.
+hd-12144,22-Jul-2026 16:27,Ridgeview Animal Hospital,rruiz@ridgeviewanimal.com,VPN slow from home office,p3,Closed,Sam Delgado,22-Jul-2026 23:21,24-Jul-2026 01:56,Re-imaged device and restored profile.
+hd-10507,22-Jul-2026 17:17,Saltmarsh Kayaks,KMORGAN@SALTMARSHKAYAKS.COM,Scan to email broken,p3,Closed,Priya Nair,23-Jul-2026 12:30,25-Jul-2026 20:28,Reset credentials and confirmed with user.
+#10393,2026-07-23 07:17,,rmensah@summitridgesurvey.com,Monitor flickering,P4,Closed,Mei Chen,2026-07-24 12:38,2026-07-27 07:40,Re-enrolled MFA device.
+HD-10330,2026-07-23 07:40,Zephyr Bike Works,dlopez@zephyrbikes.com,Firewall blocking website,p2,in progress,Priya Nair,2026-07-23 10:13,,
+HD-10830,7/23/2026 10:56 AM,Meridian Title,slindqvist@meridiantitle.com,Shared drive access request,2 - High,Closed,jordan blake,7/23/2026 7:41 PM,7/26/2026 6:00 PM,Updated VPN client to current version.
+HD-10118,07/23/26 13:39,Juniper Street Cafe,ralvarez@juniperstreet.cafe,Accounting software won't open,P4 (Low),closed,Mei Chen,07/24/26 07:30,07/26/26 12:53,Re-imaged device and restored profile.
+#12297,23-Jul-2026 14:11,Valley Forge Storage,TRICHARDSON@VALLEYFORGESTORAGE.COM,MFA reset,P3 (Normal),Closed,Kate Morrison,23-Jul-2026 17:08,25-Jul-2026 19:14,"Confirmed phishing, blocked sender."
+HD-10854,07/23/26 16:21,Tallgrass Veterinary,ryoung@tallgrassvet.com,Shared drive access request,1 - Critical,Closed,Priya Nair,07/23/26 18:48,07/25/26 20:31,Freed 40 GB on data volume; alert cleared.
+hd-10923,07/24/26 14:10,Uptown Fitness,CALLEN@UPTOWNFIT.COM,Password reset,p1,closed,Priya Nair,07/24/26 14:22,07/24/26 23:21,"Confirmed phishing, blocked sender."
+HD-11072,7/24/2026 2:18 PM,Saltmarsh Kayaks,bharris@saltmarshkayaks.com,Shared drive access request,P2,Closed,Priya Nair,7/24/2026 5:57 PM,7/24/2026 9:36 PM,Granted access via security group.
+HD-11901,2026-07-24 14:29,Thistle & Thread Alterations,cprice@thistlethread.com,Firewall blocking website,P3 (Normal),Closed,Priya Nair,2026-07-24 18:15,2026-07-26 22:52,Renewed license and emailed confirmation.
+HD-10803,24-Jul-2026 14:31,Westbrook Plumbing,jclark@westbrookplumbing.com,License renewal question,P4,Closed,Priya Nair,25-Jul-2026 13:06,28-Jul-2026 05:22,Reset credentials and confirmed with user.
+HD-11058,07/24/26 15:22,Foxglove Interiors,PEVANS@FOXGLOVEINTERIORS.COM,Phishing email reported,p1,Closed,Mei Chen,07/24/26 16:41,07/24/26 18:41,Granted access via security group.
+HD-12450,24-Jul-2026 16:06,Saltmarsh Kayaks,kmorgan@saltmarshkayaks.com,Wi-Fi drops in conference room,p2,resolved,Jordan Blake,24-Jul-2026 18:36,26-Jul-2026 14:33,Renewed license and emailed confirmation.
+#11890,24-Jul-2026 16:52,Ironwood Fabrication,kallen@ironwoodfab.com,Firewall blocking website,P4,closed,Jordan Blake,25-Jul-2026 10:46,27-Jul-2026 16:29,Freed 40 GB on data volume; alert cleared.
+11365,24-Jul-2026 17:17,Brightwater Dental,bphillips@brightwaterdental.com,License renewal question,P3 (Normal),closed,kate morrison,25-Jul-2026 15:59,28-Jul-2026 04:47,Freed 40 GB on data volume; alert cleared.
+hd-11766,07/24/26 18:04,Zephyr Bike Works,dlopez@zephyrbikes.com,Suspicious login alert,4 - Low,resolved,Priya Nair,07/24/26 18:22,07/26/26 07:31,"Confirmed phishing, blocked sender."
+11322,07/25/26 14:03,Quill & Ink Print Shop,enelson@quillandink.print,License renewal question,4 - Low,Closed,Priya Nair,07/25/26 15:01,07/26/26 21:13,Adjusted firewall rule; site loads.
+HD-11803,27-Jul-2026 08:27,Zephyr Bike Works,chaddad@zephyrbikes.com,Outlook keeps asking for password,2 - High,Closed,Priya Nair,27-Jul-2026 08:33,27-Jul-2026 15:33,Renewed license and emailed confirmation.
+HD-10491,27-Jul-2026 09:03,Foxglove Interiors,gmurphy@foxgloveinteriors.com,VPN slow from home office,P4 (Low),resolved,Jordan Blake,28-Jul-2026 02:57,29-Jul-2026 07:59,Renewed license and emailed confirmation.
+HD-10645,07/27/26 11:41,Umber Ceramics,JMARTINEZ@UMBERCERAMICS.COM,Door badge reader offline,P4 (Low),closed,Andre Silva,07/27/26 23:51,07/30/26 17:59,Adjusted firewall rule; site loads.
+HD-12793,07/28/26 09:28,Tallgrass Veterinary,ryoung@tallgrassvet.com,Shared drive access request,p4,closed,Priya Nair,07/28/26 11:38,07/28/26 19:43,Granted access via security group.
+HD-11327,2026-07-28 10:18,Seaside Realty Partners,nross@seasiderp.com,Domain renewal,P2,Closed,Andre Silva,2026-07-28 13:41,2026-07-26 19:18,Re-imaged device and restored profile.
+HD-10462,28-Jul-2026 12:01,Harlow Pediatric Dentistry,abrooks@harlowpeds.com,Domain renewal,P3 (Normal),Closed,Sam Delgado,28-Jul-2026 18:02,30-Jul-2026 19:31,Reset credentials and confirmed with user.
+10258,2026-07-28 12:15,Foxglove Interiors,kcox@foxgloveinteriors.com,Suspicious login alert,P3 (Normal),Closed,Sam Delgado,2026-07-28 18:36,2026-07-31 10:54,"Confirmed phishing, blocked sender."
+HD-10842,28-Jul-2026 14:05,Hollowell Electric,mtanaka@hollowellelectric.com,New starter laptop setup,P2 (High),Closed,Priya Nair,28-Jul-2026 15:46,29-Jul-2026 08:42,Granted access via security group.
+HD-10499,7/28/2026 4:05 PM,Harbor Light Marine,jyoung@harborlightmarine.com,Wi-Fi drops in conference room,P3 (Normal),Closed,Kate Morrison,7/28/2026 6:55 PM,7/31/2026 3:12 AM,Re-imaged device and restored profile.
+HD-10131,7/28/2026 5:03 PM,Westbrook Plumbing,JCLARK@WESTBROOKPLUMBING.COM,Calendar sharing not working,P3,Resolved,Priya Nair,7/28/2026 8:02 PM,7/31/2026 7:40 AM,Adjusted firewall rule; site loads.
+HD-10996,28-Jul-2026 18:30,Vantage Point Media,ywood@vantagepointmedia.com,Outlook keeps asking for password,P1 (Critical),Closed,Mei Chen,28-Jul-2026 19:15,31-Jul-2026 05:04,Adjusted firewall rule; site loads.
+HD-10543,7/28/2026 6:31 PM,Ivy Lane Florist,mmensah@ivylaneflorist.com,Shared drive access request,P3 (Normal),closed,Kate Morrison,7/28/2026 6:48 PM,7/30/2026 3:42 AM,Replaced toner and cleared queue.
+hd-10799,2026-07-29 11:28,Ironwood Fabrication,rmiller@ironwoodfab.com,Outlook keeps asking for password,p2,Closed,Jordan Blake,2026-07-29 15:01,2026-08-01 06:25,"Confirmed phishing, blocked sender."
+HD-12865,07/29/26 12:08,Seaside Realty Partners,amitchell@seasiderp.com,Door badge reader offline,p3,closed,Andre Silva,07/29/26 19:21,07/29/26 21:13,Renewed license and emailed confirmation.
+HD-11634,30-Jul-2026 12:41,Harlow Pediatric Dentistry,abrooks@harlowpeds.com,Domain renewal,2 - High,Closed,Andre Silva,30-Jul-2026 13:57,30-Jul-2026 22:44,Adjusted firewall rule; site loads.
+HD-12011,07/30/26 12:55,Harlow Pediatric Dentistry,dgray@harlowpeds.com,Phishing email reported,P2,Closed,kate morrison,07/31/26 00:17,08/01/26 12:04,Replaced toner and cleared queue.
+HD-11872,7/30/2026 5:37 PM,Bramble & Birch Florals,cchavez@bramblebirch.com,Phishing email reported,3 - Normal,Closed,Mei Chen,7/30/2026 9:10 PM,8/2/2026 5:39 PM,Freed 40 GB on data volume; alert cleared.
+HD-12476,7/31/2026 9:15 AM,Kingfisher Charters,pwright@kingfishercharters.com,Door badge reader offline,3 - Normal,closed,Jordan Blake,7/31/2026 3:17 PM,8/1/2026 5:37 AM,"Confirmed phishing, blocked sender."
+HD-12347,2026-07-31 15:58,Saltmarsh Kayaks,kmorgan@saltmarshkayaks.com,Calendar sharing not working,P3,closed,Priya Nair,2026-07-31 20:57,2026-07-31 22:23,Re-imaged device and restored profile.
+HD-10878,7/31/2026 6:11 PM,Valley Forge Storage,trichardson@valleyforgestorage.com,Calendar sharing not working,P3,Closed,Kate Morrison,8/1/2026 12:01 PM,8/2/2026 8:42 PM,Re-enrolled MFA device.
+HD-11729,01-Aug-2026 09:07,Westbrook Plumbing,jclark@westbrookplumbing.com,VPN slow from home office,1 - Critical,Closed,Priya Nair,01-Aug-2026 09:19,02-Aug-2026 01:52,"Confirmed phishing, blocked sender."
+hd-10232,2026-08-01 09:59,Quill & Ink Print Shop,enelson@quillandink.print,Laptop running slow,P3 (Normal),Closed,Priya Nair,2026-08-02 07:24,2026-08-04 01:12,Re-imaged device and restored profile.
+10531,08/01/26 12:52,Seaside Realty Partners,NROSS@SEASIDERP.COM,Domain renewal,P4,Closed,Jordan Blake,08/02/26 09:42,08/04/26 16:58,Re-enrolled MFA device.
+HD-11671,8/2/2026 7:52 AM,Granger Tool & Die,rdiaz@grangertool.com,VPN won't connect,P2,Resolved,Andre Silva,8/2/2026 11:10 AM,8/4/2026 11:45 PM,Freed 40 GB on data volume; alert cleared.
+HD-11586,8/3/2026 8:20 AM,Orchard Hill Dental,RRAMIREZ@ORCHARDHILLDENTAL.COM,Offboarding user,P4,In Progress,Priya Nair,8/3/2026 9:32 PM,,
+10215,03-Aug-2026 11:55,Zephyr Bike Works,chaddad@zephyrbikes.com,Accounting software won't open,P3 (Normal),closed,Priya Nair,03-Aug-2026 15:06,03-Aug-2026 16:11,"Confirmed phishing, blocked sender."
+HD-12764,03-Aug-2026 12:18,Hollowell Electric,jscott@hollowellelectric.com,MFA reset,P1,closed,priya nair,03-Aug-2026 12:59,04-Aug-2026 22:56,Freed 40 GB on data volume; alert cleared.
+HD-10998,8/3/2026 1:55 PM,,dthomas@fairwaypt.com,Printer offline,P2,Closed,Mei Chen,8/3/2026 4:14 PM,8/5/2026 8:25 PM,Replaced toner and cleared queue.
+HD-12329,8/3/2026 2:36 PM,Thistle & Thread Alterations,cprice@thistlethread.com,New starter laptop setup,P3 (Normal),resolved,Andre Silva,8/3/2026 4:15 PM,8/5/2026 10:57 PM,Granted access via security group.
+HD-10948,08/03/26 18:30,,RMILLER@IRONWOODFAB.COM,Backup job failed,P3,Resolved,Jordan Blake,08/03/26 23:39,08/05/26 13:35,Reset credentials and confirmed with user.
+HD-10772,08/04/26 11:55,Fairway Physical Therapy,DTHOMAS@FAIRWAYPT.COM,VPN won't connect,2 - High,resolved,Mei Chen,08/04/26 21:11,08/07/26 05:59,Replaced toner and cleared queue.
+HD-11330,2026-08-05 07:04,Granite Peak Outfitters,GLEWIS@GRANITEPEAK.COM,Phishing email reported,p4,Closed,Priya Nair,2026-08-06 02:38,2026-08-07 09:12,Re-imaged device and restored profile.
+HD-12063,08/05/26 09:35,Granger Tool & Die,RDIAZ@GRANGERTOOL.COM,Shared drive access request,2 - High,closed,Andre Silva,08/05/26 12:11,08/05/26 16:30,Re-imaged device and restored profile.
+10331,8/11/2026 9:30 AM,Northgate Chiropractic,rtanaka@northgatechiro.com,Phishing email reported,P2,closed,Mei Chen,8/11/2026 10:11 AM,8/11/2026 1:41 PM,"Confirmed phishing, blocked sender."
+HD-10947,8/5/2026 12:42 PM,Saltmarsh Kayaks,bharris@saltmarshkayaks.com,Accounting software won't open,p2,Closed,Priya Nair,8/5/2026 2:07 PM,8/6/2026 8:41 PM,Reset credentials and confirmed with user.
+HD-12496,05-Aug-2026 13:26,Riverbend Physio,mramos@riverbendphysio.com,Printer offline,P3 (Normal),Closed,Priya Nair,05-Aug-2026 19:36,06-Aug-2026 01:27,Re-enrolled MFA device.
+HD-10377,05-Aug-2026 13:56,Dorsey Freight,ledwards@dorseyfreight.com,Calendar sharing not working,P3,open,Priya Nair,05-Aug-2026 18:36,,
+HD-12088,08/05/26 14:04,Fairway Physical Therapy,lgomez@fairwaypt.com,Monitor flickering,3 - Normal,Resolved,Mei Chen,08/05/26 20:53,08/08/26 20:17,Reset credentials and confirmed with user.
+#11215,05-Aug-2026 17:11,Thistle & Thread Alterations,dmorris@thistlethread.com,Backup job failed,P2,Closed,Kate Morrison,05-Aug-2026 18:57,08-Aug-2026 09:04,Updated VPN client to current version.
+#11797,8/5/2026 5:27 PM,Everline Insurance,jhernandez@everline.com,Calendar sharing not working,P2 (High),resolved,Mei Chen,8/6/2026 3:29 AM,8/8/2026 5:03 AM,Reset credentials and confirmed with user.
+HD-11657,08/06/26 09:18,Valley Forge Storage,trichardson@valleyforgestorage.com,VPN slow from home office,2 - High,Closed,kate morrison,08/06/26 12:25,08/09/26 01:37,Updated VPN client to current version.
+HD-12167,08/06/26 09:55,Glassworks Optical,ijones@glassworksoptical.com,Wi-Fi drops in conference room,P3 (Normal),Closed,Kate Morrison,08/06/26 11:38,08/06/26 16:54,Adjusted firewall rule; site loads.
+HD-11236,2026-08-06 10:38,Summit Ridge Surveying,adavis@summitridgesurvey.com,VPN won't connect,P1,closed,Mei Chen,2026-08-06 11:05,2026-08-09 02:27,Freed 40 GB on data volume; alert cleared.
+HD-12341,06-Aug-2026 15:58,Zephyr Bike Works,dlopez@zephyrbikes.com,Server disk space alert,P2 (High),closed,Priya Nair,06-Aug-2026 17:46,09-Aug-2026 08:09,Renewed license and emailed confirmation.
+12572,06-Aug-2026 18:53,Zephyr Bike Works,dlopez@zephyrbikes.com,VPN slow from home office,3 - Normal,Closed,Priya Nair,06-Aug-2026 20:43,06-Aug-2026 21:51,"Confirmed phishing, blocked sender."
+HD-10123,2026-08-07 08:41,Glassworks Optical,ijones@glassworksoptical.com,VPN won't connect,P2 (High),Resolved,andre silva,2026-08-07 10:27,2026-08-08 15:33,Re-enrolled MFA device.
+HD-10885,2026-08-07 11:27,Orchard Hill Dental,AWRIGHT@ORCHARDHILLDENTAL.COM,Password reset,4 - Low,Closed,Priya Nair,2026-08-08 03:46,2026-08-08 05:31,Re-enrolled MFA device.
+HD-12504,08/07/26 13:09,Blue Mesa Title,nscott@bluemesatitle.com,License renewal question,P3 (Normal),closed,Kate Morrison,08/07/26 20:07,08/07/26 21:53,Re-imaged device and restored profile.
+HD-11658,2026-08-07 14:05,Quill & Ink Print Shop,tlopez@quillandink.print,Suspicious login alert,p3,Closed,Andre Silva,2026-08-07 18:44,2026-08-09 04:07,Updated VPN client to current version.
+HD-11127,08/07/26 15:16,Kingfisher Charters,pwright@kingfishercharters.com,Calendar sharing not working,P2,Closed,Mei Chen,08/07/26 18:06,08/10/26 10:48,Adjusted firewall rule; site loads.
+HD-10879,2026-08-07 15:41,Harlow Pediatric Dentistry,abrooks@harlowpeds.com,Scan to email broken,P3 (Normal),in progress,Kate Morrison,2026-08-07 20:03,,
+#10470,2026-08-12 08:13,Blue Heron Consulting,kwright@blueheronconsulting.com,Domain renewal,p2,Closed,Mei Chen,2026-08-12 10:57,2026-08-14 02:38,Adjusted firewall rule; site loads.
+10570,2026-08-07 17:40,Foxglove Interiors,gmurphy@foxgloveinteriors.com,VPN won't connect,p3,resolved,Sam Delgado,2026-08-08 17:01,2026-08-11 14:05,Granted access via security group.
+HD-11042,8/7/2026 6:07 PM,Dorsey Freight,ledwards@dorseyfreight.com,Calendar sharing not working,p4,closed,Andre Silva,8/10/2026 5:13 PM,8/11/2026 10:50 AM,Replaced toner and cleared queue.
+HD-12835,09-Aug-2026 17:44,Quill & Ink Print Shop,tlopez@quillandink.print,Backup job failed,P3 (Normal),Resolved,Priya Nair,10-Aug-2026 12:08,12-Aug-2026 00:15,Renewed license and emailed confirmation.
+#11890,24-Jul-2026 16:52,Ironwood Fabrication,kallen@ironwoodfab.com,Firewall blocking website,P4,closed,Jordan Blake,25-Jul-2026 10:46,27-Jul-2026 16:29,Freed 40 GB on data volume; alert cleared.
+#11624,10-Aug-2026 09:37,Fernbrook Montessori,njones@fernbrookmontessori.org,Suspicious login alert,p2,Closed,Mei Chen,10-Aug-2026 13:06,13-Aug-2026 05:06,"Confirmed phishing, blocked sender."
+HD-11330,2026-08-05 07:04,Granite Peak Outfitters,GLEWIS@GRANITEPEAK.COM,Phishing email reported,p4,Closed,Priya Nair,2026-08-06 02:38,2026-08-07 09:12,Re-imaged device and restored profile.
+hd-11753,2026-08-10 12:53,Acme Industrial,jramirez@acmeindustrial.com,New starter laptop setup,p1,resolved,Kate Morrison,2026-08-10 15:12,2026-08-13 13:44,Replaced toner and cleared queue.
+HD-11769,8/10/2026 3:44 PM,Kingfisher Charters,PWRIGHT@KINGFISHERCHARTERS.COM,Door badge reader offline,3 - Normal,Closed,Jordan Blake,8/11/2026 7:23 AM,8/12/2026 7:25 PM,Replaced toner and cleared queue.
+HD-11402,08/10/26 18:05,Acme Industrial,jramirez@acmeindustrial.com,Firewall blocking website,p3,Resolved,Kate Morrison,08/11/26 00:01,08/12/26 13:53,Updated VPN client to current version.
+hd-11715,11-Aug-2026 08:58,Ironwood Fabrication,GLOPEZ@IRONWOODFAB.COM,Backup job failed,p3,Closed,jordan blake,11-Aug-2026 12:51,12-Aug-2026 07:18,Re-enrolled MFA device.
+#10905,2026-07-20 09:08,Tallgrass Veterinary,mharris@tallgrassvet.com,MFA reset,P2 (High),Closed,Priya Nair,2026-07-20 09:13,2026-07-22 18:10,Re-enrolled MFA device.
+HD-10873,2026-08-11 09:07,Granger Tool & Die,rdiaz@grangertool.com,Outlook keeps asking for password,3 - Normal,closed,Andre Silva,2026-08-11 12:07,2026-08-12 06:41,Granted access via security group.
+10331,8/11/2026 9:30 AM,Northgate Chiropractic,rtanaka@northgatechiro.com,Phishing email reported,P2,closed,Mei Chen,8/11/2026 10:11 AM,8/11/2026 1:41 PM,"Confirmed phishing, blocked sender."
+HD-10177,11-Aug-2026 09:49,Dorsey Freight,ledwards@dorseyfreight.com,Printer offline,P2,Closed,Kate Morrison,11-Aug-2026 10:25,11-Aug-2026 16:04,Updated VPN client to current version.
+HD-11053,8/11/2026 11:15 AM,Tallgrass Veterinary,mharris@tallgrassvet.com,Door badge reader offline,P2 (High),Closed,Priya Nair,8/11/2026 12:07 PM,8/13/2026 10:14 AM,Freed 40 GB on data volume; alert cleared.
+hd-10116,8/17/2026 10:52 AM,Quill & Ink Print Shop,enelson@quillandink.print,License renewal question,p3,closed,Priya Nair,8/17/2026 4:03 PM,8/20/2026 12:13 AM,Adjusted firewall rule; site loads.
+11893,08/11/26 12:38,Meridian Title,smitchell@meridiantitle.com,VPN slow from home office,P3,Resolved,Mei Chen,08/11/26 15:25,08/13/26 05:04,Adjusted firewall rule; site loads.
+HD-11116,08/11/26 14:29,Seaside Realty Partners,ghaddad@seasiderp.com,Calendar sharing not working,2 - High,Resolved,Mei Chen,08/11/26 23:05,08/13/26 19:25,Renewed license and emailed confirmation.
+HD-12896,2026-08-11 16:01,Fairway Physical Therapy,dthomas@fairwaypt.com,Password reset,3 - Normal,Closed,Mei Chen,2026-08-11 21:19,2026-08-11 23:36,Reset credentials and confirmed with user.
+HD-11892,08/11/26 16:05,Ironwood Fabrication,rmiller@ironwoodfab.com,Outlook keeps asking for password,P2 (High),resolved,Andre Silva,08/11/26 16:51,08/11/26 21:57,Replaced toner and cleared queue.
+HD-10225,2026-08-12 07:42,Ironwood Fabrication,glopez@ironwoodfab.com,Firewall blocking website,P3 (Normal),resolved,Jordan Blake,2026-08-12 15:08,2026-08-13 15:31,Re-imaged device and restored profile.
+HD-10470,2026-08-12 08:13,Blue Heron Consulting,kwright@blueheronconsulting.com,Domain renewal,p2,Closed,Mei Chen,2026-08-12 10:57,2026-08-14 02:38,Adjusted firewall rule; site loads.
+HD-12475,2026-08-12 08:37,Fernbrook Montessori,gwatson@fernbrookmontessori.org,Monitor flickering,P3 (Normal),Closed,Kate Morrison,2026-08-13 05:49,2026-08-15 06:58,Adjusted firewall rule; site loads.
+HD-10687,2026-08-12 09:46,Mossbank Accounting,jstewart@mossbank.cpa,Domain renewal,4 - Low,Closed,Mei Chen,2026-08-12 11:50,2026-08-13 18:10,Re-enrolled MFA device.
+HD-11848,12-Aug-2026 11:07,Quill & Ink Print Shop,tlopez@quillandink.print,Monitor flickering,3 - Normal,resolved,Sam Delgado,12-Aug-2026 18:16,15-Aug-2026 07:36,Granted access via security group.
+HD-12318,2026-08-12 14:38,Pemberton HVAC,kthomas@pembertonhvac.com,Server disk space alert,P1 (Critical),Closed,Sam Delgado,2026-08-12 17:13,2026-08-15 10:59,Granted access via security group.
+HD-10757,08/12/26 14:56,Ironwood Fabrication,kallen@ironwoodfab.com,Calendar sharing not working,P4 (Low),closed,Jordan Blake,08/13/26 12:04,08/14/26 01:57,Renewed license and emailed confirmation.
+HD-10964,08/13/26 12:47,Valley Forge Storage,RGONZALEZ@VALLEYFORGESTORAGE.COM,New starter laptop setup,2 - High,Closed,Mei Chen,08/13/26 13:19,08/13/26 22:06,Reset credentials and confirmed with user.
+HD-11422,2026-08-14 08:24,Dorsey Freight,ledwards@dorseyfreight.com,Teams audio not working,P2,Resolved,Priya Nair,2026-08-14 10:25,2026-08-16 07:24,Granted access via security group.
+10327,8/14/2026 9:18 AM,Hollowell Electric,mtanaka@hollowellelectric.com,Backup job failed,P3 (Normal),closed,Priya Nair,8/14/2026 1:22 PM,8/16/2026 5:14 AM,Granted access via security group.
+12464,14-Aug-2026 13:00,Zephyr Bike Works,dlopez@zephyrbikes.com,MFA reset,P4,Closed,Priya Nair,15-Aug-2026 03:17,17-Aug-2026 09:30,Reset credentials and confirmed with user.
+hd-12466,2026-08-14 13:48,,dlindqvist@riverbendphysio.com,Scan to email broken,P4 (Low),Resolved,Priya Nair,2026-08-15 06:12,2026-08-16 10:22,Renewed license and emailed confirmation.
+HD-10357,2026-08-14 13:49,Ellington Bakeries,mgutierrez@ellingtonbakes.com,Firewall blocking website,4 - Low,Closed,Priya Nair,2026-08-15 06:20,2026-08-17 07:42,Freed 40 GB on data volume; alert cleared.
+11996,8/14/2026 3:44 PM,Thistle & Thread Alterations,eking@thistlethread.com,Teams audio not working,p3,Closed,Andre Silva,8/14/2026 9:24 PM,8/17/2026 4:28 PM,Re-enrolled MFA device.
+#10264,14-Aug-2026 18:43,Westbrook Plumbing,abailey@westbrookplumbing.com,Accounting software won't open,4 - Low,Closed,Priya Nair,16-Aug-2026 03:55,18-Aug-2026 11:55,Granted access via security group.
+HD-10116,8/17/2026 10:52 AM,Quill & Ink Print Shop,enelson@quillandink.print,License renewal question,p3,closed,Priya Nair,8/17/2026 4:03 PM,8/20/2026 12:13 AM,Adjusted firewall rule; site loads.
+12839,17-Aug-2026 11:52,Everline Insurance,jhernandez@everline.com,Offboarding user,3 - Normal,closed,Priya Nair,17-Aug-2026 17:26,19-Aug-2026 00:39,Granted access via security group.
+#11776,08/17/26 12:58,Fernbrook Montessori,njones@fernbrookmontessori.org,Firewall blocking website,4 - Low,closed,Jordan Blake,08/19/26 06:48,08/20/26 17:51,Reset credentials and confirmed with user.
+HD-12794,2026-08-17 15:00,Umber Ceramics,mreed@umberceramics.com,Accounting software won't open,3 - Normal,Closed,Andre Silva,2026-08-17 18:31,2026-08-19 23:23,Freed 40 GB on data volume; alert cleared.
+HD-11338,2026-08-17 16:30,Saltmarsh Kayaks,kmorgan@saltmarshkayaks.com,Accounting software won't open,P4 (Low),Resolved,Priya Nair,2026-08-18 00:29,2026-08-19 12:17,Re-enrolled MFA device.
+hd-12309,8/17/2026 5:04 PM,Kestrel Analytics,kchavez@kestrelanalytics.io,Wi-Fi drops in conference room,p4,In Progress,Mei Chen,8/17/2026 7:27 PM,,
+hd-11646,8/17/2026 5:33 PM,Harlow Pediatric Dentistry,dlewis@harlowpeds.com,Calendar sharing not working,p3,Closed,Kate Morrison,8/17/2026 5:37 PM,8/20/2026 5:16 PM,Updated VPN client to current version.
+HD-12389,08/17/26 18:10,Valley Forge Storage,rgonzalez@valleyforgestorage.com,Password reset,4 - Low,Resolved,Kate Morrison,08/18/26 03:32,08/20/26 08:08,Granted access via security group.
+HD-10394,08/18/26 08:38,Westbrook Plumbing,nkim@westbrookplumbing.com,Domain renewal,P3 (Normal),Resolved,Priya Nair,08/19/26 00:56,08/19/26 22:29,Replaced toner and cleared queue.
+HD-12419,2026-08-18 10:16,Umber Ceramics,JMARTINEZ@UMBERCERAMICS.COM,Printer offline,3 - Normal,Resolved,Andre Silva,2026-08-18 15:28,2026-08-21 00:38,Freed 40 GB on data volume; alert cleared.
+#12302,18-Aug-2026 12:55,Everline Insurance,kking@everline.com,Suspicious login alert,P4,closed,mei chen,20-Aug-2026 15:53,23-Aug-2026 14:17,Freed 40 GB on data volume; alert cleared.
+10183,8/18/2026 5:45 PM,Kingfisher Charters,pwright@kingfishercharters.com,Backup job failed,p3,Closed,Jordan Blake,8/19/2026 12:03 AM,8/20/2026 12:59 AM,Reset credentials and confirmed with user.
+HD-12125,2026-08-19 10:02,Glassworks Optical,ijones@glassworksoptical.com,Backup job failed,3 - Normal,Closed,Jordan Blake,2026-08-19 12:50,2026-08-20 17:51,Granted access via security group.
+hd-11243,8/19/2026 11:46 AM,Zephyr Bike Works,chaddad@zephyrbikes.com,New starter laptop setup,p4,Closed,Priya Nair,8/20/2026 4:18 AM,8/20/2026 10:17 AM,Freed 40 GB on data volume; alert cleared.
+HD-12068,19-Aug-2026 15:22,Keystone Freight Brokers,malvarez@keystonefb.com,Mailbox full,P3,Resolved,sam delgado,19-Aug-2026 17:33,21-Aug-2026 11:07,Granted access via security group.
+HD-10502,19-Aug-2026 18:12,Crescent Moon Bakery,rdavis@crescentmoonbakes.com,Door badge reader offline,P2,Closed,jordan blake,19-Aug-2026 20:31,20-Aug-2026 11:06,Replaced toner and cleared queue.
+12344,8/20/2026 7:06 AM,Cedar & Pine Landscaping,rmorris@cedarpine.co,Offboarding user,4 - Low,Waiting on client,Sam Delgado,8/21/2026 2:45 AM,,
+HD-10350,08/20/26 09:33,Umber Ceramics,akim@umberceramics.com,Offboarding user,P3,Resolved,andre silva,08/20/26 11:17,08/22/26 08:47,Re-imaged device and restored profile.
+HD-11968,8/20/2026 10:39 AM,Glassworks Optical,IJONES@GLASSWORKSOPTICAL.COM,Printer offline,p3,resolved,Kate Morrison,8/20/2026 12:53 PM,8/22/2026 5:21 PM,Adjusted firewall rule; site loads.
+HD-10880,2026-08-20 12:49,Pinnacle Roofing,groberts@pinnacleroofing.com,Outlook keeps asking for password,2 - High,waiting on client,Kate Morrison,2026-08-20 13:58,,
+HD-10840,21-Aug-2026 07:15,Vantage Point Media,revans@vantagepointmedia.com,Monitor flickering,p3,New,Mei Chen,,,
+HD-11838,2026-08-21 09:24,Oakhurst Pediatrics,msanchez@oakhurstpeds.org,Laptop running slow,P2,In Progress,kate morrison,2026-08-21 15:17,,
+HD-11234,08/21/26 11:59,Ivy Lane Florist,mmensah@ivylaneflorist.com,MFA reset,P4 (Low),In Progress,Sam Delgado,08/22/26 09:44,,
+10173,8/21/2026 1:03 PM,Tallgrass Veterinary,mharris@tallgrassvet.com,Backup job failed,1 - Critical,Resolved,priya nair,8/21/2026 1:17 PM,8/22/2026 11:18 AM,Renewed license and emailed confirmation.
+12375,21-Aug-2026 14:01,Orchard Hill Dental,mnelson@orchardhilldental.com,MFA reset,P1,Closed,Priya Nair,21-Aug-2026 14:28,21-Aug-2026 18:29,Reset credentials and confirmed with user.
+#10514,2026-08-21 14:43,Vantage Point Media,ywood@vantagepointmedia.com,Firewall blocking website,P3 (Normal),Closed,Mei Chen,2026-08-21 15:17,2026-08-23 02:47,Updated VPN client to current version.
+10997,2026-08-21 17:23,Fernbrook Montessori,CMENDOZA@FERNBROOKMONTESSORI.ORG,Offboarding user,3 - Normal,open,Kate Morrison,2026-08-21 21:48,,
+HD-10579,08/21/26 17:40,,KALLEN@IRONWOODFAB.COM,Printer offline,P4 (Low),new,Mei Chen,,,
+HD-12263,8/23/2026 1:41 PM,Tamarack Brewing,anguyen@tamarackbrewing.com,New starter laptop setup,3 - Normal,Resolved,Andre Silva,8/23/2026 2:23 PM,8/23/2026 11:17 PM,Granted access via security group.
+hd-12543,08/23/26 16:45,Foxglove Interiors,pevans@foxgloveinteriors.com,Password reset,P1 (Critical),new,,,,
+#12893,07/06/26 15:47,Meridian Title,slindqvist@meridiantitle.com,Offboarding user,3 - Normal,Resolved,Jordan Blake,07/06/26 22:52,07/07/26 03:10,Renewed license and emailed confirmation.
+HD-12547,08/24/26 08:18,Northfield Auto Body,EKELLY@NORTHFIELDAUTO.COM,Door badge reader offline,P2 (High),In Progress,Andre Silva,08/24/26 11:02,,
+HD-12837,08/24/26 08:38,Glassworks Optical,ijones@glassworksoptical.com,Monitor flickering,p3,New,,,,
+HD-12634,24-Aug-2026 13:21,Glassworks Optical,dmoore@glassworksoptical.com,Laptop running slow,3 - Normal,New,Sam Delgado,,,
+hd-11795,24-Aug-2026 18:28,Quill & Ink Print Shop,ENELSON@QUILLANDINK.PRINT,Door badge reader offline,3 - Normal,Open,Priya Nair,24-Aug-2026 22:46,,
+HD-12367,24-Aug-2026 18:41,Tallgrass Veterinary,mharris@tallgrassvet.com,Suspicious login alert,P3 (Normal),In Progress,Priya Nair,24-Aug-2026 23:30,,
+HD-10643,08/25/26 08:01,Orchard Hill Dental,RRAMIREZ@ORCHARDHILLDENTAL.COM,Teams audio not working,P3,open,Priya Nair,08/25/26 10:32,,
+#10346,2026-08-25 14:20,Tamarack Brewing,mramos@tamarackbrewing.com,Domain renewal,2 - High,New,Andre Silva,,,
+12030,25-Aug-2026 15:32,Dorsey Freight,LEDWARDS@DORSEYFREIGHT.COM,Accounting software won't open,P4,New,Priya Nair,,,
+HD-11843,08/25/26 15:51,Glassworks Optical,dmoore@glassworksoptical.com,Firewall blocking website,3 - Normal,Waiting on client,priya nair,08/25/26 17:09,,
+HD-11203,25-Aug-2026 16:41,Foxglove Interiors,pevans@foxgloveinteriors.com,Suspicious login alert,P3,Closed,Sam Delgado,25-Aug-2026 21:04,26-Aug-2026 17:04,Granted access via security group.
+HD-11434,2026-08-25 17:36,Saltmarsh Kayaks,bharris@saltmarshkayaks.com,Server disk space alert,P3 (Normal),In Progress,Priya Nair,2026-08-26 00:29,,
+12575,26-Aug-2026 07:44,Uptown Fitness,LMARTIN@UPTOWNFIT.COM,Server disk space alert,p2,New,Kate Morrison,,,
+11932,2026-08-26 08:46,Foxglove Interiors,gmurphy@foxgloveinteriors.com,Teams audio not working,2 - High,resolved,Sam Delgado,2026-08-26 10:19,2026-08-28 15:24,"Confirmed phishing, blocked sender."
+10198,2026-08-26 08:47,Ivy Lane Florist,afoster@ivylaneflorist.com,Accounting software won't open,p4,Resolved,Andre Silva,2026-08-26 16:58,2026-08-27 03:36,Granted access via security group.
+HD-12817,2026-08-26 08:55,Saltmarsh Kayaks,kmorgan@saltmarshkayaks.com,VPN won't connect,P3 (Normal),Closed,Priya Nair,2026-08-26 15:05,2026-08-27 04:49,Re-enrolled MFA device.
+#12111,08/26/26 11:47,Juniper Street Cafe,rjones@juniperstreet.cafe,Shared drive access request,P3,New,Sam Delgado,,,
+HD-12349,2026-08-26 18:41,Uptown Fitness,lmartin@uptownfit.com,Laptop running slow,P2 (High),Open,kate morrison,2026-08-26 20:19,,
+11016,2026-08-27 07:06,Yellowtail Seafood,sortiz@yellowtailseafood.com,Door badge reader offline,3 - Normal,open,Sam Delgado,2026-08-27 11:38,,
+#12261,8/27/2026 3:39 PM,Granite Peak Outfitters,ephillips@granitepeak.com,Phishing email reported,P3,In Progress,Priya Nair,8/27/2026 10:51 PM,,
+HD-12187,2026-08-28 07:08,Kingfisher Charters,pwright@kingfishercharters.com,Firewall blocking website,P3 (Normal),in progress,Priya Nair,2026-08-28 12:21,,
+#10257,8/28/2026 11:19 AM,Foxglove Interiors,gmurphy@foxgloveinteriors.com,Teams audio not working,P4,Resolved,Jordan Blake,8/28/2026 11:34 PM,8/29/2026 6:00 AM,Freed 40 GB on data volume; alert cleared.
+HD-12769,28-Aug-2026 12:26,Vantage Point Media,ywood@vantagepointmedia.com,Door badge reader offline,p3,closed,Mei Chen,28-Aug-2026 13:54,31-Aug-2026 12:29,Adjusted firewall rule; site loads.
+HD-11030,8/28/2026 3:30 PM,Hollowell Electric,mtanaka@hollowellelectric.com,Server disk space alert,p3,Resolved,Priya Nair,8/29/2026 12:51 AM,8/30/2026 10:53 AM,Updated VPN client to current version.
+HD-11255,8/28/2026 5:37 PM,Mossbank Accounting,JSTEWART@MOSSBANK.CPA,Wi-Fi drops in conference room,P2 (High),resolved,mei chen,8/29/2026 3:45 AM,8/31/2026 10:00 PM,Replaced toner and cleared queue.
+hd-11837,2026-08-30 14:55,Tallgrass Veterinary,mharris@tallgrassvet.com,Offboarding user,p4,Resolved,Priya Nair,2026-08-30 23:19,2026-08-31 04:23,Granted access via security group.
+HD-11039,2026-08-31 09:21,Mossbank Accounting,jstewart@mossbank.cpa,Shared drive access request,1 - Critical,new,Kate Morrison,,,
+HD-12600,8/31/2026 9:50 AM,Larkspur Yoga,STURNER@LARKSPURYOGA.COM,Scan to email broken,P3,Resolved,Andre Silva,8/31/2026 5:17 PM,8/31/2026 10:00 PM,Freed 40 GB on data volume; alert cleared.
+HD-12467,31-Aug-2026 10:07,Granger Tool & Die,scarter@grangertool.com,Printer offline,2 - High,New,Andre Silva,,,
+12517,2026-08-31 10:08,Quill & Ink Print Shop,ENELSON@QUILLANDINK.PRINT,Printer offline,4 - Low,Open,Mei Chen,2026-08-31 21:00,,
+HD-12268,8/31/2026 11:52 AM,Silverline Logistics,lrichardson@silverlinelogistics.com,VPN won't connect,P4,In Progress,Priya Nair,8/31/2026 12:10 PM,,

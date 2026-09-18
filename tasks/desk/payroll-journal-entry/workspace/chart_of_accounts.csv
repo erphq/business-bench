@@ -1,0 +1,20 @@
+Account,Name,Type
+1010,Operating checking,Bank
+1020,Payroll clearing (inactive since 2025),Bank
+2100,Accrued wages payable,Other current liability
+2110,Federal income tax withheld,Other current liability
+2115,FICA payable (Social Security & Medicare),Other current liability
+2120,State income tax withheld,Other current liability
+2130,FUTA payable,Other current liability
+2135,State unemployment (SUI) payable,Other current liability
+2140,401(k) payable,Other current liability
+2145,Health insurance payable,Other current liability
+2150,Wage garnishments payable,Other current liability
+6010,Wages - field technicians,Expense
+6020,Wages - office & admin,Expense
+6030,Officer compensation,Expense
+6040,Contract labor,Expense
+6110,Payroll tax expense,Expense
+6120,Employee benefits - health,Expense
+6130,Employee benefits - retirement,Expense
+6310,Employee expense reimbursements,Expense

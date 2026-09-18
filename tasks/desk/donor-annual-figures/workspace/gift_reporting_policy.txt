@@ -1,0 +1,20 @@
+Riverbend Animal Rescue - Gift reporting policy (board approved, March 2024)
+
+1. Fiscal year. Our fiscal year runs from 1 July to 30 June and is named for the year in which it ends:
+   FY2026 is 1 July 2025 to 30 June 2026. All board figures are by fiscal year.
+
+2. What counts as raised. Cash gifts count at the amount received: card, check, ACH, PayPal, gifts of stock
+   (at the value on the day received) and donor-advised fund grants.
+
+3. In-kind gifts. Goods and services are recorded at fair market value so we can thank the donor, but they
+   are not fundraising revenue. Leave them out of totals, donor counts, rankings and retention.
+
+4. Refunds and chargebacks. A gift refunded in full shows Status 'Refunded' and did not happen. A partial refund
+   or a card chargeback is entered as its own negative line naming the gift it reverses; net it against that
+   original gift, in the original gift's fiscal year, even when the refund is processed later.
+
+5. Donors. A donor is a Donor ID. The CRM prints the name as it was typed on each gift.
+
+6. Retention. Donor retention for a year is the number of donors who gave in the prior fiscal year and gave
+   again in this one, divided by the number of donors who gave in the prior fiscal year. 'Gave' means net
+   cash giving above zero in that year.

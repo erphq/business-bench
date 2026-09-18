@@ -1,0 +1,117 @@
+id: shipment-manifests
+track: desk
+category: extraction
+title: Shipment weights and costs from last week's manifests
+ask: |
+  Last week's carrier manifests are in the folder. Can you pull every shipment into shipments.csv so I can check shipping against what we charged? Hollis's note says what he needs.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  AeroPac prints actual kilograms next to a larger chargeable (volumetric) kilogram column, the postage log prints '2 lb 7 oz' and the scan '3 pounds 11 ounces', and Northline prints decimal pounds; the note wants actual pounds (check: weights)
+- |-
+  Northline prints each box of a multi-piece shipment as its own row with its own tracking number under the master (2 shipments, three and two boxes); one row per shipment on the master number with the boxes counted and weight and cost summed (checks: one row per shipment; row count; packages; weights; cost)
+- |-
+  voided labels are listed with weights and postage: a VOID row in the PostPoint log, a VOID line on the scanned manifest, and a Northline label marked VOIDED just above the replacement label for the same order (checks: one row per shipment; row count)
+- |-
+  cost is the carrier's total to us: Northline adds fuel and residential surcharges in their own columns, PostPoint adds insurance, and AeroPac prints duties billed to the receiver and a declared value beside freight, fuel and remote-area charges (check: cost)
+- |-
+  order references are printed '#SB-10482' (Northline), 'Ref SB10482' (AeroPac) and 'SB-10482' (PostPoint) (check: carrier, date and order)
+- |-
+  Friday's PostPoint manifest is an image-only scan (checks: one row per shipment; weights; cost)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: shipments.csv
+  columns:
+  - tracking_no
+  - carrier
+  - ship_date
+  - order_no
+  - packages
+  - weight_lb
+  - cost
+- type: csv_set_equal
+  name: one row per shipment
+  path: shipments.csv
+  column: tracking_no
+  ref: shipments.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: shipments.csv
+  equals_ref: shipments.csv
+- type: csv_values_match
+  name: carrier, date and order
+  path: shipments.csv
+  ref: shipments.csv
+  key: tracking_no
+  columns:
+  - carrier
+  - ship_date
+  - order_no
+  min_accuracy: 1.0
+  must_match_keys:
+  - AP5809055446
+  - AP9687785011
+  - AP9852109887
+- type: csv_values_match
+  name: packages
+  path: shipments.csv
+  ref: shipments.csv
+  key: tracking_no
+  columns:
+  - packages
+  tolerance: 0.01
+  must_match_keys:
+  - NL837811162064
+  - NL244987804856
+  - AP5809055446
+  - AP9687785011
+  - AP9852109887
+  numeric: true
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: weights
+  path: shipments.csv
+  ref: shipments.csv
+  key: tracking_no
+  columns:
+  - weight_lb
+  tolerance: 0.03
+  must_match_keys:
+  - NL837811162064
+  - NL244987804856
+  - AP5809055446
+  - AP9687785011
+  - AP9852109887
+  - '94029127237070819778'
+  - '94027911663092514744'
+  - '94022458754913419025'
+  - '94029299399797494277'
+  - '94024216937586819395'
+  - '94026049434795020066'
+  - '94027656466312142990'
+  numeric: true
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: cost
+  path: shipments.csv
+  ref: shipments.csv
+  key: tracking_no
+  columns:
+  - cost
+  tolerance: 0.01
+  must_match_keys:
+  - NL837811162064
+  - NL244987804856
+  - AP5809055446
+  - AP9687785011
+  - AP9852109887
+  - '94024216937586819395'
+  - '94026049434795020066'
+  - '94027656466312142990'
+  numeric: true
+  min_accuracy: 1.0

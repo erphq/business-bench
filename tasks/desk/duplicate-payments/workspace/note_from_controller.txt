@@ -1,0 +1,18 @@
+Duplicate payments - before I call anyone
+
+Our bank flagged a supplier who told us we had paid them twice, which means there are probably more. Go through the
+payment register for this year and find money we have paid twice.
+
+How I want it judged:
+- Only payments that actually went out count. Voided and stopped checks never left the building.
+- The vendor master has some suppliers set up twice under different vendor IDs. Same tax ID = same supplier.
+- Invoice numbers get keyed with and without INV-, #, dashes and leading zeros. Ignore those when comparing.
+- A supplier can be paid more than once on one invoice if we pay in instalments - that is only a problem when what we
+  paid on the invoice adds up to more than the invoice.
+- If the supplier already sent the money back (see the refunds file), leave it off.
+
+Send me duplicate_payments.csv with one row for each payment that took us over: payment_id, original_payment_id (the
+first payment on that invoice), vendor, invoice, amount_overpaid (just the part that was too much) and a short reason
+I can read out on the phone.
+
+- Hannah

@@ -1,0 +1,17 @@
+From: June Whitaker <june@oakhollowchoir.org>
+To: you
+Date: Mon, 5 Oct 2026 20:12
+Subject: Moving the concert sign-ups into Eventbrite
+
+Hi! Now the Eventbrite page is up I'd like everyone who signed up on the Google Form loaded in as attendees, so the door list and the numbers all come from Eventbrite. They have an import - template attached, and the ticket types as they are set up on the event.
+
+A few things:
+- One row per person who signed up, with their ticket type and how many tickets.
+- Ticket Type has to be exactly the Eventbrite name or the import rejects the row. The form wording is different (I wrote it before we set up Eventbrite).
+- The form asked 'How many?' and people typed all sorts. If they left it blank it's one ticket. The Family Pass is ONE ticket for the whole family, no matter how many people they said.
+- If someone filled the form in more than once, their latest response is the one that counts.
+- My test response from the first night is in there too, please leave that out.
+- First and last name in their own columns.
+
+Thanks so much,
+June

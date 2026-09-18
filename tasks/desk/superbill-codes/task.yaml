@@ -1,0 +1,136 @@
+id: superbill-codes
+track: desk
+category: extraction
+title: Key this week's superbills for charge entry
+ask: |
+  This week's superbills are in the folder - can you get them into superbill_lines.csv for charge entry? Renee's note has how the import wants it.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  modifiers are written four ways: hyphen-joined to the code on the encounter form and the typed flowsheet (99214-25, 97140-GP-59), in a Mod column on the checkbox superbill and the late ticket, after the code on the scan (GP KX), and once in bold above the therapy note's table for every code below it; the code column must hold the bare code (checks: procedure codes; modifiers)
+- |-
+  the therapy note prints minutes beside units, the typed flowsheet writes quantities as x2, and the checkbox superbill leaves Units blank for one unit; charge is units times the fee, not the fee (checks: units; charges)
+- |-
+  the typed flowsheet for encounter 40388 lists 97530 marked 'VOID - entered in error'; it is not billed (checks: one row per billed line; row count)
+- |-
+  the checkbox superbill and the encounter form list all eleven common codes with fees; only the rows marked X were performed (checks: one row per billed line; row count)
+- |-
+  every form prints the 2025 fees; charges come from the schedule in effect on the date of service, which is the 2026 fee for September visits and the 2025 fee for the late ticket 39916 dated 29 June (check: charges)
+- |-
+  the Thursday therapy slip for encounter 40873 is an image-only scan (checks: modifiers; units)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: superbill_lines.csv
+  columns:
+  - line_ref
+  - encounter_no
+  - account_no
+  - service_date
+  - cpt_code
+  - modifiers
+  - units
+  - charge
+- type: csv_set_equal
+  name: one row per billed line
+  path: superbill_lines.csv
+  column: line_ref
+  ref: superbill_lines.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: superbill_lines.csv
+  equals_ref: superbill_lines.csv
+- type: csv_values_match
+  name: encounter, account and date
+  path: superbill_lines.csv
+  ref: superbill_lines.csv
+  key: line_ref
+  columns:
+  - encounter_no
+  - account_no
+  - service_date
+  min_accuracy: 1.0
+  must_match_keys:
+  - 39916-99213
+  - 39916-20611
+  - 40873-97110
+  - 40873-97530
+  - 40873-97035
+- type: csv_values_match
+  name: procedure codes
+  path: superbill_lines.csv
+  ref: superbill_lines.csv
+  key: line_ref
+  columns:
+  - cpt_code
+  min_accuracy: 1.0
+  must_match_keys:
+  - 40243-99203
+  - 40243-20550
+  - 40243-29530
+  - 40388-97162
+  - 40388-97110
+  - 40388-97140
+- type: csv_values_match
+  name: modifiers
+  path: superbill_lines.csv
+  ref: superbill_lines.csv
+  key: line_ref
+  columns:
+  - modifiers
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - 40323-97110
+  - 40323-97140
+  - 40323-97112
+  - 40388-97162
+  - 40388-97110
+  - 40388-97140
+  - 40873-97110
+  - 40873-97530
+  - 40873-97035
+- type: csv_values_match
+  name: units
+  path: superbill_lines.csv
+  ref: superbill_lines.csv
+  key: line_ref
+  columns:
+  - units
+  must_match_keys:
+  - 40242-99214
+  - 40242-20610
+  - 40242-73560
+  - 40323-97110
+  - 40323-97140
+  - 40323-97112
+  - 40388-97162
+  - 40388-97110
+  - 40388-97140
+  - 40873-97110
+  - 40873-97530
+  - 40873-97035
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: charges
+  path: superbill_lines.csv
+  ref: superbill_lines.csv
+  key: line_ref
+  columns:
+  - charge
+  must_match_keys:
+  - 40242-99214
+  - 40242-20610
+  - 40242-73560
+  - 39916-99213
+  - 39916-20611
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

@@ -1,0 +1,12 @@
+August card transactions
+
+Can you key everything on the company cards for August into card_transactions.csv? The statements are in card_statements. I book cards by the date of the transaction, not when the bank posted it, and I want one row per transaction:
+
+txn_ref - the bank's reference number for the transaction
+card_last4 - last four digits of the card it was made on
+trans_date - YYYY-MM-DD
+description - the merchant or payment line as printed (first line only)
+amount - in dollars; purchases and fees positive, payments, refunds and credits negative. For foreign purchases leave the bank's foreign transaction fee out of this amount...
+foreign_fee - ...and put it here, on the purchase it belongs to. 0 if none.
+
+Ingrid

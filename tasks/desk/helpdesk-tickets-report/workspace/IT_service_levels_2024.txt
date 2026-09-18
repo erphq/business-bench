@@ -1,0 +1,7 @@
+Meridian Title - IT service levels (2024)
+
+Business hours: Monday to Friday 08:00 to 17:00.
+
+Targets (business hours): Urgent 4, High 8, Normal 16, Low 40.
+
+Measured from ticket creation to resolution.

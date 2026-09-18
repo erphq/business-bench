@@ -1,0 +1,64 @@
+id: helpdesk-tickets-report
+track: desk
+category: reports
+title: May helpdesk tickets by category and SLA breaches
+ask: |
+  Can you turn the helpdesk export into May's report for Thursday's ops meeting - tickets per category and how many breached the SLA? Save it as tickets_report.xlsx with live formulas, and write the headline in memo.md. Gwen's email and the policy in the folder say how we count.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  priorities are spelled nine ways across old-helpdesk imports and the web form (P1, Urgent, 1 - Critical, Hi, Medium, med, ...); the 2026 policy says Urgent is P1 Critical and Medium is P3 Normal, and reading an unrecognised spelling as a default target moves the breach count (check: total SLA breaches)
+- |-
+  targets are business hours, Monday to Friday 08:00-18:00, and a ticket opened in the evening or at the weekend starts its clock at the next opening; elapsed calendar hours turn most overnight P1/P2 tickets into breaches (checks: Network SLA breaches; total SLA breaches)
+- |-
+  25 May is Memorial Day and the clock does not run; three Network tickets opened on Friday 22 May and fixed on Tuesday morning are inside target only if the holiday is skipped (check: Network SLA breaches)
+- |-
+  tickets still open at the export (1 June 07:45) have no Resolved time; Gwen's second email counts those already past target as breaches, and dropping them understates the total (check: total SLA breaches)
+- |-
+  Merged duplicates and Spam are in the export, and so are ten tickets opened in late April and closed in May; none are May tickets, and Email carries spam, merges and April tickets (checks: Email tickets; total tickets)
+- |-
+  the superseded 2024 policy (08:00-17:00, Normal 16 hours) sits beside the 2026 one (check: total SLA breaches)
+- 'the memo must state the breach count in a sentence (check: memo states the breach count)'
+checks:
+- type: file_exists
+  name: tickets_report.xlsx exists
+  path: tickets_report.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: tickets_report.xlsx
+  min_count: 8
+- type: xlsx_no_errors
+  name: no error cells
+  path: tickets_report.xlsx
+- type: xlsx_value_present
+  name: Email tickets (no merged, spam or April tickets)
+  path: tickets_report.xlsx
+  expected: 41
+  rel_tol: 0.001
+  near_text: email
+- type: xlsx_value_present
+  name: Network SLA breaches (business hours, holiday skipped)
+  path: tickets_report.xlsx
+  expected: 13
+  rel_tol: 0.001
+  near_text: network
+- type: xlsx_value_present
+  name: total tickets
+  path: tickets_report.xlsx
+  expected: 255
+  rel_tol: 0.001
+  near_text: total
+- type: xlsx_value_present
+  name: total SLA breaches
+  path: tickets_report.xlsx
+  expected: 48
+  rel_tol: 0.001
+  near_text: total
+- type: text_sentence_matches
+  name: memo states the breach count
+  path: memo.md
+  all:
+  - |-
+    (breach|missed|outside (the |their |its )?(sla|target)|over (the |their |its )?(sla|target)|\blate\b|overdue|exceeded|past (the |their |its )?target)
+  - (?<![\d.,])48(?![\d]|[.,]\d)

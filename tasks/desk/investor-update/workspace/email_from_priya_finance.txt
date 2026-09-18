@@ -1,0 +1,12 @@
+From: Priya Shah <priya.shah@kestrelanalytics.io>
+To: Marcus Reed <marcus@kestrelanalytics.io>
+Date: Mon, 13 Jul 2026 16:05
+Subject: May revenue restated
+
+Marcus,
+
+Found it: INV-2357 to Harbor Light Marine was posted twice in May, so May revenue in the KPI tracker is overstated by
+$22,600. Restated May revenue is $126,344. I will fix the tracker after the audit fieldwork, but use the
+restated number for anything going out before then. Nothing else in the sheet changes.
+
+Priya

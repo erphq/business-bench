@@ -1,0 +1,84 @@
+id: energy-usage-sites
+track: desk
+category: reports
+title: Monthly electricity by building from meter reads
+ask: |
+  The owners want electricity by building for January to June, month by month. Build it as energy.xlsx with live formulas and put anything I should know in memo.md. Omar's email explains how the meter reads work.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the Register column is the meter's running total, not usage; summing it gives a number in the millions and even differencing it needs the reads in meter order (checks: Riverside total; Mill Street total; total across the portfolio)
+- |-
+  reads land mid-month, so each interval has to be split across the month boundary by days; assigning a whole interval to the month of its later read moves every figure and loses the last days of June (checks: Hawthorn Court total; total across the portfolio)
+- |-
+  the Mill Street Lofts meter was read, removed and replaced on 2026-03-18 and the new meter starts at zero, so a plain difference over that site's reads produces a large negative March (check: Mill Street total)
+- |-
+  Riverside Business Park is two meters, one per building, read on the same days; using one of them halves the site (check: Riverside total)
+- |-
+  Depot Lane Storage has no read after 31 May, so June cannot be computed for it - the report must leave it out rather than repeat May, and its half-year total covers five months (checks: Depot Lane total; memo names the missing June read)
+- |-
+  registers are written '482,119' and '482119', dates come in three formats, some reads are marked Estimated (they still count), and the export carries a preamble, a BOM and CRLF endings (check: total across the portfolio)
+checks:
+- type: file_exists
+  name: energy.xlsx exists
+  path: energy.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: energy.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: energy.xlsx
+- type: xlsx_value_present
+  name: Riverside total (both meters)
+  path: energy.xlsx
+  expected: 145867.1
+  rel_tol: 0.001
+  rounding: kWh prorated by day between meter reads
+  near_text: riverside
+- type: xlsx_value_present
+  name: Mill Street total (meter replaced in March)
+  path: energy.xlsx
+  expected: 58992.2
+  rel_tol: 0.001
+  rounding: kWh prorated by day between meter reads
+  near_text: mill street
+- type: xlsx_value_present
+  name: Depot Lane total (five months, June not invented)
+  path: energy.xlsx
+  expected: 23572.9
+  rel_tol: 0.001
+  rounding: kWh prorated by day between meter reads
+  near_text: depot lane
+- type: xlsx_value_present
+  name: Hawthorn Court total
+  path: energy.xlsx
+  expected: 79556.5
+  rel_tol: 0.001
+  rounding: kWh prorated by day between meter reads
+  near_text: hawthorn
+- type: xlsx_value_present
+  name: total across the portfolio
+  path: energy.xlsx
+  expected: 441625.7
+  rel_tol: 0.001
+  rounding: kWh prorated by day between meter reads
+  near_text: total
+- type: text_numbers_present
+  name: memo carries the portfolio and Depot Lane totals
+  path: memo.md
+  numbers:
+  - 441625.7
+  - 23572.9
+  rel_tol: 0.01
+- type: text_sentence_matches
+  name: memo names the missing June read
+  path: memo.md
+  all:
+  - \bdepot lane\b
+  - (\bjune\b|\bjun\b|\b2026-06\b|\b06/2026\b)
+  - |-
+    (\bno\b[^.;]{0,40}\b(read|reading|readings|data)\b|\bmissing\b|\bgap\b|\bnot been read\b|\bhas not been read\b|\bnever read\b|\bcannot be (calculated|computed|worked out)\b|\bblank\b)
+  none:
+  - (rather than (a |an )?(missing|gap)|\bnot (a |an )?(missing|gap)\b)

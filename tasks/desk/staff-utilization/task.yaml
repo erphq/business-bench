@@ -1,0 +1,65 @@
+id: staff-utilization
+track: desk
+category: spreadsheet
+title: September billable utilization per person
+ask: |
+  Dana wants September's utilization for everyone from the time entries, the HR roster and the leave export. Build utilization.xlsx with live formulas - her note says how the firm counts it.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  capacity comes from the roster's standard week: full-time is 37.5 hours (7.5 a day, not 8) and the two part-timers work 24 and 30 hours (checks: Omar Haddad capacity; utilization per person)
+- |-
+  Labor Day (7 September, on the roster's holiday tab) is a firm holiday, leaving 21 working days; Kenneth's approved 4-8 September vacation shows 3 in the HR Days column because it counts the holiday, so subtracting Days takes the holiday off twice (check: Kenneth Oduya capacity)
+- |-
+  Priya's vacation runs 27 August to 2 September and its Days column carries all five weekdays; only 1 and 2 September come off September (check: Priya Raman capacity)
+- |-
+  rejected, cancelled and pending requests sit in the same export and are not leave; Omar's personal day is a half day (checks: Omar Haddad capacity; utilization per person)
+- |-
+  Hannah Brooks started on 14 September, so her capacity covers 13 working days, not the month (check: Hannah Brooks capacity)
+- |-
+  internal admin, training and marketing time is logged under the firm itself and marked N, as are write-offs; the time export names staff 'Last, First' under a two-line preamble with CRLF endings, and the roster also lists the office manager, who is not on the report (checks: utilization per person; firm capacity total)
+checks:
+- type: file_exists
+  name: utilization.xlsx exists
+  path: utilization.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: utilization.xlsx
+  min_count: 16
+- type: xlsx_no_errors
+  name: no error cells
+  path: utilization.xlsx
+- type: xlsx_value_present
+  name: Omar Haddad capacity (part-time, half day)
+  path: utilization.xlsx
+  expected: 123.0
+  rel_tol: 0.002
+  near_text: omar
+- type: xlsx_value_present
+  name: Kenneth Oduya capacity (leave over the holiday)
+  path: utilization.xlsx
+  expected: 142.5
+  rel_tol: 0.002
+  near_text: kenneth
+- type: xlsx_value_present
+  name: Priya Raman capacity (leave from August)
+  path: utilization.xlsx
+  expected: 142.5
+  rel_tol: 0.002
+  near_text: priya
+- type: xlsx_value_present
+  name: Hannah Brooks capacity (started 14 Sep)
+  path: utilization.xlsx
+  expected: 97.5
+  rel_tol: 0.002
+  near_text: hannah
+- type: xlsx_value_present
+  name: firm capacity total
+  path: utilization.xlsx
+  expected: 1029.0
+  rel_tol: 0.00087
+  near_text: total
+- type: custom
+  name: utilization per person
+  module: check.py

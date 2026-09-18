@@ -1,0 +1,98 @@
+id: orders-status-page
+track: desk
+category: tooling
+title: This week's orders page for the packing bench
+ask: |
+  Hana wants this week's orders as a page for the packing-bench laptop - her note has what goes on it. Please save it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the export carries nine platform codes that map to six statuses (two codes each for To pack, Shipped and Cancelled); counting the raw codes splits those columns (checks: page structure: status counts; page structure: status per order)
+- |-
+  four orders are CANCELLED or VOIDED; they stay in the table and the counts but not in revenue, and GR-4666 has several lines (checks: revenue this week; page structure: revenue line)
+- |-
+  the export is one row per line item, so a row-per-line table repeats orders and inflates every count (checks: page structure: one row per order; page structure: status counts)
+- |-
+  shipping is repeated on every line of a multi-line order; adding it per line overstates order totals and revenue (checks: page structure: order totals; revenue this week)
+- |-
+  two orders tagged test (one of them CANCELLED, one PAID_UNFULFILLED) are the owner trying the checkout and come off the page (checks: test orders left off; page structure: one row per order)
+- |-
+  last week's export sits beside this week's with other order numbers (checks: page structure: one row per order; revenue this week)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: every order listed
+  path: index.html
+  phrases:
+  - GR-4661
+  - GR-4662
+  - GR-4663
+  - GR-4664
+  - GR-4665
+  - GR-4666
+  - GR-4667
+  - GR-4668
+  - GR-4669
+  - GR-4670
+  - GR-4672
+  - GR-4673
+  - GR-4674
+  - GR-4675
+  - GR-4676
+  - GR-4677
+  - GR-4678
+  - GR-4679
+  - GR-4680
+  - GR-4681
+  - GR-4682
+  - GR-4683
+  - GR-4684
+  - GR-4685
+  - GR-4686
+  - GR-4687
+  - GR-4688
+  - GR-4689
+  - GR-4690
+  - GR-4691
+  - GR-4692
+  - GR-4693
+  - GR-4694
+  - GR-4695
+  - GR-4696
+  - GR-4698
+  - GR-4699
+  - GR-4700
+  - GR-4701
+  - GR-4702
+  - GR-4703
+  - GR-4704
+  - GR-4705
+  - GR-4706
+- type: text_not_contains
+  name: test orders left off
+  path: index.html
+  phrases:
+  - GR-4671
+  - GR-4697
+  - GR-4631
+  - GR-4632
+  - GR-4633
+  - GR-4634
+  - GR-4635
+  - GR-4636
+  - GR-4637
+  - GR-4638
+  - GR-4639
+  - GR-4640
+- type: text_numbers_present
+  name: revenue this week
+  path: index.html
+  numbers:
+  - 3238.7
+  rel_tol: 1.0e-07
+- type: custom
+  name: page structure
+  module: check.py

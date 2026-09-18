@@ -1,0 +1,28 @@
+From: Dale Hoffman <dale@covepointmarina.com>
+To: you
+Date: Mon, 13 Jul 2026 07:48
+Subject: first half vs budget
+
+The owners meet next week and want to see how January to June went against the budget, line by line. The approved budget is the file from December; the GL detail is what Tanya exported from the new system on Friday.
+
+The budget is annual. Most lines we just spread evenly, a twelfth a month. The seasonal ones we budgeted by month as a percentage of the year:
+
+                                       Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+  Slip rentals                           0   0   0   5  12  18  20  20  15  10   0   0
+  Winter storage                        16  16  16   8   0   0   0   0   0   8  18  18
+  Launch and haul-out                    0   0   6  24  18   4   0   0   4  20  22   2
+  Shrink-wrap and blocking supplies      0   0   6  24  18   4   0   0   4  20  22   2
+  Seasonal dock staff                    0   0   0   8  16  20  20  20  16   0   0   0
+
+Everything else is even.
+
+-----Original Message-----
+
+From: Dale Hoffman <dale@covepointmarina.com>
+To: you
+Date: Mon, 13 Jul 2026 08:05
+Subject: RE: first half vs budget
+
+Forgot two things about the new system. It pads the account numbers out to six digits - the first four are the budget account and the last two are sub-accounts Tanya set up, so anything starting 4100 is slip rentals. And it shows income as negative numbers, which confuses everyone. On the report I want income and costs both as positive numbers the way the budget has them.
+
+For the variance column, positive should mean it helped us - more income than budget or less spent than budget - and negative means it hurt. If something has spending but no budget line, put it on with a zero budget.

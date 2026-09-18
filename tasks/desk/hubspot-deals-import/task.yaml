@@ -1,0 +1,193 @@
+id: hubspot-deals-import
+track: desk
+category: reformatting
+title: Import the roofing pipeline into HubSpot deals
+ask: |
+  Our companies are in HubSpot now; next are the deals from pipeline_2026.xlsx. Marcus wrote up how our pipelines are set up, and the companies export and HubSpot's template are in the folder. Save the import as hubspot_deals.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  each tab is its own pipeline with its own stage labels, and the workbook's stage words (Bid out, On hold - budget, Value engineering, Awarded, No bid, Inspected, Quote given, Ghosted) must map by the stage definitions; copying Status or Stage fails the import (check: pipeline and stage)
+- |-
+  amounts come as $48,500, 48.5k, ~12,000, $1.15M, rev 52,000 (was 48,500), 12,400.00, TBD or real numbers; HubSpot needs a plain number, the latest revision and blank for TBD (check: amount)
+- |-
+  won and lost deals still carry an old Expected Close and must close on their Closed On date (some typed 8/12/26); open deals written Oct 2026, end of Sept, Q4 or Q1 2027 take the last day of that month or quarter (check: close date)
+- |-
+  the Client column is a loose spelling (REDWOOD PROPERTY MGMT, Redwood PM, Aspen Court Condos, an added Inc); the association needs the domain from the companies export, two Northfield companies are both typed Northfield Auto and only the contact email tells them apart, and homeowner jobs get no domain (check: company domain)
+- |-
+  the Archive 2025 tab holds nine closed deals from last year that must stay out (checks: one deal per bid; row count)
+checks:
+- type: csv_columns
+  name: HubSpot template columns, exact order
+  path: hubspot_deals.csv
+  columns:
+  - Bid Number
+  - Deal Name
+  - Pipeline
+  - Deal Stage
+  - Amount
+  - Close Date
+  - Company Domain Name
+  exact: true
+- type: csv_set_equal
+  name: one deal per bid
+  path: hubspot_deals.csv
+  column: Bid Number
+  ref: hubspot_deals.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: hubspot_deals.csv
+  equals_ref: hubspot_deals.csv
+- type: csv_values_match
+  name: pipeline and stage
+  path: hubspot_deals.csv
+  ref: hubspot_deals.csv
+  key: Bid Number
+  columns:
+  - Pipeline
+  - Deal Stage
+  min_accuracy: 1.0
+  must_match_keys:
+  - C-26-001
+  - C-26-002
+  - C-26-003
+  - C-26-004
+  - C-26-005
+  - C-26-006
+  - C-26-007
+  - C-26-008
+  - C-26-009
+  - C-26-010
+  - C-26-011
+  - C-26-012
+  - C-26-013
+  - C-26-014
+  - C-26-015
+  - C-26-016
+  - C-26-017
+  - C-26-018
+  - C-26-019
+  - C-26-020
+  - C-26-021
+  - C-26-022
+  - C-26-023
+  - C-26-024
+  - C-26-025
+  - C-26-026
+  - C-26-027
+  - C-26-028
+  - C-26-029
+  - R-26-001
+  - R-26-002
+  - R-26-003
+  - R-26-004
+  - R-26-005
+  - R-26-006
+  - R-26-007
+  - R-26-008
+  - R-26-009
+  - R-26-010
+  - R-26-011
+  - R-26-012
+  - R-26-013
+  - R-26-014
+  - R-26-015
+  - R-26-016
+  - R-26-017
+  - R-26-018
+  - R-26-019
+  - R-26-020
+  - R-26-021
+  - R-26-022
+- type: custom
+  name: amount
+  module: check.py
+- type: csv_values_match
+  name: close date
+  path: hubspot_deals.csv
+  ref: hubspot_deals.csv
+  key: Bid Number
+  columns:
+  - Close Date
+  min_accuracy: 1.0
+  must_match_keys:
+  - C-26-001
+  - C-26-002
+  - C-26-003
+  - C-26-004
+  - C-26-005
+  - C-26-006
+  - C-26-007
+  - C-26-008
+  - C-26-009
+  - C-26-010
+  - C-26-012
+  - C-26-015
+  - C-26-016
+  - C-26-017
+  - C-26-018
+  - C-26-019
+  - C-26-020
+  - C-26-021
+  - C-26-022
+  - C-26-023
+  - C-26-024
+  - C-26-025
+  - C-26-026
+  - C-26-027
+  - C-26-029
+  - R-26-001
+  - R-26-002
+  - R-26-003
+  - R-26-004
+  - R-26-006
+  - R-26-007
+  - R-26-008
+  - R-26-009
+  - R-26-012
+  - R-26-013
+  - R-26-015
+  - R-26-016
+  - R-26-017
+  - R-26-018
+  - R-26-019
+  - R-26-020
+  - R-26-021
+  - R-26-022
+- type: csv_values_match
+  name: company domain
+  path: hubspot_deals.csv
+  ref: hubspot_deals.csv
+  key: Bid Number
+  columns:
+  - Company Domain Name
+  min_accuracy: 1.0
+  must_match_keys:
+  - C-26-004
+  - C-26-005
+  - C-26-007
+  - C-26-012
+  - C-26-017
+  - C-26-018
+  - C-26-024
+  - C-26-026
+  - R-26-007
+  - R-26-019
+  - R-26-002
+  - R-26-003
+  - R-26-005
+  - R-26-006
+  - R-26-008
+  - R-26-009
+  - R-26-011
+  - R-26-012
+  - R-26-014
+  - R-26-015
+  - R-26-017
+  - R-26-018
+  - R-26-020
+  - R-26-021

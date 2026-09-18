@@ -1,0 +1,20 @@
+How I load the checking account into YNAB by file (bank sync is broken again)
+- Wren
+
+YNAB already has everything up to and including August 31 (by the date I actually bought
+things), so only September goes in. The bank export always starts a couple of weeks early.
+
+Leave out anything still pending - it gets a new reference when it posts and I end up with
+doubles.
+
+Columns exactly like the template: Date, Payee, Memo, Outflow, Inflow.
+
+Date - the Tran Date, not the Post Date. YNAB matches on the day the purchase happened.
+  My file import is set to MM/DD/YYYY, four-digit year.
+Payee - put the bank description through my payee rules (ynab_payee_rules.csv). Go down the
+  list in order and use the FIRST rule whose text is in the description (capitals don't
+  matter). Transfers to/from savings come out as YNAB transfers that way.
+Memo - the bank's Reference number, exactly as it is on the export including the zeros in
+  front. That's how I find things later. NOT the bank's Memo column, that's just noise.
+Outflow / Inflow - money out (DEBIT) goes in Outflow, money in (CREDIT) goes in Inflow.
+  Plain numbers, and leave the other column empty on each row.

@@ -1,0 +1,200 @@
+Juniper Hollow Event Rentals - payments and vendor refunds
+01/01/2025 to 12/31/2025
+Date,Payee,Memo,Method,Type,Amount
+01/06/2025,Harbor Trust Equipment Loan,monthly,ACH,Payment,"$1,213.58"
+01/08/2025,Pacific Gas & Power,monthly,ACH,Payment,"$2,721.76"
+01/09/2025,Harborside Linen,deposit,Check #2582,Payment,"$1,657.64"
+01/10/2025,Bayview Generator Svc,crew labor,ACH,Payment,$187.53
+01/10/2025,Mensah Mobile Welding,balance due,Check #2877,Payment,$270.20
+01/13/2025,Dana Whitfield,crew labor,Venmo Business,Payment,"$1,481.78"
+01/14/2025,Tanaka Valet,event services,PayPal,Payment,"$1,583.19"
+01/15/2025,Riverbank Sound,repairs,ACH,Payment,$999.47
+01/16/2025,Pacific Gas & Power,monthly,ACH,Payment,"$1,195.30"
+01/18/2025,Bello Event Design,rental support,ACH,Payment,$977.54
+01/18/2025,Bello Event Design,rental support,Check #2608,Payment,"$1,703.85"
+01/18/2025,Bello Event Design,balance due,ACH,Payment,"$1,810.10"
+01/21/2025,Summit Forklift Rental,event services,Amex x1008,Payment,"$1,501.81"
+01/23/2025,Mensah Mobile Welding,repairs,Check #2167,Payment,"$1,326.69"
+01/23/2025,Tanaka Valet,crew labor,PayPal,Payment,"$2,141.85"
+01/23/2025,Tomasz Kowalczyk,balance due,Zelle,Payment,"$2,303.42"
+01/24/2025,Oak & Ember Catering,balance due,ACH,Payment,"$2,263.33"
+01/29/2025,Pacific Gas & Power,monthly,ACH,Payment,"$2,849.61"
+02/01/2025,Harborside Linen,invoice,ACH,Payment,"$2,325.74"
+02/03/2025,Tentline Crew LLC,crew labor,Check #2795,Payment,$647.48
+02/03/2025,Tentline Crew LLC,invoice,Check #2203,Payment,"$1,126.01"
+02/04/2025,Bayview Generator Svc,invoice,Check #2365,Payment,$547.80
+02/04/2025,Hollis Tent Repair,crew labor,Check #2818,Payment,$975.92
+02/13/2025,Northbeat DJ Services,deposit,Zelle,Payment,"$2,229.91"
+02/13/2025,Riverbank Sound,event services,ACH,Payment,"$1,496.50"
+02/15/2025,Graystone Portable Toilets,balance due,Check #2354,Payment,"$1,594.06"
+02/22/2025,Bello Event Design,deposit,Visa x4417,Payment,"$1,102.72"
+02/22/2025,Petal & Stem Florals,deposit,Amex x1008,Payment,"$1,034.28"
+02/23/2025,Tentline Crew LLC,setup/teardown,Visa x4417,Payment,"$1,124.87"
+02/25/2025,Hollis Tent Repair,balance due,Check #2302,Payment,"$1,563.98"
+03/01/2025,Riverbank Sound,balance due,ACH,Payment,$595.12
+03/03/2025,Tentline Crew LLC,crew labor,Check #2137,Payment,$383.20
+03/05/2025,Summit Forklift Rental,deposit,ACH,Payment,$453.72
+03/07/2025,Bello Event Design,crew labor,ACH,Payment,"$1,643.02"
+03/10/2025,Northbeat DJ Services,invoice,ACH,Payment,$379.41
+03/11/2025,Cascade Staging Partners,rental support,Wire out,Payment,"$1,508.23"
+03/15/2025,Summit Forklift Rental,setup/teardown,Amex x1008,Payment,"$1,492.16"
+03/16/2025,Graystone Portable Toilets,deposit,Check #2705,Payment,"$1,824.75"
+03/18/2025,Bello Event Design,deposit,ACH,Payment,"$2,278.98"
+03/19/2025,Mensah Mobile Welding,setup/teardown,Zelle,Payment,$258.74
+03/19/2025,Riverbank Sound,invoice,ACH,Payment,$527.21
+03/19/2025,Tallyrun Payroll,monthly,ACH,Payment,"$1,481.08"
+03/20/2025,Mensah Mobile Welding,balance due,Amex x1008,Payment,"$2,093.43"
+03/20/2025,Oak & Ember Catering,setup/teardown,ACH,Payment,$778.56
+03/21/2025,Cascade Staging Partners,crew labor,Wire out,Payment,$405.29
+03/21/2025,Hollis Tent Repair,event services,ACH,Payment,$982.85
+03/27/2025,Google Workspace,monthly,Amex x1008,Payment,"$1,177.88"
+03/27/2025,Summit Forklift Rental,event services,ACH,Payment,"$2,157.35"
+03/29/2025,Hollis Tent Repair,deposit,ACH,Payment,"$1,479.21"
+03/31/2025,Tentline Crew LLC,rental support,ACH,Payment,"$1,005.97"
+04/05/2025,Harborside Linen,balance due,Check #2162,Payment,$957.65
+04/07/2025,Marisol Vega,repairs,Amex x1008,Payment,$717.48
+04/07/2025,Tanaka Valet,deposit,Check #2886,Payment,"$2,240.76"
+04/07/2025,Tentline Crew LLC,event services,ACH,Payment,"$2,313.49"
+04/08/2025,Home Depot,monthly,Amex x1008,Payment,"$1,220.83"
+04/08/2025,Home Depot,monthly,Amex x1008,Payment,"$1,471.23"
+04/09/2025,Tentline Crew LLC,event services,ACH,Payment,$456.27
+04/09/2025,Tomasz Kowalczyk,crew labor,Zelle,Payment,"$1,332.20"
+04/10/2025,Tallyrun Payroll,monthly,ACH,Payment,$417.98
+04/10/2025,Tomasz Kowalczyk,rental support,Check #2566,Payment,"$1,166.97"
+04/14/2025,Petal & Stem Florals,repairs,Amex x1008,Payment,"$1,973.26"
+04/16/2025,Hollis Tent Repair,event services,ACH,Payment,"$1,850.41"
+04/17/2025,Home Depot,monthly,Visa x4417,Payment,"$1,914.11"
+04/18/2025,Dana Whitfield,setup/teardown,Venmo Business,Payment,"$1,838.26"
+04/19/2025,Bello Event Design,crew labor,Visa x4417,Payment,"$2,163.43"
+04/19/2025,Hollis Tent Repair,crew labor,ACH,Payment,"$1,063.46"
+04/25/2025,Home Depot,monthly,Visa x4417,Payment,"$2,564.26"
+04/25/2025,Mensah Mobile Welding,rental support,Check #2109,Payment,"$1,385.04"
+04/25/2025,Tentline Crew LLC,crew labor,Visa x4417,Payment,"$2,078.82"
+04/29/2025,Tallyrun Payroll,monthly,ACH,Payment,$527.51
+05/01/2025,Bello Event Design,event services,Check #2474,Payment,$574.96
+05/01/2025,Tanaka Valet,deposit,Zelle,Payment,"$1,284.85"
+05/02/2025,Home Depot,monthly,Amex x1008,Payment,"$1,989.53"
+05/03/2025,Northbeat DJ Services,repairs,Zelle,Payment,"$1,338.37"
+05/05/2025,Oak & Ember Catering,crew labor,ACH,Payment,"$1,241.30"
+05/07/2025,Riverbank Sound,repairs,ACH,Payment,$881.28
+05/09/2025,Tanaka Valet,balance due,PayPal,Payment,"$1,138.41"
+05/11/2025,Harborside Linen,event services,ACH,Payment,$939.93
+05/12/2025,Tanaka Valet,rental support,PayPal,Payment,$406.51
+05/15/2025,Ortiz Lighting & Rigging,rental support,Check #2671,Payment,$636.73
+05/15/2025,Riverbank Sound,invoice,ACH,Payment,"$1,750.61"
+05/17/2025,Dana Whitfield,setup/teardown,ACH,Payment,$325.68
+05/19/2025,Google Workspace,monthly,Amex x1008,Payment,$221.35
+05/21/2025,Northbeat DJ Services,event services,ACH,Payment,$215.98
+05/25/2025,Ortiz Lighting & Rigging,crew labor,Check #2119,Payment,"$2,115.54"
+05/26/2025,Ortiz Lighting & Rigging,invoice,Zelle,Payment,"$2,119.51"
+05/27/2025,Summit Forklift Rental,invoice,Amex x1008,Payment,"$2,091.29"
+06/01/2025,Oak & Ember Catering,crew labor,ACH,Payment,"$1,013.79"
+06/02/2025,Tanaka Valet,crew labor,PayPal,Payment,"$1,856.18"
+06/03/2025,Riverbank Sound,rental support,ACH,Payment,"$2,313.21"
+06/05/2025,Graystone Portable Toilets,deposit,ACH,Payment,$473.09
+06/05/2025,Pacific Gas & Power,monthly,ACH,Payment,$534.14
+06/11/2025,Bayview Generator Svc,crew labor,Check #2578,Payment,"$1,277.97"
+06/14/2025,Mensah Mobile Welding,rental support,Amex x1008,Payment,"$1,746.42"
+06/15/2025,Vega Frames Photography,balance due,Check #2620,Payment,$358.59
+06/16/2025,Graystone Portable Toilets,repairs,Check #2551,Payment,$198.71
+06/17/2025,Hollis Tent Repair,balance due,ACH,Payment,"$1,688.09"
+06/20/2025,Oak & Ember Catering,deposit,Check #2406,Payment,"$1,075.04"
+06/21/2025,Tallyrun Payroll,monthly,ACH,Payment,"$1,284.64"
+06/22/2025,Oak & Ember Catering,rental support,ACH,Payment,$515.27
+06/23/2025,Cascade Staging Partners,crew labor,Wire out,Payment,$710.47
+06/23/2025,Northbeat DJ Services,repairs,Zelle,Payment,"$1,483.31"
+06/23/2025,Ridgeway Party Supply,crew labor,Amex x1008,Payment,"$1,826.30"
+06/25/2025,Oak & Ember Catering,crew labor,Check #2898,Payment,"$1,775.07"
+06/26/2025,Summit Forklift Rental,event services,Amex x1008,Payment,$858.44
+06/27/2025,Petal & Stem Florals,event services,PayPal,Payment,$928.32
+06/30/2025,Dana Whitfield,refund - overpaid,Venmo Business refund,Vendor refund,($73.10)
+07/02/2025,Bello Event Design,event services,Visa x4417,Payment,$740.74
+07/02/2025,Cascade Staging Partners,deposit,Wire out,Payment,"$1,978.84"
+07/02/2025,Google Workspace,monthly,Amex x1008,Payment,"$1,369.55"
+07/07/2025,Riverbank Sound,rental support,ACH,Payment,"$2,325.67"
+07/10/2025,Hollis Tent Repair,repairs,ACH,Payment,"$1,119.14"
+07/12/2025,Summit Forklift Rental,invoice,Amex x1008,Payment,$828.80
+07/14/2025,Petal & Stem Florals,event services,Amex x1008,Payment,"$1,571.37"
+07/16/2025,Mensah Mobile Welding,setup/teardown,Zelle,Payment,"$1,920.85"
+07/18/2025,Dana Whitfield,crew labor,ACH,Payment,"$1,032.83"
+07/19/2025,Cascade Staging Partners,balance due,Wire out,Payment,"$1,538.13"
+07/19/2025,Vega Frames Photography,rental support,Zelle,Payment,$383.42
+07/20/2025,Home Depot,monthly,Amex x1008,Payment,$193.50
+07/20/2025,Ridgeway Party Supply,setup/teardown,ACH,Payment,"$1,620.63"
+07/20/2025,Tomasz Kowalczyk,setup/teardown,Zelle,Payment,"$2,307.80"
+07/23/2025,Riverbank Sound,event services,ACH,Payment,"$1,514.68"
+07/25/2025,Ortiz Lighting & Rigging,event services,Check #2742,Payment,"$1,235.84"
+07/27/2025,Bayview Generator Svc,deposit,Check #2794,Payment,"$2,370.74"
+07/29/2025,Hollis Tent Repair,deposit,ACH,Payment,$509.45
+08/01/2025,Summit Forklift Rental,deposit,ACH,Payment,"$1,359.65"
+08/03/2025,Ridgeway Party Supply,event services,Amex x1008,Payment,"$1,041.40"
+08/03/2025,Summit Forklift Rental,repairs,Amex x1008,Payment,"$1,583.29"
+08/05/2025,Riverbank Sound,crew labor,ACH,Payment,$826.15
+08/06/2025,Tallyrun Payroll,monthly,ACH,Payment,"$2,105.30"
+08/07/2025,Bello Event Design,event services,Check #2186,Payment,"$2,159.89"
+08/09/2025,Home Depot,monthly,Visa x4417,Payment,"$2,599.29"
+08/14/2025,Hollis Tent Repair,refund overbilled repair,Deposit - vendor refund check,Vendor refund,($699.27)
+08/21/2025,Northbeat DJ Services,balance due,Zelle,Payment,"$1,466.92"
+08/22/2025,Ortiz Lighting & Rigging,setup/teardown,Check #2218,Payment,$789.86
+08/25/2025,Oak & Ember Catering,deposit,Check #2755,Payment,"$1,761.43"
+08/27/2025,Tanaka Valet,crew labor,Zelle,Payment,"$1,176.98"
+08/31/2025,Harborside Linen,invoice,ACH,Payment,$757.50
+08/31/2025,Mensah Mobile Welding,event services,Zelle,Payment,"$1,748.15"
+09/01/2025,Graystone Portable Toilets,invoice,Check #2193,Payment,$831.15
+09/01/2025,Tanaka Valet,event services,PayPal,Payment,"$1,747.97"
+09/06/2025,Cascade Staging Partners,deposit,ACH,Payment,"$2,270.93"
+09/06/2025,Dana Whitfield,deposit,Venmo Business,Payment,"$2,013.05"
+09/06/2025,Petal & Stem Florals,balance due,Amex x1008,Payment,$400.67
+09/06/2025,Ridgeway Party Supply,rental support,Amex x1008,Payment,$479.34
+09/09/2025,Bayview Generator Svc,crew labor,ACH,Payment,"$1,170.93"
+09/10/2025,Hollis Tent Repair,repairs,Check #2698,Payment,"$1,175.77"
+09/11/2025,Tomasz Kowalczyk,event services,Zelle,Payment,"$1,031.18"
+09/14/2025,Petal & Stem Florals,deposit,PayPal,Payment,$437.54
+09/19/2025,Dana Whitfield,setup/teardown,Venmo Business,Payment,$583.97
+09/26/2025,Tomasz Kowalczyk,repairs,Check #2782,Payment,"$2,180.38"
+09/27/2025,Oak & Ember Catering,event services,Check #2846,Payment,$578.68
+09/27/2025,Tanaka Valet,invoice,Zelle,Payment,$935.66
+09/28/2025,Home Depot,monthly,Amex x1008,Payment,"$1,072.98"
+09/30/2025,Graystone Portable Toilets,deposit,Check #2159,Payment,"$1,594.24"
+10/01/2025,Mensah Mobile Welding,crew labor,Amex x1008,Payment,"$1,301.10"
+10/02/2025,Mensah Mobile Welding,refund - job cancelled,Amex x1008 credit,Vendor refund,($608.24)
+10/03/2025,Tentline Crew LLC,event services,Visa x4417,Payment,"$1,587.94"
+10/05/2025,Oak & Ember Catering,invoice,Visa x4417,Payment,"$1,006.84"
+10/10/2025,Oak & Ember Catering,setup/teardown,Check #2232,Payment,"$1,056.44"
+10/10/2025,Vega Frames Photography,rental support,Amex x1008,Payment,"$1,748.57"
+10/12/2025,Marisol Vega,setup/teardown,Zelle,Payment,$422.11
+10/15/2025,Graystone Portable Toilets,invoice,ACH,Payment,$794.87
+10/27/2025,Google Workspace,monthly,Amex x1008,Payment,"$1,503.81"
+10/27/2025,Tanaka Valet,deposit,PayPal,Payment,"$1,064.51"
+11/01/2025,Ridgeway Party Supply,invoice,Amex x1008,Payment,"$1,674.96"
+11/05/2025,Dana Whitfield,deposit,ACH,Payment,"$1,368.62"
+11/07/2025,Cascade Staging Partners,event services,Wire out,Payment,"$1,271.86"
+11/07/2025,Marisol Vega,setup/teardown,Amex x1008,Payment,$631.11
+11/10/2025,Ortiz Lighting & Rigging,repairs,Check #2764,Payment,$602.82
+11/11/2025,Tomasz Kowalczyk,balance due,Check #2817,Payment,"$2,136.43"
+11/12/2025,Northbeat DJ Services,event services,Zelle,Payment,$362.87
+11/16/2025,Harbor Trust Equipment Loan,monthly,ACH,Payment,$101.63
+11/20/2025,Mensah Mobile Welding,refund - unused welding rod,Zelle received,Vendor refund,($137.50)
+11/20/2025,Tomasz Kowalczyk,deposit,Zelle,Payment,$387.52
+11/21/2025,Tanaka Valet,invoice,Check #2408,Payment,$842.80
+11/22/2025,Google Workspace,monthly,Amex x1008,Payment,"$2,257.06"
+11/23/2025,Bayview Generator Svc,event services,ACH,Payment,$597.36
+11/25/2025,Ridgeway Party Supply,balance due,ACH,Payment,$711.50
+11/25/2025,Tanaka Valet,event services,PayPal,Payment,"$1,206.61"
+11/30/2025,Harborside Linen,setup/teardown,ACH,Payment,$670.24
+12/01/2025,Cascade Staging Partners,rental support,Wire out,Payment,"$1,734.18"
+12/02/2025,Ortiz Lighting & Rigging,rental support,Check #2760,Payment,"$1,630.92"
+12/02/2025,Pacific Gas & Power,monthly,ACH,Payment,"$3,070.69"
+12/05/2025,Vega Frames Photography,balance due,Check #2366,Payment,$253.20
+12/13/2025,Ridgeway Party Supply,deposit,Amex x1008,Payment,"$1,756.98"
+12/13/2025,Summit Forklift Rental,repairs,ACH,Payment,"$2,114.28"
+12/18/2025,Tomasz Kowalczyk,setup/teardown,Check #2830,Payment,"$1,624.05"
+12/20/2025,Harbor Trust Equipment Loan,monthly,ACH,Payment,"$3,042.35"
+12/20/2025,Petal & Stem Florals,invoice,Amex x1008,Payment,$850.22
+12/22/2025,Ridgeway Party Supply,crew labor,Amex x1008,Payment,$520.58
+12/24/2025,Pacific Gas & Power,monthly,ACH,Payment,"$1,649.87"
+12/26/2025,Ridgeway Party Supply,rental support,ACH,Payment,"$1,499.96"
+12/27/2025,Harborside Linen,deposit,ACH,Payment,"$1,504.20"
+12/28/2025,Ridgeway Party Supply,deposit,ACH,Payment,"$1,073.03"
+12/29/2025,Google Workspace,monthly,Amex x1008,Payment,"$1,569.28"
+12/29/2025,Google Workspace,monthly,Amex x1008,Payment,"$2,792.10"

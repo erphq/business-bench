@@ -1,0 +1,61 @@
+Employee ID,Name,Email,Department,Manager,Start Date,End Date,Annual Leave Remaining
+E0021,Sofia Morris,sofia.morris@northgate-analytics.com,Customer Support,Grace Oduya,2021-08-25,2024-04-27,2.5 days
+E0094,Kathleen Myers,kathleen.myers@northgate-analytics.com,customer support,Grace Oduya,"September 14, 2014","March 13, 2024",7.5
+E0027,Carol Tanaka,carol.tanaka@northgate-analytics.com,Sales,Martin Keane,11/29/2021,05/13/24,7.5 days
+E0095,Cynthia Rogers,cynthia.rogers@northgate-analytics.com,Sales,Martin Keane,2019-07-07,,0
+E0063,Sharon Clark,sharon.clark@northgate-analytics.com,Customer Support,Grace Oduya,"March 04, 2022",,13
+E0034,Jacob Okafor,jacob.okafor@northgate-analytics.com,Customer Support,Grace Oduya,"October 01, 2019",,23.5
+E0053,James Mitchell,james.mitchell@northgate-analytics.com,Engineering,Rafael Ortiz,"November 14, 2019","February 21, 2024",4
+E0064,Daniel Kim,daniel.kim@northgate-analytics.com,Engineering,Rafael Ortiz,Nov 03 2025,,5 days
+E0015,Susan Parker,susan.parker@northgate-analytics.com,Finance,Lena Fischer,2017-01-10,,3 days
+E0025,Wei Hall,wei.hall@northgate-analytics.com,Operations,Helen Marsh,Oct 07 2022,,3.5
+E0036,Mateo Mensah,mateo.mensah@northgate-analytics.com,Eng,Rafael Ortiz,Jul 07 2023,,15.5
+E0061,Laura Osei,laura.osei@northgate-analytics.com,Customer Support,Grace Oduya,Mar 27 2021,"May 23, 2025",2.5
+E0019,Samir Qureshi,samir.qureshi@northgate-analytics.com,people & admin,Helen Marsh,2024-09-28,,18.5
+E0084,William Miller,william.miller@northgate-analytics.com,Sales,Martin Keane,03/04/25,,9 days
+E0071,Anna Green,anna.green@northgate-analytics.com,Customer Support,Grace Oduya,"December 23, 2016",,14
+E0045,Martin Keane,martin.keane@northgate-analytics.com,Sales,Helen Marsh,12/08/2021,,24.5
+E0079,Ronald Adams,ronald.adams@northgate-analytics.com,operations,Helen Marsh,"April 26, 2020","October 15, 2025",0
+E0043,Kwame Campbell,kwame.campbell@northgate-analytics.com,People and Admin,Samir Qureshi,Mar 24 2019,,27.5 days
+E0080,Rebecca Perez,rebecca.perez@northgate-analytics.com,Customer Support,Grace Oduya,"May 19, 2020",,6
+E0022,Dorothy Edwards,dorothy.edwards@northgate-analytics.com,People & Admin,Samir Qureshi,2022-04-06,,10
+E0081,Susan Rogers,susan.rogers@northgate-analytics.com,Engineering,Rafael Ortiz,"May 18, 2020",,21
+E0025,Wei Hall,Wei.Hall@northgate-analytics.com,operations,Helen Marsh,Oct 07 2022,,3.5
+E0007,Rafael Ortiz,rafael.ortiz@northgate-analytics.com,Engineering,Helen Marsh,2019-07-08,,4.5
+E0066,Wei Tanaka,wei.tanaka@northgate-analytics.com,Engineering,Rafael Ortiz,2024-03-02,,18
+E0082,Chloe Hughes,chloe.hughes@northgate-analytics.com,Support,Grace Oduya,Sep 08 2017,,14
+E0004,Ryan Osei,ryan.osei@northgate-analytics.com,Engineering,Rafael Ortiz,Dec 10 2019,,10
+E0003,Margaret Reed,margaret.reed@northgate-analytics.com,engineering ,Rafael Ortiz,2018-12-09,17-Aug-2026,4
+E0002,Jennifer Smith,jennifer.smith@northgate-analytics.com,Engineering,Rafael Ortiz,2018-04-20,16-Jul-2024,4
+E0016,Ryan Taylor,ryan.taylor@northgate-analytics.com,Operations,Helen Marsh,Apr 14 2019,10/07/2024,0
+E0096,Paul Perez,paul.perez@northgate-analytics.com,Customer Support,Grace Oduya,10/21/2023,,9.5
+E0011,Tomasz Okafor,tomasz.okafor@northgate-analytics.com,Sales,Martin Keane,10/10/16,,19
+E0056,Grace Oduya,grace.oduya@northgate-analytics.com,Customer Support,Helen Marsh,05/30/24,,12
+E0067,Lisa Walker,lisa.walker@northgate-analytics.com,Sales,Martin Keane,13-Jun-2020,Dec 28 2024,4
+E0037,Owen Pratt,owen.pratt@northgate-analytics.com,Engineering,Rafael Ortiz,"July 18, 2022",2026-10-30,13
+E0077,Michael Mendoza,michael.mendoza@northgate-analytics.com,sales ,Martin Keane,2021-01-03,,7
+E0026,William Collins,william.collins@northgate-analytics.com,FINANCE,Lena Fischer,07-Jan-2020,,25
+E0090,Sofia Williams,sofia.williams@northgate-analytics.com,Engineering,Rafael Ortiz,12-Mar-2018,2026-03-29,7.5
+E0039,Sandra Price,sandra.price@northgate-analytics.com,ENGINEERING,Rafael Ortiz,2021-05-07,,10
+E0014,Barbara Sanchez,barbara.sanchez@northgate-analytics.com,Engineering,Rafael Ortiz,12/26/2017,,7.5
+E0062,Deborah Thomas,deborah.thomas@northgate-analytics.com,Ops,Helen Marsh,10/25/2023,,11.5
+E0083,Kevin Bennett,kevin.bennett@northgate-analytics.com,Operations,Helen Marsh,17-Feb-2025,,24
+E0078,Luis Haddad,luis.haddad@northgate-analytics.com,Sales,Martin Keane,28-Jun-2023,,0
+E0098,Jessica Parker,jessica.parker@northgate-analytics.com,People & Admin,Samir Qureshi,2025-01-06,,2
+E0011,Tomasz Okafor,tomasz.okafor@northgate-analytics.com,Sales,Martin Keane,10/10/16,,19
+E0026,William Collins,WILLIAM.COLLINS@NORTHGATE-ANALYTICS.COM,Finance,Lena Fischer,01/07/20,,25
+E0055,Joshua Wright,joshua.wright@northgate-analytics.com,People & Admin,Samir Qureshi,08/11/17,,1.5
+E0092,Patricia Martin,patricia.martin@northgate-analytics.com,Finance,Lena Fischer,Oct 04 2018,07/30/26,4
+E0060,Daniel Kim,daniel.kim@northgate-analytics.com,Engineering,Rafael Ortiz,2019-04-08,2024-06-28,2.5 days
+E0017,Joseph Long,joseph.long@northgate-analytics.com,Customer Support,Grace Oduya,"February 28, 2015",2025-05-31,2.5
+E0054,James Bennett,james.bennett@northgate-analytics.com,operations,Helen Marsh,09/16/2017,,21
+E0013,Lena Fischer,lena.fischer@northgate-analytics.com,Finance,Helen Marsh,"October 13, 2018",,16 days
+E0069,Dmitri Walker,dmitri.walker@northgate-analytics.com,Engineering,Rafael Ortiz,Nov 21 2023,,13
+E0093,Luis Mensah,luis.mensah@northgate-analytics.com,customer support,Grace Oduya,Oct 29 2019,,25
+E0091,Shirley Hernandez,shirley.hernandez@northgate-analytics.com,Customer Support,Grace Oduya,05/13/2016,,22 days
+E0057,Mary Reyes,mary.reyes@northgate-analytics.com,People & Admin,Samir Qureshi,2018-10-15,12/18/25,4
+E0072,Angela Chavez,angela.chavez@northgate-analytics.com,People & Admin,Samir Qureshi,Feb 01 2017,14-Sep-2025,0
+E0073,Helen Marsh,helen.marsh@northgate-analytics.com,Operations,,29-May-2021,,1.5
+E0031,Jonathan Chavez,jonathan.chavez@northgate-analytics.com,FINANCE,Lena Fischer,Oct 20 2019,,11.5
+E0073,Helen Marsh,helen.marsh@northgate-analytics.com,Operations,,29-May-2021,,1.5
+E0006,Eric Gutierrez,eric.gutierrez@northgate-analytics.com,Sales,Martin Keane,12/30/2022,,0

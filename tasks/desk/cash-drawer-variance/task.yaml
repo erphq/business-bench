@@ -1,0 +1,82 @@
+id: cash-drawer-variance
+track: desk
+category: bookkeeping
+title: August cash drawer variance by day
+ask: |
+  Marcus wants to see where cash is going missing. Compare August's close-of-day reports with the bank deposits, day by day, following his note. Save it as drawer_variance.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  each bag goes in the night drop the next morning the shop is open, so a deposit dated Tuesday is Sunday's bag and the 2026-08-30 bag reaches the bank in September; matching deposits to the business day's own date shifts every row (checks: deposited per day; variance per day)
+- |-
+  both drawers go in one bag, and the POS 'Cash Expected In Drawer' includes the $150 float and ignores the card tips paid out of the front drawer at close (check: expected deposit per day)
+- |-
+  cash tips declared never enter a drawer; subtracting them as well as the card tips understates the bag every day (check: expected deposit per day)
+- |-
+  the retail counter's Z report for 2026-08-15 was reprinted and the reprint repeats the row with the same Z number (check: expected deposit per day)
+- |-
+  the credit union posted a count-difference adjustment several days after the deposit of the 2026-08-22 bag; it belongs to 2026-08-22, not to the day it posted (checks: deposited per day; variance per day)
+- |-
+  the bank export opens with July 31's bag on 1 August, carries daily card settlements, rent and payroll in the same columns, and has a preamble and a BOM; the POS export writes days as 'Sat 08/01/2026' (check: deposited per day)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: drawer_variance.csv
+  columns:
+  - date
+  - expected_deposit
+  - deposited
+  - variance
+- type: csv_set_equal
+  name: every open day
+  path: drawer_variance.csv
+  column: date
+  ref: drawer_variance.csv
+- type: csv_row_count
+  name: row count
+  path: drawer_variance.csv
+  equals_ref: drawer_variance.csv
+- type: csv_values_match
+  name: expected deposit per day
+  path: drawer_variance.csv
+  ref: drawer_variance.csv
+  key: date
+  columns:
+  - expected_deposit
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - '2026-08-15'
+  - '2026-08-02'
+- type: csv_values_match
+  name: deposited per day
+  path: drawer_variance.csv
+  ref: drawer_variance.csv
+  key: date
+  columns:
+  - deposited
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - '2026-08-02'
+  - '2026-08-22'
+  - '2026-08-30'
+- type: csv_values_match
+  name: variance per day
+  path: drawer_variance.csv
+  ref: drawer_variance.csv
+  key: date
+  columns:
+  - variance
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - '2026-08-05'
+  - '2026-08-06'
+  - '2026-08-09'
+  - '2026-08-16'
+  - '2026-08-22'

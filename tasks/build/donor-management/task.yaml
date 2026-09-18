@@ -1,0 +1,65 @@
+id: donor-management
+track: build
+category: nonprofit
+title: Donor management app with household dedupe, pledges and balances, acknowledgement letters, and program-scoped access
+ask: |
+  We're Harbor Lights Community Fund, a small nonprofit, and our donor records are spread across three
+  spreadsheets that are attached: donors, gifts since January 2025, and pledges. People who live at the
+  same address are one household for us, and a few donors got entered twice. Pledges are paid in
+  installments, so I need to see what's still owed on each one, and every gift of $250 or more needs a
+  thank-you letter, so show me which ones still need one. Our program officers should see only the gifts
+  and donors for their own programs (Nia Robinson has Youth Literacy and Scholarships, Omar Haddad has
+  Food Pantry, Grace Kim has Senior Meals), and our board treasurer needs to look at everything without
+  changing anything. I want a dashboard with what we've raised this year, how many donor households we
+  have, outstanding pledges, and letters still owed; send me an admin login and one for Nia.
+seed:
+  - seed/donors.csv
+  - seed/gifts.csv
+  - seed/pledges.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email (the executive director).
+      password: Admin password.
+    restricted:
+      user: Login for Nia Robinson, program officer for Youth Literacy and Scholarships.
+      password: Nia's password.
+    notes: >
+      Free text. Must say the restricted login is Nia Robinson. May include other officer or treasurer
+      logins, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "director@harborlights.example", "password": "..."},
+      "restricted": {"user": "nia@harborlights.example", "password": "..."},
+      "notes": "restricted login is Nia Robinson. Restart: systemctl restart donors."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 22]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - 190 donor rows -> 176 people (8 exact duplicate rows, 6 people re-entered under a second donor id with the email in different case) -> 150 households (26 couples share an address) (item 15)
+  - couples' addresses written 1329 Ocean Street vs 1329 OCEAN ST. or with a double space; a literal address match keeps them apart (item 16)
+  - three pairs of neighbours at one street address with different apartment numbers; stripping units merges them (147) (item 17)
+  - six online donors with no address; grouping on a blank address merges them into one household (145) (item 17)
+  - gifts filed under the re-entered person's second id; Carlos Sanchez keeps 1,300.00 of his 1,525.00 only if the ids are merged (item 18)
+  - donor ids written D-00007, D-7, or 7 and pledge ids PL-0033, PL-33, or 33; a literal join loses a payment and PL-0033 shows 500.00 left instead of 250.00 (items 18, 20)
+  - 7 gift rows exported twice; year to date reads 74,575.75 with them (item 19)
+  - year to date must count gifts and pledge payments but not pledge amounts, or it reads 95,375.75 (items 8, 19)
+  - program written food pantry, FOOD PANTRY, or with a trailing space; exact matching gives Nia 55 gifts instead of 70 (items 6, 10)
+  - acknowledgement written Y, Yes, yes, Sent plus a date, N, n/a, or blank; the letter rule is 250.00 or more, so a strictly-over rule owes 4 letters instead of 9 (items 8, 24)
+  - PL-0004 ends a year before it starts; must be flagged, not imported silently (item 21)
+  - a program officer opening a shared donor must not see that donor's gifts to other programs (item 25)

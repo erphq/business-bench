@@ -1,0 +1,61 @@
+id: time-tracking-invoicing
+track: build
+category: professional-services
+title: Consultancy time tracking with rate cards, rounding, monthly invoicing, and locked entries
+ask: |
+  We're a 12-person management consultancy and I need one place for our consultants' time and our
+  client billing. I've attached our client list, our rate card (every client pays its own hourly rate
+  for partners, seniors, and associates), and the July and August timesheets; we bill each entry in
+  quarter hours, always rounding up, and once time has been invoiced nobody should be able to change it.
+  I want to generate one invoice per client per month from that month's billable time, and see at any
+  moment how much work is still unbilled on a dashboard. Each consultant should have a login that shows
+  only their own time, our bookkeeper needs a read-only login, and I want an admin login for me and a
+  login for Nadia Okafor, one of our senior consultants.
+seed:
+  - seed/clients.csv
+  - seed/rates.csv
+  - seed/time_entries.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for consultant Nadia Okafor.
+      password: That consultant's password.
+    notes: >
+      Free text. Must say the restricted login is Nadia Okafor. May include the read-only login,
+      how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "admin@example.com", "password": "..."},
+      "restricted": {"user": "nadia.okafor@example.com", "password": "..."},
+      "notes": "restricted login is consultant Nadia Okafor. Read-only: books@example.com / ... Restart: systemctl restart timesheets."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 19, 21, 23]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - "clients.csv repeats 2 rows exactly and writes 2 more clients' codes without the leading zero (C-728 vs C-0728) with the name in capitals and a trailing space; 64 rows -> 60 clients (item 15)"
+  - "rates.csv writes client codes four ways (C-0665, C-665, 0665, 665) and rates as $390.00 / 390 / 390.00 / $ 390.00; a join on the literal code leaves Kittering Dairy Cooperative with no rates (items 16, 21)"
+  - "Orchard Lane Grocers' Associate rate is -$200.00; it must be flagged, not imported as a negative rate (item 17)"
+  - "time_entries.csv repeats 8 rows exactly; no dedupe gives 259 entries, 23 for Nadia, 7 Vantage rows, 40 non-billable (items 6, 10, 11, 18)"
+  - "durations are written 0:20, 1.67, 59 min, 4h 29m; a numeric parse of the column or a text sort breaks hours and the longest-entry sort (items 10, 18)"
+  - "billing rounds each entry UP to 15 minutes; nearest-quarter rounding gives 5,210.00 and no rounding 5,185.83 instead of 5,272.50 on the Kittering August invoice (items 19, 21, 22)"
+  - "seven late July entries have no invoice number: a 'last month only' unbilled figure or an 'all uninvoiced time' invoice misses or over-bills them (5,955.00 vs 5,272.50) (items 8, 20, 21, 24)"
+  - "billable flags are spelled Yes/Y/yes/TRUE and No/N/no/FALSE; treating anything but 'Yes' as non-billable drops most entries (items 8, 10, 21)"
+  - "entries imported with a July invoice number are already invoiced and must be locked from import, not only entries invoiced inside the new app (item 23)"

@@ -1,0 +1,21 @@
+From: Dana Okafor <dokafor@lakeviewlearning.org>
+To: you
+Date: Mon, 17 Aug 2026 18:22
+Subject: BKP-110 final grades
+
+Hi - I've exported the gradebook. Could you work out the final grades? The registrar wants the final percentage (one decimal) and the letter for every student.
+
+A few things the export doesn't know:
+
+1. Use the weights on the Weights tab of the export. We dropped the second project in week 3 and I moved that weight onto the final exam. The syllabus still shows the old split.
+
+2. In the gradebook EX means excused, and a blank means they never turned it in.
+
+3. Jason Foster had a documented absence on the day of Quiz 4. I never entered the EX, so the cell is blank - please treat it as excused.
+
+4. Ronald Nguyen withdrew in July. The registrar records a W, so leave that student off the grade sheet.
+
+Please send it as a spreadsheet with the formulas in, so I can check a couple of students by hand.
+
+Thanks,
+Dana

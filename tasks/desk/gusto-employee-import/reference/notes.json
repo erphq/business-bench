@@ -1,0 +1,40 @@
+{
+  "blank_paytype": [
+    "chloe_watson@hotmail.com",
+    "garyphillips50@icloud.com",
+    "gutierrez.jeffrey@me.com",
+    "priyamorris10@aol.com"
+  ],
+  "excluded_emails": [
+    "anna.edwards@protonmail.com",
+    "barbara.hernandez@outlook.com",
+    "carlos_lewis@yahoo.com",
+    "charles_mensah@protonmail.com",
+    "donaldmensah25@outlook.com",
+    "krogers@me.com",
+    "wilson.gary@gmail.com"
+  ],
+  "on_leave": [
+    "chloe_watson@hotmail.com",
+    "ruiz.elizabeth@yahoo.com"
+  ],
+  "ot_eligible": [
+    "dorothy.howard@outlook.com",
+    "kimberlyrogers76@me.com"
+  ],
+  "per_month": [
+    "margaret.cook@protonmail.com"
+  ],
+  "per_paycheck": [
+    "dorothy.howard@outlook.com",
+    "foster.sarah@hotmail.com",
+    "jmorris@gmail.com"
+  ],
+  "rehires": [
+    "marcuscox3@yahoo.com",
+    "rmyers@gmail.com"
+  ],
+  "remote": [
+    "foster.sarah@hotmail.com"
+  ]
+}

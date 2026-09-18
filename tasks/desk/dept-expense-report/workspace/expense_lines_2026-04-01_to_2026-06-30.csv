@@ -1,0 +1,377 @@
+Expense lines - approval activity 04/01/2026 to 06/30/2026
+
+Report ID,Line,Employee,Expense Date,Merchant,Category,Amount,Cost Center,Status
+ER-2026-0400,00001,Kevin Stewart,03/18/2026,SQ *BLUE BOTTLE,Meals,$87.09,Copy & Content (5200),Reimbursed
+ER-2026-0401,00002,Priya Morris,03/20/2026,BORROWLENSES,Equipment rental,"$1,529.93",6100 - Video,Reimbursed
+ER-2026-0402,00003,Rebecca Garcia,03/22/2026,UNITED AIRLINES,Travel,$916.78,3100 - Sales - East,Reimbursed
+ER-2026-0403,00004,Amy Nelson,03/22/2026,SLACK T0123,IT,$728.38,7300 - Finance & HR,Reimbursed
+ER-2026-0404,00005,Barbara Patel,03/22/2026,HERTZ RENT-A-CAR,Travel,$769.00,CC-6200,Reimbursed
+ER-2026-0405,00006,Priya Johnson,03/23/2026,MARRIOTT HTL,Travel,$343.69,6100 - Video,Reimbursed
+ER-2026-0404,00007,Barbara Patel,03/23/2026,SHELL OIL 57444,Travel,$274.13,6100,Reimbursed
+ER-2026-0406,00008,Kimberly Davis,04/01/2026,SAMYS CAMERA,Equipment rental,"$2,425.11",6100,Rejected
+ER-2026-0407,00009,Carlos Lewis,04/01/2026,COSTCO WHSE #0891,Office,$793.54,CC-7100,Reimbursed
+ER-2026-0408,00010,Dorothy Parker,04/01/2026,FIGMA,Software,$464.11,Design (5100),Reimbursed
+ER-2026-0409,00011,Kimberly Rogers,04/01/2026,MARRIOTT HTL,Travel,$184.14,Sales - West (3200),Approved
+ER-2026-0410,00012,Kenneth Ward,04/01/2026,STARBUCKS #04512,Meals,$25.33,5200 - Copy & Content,Reimbursed
+ER-2026-0411,00013,Jeffrey Gutierrez,04/02/2026,BORROWLENSES,Equipment rental,"$1,817.98",,Reimbursed
+ER-2026-0412,00014,Richard Myers,04/02/2026,BLICK ART MATERIALS,Supplies,$360.66,5200 - Copy & Content,Reimbursed
+ER-2026-0413,00015,Elizabeth Ruiz,04/02/2026,BLICK ART MATERIALS,Supplies,$186.85,Copy & Content (5200),Rejected
+ER-2026-0414,00016,Charles Flores,04/03/2026,GOOGLE *ADS,Advertising,"$1,994.59",CC-4100,Reimbursed
+ER-2026-0415,00017,Wei Gonzalez,04/03/2026,STAPLES 0442,Supplies,$96.99,5200,Reimbursed
+ER-2026-0416,00018,Priya Johnson,04/03/2026,CHIPOTLE 1882,Crew meals,$109.38,CC-6100,Approved
+ER-2026-0412,00019,Ashley Myers,04/03/2026,IKEA EMERYVILLE,Office,$220.51,CC-7100,Reimbursed
+ER-2026-0417,00020,Rebecca Garcia,04/04/2026,MARRIOTT HTL,Travel,$617.44,CC-3100,Reimbursed
+ER-2026-0418,00021,Amy Nelson,04/04/2026,GITHUB INC,IT,$292.59,CC-7100,Reimbursed
+ER-2026-0419,00022,Richard Richardson,04/04/2026,GOOGLE *ADS,Advertising,"$2,476.00",4300 - Digital,Approved
+ER-2026-0406,00023,Kimberly Davis,04/05/2026,CHIPOTLE 1882,Crew meals,$370.40,6100,Rejected
+ER-2026-0411,00024,Jeffrey Gutierrez,04/05/2026,SAMYS CAMERA,Equipment rental,$347.69,6100,Approved
+ER-2026-0420,00025,David Harris,04/05/2026,IKEA EMERYVILLE,Office,$275.97,7100 - Office & Facilities,Draft
+ER-2026-0421,00026,Dorothy Howard,04/05/2026,TST* THE PARLOUR,Client meals,$297.58,Sales - West (3200),Approved
+ER-2026-0407,00027,Carlos Lewis,04/05/2026,GITHUB INC,IT,"$1,144.86",7300,Reimbursed
+ER-2026-0422,00028,Joshua Morris,04/05/2026,PANERA BREAD #601,Client meals,$100.65,Sales - East (3100),Reimbursed
+ER-2026-0422,00029,Priya Morris,04/05/2026,SAMYS CAMERA,Equipment rental,$542.62,CC-6100,Reimbursed
+ER-2026-0408,00030,Dorothy Parker,04/05/2026,STARBUCKS #04512,Meals,$80.11,Design (5100),Reimbursed
+ER-2026-0413,00031,Elizabeth Ruiz,04/05/2026,ADOBE *CREATIVE CLD,Software,$390.39,5100 - Design,Reimbursed
+ER-2026-0407,00032,Carlos Lewis,04/06/2026,GOOGLE *GSUITE,IT,$318.20,7300,Reimbursed
+ER-2026-0410,00033,Kenneth Ward,04/06/2026,SQ *BLUE BOTTLE,Meals,$90.48,Copy & Content (5200),Reimbursed
+ER-2026-0410,00034,Kenneth Ward,04/06/2026,FIGMA,Software,$256.82,5200 - Copy & Content,Reimbursed
+ER-2026-0423,00035,Carol Alvarez,04/07/2026,GOOGLE *GSUITE,IT,$739.09,7100,Reimbursed
+ER-2026-0410,00036,James Ward,04/07/2026,SHELL OIL 57444,Travel,$292.53,6200 - Photo,Approved
+ER-2026-0421,00037,Dorothy Howard,04/08/2026,LINKEDIN PREMIUM,Software,$153.02,3200,Approved
+ER-2026-0419,00038,Richard Richardson,04/09/2026,CANVA,Software,$67.21,Digital (4300),Reimbursed
+ER-2026-0413,00039,Elizabeth Ruiz,04/09/2026,SHUTTERSTOCK,Software,$471.27,5200 - Copy & Content,Reimbursed
+ER-2026-0406,00040,Kimberly Davis,04/10/2026,COSTCO WHSE #0891,Crew meals,$256.52,6100,Reimbursed
+ER-2026-0406,00041,Kimberly Davis,04/10/2026,BORROWLENSES,Equipment rental,"$2,513.30",Video (6100),Reimbursed
+ER-2026-0421,00042,Dorothy Howard,04/10/2026,LINKEDIN PREMIUM,Software,$59.66,CC-3200,Approved
+ER-2026-0424,00043,Barbara Patel,04/11/2026,SHELL OIL 57444,Travel,$534.59,6100,Reimbursed
+ER-2026-0425,00044,Gary Phillips,04/11/2026,TST* THE PARLOUR,Client meals,$307.35,CC-3200,Reimbursed
+ER-2026-0426,00045,Chloe Watson,04/11/2026,LENSRENTALS.COM,Equipment rental,"$2,493.42",CC-6200,Reimbursed
+ER-2026-0427,00046,Margaret Cook,04/12/2026,DELTA AIR,Travel,$773.12,3100 - Sales - East,Rejected
+ER-2026-0428,00047,Sarah Foster,04/12/2026,CONVENTION CTR SVCS,Events,"$1,848.83",4200,Approved
+ER-2026-0421,00048,Dorothy Howard,04/12/2026,HERTZ RENT-A-CAR,Travel,$739.84,3200 - Sales - West,Reimbursed
+ER-2026-0422,00049,Priya Morris,04/12/2026,BORROWLENSES,Equipment rental,"$1,323.18",6100,Reimbursed
+ER-2026-0429,00050,Sarah Torres,04/12/2026,FACEBK *ADS,Advertising,$409.05,4100 - Brand,Approved
+ER-2026-0410,00051,James Ward,04/12/2026,HERTZ RENT-A-CAR,Travel,$878.03,CC-6200,Approved
+ER-2026-0430,00052,Steven Morgan,04/13/2026,SIGNARAMA,Events,"$1,129.36",CC-4200,Reimbursed
+ER-2026-0408,00053,Dorothy Parker,04/13/2026,SHUTTERSTOCK,Software,$88.23,5100 - Design,Draft
+ER-2026-0413,00054,Elizabeth Ruiz,04/13/2026,STAPLES 0442,Supplies,$287.69,5100 - Design,Reimbursed
+ER-2026-0431,00055,Yuki Clark,04/14/2026,FIGMA,Software,$147.63,5200 - Copy & Content,Reimbursed
+ER-2026-0428,00056,Sarah Foster,04/14/2026,GOOGLE *ADS,Advertising,"$1,353.09",4200 - Events,Reimbursed
+ER-2026-0415,00057,Wei Gonzalez,04/14/2026,ADOBE *CREATIVE CLD,Software,$315.52,CC-5200,Approved
+ER-2026-0422,00058,Priya Morris,04/14/2026,BORROWLENSES,Equipment rental,$539.31,6100 - Video,Approved
+ER-2026-0429,00059,Sarah Torres,04/14/2026,NAB SHOW EXHIBITOR SVCS,Events,"$11,248.85",4200,Reimbursed
+ER-2026-0426,00060,Chloe Watson,04/14/2026,SHELL OIL 57444,Travel,$157.94,6200 - Photo,Approved
+ER-2026-0430,00061,Steven Morgan,04/15/2026,ADOBE *CREATIVE CLD,Software,$38.99,4300 - Digital,Approved
+ER-2026-0412,00062,Ashley Myers,04/15/2026,GOOGLE *GSUITE,IT,$800.97,7100,Draft
+ER-2026-0414,00063,Charles Flores,04/16/2026,FACEBK *ADS,Advertising,"$1,948.74",4100,Reimbursed
+ER-2026-0416,00064,Priya Johnson,04/16/2026,COSTCO WHSE #0891,Crew meals,$444.16,,Reimbursed
+ER-2026-0425,00065,Gary Phillips,04/16/2026,UBER *TRIP,Travel,"$1,068.97",3100 - Sales - East,Reimbursed
+ER-2026-0432,00066,Deborah Okafor,04/17/2026,PANERA BREAD #601,Client meals,$262.39,3100,Approved
+ER-2026-0433,00067,Kevin Stewart,04/17/2026,STARBUCKS #04512,Meals,$60.11,Copy & Content (5200),Approved
+ER-2026-0416,00068,Priya Johnson,04/18/2026,SAMYS CAMERA,Equipment rental,"$1,661.99",6100 - Video,Reimbursed
+ER-2026-0414,00069,Charles Flores,04/19/2026,GOOGLE *ADS,Advertising,$834.68,Brand (4100),Approved
+ER-2026-0415,00070,Wei Gonzalez,04/19/2026,FIGMA,Software,$432.78,5200,Approved
+ER-2026-0418,00071,Amy Nelson,04/19/2026,IKEA EMERYVILLE,Office,$460.97,CC-7100,Rejected
+ER-2026-0426,00072,Chloe Watson,04/19/2026,LENSRENTALS.COM,Equipment rental,"$1,130.87",6200 - Photo,Approved
+ER-2026-0423,00073,Stephanie Alvarez,04/20/2026,SHELL OIL 57444,Travel,$172.70,6100 - Video,Reimbursed
+ER-2026-0428,00074,Sarah Foster,04/20/2026,GOOGLE *ADS,Advertising,"$2,999.15",4200,Approved
+ER-2026-0411,00075,Jeffrey Gutierrez,04/20/2026,MARRIOTT HTL,Travel,$400.21,Photo (6200),Reimbursed
+ER-2026-0420,00076,David Harris,04/20/2026,USPS PO 0561,Postage,$72.33,7200,Approved
+ER-2026-0409,00077,Kimberly Rogers,04/20/2026,CAPITAL GRILLE,Client meals,$359.15,CC-3100,Reimbursed
+ER-2026-0409,00078,Kimberly Rogers,04/20/2026,MARRIOTT HTL,Travel,"$1,020.02",Sales - West (3200),Approved
+ER-2026-0429,00079,Sarah Torres,04/20/2026,GOOGLE *ADS,Advertising,$714.69,Brand (4100),Reimbursed
+ER-2026-0417,00080,Rebecca Garcia,04/21/2026,DELTA AIR,Travel,$794.44,Sales - East (3100),Reimbursed
+ER-2026-0422,00081,Joshua Morris,04/21/2026,LINKEDIN PREMIUM,Software,$41.16,CC-3100,Reimbursed
+ER-2026-0422,00082,Priya Morris,04/21/2026,CHIPOTLE 1882,Crew meals,$489.14,,Approved
+ER-2026-0433,00083,Kevin Stewart,04/21/2026,SQ *BLUE BOTTLE,Meals,$37.85,CC-5200,Approved
+ER-2026-0423,00084,Stephanie Alvarez,04/22/2026,HERTZ RENT-A-CAR,Travel,$87.64,6100 - Video,Reimbursed
+ER-2026-0423,00085,Stephanie Alvarez,04/22/2026,COSTCO WHSE #0891,Crew meals,$308.45,CC-6100,Approved
+ER-2026-0423,00086,Carol Alvarez,04/22/2026,COSTCO WHSE #0891,Office,$754.88,7100,Reimbursed
+ER-2026-0422,00087,Joshua Morris,04/22/2026,MARRIOTT HTL,Travel,"$1,196.91",CC-3100,Reimbursed
+ER-2026-0434,00088,Marcus Cox,04/23/2026,LINKEDIN ADS,Advertising,$602.55,4300,Reimbursed
+ER-2026-0430,00089,Steven Morgan,04/23/2026,PP*EVENTBRITE,Events,"$2,198.38",4200 - Events,Reimbursed
+ER-2026-0422,00090,Priya Morris,04/23/2026,MARRIOTT HTL,Travel,$670.02,6100 - Video,Approved
+ER-2026-0418,00091,Amy Nelson,04/23/2026,GITHUB INC,IT,$947.43,7100 - Office & Facilities,Reimbursed
+ER-2026-0424,00092,Barbara Patel,04/23/2026,HERTZ RENT-A-CAR,Travel,$454.63,6100,Reimbursed
+ER-2026-0429,00093,Sarah Torres,04/23/2026,FACEBK *ADS,Advertising,"$2,724.76",CC-4100,Reimbursed
+ER-2026-0410,00094,James Ward,04/23/2026,COSTCO WHSE #0891,Crew meals,$347.86,Photo (6200),Reimbursed
+ER-2026-0434,00095,Marcus Cox,04/24/2026,GOOGLE *ADS,Advertising,"$1,112.99",4200,Reimbursed
+ER-2026-0434,00096,Marcus Cox,04/24/2026,CONVENTION CTR SVCS,Events,"$2,352.51",4300 - Digital,Approved
+ER-2026-0407,00097,Carlos Lewis,04/24/2026,IKEA EMERYVILLE,Office,$87.11,7200 - IT,Reimbursed
+ER-2026-0422,00098,Joshua Morris,04/24/2026,CHIPOTLE 1882,Client meals,$372.93,Sales - West (3200),Reimbursed
+ER-2026-0433,00099,Kevin Stewart,04/24/2026,SQ *BLUE BOTTLE,Meals,$35.13,Copy & Content (5200),Reimbursed
+ER-2026-0429,00100,Sarah Torres,04/24/2026,CONVENTION CTR SVCS,Events,$980.54,4100,Approved
+ER-2026-0409,00101,Kimberly Rogers,04/25/2026,UBER *TRIP,Travel,$926.72,3200,Approved
+ER-2026-0433,00102,Kevin Stewart,04/25/2026,SHUTTERSTOCK,Software,$288.36,CC-5200,Rejected
+ER-2026-0427,00103,Margaret Cook,04/26/2026,PANERA BREAD #601,Client meals,$184.34,CC-3100,Approved
+ER-2026-0411,00104,Jeffrey Gutierrez,04/26/2026,SHELL OIL 57444,Travel,$715.64,6100 - Video,Reimbursed
+ER-2026-0430,00105,Steven Morgan,04/26/2026,GOOGLE *ADS,Advertising,"$2,443.39",CC-4200,Approved
+ER-2026-0428,00106,Sarah Foster,04/27/2026,FACEBK *ADS,Advertising,"$1,012.46",4200 - Events,Reimbursed
+ER-2026-0412,00107,Richard Myers,04/27/2026,FIGMA,Software,$96.57,5200,Draft
+ER-2026-0408,00108,Dorothy Parker,04/27/2026,FIGMA,Software,$309.43,Design (5100),Reimbursed
+ER-2026-0425,00109,Gary Phillips,04/27/2026,DELTA AIR,Travel,$864.21,Sales - East (3100),Reimbursed
+ER-2026-0409,00110,Kimberly Rogers,04/27/2026,DELTA AIR,Travel,"$1,201.69",Sales - West (3200),Reimbursed
+ER-2026-0423,00111,Stephanie Alvarez,04/28/2026,MARRIOTT HTL,Travel,$638.54,CC-6100,Reimbursed
+ER-2026-0430,00112,Steven Morgan,04/28/2026,SIGNARAMA,Events,"$1,674.36",Events (4200),Reimbursed
+ER-2026-0412,00113,Ashley Myers,04/28/2026,IKEA EMERYVILLE,Office,$423.78,Office & Facilities (7100),Approved
+ER-2026-0419,00114,Richard Richardson,04/28/2026,LINKEDIN ADS,Advertising,"$1,864.57",4300,Reimbursed
+ER-2026-0411,00115,Jeffrey Gutierrez,04/29/2026,SHELL OIL 57444,Travel,$798.07,Photo (6200),Approved
+ER-2026-0407,00116,Carlos Lewis,04/29/2026,SLACK T0123,IT,$780.20,CC-7100,Reimbursed
+ER-2026-0422,00117,Priya Morris,04/29/2026,HERTZ RENT-A-CAR,Travel,$634.72,CC-6200,Approved
+ER-2026-0432,00118,Deborah Okafor,04/29/2026,PANERA BREAD #601,Client meals,$359.20,Sales - East (3100),Approved
+ER-2026-0410,00119,Kenneth Ward,04/29/2026,BLICK ART MATERIALS,Supplies,$110.30,5200 - Copy & Content,Reimbursed
+ER-2026-0431,00120,Yuki Clark,04/30/2026,STAPLES 0442,Supplies,$339.19,CC-5200,Approved
+ER-2026-0415,00121,Wei Gonzalez,04/30/2026,SHUTTERSTOCK,Software,$453.82,5200 - Copy & Content,Reimbursed
+ER-2026-0433,00122,Kevin Stewart,04/30/2026,SHUTTERSTOCK,Software,$431.01,5200,Approved
+ER-2026-0429,00123,Sarah Torres,04/30/2026,FACEBK *ADS,Advertising,"$1,387.01",Events (4200),Approved
+ER-2026-0426,00124,Chloe Watson,04/30/2026,SHELL OIL 57444,Travel,$652.62,6100,Approved
+ER-2026-0426,00125,Chloe Watson,04/30/2026,HERTZ RENT-A-CAR,Travel,$845.89,6200 - Photo,Approved
+ER-2026-0435,00126,Amy Nelson,05/01/2026,USPS PO 0561,Postage,$80.92,CC-7200,Reimbursed
+ER-2026-0436,00127,Gary Phillips,05/01/2026,MARRIOTT HTL,Travel,$727.22,CC-3100,Reimbursed
+ER-2026-0437,00128,Chloe Watson,05/01/2026,SHELL OIL 57444,Travel,$349.00,6200 - Photo,Reimbursed
+ER-2026-0438,00129,Marcus Cox,05/02/2026,MAILCHIMP,Software,$256.92,4100 - Brand,Reimbursed
+ER-2026-0439,00130,Stephanie Alvarez,05/03/2026,COSTCO WHSE #0891,Crew meals,$499.69,CC-6100,Approved
+ER-2026-0438,00131,Marcus Cox,05/03/2026,FACEBK *ADS,Advertising,"$1,559.24",CC-4300,Reimbursed
+ER-2026-0440,00132,Jeffrey Gutierrez,05/03/2026,COSTCO WHSE #0891,Crew meals,$302.99,6200 - Photo,Reimbursed
+ER-2026-0441,00133,David Harris,05/04/2026,SLACK T0123,IT,$901.17,Office & Facilities (7100),Reimbursed
+ER-2026-0442,00134,Deborah Okafor,05/04/2026,UBER *TRIP,Travel,$326.03,3100 - Sales - East,Reimbursed
+ER-2026-0439,00135,Carol Alvarez,05/05/2026,SLACK T0123,IT,"$1,089.00",Finance & HR (7300),Reimbursed
+ER-2026-0443,00136,Kimberly Davis,05/05/2026,LENSRENTALS.COM,Equipment rental,"$2,432.57",6100,Reimbursed
+ER-2026-0444,00137,Charles Flores,05/05/2026,LINKEDIN ADS,Advertising,$771.11,4200,Reimbursed
+ER-2026-0445,00138,Dorothy Howard,05/05/2026,CHIPOTLE 1882,Client meals,$281.24,3200,Reimbursed
+ER-2026-0446,00139,Priya Morris,05/05/2026,MARRIOTT HTL,Travel,$651.75,CC-6100,Reimbursed
+ER-2026-0447,00140,Richard Myers,05/05/2026,STAPLES 0442,Supplies,$283.46,CC-5200,Reimbursed
+ER-2026-0447,00141,Ashley Myers,05/05/2026,SLACK T0123,IT,$738.11,Office & Facilities (7100),Approved
+ER-2026-0435,00142,Amy Nelson,05/06/2026,GITHUB INC,IT,$233.87,Office & Facilities (7100),Reimbursed
+ER-2026-0448,00143,Kenneth Ward,05/06/2026,STAPLES 0442,Supplies,$206.08,Design (5100),Reimbursed
+ER-2026-0449,00144,Wei Gonzalez,05/07/2026,ADOBE *CREATIVE CLD,Software,$184.25,CC-5200,Reimbursed
+ER-2026-0450,00145,Kevin Stewart,05/07/2026,STARBUCKS #04512,Meals,$74.25,Copy & Content (5200),Approved
+ER-2026-0437,00146,Chloe Watson,05/07/2026,COSTCO WHSE #0891,Crew meals,$151.03,Video (6100),Reimbursed
+ER-2026-0439,00147,Carol Alvarez,05/08/2026,FEDEX 78123,Postage,$122.28,7300,Reimbursed
+ER-2026-0443,00148,Kimberly Davis,05/08/2026,BORROWLENSES,Equipment rental,"$1,326.27",6100 - Video,Reimbursed
+ER-2026-0451,00149,Priya Johnson,05/08/2026,COSTCO WHSE #0891,Crew meals,$271.76,6200 - Photo,Reimbursed
+ER-2026-0435,00150,Amy Nelson,05/08/2026,COSTCO WHSE #0891,Office,$817.56,CC-7100,Reimbursed
+ER-2026-0439,00151,Stephanie Alvarez,05/09/2026,BORROWLENSES,Equipment rental,"$1,462.91",,Approved
+ER-2026-0446,00152,Priya Morris,05/09/2026,HERTZ RENT-A-CAR,Travel,$507.83,6200,Approved
+ER-2026-0435,00153,Amy Nelson,05/09/2026,GITHUB INC,IT,$213.79,Office & Facilities (7100),Reimbursed
+ER-2026-0452,00154,Kimberly Rogers,05/09/2026,MARRIOTT HTL,Travel,$320.43,3200 - Sales - West,Reimbursed
+ER-2026-0453,00155,Sarah Torres,05/09/2026,CONVENTION CTR SVCS,Events,$903.78,4100 - Brand,Rejected
+ER-2026-0437,00156,Chloe Watson,05/09/2026,BORROWLENSES,Equipment rental,"$1,109.50",CC-6200,Reimbursed
+ER-2026-0439,00157,Stephanie Alvarez,05/10/2026,SHELL OIL 57444,Travel,$197.10,6200,Reimbursed
+ER-2026-0444,00158,Charles Flores,05/10/2026,SIGNARAMA,Events,$516.83,4100 - Brand,Reimbursed
+ER-2026-0449,00159,Wei Gonzalez,05/10/2026,ADOBE *CREATIVE CLD,Software,$476.20,5200,Reimbursed
+ER-2026-0447,00160,Ashley Myers,05/10/2026,OFFICE DEPOT 2231,Office,$846.30,7100,Reimbursed
+ER-2026-0453,00161,Sarah Torres,05/10/2026,MAILCHIMP,Software,$190.12,4300,Approved
+ER-2026-0448,00162,James Ward,05/10/2026,SHELL OIL 57444,Travel,$490.68,6100,Approved
+ER-2026-0454,00163,Carlos Lewis,05/11/2026,GITHUB INC,IT,$121.64,IT (7200),Reimbursed
+ER-2026-0447,00164,Ashley Myers,05/11/2026,THE HOME DEPOT #4402,IT,$487.12,7100 - Office & Facilities,Approved
+ER-2026-0436,00165,Gary Phillips,05/11/2026,UBER *TRIP,Travel,$638.20,CC-3100,Approved
+ER-2026-0453,00166,Sarah Torres,05/11/2026,MAILCHIMP,Software,$108.59,4100,Reimbursed
+ER-2026-0439,00167,Stephanie Alvarez,05/12/2026,MARRIOTT HTL,Travel,$326.72,6200,Reimbursed
+ER-2026-0439,00168,Carol Alvarez,05/12/2026,SLACK T0123,IT,$958.84,IT (7200),Reimbursed
+ER-2026-0438,00169,Marcus Cox,05/12/2026,LINKEDIN ADS,Advertising,"$2,918.95",CC-4300,Reimbursed
+ER-2026-0446,00170,Priya Morris,05/13/2026,BORROWLENSES,Equipment rental,"$1,044.73",6200,Reimbursed
+ER-2026-0455,00171,Richard Richardson,05/13/2026,SIGNARAMA,Events,"$1,653.58",Digital (4300),Reimbursed
+ER-2026-0439,00172,Carol Alvarez,05/14/2026,COSTCO WHSE #0891,Office,$52.28,7300,Reimbursed
+ER-2026-0440,00173,Jeffrey Gutierrez,05/14/2026,SHELL OIL 57444,Travel,$744.16,Photo (6200),Reimbursed
+ER-2026-0456,00174,Steven Morgan,05/14/2026,CANVA,Software,$209.72,4200,Approved
+ER-2026-0456,00175,Steven Morgan,05/14/2026,CANVA,Software,$237.75,,Reimbursed
+ER-2026-0447,00176,Richard Myers,05/14/2026,SQ *BLUE BOTTLE,Meals,$56.30,5200,Reimbursed
+ER-2026-0439,00177,Stephanie Alvarez,05/15/2026,SAMYS CAMERA,Equipment rental,$330.92,CC-6100,Approved
+ER-2026-0457,00178,Yuki Clark,05/15/2026,FIGMA,Software,$262.44,5200 - Copy & Content,Reimbursed
+ER-2026-0438,00179,Marcus Cox,05/15/2026,CANVA,Software,$233.80,4300 - Digital,Approved
+ER-2026-0458,00180,Rebecca Garcia,05/15/2026,CAPITAL GRILLE,Client meals,$95.56,3200 - Sales - West,Approved
+ER-2026-0458,00181,Rebecca Garcia,05/15/2026,PANERA BREAD #601,Client meals,$382.54,3100 - Sales - East,Reimbursed
+ER-2026-0454,00182,Carlos Lewis,05/15/2026,IKEA EMERYVILLE,Office,$492.74,Office & Facilities (7100),Reimbursed
+ER-2026-0446,00183,Joshua Morris,05/15/2026,CHIPOTLE 1882,Client meals,$370.76,Sales - East (3100),Reimbursed
+ER-2026-0459,00184,Barbara Patel,05/15/2026,BORROWLENSES,Equipment rental,$753.08,6100,Reimbursed
+ER-2026-0440,00185,Jeffrey Gutierrez,05/16/2026,HERTZ RENT-A-CAR,Travel,$194.01,6200 - Photo,Reimbursed
+ER-2026-0440,00186,Jeffrey Gutierrez,05/16/2026,MARRIOTT HTL,Travel,$471.84,6200,Reimbursed
+ER-2026-0459,00187,Barbara Patel,05/16/2026,BORROWLENSES,Equipment rental,"$1,076.75",6100,Reimbursed
+ER-2026-0455,00188,Richard Richardson,05/16/2026,LINKEDIN ADS,Advertising,"$1,804.39",4100 - Brand,Reimbursed
+ER-2026-0441,00189,David Harris,05/17/2026,FEDEX 78123,Postage,$67.66,7100 - Office & Facilities,Approved
+ER-2026-0446,00190,Priya Morris,05/17/2026,COSTCO WHSE #0891,Crew meals,$342.15,6100 - Video,Approved
+ER-2026-0446,00191,Priya Morris,05/17/2026,CHIPOTLE 1882,Crew meals,$437.69,6100,Reimbursed
+ER-2026-0435,00192,Amy Nelson,05/17/2026,USPS PO 0561,Postage,$114.87,7100 - Office & Facilities,Reimbursed
+ER-2026-0445,00193,Dorothy Howard,05/18/2026,HERTZ RENT-A-CAR,Travel,$315.42,CC-3200,Reimbursed
+ER-2026-0456,00194,Steven Morgan,05/18/2026,CONVENTION CTR SVCS,Events,$723.19,CC-4200,Reimbursed
+ER-2026-0453,00195,Sarah Torres,05/18/2026,FACEBK *ADS,Advertising,"$3,047.90",Brand (4100),Reimbursed
+ER-2026-0440,00196,Jeffrey Gutierrez,05/19/2026,CHIPOTLE 1882,Crew meals,$442.27,,Approved
+ER-2026-0446,00197,Joshua Morris,05/19/2026,PANERA BREAD #601,Client meals,$69.88,3100 - Sales - East,Approved
+ER-2026-0436,00198,Gary Phillips,05/19/2026,LINKEDIN PREMIUM,Software,$47.66,Sales - West (3200),Reimbursed
+ER-2026-0436,00199,Gary Phillips,05/19/2026,CAPITAL GRILLE,Client meals,$127.55,3100,Reimbursed
+ER-2026-0439,00200,Stephanie Alvarez,05/20/2026,CHIPOTLE 1882,Crew meals,$486.83,6100 - Video,Approved
+ER-2026-0457,00201,Yuki Clark,05/20/2026,BLICK ART MATERIALS,Supplies,$123.08,CC-5200,Reimbursed
+ER-2026-0456,00202,Steven Morgan,05/20/2026,CONVENTION CTR SVCS,Events,"$1,885.72",4200,Approved
+ER-2026-0442,00203,Deborah Okafor,05/20/2026,LINKEDIN PREMIUM,Software,$113.39,,Reimbursed
+ER-2026-0460,00204,Dorothy Parker,05/20/2026,SHUTTERSTOCK,Software,$446.06,Copy & Content (5200),Approved
+ER-2026-0450,00205,Kevin Stewart,05/20/2026,FIGMA,Software,$289.26,5100 - Design,Approved
+ER-2026-0461,00206,Sarah Foster,05/21/2026,CONVENTION CTR SVCS,Events,"$1,739.16",CC-4200,Reimbursed
+ER-2026-0442,00207,Deborah Okafor,05/21/2026,TST* THE PARLOUR,Client meals,$227.42,Sales - West (3200),Reimbursed
+ER-2026-0460,00208,Dorothy Parker,05/21/2026,FIGMA,Software,$476.72,5100 - Design,Reimbursed
+ER-2026-0436,00209,Gary Phillips,05/21/2026,LINKEDIN PREMIUM,Software,$129.98,CC-3100,Approved
+ER-2026-0462,00210,Margaret Cook,05/22/2026,LINKEDIN PREMIUM,Software,$51.22,CC-3200,Approved
+ER-2026-0444,00211,Charles Flores,05/22/2026,CANVA,Software,$160.60,,Reimbursed
+ER-2026-0461,00212,Sarah Foster,05/22/2026,SIGNARAMA,Events,"$1,864.49",CC-4200,Rejected
+ER-2026-0458,00213,Rebecca Garcia,05/22/2026,UBER *TRIP,Travel,$485.84,3100 - Sales - East,Reimbursed
+ER-2026-0447,00214,Richard Myers,05/22/2026,STARBUCKS #04512,Meals,$45.94,5100,Reimbursed
+ER-2026-0447,00215,Ashley Myers,05/22/2026,OFFICE DEPOT 2231,Office,$471.51,Office & Facilities (7100),Approved
+ER-2026-0463,00216,Elizabeth Ruiz,05/22/2026,FIGMA,Software,$517.52,Design (5100),Approved
+ER-2026-0450,00217,Kevin Stewart,05/22/2026,SQ *BLUE BOTTLE,Meals,$13.59,Copy & Content (5200),Reimbursed
+ER-2026-0450,00218,Kevin Stewart,05/22/2026,ADOBE *CREATIVE CLD,Software,$305.18,CC-5200,Reimbursed
+ER-2026-0443,00219,Kimberly Davis,05/23/2026,BORROWLENSES,Equipment rental,$880.24,CC-6100,Approved
+ER-2026-0449,00220,Wei Gonzalez,05/23/2026,AMZN Mktp US*2K4JR7,Supplies,$40.43,CC-5100,Approved
+ER-2026-0442,00221,Deborah Okafor,05/23/2026,UBER *TRIP,Travel,$914.65,3100 - Sales - East,Approved
+ER-2026-0437,00222,Chloe Watson,05/24/2026,CHIPOTLE 1882,Crew meals,$461.49,,Reimbursed
+ER-2026-0457,00223,Yuki Clark,05/25/2026,FIGMA,Software,$242.15,Copy & Content (5200),Approved
+ER-2026-0443,00224,Kimberly Davis,05/25/2026,CHIPOTLE 1882,Crew meals,$477.58,6200 - Photo,Approved
+ER-2026-0449,00225,Wei Gonzalez,05/25/2026,STARBUCKS #04512,Meals,$61.44,Copy & Content (5200),Reimbursed
+ER-2026-0451,00226,Priya Johnson,05/25/2026,LENSRENTALS.COM,Equipment rental,"$1,607.09",6100,Rejected
+ER-2026-0463,00227,Elizabeth Ruiz,05/25/2026,STAPLES 0442,Supplies,$99.18,CC-5100,Reimbursed
+ER-2026-0448,00228,Kenneth Ward,05/25/2026,ADOBE *CREATIVE CLD,Software,$366.60,CC-5200,Rejected
+ER-2026-0448,00229,Kenneth Ward,05/25/2026,SHUTTERSTOCK,Software,$415.56,CC-5100,Approved
+ER-2026-0438,00230,Marcus Cox,05/26/2026,CONVENTION CTR SVCS,Events,"$1,306.58",CC-4300,Reimbursed
+ER-2026-0446,00231,Priya Morris,05/26/2026,CHIPOTLE 1882,Crew meals,$441.07,,Reimbursed
+ER-2026-0442,00232,Deborah Okafor,05/26/2026,DELTA AIR,Travel,$302.74,Sales - East (3100),Reimbursed
+ER-2026-0460,00233,Dorothy Parker,05/26/2026,BLICK ART MATERIALS,Supplies,$169.92,5200 - Copy & Content,Approved
+ER-2026-0440,00234,Jeffrey Gutierrez,05/27/2026,COSTCO WHSE #0891,Crew meals,$290.37,Photo (6200),Reimbursed
+ER-2026-0451,00235,Priya Johnson,05/27/2026,SHELL OIL 57444,Travel,$560.56,CC-6100,Reimbursed
+ER-2026-0448,00236,James Ward,05/27/2026,BORROWLENSES,Equipment rental,$303.56,6200 - Photo,Approved
+ER-2026-0457,00237,Yuki Clark,05/28/2026,BLICK ART MATERIALS,Supplies,$76.19,CC-5100,Reimbursed
+ER-2026-0446,00238,Joshua Morris,05/28/2026,DELTA AIR,Travel,$546.55,Sales - East (3100),Reimbursed
+ER-2026-0442,00239,Deborah Okafor,05/28/2026,CAPITAL GRILLE,Client meals,$88.93,3100 - Sales - East,Reimbursed
+ER-2026-0459,00240,Barbara Patel,05/28/2026,CHIPOTLE 1882,Crew meals,$421.10,CC-6100,Reimbursed
+ER-2026-0452,00241,Kimberly Rogers,05/28/2026,MARRIOTT HTL,Travel,$861.19,3200 - Sales - West,Reimbursed
+ER-2026-0452,00242,Kimberly Rogers,05/28/2026,HERTZ RENT-A-CAR,Travel,"$1,155.79",3100,Reimbursed
+ER-2026-0462,00243,Margaret Cook,05/29/2026,PANERA BREAD #601,Client meals,$235.17,3200,Reimbursed
+ER-2026-0447,00244,Ashley Myers,05/29/2026,GOOGLE *GSUITE,IT,$35.92,7100 - Office & Facilities,Reimbursed
+ER-2026-0443,00245,Kimberly Davis,05/30/2026,MARRIOTT HTL,Travel,$321.41,Video (6100),Approved
+ER-2026-0444,00246,Charles Flores,05/30/2026,SIGNARAMA,Events,"$1,491.28",4100,Approved
+ER-2026-0458,00247,Rebecca Garcia,05/30/2026,CAPITAL GRILLE,Client meals,$102.53,Sales - East (3100),Reimbursed
+ER-2026-0458,00248,Rebecca Garcia,05/30/2026,CHIPOTLE 1882,Client meals,$407.46,3100,Approved
+ER-2026-0441,00249,David Harris,05/30/2026,IKEA EMERYVILLE,Office,$739.10,Office & Facilities (7100),Reimbursed
+ER-2026-0459,00250,Barbara Patel,05/30/2026,MARRIOTT HTL,Travel,$589.96,CC-6100,Reimbursed
+ER-2026-0464,00251,Sarah Foster,06/01/2026,PP*EVENTBRITE,Events,$150.57,CC-4200,Approved
+ER-2026-0465,00252,Dorothy Parker,06/01/2026,FIGMA,Software,$61.41,5100,Reimbursed
+ER-2026-0465,00253,Dorothy Parker,06/01/2026,SHUTTERSTOCK,Software,$368.38,5100 - Design,Reimbursed
+ER-2026-0466,00254,Richard Richardson,06/01/2026,PP*EVENTBRITE,Events,"$2,054.01",4300,Reimbursed
+ER-2026-0467,00255,Charles Flores,06/02/2026,FACEBK *ADS,Advertising,"$1,360.86",4100 - Brand,Approved
+ER-2026-0468,00256,David Harris,06/02/2026,USPS PO 0561,Postage,$20.90,7100 - Office & Facilities,Approved
+ER-2026-0466,00257,Richard Richardson,06/02/2026,CONVENTION CTR SVCS,Events,$267.91,Digital (4300),Reimbursed
+ER-2026-0469,00258,Kimberly Rogers,06/02/2026,CAPITAL GRILLE,Client meals,$180.34,3200 - Sales - West,Reimbursed
+ER-2026-0470,00259,James Ward,06/02/2026,HERTZ RENT-A-CAR,Travel,$123.99,CC-6200,Reimbursed
+ER-2026-0471,00260,Stephanie Alvarez,06/03/2026,HERTZ RENT-A-CAR,Travel,$691.92,CC-6100,Draft
+ER-2026-0472,00261,Richard Myers,06/03/2026,BLICK ART MATERIALS,Supplies,$112.61,5200 - Copy & Content,Approved
+ER-2026-0473,00262,Amy Nelson,06/03/2026,COSTCO WHSE #0891,Office,$49.07,7100 - Office & Facilities,Approved
+ER-2026-0470,00263,James Ward,06/03/2026,CHIPOTLE 1882,Crew meals,$133.99,Photo (6200),Reimbursed
+ER-2026-0474,00264,Kimberly Davis,06/04/2026,LENSRENTALS.COM,Equipment rental,$776.29,6100 - Video,Approved
+ER-2026-0475,00265,Priya Johnson,06/04/2026,LENSRENTALS.COM,Equipment rental,"$1,697.55",CC-6200,Reimbursed
+ER-2026-0476,00266,Priya Morris,06/04/2026,COSTCO WHSE #0891,Crew meals,$468.39,,Reimbursed
+ER-2026-0477,00267,Deborah Okafor,06/04/2026,UNITED AIRLINES,Travel,"$1,056.10",Sales - East (3100),Reimbursed
+ER-2026-0466,00268,Richard Richardson,06/04/2026,LINKEDIN ADS,Advertising,"$2,359.12",4300,Draft
+ER-2026-0478,00269,Carlos Lewis,06/05/2026,FEDEX 78123,Postage,$33.52,7100 - Office & Facilities,Approved
+ER-2026-0479,00270,Steven Morgan,06/05/2026,PP*EVENTBRITE,Events,"$2,334.02",CC-4200,Reimbursed
+ER-2026-0480,00271,Barbara Patel,06/05/2026,COSTCO WHSE #0891,Crew meals,$416.93,CC-6100,Reimbursed
+ER-2026-0481,00272,Elizabeth Ruiz,06/05/2026,STARBUCKS #04512,Meals,$60.55,CC-5100,Approved
+ER-2026-0481,00273,Elizabeth Ruiz,06/05/2026,FIGMA,Software,$188.27,5200 - Copy & Content,Reimbursed
+ER-2026-0482,00274,Yuki Clark,06/06/2026,STARBUCKS #04512,Meals,$36.16,Copy & Content (5200),Reimbursed
+ER-2026-0483,00275,Rebecca Garcia,06/06/2026,CHIPOTLE 1882,Client meals,$212.39,Sales - East (3100),Reimbursed
+ER-2026-0483,00276,Rebecca Garcia,06/06/2026,PANERA BREAD #601,Client meals,$311.38,3100 - Sales - East,Approved
+ER-2026-0484,00277,Wei Gonzalez,06/06/2026,STAPLES 0442,Supplies,$315.32,5200,Reimbursed
+ER-2026-0476,00278,Joshua Morris,06/06/2026,MARRIOTT HTL,Travel,$260.06,3100 - Sales - East,Reimbursed
+ER-2026-0473,00279,Amy Nelson,06/06/2026,GOOGLE *GSUITE,IT,$962.35,Finance & HR (7300),Draft
+ER-2026-0479,00280,Steven Morgan,06/07/2026,SIGNARAMA,Events,$927.93,CC-4200,Reimbursed
+ER-2026-0476,00281,Joshua Morris,06/07/2026,PANERA BREAD #601,Client meals,$354.64,3100 - Sales - East,Approved
+ER-2026-0485,00282,Marcus Cox,06/08/2026,CONVENTION CTR SVCS,Events,"$1,667.95",4100,Reimbursed
+ER-2026-0466,00283,Richard Richardson,06/08/2026,PP*EVENTBRITE,Events,$387.29,4300,Reimbursed
+ER-2026-0486,00284,Kevin Stewart,06/08/2026,STAPLES 0442,Supplies,$52.66,5200,Rejected
+ER-2026-0485,00285,Marcus Cox,06/09/2026,SIGNARAMA,Events,"$1,912.86",4300 - Digital,Reimbursed
+ER-2026-0484,00286,Wei Gonzalez,06/09/2026,FIGMA,Software,$283.54,Copy & Content (5200),Approved
+ER-2026-0479,00287,Steven Morgan,06/09/2026,GOOGLE *ADS,Advertising,$410.85,Events (4200),Reimbursed
+ER-2026-0483,00288,Rebecca Garcia,06/10/2026,UBER *TRIP,Travel,$341.46,Sales - East (3100),Reimbursed
+ER-2026-0487,00289,Dorothy Howard,06/10/2026,PANERA BREAD #601,Client meals,$344.75,3100 - Sales - East,Rejected
+ER-2026-0488,00290,Sarah Torres,06/10/2026,FACEBK *ADS,Advertising,"$2,055.01",4100 - Brand,Approved
+ER-2026-0471,00291,Carol Alvarez,06/11/2026,IKEA EMERYVILLE,Office,$202.60,Finance & HR (7300),Approved
+ER-2026-0465,00292,Dorothy Parker,06/11/2026,SQ *BLUE BOTTLE,Meals,$51.55,CC-5100,Reimbursed
+ER-2026-0469,00293,Kimberly Rogers,06/11/2026,DELTA AIR,Travel,$592.67,Sales - West (3200),Reimbursed
+ER-2026-0470,00294,James Ward,06/11/2026,CHIPOTLE 1882,Crew meals,$101.31,CC-6200,Reimbursed
+ER-2026-0467,00295,Charles Flores,06/12/2026,LINKEDIN ADS,Advertising,$823.41,CC-4100,Reimbursed
+ER-2026-0484,00296,Wei Gonzalez,06/12/2026,STARBUCKS #04512,Meals,$79.50,CC-5100,Reimbursed
+ER-2026-0468,00297,David Harris,06/12/2026,COSTCO WHSE #0891,Office,$46.95,7100 - Office & Facilities,Reimbursed
+ER-2026-0465,00298,Dorothy Parker,06/12/2026,ADOBE *CREATIVE CLD,Software,$475.44,CC-5200,Rejected
+ER-2026-0488,00299,Sarah Torres,06/12/2026,GOOGLE *ADS,Advertising,"$2,183.72",CC-4100,Reimbursed
+ER-2026-0488,00300,Sarah Torres,06/12/2026,FACEBK *ADS,Advertising,"$2,630.25",Brand (4100),Reimbursed
+ER-2026-0475,00301,Priya Johnson,06/13/2026,HERTZ RENT-A-CAR,Travel,$229.39,6100,Draft
+ER-2026-0478,00302,Carlos Lewis,06/13/2026,OFFICE DEPOT 2231,Office,$486.04,Finance & HR (7300),Reimbursed
+ER-2026-0488,00303,Sarah Torres,06/13/2026,SIGNARAMA,Events,"$2,177.84",CC-4100,Reimbursed
+ER-2026-0470,00304,Kenneth Ward,06/13/2026,SHUTTERSTOCK,Software,$201.79,5200 - Copy & Content,Reimbursed
+ER-2026-0474,00305,Kimberly Davis,06/14/2026,BORROWLENSES,Equipment rental,$696.72,CC-6100,Reimbursed
+ER-2026-0473,00306,Amy Nelson,06/14/2026,OFFICE DEPOT 2231,Office,$244.02,,Reimbursed
+ER-2026-0486,00307,Kevin Stewart,06/14/2026,FIGMA,Software,$244.24,Copy & Content (5200),Rejected
+ER-2026-0489,00308,Chloe Watson,06/14/2026,SHELL OIL 57444,Travel,$497.39,Video (6100),Reimbursed
+ER-2026-0487,00309,Dorothy Howard,06/15/2026,TST* THE PARLOUR,Client meals,$408.56,3200,Rejected
+ER-2026-0490,00310,Gary Phillips,06/15/2026,PANERA BREAD #601,Client meals,$141.18,CC-3100,Reimbursed
+ER-2026-0470,00311,James Ward,06/15/2026,MARRIOTT HTL,Travel,$427.04,CC-6100,Reimbursed
+ER-2026-0474,00312,Kimberly Davis,06/16/2026,SAMYS CAMERA,Equipment rental,"$1,848.70",,Reimbursed
+ER-2026-0491,00313,Jeffrey Gutierrez,06/16/2026,MARRIOTT HTL,Travel,$351.72,Video (6100),Rejected
+ER-2026-0476,00314,Joshua Morris,06/17/2026,LINKEDIN PREMIUM,Software,$108.86,Sales - East (3100),Reimbursed
+ER-2026-0472,00315,Ashley Myers,06/17/2026,SLACK T0123,IT,$242.80,CC-7100,Approved
+ER-2026-0472,00316,Richard Myers,06/17/2026,SHUTTERSTOCK,Software,$441.63,Copy & Content (5200),Approved
+ER-2026-0472,00317,Ashley Myers,06/17/2026,IKEA EMERYVILLE,Office,$484.95,Office & Facilities (7100),Reimbursed
+ER-2026-0473,00318,Amy Nelson,06/17/2026,IKEA EMERYVILLE,Office,$464.14,Office & Facilities (7100),Reimbursed
+ER-2026-0485,00319,Marcus Cox,06/18/2026,FACEBK *ADS,Advertising,"$1,477.14",4300 - Digital,Approved
+ER-2026-0464,00320,Sarah Foster,06/18/2026,FACEBK *ADS,Advertising,"$2,893.96",CC-4200,Reimbursed
+ER-2026-0491,00321,Jeffrey Gutierrez,06/18/2026,BORROWLENSES,Equipment rental,"$1,548.70",6200 - Photo,Reimbursed
+ER-2026-0465,00322,Dorothy Parker,06/18/2026,STARBUCKS #04512,Meals,$81.44,Copy & Content (5200),Reimbursed
+ER-2026-0469,00323,Kimberly Rogers,06/18/2026,MARRIOTT HTL,Travel,$190.85,CC-3200,Reimbursed
+ER-2026-0470,00324,Kenneth Ward,06/19/2026,ADOBE *CREATIVE CLD,Software,$208.37,CC-5200,Approved
+ER-2026-0489,00325,Chloe Watson,06/19/2026,COSTCO WHSE #0891,Crew meals,$232.82,Photo (6200),Reimbursed
+ER-2026-0471,00326,Carol Alvarez,06/20/2026,SLACK T0123,IT,$612.91,7300,Approved
+ER-2026-0471,00327,Stephanie Alvarez,06/20/2026,LENSRENTALS.COM,Equipment rental,"$2,046.32",Photo (6200),Reimbursed
+ER-2026-0472,00328,Richard Myers,06/20/2026,AMZN Mktp US*2K4JR7,Supplies,$238.70,5200,Approved
+ER-2026-0481,00329,Elizabeth Ruiz,06/20/2026,STARBUCKS #04512,Meals,$59.19,Design (5100),Reimbursed
+ER-2026-0484,00330,Wei Gonzalez,06/21/2026,SHUTTERSTOCK,Software,$108.10,Design (5100),Approved
+ER-2026-0471,00331,Stephanie Alvarez,06/22/2026,HERTZ RENT-A-CAR,Travel,$319.25,6100,Approved
+ER-2026-0474,00332,Kimberly Davis,06/22/2026,BORROWLENSES,Equipment rental,"$2,340.53",CC-6100,Reimbursed
+ER-2026-0480,00333,Barbara Patel,06/22/2026,SHELL OIL 57444,Travel,$388.35,Video (6100),Reimbursed
+ER-2026-0466,00334,Richard Richardson,06/22/2026,CANVA,Software,$136.68,4300,Rejected
+ER-2026-0467,00335,Charles Flores,06/23/2026,CONVENTION CTR SVCS,Events,"$1,014.21",4100 - Brand,Reimbursed
+ER-2026-0472,00336,Ashley Myers,06/23/2026,COSTCO WHSE #0891,Office,$775.89,Office & Facilities (7100),Reimbursed
+ER-2026-0473,00337,Amy Nelson,06/23/2026,SLACK T0123,IT,$93.59,CC-7300,Reimbursed
+ER-2026-0473,00338,Amy Nelson,06/23/2026,USPS PO 0561,Postage,$125.13,CC-7100,Approved
+ER-2026-0485,00339,Marcus Cox,06/24/2026,LINKEDIN ADS,Advertising,"$2,369.75",CC-4300,Reimbursed
+ER-2026-0485,00340,Marcus Cox,06/24/2026,LINKEDIN ADS,Advertising,"$3,192.02",4300 - Digital,Reimbursed
+ER-2026-0467,00341,Charles Flores,06/24/2026,MAILCHIMP,Software,$99.97,CC-4100,Reimbursed
+ER-2026-0467,00342,Charles Flores,06/24/2026,GOOGLE *ADS,Advertising,"$2,280.44",4100,Reimbursed
+ER-2026-0483,00343,Rebecca Garcia,06/24/2026,DELTA AIR,Travel,$905.38,3100,Approved
+ER-2026-0468,00344,David Harris,06/24/2026,OFFICE DEPOT 2231,Office,$277.47,7100 - Office & Facilities,Approved
+ER-2026-0476,00345,Priya Morris,06/24/2026,LENSRENTALS.COM,Equipment rental,$244.96,Video (6100),Reimbursed
+ER-2026-0477,00346,Deborah Okafor,06/24/2026,TST* THE PARLOUR,Client meals,$358.46,3100,Reimbursed
+ER-2026-0486,00347,Kevin Stewart,06/24/2026,BLICK ART MATERIALS,Supplies,$181.38,5100,Rejected
+ER-2026-0482,00348,Yuki Clark,06/25/2026,BLICK ART MATERIALS,Supplies,$94.47,5200 - Copy & Content,Reimbursed
+ER-2026-0492,00349,Margaret Cook,06/25/2026,HERTZ RENT-A-CAR,Travel,$705.93,3200 - Sales - West,Rejected
+ER-2026-0468,00350,David Harris,06/25/2026,THE HOME DEPOT #4402,IT,"$1,065.39",7100 - Office & Facilities,Reimbursed
+ER-2026-0472,00351,Ashley Myers,06/25/2026,FEDEX 78123,Postage,$47.37,Finance & HR (7300),Reimbursed
+ER-2026-0491,00352,Jeffrey Gutierrez,06/26/2026,LENSRENTALS.COM,Equipment rental,"$2,178.74",6200 - Photo,Approved
+ER-2026-0479,00353,Steven Morgan,06/26/2026,ADOBE *CREATIVE CLD,Software,$98.98,4200,Reimbursed
+ER-2026-0476,00354,Joshua Morris,06/26/2026,TST* THE PARLOUR,Client meals,$291.37,3100,Approved
+ER-2026-0476,00355,Joshua Morris,06/26/2026,TST* THE PARLOUR,Client meals,$325.11,3100 - Sales - East,Reimbursed
+ER-2026-0472,00356,Richard Myers,06/26/2026,ADOBE *CREATIVE CLD,Software,$273.21,5200,Reimbursed
+ER-2026-0472,00357,Richard Myers,06/26/2026,FIGMA,Software,$484.55,5100,Approved
+ER-2026-0490,00358,Gary Phillips,06/26/2026,CHIPOTLE 1882,Client meals,$216.90,3100 - Sales - East,Reimbursed
+ER-2026-0468,00359,David Harris,06/27/2026,IKEA EMERYVILLE,Office,$538.12,7100 - Office & Facilities,Approved
+ER-2026-0476,00360,Priya Morris,06/27/2026,CHIPOTLE 1882,Crew meals,$242.40,6200 - Photo,Reimbursed
+ER-2026-0471,00361,Stephanie Alvarez,06/28/2026,SAMYS CAMERA,Equipment rental,"$1,094.68",Video (6100),Approved
+ER-2026-0471,00362,Stephanie Alvarez,06/28/2026,BORROWLENSES,Equipment rental,"$1,507.21",CC-6100,Reimbursed
+ER-2026-0482,00363,Yuki Clark,06/28/2026,STAPLES 0442,Supplies,$147.62,5200,Reimbursed
+ER-2026-0464,00364,Sarah Foster,06/28/2026,FACEBK *ADS,Advertising,$597.28,4100,Reimbursed
+ER-2026-0483,00365,Rebecca Garcia,06/28/2026,PANERA BREAD #601,Client meals,$334.57,3100 - Sales - East,Reimbursed
+ER-2026-0491,00366,Jeffrey Gutierrez,06/28/2026,COSTCO WHSE #0891,Crew meals,$299.01,6200 - Photo,Reimbursed
+ER-2026-0488,00367,Sarah Torres,06/28/2026,PP*EVENTBRITE,Events,"$1,729.88",Brand (4100),Reimbursed
+ER-2026-0492,00368,Margaret Cook,06/29/2026,DELTA AIR,Travel,$687.08,Sales - West (3200),Rejected
+ER-2026-0464,00369,Sarah Foster,06/29/2026,FACEBK *ADS,Advertising,"$2,490.34",4200 - Events,Reimbursed
+ER-2026-0484,00370,Wei Gonzalez,06/30/2026,AMZN Mktp US*2K4JR7,Supplies,$79.25,Copy & Content (5200),Approved
+ER-2026-0479,00371,Steven Morgan,06/30/2026,LINKEDIN ADS,Advertising,$686.55,4200 - Events,Reimbursed
+ER-2026-0472,00372,Ashley Myers,06/30/2026,IKEA EMERYVILLE,Office,$207.12,CC-7100,Reimbursed
+ER-2026-0469,00373,Kimberly Rogers,06/30/2026,ZOOM.US 888-799-9666,Software,$116.82,3200,Approved
+ER-2026-0481,00374,Elizabeth Ruiz,06/30/2026,SQ *BLUE BOTTLE,Meals,$25.49,5100,Approved

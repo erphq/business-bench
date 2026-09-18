@@ -1,0 +1,20 @@
+Q2 expense report - what I need
+
+Spend by department for April, May and June, and a short memo on anyone over budget.
+
+Budgets below are the annual expense budgets the partners approved in January. We phase them evenly
+through the year.
+
+  Sales       $123,000
+  Marketing   $406,000
+  Creative    $78,000
+  Production  $238,000
+  Operations  $99,000
+
+Only lines that were approved or already reimbursed are spend. Put each expense in the month it was
+incurred, not the month it was approved. Q1 is closed, so anything dated March stays out even if it
+was approved in April.
+
+If someone left the cost center blank, charge it to their home cost center on the People tab.
+
+- Hiroshi

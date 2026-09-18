@@ -1,0 +1,17 @@
+{
+  "duplicates": {
+    "PMT-26-0369": "dup_check_twice",
+    "PMT-26-0373": "dup_vendor_record",
+    "PMT-26-0395": "dup_over_half",
+    "PMT-26-0396": "dup_leading_zero"
+  },
+  "lookalikes": {
+    "PMT-26-0343": "same_amount_new_invoice",
+    "PMT-26-0351": "stop_replaced",
+    "PMT-26-0364": "instalment",
+    "PMT-26-0374": "void_reissue",
+    "PMT-26-0378": "refunded_dup",
+    "PMT-26-0413": "other_vendor_same_invoice",
+    "PMT-26-0416": "rent"
+  }
+}

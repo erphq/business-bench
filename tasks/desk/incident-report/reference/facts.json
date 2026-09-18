@@ -1,0 +1,31 @@
+{
+  "actions": [
+    {
+      "action": "guard at the Line 3 merge",
+      "due": "2026-09-17",
+      "due_regex": "(2026-09-17|(?<!\\d)0?9/17(?!\\d)|(?<!\\d)0?9/17(?!\\d)|(?<!\\d)17/0?9(?!\\d)|(?<!\\d)17/0?9(?!\\d)|\\bsep(?:t(?:ember)?)?\\.?\\s+17(?:st|nd|rd|th)?\\b|\\b17(?:st|nd|rd|th)?\\s+(?:of\\s+)?sep(?:t(?:ember)?)?\\b)",
+      "keyword": "\\bguard",
+      "owner": "Torres",
+      "wrong_due": "2026-09-11"
+    },
+    {
+      "action": "jam-clearing refresher training",
+      "due": "2026-09-22",
+      "due_regex": "(2026-09-22|(?<!\\d)0?9/22(?!\\d)|(?<!\\d)0?9/22(?!\\d)|(?<!\\d)22/0?9(?!\\d)|(?<!\\d)22/0?9(?!\\d)|\\bsep(?:t(?:ember)?)?\\.?\\s+22(?:st|nd|rd|th)?\\b|\\b22(?:st|nd|rd|th)?\\s+(?:of\\s+)?sep(?:t(?:ember)?)?\\b)",
+      "keyword": "\\b(train|refresher)",
+      "owner": "Cox",
+      "wrong_owner": "Miller"
+    },
+    {
+      "action": "stop-line signs at the merges",
+      "due": "2026-09-08",
+      "due_regex": "(2026-09-08|(?<!\\d)0?9/08(?!\\d)|(?<!\\d)0?9/8(?!\\d)|(?<!\\d)08/0?9(?!\\d)|(?<!\\d)8/0?9(?!\\d)|\\bsep(?:t(?:ember)?)?\\.?\\s+8(?:st|nd|rd|th)?\\b|\\b8(?:st|nd|rd|th)?\\s+(?:of\\s+)?sep(?:t(?:ember)?)?\\b)",
+      "keyword": "\\b(sign|signs|signage)\\b",
+      "owner": "Cook"
+    }
+  ],
+  "coworker_who_pressed_estop": "Anna Rivera",
+  "incident_time": "14:08",
+  "injured": "Hiroshi Harris",
+  "urgent_care": "MultiCare Urgent Care Fife"
+}

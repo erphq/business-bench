@@ -1,0 +1,65 @@
+id: hvac-field-service
+track: build
+category: field-service
+title: HVAC field-service app with customers, jobs, technicians, parts, and invoicing
+ask: |
+  We're a 12-person HVAC company. I need to track customers, jobs, technicians, and the
+  parts used on each job, and invoice when a job closes: the invoice is the parts we used
+  at our sell price plus labor hours at our hourly rate. Import our customer and parts
+  lists (attached); the customer list came out of our old system and has some duplicates
+  in it, so I only want each customer once. Sales reps should only see their own customers,
+  and technicians should only see the jobs assigned to them. I also want to invite the rest of the
+  team with their own logins at different access levels, including a read-only one for our bookkeeper,
+  and a dashboard with our key numbers. Give me an admin login and a login for one sales rep.
+seed:
+  - seed/customers.csv
+  - seed/parts.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for one sales rep (Dana, Marcus, or Priya).
+      password: That rep's password.
+    notes: >
+      Free text. Must name which rep the restricted login is. May include a technician
+      login, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "admin@example.com", "password": "..."},
+      "restricted": {"user": "dana@example.com", "password": "..."},
+      "notes": "restricted login is Dana. Technician login: tech1 / ... Restart: systemctl restart hvac."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 11, 17, 20, 21, 23, 24, 26]  # "first usable" = these pass; 21, 23, 24, 26 are baseline core items 3, 5, 6, 8 (added 13 September 2026; earlier runs used the first five)
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - 5 exact-duplicate customer rows and 3 same-email-different-case rows (120 rows -> 112 customers)
+  - 6 customers with blank email; email-only dedupe collapses them to one (gives 107)
+  - Last Service in five date formats plus blanks; newest is ISO so a text sort ranks it wrong
+  - phones in six formats; 4 customer names in all caps; unit/suite numbers in ~20% of addresses
+  - parts prices as "$1,240.00" strings on 10 rows; the highest sell price is one of them
+  - two SKUs with trailing spaces (IGN-HSI-80V, DISC-60A-NF)
+  - FLT-16x25x1 has On Hand -3; must be flagged or corrected, not silently imported
+
+# Automated probes (bench/build_grade.py --probe). The export and scope items give the main list; these keep
+# the items that runs before 13 September 2026 were graded on.
+probe_extra:
+  - {item: 3, name: customers, paths: [/customers], expected: 112}
+  - {item: 7, name: parts, paths: [/parts], expected: 60}
+probe_scope_also: [11]

@@ -1,0 +1,23 @@
+{
+  "am_annual": 71400,
+  "am_notice": "2026-12-15",
+  "am_renew": "2027-03-15",
+  "annual": 91800,
+  "effective_end": "2027-03-14",
+  "monthly": 7650,
+  "naive": {
+    "amend1_only": 85800,
+    "amend2_only": 77400,
+    "original": 71400,
+    "with_draft": 99600
+  },
+  "notice_by": [
+    "2026-12-01",
+    "2026-11-30"
+  ],
+  "notice_days": 120,
+  "term_end": [
+    "2027-03-31",
+    "2027-04-01"
+  ]
+}

@@ -1,0 +1,44 @@
+id: fleet-mileage-monthly
+track: desk
+category: spreadsheet
+title: Monthly miles per van for the insurer
+ask: |
+  The insurance renewal needs miles per van per month for January to June, worked out from the fuel card export. Save it as mileage.csv. Tom's note says how he wants it counted.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the export is sorted by posted date, one to five days after the fill-up, so readings are out of order and month-end fill-ups post in the next month; bucketing or ordering by posted date moves miles between months (check: miles per van and month)
+- |-
+  the first rows are late-December fill-ups posted in January; they are January's starting reading, and a max-minus-min inside each month drops the miles driven between the last fill-up of one month and the first of the next (check: miles per van and month)
+- |-
+  VAN-06's instrument cluster was replaced in March and restarted at zero; the shop log carries the old reading at the swap, so March is (old reading minus February's last) plus March's last reading on the new cluster (check: miles per van and month)
+- |-
+  VAN-04 has no readings at all in April: the April row stays with empty miles and a flag rather than 0, and May's miles run from the last March reading (checks: miles per van and month; a row for every van and month)
+- |-
+  the card system writes the unit as 'VAN-03', 'VAN 03' or 'Van 03'; grouping on the raw text splits every van into three (check: every van)
+- |-
+  car-wash, wiper and DEF purchases carry no odometer and sit between fill-ups (check: miles per van and month)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: mileage.csv
+  columns:
+  - vehicle
+  - month
+  - miles
+  - flag
+- type: csv_set_equal
+  name: every van
+  path: mileage.csv
+  column: vehicle
+  ref: mileage.csv
+  normalize:
+  - alnum
+- type: csv_row_count
+  name: a row for every van and month
+  path: mileage.csv
+  equals_ref: mileage.csv
+- type: custom
+  name: miles per van and month
+  module: check.py

@@ -1,0 +1,64 @@
+id: procurement-savings
+track: desk
+category: reports
+title: First-half purchasing savings by category
+ask: |
+  The owners want to know what Jess's negotiating saved us in the first half, by category. Her quote log and the PO export are in the folder, and Ruth's email says how finance counts it. Save it as savings.xlsx with live formulas.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  Hallertau quotes are in EUR and Prairie Heritage quotes in CAD while PO unit costs are USD; comparing unconverted quote prices turns hop savings negative and inflates malt savings several times over (checks: Hops savings; Malt savings)
+- |-
+  PO quantities differ from the quoted quantities on most malt and packaging lines; savings use the quantity ordered, so quote total minus PO total is wrong (checks: Malt savings; Packaging savings)
+- |-
+  negotiated quotes have a Rev 2 row at a lower price; the baseline is Rev 1, and joining on the latest revision shrinks savings to almost nothing (checks: Hops savings; Cleaning savings)
+- '2 cancelled POs still sit in the export, one of them packaging (check: Packaging savings)'
+- |-
+  one cleaning PO came in 6-10% above its quote (a supplier surcharge); it is negative savings and must not be floored at zero (check: Cleaning savings)
+- |-
+  spot buys have no quote reference and no baseline; the PO export carries a two-line preamble, a BOM, CRLF endings and "$1,234.50" text money, and multi-line POs repeat the PO number (check: total savings)
+checks:
+- type: file_exists
+  name: savings.xlsx exists
+  path: savings.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: savings.xlsx
+  min_count: 10
+- type: xlsx_no_errors
+  name: no formula errors
+  path: savings.xlsx
+- type: xlsx_value_present
+  name: Hops savings
+  path: savings.xlsx
+  expected: 1213.27
+  rel_tol: 0.001
+  rounding: EUR quotes converted at the 1.08 budget rate
+  near_text: hops
+- type: xlsx_value_present
+  name: Malt savings
+  path: savings.xlsx
+  expected: 1660.03
+  rel_tol: 0.001
+  rounding: CAD quotes converted at the 0.73 budget rate
+  near_text: malt
+- type: xlsx_value_present
+  name: Packaging savings
+  path: savings.xlsx
+  expected: 1510.3
+  rel_tol: 0.0001
+  near_text: packaging
+- type: xlsx_value_present
+  name: Cleaning savings
+  path: savings.xlsx
+  expected: 911.57
+  rel_tol: 0.001
+  near_text: cleaning
+- type: xlsx_value_present
+  name: total savings
+  path: savings.xlsx
+  expected: 5334.66
+  rel_tol: 0.001
+  rounding: includes EUR and CAD quotes converted at budget rates
+  near_text: total

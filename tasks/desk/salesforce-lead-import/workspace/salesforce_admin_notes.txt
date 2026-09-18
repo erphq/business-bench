@@ -1,0 +1,31 @@
+Salesforce lead import - notes from Wei Tanaka (our Salesforce consultant), 9 Sept 2026
+
+Use sf_lead_import_template.csv: same columns, same order, one row per lead, drop the Pat Sample row.
+
+LEAD SOURCE is a restricted picklist. Only these values import; anything else fails the row.
+  Web                 our website: contact form, quote request form, website chat
+  Advertisement       anything we paid to show: LinkedIn ads or sponsored posts, Google Ads / PPC
+  Trade Show          booth scans and business cards from any event
+  Partner Referral    sent to us by a partner, carrier or reseller
+  Employee Referral   sent to us by someone on our own staff
+  Phone Inquiry       they called us
+  Purchased List      bought or rented lists (ZoomInfo etc.)
+  Other               only if none of the above fits
+
+LEAD STATUS (restricted):
+  Open - Not Contacted     new, nobody has reached out yet (blank status in the sheet means new)
+  Working - Contacted      we have reached out or talked to them, including voicemails
+  Closed - Converted       (not used for this import)
+  Closed - Not Converted   dead, unqualified or not interested
+
+STATE AND COUNTRY: State and Country/Territory picklists are switched on, so the import takes codes, not names.
+Country Code is the two-letter ISO 3166 code (United States US, Canada CA, Mexico MX, United Kingdom GB, Germany DE).
+State/Province Code is the two-letter code for US states and Canadian provinces only; leave it blank for every
+other country. A blank country in the sheet is a US lead (marketing only leaves it off for US ones).
+
+COMPANY is required on a lead. If there is no company, put [not provided] exactly like that, which is what
+web-to-lead does.
+
+LEAD OWNER: the import wizard matches owners on their Salesforce USERNAME, not their email address, and a couple
+of ours are different, so use the Username column of the users export. Luis left in August and his user is
+deactivated; his leads and any lead without a rep go to Priya Natarajan.

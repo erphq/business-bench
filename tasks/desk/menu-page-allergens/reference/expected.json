@@ -1,0 +1,239 @@
+{
+  "allergen_rx": {
+    "Dairy": "\\bdairy\\b|\\bmilk\\b",
+    "Egg": "\\beggs?\\b",
+    "Fish": "(?<!shell)\\bfish\\b",
+    "Gluten": "\\bgluten\\b(?![- ]?free)|\\bwheat\\b",
+    "Peanut": "\\bpeanuts?\\b",
+    "Sesame": "\\bsesame\\b",
+    "Shellfish": "\\bshellfish\\b|\\bcrustaceans?\\b|\\bmollus(c|k)s?\\b",
+    "Soy": "\\bsoy(a|bean|beans)?\\b",
+    "Tree nuts": "\\btree[- ]?nuts?\\b"
+  },
+  "dishes": [
+    {
+      "allergens": [
+        "Sesame",
+        "Soy"
+      ],
+      "name": "Smashed cucumber salad",
+      "price": 8.0,
+      "section": "Small plates"
+    },
+    {
+      "allergens": [
+        "Soy"
+      ],
+      "name": "Edamame with chili salt",
+      "price": 7.0,
+      "section": "Small plates"
+    },
+    {
+      "allergens": [
+        "Egg",
+        "Gluten",
+        "Soy"
+      ],
+      "name": "Karaage chicken",
+      "price": 11.0,
+      "section": "Small plates"
+    },
+    {
+      "allergens": [
+        "Gluten",
+        "Soy"
+      ],
+      "name": "Crispy tofu bites",
+      "price": 10.0,
+      "section": "Small plates"
+    },
+    {
+      "allergens": [
+        "Soy"
+      ],
+      "name": "Charred shishito peppers",
+      "price": 7.5,
+      "section": "Small plates"
+    },
+    {
+      "allergens": [
+        "Gluten",
+        "Sesame",
+        "Soy"
+      ],
+      "name": "Pork and chive gyoza",
+      "price": 11.0,
+      "section": "Dumplings"
+    },
+    {
+      "allergens": [
+        "Gluten",
+        "Shellfish"
+      ],
+      "name": "Shrimp har gow",
+      "price": 13.0,
+      "section": "Dumplings"
+    },
+    {
+      "allergens": [
+        "Gluten",
+        "Soy"
+      ],
+      "name": "Mushroom potstickers",
+      "price": 10.5,
+      "section": "Dumplings"
+    },
+    {
+      "allergens": [
+        "Fish",
+        "Gluten",
+        "Soy"
+      ],
+      "name": "Kimchi dumplings",
+      "price": 11.5,
+      "section": "Dumplings"
+    },
+    {
+      "allergens": [
+        "Egg",
+        "Gluten",
+        "Sesame",
+        "Soy"
+      ],
+      "name": "Tonkotsu ramen",
+      "price": 18.0,
+      "section": "Ramen"
+    },
+    {
+      "allergens": [
+        "Egg",
+        "Gluten",
+        "Soy"
+      ],
+      "name": "Shoyu chicken ramen",
+      "price": 18.0,
+      "section": "Ramen"
+    },
+    {
+      "allergens": [
+        "Gluten",
+        "Peanut",
+        "Sesame",
+        "Soy"
+      ],
+      "name": "Spicy miso ramen",
+      "price": 16.5,
+      "section": "Ramen"
+    },
+    {
+      "allergens": [
+        "Gluten",
+        "Peanut",
+        "Sesame",
+        "Soy"
+      ],
+      "name": "Vegan tantanmen",
+      "price": 16.0,
+      "section": "Ramen"
+    },
+    {
+      "allergens": [
+        "Fish",
+        "Gluten",
+        "Shellfish"
+      ],
+      "name": "Yuzu shio ramen",
+      "price": 20.5,
+      "section": "Ramen"
+    },
+    {
+      "allergens": [
+        "Fish",
+        "Sesame",
+        "Soy"
+      ],
+      "name": "Salmon poke bowl",
+      "price": 16.0,
+      "section": "Rice bowls"
+    },
+    {
+      "allergens": [
+        "Soy"
+      ],
+      "name": "Mapo tofu bowl",
+      "price": 14.0,
+      "section": "Rice bowls"
+    },
+    {
+      "allergens": [
+        "Dairy",
+        "Egg",
+        "Gluten"
+      ],
+      "name": "Katsu curry",
+      "price": 16.0,
+      "section": "Rice bowls"
+    },
+    {
+      "allergens": [
+        "Dairy",
+        "Egg",
+        "Sesame"
+      ],
+      "name": "Kuro goma ice cream",
+      "price": 6.5,
+      "section": "Sweets"
+    },
+    {
+      "allergens": [
+        "Dairy",
+        "Egg",
+        "Gluten"
+      ],
+      "name": "Yuzu cheesecake",
+      "price": 8.0,
+      "section": "Sweets"
+    },
+    {
+      "allergens": [
+        "Dairy"
+      ],
+      "name": "Hojicha latte",
+      "price": 6.0,
+      "section": "Drinks"
+    },
+    {
+      "allergens": [
+        "Dairy"
+      ],
+      "name": "Calpico soda",
+      "price": 4.5,
+      "section": "Drinks"
+    },
+    {
+      "allergens": [],
+      "name": "Yuzu lemonade",
+      "price": 4.5,
+      "section": "Drinks"
+    },
+    {
+      "allergens": [],
+      "name": "Ramune",
+      "price": 4.5,
+      "section": "Drinks"
+    }
+  ],
+  "out86": [
+    "Crab rangoon",
+    "Chashu rice bowl",
+    "Matcha mochi"
+  ],
+  "section_rx": {
+    "Drinks": "\\bdrinks?\\b|\\bbeverages?\\b",
+    "Dumplings": "\\bdumplings?\\b",
+    "Ramen": "\\bramen\\b",
+    "Rice bowls": "\\brice bowls?\\b|\\bbowls\\b|\\bdonburi\\b",
+    "Small plates": "\\bsmall plates?\\b|\\bstarters?\\b",
+    "Sweets": "\\bsweets?\\b|\\bdesserts?\\b"
+  }
+}

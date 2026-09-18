@@ -1,0 +1,72 @@
+id: vendor-1099-totals
+track: desk
+category: bookkeeping
+title: 2025 reportable totals per vendor, cards and corporations out
+ask: |
+  Tamsin needs our 2025 vendor totals so she can prepare the 1099s. The bank payments and the W-9 form responses are in the folder and her email says how to count. Save it as vendor_totals.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  card, PayPal and Venmo payments are reported by the processor and leave the total, while Zelle and wires stay; Dana Whitfield (8816) is paid by Venmo and ACH and only the ACH counts (check: reportable totals)
+- |-
+  refunds come off only when they came back a reportable way: Hollis Tent Repair (2650) deposited a refund check that reduces its total, Mensah Mobile Welding's (6181) card credit does not while its Zelle refund does, and a Venmo refund changes nothing (check: reportable totals)
+- |-
+  corporations come from line 3a and the LLC letter on the form: Harborside Linen and Summit Forklift Rental are LLCs taxed as S and C corporations and drop out, while Tentline Crew and Riverbank Sound are LLCs taxed as partnerships and stay (check: which vendors)
+- |-
+  two vendors submitted the form twice: Luis Ortiz first filled it in under his own name and SSN, then resubmitted in May 2025 for Ortiz Lighting & Rigging Inc, an S corporation with its own EIN, so he drops out; Oak & Ember Catering first ticked C corporation by mistake and corrected it to Partnership the next day, so it stays (checks: which vendors; row count)
+- |-
+  Marisol Vega is paid as both 'Vega Frames Photography' and 'Marisol Vega'; the bank payee does not match the form's line 1 name, and splitting her by payee halves her total (checks: reportable totals; line 1 names)
+- |-
+  Petal & Stem Florals (2209) is a sole proprietor paid only by Amex and PayPal, so nothing is reportable and she stays off the list (checks: which vendors; row count)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: vendor_totals.csv
+  columns:
+  - vendor
+  - tin_last4
+  - reportable_total
+- type: csv_set_equal
+  name: which vendors
+  path: vendor_totals.csv
+  column: tin_last4
+  ref: vendor_totals.csv
+  normalize:
+  - digits
+- type: csv_row_count
+  name: row count
+  path: vendor_totals.csv
+  equals_ref: vendor_totals.csv
+- type: csv_values_match
+  name: reportable totals
+  path: vendor_totals.csv
+  ref: vendor_totals.csv
+  key: tin_last4
+  columns:
+  - reportable_total
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - '7312'
+  - '8816'
+  - '2650'
+  - '6181'
+  - '9542'
+  - '7635'
+  - '6082'
+- type: csv_values_match
+  name: line 1 names
+  path: vendor_totals.csv
+  ref: vendor_totals.csv
+  key: tin_last4
+  columns:
+  - vendor
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - '7312'
+  - '6181'
+  - '6082'

@@ -1,0 +1,17 @@
+account_number,account_name,debit,credit
+6010,Wages - field technicians,31043.91,
+6020,Wages - office & admin,7500.01,
+6030,Officer compensation,7500.00,
+6110,Payroll tax expense,3172.43,
+6120,Employee benefits - health,2520.00,
+6130,Employee benefits - retirement,908.10,
+6310,Employee expense reimbursements,425.49,
+1010,Operating checking,,33775.92
+2110,Federal income tax withheld,,4648.82
+2115,FICA payable (Social Security & Medicare),,6114.72
+2120,State income tax withheld,,1827.69
+2130,FUTA payable,,12.62
+2135,State unemployment (SUI) payable,,102.45
+2140,401(k) payable,,2887.72
+2145,Health insurance payable,,3550.00
+2150,Wage garnishments payable,,150.00

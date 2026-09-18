@@ -1,0 +1,18 @@
+From: Mensah Osei <mensah@oseicpa.com>
+To: Tara Wood <tara@barkwellpet.com>
+Date: Tue, 7 Jul 2026 08:44
+Subject: First-half COGS - FIFO
+
+Hi Tara,
+
+For the mid-year review I need cost of goods sold on FIFO for the seven lines on my layer sheet, January through June. The rules:
+
+1. Start from my 12/31/2025 layers. Each sale uses up the oldest units first, at the cost those units were bought at.
+2. Receipts count on the day they were received, and anything received (or put back on the shelf) on a day is available for that day's sales.
+3. Customer returns: if the item goes back on the shelf, take what those units cost when they were sold (look up the original receipt) off COGS in the month of the return, and put them back into stock as a new layer at that cost, dated the day they came back. If the return was damaged and thrown away, it does not go back into stock and COGS stays as it was.
+4. Use what we actually paid from the receiving log. Case lines are cost per case - divide by the units in the case.
+
+What I need: COGS by month for each of the seven items with monthly totals, and a roll-forward per item from my opening value through what was received and COGS to what is left on hand at June 30. Keep it formula-driven.
+
+Thanks,
+Mensah

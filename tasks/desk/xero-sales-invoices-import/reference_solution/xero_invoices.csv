@@ -1,0 +1,46 @@
+*ContactName,EmailAddress,*InvoiceNumber,Reference,*InvoiceDate,*DueDate,InventoryItemCode,*Description,*Quantity,*UnitAmount,Discount,*AccountCode,*TaxType,Currency
+Harbour Light Marine,accounts@harbourlightmarine.com.au,INV-2506,JOB-7640,03/08/2026,20/09/2026,DES-LOGO,Logo design package,2,650.00,5,210,GST on Income,AUD
+Harbour Light Marine,accounts@harbourlightmarine.com.au,INV-2506,JOB-7640,03/08/2026,20/09/2026,FLY-A5-1000,"A5 flyers, 1000, 150gsm gloss",2,145.00,5,200,GST on Income,AUD
+Harbour Light Marine,accounts@harbourlightmarine.com.au,INV-2506,JOB-7640,03/08/2026,20/09/2026,BAN-PVC-2M,PVC banner 2m x 1m with eyelets,1,118.00,5,200,GST on Income,AUD
+Harbour Light Marine,accounts@harbourlightmarine.com.au,INV-2506,JOB-7640,03/08/2026,20/09/2026,,Delivery,1,22.50,,260,GST on Income,AUD
+Juniper Street Cafe,accounts@juniperstreet.cafe,INV-2507,JOB-7215,05/08/2026,20/09/2026,STK-CUT,"Die-cut stickers, 250",1,96.00,,200,GST on Income,AUD
+Mossbank Accounting,accounts@mossbank.com.au,INV-2509,JOB-7373,02/08/2026,16/08/2026,POS-A2,"A2 posters, satin",10,12.50,5,200,GST on Income,AUD
+Mossbank Accounting,accounts@mossbank.com.au,INV-2509,JOB-7373,02/08/2026,16/08/2026,FLY-A5-1000,"A5 flyers, 1000, 150gsm gloss",1,145.00,5,200,GST on Income,AUD
+Riverbend Physio,accounts@riverbendphysio.com.au,INV-2510,JOB-7124,01/08/2026,15/08/2026,BRO-A4-TRI,"A4 trifold brochures, 500",2,265.00,,200,GST on Income,AUD
+Riverbend Physio,accounts@riverbendphysio.com.au,INV-2510,JOB-7124,01/08/2026,15/08/2026,,Delivery,1,22.50,,260,GST on Income,AUD
+Tamarack Brewing Co,accounts@tamarackbrewing.com.au,INV-2511,JOB-7428,04/08/2026,18/08/2026,STK-CUT,"Die-cut stickers, 250",2,96.00,,200,GST on Income,AUD
+Tamarack Brewing Co,accounts@tamarackbrewing.com.au,INV-2511,JOB-7428,04/08/2026,18/08/2026,BC-500,"Business cards, 500, 350gsm matte",1,89.00,,200,GST on Income,AUD
+Tamarack Brewing Co,accounts@tamarackbrewing.com.au,INV-2511,JOB-7428,04/08/2026,18/08/2026,FLY-A5-1000,"A5 flyers, 1000, 150gsm gloss",1,145.00,,200,GST on Income,AUD
+Kingfisher Charters NZ,accounts@kingfishercharters.co.nz,INV-2512,JOB-7932,29/08/2026,12/09/2026,BAN-PVC-2M,PVC banner 2m x 1m with eyelets,1,118.00,10,200,GST Free Income,AUD
+Kingfisher Charters NZ,accounts@kingfishercharters.co.nz,INV-2512,JOB-7932,29/08/2026,12/09/2026,POS-A2,"A2 posters, satin",10,12.50,10,200,GST Free Income,AUD
+Kingfisher Charters NZ,accounts@kingfishercharters.co.nz,INV-2512,JOB-7932,29/08/2026,12/09/2026,BC-500,"Business cards, 500, 350gsm matte",1,89.00,10,200,GST Free Income,AUD
+Kingfisher Charters NZ,accounts@kingfishercharters.co.nz,INV-2512,JOB-7932,29/08/2026,12/09/2026,,Delivery,1,38.00,,260,GST Free Income,AUD
+Wren & Sparrow Bookshop,accounts@wrensparrowbooks.com.au,INV-2513,JOB-7160,14/08/2026,13/09/2026,POS-A2,"A2 posters, satin",25,12.50,10,200,GST on Income,AUD
+Wren & Sparrow Bookshop,accounts@wrensparrowbooks.com.au,INV-2513,JOB-7160,14/08/2026,13/09/2026,BC-500,"Business cards, 500, 350gsm matte",1,89.00,10,200,GST on Income,AUD
+Wren & Sparrow Bookshop,accounts@wrensparrowbooks.com.au,INV-2513,JOB-7160,14/08/2026,13/09/2026,GIFT-VOUCHER,Gift voucher,3,50.00,,835,BAS Excluded,AUD
+Wren & Sparrow Bookshop,accounts@wrensparrowbooks.com.au,INV-2513,JOB-7160,14/08/2026,13/09/2026,,Delivery,1,15.00,,260,GST on Income,AUD
+Harbour Light Marine,accounts@harbourlightmarine.com.au,INV-2514,JOB-7309,25/08/2026,20/09/2026,DES-LOGO,Logo design package,2,650.00,,210,GST on Income,AUD
+Harbour Light Marine,accounts@harbourlightmarine.com.au,INV-2514,JOB-7309,25/08/2026,20/09/2026,,Delivery,1,15.00,,260,GST on Income,AUD
+Juniper Street Cafe,accounts@juniperstreet.cafe,INV-2515,JOB-7314,10/08/2026,20/09/2026,BAN-PVC-2M,PVC banner 2m x 1m with eyelets,1,118.00,5,200,GST on Income,AUD
+Juniper Street Cafe,accounts@juniperstreet.cafe,INV-2515,JOB-7314,10/08/2026,20/09/2026,POS-A2,"A2 posters, satin",20,12.50,5,200,GST on Income,AUD
+Larkspur Yoga,accounts@larkspuryoga.com.au,INV-2516,JOB-7537,10/08/2026,20/09/2026,DES-HR,"Graphic design, per hour",4.5,95.00,,210,GST on Income,AUD
+Riverbend Physio,accounts@riverbendphysio.com.au,INV-2518,JOB-7360,31/08/2026,14/09/2026,BAN-PVC-2M,PVC banner 2m x 1m with eyelets,2,118.00,,200,GST on Income,AUD
+Riverbend Physio,accounts@riverbendphysio.com.au,INV-2518,JOB-7360,31/08/2026,14/09/2026,BRO-A4-TRI,"A4 trifold brochures, 500",1,265.00,,200,GST on Income,AUD
+Riverbend Physio,accounts@riverbendphysio.com.au,INV-2518,JOB-7360,31/08/2026,14/09/2026,,Delivery,1,22.50,,260,GST on Income,AUD
+Tamarack Brewing Co,accounts@tamarackbrewing.com.au,INV-2519,JOB-7233,08/08/2026,22/08/2026,STK-CUT,"Die-cut stickers, 250",1,96.00,,200,GST on Income,AUD
+Tamarack Brewing Co,accounts@tamarackbrewing.com.au,INV-2519,JOB-7233,08/08/2026,22/08/2026,POS-A2,"A2 posters, satin",10,12.50,,200,GST on Income,AUD
+Tamarack Brewing Co,accounts@tamarackbrewing.com.au,INV-2519,JOB-7233,08/08/2026,22/08/2026,BAN-PVC-2M,PVC banner 2m x 1m with eyelets,2,118.00,,200,GST on Income,AUD
+Kingfisher Charters NZ,accounts@kingfishercharters.co.nz,INV-2520,JOB-7113,29/08/2026,12/09/2026,BAN-PVC-2M,PVC banner 2m x 1m with eyelets,2,118.00,,200,GST Free Income,AUD
+Kingfisher Charters NZ,accounts@kingfishercharters.co.nz,INV-2520,JOB-7113,29/08/2026,12/09/2026,BRO-A4-TRI,"A4 trifold brochures, 500",2,265.00,,200,GST Free Income,AUD
+Wren & Sparrow Bookshop,accounts@wrensparrowbooks.com.au,INV-2521,JOB-7997,09/08/2026,08/09/2026,BC-500,"Business cards, 500, 350gsm matte",2,89.00,10,200,GST on Income,AUD
+Wren & Sparrow Bookshop,accounts@wrensparrowbooks.com.au,INV-2521,JOB-7997,09/08/2026,08/09/2026,POS-A2,"A2 posters, satin",10,12.50,10,200,GST on Income,AUD
+Wren & Sparrow Bookshop,accounts@wrensparrowbooks.com.au,INV-2521,JOB-7997,09/08/2026,08/09/2026,,Delivery,1,15.00,,260,GST on Income,AUD
+Kingfisher Charters NZ,accounts@kingfishercharters.co.nz,INV-2522,JOB-7748,20/08/2026,03/09/2026,DES-LOGO,Logo design package,1,650.00,,210,GST Free Income,AUD
+Juniper Street Cafe,accounts@juniperstreet.cafe,INV-2523,JOB-7487,24/08/2026,20/09/2026,FLY-A5-1000,"A5 flyers, 1000, 150gsm gloss",2,145.00,5,200,GST on Income,AUD
+Juniper Street Cafe,accounts@juniperstreet.cafe,INV-2523,JOB-7487,24/08/2026,20/09/2026,DES-HR,"Graphic design, per hour",3,95.00,5,210,GST on Income,AUD
+Juniper Street Cafe,accounts@juniperstreet.cafe,INV-2523,JOB-7487,24/08/2026,20/09/2026,,Delivery,1,22.50,,260,GST on Income,AUD
+Larkspur Yoga,accounts@larkspuryoga.com.au,INV-2524,JOB-7787,22/08/2026,20/09/2026,DES-LOGO,Logo design package,2,650.00,,210,GST on Income,AUD
+Larkspur Yoga,accounts@larkspuryoga.com.au,INV-2524,JOB-7787,22/08/2026,20/09/2026,,Delivery,1,15.00,,260,GST on Income,AUD
+Riverbend Physio,accounts@riverbendphysio.com.au,INV-2525,JOB-7150,20/08/2026,03/09/2026,BAN-PVC-2M,PVC banner 2m x 1m with eyelets,1,118.00,10,200,GST on Income,AUD
+Riverbend Physio,accounts@riverbendphysio.com.au,INV-2525,JOB-7150,20/08/2026,03/09/2026,DES-HR,"Graphic design, per hour",1.5,95.00,10,210,GST on Income,AUD
+Riverbend Physio,accounts@riverbendphysio.com.au,INV-2525,JOB-7150,20/08/2026,03/09/2026,FLY-A5-1000,"A5 flyers, 1000, 150gsm gloss",1,145.00,10,200,GST on Income,AUD

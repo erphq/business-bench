@@ -1,0 +1,437 @@
+{
+  "seed": 0,
+  "attempt": 9,
+  "baseline": {
+    "STAFF_ROLE": "Building manager",
+    "VIEWER_ROLE": "Read-only (the accountant)",
+    "MAIN_ENTITY": "work request",
+    "MAIN_ENTITY_PLURAL": "work requests",
+    "restricted_user": "Rosa Delgado",
+    "restricted_buildings": [
+      "Harbor View",
+      "Elm Court"
+    ],
+    "SCOPE_COUNT": 58,
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "request": "WR-00449",
+      "building": "Northgate Lofts",
+      "unit": "L408",
+      "manager": "Tom Becker"
+    },
+    "KPI_1": {
+      "name": "open work requests",
+      "value": 26,
+      "scoped_value": 9
+    },
+    "KPI_2": {
+      "name": "estimated cost of open work requests",
+      "value": 21370.0
+    },
+    "KPI_3": {
+      "name": "vacant units",
+      "value": 12
+    },
+    "KPI_4": {
+      "name": "work requests completed in August 2026",
+      "value": 15
+    },
+    "SEARCH_TERM": "dishwasher",
+    "SEARCH_COUNT": 6,
+    "search_hits": [
+      "WR-00307",
+      "WR-00331",
+      "WR-00344",
+      "WR-00384",
+      "WR-00390",
+      "WR-00400"
+    ],
+    "FILTER_FIELD": "building",
+    "FILTER_VALUE": "Cedar Terrace",
+    "FILTER_COUNT": 24,
+    "filter_rows_written_as": [
+      "CEDAR TERRACE",
+      "Cedar Terrace"
+    ],
+    "SORT_FIELD": "estimated cost",
+    "SORT_TOP": {
+      "request": "WR-00447",
+      "est_cost": 6850.0,
+      "file_value": "$6,850.00"
+    },
+    "text_sort_top_would_be": {
+      "request": "WR-00410",
+      "file_value": "995.00"
+    },
+    "EXPORT_ROWS": 150,
+    "EXPORT_COLUMNS": [
+      "request number",
+      "building",
+      "unit",
+      "category",
+      "status",
+      "estimated cost"
+    ],
+    "REQUIRED_FIELD": "a building",
+    "test_building": "Northgate Lofts"
+  },
+  "units": {
+    "file_rows_excluding_header": 186,
+    "exact_duplicate_rows": 5,
+    "variant_name_duplicate_rows": 3,
+    "unique_units": 178,
+    "buildings": 6,
+    "per_building": {
+      "Harbor View": 40,
+      "Elm Court": 24,
+      "Northgate Lofts": 36,
+      "Cedar Terrace": 28,
+      "Riverside Commons": 32,
+      "Maple Row Townhomes": 18
+    },
+    "building_spellings_in_file": [
+      "CEDAR TERRACE",
+      "Cedar Ter.",
+      "Cedar Terrace",
+      "ELM COURT",
+      "Elm Court",
+      "Harbor View",
+      "Harbor View Apts",
+      "Maple Row",
+      "Maple Row Townhomes",
+      "Northgate Lofts",
+      "Northgate Lofts LLC",
+      "Riverside Cmns",
+      "Riverside Commons"
+    ],
+    "distinct_building_spellings_in_file": 13,
+    "restricted_units": 64,
+    "vacant_units": [
+      "Harbor View 208",
+      "Elm Court A10",
+      "Elm Court B2",
+      "Northgate Lofts L208",
+      "Northgate Lofts L302",
+      "Cedar Terrace 1",
+      "Cedar Terrace 10",
+      "Cedar Terrace 20",
+      "Riverside Commons 103",
+      "Riverside Commons 303",
+      "Riverside Commons 401",
+      "Maple Row Townhomes 16"
+    ],
+    "vacant_named": {
+      "elm_court": "Elm Court A10",
+      "maple_row": "Maple Row Townhomes 16"
+    }
+  },
+  "tenants": {
+    "file_rows_excluding_header": 173,
+    "exact_duplicate_rows": 3,
+    "same_email_different_case_rows": 4,
+    "unique_tenants": 166,
+    "dedupe_rule": "Two rows are the same tenant when Email matches after trimming and lowercasing. Two tenants with the same name and different emails are different people.",
+    "duplicate_rows": [
+      {
+        "tenant": "Linda Tanaka",
+        "email_as_written": "LTANAKA@GMAIL.COM",
+        "kind": "same_email_different_case",
+        "file_line": 9
+      },
+      {
+        "tenant": "Kevin Roberts",
+        "email_as_written": "Kroberts@AOL.COM",
+        "kind": "same_email_different_case",
+        "file_line": 36
+      },
+      {
+        "tenant": "Ronald Williams",
+        "email_as_written": "ronald.williams@yahoo.com",
+        "kind": "exact_duplicate",
+        "file_line": 38
+      },
+      {
+        "tenant": "Brian Collins",
+        "email_as_written": "bcollins@aol.com",
+        "kind": "exact_duplicate",
+        "file_line": 55
+      },
+      {
+        "tenant": "Margaret Parker",
+        "email_as_written": "margaret.parker@outlook.com",
+        "kind": "exact_duplicate",
+        "file_line": 93
+      },
+      {
+        "tenant": "Amanda Ramos",
+        "email_as_written": "AMANDA.RAMOS@HOTMAIL.COM",
+        "kind": "same_email_different_case",
+        "file_line": 129
+      },
+      {
+        "tenant": "Wei Cox",
+        "email_as_written": "WCOX@aol.com",
+        "kind": "same_email_different_case",
+        "file_line": 153
+      }
+    ],
+    "same_name_pair": {
+      "name": "Amy Ortiz",
+      "first": {
+        "building": "Harbor View",
+        "unit": "205",
+        "email": "aortiz@yahoo.com"
+      },
+      "second": {
+        "building": "Riverside Commons",
+        "unit": "201",
+        "email": "aortiz94@me.com"
+      }
+    },
+    "restricted_tenants": 61,
+    "linked_unit_example": {
+      "tenant": "Yuki Clark",
+      "building": "Harbor View",
+      "unit": "103",
+      "unit_as_written": "#103"
+    },
+    "impossible_lease": {
+      "tenant": "Luis Carter",
+      "building": "Maple Row Townhomes",
+      "unit": "14",
+      "lease_start": "2026-05-01",
+      "lease_end": "2026-04-30",
+      "file_values": {
+        "Lease Start": "01-May-2026",
+        "Lease End": "4/30/2026"
+      }
+    },
+    "highest_rent": {
+      "tenant": "John Hall",
+      "building": "Harbor View",
+      "unit": "410",
+      "rent": 3100.0,
+      "file_value": "$3,100.00"
+    },
+    "credit_balance_example": {
+      "tenant": "Donna Jones",
+      "building": "Harbor View",
+      "unit": "303",
+      "balance": -45.0,
+      "file_value": "($45.00)"
+    },
+    "tenants_with_credit": 6,
+    "total_monthly_rent": 319725.0
+  },
+  "vendors": {
+    "file_rows_excluding_header": 60,
+    "unique_vendors": 58,
+    "duplicate_pairs": [
+      {
+        "canonical": "Apex Plumbing, LLC",
+        "typed_as": "Apex Plumbing LLC"
+      },
+      {
+        "canonical": "Keyway Locksmiths",
+        "typed_as": "KEYWAY LOCKSMITHS"
+      }
+    ],
+    "expired_insurance_as_of_2026_09_13": [
+      "All-Trades Maintenance",
+      "ClearFlow Plumbing",
+      "FixRite Appliance Repair",
+      "Greenleaf Grounds",
+      "Plank & Tile Flooring",
+      "Secure Lock & Key",
+      "Summit Pest Solutions",
+      "Sunday Repairs"
+    ],
+    "expired_named": {
+      "vendor": "Summit Pest Solutions",
+      "trade": "Pest Control",
+      "insurance_expires": "2026-03-31",
+      "file_value": "3/31/2026"
+    },
+    "current_named": {
+      "vendor": "Evergreen Pest Co.",
+      "trade": "Pest Control",
+      "insurance_expires": "2027-06-30"
+    },
+    "trade_ok_named": {
+      "vendor": "Apex Plumbing, LLC",
+      "trades": [
+        "Plumbing"
+      ],
+      "insurance_expires": "2027-05-20"
+    },
+    "trade_wrong_named": {
+      "vendor": "Brightline Electric",
+      "trades": [
+        "Electrical"
+      ],
+      "insurance_expires": "2027-03-12"
+    },
+    "plumbing_vendors_with_current_insurance": [
+      "Apex Plumbing, LLC",
+      "Crestline Drain Co.",
+      "Harborside Plumbing",
+      "Northwest Pipe Works",
+      "Rooter Brothers",
+      "Tideline Plumbing & Drain"
+    ]
+  },
+  "work_requests": {
+    "file_rows_excluding_header": 154,
+    "unique_requests": 150,
+    "duplicate_rows": [
+      {
+        "written_as": "WR-318",
+        "request": "WR-00318",
+        "kind": "unpadded_number",
+        "file_line": 3
+      },
+      {
+        "written_as": "WR-00425",
+        "request": "WR-00425",
+        "kind": "exact_duplicate",
+        "file_line": 14
+      },
+      {
+        "written_as": "412",
+        "request": "WR-00412",
+        "kind": "unpadded_number",
+        "file_line": 77
+      },
+      {
+        "written_as": "WR-00448",
+        "request": "WR-00448",
+        "kind": "exact_duplicate",
+        "file_line": 139
+      }
+    ],
+    "status_mapping": {
+      "open": [
+        "New",
+        "new",
+        "Assigned",
+        "In Progress",
+        "In progress",
+        "Waiting on Vendor",
+        "Waiting - vendor"
+      ],
+      "closed": [
+        "Completed",
+        "complete",
+        "Closed",
+        "Cancelled",
+        "Canceled"
+      ]
+    },
+    "open_total": 26,
+    "open_by_building": {
+      "Harbor View": 6,
+      "Elm Court": 3,
+      "Northgate Lofts": 3,
+      "Cedar Terrace": 5,
+      "Riverside Commons": 6,
+      "Maple Row Townhomes": 3
+    },
+    "naive_open_rows_counting_duplicates": 28,
+    "naive_open_if_only_Completed_and_Cancelled_close": 80,
+    "open_by_status": {
+      "New": 8,
+      "Assigned": 4,
+      "In Progress": 10,
+      "Waiting on Vendor": 4
+    },
+    "biggest_job": {
+      "request": "WR-00447",
+      "building": "Harbor View",
+      "unit": "310",
+      "est_cost": 6850.0
+    },
+    "approval_threshold": 1500.0,
+    "approval_test": {
+      "over_threshold_est": 2400.0,
+      "at_threshold_est": 1500.0
+    }
+  },
+  "changes": {
+    "c1_august_2026_actual_cost_by_building": {
+      "Harbor View": 923.21,
+      "Elm Court": 2486.05,
+      "Northgate Lofts": 3220.86,
+      "Cedar Terrace": 445.89,
+      "Riverside Commons": 842.21,
+      "Maple Row Townhomes": 753.31
+    },
+    "c1_august_2026_actual_cost_total": 8671.53,
+    "c1_completed_requests": 115,
+    "c1_average_days_submitted_to_completed": 10.6,
+    "c1_restricted_completed_requests": 44,
+    "c1_restricted_average_days": 11.6,
+    "c1_naive_august_by_building_counting_repeated_rows": {
+      "Harbor View": 923.21,
+      "Elm Court": 2486.05,
+      "Northgate Lofts": 3220.86,
+      "Cedar Terrace": 445.89,
+      "Riverside Commons": 1033.52,
+      "Maple Row Townhomes": 753.31
+    },
+    "c2_chargeback": {
+      "tenant": "Donna Jones",
+      "building": "Harbor View",
+      "unit": "303",
+      "balance_before": -45.0,
+      "actual_cost": 180.0,
+      "balance_after": 135.0
+    },
+    "c2_vacant_unit": "Elm Court A10",
+    "c2_naive_balance_if_credit_read_as_owed": 225.0,
+    "c1_average_days_bounds": [
+      10.5,
+      10.7
+    ],
+    "c1_restricted_average_days_bounds": [
+      11.5,
+      11.7
+    ]
+  },
+  "naive_alternatives": {
+    "units_without_dedupe": 186,
+    "buildings_if_spellings_kept": 13,
+    "tenants_case_sensitive_email": 170,
+    "tenants_merged_by_name": 165
+  },
+  "test_inputs": {
+    "item_21": {
+      "request": "QA1",
+      "building": "Northgate Lofts",
+      "unit": "L101",
+      "category": "Plumbing"
+    },
+    "item_24": {
+      "building": "Harbor View",
+      "unit": "101",
+      "over_threshold_est": 2400.0,
+      "at_threshold_est": 1500.0,
+      "vendor": "Apex Plumbing, LLC"
+    },
+    "item_25": {
+      "actual_cost": 185.0
+    },
+    "change_2": {
+      "tenant_caused_actual_cost": 180.0,
+      "untagged_actual_cost": 50.0
+    },
+    "change_3": {
+      "estimate": 200.0,
+      "attempted_estimate": 900.0,
+      "vendor_actual_cost": 210.0,
+      "visit_date": "2027-01-15",
+      "vendors": [
+        "Apex Plumbing, LLC",
+        "Tideline Plumbing & Drain"
+      ]
+    }
+  }
+}

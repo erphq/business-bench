@@ -1,0 +1,132 @@
+id: google-contacts-import
+track: desk
+category: reformatting
+title: Move the office phone list into Google Contacts
+ask: |
+  We're switching to Google Workspace and I want our phone list in Google Contacts. Beth left notes on how she kept the list, and Google's CSV layout is in the folder. Save the import file as google_contacts.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  names are typed as First Last, Last, First, LAST, FIRST M., First M. Last, with a bracketed remark, or as Company - First Last and Company: First Last; splitting on the first space puts surnames in First Name and companies in the name (checks: one contact per person; first and middle names; organization)
+- |-
+  the Phone cell holds one to three numbers with labels before or after the number (c:, cell, h, home, w, o, office, fax) or no label at all; each number takes its own slot with Google's Mobile / Home / Work / Work Fax label and an unlabeled number is Mobile (check: phones typed)
+- |-
+  four names carry a bracketed remark (gate code, dog in yard) and three phone cells end with an instruction (text first, don't call before 9am); both belong in Notes alongside the Notes column, never in the name (check: notes carried and names clean)
+- |-
+  three wrapped lines have a blank Name: two add another number and one adds a note to the contact above; importing them as contacts or dropping them loses data (checks: row count; phones typed; notes carried and names clean)
+- |-
+  there is no type column; heading rows (CLIENTS - CURRENT, PAST CLIENTS, SUPPLIERS, SUBS) decide the label and are not contacts themselves (checks: labels; row count)
+checks:
+- type: csv_columns
+  name: Google template columns, exact order
+  path: google_contacts.csv
+  columns:
+  - First Name
+  - Middle Name
+  - Last Name
+  - Organization Name
+  - E-mail 1 - Label
+  - E-mail 1 - Value
+  - Phone 1 - Label
+  - Phone 1 - Value
+  - Phone 2 - Label
+  - Phone 2 - Value
+  - Phone 3 - Label
+  - Phone 3 - Value
+  - Notes
+  - Labels
+  exact: true
+- type: csv_set_equal
+  name: one contact per person
+  path: google_contacts.csv
+  column: Last Name
+  ref: google_contacts.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: google_contacts.csv
+  equals_ref: google_contacts.csv
+- type: csv_values_match
+  name: first and middle names
+  path: google_contacts.csv
+  ref: google_contacts.csv
+  key: Last Name
+  columns:
+  - First Name
+  - Middle Name
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - Clark
+  - Cox
+  - Davis
+  - Foster
+  - Gutierrez
+  - Harris
+  - Johnson
+  - Lewis
+  - Morgan
+  - Morris
+  - Okafor
+  - Parker
+  - Patel
+  - Richardson
+  - Rogers
+  - Ruiz
+  - Torres
+  - Watson
+- type: csv_values_match
+  name: organization
+  path: google_contacts.csv
+  ref: google_contacts.csv
+  key: Last Name
+  columns:
+  - Organization Name
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - Cooper
+  - Edwards
+  - Green
+  - Hernandez
+  - King
+  - Lopez
+  - Peterson
+  - Rodriguez
+  - Walker
+  - White
+  - Wilson
+- type: csv_values_match
+  name: labels
+  path: google_contacts.csv
+  ref: google_contacts.csv
+  key: Last Name
+  columns:
+  - Labels
+  min_accuracy: 1.0
+  must_match_keys:
+  - Alvarez
+  - Cooper
+  - Edwards
+  - Green
+  - Harris
+  - Hernandez
+  - King
+  - Lewis
+  - Lopez
+  - Mensah
+  - Nelson
+  - Peterson
+  - Rodriguez
+  - Walker
+  - Watson
+  - White
+  - Wilson
+- type: custom
+  name: phones typed; notes carried and names clean
+  module: check.py

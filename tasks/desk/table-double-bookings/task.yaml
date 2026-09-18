@@ -1,0 +1,65 @@
+id: table-double-bookings
+track: desk
+category: spreadsheet
+title: Find double-booked tables in the reservations
+ask: |
+  Marisol wants every double-booked table in the next two weeks of reservations found before service. Go through the booking export and save conflicts.csv - her note explains how bookings work.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  a booking holds its table for its duration, so clashes are overlapping windows, not equal times; several sittings are back-to-back (one ends at 7:30, the next starts at 7:30) and are not clashes (check: clashing bookings)
+- |-
+  four in ten bookings have a blank Duration and take the turn time for the party size; two clashes on the six-tops exist only at the two-hour turn time, while two-top and four-top sittings that follow a blank booking clash only if every blank is read as two hours (checks: clashing bookings; clashes with)
+- |-
+  a host moved a party to T9 in the Notes while the Table column still says T4, creating a real clash on T9; another party exported on T2 was moved to T11, so the apparent T2 clash is not one (checks: clashing bookings; table)
+- |-
+  one note names T12 as the table a guest asked for and did not get; reading any table number in Notes as a move invents a clash on T12 (check: clashing bookings)
+- |-
+  the online widget took overlapping bookings on Monday 21 September and on the private-event Thursday; the note leaves closed days out (check: clashing bookings)
+- 'three cancelled bookings sit on top of confirmed ones (check: clashing bookings)'
+- |-
+  dates are 'Tue 09/15/2026', times are 12-hour, and the export carries a BOM and CRLF endings (check: clashes with)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: conflicts.csv
+  columns:
+  - reservation
+  - date
+  - table
+  - conflicts_with
+- type: csv_set_equal
+  name: clashing bookings
+  path: conflicts.csv
+  column: reservation
+  ref: conflicts.csv
+- type: csv_row_count
+  name: row count
+  path: conflicts.csv
+  equals_ref: conflicts.csv
+- type: csv_values_match
+  name: table
+  path: conflicts.csv
+  ref: conflicts.csv
+  key: reservation
+  columns:
+  - table
+  min_accuracy: 1.0
+  must_match_keys:
+  - R40924
+  - R40640
+- type: csv_values_match
+  name: clashes with
+  path: conflicts.csv
+  ref: conflicts.csv
+  key: reservation
+  columns:
+  - conflicts_with
+  - date
+  min_accuracy: 1.0
+  must_match_keys:
+  - R40257
+  - R40930
+  - R40891
+  - R40949

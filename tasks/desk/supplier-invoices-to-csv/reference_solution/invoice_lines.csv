@@ -1,0 +1,27 @@
+line_ref,vendor_id,document_type,document_number,document_date,currency,description,quantity,unit_price,discount_pct,line_amount,document_total
+PPS-55983-1,V-2031,invoice,PPS-55983,2026-08-03,USD,"12 oz hot cups, case of 1000",3,46.51,0,139.53,518.56
+PPS-55983-2,V-2031,invoice,PPS-55983,2026-08-03,USD,"Sip lids for 12/16 oz, case of 1000",3,42.42,0,127.26,518.56
+PPS-55983-3,V-2031,invoice,PPS-55983,2026-08-03,USD,"Kraft cup sleeves, case of 1300",3,60.83,0,182.49,518.56
+PPS-55983-4,V-2031,invoice,PPS-55983,2026-08-03,USD,"4-cup carrier trays, case of 300",2,34.64,0,69.28,518.56
+HE-2026-0814-1,V-2044,invoice,HE-2026-0814,2026-08-07,USD,Service call,1,95.00,0,95.00,480.71
+HE-2026-0814-2,V-2044,invoice,HE-2026-0814,2026-08-07,USD,Labor - replace grinder circuit,3.00,110.00,0,330.00,480.71
+HE-2026-0814-3,V-2044,invoice,HE-2026-0814,2026-08-07,USD,20A breaker,3,18.57,0,55.71,480.71
+RE-2026-0465-1,V-2058,invoice,RE-2026-0465,2026-08-12,EUR,"Ethiopia Yirgacheffe Grade 1, green, 60 kg bag",4,437.30,0,1749.20,3368.95
+RE-2026-0465-2,V-2058,invoice,RE-2026-0465,2026-08-12,EUR,"Colombia Huila Excelso, green, 70 kg bag",3,486.25,0,1458.75,3368.95
+RE-2026-0465-3,V-2058,invoice,RE-2026-0465,2026-08-12,EUR,Freight,1,161.00,0,161.00,3368.95
+BD776964-1,V-2062,invoice,BD776964,2026-08-14,USD,"Whole milk, 1 gal",23,4.10,8,86.76,269.66
+BD776964-2,V-2062,invoice,BD776964,2026-08-14,USD,"Oat milk barista, 32 oz",37,3.35,10,111.56,269.66
+BD776964-3,V-2062,invoice,BD776964,2026-08-14,USD,"Half and half, 1 qt",16,2.90,0,46.40,269.66
+BD776964-4,V-2062,invoice,BD776964,2026-08-14,USD,"Heavy cream, 1 qt",5,5.25,5,24.94,269.66
+SOS-INV-39024-1,V-2077,invoice,SOS-INV-39024,2026-08-17,USD,"Thermal receipt paper 3-1/8 in, 50 rolls",2,38.99,0,77.98,202.48
+SOS-INV-39024-2,V-2077,invoice,SOS-INV-39024,2026-08-17,USD,Toner cartridge 58A,1,89.50,0,89.50,202.48
+SOS-INV-39024-3,V-2077,invoice,SOS-INV-39024,2026-08-17,USD,"Copy paper, case of 10 reams",1,42.00,0,42.00,202.48
+SOS-INV-39024-4,V-2077,invoice,SOS-INV-39024,2026-08-17,USD,Loyalty discount,1,-19.00,0,-19.00,202.48
+SOS-INV-39024-5,V-2077,invoice,SOS-INV-39024,2026-08-17,USD,Delivery,1,12.00,0,12.00,202.48
+CM-20539-1,V-2031,credit_note,CM-20539,2026-08-22,USD,"12 oz hot cups, case of 1000",-1,46.51,0,-46.51,-107.34
+CM-20539-2,V-2031,credit_note,CM-20539,2026-08-22,USD,"Kraft cup sleeves, case of 1300",-1,60.83,0,-60.83,-107.34
+GWS-88522-1,V-2085,invoice,GWS-88522,2026-08-23,USD,Dumpster service August,1,392.00,0,392.00,439.44
+GWS-88522-2,V-2085,invoice,GWS-88522,2026-08-23,USD,Fuel surcharge,1,47.44,0,47.44,439.44
+CCL-26-1146-1,V-2090,invoice,CCL-26-1146,2026-08-26,USD,"16 oz cold cups, case of 1000",3,63.88,0,191.64,368.26
+CCL-26-1146-2,V-2090,invoice,CCL-26-1146,2026-08-26,USD,"Strawless lids 16 oz, case of 1000",3,48.74,0,146.22,368.26
+CCL-26-1146-3,V-2090,invoice,CCL-26-1146,2026-08-26,USD,"Compostable straws, box of 2000",1,29.12,0,29.12,368.26

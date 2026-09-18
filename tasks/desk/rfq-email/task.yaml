@@ -1,0 +1,39 @@
+id: rfq-email
+track: desk
+category: drafting
+title: Request for quotation for the rolling bench parts
+ask: |
+  Amara needs the RFQ email for the Hollis Growers bench parts so it can go out to our suppliers. Everything you need is in the folder. Save the email as rfq.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the sheet gives quantities per bench and the job ticket orders 36 benches; the sheet also carries a pre-filled build-quantity column from an earlier 30-bench job (check: line quantities, stock kit, dates)
+- |-
+  the workbook keeps a superseded Rev A tab with 10 corner brackets per bench instead of 12 and a 44 in cross member (check: line quantities, stock kit, dates)
+- |-
+  Rev B lists the roller pipe as 16 ga steel tube; engineering's note says it must be quoted at 14 ga (0.083 in wall) (check: roller pipe wall)
+- |-
+  the fastener kits come from stock and must be left off the request (check: line quantities, stock kit, dates)
+- |-
+  the job ticket's ship date is December 1; the email wants quotes back by October 2 and parts on the dock by November 13 (check: line quantities, stock kit, dates)
+checks:
+- type: file_exists
+  name: rfq.md exists
+  path: rfq.md
+- type: custom
+  name: line quantities, stock kit, dates
+  module: check.py
+- type: text_sentence_matches
+  name: roller pipe wall
+  path: rfq.md
+  all:
+  - (roller|1\.315|RLR)
+  - (\b14\s*-?\s*(ga|gauge|gage)\b|0?\.083)
+  none:
+  - \b16\s*-?\s*(ga|gauge|gage)\b
+- type: text_matches_all
+  name: delivery address
+  path: rfq.md
+  patterns:
+  - \b1468\s+Industrial\s+(Parkway|Pkwy\b)

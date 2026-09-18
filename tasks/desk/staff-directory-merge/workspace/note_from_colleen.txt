@@ -1,0 +1,19 @@
+Website staff directory - please build the list
+
+We're putting a staff directory on the new website. HR (BambooHR) is the only list of who actually works here, what their job title is and which department they're in. IT's Google list has everyone's real email address and desk extension, but it also has a lot that isn't a person, and IT's departments haven't been touched in years.
+
+Rules:
+- Only current staff. Terminated people come off even if IT hasn't shut their account yet. People on leave stay on.
+- Use the name people go by: their preferred first name if HR has one, otherwise their legal first name, plus last name.
+- Email is their Google address, not whatever HR has on file.
+- The website uses these department names (from HR's department):
+  100 - Clinical PT            -> Physical Therapy
+  105 - Aquatic Therapy        -> Aquatic Therapy
+  110 - Clinical OT            -> Occupational Therapy
+  200 - Front Office           -> Patient Services
+  300 - Billing & Insurance    -> Billing
+  400 - Management             -> Leadership
+
+Send it back as directory.csv with name, email, department, title and extension.
+
+Colleen

@@ -1,0 +1,119 @@
+{
+  "files": {
+    "au": [
+      "Scan_2026-09-17_010.pdf"
+    ],
+    "ca_peng": [
+      "Scan_2026-09-17_006.pdf"
+    ],
+    "fr": [
+      "Scan_2026-09-17_008.pdf"
+    ],
+    "uk_dr": [
+      "Scan_2026-09-17_004.pdf",
+      "Scan_2026-09-17_005.pdf"
+    ],
+    "uk_fax": [
+      "Scan_2026-09-17_002.pdf"
+    ],
+    "uk_mobile_first": [
+      "Scan_2026-09-17_007.pdf"
+    ],
+    "us_mobile": [
+      "Scan_2026-09-17_003.pdf"
+    ],
+    "us_plain": [
+      "Scan_2026-09-17_009.pdf"
+    ],
+    "us_title_first": [
+      "Scan_2026-09-17_001.pdf"
+    ]
+  },
+  "scan_figures": {
+    "expo_cards/Scan_2026-09-17_001.pdf": [
+      "VP, Business Development",
+      "Mateo Oyelaran",
+      "MORGAN HALE",
+      "Lighting and daylight design",
+      "Main (206) 555-0190",
+      "Mobile (206) 555-0177",
+      "mateo.oyelaran@morganhale.example"
+    ],
+    "expo_cards/Scan_2026-09-17_002.pdf": [
+      "PENNINE BUILD GROUP",
+      "Marcus Novak",
+      "Procurement Manager",
+      "T +44 (0)161 496 0362",
+      "F +44 (0)161 496 0999",
+      "marcus.novak@penninebuild.example",
+      "United Kingdom"
+    ],
+    "expo_cards/Scan_2026-09-17_003.pdf": [
+      "NADIA RAMAN",
+      "OWNER",
+      "BRIGHTLINE ELECTRICAL CONTRACTORS",
+      "Ph 415-555-0155 (mobile)",
+      "nadia@brightlineelectric.example"
+    ],
+    "expo_cards/Scan_2026-09-17_004.pdf": [
+      "HALCYON ACOUSTICS LTD",
+      "Dr Sofia Volkov",
+      "Head of Specification",
+      "T +44 (0)20 7946 0931",
+      "M +44 (0)7700 900545",
+      "sofia@halcyonacoustics.example",
+      "United Kingdom"
+    ],
+    "expo_cards/Scan_2026-09-17_005.pdf": [
+      "HALCYON ACOUSTICS LTD",
+      "Dr Sofia Volkov",
+      "Head of Specification",
+      "T +44 (0)20 7946 0931",
+      "M +44 (0)7700 900545",
+      "sofia@halcyonacoustics.example",
+      "United Kingdom"
+    ],
+    "expo_cards/Scan_2026-09-17_006.pdf": [
+      "NORTHSHORE PHOTOMETRICS INC",
+      "Rahul Ashworth, P.Eng.",
+      "Principal Lighting Engineer",
+      "Desk 604-555-0171",
+      "Mobile 604-555-0112",
+      "rahul@northshorephoto.example",
+      "Canada"
+    ],
+    "expo_cards/Scan_2026-09-17_007.pdf": [
+      "Chloe Kapoor",
+      "Director",
+      "KAPOOR FARAH ARCHITECTS",
+      "Mobile  07700 900323",
+      "Office  020 7946 0625",
+      "chloe@kfarchitects.example"
+    ],
+    "expo_cards/Scan_2026-09-17_008.pdf": [
+      "ATELIER LUMIERE VIVE",
+      "FARAH Priya",
+      "Responsable Export",
+      "France",
+      "Standard +33 (0)4 65 71 28 49",
+      "Mob +33 (0)6 39 98 22 19",
+      "priya.farah@lumierevive.example"
+    ],
+    "expo_cards/Scan_2026-09-17_009.pdf": [
+      "Cascade Health System",
+      "Kwame Duarte",
+      "Facilities Planning Lead",
+      "Switchboard (206) 555-0181",
+      "Mobile (206) 555-0126",
+      "kwame.duarte@cascadehealth.example"
+    ],
+    "expo_cards/Scan_2026-09-17_010.pdf": [
+      "Ingrid Haddad",
+      "Senior Lighting Designer",
+      "SOUTHERN LUX STUDIO",
+      "Mobile 0491 570 489",
+      "Main (02) 5550 6409",
+      "ingrid@southernlux.example"
+    ]
+  }
+}

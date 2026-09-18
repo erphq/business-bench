@@ -1,0 +1,383 @@
+Mossbank Accounting - Time Detail
+Period: 09/01/2026 - 09/30/2026
+Work Date,Staff,Client,Service,Hours,Billable
+09/01/2026,"Mossbank, Dana",Mossbank Accounting (internal),CPE training,4.00,N
+09/01/2026,"Mossbank, Dana",Pinnacle Roofing,Payroll processing,4.00,Y
+09/01/2026,"Oduya, Kenneth",Meridian Title,Monthly bookkeeping,1.75,Y
+09/01/2026,"Oduya, Kenneth",Mossbank Accounting,Year-end close,1.75,Y
+09/01/2026,"Oduya, Kenneth",Pinnacle Roofing,1065 preparation,1.75,Y
+09/01/2026,"Oduya, Kenneth",Riverbend Physio,Year-end close,1.75,Y
+09/01/2026,"Wojcik, Tomasz",Ironwood Fabrication,1065 preparation,6.75,Y
+09/01/2026,"Lin, Grace",Nightjar Coffee Roasters,Year-end close,2.25,Y
+09/01/2026,"Lin, Grace",Yellowtail Seafood,1120-S preparation,2.25,N
+09/01/2026,"Haddad, Omar",Hollowell Electric,Sales tax filing,2.75,Y
+09/01/2026,"Haddad, Omar",Oakhurst Pediatrics,Year-end close,2.75,Y
+09/01/2026,"Ortega, Luis",Mossbank Accounting,Payroll processing,7.50,Y
+09/02/2026,"Mossbank, Dana",Mossbank Accounting (internal),Admin,7.50,N
+09/02/2026,"Oduya, Kenneth",Ellington Bakeries,Payroll processing,7.25,Y
+09/02/2026,"Wojcik, Tomasz",Ironwood Fabrication,Review engagement,8.25,Y
+09/02/2026,"Lin, Grace",Acme Industrial,1065 preparation,4.75,Y
+09/02/2026,"Haddad, Omar",Mossbank Accounting (internal),CPE training,1.50,N
+09/02/2026,"Haddad, Omar",Nightjar Coffee Roasters,Review engagement,1.50,Y
+09/02/2026,"Haddad, Omar",Redwood Property Mgmt,1065 preparation,1.50,Y
+09/02/2026,"Haddad, Omar",Redwood Property Mgmt,Sales tax filing,1.50,Y
+09/02/2026,"Ortega, Luis",Mossbank Accounting,Sales tax filing,8.75,Y
+09/03/2026,"Mossbank, Dana",Mossbank Accounting (internal),Practice meeting,2.25,N
+09/03/2026,"Mossbank, Dana",Mossbank Accounting (internal),Practice meeting,2.25,N
+09/03/2026,"Mossbank, Dana",Oakhurst Pediatrics,Review engagement,2.25,N
+09/03/2026,"Mossbank, Dana",Quarry Road Nursery,Payroll processing,2.25,Y
+09/03/2026,"Oduya, Kenneth",Ironwood Fabrication,Monthly bookkeeping,2.00,Y
+09/03/2026,"Oduya, Kenneth",Ironwood Fabrication,Monthly bookkeeping,2.00,Y
+09/03/2026,"Oduya, Kenneth",Oakhurst Pediatrics,Monthly bookkeeping,2.00,Y
+09/03/2026,"Oduya, Kenneth",Oakhurst Pediatrics,1120-S preparation,2.00,Y
+09/03/2026,"Raman, Priya",Ironwood Fabrication,1120-S preparation,7.25,Y
+09/03/2026,"Wojcik, Tomasz",Ironwood Fabrication,Advisory,2.75,Y
+09/03/2026,"Wojcik, Tomasz",Mossbank Accounting (internal),Admin,2.75,N
+09/03/2026,"Wojcik, Tomasz",Oakhurst Pediatrics,1065 preparation,2.75,Y
+09/03/2026,"Lin, Grace",Ironwood Fabrication,Year-end close,2.50,Y
+09/03/2026,"Lin, Grace",Mossbank Accounting (internal),CPE training,2.50,N
+09/03/2026,"Haddad, Omar",Mossbank Accounting (internal),Practice meeting,3.00,N
+09/03/2026,"Haddad, Omar",Riverbend Physio,Payroll processing,3.00,Y
+09/03/2026,"Ortega, Luis",Acme Industrial,Sales tax filing,1.75,Y
+09/03/2026,"Ortega, Luis",Hollowell Electric,Monthly bookkeeping,1.75,Y
+09/03/2026,"Ortega, Luis",Mossbank Accounting (internal),CPE training,1.75,N
+09/03/2026,"Ortega, Luis",Yellowtail Seafood,Sales tax filing,1.75,Y
+09/04/2026,"Mossbank, Dana",Ironwood Fabrication,1065 preparation,2.25,N
+09/04/2026,"Mossbank, Dana",Pinnacle Roofing,Advisory,2.25,N
+09/04/2026,"Mossbank, Dana",Quarry Road Nursery,Year-end close,2.25,Y
+09/04/2026,"Mossbank, Dana",Quill & Ink Print Shop,Sales tax filing,2.25,Y
+09/04/2026,"Raman, Priya",Acme Industrial,Monthly bookkeeping,2.00,Y
+09/04/2026,"Raman, Priya",Meridian Title,Year-end close,2.00,Y
+09/04/2026,"Raman, Priya",Quill & Ink Print Shop,1120-S preparation,2.00,Y
+09/04/2026,"Raman, Priya",Yellowtail Seafood,Year-end close,2.00,Y
+09/04/2026,"Wojcik, Tomasz",Mossbank Accounting,Sales tax filing,7.25,Y
+09/04/2026,"Lin, Grace",Mossbank Accounting,1065 preparation,1.50,N
+09/04/2026,"Lin, Grace",Mossbank Accounting (internal),Admin,1.50,N
+09/04/2026,"Lin, Grace",Mossbank Accounting (internal),CPE training,1.50,N
+09/04/2026,"Haddad, Omar",Acme Industrial,Advisory,2.00,Y
+09/04/2026,"Haddad, Omar",Hollowell Electric,Payroll processing,2.00,Y
+09/04/2026,"Haddad, Omar",Nightjar Coffee Roasters,Sales tax filing,2.00,Y
+09/04/2026,"Ortega, Luis",Acme Industrial,Advisory,2.00,Y
+09/04/2026,"Ortega, Luis",Mossbank Accounting (internal),CPE training,2.00,N
+09/04/2026,"Ortega, Luis",Oakhurst Pediatrics,1065 preparation,2.00,Y
+09/04/2026,"Ortega, Luis",Riverbend Physio,Advisory,2.00,Y
+09/07/2026,"Mossbank, Dana",Ellington Bakeries,Advisory,2.00,Y
+09/08/2026,"Mossbank, Dana",Acme Industrial,Year-end close,2.00,Y
+09/08/2026,"Mossbank, Dana",Ellington Bakeries,1065 preparation,2.00,Y
+09/08/2026,"Mossbank, Dana",Mossbank Accounting (internal),Admin,2.00,N
+09/08/2026,"Mossbank, Dana",Pemberton HVAC,Monthly bookkeeping,2.00,N
+09/08/2026,"Raman, Priya",Acme Industrial,Review engagement,2.50,N
+09/08/2026,"Raman, Priya",Mossbank Accounting (internal),CPE training,2.50,N
+09/08/2026,"Raman, Priya",Wren & Sparrow Bookshop,Review engagement,2.50,Y
+09/08/2026,"Wojcik, Tomasz",Ellington Bakeries,1065 preparation,3.50,Y
+09/08/2026,"Wojcik, Tomasz",Pemberton HVAC,Sales tax filing,3.50,Y
+09/08/2026,"Lin, Grace",Mossbank Accounting (internal),Marketing,2.00,N
+09/08/2026,"Lin, Grace",Quarry Road Nursery,Review engagement,2.00,Y
+09/08/2026,"Haddad, Omar",Oakhurst Pediatrics,Payroll processing,2.00,Y
+09/08/2026,"Haddad, Omar",Quarry Road Nursery,Year-end close,2.00,Y
+09/08/2026,"Haddad, Omar",Wren & Sparrow Bookshop,Advisory,2.00,Y
+09/08/2026,"Ortega, Luis",Meridian Title,1065 preparation,3.75,Y
+09/08/2026,"Ortega, Luis",Oakhurst Pediatrics,Advisory,3.75,Y
+09/09/2026,"Mossbank, Dana",Mossbank Accounting (internal),Admin,9.50,N
+09/09/2026,"Oduya, Kenneth",Mossbank Accounting (internal),Admin,2.75,N
+09/09/2026,"Oduya, Kenneth",Pemberton HVAC,1065 preparation,2.75,Y
+09/09/2026,"Oduya, Kenneth",Riverbend Physio,1120-S preparation,2.75,Y
+09/09/2026,"Raman, Priya",Mossbank Accounting (internal),Marketing,3.50,N
+09/09/2026,"Raman, Priya",Pemberton HVAC,Review engagement,3.50,Y
+09/09/2026,"Wojcik, Tomasz",Meridian Title,Review engagement,3.50,Y
+09/09/2026,"Wojcik, Tomasz",Nightjar Coffee Roasters,Year-end close,3.50,Y
+09/09/2026,"Lin, Grace",Acme Industrial,Review engagement,1.25,Y
+09/09/2026,"Lin, Grace",Acme Industrial,1120-S preparation,1.25,Y
+09/09/2026,"Lin, Grace",Mossbank Accounting (internal),Practice meeting,1.25,N
+09/09/2026,"Lin, Grace",Quill & Ink Print Shop,Sales tax filing,1.25,Y
+09/09/2026,"Haddad, Omar",Hollowell Electric,Year-end close,1.50,Y
+09/09/2026,"Haddad, Omar",Oakhurst Pediatrics,Sales tax filing,1.50,Y
+09/09/2026,"Haddad, Omar",Pemberton HVAC,Review engagement,1.50,Y
+09/09/2026,"Haddad, Omar",Quill & Ink Print Shop,Payroll processing,1.50,Y
+09/09/2026,"Ortega, Luis",Pemberton HVAC,Review engagement,8.75,Y
+09/10/2026,"Mossbank, Dana",Mossbank Accounting (internal),CPE training,3.00,N
+09/10/2026,"Mossbank, Dana",Nightjar Coffee Roasters,Year-end close,3.00,Y
+09/10/2026,"Mossbank, Dana",Pemberton HVAC,Sales tax filing,3.00,Y
+09/10/2026,"Oduya, Kenneth",Oakhurst Pediatrics,Advisory,4.25,Y
+09/10/2026,"Oduya, Kenneth",Quarry Road Nursery,Year-end close,4.25,Y
+09/10/2026,"Raman, Priya",Mossbank Accounting,Review engagement,4.25,Y
+09/10/2026,"Raman, Priya",Pemberton HVAC,Monthly bookkeeping,4.25,Y
+09/10/2026,"Wojcik, Tomasz",Acme Industrial,Monthly bookkeeping,2.00,N
+09/10/2026,"Wojcik, Tomasz",Mossbank Accounting (internal),Admin,2.00,N
+09/10/2026,"Wojcik, Tomasz",Mossbank Accounting (internal),CPE training,2.00,N
+09/10/2026,"Wojcik, Tomasz",Redwood Property Mgmt,Monthly bookkeeping,2.00,Y
+09/10/2026,"Lin, Grace",Quill & Ink Print Shop,Payroll processing,4.25,Y
+09/10/2026,"Haddad, Omar",Ellington Bakeries,Payroll processing,2.00,Y
+09/10/2026,"Haddad, Omar",Quarry Road Nursery,Year-end close,2.00,Y
+09/10/2026,"Haddad, Omar",Quill & Ink Print Shop,Advisory,2.00,Y
+09/10/2026,"Ortega, Luis",Mossbank Accounting,Payroll processing,2.75,N
+09/10/2026,"Ortega, Luis",Oakhurst Pediatrics,1120-S preparation,2.75,Y
+09/10/2026,"Ortega, Luis",Redwood Property Mgmt,1065 preparation,2.75,Y
+09/11/2026,"Mossbank, Dana",Ellington Bakeries,Year-end close,8.50,N
+09/11/2026,"Oduya, Kenneth",Quill & Ink Print Shop,Year-end close,4.25,Y
+09/11/2026,"Oduya, Kenneth",Redwood Property Mgmt,1120-S preparation,4.25,Y
+09/11/2026,"Raman, Priya",Hollowell Electric,Payroll processing,2.50,Y
+09/11/2026,"Raman, Priya",Pemberton HVAC,Payroll processing,2.50,Y
+09/11/2026,"Raman, Priya",Yellowtail Seafood,Payroll processing,2.50,Y
+09/11/2026,"Wojcik, Tomasz",Acme Industrial,Year-end close,1.75,Y
+09/11/2026,"Wojcik, Tomasz",Hollowell Electric,Advisory,1.75,Y
+09/11/2026,"Wojcik, Tomasz",Meridian Title,Review engagement,1.75,Y
+09/11/2026,"Wojcik, Tomasz",Mossbank Accounting (internal),CPE training,1.75,N
+09/11/2026,"Lin, Grace",Quarry Road Nursery,Advisory,4.75,N
+09/11/2026,"Haddad, Omar",Ellington Bakeries,Sales tax filing,1.50,Y
+09/11/2026,"Haddad, Omar",Ironwood Fabrication,1120-S preparation,1.50,Y
+09/11/2026,"Ortega, Luis",Ellington Bakeries,Monthly bookkeeping,3.50,Y
+09/11/2026,"Ortega, Luis",Wren & Sparrow Bookshop,Review engagement,3.50,Y
+09/14/2026,"Mossbank, Dana",Acme Industrial,Sales tax filing,2.75,Y
+09/14/2026,"Mossbank, Dana",Mossbank Accounting (internal),Practice meeting,2.75,N
+09/14/2026,"Mossbank, Dana",Oakhurst Pediatrics,1120-S preparation,2.75,Y
+09/14/2026,"Oduya, Kenneth",Mossbank Accounting (internal),Practice meeting,4.00,N
+09/14/2026,"Oduya, Kenneth",Nightjar Coffee Roasters,1120-S preparation,4.00,Y
+09/14/2026,"Raman, Priya",Mossbank Accounting (internal),CPE training,4.25,N
+09/14/2026,"Raman, Priya",Pemberton HVAC,Year-end close,4.25,Y
+09/14/2026,"Wojcik, Tomasz",Nightjar Coffee Roasters,Review engagement,2.75,Y
+09/14/2026,"Wojcik, Tomasz",Quarry Road Nursery,Advisory,2.75,Y
+09/14/2026,"Wojcik, Tomasz",Quarry Road Nursery,Advisory,2.75,Y
+09/14/2026,"Lin, Grace",Ellington Bakeries,1120-S preparation,1.00,N
+09/14/2026,"Lin, Grace",Hollowell Electric,Sales tax filing,1.00,Y
+09/14/2026,"Lin, Grace",Quarry Road Nursery,Sales tax filing,1.00,Y
+09/14/2026,"Lin, Grace",Riverbend Physio,Sales tax filing,1.00,Y
+09/14/2026,"Haddad, Omar",Meridian Title,Year-end close,1.50,Y
+09/14/2026,"Haddad, Omar",Mossbank Accounting (internal),Practice meeting,1.50,N
+09/14/2026,"Haddad, Omar",Quarry Road Nursery,Review engagement,1.50,Y
+09/14/2026,"Haddad, Omar",Yellowtail Seafood,1120-S preparation,1.50,Y
+09/14/2026,"Brooks, Hannah",Quill & Ink Print Shop,Sales tax filing,2.50,Y
+09/14/2026,"Brooks, Hannah",Redwood Property Mgmt,1065 preparation,2.50,N
+09/14/2026,"Brooks, Hannah",Wren & Sparrow Bookshop,Monthly bookkeeping,2.50,Y
+09/14/2026,"Ortega, Luis",Ironwood Fabrication,Monthly bookkeeping,2.75,Y
+09/14/2026,"Ortega, Luis",Nightjar Coffee Roasters,Review engagement,2.75,Y
+09/14/2026,"Ortega, Luis",Pemberton HVAC,Sales tax filing,2.75,Y
+09/15/2026,"Mossbank, Dana",Ellington Bakeries,Review engagement,1.75,N
+09/15/2026,"Mossbank, Dana",Mossbank Accounting (internal),Admin,1.75,N
+09/15/2026,"Mossbank, Dana",Quarry Road Nursery,Advisory,1.75,Y
+09/15/2026,"Mossbank, Dana",Riverbend Physio,1120-S preparation,1.75,Y
+09/15/2026,"Oduya, Kenneth",Ellington Bakeries,1065 preparation,3.50,Y
+09/15/2026,"Oduya, Kenneth",Wren & Sparrow Bookshop,Advisory,3.50,Y
+09/15/2026,"Raman, Priya",Meridian Title,1065 preparation,2.00,Y
+09/15/2026,"Raman, Priya",Nightjar Coffee Roasters,Review engagement,2.00,Y
+09/15/2026,"Raman, Priya",Quarry Road Nursery,Sales tax filing,2.00,Y
+09/15/2026,"Raman, Priya",Quill & Ink Print Shop,Review engagement,2.00,Y
+09/15/2026,"Wojcik, Tomasz",Mossbank Accounting (internal),CPE training,8.00,N
+09/15/2026,"Lin, Grace",Meridian Title,Advisory,1.50,Y
+09/15/2026,"Lin, Grace",Meridian Title,Year-end close,1.50,Y
+09/15/2026,"Lin, Grace",Quill & Ink Print Shop,Review engagement,1.50,Y
+09/15/2026,"Haddad, Omar",Hollowell Electric,Sales tax filing,1.50,Y
+09/15/2026,"Haddad, Omar",Meridian Title,Monthly bookkeeping,1.50,Y
+09/15/2026,"Haddad, Omar",Mossbank Accounting (internal),CPE training,1.50,N
+09/15/2026,"Haddad, Omar",Quarry Road Nursery,1065 preparation,1.50,Y
+09/15/2026,"Brooks, Hannah",Oakhurst Pediatrics,Sales tax filing,2.00,Y
+09/15/2026,"Brooks, Hannah",Riverbend Physio,Year-end close,2.00,Y
+09/15/2026,"Brooks, Hannah",Wren & Sparrow Bookshop,1120-S preparation,2.00,Y
+09/15/2026,"Ortega, Luis",Mossbank Accounting (internal),CPE training,1.75,N
+09/15/2026,"Ortega, Luis",Pemberton HVAC,Sales tax filing,1.75,Y
+09/15/2026,"Ortega, Luis",Pinnacle Roofing,1120-S preparation,1.75,Y
+09/15/2026,"Ortega, Luis",Quarry Road Nursery,1065 preparation,1.75,Y
+09/16/2026,"Mossbank, Dana",Ellington Bakeries,1065 preparation,2.75,Y
+09/16/2026,"Mossbank, Dana",Oakhurst Pediatrics,Payroll processing,2.75,Y
+09/16/2026,"Mossbank, Dana",Yellowtail Seafood,Advisory,2.75,Y
+09/16/2026,"Oduya, Kenneth",Meridian Title,Review engagement,1.75,Y
+09/16/2026,"Oduya, Kenneth",Oakhurst Pediatrics,Monthly bookkeeping,1.75,Y
+09/16/2026,"Oduya, Kenneth",Pinnacle Roofing,Review engagement,1.75,Y
+09/16/2026,"Oduya, Kenneth",Wren & Sparrow Bookshop,Sales tax filing,1.75,Y
+09/16/2026,"Raman, Priya",Hollowell Electric,Advisory,2.00,Y
+09/16/2026,"Raman, Priya",Nightjar Coffee Roasters,1065 preparation,2.00,Y
+09/16/2026,"Raman, Priya",Oakhurst Pediatrics,1120-S preparation,2.00,Y
+09/16/2026,"Raman, Priya",Quill & Ink Print Shop,Review engagement,2.00,Y
+09/16/2026,"Wojcik, Tomasz",Mossbank Accounting (internal),Practice meeting,7.50,N
+09/16/2026,"Lin, Grace",Mossbank Accounting (internal),Practice meeting,1.50,N
+09/16/2026,"Lin, Grace",Mossbank Accounting (internal),Practice meeting,1.50,N
+09/16/2026,"Lin, Grace",Quarry Road Nursery,1065 preparation,1.50,N
+09/16/2026,"Haddad, Omar",Ironwood Fabrication,Sales tax filing,1.75,Y
+09/16/2026,"Haddad, Omar",Mossbank Accounting (internal),Admin,1.75,N
+09/16/2026,"Haddad, Omar",Pinnacle Roofing,Payroll processing,1.75,Y
+09/16/2026,"Haddad, Omar",Quill & Ink Print Shop,Advisory,1.75,Y
+09/16/2026,"Brooks, Hannah",Meridian Title,1065 preparation,1.50,Y
+09/16/2026,"Brooks, Hannah",Mossbank Accounting (internal),Admin,1.50,N
+09/16/2026,"Brooks, Hannah",Oakhurst Pediatrics,Review engagement,1.50,Y
+09/16/2026,"Brooks, Hannah",Quill & Ink Print Shop,Monthly bookkeeping,1.50,Y
+09/16/2026,"Ortega, Luis",Mossbank Accounting (internal),CPE training,7.75,N
+09/17/2026,"Mossbank, Dana",Mossbank Accounting (internal),Marketing,8.00,N
+09/17/2026,"Oduya, Kenneth",Hollowell Electric,Advisory,3.75,Y
+09/17/2026,"Oduya, Kenneth",Mossbank Accounting,1065 preparation,3.75,Y
+09/17/2026,"Raman, Priya",Pemberton HVAC,Monthly bookkeeping,7.75,Y
+09/17/2026,"Wojcik, Tomasz",Ironwood Fabrication,Review engagement,2.25,Y
+09/17/2026,"Wojcik, Tomasz",Mossbank Accounting (internal),Practice meeting,2.25,N
+09/17/2026,"Wojcik, Tomasz",Quill & Ink Print Shop,1065 preparation,2.25,Y
+09/17/2026,"Lin, Grace",Acme Industrial,Sales tax filing,1.25,Y
+09/17/2026,"Lin, Grace",Quarry Road Nursery,Payroll processing,1.25,Y
+09/17/2026,"Lin, Grace",Wren & Sparrow Bookshop,Monthly bookkeeping,1.25,Y
+09/17/2026,"Lin, Grace",Yellowtail Seafood,Payroll processing,1.25,Y
+09/17/2026,"Haddad, Omar",Mossbank Accounting,Advisory,1.50,Y
+09/17/2026,"Haddad, Omar",Nightjar Coffee Roasters,Advisory,1.50,Y
+09/17/2026,"Haddad, Omar",Pinnacle Roofing,Monthly bookkeeping,1.50,Y
+09/17/2026,"Haddad, Omar",Quarry Road Nursery,Payroll processing,1.50,Y
+09/17/2026,"Brooks, Hannah",Mossbank Accounting (internal),CPE training,8.00,N
+09/17/2026,"Ortega, Luis",Oakhurst Pediatrics,Monthly bookkeeping,2.75,Y
+09/17/2026,"Ortega, Luis",Pinnacle Roofing,Payroll processing,2.75,Y
+09/17/2026,"Ortega, Luis",Quarry Road Nursery,Year-end close,2.75,Y
+09/18/2026,"Mossbank, Dana",Nightjar Coffee Roasters,Advisory,4.75,Y
+09/18/2026,"Mossbank, Dana",Quill & Ink Print Shop,Payroll processing,4.75,N
+09/18/2026,"Oduya, Kenneth",Pemberton HVAC,Sales tax filing,7.00,Y
+09/18/2026,"Raman, Priya",Hollowell Electric,1120-S preparation,1.75,Y
+09/18/2026,"Raman, Priya",Ironwood Fabrication,Monthly bookkeeping,1.75,Y
+09/18/2026,"Raman, Priya",Mossbank Accounting (internal),CPE training,1.75,N
+09/18/2026,"Raman, Priya",Nightjar Coffee Roasters,Advisory,1.75,Y
+09/18/2026,"Wojcik, Tomasz",Meridian Title,Sales tax filing,1.75,Y
+09/18/2026,"Wojcik, Tomasz",Pemberton HVAC,Monthly bookkeeping,1.75,Y
+09/18/2026,"Wojcik, Tomasz",Quill & Ink Print Shop,1065 preparation,1.75,Y
+09/18/2026,"Wojcik, Tomasz",Quill & Ink Print Shop,Monthly bookkeeping,1.75,Y
+09/18/2026,"Lin, Grace",Hollowell Electric,Review engagement,2.25,Y
+09/18/2026,"Lin, Grace",Mossbank Accounting (internal),Marketing,2.25,N
+09/18/2026,"Haddad, Omar",Riverbend Physio,1065 preparation,5.25,Y
+09/18/2026,"Brooks, Hannah",Mossbank Accounting (internal),CPE training,2.00,N
+09/18/2026,"Brooks, Hannah",Mossbank Accounting (internal),Practice meeting,2.00,N
+09/18/2026,"Brooks, Hannah",Pinnacle Roofing,Advisory,2.00,N
+09/18/2026,"Brooks, Hannah",Riverbend Physio,Sales tax filing,2.00,Y
+09/18/2026,"Ortega, Luis",Ironwood Fabrication,Year-end close,3.00,Y
+09/18/2026,"Ortega, Luis",Meridian Title,1065 preparation,3.00,Y
+09/18/2026,"Ortega, Luis",Pemberton HVAC,Advisory,3.00,Y
+09/21/2026,"Mossbank, Dana",Mossbank Accounting,Sales tax filing,3.75,N
+09/21/2026,"Mossbank, Dana",Quill & Ink Print Shop,Advisory,3.75,N
+09/21/2026,"Oduya, Kenneth",Acme Industrial,Monthly bookkeeping,7.00,Y
+09/21/2026,"Raman, Priya",Quarry Road Nursery,Sales tax filing,7.75,Y
+09/21/2026,"Wojcik, Tomasz",Ellington Bakeries,Advisory,1.50,Y
+09/21/2026,"Wojcik, Tomasz",Ironwood Fabrication,Year-end close,1.50,N
+09/21/2026,"Wojcik, Tomasz",Meridian Title,Sales tax filing,1.50,Y
+09/21/2026,"Wojcik, Tomasz",Quill & Ink Print Shop,Payroll processing,1.50,Y
+09/21/2026,"Lin, Grace",Acme Industrial,Advisory,1.00,Y
+09/21/2026,"Lin, Grace",Oakhurst Pediatrics,Monthly bookkeeping,1.00,Y
+09/21/2026,"Lin, Grace",Quill & Ink Print Shop,Payroll processing,1.00,Y
+09/21/2026,"Lin, Grace",Redwood Property Mgmt,Advisory,1.00,N
+09/21/2026,"Haddad, Omar",Meridian Title,Year-end close,5.75,Y
+09/21/2026,"Brooks, Hannah",Mossbank Accounting (internal),Practice meeting,3.50,N
+09/21/2026,"Brooks, Hannah",Riverbend Physio,1065 preparation,3.50,Y
+09/22/2026,"Mossbank, Dana",Acme Industrial,Year-end close,2.75,Y
+09/22/2026,"Mossbank, Dana",Meridian Title,1120-S preparation,2.75,Y
+09/22/2026,"Mossbank, Dana",Mossbank Accounting (internal),Practice meeting,2.75,N
+09/22/2026,"Oduya, Kenneth",Mossbank Accounting,1065 preparation,2.50,Y
+09/22/2026,"Oduya, Kenneth",Mossbank Accounting (internal),Marketing,2.50,N
+09/22/2026,"Oduya, Kenneth",Redwood Property Mgmt,Year-end close,2.50,Y
+09/22/2026,"Raman, Priya",Pinnacle Roofing,Payroll processing,6.75,Y
+09/22/2026,"Wojcik, Tomasz",Nightjar Coffee Roasters,Advisory,3.75,Y
+09/22/2026,"Wojcik, Tomasz",Pemberton HVAC,Year-end close,3.75,Y
+09/22/2026,"Lin, Grace",Acme Industrial,Year-end close,1.00,N
+09/22/2026,"Lin, Grace",Meridian Title,Payroll processing,1.00,Y
+09/22/2026,"Lin, Grace",Mossbank Accounting,Payroll processing,1.00,Y
+09/22/2026,"Lin, Grace",Riverbend Physio,Payroll processing,1.00,Y
+09/22/2026,"Haddad, Omar",Acme Industrial,Payroll processing,5.25,Y
+09/22/2026,"Brooks, Hannah",Oakhurst Pediatrics,Monthly bookkeeping,3.75,Y
+09/22/2026,"Brooks, Hannah",Wren & Sparrow Bookshop,1120-S preparation,3.75,Y
+09/23/2026,"Mossbank, Dana",Acme Industrial,Sales tax filing,2.25,N
+09/23/2026,"Mossbank, Dana",Acme Industrial,Payroll processing,2.25,N
+09/23/2026,"Mossbank, Dana",Hollowell Electric,Year-end close,2.25,Y
+09/23/2026,"Mossbank, Dana",Wren & Sparrow Bookshop,Monthly bookkeeping,2.25,N
+09/23/2026,"Oduya, Kenneth",Ellington Bakeries,Payroll processing,2.25,Y
+09/23/2026,"Oduya, Kenneth",Mossbank Accounting (internal),Practice meeting,2.25,N
+09/23/2026,"Oduya, Kenneth",Quarry Road Nursery,Review engagement,2.25,Y
+09/23/2026,"Raman, Priya",Mossbank Accounting (internal),Marketing,1.75,N
+09/23/2026,"Raman, Priya",Oakhurst Pediatrics,Payroll processing,1.75,Y
+09/23/2026,"Raman, Priya",Pemberton HVAC,Year-end close,1.75,Y
+09/23/2026,"Raman, Priya",Redwood Property Mgmt,Sales tax filing,1.75,N
+09/23/2026,"Wojcik, Tomasz",Ellington Bakeries,Payroll processing,6.50,Y
+09/23/2026,"Lin, Grace",Oakhurst Pediatrics,Advisory,1.25,Y
+09/23/2026,"Lin, Grace",Pemberton HVAC,Monthly bookkeeping,1.25,N
+09/23/2026,"Lin, Grace",Riverbend Physio,1065 preparation,1.25,Y
+09/23/2026,"Lin, Grace",Wren & Sparrow Bookshop,Payroll processing,1.25,Y
+09/23/2026,"Haddad, Omar",Ellington Bakeries,Year-end close,1.75,Y
+09/23/2026,"Haddad, Omar",Meridian Title,Advisory,1.75,Y
+09/23/2026,"Haddad, Omar",Nightjar Coffee Roasters,Payroll processing,1.75,Y
+09/23/2026,"Brooks, Hannah",Ironwood Fabrication,Review engagement,2.50,N
+09/23/2026,"Brooks, Hannah",Oakhurst Pediatrics,Advisory,2.50,Y
+09/23/2026,"Brooks, Hannah",Quarry Road Nursery,1065 preparation,2.50,Y
+09/24/2026,"Mossbank, Dana",Mossbank Accounting (internal),Marketing,8.50,N
+09/24/2026,"Oduya, Kenneth",Acme Industrial,1120-S preparation,2.50,Y
+09/24/2026,"Oduya, Kenneth",Ironwood Fabrication,Review engagement,2.50,Y
+09/24/2026,"Oduya, Kenneth",Mossbank Accounting (internal),Marketing,2.50,N
+09/24/2026,"Raman, Priya",Meridian Title,Review engagement,2.25,Y
+09/24/2026,"Raman, Priya",Oakhurst Pediatrics,Sales tax filing,2.25,Y
+09/24/2026,"Raman, Priya",Redwood Property Mgmt,Sales tax filing,2.25,Y
+09/24/2026,"Raman, Priya",Riverbend Physio,Year-end close,2.25,Y
+09/24/2026,"Lin, Grace",Hollowell Electric,Review engagement,2.25,Y
+09/24/2026,"Lin, Grace",Yellowtail Seafood,Sales tax filing,2.25,Y
+09/24/2026,"Haddad, Omar",Ironwood Fabrication,Payroll processing,2.75,Y
+09/24/2026,"Haddad, Omar",Quill & Ink Print Shop,1065 preparation,2.75,Y
+09/24/2026,"Brooks, Hannah",Ironwood Fabrication,Monthly bookkeeping,1.75,Y
+09/24/2026,"Brooks, Hannah",Mossbank Accounting,Payroll processing,1.75,Y
+09/24/2026,"Brooks, Hannah",Mossbank Accounting (internal),Marketing,1.75,N
+09/24/2026,"Brooks, Hannah",Quarry Road Nursery,1065 preparation,1.75,N
+09/25/2026,"Mossbank, Dana",Ironwood Fabrication,1120-S preparation,2.00,Y
+09/25/2026,"Mossbank, Dana",Mossbank Accounting (internal),Admin,2.00,N
+09/25/2026,"Mossbank, Dana",Redwood Property Mgmt,Monthly bookkeeping,2.00,Y
+09/25/2026,"Mossbank, Dana",Yellowtail Seafood,Monthly bookkeeping,2.00,Y
+09/25/2026,"Oduya, Kenneth",Mossbank Accounting (internal),CPE training,4.00,N
+09/25/2026,"Oduya, Kenneth",Nightjar Coffee Roasters,Payroll processing,4.00,Y
+09/25/2026,"Raman, Priya",Ironwood Fabrication,Sales tax filing,1.75,Y
+09/25/2026,"Raman, Priya",Pemberton HVAC,Monthly bookkeeping,1.75,Y
+09/25/2026,"Raman, Priya",Quill & Ink Print Shop,Monthly bookkeeping,1.75,Y
+09/25/2026,"Raman, Priya",Riverbend Physio,Sales tax filing,1.75,Y
+09/25/2026,"Wojcik, Tomasz",Nightjar Coffee Roasters,1065 preparation,7.25,Y
+09/25/2026,"Lin, Grace",Hollowell Electric,1120-S preparation,1.25,Y
+09/25/2026,"Lin, Grace",Ironwood Fabrication,Year-end close,1.25,N
+09/25/2026,"Lin, Grace",Pemberton HVAC,Sales tax filing,1.25,Y
+09/25/2026,"Haddad, Omar",Mossbank Accounting (internal),Admin,3.00,N
+09/25/2026,"Haddad, Omar",Pinnacle Roofing,Monthly bookkeeping,3.00,Y
+09/25/2026,"Brooks, Hannah",Mossbank Accounting,Year-end close,6.75,Y
+09/28/2026,"Mossbank, Dana",Mossbank Accounting (internal),Marketing,2.00,N
+09/28/2026,"Mossbank, Dana",Mossbank Accounting (internal),Practice meeting,2.00,N
+09/28/2026,"Mossbank, Dana",Mossbank Accounting (internal),Marketing,2.00,N
+09/28/2026,"Mossbank, Dana",Pemberton HVAC,1120-S preparation,2.00,Y
+09/28/2026,"Oduya, Kenneth",Mossbank Accounting,Payroll processing,2.25,Y
+09/28/2026,"Oduya, Kenneth",Mossbank Accounting (internal),Marketing,2.25,N
+09/28/2026,"Oduya, Kenneth",Nightjar Coffee Roasters,Review engagement,2.25,Y
+09/28/2026,"Oduya, Kenneth",Oakhurst Pediatrics,Sales tax filing,2.25,Y
+09/28/2026,"Raman, Priya",Nightjar Coffee Roasters,Payroll processing,6.75,Y
+09/28/2026,"Wojcik, Tomasz",Mossbank Accounting,Review engagement,1.75,Y
+09/28/2026,"Wojcik, Tomasz",Pemberton HVAC,Advisory,1.75,Y
+09/28/2026,"Wojcik, Tomasz",Pemberton HVAC,1120-S preparation,1.75,Y
+09/28/2026,"Wojcik, Tomasz",Riverbend Physio,Sales tax filing,1.75,Y
+09/28/2026,"Lin, Grace",Wren & Sparrow Bookshop,1120-S preparation,4.75,Y
+09/28/2026,"Haddad, Omar",Acme Industrial,Advisory,1.25,Y
+09/28/2026,"Haddad, Omar",Acme Industrial,1120-S preparation,1.25,Y
+09/28/2026,"Haddad, Omar",Mossbank Accounting (internal),CPE training,1.25,N
+09/28/2026,"Haddad, Omar",Oakhurst Pediatrics,Monthly bookkeeping,1.25,Y
+09/28/2026,"Brooks, Hannah",Ellington Bakeries,Year-end close,2.00,N
+09/28/2026,"Brooks, Hannah",Mossbank Accounting (internal),CPE training,2.00,N
+09/28/2026,"Brooks, Hannah",Nightjar Coffee Roasters,Year-end close,2.00,Y
+09/28/2026,"Brooks, Hannah",Quill & Ink Print Shop,Review engagement,2.00,Y
+09/28/2026,"Ortega, Luis",Oakhurst Pediatrics,Sales tax filing,3.00,Y
+09/28/2026,"Ortega, Luis",Quill & Ink Print Shop,1065 preparation,3.00,Y
+09/28/2026,"Ortega, Luis",Wren & Sparrow Bookshop,Sales tax filing,3.00,Y
+09/29/2026,"Mossbank, Dana",Mossbank Accounting,Review engagement,1.75,N
+09/29/2026,"Mossbank, Dana",Mossbank Accounting (internal),Marketing,1.75,N
+09/29/2026,"Mossbank, Dana",Quarry Road Nursery,Year-end close,1.75,Y
+09/29/2026,"Mossbank, Dana",Quarry Road Nursery,Advisory,1.75,Y
+09/29/2026,"Oduya, Kenneth",Quarry Road Nursery,Sales tax filing,7.50,Y
+09/29/2026,"Raman, Priya",Yellowtail Seafood,Monthly bookkeeping,8.25,Y
+09/29/2026,"Wojcik, Tomasz",Ironwood Fabrication,Monthly bookkeeping,6.75,Y
+09/29/2026,"Haddad, Omar",Mossbank Accounting (internal),Practice meeting,1.25,N
+09/29/2026,"Haddad, Omar",Pinnacle Roofing,Review engagement,1.25,Y
+09/29/2026,"Haddad, Omar",Riverbend Physio,Year-end close,1.25,Y
+09/29/2026,"Haddad, Omar",Yellowtail Seafood,1120-S preparation,1.25,Y
+09/29/2026,"Brooks, Hannah",Nightjar Coffee Roasters,Monthly bookkeeping,2.25,Y
+09/29/2026,"Brooks, Hannah",Quill & Ink Print Shop,1065 preparation,2.25,N
+09/29/2026,"Brooks, Hannah",Quill & Ink Print Shop,1120-S preparation,2.25,Y
+09/29/2026,"Ortega, Luis",Hollowell Electric,1120-S preparation,3.75,Y
+09/29/2026,"Ortega, Luis",Nightjar Coffee Roasters,1120-S preparation,3.75,Y
+09/30/2026,"Mossbank, Dana",Mossbank Accounting,1120-S preparation,8.00,Y
+09/30/2026,"Oduya, Kenneth",Ironwood Fabrication,1120-S preparation,8.75,Y
+09/30/2026,"Raman, Priya",Hollowell Electric,Review engagement,3.50,Y
+09/30/2026,"Raman, Priya",Meridian Title,Sales tax filing,3.50,Y
+09/30/2026,"Wojcik, Tomasz",Nightjar Coffee Roasters,Advisory,8.25,N
+09/30/2026,"Lin, Grace",Ironwood Fabrication,1065 preparation,4.25,Y
+09/30/2026,"Haddad, Omar",Ellington Bakeries,Review engagement,5.75,Y
+09/30/2026,"Brooks, Hannah",Mossbank Accounting (internal),Practice meeting,2.50,N
+09/30/2026,"Brooks, Hannah",Oakhurst Pediatrics,1120-S preparation,2.50,Y
+09/30/2026,"Brooks, Hannah",Riverbend Physio,Monthly bookkeeping,2.50,N
+09/30/2026,"Ortega, Luis",Acme Industrial,Year-end close,2.75,Y
+09/30/2026,"Ortega, Luis",Hollowell Electric,Sales tax filing,2.75,Y
+09/30/2026,"Ortega, Luis",Oakhurst Pediatrics,Payroll processing,2.75,Y

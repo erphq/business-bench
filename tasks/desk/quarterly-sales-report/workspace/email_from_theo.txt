@@ -1,0 +1,15 @@
+From: Theo Lindqvist <theo@thistleleaftea.com>
+To: you
+Date: Mon, 5 Oct 2026 08:10
+Subject: Q3 numbers
+
+Partners meeting is Thursday. Can you do the wholesale quarter by product and by month from the portal export - revenue net of refunds, refunds coming off the month we issued them - and a short memo with anything they should know?
+
+-----Original Message-----
+
+From: Theo Lindqvist <theo@thistleleaftea.com>
+To: you
+Date: Mon, 5 Oct 2026 08:26
+Subject: RE: Q3 numbers
+
+One more thing. Portal support closed our ticket from August - they said a sync job timed out one afternoon and retried, and 'some orders may have been imported more than once'. They never told me which. If you find them, leave them out and tell me in the memo.

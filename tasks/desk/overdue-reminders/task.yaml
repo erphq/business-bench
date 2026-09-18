@@ -1,0 +1,51 @@
+id: overdue-reminders
+track: desk
+category: drafting
+title: Write this month's past-due reminders
+ask: |
+  Nadia's out, so please write this month's past-due payment reminders from the open invoice export - one file per customer in a reminders folder. Her guidelines are in the folder, and Dale's email has a couple of notes.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the export's Days column is each invoice's age from its invoice date; Redwood Property Mgmt shows 88 there but is 58 days past due from its due date (checks: Redwood Property Mgmt reminder figures; per-customer reminder facts)
+- |-
+  two invoices have a blank due date and Net 15 terms; Yellowtail Seafood's is 96 days past due once the due date is worked out (checks: Yellowtail Seafood reminder figures; per-customer reminder facts)
+- |-
+  Dale's email says Redwood Property Mgmt is over 60 days and gets the credit hold paragraph; by the ledger it is 58 days past due, so only Dorsey Freight and Yellowtail Seafood get it (checks: Dorsey Freight credit hold paragraph; per-customer reminder facts)
+- |-
+  one invoice was partly paid; the reminder states the balance, not the original amount (check: per-customer reminder facts)
+- |-
+  two customers with active payment plans get the plan reminder (next installment amount and date, no invoice list, no credit hold) even though one has a 90-day invoice; a third customer's plan is marked completed and gets a standard reminder (check: per-customer reminder facts)
+- |-
+  disputed invoices are left out entirely: Driftwood Studio has nothing else past due and gets no reminder, Uptown Fitness's reminder carries only its undisputed invoice; not-yet-due and zero-balance invoices are left out too (checks: reminder files; per-customer reminder facts)
+- |-
+  the export has a three-line preamble, a BOM, CRLF endings and balances written as '$1,234.50' text (check: per-customer reminder facts)
+checks:
+- type: file_exists
+  name: reminder files
+  path: reminders/*.md
+- type: text_numbers_present
+  name: Redwood Property Mgmt reminder figures
+  path: reminders/*[Rr][Ee][Dd][Ww][Oo][Oo][Dd]*
+  numbers:
+  - 3129.27
+  - 58
+  rel_tol: 0.0001
+- type: text_numbers_present
+  name: Yellowtail Seafood reminder figures
+  path: reminders/*[Yy][Ee][Ll][Ll][Oo][Ww][Tt][Aa][Ii][Ll]*
+  numbers:
+  - 2547.89
+  - 96
+  rel_tol: 0.0001
+- type: text_sentence_matches
+  name: Dorsey Freight credit hold paragraph
+  path: reminders/*[Dd][Oo][Rr][Ss][Ee][Yy]*
+  all:
+  - (credit hold|on hold|\bhold\b|\bc\.?o\.?d\b|cash on delivery)
+  none:
+  - \b(not|no longer|never|won't|will not|isn't|aren't|without)\b
+- type: custom
+  name: per-customer reminder facts
+  module: check.py

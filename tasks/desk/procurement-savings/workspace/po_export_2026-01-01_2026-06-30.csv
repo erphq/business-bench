@@ -1,0 +1,30 @@
+﻿Purchase order lines - Tamarack Brewing
+Created 01/01/2026 to 06/30/2026, all statuses
+PO Number,PO Date,Status,Supplier,Quote Ref,Category,Item Code,Description,Qty,UOM,Unit Cost (USD),Line Total (USD)
+PO-5298,01/27/2026,Closed,Home Depot Pro,,Cleaning & sanitation,CHM-RAG-50,"Shop towels, box of 50",12,box,$32.50,$390.00
+PO-5301,01/29/2026,Open,Great Lakes Can Co.,Q26-0133,Packaging,CAN-16-BRT,"16 oz can, bright (per 1,000)",40,1000,$157.68,"$6,307.20"
+PO-5303,02/02/2026,Closed,Cascade Lab Supply,Q26-0132,Lab & QA,LAB-ATP-100,"ATP test swabs, box of 100",9,box,$213.79,"$1,924.11"
+PO-5304,02/07/2026,Closed,Great Lakes Can Co.,Q26-0136,Packaging,CAN-16-BRT,"16 oz can, bright (per 1,000)",40,1000,$148.14,"$5,925.60"
+PO-5307,02/10/2026,Closed,Prairie Heritage Malting Ltd.,Q26-0135,Malt & grain,MLT-MUN-55,"Munich malt, 55 lb bag",70,bag,$36.05,"$2,523.50"
+PO-5311,02/12/2026,Received,Northwest Chem Supply,Q26-0137,Cleaning & sanitation,CHM-ACD-5,"Acid rinse, 5 gal",35,pail,$97.20,"$3,402.00"
+PO-5315,03/02/2026,Closed,Great Lakes Can Co.,Q26-0138,Packaging,TRY-24-EA,24-can case tray,11000,each,$0.431,"$4,741.00"
+PO-5317,03/06/2026,Cancelled,Great Lakes Can Co.,Q26-0142,Packaging,CAR-4PK-1000,"4-pack carrier (per 1,000)",44,1000,$68.89,"$3,031.16"
+PO-5320,03/06/2026,Closed,Prairie Heritage Malting Ltd.,Q26-0141,Malt & grain,MLT-2ROW-55,"2-Row pale malt, 55 lb bag",150,bag,$33.51,"$5,026.50"
+PO-5321,03/21/2026,Received,Hopfenhaus Hallertau GmbH,Q26-0149,Hops,HOP-HMF-KG,Hallertau Mittelfrueh T90 pellets,150,kg,$23.32,"$3,498.00"
+PO-5321,03/21/2026,Received,Hopfenhaus Hallertau GmbH,Q26-0144,Hops,HOP-HMF-KG,Hallertau Mittelfrueh T90 pellets,340,kg,$20.04,"$6,813.60"
+PO-5322,03/28/2026,Closed,Northwest Chem Supply,Q26-0147,Cleaning & sanitation,CHM-CIP-55,"Caustic CIP cleaner, 55 gal drum",14,drum,$379.09,"$5,307.26"
+PO-5326,04/03/2026,Closed,Uline,,Packaging,PKG-TAPE-36,"Carton tape, 36 rolls",5,case,$64.80,$324.00
+PO-5330,04/05/2026,Closed,Northwest Chem Supply,Q26-0151,Cleaning & sanitation,CHM-PAA-5,"Peracetic acid sanitizer, 5 gal",31,pail,$90.46,"$2,804.26"
+PO-5332,04/09/2026,Closed,Hopfenhaus Hallertau GmbH,Q26-0154,Hops,HOP-TET-KG,Tettnanger T90 pellets,150,kg,$19.83,"$2,974.50"
+PO-5332,04/09/2026,Closed,Hopfenhaus Hallertau GmbH,Q26-0152,Hops,HOP-SAZ-KG,Saaz-type Spalter Select T90 pellets,200,kg,$17.19,"$3,438.00"
+PO-5335,04/18/2026,Closed,Cascade Lab Supply,Q26-0157,Lab & QA,LAB-VIA-KIT,Yeast viability stain kit,5,kit,$135.31,$676.55
+PO-5336,04/20/2026,Closed,Amazon Business,,Lab & QA,LAB-PIP-SET,"Pipette set, adjustable",2,set,$189.00,$378.00
+PO-5340,04/25/2026,Closed,Northwest Chem Supply,Q26-0159,Cleaning & sanitation,CHM-CIP-55,"Caustic CIP cleaner, 55 gal drum",14,drum,$392.26,"$5,491.64"
+PO-5341,05/07/2026,Closed,Great Lakes Can Co.,Q26-0163,Packaging,CAR-4PK-1000,"4-pack carrier (per 1,000)",35,1000,$65.83,"$2,304.05"
+PO-5344,05/09/2026,Open,Prairie Heritage Malting Ltd.,Q26-0160,Malt & grain,MLT-MUN-55,"Munich malt, 55 lb bag",100,bag,$36.62,"$3,662.00"
+PO-5346,05/17/2026,Received,Great Lakes Can Co.,Q26-0166,Packaging,TRY-24-EA,24-can case tray,1000,each,$0.543,$543.00
+PO-5347,05/19/2026,Closed,Hopfenhaus Hallertau GmbH,Q26-0167,Hops,HOP-SAZ-KG,Saaz-type Spalter Select T90 pellets,220,kg,$15.74,"$3,462.80"
+PO-5349,05/24/2026,Closed,Prairie Heritage Malting Ltd.,Q26-0168,Malt & grain,MLT-2ROW-55,"2-Row pale malt, 55 lb bag",120,bag,$39.73,"$4,767.60"
+PO-5349,05/24/2026,Closed,Prairie Heritage Malting Ltd.,Q26-0169,Malt & grain,MLT-C60-55,"Crystal 60L malt, 55 lb bag",60,bag,$40.98,"$2,458.80"
+PO-5350,06/16/2026,Cancelled,Prairie Heritage Malting Ltd.,Q26-0171,Malt & grain,MLT-C60-55,"Crystal 60L malt, 55 lb bag",40,bag,$45.97,"$1,838.80"
+PO-5353,06/20/2026,Open,Hopfenhaus Hallertau GmbH,Q26-0172,Hops,HOP-TET-KG,Tettnanger T90 pellets,240,kg,$15.09,"$3,621.60"

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alder Street kitchen - task board</title>
+<style>
+body{font-family:Helvetica,Arial,sans-serif;margin:20px;color:#111}
+.board{display:flex;gap:16px;align-items:flex-start}
+.col{flex:1;border:1px solid #999;padding:8px}
+.col h2{font-size:18px;margin:0 0 8px}
+.card{border:1px solid #bbb;padding:6px 8px;margin-bottom:8px}
+.card.blocked{border:3px solid #000}
+.flag{font-weight:bold;letter-spacing:1px}
+.meta{font-size:12px;color:#444}
+</style>
+</head>
+<body>
+<h1>Alder Street kitchen - task board</h1>
+<p>Status as of 11 September 2026. Cards marked BLOCKED are waiting on a task that is not Done yet.</p>
+<div class="board">
+<section class="col">
+<h2>Not started (5)</h2>
+<div class="card blocked"><div class="flag">BLOCKED</div><div><strong>Install sink and faucet</strong></div><div class="meta">T-372 &middot; Dana Kelly &middot; due Sep 14</div></div>
+<div class="card blocked"><div class="flag">BLOCKED</div><div><strong>Tile backsplash</strong></div><div class="meta">T-371 &middot; Aisha Mensah &middot; due Sep 18</div></div>
+<div class="card blocked"><div class="flag">BLOCKED</div><div><strong>Connect dishwasher</strong></div><div class="meta">T-373 &middot; Ryan Brooks and Aisha Mensah &middot; due Sep 22</div></div>
+<div class="card blocked"><div class="flag">BLOCKED</div><div><strong>Final electrical inspection</strong></div><div class="meta">T-377 &middot; Ryan Brooks &middot; due Sep 25</div></div>
+<div class="card blocked"><div class="flag">BLOCKED</div><div><strong>Homeowner walkthrough</strong></div><div class="meta">T-378 &middot; Luis Ortiz and Wei Chen &middot; due Oct 2</div></div>
+</section>
+<section class="col">
+<h2>In progress (6)</h2>
+<div class="card"><div><strong>Install wall cabinets</strong></div><div class="meta">T-368 &middot; Dana Kelly &middot; due Aug 25</div></div>
+<div class="card blocked"><div class="flag">BLOCKED</div><div><strong>Under-cabinet lighting</strong></div><div class="meta">T-375 &middot; Wei Chen &middot; due Aug 31</div></div>
+<div class="card blocked"><div class="flag">BLOCKED</div><div><strong>Install range hood</strong></div><div class="meta">T-374 &middot; Ryan Brooks &middot; due Sep 1</div></div>
+<div class="card"><div><strong>Patch hardwood floor</strong></div><div class="meta">T-376 &middot; Wei Chen &middot; due Sep 2</div></div>
+<div class="card"><div><strong>Countertop template visit</strong></div><div class="meta">T-369 &middot; Wei Chen &middot; due Sep 4</div></div>
+<div class="card blocked"><div class="flag">BLOCKED</div><div><strong>Countertop install</strong></div><div class="meta">T-370 &middot; Tomasz Nowak &middot; due Sep 8</div></div>
+</section>
+<section class="col">
+<h2>Done (15)</h2>
+<div class="card"><div><strong>Sign contract and collect deposit</strong></div><div class="meta">T-353 &middot; Tomasz Nowak &middot; due Jul 15</div></div>
+<div class="card"><div><strong>Order cabinets</strong></div><div class="meta">T-365 &middot; Luis Ortiz &middot; due Jul 16</div></div>
+<div class="card"><div><strong>Pull building permit</strong></div><div class="meta">T-354 &middot; Luis Ortiz &middot; due Jul 17</div></div>
+<div class="card"><div><strong>Protect floors and hang dust walls</strong></div><div class="meta">T-355 &middot; Tomasz Nowak &middot; due Jul 20</div></div>
+<div class="card"><div><strong>Demo upper and lower cabinets</strong></div><div class="meta">T-356 &middot; Aisha Mensah and Tomasz Nowak &middot; due Jul 20</div></div>
+<div class="card"><div><strong>Remove soffit over sink wall</strong></div><div class="meta">T-357 &middot; Tomasz Nowak &middot; due Jul 24</div></div>
+<div class="card"><div><strong>Rough electrical and new circuits</strong></div><div class="meta">T-360 &middot; Luis Ortiz &middot; due Jul 27</div></div>
+<div class="card"><div><strong>Rough plumbing for island sink</strong></div><div class="meta">T-359 &middot; Wei Chen &middot; due Jul 28</div></div>
+<div class="card"><div><strong>Haul demo debris</strong></div><div class="meta">T-358 &middot; Aisha Mensah &middot; due Jul 31</div></div>
+<div class="card"><div><strong>Cabinet delivery</strong></div><div class="meta">T-366 &middot; Luis Ortiz &middot; due Aug 6</div></div>
+<div class="card"><div><strong>Rough-in inspection</strong></div><div class="meta">T-361 &middot; Dana Kelly &middot; due Aug 7</div></div>
+<div class="card"><div><strong>Insulate exterior wall</strong></div><div class="meta">T-362 &middot; Wei Chen &middot; due Aug 12</div></div>
+<div class="card"><div><strong>Hang and tape drywall</strong></div><div class="meta">T-363 &middot; Wei Chen &middot; due Aug 12</div></div>
+<div class="card"><div><strong>Prime and paint walls</strong></div><div class="meta">T-364 &middot; Tomasz Nowak &middot; due Aug 18</div></div>
+<div class="card"><div><strong>Install base cabinets</strong></div><div class="meta">T-367 &middot; Ryan Brooks &middot; due Aug 25</div></div>
+</section>
+</div>
+</body>
+</html>

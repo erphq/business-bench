@@ -1,0 +1,2 @@
+product_code,product_name,sku,option1_name,option1_value,option2_name,option2_value,price,inventory_qty,availability
+DEMO1,Demo Rain Hat,DEMO1-M-RED,Size,M,Color,Red,34.00,7,in_stock

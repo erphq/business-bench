@@ -1,0 +1,64 @@
+id: expense-claims
+track: build
+category: finance
+title: Expense claims app with receipt and policy-limit rules, manager approval, and reimbursement batches
+ask: |
+  I run finance at Tallgrass Analytics, a 60-person company, and I want our expense claims out of email
+  and spreadsheets. Attached are our employee list, our expense policy with a limit per category for
+  each grade, and this year's claims so far. Every claim needs a business purpose, anything over $75
+  needs a receipt, and we only reimburse up to the limit for that person's grade. Employees should see
+  only their own claims, managers also see their direct reports' claims and approve them (never their
+  own), and our auditor needs to look at everything without changing anything. Once a month I pay all
+  approved claims in one reimbursement batch, so I want a dashboard with what's waiting for approval,
+  what's approved and waiting to be paid, what we've reimbursed this year, and which claims break
+  policy; send me an admin login and one for Grace Liu, our sales manager.
+seed:
+  - seed/employees.csv
+  - seed/expense_policy.csv
+  - seed/claims.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email (the finance manager).
+      password: Admin password.
+    restricted:
+      user: Login for Grace Liu, the Sales manager.
+      password: Grace's password.
+    notes: >
+      Free text. Must say the restricted login is Grace Liu. May include employee or auditor logins,
+      how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "ellen.park@tallgrass.io", "password": "..."},
+      "restricted": {"user": "grace.liu@tallgrass.io", "password": "..."},
+      "notes": "restricted login is Grace Liu. Employee login: robert.morris@tallgrass.io / ... Restart: pm2 restart claims."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 20]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - 1 exact duplicate employee row and 3 people re-imported with an upper-cased email and an unpadded id such as E-12 (64 rows -> 60 employees) (item 15)
+  - half of Grace Liu's reports carry her manager email as Grace.Liu@Tallgrass.io or GRACE.LIU@TALLGRASS.IO; case-sensitive matching gives her 6 reports and 18 claims instead of 12 and 28 (items 6, 15)
+  - the policy file has one row per category and grade; importing each row as a category gives 60 categories, and 5 rows carry a category name with a stray space or lower case (item 16)
+  - limits written 250, 250.00, "$1,500.00", and "no limit"; reading "no limit" as zero flags the CEO's 1,850.00 airfare (items 16, 21)
+  - claims.csv has one row per line; counting rows gives 211 claims instead of 112, and 6 lines are exported twice (C-1096 totals 1,206.23 with its duplicate) (items 10, 11, 17, 19)
+  - employee ids in claims written E-0009, E-9, or 9; a literal join orphans about a quarter of the lines (items 6, 22)
+  - over-policy must use the claimant's grade, so a Manager's 312.40 hotel is inside policy while a Staff member's is not (item 21)
+  - C-1076 has an expense dated a year after the claim was submitted; must be flagged, not imported silently (item 18)
+  - receipts are required strictly over 75.00; a greater-or-equal rule refuses the 75.00 line (item 23)
+  - reimbursable is capped per line, not refused, and the batch must pay approved claims only and mark them Paid in one step (items 20, 24)
+  - managers must not approve their own claims even though they can see them (item 25)

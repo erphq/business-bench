@@ -1,0 +1,13 @@
+Payroll for the week of Aug 31 (Mon) through Sep 6 (Sun)
+
+I exported the punches from the clock. It runs from Monday midnight to the following Monday noon so the night crew's clock-outs on Monday morning are in there.
+
+How I count it:
+- A shift belongs to the day it started. The bakers who start at night get the whole shift on that day.
+- Anything that started before Monday the 31st was last week and is already paid. Anything that starts on Monday the 7th is next week.
+- The clock sometimes records the same tap twice a minute or two apart. That is one punch, the first one.
+- If someone forgot to punch in or out, do NOT fill it in from the schedule and do not guess. Put the day in with the hours empty and write MISSING IN or MISSING OUT in the flag so I can ask them.
+
+What I need back: hours_audit.csv, one line per person per day they worked, with columns badge, name, date (2026-08-31 style), hours (decimal, two places, e.g. 8.25) and flag. Leave the flag empty when the day is fine.
+
+- Bea

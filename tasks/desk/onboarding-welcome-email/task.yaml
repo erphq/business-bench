@@ -1,0 +1,49 @@
+id: onboarding-welcome-email
+track: desk
+category: drafting
+title: Welcome email for the new project engineer
+ask: |
+  Please write the welcome email for Rahul Garcia, our new project engineer. The new hire form, the onboarding emails and the first-day sheet are in the folder. Save it as welcome.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the form and HR's first email give Monday October 5; HR's follow-up moves the first day to Monday October 12 (check: start date, manager and desk phone)
+- |-
+  the form names Eric Thomas as hiring manager, but that manager leaves for the Denver office on October 1 and Angela Sanchez is the manager from day one (check: start date, manager and desk phone)
+- |-
+  the form's kit is ENG-STD (14-inch laptop, two 24-inch monitors); the manager asks for the ENG-CAD kit (16-inch workstation, two 27-inch monitors, 3D mouse) (checks: CAD kit items; standard kit items absent)
+- |-
+  both kits list a desk phone and the manager says to skip it because the group uses Teams calling (check: start date, manager and desk phone)
+- |-
+  the first-day sheet's office hours start at 8:00 but new hires arrive at 8:30 for orientation (check: first-day logistics)
+checks:
+- type: file_exists
+  name: welcome.md exists
+  path: welcome.md
+- type: custom
+  name: start date, manager and desk phone
+  module: check.py
+- type: text_matches_all
+  name: CAD kit items
+  path: welcome.md
+  patterns:
+  - \b27(\s*-?\s*(inch|in\b\.?)|\s*[\"”″])
+  - 3\s*-?\s*d\s*mouse|space\s*mouse|3dconnexion
+  - \b16(\s*-?\s*(inch|in\b\.?)|\s*[\"”″])|workstation|precision
+- type: text_not_contains
+  name: standard kit items absent
+  path: welcome.md
+  phrases:
+  - latitude
+  - 24-inch
+  - 24 inch
+  - 24"
+  - 24”
+  - '24-in '
+- type: text_matches_all
+  name: first-day logistics
+  path: welcome.md
+  patterns:
+  - (?<![\d:])8:30
+  - \b2215\s+Canal

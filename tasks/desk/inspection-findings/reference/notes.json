@@ -1,0 +1,42 @@
+{
+  "closed": [
+    "FM-26-0425-1",
+    "FM-26-0425-2",
+    "FM-26-0425-4",
+    "FM-26-0425-5",
+    "LIC-2026-11802-3",
+    "LIC-2026-11802-5",
+    "HD-77849-1",
+    "HD-77849-3"
+  ],
+  "files": {
+    "fire1": "FireInspection_MapleStreet_FM-26-0425.pdf",
+    "fire2": "FireReinspection_MapleStreet_FM-26-0499.pdf",
+    "hd": "HealthDept_Hilltop_kitchen_HD-77849.pdf",
+    "ins": "scan_playground_audit_riverside.pdf",
+    "lic": "Licensing_Riverside_20260818.pdf",
+    "old": "FireInspection_Hilltop_2025.pdf"
+  },
+  "scan_figures": {
+    "inspection_reports/scan_playground_audit_riverside.pdf": [
+      "Mulch under climber only 4 in deep, 9 in required",
+      "PRIORITY 1",
+      "COMPLETE WITHIN 30 DAYS",
+      "Toddler yard gate latch does not self-close",
+      "PRIORITY 2",
+      "COMPLETE WITHIN 14 DAYS",
+      "Swing hanger bolt missing its locking nut",
+      "PRIORITY 1",
+      "COMPLETE WITHIN 7 DAYS",
+      "Sand box has no cover",
+      "PRIORITY 3",
+      "COMPLETE WITHIN 60 DAYS",
+      "LC-5538",
+      "09/10/2026",
+      "REPEAT OF LC-5361 R-4 (03/12/2026)",
+      "R-1",
+      "R-2",
+      "R-3"
+    ]
+  }
+}

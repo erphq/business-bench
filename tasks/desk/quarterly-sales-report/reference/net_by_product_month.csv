@@ -1,0 +1,19 @@
+product,month,net_revenue,gross,refunds
+Assam Breakfast,July,12274.00,12426.00,152.00
+Assam Breakfast,August,15162.00,15162.00,0.00
+Assam Breakfast,September,14288.00,14402.00,114.00
+Earl Grey Cream,July,15268.00,15268.00,0.00
+Earl Grey Cream,August,17380.00,17380.00,0.00
+Earl Grey Cream,September,17952.00,18128.00,176.00
+Masala Chai,July,7134.00,7134.00,0.00
+Masala Chai,August,7585.00,7831.00,246.00
+Masala Chai,September,8446.00,8897.00,451.00
+Golden Yunnan,July,13050.00,13050.00,0.00
+Golden Yunnan,August,11020.00,11542.00,522.00
+Golden Yunnan,September,12064.00,12064.00,0.00
+Sencha Kagoshima,July,7502.00,7812.00,310.00
+Sencha Kagoshima,August,8866.00,8990.00,124.00
+Sencha Kagoshima,September,13330.00,13826.00,496.00
+Chamomile Blossom,July,3924.00,3924.00,0.00
+Chamomile Blossom,August,5184.00,5256.00,72.00
+Chamomile Blossom,September,5580.00,5652.00,72.00

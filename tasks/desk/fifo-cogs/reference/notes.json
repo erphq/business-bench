@@ -1,0 +1,78 @@
+{
+  "cogs_by_month": {
+    "2026-01": 3943.75,
+    "2026-02": 4151.65,
+    "2026-03": 3600.33,
+    "2026-04": 3891.75,
+    "2026-05": 3437.65,
+    "2026-06": 5035.18
+  },
+  "returns": [
+    {
+      "cost": 2171,
+      "date": "2026-02-16",
+      "orig": "R51186",
+      "price": 3799,
+      "qty": 2,
+      "reason": "Wrong formula - unopened, back to shelf",
+      "receipt": "R51223",
+      "restock": true,
+      "seq": 219.5,
+      "sku": "CAT-WF12",
+      "time": "2026-02-16T12:31:00"
+    },
+    {
+      "cost": 2343,
+      "date": "2026-06-05",
+      "orig": "R51702",
+      "price": 3799,
+      "qty": 1,
+      "reason": "Dog would not eat it - unopened, restocked",
+      "receipt": "R51742",
+      "restock": true,
+      "seq": 734.5,
+      "sku": "CAT-WF12",
+      "time": "2026-06-05T10:10:00"
+    },
+    {
+      "cost": 1273,
+      "date": "2026-04-02",
+      "orig": "R51418",
+      "price": 2199,
+      "qty": 1,
+      "reason": "Bag split in car - damaged, discarded",
+      "receipt": "R51452",
+      "restock": false,
+      "seq": 446.5,
+      "sku": "LIT-CC35",
+      "time": "2026-04-02T16:30:00"
+    },
+    {
+      "cost": 1482,
+      "date": "2026-03-02",
+      "orig": "R51294",
+      "price": 2899,
+      "qty": 1,
+      "reason": "Duplicate gift - unopened, restocked",
+      "receipt": "R51302",
+      "restock": true,
+      "seq": 297.5,
+      "sku": "CHW-DC30",
+      "time": "2026-03-02T15:54:00"
+    },
+    {
+      "cost": 1067,
+      "date": "2026-05-25",
+      "orig": "R51672",
+      "price": 1699,
+      "qty": 1,
+      "reason": "Mold found - damaged, discarded",
+      "receipt": "R51682",
+      "restock": false,
+      "seq": 675.5,
+      "sku": "HAY-MT05",
+      "time": "2026-05-25T12:30:00"
+    }
+  ],
+  "total_cogs": 24060.31
+}

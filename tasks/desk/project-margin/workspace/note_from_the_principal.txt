@@ -1,0 +1,15 @@
+Job margins for the partners' meeting
+
+I want to see, job by job, what we have actually earned against what it has actually cost us, and
+I want the ones that are under water flagged so we stop arguing about which they are.
+
+Revenue is what we have invoiced. A draft invoice is not revenue - it is a hope. Anything we wrote
+off is not revenue either.
+
+Cost is everything the job has consumed. The hours in the unbilled file are hours we have paid for,
+so they are cost at the cost rate on the row, whether or not the client ever sees a bill for them.
+Supplier credits come off the cost of the job they were raised against.
+
+Every job on the job list goes on the report, including the ones we have not billed yet.
+
+- Fatima

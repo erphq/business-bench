@@ -1,0 +1,132 @@
+{
+  "A-01": {
+    "rent_due": "635.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "A-02": {
+    "rent_due": "545.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "A-03": {
+    "rent_due": "565.00",
+    "role": "partial",
+    "unpaid_rent_after_5th": "310.75"
+  },
+  "A-04": {
+    "rent_due": "545.00",
+    "role": "received_sept",
+    "unpaid_rent_after_5th": "545.00"
+  },
+  "A-05": {
+    "rent_due": "545.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "A-06": {
+    "rent_due": "635.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "A-07": {
+    "rent_due": "635.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "A-08": {
+    "rent_due": "660.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "A-09": {
+    "rent_due": "635.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "A-10": {
+    "rent_due": "585.00",
+    "role": "utilities_unpaid",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "B-01": {
+    "rent_due": "585.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "B-02": {
+    "rent_due": "565.00",
+    "role": "on_6th",
+    "unpaid_rent_after_5th": "565.00"
+  },
+  "B-04": {
+    "rent_due": "635.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "B-05": {
+    "rent_due": "565.00",
+    "role": "credit_forward",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "B-06": {
+    "rent_due": "585.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "B-07": {
+    "rent_due": "660.00",
+    "role": "prior_balance",
+    "unpaid_rent_after_5th": "52.00"
+  },
+  "B-08": {
+    "rent_due": "545.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "B-09": {
+    "rent_due": "565.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "B-10": {
+    "rent_due": "193.39",
+    "role": "moveout_paid",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "C-01": {
+    "rent_due": "660.00",
+    "role": "mailed_posted_late",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "C-02": {
+    "rent_due": "660.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "C-03": {
+    "rent_due": "415.16",
+    "role": "moveout_unpaid",
+    "unpaid_rent_after_5th": "415.16"
+  },
+  "C-04": {
+    "rent_due": "660.00",
+    "role": "received_aug31",
+    "unpaid_rent_after_5th": "660.00"
+  },
+  "C-06": {
+    "rent_due": "610.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "C-07": {
+    "rent_due": "660.00",
+    "role": "plain",
+    "unpaid_rent_after_5th": "0.00"
+  },
+  "C-10": {
+    "rent_due": "660.00",
+    "role": "on_5th",
+    "unpaid_rent_after_5th": "0.00"
+  }
+}

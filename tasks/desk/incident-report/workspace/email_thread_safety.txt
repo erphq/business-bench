@@ -1,0 +1,40 @@
+From: Margaret Cox <margaret.cox@silverlinelogistics.com>
+To: Dmitri Cook; Mark Torres
+Date: Fri, 4 Sep 2026 09:05
+Subject: Line 3 incident - formal report
+
+Thanks for the notes and statements. The insurer wants the formal report on our template (incident_report_template.md) and it goes in the file, so a few rules:
+
+1. Time of the incident: use the Line 3 e-stop in the conveyor controller export. That is the only clock we have. Everybody's memory is a guess.
+2. Who was injured and how they were treated comes from the first aid log. Gary filled it in at the time.
+3. No blame and no fault in the report. Do not write that anyone was careless or not paying attention. We have not done the root cause yet; say the cause is under investigation (RCA review is Tuesday).
+4. Every corrective action needs one owner and a due date.
+
+Proposed actions:
+- fixed guard at the Line 3 merge pinch point - Mark Torres - due 11 Sep
+- jam-clearing (stop the line first) refresher for all pick module staff - Cynthia Miller - due 22 Sep
+- STOP LINE BEFORE CLEARING signs at every merge - Dmitri Cook - due 8 Sep
+
+Margaret
+
+-----Original Message-----
+
+From: Mark Torres <mark.torres@silverlinelogistics.com>
+To: Margaret Cox
+Date: Fri, 4 Sep 2026 11:40
+Subject: RE: Line 3 incident - formal report
+
+The guard panel has to come from the conveyor vendor. Earliest install is Thursday 17 September, so please put that as the due date for the guard. Until then I have taped off the merge.
+
+Mark
+
+-----Original Message-----
+
+From: Margaret Cox <margaret.cox@silverlinelogistics.com>
+To: Dmitri Cook; Mark Torres
+Date: Fri, 4 Sep 2026 13:22
+Subject: RE: Line 3 incident - formal report
+
+OK, guard due 17 September then. One more change: I will run the jam-clearing refresher myself, not Cynthia. Cynthia is on the dock and it needs to come from safety. Same due date. Signs stay with Dmitri.
+
+Margaret

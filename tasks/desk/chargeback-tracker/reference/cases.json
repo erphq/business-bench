@@ -1,0 +1,173 @@
+[
+  {
+    "case_id": "DP-7734100",
+    "disputed": 241.85,
+    "evidence_due": "2026-06-26",
+    "first_notice": "2026-06-16",
+    "net_loss": 0.0,
+    "status": "won",
+    "tag": "holiday_june"
+  },
+  {
+    "case_id": "DP-7734137",
+    "disputed": 142.82,
+    "evidence_due": "2026-07-02",
+    "first_notice": "2026-06-23",
+    "net_loss": 162.82,
+    "status": "lost",
+    "tag": "lost"
+  },
+  {
+    "case_id": "DP-7734174",
+    "disputed": 197.77,
+    "evidence_due": "2026-07-08",
+    "first_notice": "2026-06-26",
+    "net_loss": 217.77,
+    "status": "lost",
+    "tag": "plain_1"
+  },
+  {
+    "case_id": "DP-7734211",
+    "disputed": 46.99,
+    "evidence_due": "2026-07-09",
+    "first_notice": "2026-06-29",
+    "net_loss": 66.99,
+    "status": "lost",
+    "tag": "holiday_july"
+  },
+  {
+    "case_id": "DP-7734248",
+    "disputed": 128.59,
+    "evidence_due": "2026-07-17",
+    "first_notice": "2026-07-08",
+    "net_loss": 0.0,
+    "status": "won",
+    "tag": "partial_won"
+  },
+  {
+    "case_id": "DP-7734285",
+    "disputed": 216.34,
+    "evidence_due": "2026-07-24",
+    "first_notice": "2026-07-15",
+    "net_loss": 0.0,
+    "status": "won",
+    "tag": "plain_4"
+  },
+  {
+    "case_id": "DP-7734322",
+    "disputed": 51.83,
+    "evidence_due": "2026-07-29",
+    "first_notice": "2026-07-20",
+    "net_loss": 0.0,
+    "status": "won",
+    "tag": "plain_0"
+  },
+  {
+    "case_id": "DP-7734359",
+    "disputed": 50.28,
+    "evidence_due": "2026-07-30",
+    "first_notice": "2026-07-21",
+    "net_loss": 70.28,
+    "status": "open",
+    "tag": "amended"
+  },
+  {
+    "case_id": "DP-7734396",
+    "disputed": 194.21,
+    "evidence_due": "2026-08-05",
+    "first_notice": "2026-07-27",
+    "net_loss": 214.21,
+    "status": "lost",
+    "tag": "plain_3"
+  },
+  {
+    "case_id": "DP-7734433",
+    "disputed": 117.49,
+    "evidence_due": "2026-08-14",
+    "first_notice": "2026-08-05",
+    "net_loss": 137.49,
+    "status": "open",
+    "tag": "reminder"
+  },
+  {
+    "case_id": "DP-7734470",
+    "disputed": 58.34,
+    "evidence_due": "2026-08-19",
+    "first_notice": "2026-08-10",
+    "net_loss": 78.34,
+    "status": "open",
+    "tag": "plain_8"
+  },
+  {
+    "case_id": "DP-7734507",
+    "disputed": 58.25,
+    "evidence_due": "2026-08-20",
+    "first_notice": "2026-08-11",
+    "net_loss": 78.25,
+    "status": "open",
+    "tag": "plain_5"
+  },
+  {
+    "case_id": "DP-7734544",
+    "disputed": 106.85,
+    "evidence_due": "2026-08-21",
+    "first_notice": "2026-08-12",
+    "net_loss": 126.85,
+    "status": "lost",
+    "tag": "accepted"
+  },
+  {
+    "case_id": "DP-7734581",
+    "disputed": 62.21,
+    "evidence_due": "2026-08-26",
+    "first_notice": "2026-08-17",
+    "net_loss": 82.21,
+    "status": "open",
+    "tag": "plain_6"
+  },
+  {
+    "case_id": "DP-7734618",
+    "disputed": 111.87,
+    "evidence_due": "2026-09-02",
+    "first_notice": "2026-08-24",
+    "net_loss": 131.87,
+    "status": "open",
+    "tag": "plain_7"
+  },
+  {
+    "case_id": "DP-7734655",
+    "disputed": 108.2,
+    "evidence_due": "2026-09-09",
+    "first_notice": "2026-08-28",
+    "net_loss": 128.2,
+    "status": "open",
+    "tag": "friday_notice"
+  },
+  {
+    "case_id": "DP-7734692",
+    "disputed": 147.57,
+    "evidence_due": "2026-09-11",
+    "first_notice": "2026-09-01",
+    "net_loss": 167.57,
+    "status": "open",
+    "tag": "plain_2"
+  },
+  {
+    "case_id": "DP-7734729",
+    "disputed": 225.46,
+    "evidence_due": "2026-09-11",
+    "first_notice": "2026-09-01",
+    "net_loss": 245.46,
+    "status": "open",
+    "tag": "holiday_labor"
+  },
+  {
+    "case_id": "DP-7734766",
+    "disputed": 101.04,
+    "evidence_due": "2026-09-18",
+    "first_notice": "2026-09-09",
+    "net_loss": 121.04,
+    "status": "open",
+    "tag": "partial_open"
+  }
+]

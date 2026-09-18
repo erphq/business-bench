@@ -1,0 +1,69 @@
+id: month-end-accruals
+track: desk
+category: bookkeeping
+title: August accrual entry for the theatre
+ask: |
+  Renata needs the August accruals before she closes the month; her email explains how we do them. Save the entry as accruals.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  bills dated in September for August work (Rigging Hands Staffing RH-93148 for the August run, a plumbing repair, August electricity) are posted to the September period and must be accrued at the bill amount (checks: accrued items; amount per item)
+- |-
+  Hollis & Webb LLP HW-69280 is dated in August but entered into Sep 2026, so it is not in August AP; filtering on bill date skips it (checks: accrued items; amount per item)
+- |-
+  Brightfield Stage Lighting BSL62514 covers 08/23/2026 - 09/21/2026: only 9 of its 30 days are August, so the accrual is that share of the bill, not all of it and not half (check: amount per item)
+- |-
+  July's accrual entry reversed on 1 August: two July items still have no bill and must be accrued again at July's figure, one was billed into September and takes the bill's number and amount, and two were billed into August and are done (checks: accrued items; amount per item)
+- |-
+  two receiving-log items were billed into September for a different amount than the log estimate; the bill replaces the PO line, and two other log items were already billed into August (checks: accrued items; row count)
+- |-
+  a September sound rental and a royalty advance for the November show are September-posted bills that are not August costs, and a pest-control bill and a log line fall under the $250 floor (checks: accrued items; row count)
+- |-
+  the register has a two-line preamble, CRLF endings, upper-cased vendors, three date formats and amounts as '$ 1,234.00' text; the July entry has its 2150 credit line in the same columns (check: amount per item)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: accruals.csv
+  columns:
+  - reference
+  - vendor
+  - gl_account
+  - amount
+- type: csv_set_equal
+  name: accrued items
+  path: accruals.csv
+  column: reference
+  ref: accruals.csv
+- type: csv_row_count
+  name: row count
+  path: accruals.csv
+  equals_ref: accruals.csv
+- type: csv_values_match
+  name: amount per item
+  path: accruals.csv
+  ref: accruals.csv
+  key: reference
+  columns:
+  - amount
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - RH-93148
+  - HW-69280
+  - BSL62514
+  - PO-26-0340
+  - AP-8356
+  - SAV-73666
+  - CSP-4666
+- type: csv_values_match
+  name: account per item
+  path: accruals.csv
+  ref: accruals.csv
+  key: reference
+  columns:
+  - gl_account
+  normalize:
+  - digits
+  min_accuracy: 1.0

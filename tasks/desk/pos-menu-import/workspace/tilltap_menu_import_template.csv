@@ -1,0 +1,4 @@
+Record Type,Code,Name,Parent Code,Category,Price,Min Select,Max Select,Modifier Groups
+ITEM,X100,Example Drink,,Example Category,4.50,,,MG-EX1|MG-EX2
+MODIFIER_GROUP,MG-EX1,Example Size,,,,1,1,
+MODIFIER,EX-L,Example Large,MG-EX1,,0.80,,,

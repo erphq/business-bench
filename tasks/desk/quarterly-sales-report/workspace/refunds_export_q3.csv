@@ -1,0 +1,13 @@
+Refund Date,Order,SKU,Bags,Refund Amount,Reason
+2026-07-02,W-58137,TL-AB-1,4,152.00,Damaged in transit
+2026-07-05,W-58212,TL-SK-1,5,310.00,Stale - past best-by date
+2026-08-13,W-58345,TL-SK-1,2,124.00,Wrong blend shipped
+2026-08-14,W-58306,TL-YG-1,2,116.00,Damaged in transit
+2026-08-14,W-58329,TL-YG-1,7,406.00,Damaged in transit
+2026-08-15,W-58340,TL-MC-1,6,246.00,Stale - past best-by date
+2026-08-27,W-58414,TL-CB-1,2,72.00,Customer complaint
+2026-09-08,W-58466,TL-SK-1,8,496.00,Stale - past best-by date
+2026-09-13,W-58479,TL-CB-1,2,72.00,Wrong blend shipped
+2026-09-19,W-58521,TL-EG-1,4,176.00,Short shipped
+2026-09-25,W-58529,TL-MC-1,11,451.00,Customer complaint
+2026-09-27,W-58555,TL-AB-1,3,114.00,Wrong blend shipped

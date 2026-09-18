@@ -1,0 +1,63 @@
+id: memberships-club
+track: build
+category: memberships
+title: Fitness club memberships with renewals, freezes, door check-ins, and trainer-scoped access
+ask: |
+  We run a single-site fitness club with about 220 members and six personal trainers. I've attached our
+  member list and the door check-ins from the old system; the member list has duplicates in it, and
+  the door scanner sometimes logs the same person twice within a few minutes, which is one visit.
+  Memberships are monthly, quarterly, or annual: renewing adds one term to the current expiry date, or
+  starts from the day of renewal if the membership has already lapsed, and a member can freeze for up
+  to 60 days, which pushes their expiry back by the length of the freeze; nobody frozen, lapsed, or
+  cancelled should be able to check in. Front desk staff need to see and handle every member, trainers
+  should only see their own clients, our accountant needs a read-only login, and I want a dashboard
+  showing how many members are active and how many have lapsed. Give me an admin login and a login for
+  Jess Alvarez, one of our trainers.
+seed:
+  - seed/members.csv
+  - seed/checkins.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for trainer Jess Alvarez.
+      password: That trainer's password.
+    notes: >
+      Free text. Must say the restricted login is trainer Jess Alvarez. May include a front desk login,
+      the read-only login, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "owner@example.com", "password": "..."},
+      "restricted": {"user": "jess.alvarez@example.com", "password": "..."},
+      "notes": "restricted login is trainer Jess Alvarez. Front desk: desk@example.com / ... Restart: systemctl restart club."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 17, 19, 21]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - "members.csv repeats 4 rows exactly and 5 members' numbers written 2445 / M02445 instead of M-02445 with the email in another case; 229 rows -> 220 members (items 11, 15)"
+  - "three families share one email per household (Whitfield, Okonkwo, Brannigan); an email dedupe merges distinct members and gives Whitfield 2 instead of 3 (items 10, 16)"
+  - "27 lapsed members still say Active in the file's Status column; trusting it gives 10 lapsed instead of 37 (items 8, 17, 20)"
+  - "cancelled is spelled Cancelled, Canceled, and CANCELLED; matching one spelling leaves 9 or more cancelled members counted as lapsed (items 8, 17)"
+  - "Jacob Garcia's date of birth is 2031-04-17; it must be flagged, not imported silently (item 18)"
+  - "check-ins carry 12 second scans one to three minutes after the first; keeping them gives 238 visits and 195 in August instead of 226 and 185 (items 8, 22, change 1)"
+  - "check-in member numbers are written 506, 00506, and M-00506; joining on the literal text drops Deborah Anderson's visits (items 22, 25)"
+  - "timestamps mix 24-hour and 12-hour AM/PM formats; reading 7:08 PM as 07:08 moves evening visits into the morning (change 1, items 28, 29)"
+  - "renewal of a lapsed member starts on the renewal day, of an active member on the old expiry; one formula for both gets 2027-06-30 for Amy Bailey or today plus 3 months for Betty Thompson (items 19, 20)"
+  - "expiry dates in the seed skip 2026-09-01..2027-02-28 so lapsed and active counts are stable for any test date in that window; an app that hard-codes the export date instead of today still passes only inside it (items 8, 17, 20)"

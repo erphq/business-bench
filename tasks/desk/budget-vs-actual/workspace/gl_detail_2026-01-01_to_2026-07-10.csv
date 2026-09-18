@@ -1,0 +1,272 @@
+Cove Point Marina
+General Ledger Detail  01/01/2026 - 07/10/2026
+Accrual basis
+
+Date,Transaction Type,Num,Name,Account,Account Description,Memo,Amount
+01/01/2026,Bill,B-7178,Dorsey Freight Leasing,640000,Vehicle & Forklift Leases,,"7,051.16"
+01/02/2026,Invoice,10400,Haddad - S/V Morning Star,440000,Service Labor,,"(14,013.07)"
+01/02/2026,Bill,B-7102,Shell Marine Fuel,530010,Fuel - Diesel,,"1,546.35"
+01/02/2026,Bill,B-7129,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,435.62
+01/02/2026,Bill,B-7207,Kestrel Analytics,660000,Software & Telephone,,411.39
+01/04/2026,Bill,B-7172,Everline Insurance,630000,Insurance - Marina Operators,,"3,842.16"
+01/04/2026,Bill,B-7208,Verizon Wireless,660000,Software & Telephone,,178.29
+01/06/2026,Bill,B-7128,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,43.83
+01/06/2026,Bill,B-7210,Verizon Wireless,660000,Software & Telephone,,363.81
+01/08/2026,Bill,B-7165,Port of Cove Point,620000,Harbor Lease - Port,,"3,428.62"
+01/09/2026,Invoice,10402,Patel - M/V Second Wind,420000,Winter Storage,,"(30,891.08)"
+01/10/2026,Bill,B-7100,Pilot Diesel,530000,Fuel - Gasoline,,"3,130.89"
+01/11/2026,Journal,PR-300,Payroll - ADP,610000,Office Salaries,,"2,092.38"
+01/11/2026,Bill,B-7209,Verizon Wireless,660000,Software & Telephone,,1.94
+01/13/2026,Bill,B-7127,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,560.51
+01/15/2026,Invoice,10404,Harbor Light Marine,440000,Service Labor,,"(5,491.73)"
+01/15/2026,Bill,B-7230,Copperfield Law,670000,Accounting & Legal,,446.41
+01/16/2026,Bill,B-7229,Mossbank Accounting,670000,Accounting & Legal,,545.00
+01/17/2026,Bill,B-7187,Vantage Point Media,650000,Advertising & Marketing,,581.48
+01/18/2026,Bill,B-7101,Pilot Diesel,530000,Fuel - Gasoline,,627.66
+01/19/2026,Bill,B-7126,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,"1,060.57"
+01/19/2026,Bill,B-7130,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,752.10
+01/19/2026,Bill,B-7186,Vantage Point Media,650000,Advertising & Marketing,,391.56
+01/23/2026,Bill,B-7185,Vantage Point Media,650000,Advertising & Marketing,,277.75
+01/24/2026,Invoice,10406,Kingfisher Charters,420000,Winter Storage,,"(6,226.08)"
+01/24/2026,Journal,PR-301,Payroll - ADP,510000,Yard Crew Wages,,"15,963.56"
+01/25/2026,Journal,PR-302,Payroll - ADP,510000,Yard Crew Wages,,"25,879.63"
+01/26/2026,Journal,PR-303,Payroll - ADP,610000,Office Salaries,,"10,191.60"
+02/01/2026,Bill,B-7132,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,355.34
+02/01/2026,Bill,B-7179,Dorsey Freight Leasing,640000,Vehicle & Forklift Leases,,"6,884.18"
+02/01/2026,Bill,B-7211,Verizon Wireless,660000,Software & Telephone,,206.45
+02/01/2026,Bill,B-7213,Verizon Wireless,660000,Software & Telephone,,28.31
+02/02/2026,Invoice,10408,Lindqvist - S/V Kestrel,420000,Winter Storage,,"(17,677.58)"
+02/02/2026,Bill,B-7134,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,879.83
+02/05/2026,Invoice,10410,Okafor - M/V Tidewater,420000,Winter Storage,,"(24,422.31)"
+02/05/2026,Credit Memo,CM-900,Brooks - S/V Halcyon,440000,Service Labor,Credit - slip not ready,"1,750.50"
+02/05/2026,Bill,B-7173,Everline Insurance,630000,Insurance - Marina Operators,,"3,655.56"
+02/08/2026,Invoice,10411,Lindqvist - S/V Kestrel,440000,Service Labor,,"(12,551.76)"
+02/08/2026,Bill,B-7107,Pilot Diesel,530000,Fuel - Gasoline,,"1,348.89"
+02/09/2026,Bill,B-7106,Shell Marine Fuel,530000,Fuel - Gasoline,,"1,887.51"
+02/10/2026,Journal,PR-304,Payroll - ADP,610000,Office Salaries,,"9,884.85"
+02/11/2026,Journal,PR-305,Payroll - ADP,510000,Yard Crew Wages,,"27,701.81"
+02/11/2026,Bill,B-7133,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,433.25
+02/12/2026,Invoice,10414,Brooks - S/V Halcyon,440000,Service Labor,,"(6,730.50)"
+02/12/2026,Bill,B-7103,Pilot Diesel,530000,Fuel - Gasoline,,"1,614.05"
+02/16/2026,Journal,PR-306,Payroll - ADP,610000,Office Salaries,,"2,477.36"
+02/16/2026,Bill,B-7212,Kestrel Analytics,660000,Software & Telephone,,205.89
+02/16/2026,Bill,B-7215,Kestrel Analytics,660000,Software & Telephone,,197.39
+02/17/2026,Bill,B-7189,Vantage Point Media,650000,Advertising & Marketing,,23.77
+02/18/2026,Bill,B-7166,Port of Cove Point,620000,Harbor Lease - Port,,"3,710.61"
+02/20/2026,Bill,B-7190,Vantage Point Media,650000,Advertising & Marketing,,"1,000.65"
+02/21/2026,Bill,B-7214,Kestrel Analytics,660000,Software & Telephone,,317.26
+02/22/2026,Bill,B-7131,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,810.89
+02/23/2026,Bill,B-7105,Shell Marine Fuel,530000,Fuel - Gasoline,,80.58
+02/24/2026,Bill,B-7188,Vantage Point Media,650000,Advertising & Marketing,,324.81
+02/26/2026,Bill,B-7232,Copperfield Law,670000,Accounting & Legal,,770.63
+02/27/2026,Journal,PR-307,Payroll - ADP,510000,Yard Crew Wages,,"10,853.95"
+02/27/2026,Vendor Credit,VC-7257,Pilot Diesel,530000,Fuel - Gasoline,Returned parts,(185.62)
+02/28/2026,Bill,B-7104,Shell Marine Fuel,530000,Fuel - Gasoline,,456.30
+02/28/2026,Bill,B-7231,Mossbank Accounting,670000,Accounting & Legal,,391.44
+03/01/2026,Journal,PR-308,Payroll - ADP,510000,Yard Crew Wages,,"28,456.04"
+03/02/2026,Bill,B-7135,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,439.84
+03/03/2026,Invoice,10416,Harbor Light Marine,430000,Launch & Haul-Out Fees,,"(4,592.93)"
+03/03/2026,Bill,B-7180,Dorsey Freight Leasing,640000,Vehicle & Forklift Leases,,"6,915.62"
+03/04/2026,Invoice,10418,Harbor Light Marine,440000,Service Labor,,(870.44)
+03/05/2026,Bill,B-7138,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,276.13
+03/05/2026,Bill,B-7139,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,932.20
+03/05/2026,Bill,B-7234,Copperfield Law,670000,Accounting & Legal,,480.24
+03/07/2026,Invoice,10421,Okafor - M/V Tidewater,440000,Service Labor,,"(5,613.07)"
+03/07/2026,Bill,B-7150,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,554.04
+03/08/2026,Invoice,10423,Haddad - S/V Morning Star,430000,Launch & Haul-Out Fees,,"(4,275.69)"
+03/08/2026,Bill,B-7219,Verizon Wireless,660000,Software & Telephone,,229.62
+03/09/2026,Bill,B-7110,Pilot Diesel,530010,Fuel - Diesel,,"1,431.13"
+03/09/2026,Bill,B-7191,Vantage Point Media,650000,Advertising & Marketing,,321.67
+03/13/2026,Invoice,10426,Garcia - M/V Blue Moon,440000,Service Labor,,"(7,384.10)"
+03/13/2026,Bill,B-7109,Pilot Diesel,530010,Fuel - Diesel,,"1,918.44"
+03/14/2026,Bill,B-7167,Port of Cove Point,620000,Harbor Lease - Port,,"3,553.78"
+03/15/2026,Bill,B-7193,Vantage Point Media,650000,Advertising & Marketing,,323.15
+03/15/2026,Bill,B-7217,Kestrel Analytics,660000,Software & Telephone,,82.06
+03/16/2026,Invoice,10428,Haddad - S/V Morning Star,420000,Winter Storage,,"(13,644.05)"
+03/17/2026,Invoice,10431,Okafor - M/V Tidewater,430000,Launch & Haul-Out Fees,,"(2,459.44)"
+03/17/2026,Bill,B-7174,Everline Insurance,630000,Insurance - Marina Operators,,"3,200.63"
+03/17/2026,Bill,B-7218,Verizon Wireless,660000,Software & Telephone,,315.06
+03/18/2026,Invoice,10434,Okafor - M/V Tidewater,420000,Winter Storage,,"(25,314.62)"
+03/18/2026,Credit Memo,CM-901,Patel - M/V Second Wind,420000,Winter Storage,Credit - service complaint,733.66
+03/18/2026,Bill,B-7233,Copperfield Law,670000,Accounting & Legal,,547.83
+03/19/2026,Bill,B-7216,Verizon Wireless,660000,Software & Telephone,,227.31
+03/21/2026,Bill,B-7151,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,"1,228.82"
+03/21/2026,Journal,PR-309,Payroll - ADP,610000,Office Salaries,,"8,059.60"
+03/21/2026,Bill,B-7192,Vantage Point Media,650000,Advertising & Marketing,,631.93
+03/22/2026,Bill,B-7137,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,723.88
+03/24/2026,Journal,PR-310,Payroll - ADP,510000,Yard Crew Wages,,"10,997.80"
+03/25/2026,Bill,B-7152,Brownell Boat Stands,550000,Shrink-Wrap & Blocking,,"1,352.29"
+03/25/2026,Journal,PR-311,Payroll - ADP,610000,Office Salaries,,"2,884.91"
+03/26/2026,Bill,B-7108,Pilot Diesel,530010,Fuel - Diesel,,"1,527.64"
+03/27/2026,Bill,B-7136,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,196.18
+03/28/2026,Invoice,10436,Cove Point Yacht Club,440000,Service Labor,,"(3,537.59)"
+04/01/2026,Invoice,10439,Patel - M/V Second Wind,420000,Winter Storage,,"(3,759.64)"
+04/01/2026,Invoice,10440,Cove Point Yacht Club,430000,Launch & Haul-Out Fees,,"(15,247.31)"
+04/01/2026,Bill,B-7245,Sunbelt Rentals,675000,Crane & Equipment Rental,,464.34
+04/02/2026,Bill,B-7194,Vantage Point Media,650000,Advertising & Marketing,,535.54
+04/04/2026,Invoice,10443,Lindqvist - S/V Kestrel,430000,Launch & Haul-Out Fees,,"(22,280.15)"
+04/04/2026,Journal,PR-312,Payroll - ADP,510000,Yard Crew Wages,,"31,855.08"
+04/05/2026,Journal,PR-313,Payroll - ADP,520000,Dock Staff Wages - Seasonal,,"9,076.77"
+04/05/2026,Journal,PR-314,Payroll - ADP,610000,Office Salaries,,"6,012.35"
+04/05/2026,Bill,B-7244,Sunbelt Rentals,675000,Crane & Equipment Rental,,"1,584.50"
+04/07/2026,Bill,B-7221,Kestrel Analytics,660000,Software & Telephone,,246.72
+04/08/2026,Bill,B-7181,Dorsey Freight Leasing,640000,Vehicle & Forklift Leases,,"6,356.47"
+04/08/2026,Bill,B-7236,Copperfield Law,670000,Accounting & Legal,,120.08
+04/09/2026,Invoice,10444,Haddad - S/V Morning Star,440000,Service Labor,,"(1,896.30)"
+04/09/2026,Journal,PR-315,Payroll - ADP,510000,Yard Crew Wages,,"9,554.10"
+04/09/2026,Bill,B-7112,Pilot Diesel,530010,Fuel - Diesel,,"1,754.45"
+04/10/2026,Bill,B-7111,Shell Marine Fuel,530000,Fuel - Gasoline,,"1,096.19"
+04/11/2026,Bill,B-7114,Shell Marine Fuel,530010,Fuel - Diesel,,"2,205.31"
+04/13/2026,Credit Memo,CM-902,Transient - walk-up,410010,Slip Rentals - Transient,Credit - slip not ready,406.82
+04/13/2026,Invoice,10446,Haddad - S/V Morning Star,440000,Service Labor,,"(5,904.78)"
+04/13/2026,Journal,PR-316,Payroll - ADP,520000,Dock Staff Wages - Seasonal,,"2,948.36"
+04/13/2026,Bill,B-7222,Kestrel Analytics,660000,Software & Telephone,,221.72
+04/14/2026,Invoice,10448,Nguyen - M/V Low Tide,430000,Launch & Haul-Out Fees,,"(5,388.18)"
+04/14/2026,Bill,B-7154,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,"1,410.78"
+04/14/2026,Bill,B-7195,Vantage Point Media,650000,Advertising & Marketing,,263.52
+04/15/2026,Invoice,10451,Cove Point Yacht Club,410000,Slip Rentals - Seasonal,,"(14,148.60)"
+04/15/2026,Invoice,10453,Kingfisher Charters,440000,Service Labor,,"(7,725.85)"
+04/15/2026,Bill,B-7113,Shell Marine Fuel,530000,Fuel - Gasoline,,401.31
+04/15/2026,Bill,B-7155,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,"7,528.47"
+04/15/2026,Bill,B-7235,Mossbank Accounting,670000,Accounting & Legal,,679.62
+04/16/2026,Invoice,10456,Kingfisher Charters,410000,Slip Rentals - Seasonal,,"(5,810.87)"
+04/16/2026,Invoice,10457,Patel - M/V Second Wind,420000,Winter Storage,,"(2,388.82)"
+04/16/2026,Invoice,10460,Garcia - M/V Blue Moon,440000,Service Labor,,(725.39)
+04/17/2026,Invoice,10463,Garcia - M/V Blue Moon,410000,Slip Rentals - Seasonal,,"(4,762.81)"
+04/17/2026,Invoice,10465,Cove Point Yacht Club,420000,Winter Storage,,"(3,536.32)"
+04/17/2026,Bill,B-7142,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,727.44
+04/17/2026,Bill,B-7168,Port of Cove Point,620000,Harbor Lease - Port,,"3,345.63"
+04/18/2026,Bill,B-7175,Everline Insurance,630000,Insurance - Marina Operators,,"3,209.91"
+04/18/2026,Bill,B-7196,Vantage Point Media,650000,Advertising & Marketing,,134.34
+04/21/2026,Bill,B-7140,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,"1,450.76"
+04/21/2026,Bill,B-7220,Kestrel Analytics,660000,Software & Telephone,,522.72
+04/21/2026,Bill,B-7237,Mossbank Accounting,670000,Accounting & Legal,,266.48
+04/22/2026,Invoice,10468,Brooks - S/V Halcyon,420000,Winter Storage,,"(6,687.67)"
+04/22/2026,Bill,B-7197,Vantage Point Media,650000,Advertising & Marketing,,414.71
+04/23/2026,Invoice,10471,Transient - rally group,410010,Slip Rentals - Transient,,"(10,858.17)"
+04/23/2026,Bill,B-7141,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,317.83
+04/24/2026,Invoice,10473,Brooks - S/V Halcyon,430000,Launch & Haul-Out Fees,,"(3,340.68)"
+04/24/2026,Invoice,10474,Cove Point Yacht Club,440000,Service Labor,,"(3,047.39)"
+04/25/2026,Vendor Credit,VC-7256,Shell Marine Fuel,530000,Fuel - Gasoline,Refund - overcharge,(492.47)
+04/26/2026,Journal,PR-317,Payroll - ADP,610000,Office Salaries,,"5,937.53"
+04/27/2026,Bill,B-7153,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,"3,145.49"
+04/28/2026,Invoice,10475,Garcia - M/V Blue Moon,420000,Winter Storage,,"(5,349.97)"
+04/28/2026,Vendor Credit,VC-7258,Brownell Boat Stands,550000,Shrink-Wrap & Blocking,Returned parts,(280.62)
+05/01/2026,Journal,PR-318,Payroll - ADP,510000,Yard Crew Wages,,"22,107.91"
+05/01/2026,Bill,B-7116,Shell Marine Fuel,530000,Fuel - Gasoline,,"3,440.51"
+05/01/2026,Bill,B-7182,Dorsey Freight Leasing,640000,Vehicle & Forklift Leases,,"6,595.20"
+05/02/2026,Journal,PR-319,Payroll - ADP,520000,Dock Staff Wages - Seasonal,,"13,810.73"
+05/03/2026,Bill,B-7247,Sunbelt Rentals,675000,Crane & Equipment Rental,,262.52
+05/04/2026,Bill,B-7176,Everline Insurance,630000,Insurance - Marina Operators,,"3,661.21"
+05/05/2026,Invoice,10477,Cove Point Yacht Club,440000,Service Labor,,"(6,544.54)"
+05/05/2026,Bill,B-7144,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,55.25
+05/06/2026,Invoice,10478,Patel - M/V Second Wind,440000,Service Labor,,"(8,223.74)"
+05/08/2026,Bill,B-7198,Vantage Point Media,650000,Advertising & Marketing,,735.58
+05/09/2026,Bill,B-7156,Brownell Boat Stands,550000,Shrink-Wrap & Blocking,,"1,461.40"
+05/10/2026,Invoice,10481,Nguyen - M/V Low Tide,410000,Slip Rentals - Seasonal,,"(1,201.71)"
+05/11/2026,Invoice,10482,Transient - Dockwa booking,410010,Slip Rentals - Transient,,"(6,214.95)"
+05/11/2026,Bill,B-7143,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,,753.79
+05/11/2026,Bill,B-7238,Mossbank Accounting,670000,Accounting & Legal,,351.20
+05/12/2026,Bill,B-7115,Pilot Diesel,530000,Fuel - Gasoline,,"2,251.42"
+05/12/2026,Bill,B-7239,Mossbank Accounting,670000,Accounting & Legal,,475.92
+05/12/2026,Bill,B-7240,Copperfield Law,670000,Accounting & Legal,,321.94
+05/14/2026,Bill,B-7158,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,"3,339.73"
+05/14/2026,Bill,B-7200,Vantage Point Media,650000,Advertising & Marketing,,288.49
+05/15/2026,Invoice,10483,Nguyen - M/V Low Tide,430000,Launch & Haul-Out Fees,,"(17,385.43)"
+05/15/2026,Journal,PR-320,Payroll - ADP,520000,Dock Staff Wages - Seasonal,,"7,366.77"
+05/15/2026,Bill,B-7199,Vantage Point Media,650000,Advertising & Marketing,,96.62
+05/16/2026,Journal,PR-321,Payroll - ADP,510000,Yard Crew Wages,,"16,118.05"
+05/17/2026,Journal,PR-322,Payroll - ADP,610000,Office Salaries,,"3,904.38"
+05/18/2026,Invoice,10485,Harbor Light Marine,410000,Slip Rentals - Seasonal,,"(17,123.13)"
+05/19/2026,Invoice,10486,Kingfisher Charters,440000,Service Labor,,"(4,016.93)"
+05/19/2026,Bill,B-7157,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,"2,559.23"
+05/19/2026,Bill,B-7248,Sunbelt Rentals,675000,Crane & Equipment Rental,,404.62
+05/20/2026,Invoice,10489,Haddad - S/V Morning Star,410000,Slip Rentals - Seasonal,,"(19,339.01)"
+05/21/2026,Invoice,10490,Lindqvist - S/V Kestrel,430000,Launch & Haul-Out Fees,,"(16,404.48)"
+05/22/2026,Bill,B-7224,Kestrel Analytics,660000,Software & Telephone,,485.58
+05/22/2026,Bill,B-7246,Sunbelt Rentals,675000,Crane & Equipment Rental,,"1,507.81"
+05/23/2026,Bill,B-7169,Port of Cove Point,620000,Harbor Lease - Port,,"3,694.59"
+05/24/2026,Invoice,10493,Lindqvist - S/V Kestrel,410000,Slip Rentals - Seasonal,,"(39,336.65)"
+05/24/2026,Bill,B-7201,Vantage Point Media,650000,Advertising & Marketing,,306.60
+05/24/2026,Bill,B-7223,Kestrel Analytics,660000,Software & Telephone,,136.90
+05/26/2026,Invoice,10495,Okafor - M/V Tidewater,440000,Service Labor,,(384.70)
+05/26/2026,Invoice,10496,Brooks - S/V Halcyon,440000,Service Labor,,(48.24)
+05/26/2026,Bill,B-7145,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,"1,968.06"
+05/26/2026,Bill,B-7159,Brownell Boat Stands,550000,Shrink-Wrap & Blocking,,"1,715.34"
+05/28/2026,Journal,PR-323,Payroll - ADP,610000,Office Salaries,,"7,018.47"
+05/28/2026,Bill,B-7225,Kestrel Analytics,660000,Software & Telephone,,283.62
+06/01/2026,Invoice,10497,Transient - Dockwa booking,410010,Slip Rentals - Transient,,"(20,844.98)"
+06/01/2026,Invoice,10499,Brooks - S/V Halcyon,430000,Launch & Haul-Out Fees,,(989.17)
+06/01/2026,Bill,B-7147,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,394.17
+06/01/2026,Bill,B-7170,Port of Cove Point,620000,Harbor Lease - Port,,"3,475.56"
+06/04/2026,Invoice,10501,Lindqvist - S/V Kestrel,440000,Service Labor,,"(4,081.31)"
+06/05/2026,Bill,B-7118,Pilot Diesel,530010,Fuel - Diesel,,423.24
+06/05/2026,Bill,B-7204,Vantage Point Media,650000,Advertising & Marketing,,300.01
+06/05/2026,Bill,B-7243,Copperfield Law,670000,Accounting & Legal,,356.64
+06/06/2026,Invoice,10502,Lindqvist - S/V Kestrel,440000,Service Labor,,"(8,621.49)"
+06/07/2026,Bill,B-7117,Shell Marine Fuel,530010,Fuel - Diesel,,"2,227.66"
+06/07/2026,Bill,B-7148,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,72.52
+06/07/2026,Bill,B-7160,Brownell Boat Stands,550000,Shrink-Wrap & Blocking,,609.15
+06/07/2026,Bill,B-7226,Kestrel Analytics,660000,Software & Telephone,,758.12
+06/08/2026,Bill,B-7121,Shell Marine Fuel,530010,Fuel - Diesel,,"1,216.78"
+06/08/2026,Vendor Credit,VC-7259,Travelift Parts Depot,540000,Travel Lift & Equipment Repairs,Returned parts,(912.72)
+06/08/2026,Bill,B-7163,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,4.30
+06/08/2026,Journal,PR-324,Payroll - ADP,610000,Office Salaries,,"3,914.77"
+06/09/2026,Bill,B-7119,Pilot Diesel,530000,Fuel - Gasoline,,280.35
+06/09/2026,Bill,B-7120,Shell Marine Fuel,530000,Fuel - Gasoline,,"1,395.14"
+06/10/2026,Invoice,10505,Cove Point Yacht Club,430000,Launch & Haul-Out Fees,,"(1,986.47)"
+06/10/2026,Bill,B-7161,Brownell Boat Stands,550000,Shrink-Wrap & Blocking,,95.83
+06/10/2026,Bill,B-7183,Dorsey Freight Leasing,640000,Vehicle & Forklift Leases,,"6,671.87"
+06/11/2026,Credit Memo,CM-903,Haddad - S/V Morning Star,410000,Slip Rentals - Seasonal,Credit - slip not ready,570.09
+06/12/2026,Bill,B-7177,Everline Insurance,630000,Insurance - Marina Operators,,"3,606.68"
+06/13/2026,Credit Memo,CM-904,Kingfisher Charters,410000,Slip Rentals - Seasonal,Credit - service complaint,"1,050.24"
+06/13/2026,Bill,B-7202,Vantage Point Media,650000,Advertising & Marketing,,592.02
+06/14/2026,Bill,B-7146,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,931.69
+06/14/2026,Bill,B-7205,Vantage Point Media,650000,Advertising & Marketing,,3.78
+06/14/2026,Bill,B-7206,Vantage Point Media,650000,Advertising & Marketing,,218.44
+06/15/2026,Bill,B-7227,Kestrel Analytics,660000,Software & Telephone,,50.63
+06/16/2026,Journal,PR-325,Payroll - ADP,510000,Yard Crew Wages,,"26,883.75"
+06/16/2026,Journal,PR-326,Payroll - ADP,520000,Dock Staff Wages - Seasonal,,"20,354.93"
+06/17/2026,Invoice,10506,Brooks - S/V Halcyon,430000,Launch & Haul-Out Fees,,"(1,406.13)"
+06/18/2026,Invoice,10509,Cove Point Yacht Club,440000,Service Labor,,"(4,076.07)"
+06/20/2026,Invoice,10511,Kingfisher Charters,430000,Launch & Haul-Out Fees,,"(1,731.31)"
+06/20/2026,Bill,B-7162,Brownell Boat Stands,550000,Shrink-Wrap & Blocking,,328.78
+06/21/2026,Bill,B-7149,Hoist Tech Services,540000,Travel Lift & Equipment Repairs,,"1,295.12"
+06/21/2026,Bill,B-7250,Coastal Crane Rental,675000,Crane & Equipment Rental,,753.01
+06/22/2026,Invoice,10514,Brooks - S/V Halcyon,410000,Slip Rentals - Seasonal,,"(50,030.34)"
+06/22/2026,Invoice,10515,Kingfisher Charters,430000,Launch & Haul-Out Fees,,"(2,412.75)"
+06/22/2026,Journal,PR-327,Payroll - ADP,520000,Dock Staff Wages - Seasonal,,"8,439.33"
+06/22/2026,Bill,B-7164,Dr. Shrink Supply,550000,Shrink-Wrap & Blocking,,"1,109.92"
+06/22/2026,Bill,B-7249,Coastal Crane Rental,675000,Crane & Equipment Rental,,"2,418.09"
+06/23/2026,Invoice,10516,Patel - M/V Second Wind,440000,Service Labor,,"(1,063.48)"
+06/24/2026,Invoice,10519,Harbor Light Marine,410000,Slip Rentals - Seasonal,,"(41,630.45)"
+06/24/2026,Bill,B-7228,Verizon Wireless,660000,Software & Telephone,,148.02
+06/24/2026,Bill,B-7242,Mossbank Accounting,670000,Accounting & Legal,,354.59
+06/25/2026,Journal,PR-328,Payroll - ADP,510000,Yard Crew Wages,,"11,168.17"
+06/25/2026,Bill,B-7241,Mossbank Accounting,670000,Accounting & Legal,,412.65
+06/26/2026,Invoice,10520,Transient - rally group,410010,Slip Rentals - Transient,,"(10,534.15)"
+06/26/2026,Bill,B-7203,Vantage Point Media,650000,Advertising & Marketing,,150.11
+06/27/2026,Journal,PR-329,Payroll - ADP,610000,Office Salaries,,"7,840.14"
+07/01/2026,Invoice,10522,Patel - M/V Second Wind,410000,Slip Rentals - Seasonal,,"(8,677.55)"
+07/01/2026,Journal,PR-330,Payroll - ADP,510000,Yard Crew Wages,,"6,165.06"
+07/01/2026,Bill,B-7251,Coastal Crane Rental,675000,Crane & Equipment Rental,,196.45
+07/02/2026,Bill,B-7254,Sunbelt Rentals,675000,Crane & Equipment Rental,,149.09
+07/03/2026,Bill,B-7122,Pilot Diesel,530010,Fuel - Diesel,,873.01
+07/03/2026,Bill,B-7252,Sunbelt Rentals,675000,Crane & Equipment Rental,,78.80
+07/04/2026,Invoice,10525,Transient - Dockwa booking,410010,Slip Rentals - Transient,,"(2,639.43)"
+07/04/2026,Bill,B-7171,Port of Cove Point,620000,Harbor Lease - Port,,"1,123.22"
+07/04/2026,Bill,B-7184,Dorsey Freight Leasing,640000,Vehicle & Forklift Leases,,"2,115.78"
+07/04/2026,Bill,B-7255,Sunbelt Rentals,675000,Crane & Equipment Rental,,127.15
+07/05/2026,Invoice,10526,Cove Point Yacht Club,440000,Service Labor,,"(1,675.60)"
+07/05/2026,Journal,PR-331,Payroll - ADP,520000,Dock Staff Wages - Seasonal,,"5,675.85"
+07/05/2026,Bill,B-7253,Sunbelt Rentals,675000,Crane & Equipment Rental,,151.78
+07/06/2026,Journal,PR-332,Payroll - ADP,510000,Yard Crew Wages,,"5,911.46"
+07/06/2026,Bill,B-7124,Shell Marine Fuel,530000,Fuel - Gasoline,,226.59
+07/06/2026,Bill,B-7125,Pilot Diesel,530010,Fuel - Diesel,,372.14
+07/07/2026,Invoice,10528,Transient - Dockwa booking,410010,Slip Rentals - Transient,,"(6,785.25)"
+07/07/2026,Invoice,10531,Patel - M/V Second Wind,440000,Service Labor,,"(1,664.74)"
+07/07/2026,Invoice,10533,Haddad - S/V Morning Star,440000,Service Labor,,(813.10)
+07/07/2026,Journal,PR-333,Payroll - ADP,520000,Dock Staff Wages - Seasonal,,"2,130.73"
+07/08/2026,Invoice,10534,Harbor Light Marine,440000,Service Labor,,"(1,394.36)"
+07/08/2026,Bill,B-7123,Shell Marine Fuel,530010,Fuel - Diesel,,38.61
+07/09/2026,Invoice,10535,Garcia - M/V Blue Moon,410000,Slip Rentals - Seasonal,,"(23,434.76)"

@@ -1,0 +1,21 @@
+﻿Pemberton HVAC - A/R Open Invoice Detail
+As of 09/30/2026
+
+Customer,Invoice #,Invoice Date,Terms,Due Date,Original Amount,Balance,Days,Memo
+Copperfield Law,INV-20757,08/13/2026,Net 30,09/12/2026,"$2,553.25","$1,967.25",48,Partial pmt 9/2
+Copperfield Law,INV-21343,09/10/2026,Net 15,09/25/2026,"$3,685.48","$3,685.48",20,
+Dorsey Freight,INV-21857,07/22/2026,Net 30,08/21/2026,$433.64,$433.64,70,
+Dorsey Freight,INV-20596,06/02/2026,Net 45,07/17/2026,"$2,476.03","$2,476.03",120,
+Driftwood Studio,INV-21400,07/26/2026,Net 30,08/25/2026,"$1,311.74","$1,311.74",66,"DISPUTED - billed for wrong unit, Dale reviewing"
+Everline Insurance,INV-20887,09/10/2026,Net 30,10/10/2026,"$3,455.21","$3,455.21",20,
+Everline Insurance,INV-20595,07/21/2026,Net 30,08/20/2026,"$1,375.08","$1,375.08",71,
+Glassworks Optical,INV-20512,07/30/2026,Net 30,08/29/2026,"$4,076.00",$0.00,62,Paid 9/26 ck 4471
+Ivy Lane Florist,INV-21542,09/14/2026,Net 30,10/14/2026,"$1,109.88","$1,109.88",16,
+Kingfisher Charters,INV-20823,08/26/2026,Net 15,09/10/2026,"$2,717.45","$2,717.45",35,
+Larkspur Yoga,INV-21947,07/16/2026,Net 30,08/15/2026,"$3,530.91","$3,530.91",76,
+Larkspur Yoga,INV-21576,06/02/2026,Net 30,07/02/2026,"$1,903.51","$1,903.51",120,
+Redwood Property Mgmt,INV-20504,07/04/2026,Net 30,08/03/2026,"$3,129.27","$3,129.27",88,
+Tamarack Brewing,INV-20945,08/24/2026,Net 15,,"$1,291.51","$1,291.51",37,
+Uptown Fitness,INV-21754,08/31/2026,Net 15,09/15/2026,"$1,622.28","$1,622.28",30,
+Uptown Fitness,INV-21969,07/02/2026,Net 30,08/01/2026,"$3,705.20","$3,705.20",90,Disputed (warranty part)
+Yellowtail Seafood,INV-20610,06/11/2026,Net 15,,"$2,547.89","$2,547.89",111,

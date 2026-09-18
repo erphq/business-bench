@@ -1,0 +1,114 @@
+id: insurance-certificates
+track: desk
+category: extraction
+title: Log vendor insurance certificates and flag lapsed policies
+ask: |
+  Can you log the vendor insurance certificates into coi.csv for our compliance review? They're in the certificates folder; the compliance note says what goes in it.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  each certificate lists two to four policies in one table, with the limits for each stacked in a single cell; one row per policy (checks: one row per policy; row count)
+- |-
+  carriers appear once in the INSURER A/B/C list and each policy row carries only the letter; the producer is an agency, not a carrier, and the Pemberton umbrella sits on insurer C (check: insureds and carriers)
+- |-
+  the Pemberton umbrella expired in August and the Cedar and Pine auto in July, and the Westbrook auto expired 14 September, the day before the review; the Westbrook workers comp policy expiring 30 September is still active (check: status)
+- |-
+  limits carry $ and commas, the broker's letter writes the GL limits as '1,000,000 / 2,000,000', and Hollowell's products-completed operations aggregate ($1,000,000) is printed under a $2,000,000 general aggregate (check: limits)
+- |-
+  last year's Hollowell certificate is still in the folder with three expired policies; the September 2026 certificate replaces it, so none of its policies are logged (checks: one row per policy; row count)
+- 'the Cedar and Pine certificate is an image-only scan (checks: one row per policy; status)'
+- |-
+  the broker's evidence-of-insurance letter for Pinnacle has no form, no insurer letters and long-form dates ('September 1, 2026') (checks: policy dates; insureds and carriers)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: coi.csv
+  columns:
+  - policy_number
+  - insured
+  - carrier
+  - coverage
+  - each_occurrence
+  - aggregate
+  - effective_date
+  - expiry_date
+  - status
+- type: csv_set_equal
+  name: one row per policy
+  path: coi.csv
+  column: policy_number
+  ref: coi.csv
+  normalize:
+  - alnum
+- type: csv_row_count
+  name: row count
+  path: coi.csv
+  equals_ref: coi.csv
+- type: csv_values_match
+  name: insureds and carriers
+  path: coi.csv
+  ref: coi.csv
+  key: policy_number
+  columns:
+  - insured
+  - carrier
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - BAP-9467240
+  - UMB2044878
+  - BA 6243-0021
+  - XS 5883691
+- type: csv_values_match
+  name: coverage types
+  path: coi.csv
+  ref: coi.csv
+  key: policy_number
+  columns:
+  - coverage
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: limits
+  path: coi.csv
+  ref: coi.csv
+  key: policy_number
+  columns:
+  - each_occurrence
+  - aggregate
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - TSG-214355
+  - GLP 6088743-71
+  - BAP-9467240
+  - CPL-942194
+- type: csv_values_match
+  name: policy dates
+  path: coi.csv
+  ref: coi.csv
+  key: policy_number
+  columns:
+  - effective_date
+  - expiry_date
+  min_accuracy: 1.0
+  must_match_keys:
+  - TSG-214355
+  - XS 5883691
+  - WC-5712-673812
+  - BA 6243-0021
+- type: csv_values_match
+  name: status
+  path: coi.csv
+  ref: coi.csv
+  key: policy_number
+  columns:
+  - status
+  min_accuracy: 1.0
+  must_match_keys:
+  - UMB2044878
+  - AU355759
+  - BA 6243-0021
+  - WCP695078

@@ -1,0 +1,64 @@
+id: vendor-onboarding
+track: build
+category: procurement
+title: Vendor onboarding app with document checklists, approval stages, and insurance alerts
+ask: |
+  We're the procurement team at Bellhaven Foods, and every new supplier goes through New, Documents,
+  Review, and then Approved or Rejected. Our vendor list and the documents we've collected so far are
+  attached; the list came out of two old systems, so some vendors are in there twice under different
+  vendor numbers. Every vendor needs a W-9, a certificate of insurance, and a signed code of conduct
+  before approval (ingredient suppliers also need a food safety certificate), and once the paperwork is
+  complete the vendor should move to Review on its own, but only I approve. Our category managers
+  should only see vendors in their own categories (Rosa Delgado has Ingredients and Packaging, Dev
+  Malhotra has Logistics, Mei Chen has Facilities, Tom Okafor has IT & Services), and accounts payable
+  just needs to look vendors up without changing anything. I want a dashboard with our approved
+  vendors, what we spend with them, and any approved vendor whose insurance has lapsed or runs out in
+  the next 30 days, so send me an admin login and one for Rosa.
+seed:
+  - seed/vendors.csv
+  - seed/documents.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email (the procurement lead).
+      password: Admin password.
+    restricted:
+      user: Login for Rosa Delgado, category manager for Ingredients and Packaging.
+      password: Rosa's password.
+    notes: >
+      Free text. Must say the restricted login is Rosa Delgado. May include other category-manager or
+      accounts-payable logins, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "carla@bellhavenfoods.example", "password": "..."},
+      "restricted": {"user": "rosa@bellhavenfoods.example", "password": "..."},
+      "notes": "restricted login is Rosa Delgado. Restart: systemctl restart vendors."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 19, 21]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - 6 exact duplicate vendor rows and 4 vendors re-entered under a SUP- number with the Tax ID written without its dash (126 rows -> 116 vendors) (items 15, 16)
+  - 5 New vendors have a blank Tax ID; Tax-ID-only dedupe collapses them into one and gives 112 (item 17)
+  - Category written in lowercase, uppercase, or with a trailing space on about one row in seven; exact matching gives Rosa 41 vendors instead of 54 and the Packaging filter 17 instead of 22 (items 6, 10)
+  - Annual Spend mixes 97691.25, "44,001.93", and "$479,615.05"; the top spender is a dollar-string row and a text sort ranks Cold Chain Transport Inc. first (item 10)
+  - documents filed under unpadded numbers (V-35, v-0035, 0035) and under the second system's SUP- numbers; a join on the literal number leaves Ridgeway Closures and Pioneer Industrial Supply short of documents (item 18)
+  - document types written W9, COI, Cert. of Insurance, Signed Code of Conduct on about one row in five; reading only the canonical names drops Sunridge Honey LLC from the lapsed list (items 19, 24)
+  - the food safety certificate is required only for Ingredients vendors; one checklist for everyone marks Harvest Valley Honey LLC complete (item 19)
+  - the move to Review must fire when the last document is recorded, and only the admin may approve (items 21, 22)
+  - Highway 30 Transport Inc.'s insurance certificate expires a year before it was issued; must be flagged, not imported silently (item 26)
+  - expiry dates in five formats; the 30-day alert must be computed against today, not frozen at import (items 24, 25)

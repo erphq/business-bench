@@ -1,0 +1,82 @@
+﻿id,type,status,created,amount,fee,net,currency,description,card_last4
+ch_mBM9LtHeNuzD7rBibnG1QEOE,charge,succeeded,2026-07-03 13:53,600.00,17.70,582.30,usd,Booking LH-24391 Garcia,2961
+ch_xaYzYDKp7IPSu1VD8CeaJf43,charge,succeeded,2026-07-06 21:16,580.00,17.12,562.88,usd,Booking LH-24492 Richardson,5169
+ch_pHrtnSy2I96YzS6v39rzHh3y,charge,succeeded,2026-07-09 17:40,445.00,13.20,431.80,usd,Booking LH-24507 Morgan,9033
+ch_cTJvfD4nNBWeZ4A2hEr3Fr8v,charge,succeeded,2026-07-19 15:41,1120.00,32.78,1087.22,usd,Booking LH-24548 Stewart,9217
+ch_cfqps6yWFUnHfloV2MPBuRHt,charge,succeeded,2026-07-19 21:26,980.00,28.72,951.28,usd,Booking LH-24379 Okafor,4858
+ch_T8HJb5kb7F7GaEGaxJu9Bycb,charge,succeeded,2026-07-25 16:26,1240.00,36.26,1203.74,usd,Booking LH-24523 Cox,9231
+ch_JkZorb4hfr64U1ffoq3Min7O,charge,succeeded,2026-07-26 09:38,1195.00,34.96,1160.04,usd,Booking LH-24474 Torres,7193
+ch_ch4f6jmwA4CfUT1dDz04zaMj,charge,succeeded,2026-07-26 12:44,700.00,20.60,679.40,usd,Booking LH-24422 Phillips,1766
+ch_VvCiRIPw9eWnSrWl85o2nItT,charge,succeeded,2026-07-27 15:47,885.00,25.96,859.04,usd,Booking LH-24407 Rogers,5111
+ch_vODYAGZjhSc6fyltrNbFXOQl,charge,succeeded,2026-07-28 20:05,775.00,22.78,752.22,usd,Booking LH-24464 Cook,7153
+ch_JlSXZjISHeuP7DTL2huETZ1V,charge,succeeded,2026-07-30 08:17,1130.00,33.07,1096.93,usd,Booking LH-24452 Howard,2535
+ch_zyH3QIph0ppWH3JR2BCCNrQj,charge,succeeded,2026-07-31 12:58,795.00,23.36,771.64,usd,Booking LH-24438 Morris,7499
+ch_S749joULlFGilTKY5J8IzOUg,charge,succeeded,2026-07-31 13:30,1180.00,34.52,1145.48,usd,Booking LH-24526 Flores,4409
+po_EIakqW9Gb5bPeYO6ZPpeZ6lE,payout,paid,2026-08-01 06:00,-4146.27,0.00,-4146.27,usd,Payout to Harbor Trust ****4410,
+re_0DGyJ2sOC0ko67imrEBHoMm1,refund,succeeded,2026-08-01 13:27,-240.00,0.00,-240.00,usd,Refund LH-24379 Okafor,4858
+ch_cIV7A8ue68q0qxQvnMEj7bR8,charge,succeeded,2026-08-01 20:09,1150.00,33.65,1116.35,usd,Booking LH-24733 Mensah,8061
+re_gdCmGsZMQW5ue156kKsrN9xD,refund,succeeded,2026-08-02 10:03,-300.00,0.00,-300.00,usd,Refund LH-24391 Garcia,2961
+re_FAmMsVKPOocYt4rk3aCZ3ska,refund,succeeded,2026-08-02 21:41,-885.00,-25.96,-859.04,usd,Refund LH-24407 Rogers,5111
+ch_nJxJryYyBabk6rVtP7IXgNiZ,charge,succeeded,2026-08-03 08:49,225.00,6.82,218.18,usd,Booking LH-24904 Green,9357
+ch_IktRU0BZe6hICFk3WXAEMtHq,charge,succeeded,2026-08-03 17:29,1245.00,36.40,1208.60,usd,Booking LH-24797 Wilson,7377
+po_R4hXiBmnxe4PRCnU3zZ9oGi4,payout,paid,2026-08-04 06:00,-2010.84,0.00,-2010.84,usd,Payout to Harbor Trust ****4410,
+ch_LxabLP9dV7hJWdooFewNSA1s,charge,succeeded,2026-08-04 15:59,830.00,24.37,805.63,usd,Booking LH-24530 Myers,3521
+re_UANAtwA0rhnGMHmpM3TRsLGe,refund,succeeded,2026-08-05 18:26,-230.00,0.00,-230.00,usd,Refund LH-24422 Phillips,1766
+ch_V3KzJ3pd9XgY5hgCkFryzhwm,charge,succeeded,2026-08-05 20:54,605.00,17.84,587.16,usd,Booking LH-24480 Foster,3138
+ch_nodtJnmCQVzvuYBo74CfFWSq,charge,succeeded,2026-08-06 14:59,2005.00,58.44,1946.56,usd,Booking LH-24695 Myers,3757
+ch_yy27QBphG10FVW9Ge9CJ6hoz,charge,succeeded,2026-08-06 21:03,1680.00,49.02,1630.98,usd,Booking LH-24876 Torres,9126
+po_JtZBxau3Zb7GtdmdKKVeaKl6,payout,paid,2026-08-07 06:00,-4474.91,0.00,-4474.91,usd,Payout to Harbor Trust ****4410,
+re_6eeV1zzVHeHsfbCTVvr5J6Ko,refund,succeeded,2026-08-07 09:35,-1130.00,-33.07,-1096.93,usd,Refund LH-24452 Howard,2535
+re_32sB5hcwrMHfZQNpC8zNnJGM,refund,succeeded,2026-08-07 09:52,-380.00,0.00,-380.00,usd,Refund LH-24464 Cook,7153
+re_pftp5dobX3iLNYlSAIJRVVyX,refund,succeeded,2026-08-08 19:38,-380.00,0.00,-380.00,usd,Refund LH-24438 Morris,7499
+ch_iVHh3P56wKEa3SShIkhoNiGa,charge,succeeded,2026-08-08 20:16,620.00,18.28,601.72,usd,Booking LH-24534 Ruiz,1580
+ch_mlIof56Gn1BhmWfdTA9OjpKq,charge,succeeded,2026-08-09 21:14,1025.00,30.02,994.98,usd,Booking LH-24635 Patel,4497
+po_wgH7XWJoWxeohwDM49QLulUS,payout,paid,2026-08-10 06:00,-5485.77,0.00,-5485.77,usd,Payout to Harbor Trust ****4410,
+re_ChJ3QmyJ1YlSttzeEzFh36CE,refund,succeeded,2026-08-10 21:20,-290.00,0.00,-290.00,usd,Refund LH-24474 Torres,7193
+ch_3qg1usJFVP110LP8B9z5Kvy1,charge,succeeded,2026-08-11 08:32,645.00,19.00,626.00,usd,Booking LH-24682 Nelson,7699
+ch_H8goyimYwbRTSAbx0tR8Qihj,charge,succeeded,2026-08-11 09:42,725.00,21.32,703.68,usd,Booking LH-24749 Mensah,3848
+ch_4adX4kIYkxAK7lArYtzLJBB0,charge,succeeded,2026-08-11 11:22,570.00,16.83,553.17,usd,Booking LH-24896 Mensah,5613
+ch_oZ8RQb4wxWnUFTBfAwQMwZYb,charge,succeeded,2026-08-11 15:59,270.00,8.13,261.87,usd,Booking LH-24782 Rogers,2645
+re_Si5ma0e2yYmlO23zBq4AvLTg,refund,succeeded,2026-08-11 20:13,-605.00,-17.84,-587.16,usd,Refund LH-24480 Foster,3138
+re_ndYdDGexJBCmnIoUGsjpWMYy,refund,succeeded,2026-08-12 14:02,-280.00,0.00,-280.00,usd,Refund LH-24492 Richardson,5169
+po_oCSjbCraRYuNWIIHnWKBbkZd,payout,paid,2026-08-13 06:00,-2298.68,0.00,-2298.68,usd,Payout to Harbor Trust ****4410,
+ch_hUIN6LcWyYbzfYuOyMc8NltD,charge,succeeded,2026-08-13 15:59,450.00,13.35,436.65,usd,Booking LH-24557 Gonzalez,8131
+ch_uvPk5PRL8w7aEkcPvtc3g5zz,charge,succeeded,2026-08-13 18:22,1560.00,45.54,1514.46,usd,Booking LH-24768 Hernandez,3597
+re_dWyoE9C57CfQ5B8hqkk4NOFx,refund,succeeded,2026-08-13 20:12,-210.00,0.00,-210.00,usd,Refund LH-24507 Morgan,9033
+ch_TLpVuyvaYAa5QiizvrtdwCk6,charge,succeeded,2026-08-14 15:27,465.00,13.78,451.22,usd,Booking LH-24678 Ward,7924
+re_u85HvASXsB7mO2JLdHeWt9QI,refund,succeeded,2026-08-14 18:43,-780.00,0.00,-780.00,usd,Refund LH-24523 Cox,9136
+re_uQFWEHWsBWWLA1O0XEm5JNAN,refund,succeeded,2026-08-14 21:20,-420.00,0.00,-420.00,usd,Refund LH-24523 Cox,9231
+re_aqC3ImBZEsEIaTjav7JlbToW,refund,succeeded,2026-08-15 12:23,-55.00,0.00,-55.00,usd,Refund LH-24526 Flores,4409
+po_pttrExbiujIKJNKOBhI0fW54,payout,paid,2026-08-16 06:00,-8036.30,0.00,-8036.30,usd,Payout to Harbor Trust ****4410,
+re_NTHxoTimJbtweFrfw9OiwZRo,refund,failed,2026-08-16 15:00,-400.00,0.00,-400.00,usd,Refund LH-24530 Myers,3521
+ch_CCDKWASpAIEybrOmZj6OdMVm,charge,succeeded,2026-08-17 11:21,1220.00,35.68,1184.32,usd,Booking LH-24589 Clark,5173
+re_XkoIKHsHYZldIjqTWoevaNef,refund,failed,2026-08-17 12:28,-235.00,0.00,-235.00,usd,Refund LH-24534 Ruiz,1580
+ch_CT7jEAdfucD6zafdcHFFPG0w,charge,succeeded,2026-08-17 13:55,795.00,23.36,771.64,usd,Booking LH-24605 Morris,7302
+re_o8hDYaAa9u5UcNXS8eF8LyGR,refund,succeeded,2026-08-17 18:23,-290.00,0.00,-290.00,usd,Refund LH-24526 Flores,4409
+re_R4qCAQZh4ltZcGvQWS3wr6Mm,refund,succeeded,2026-08-18 08:07,-400.00,0.00,-400.00,usd,Refund LH-24530 Myers,3521
+re_oF3LXDvorLOnTnFt3gwSx44W,refund,succeeded,2026-08-18 08:14,-110.00,0.00,-110.00,usd,Refund LH-24557 goodwill - owner,8131
+po_vStyVrHz9621ax3Q5KVog9Vi,payout,paid,2026-08-19 06:00,-8789.25,0.00,-8789.25,usd,Payout to Harbor Trust ****4410,
+re_HnAR3osSu5OJwkSMGbdtVYKV,refund,succeeded,2026-08-19 13:02,-1866.00,0.00,-1866.00,usd,Refund LH-24548 Stewart,9217
+ch_LBdzQM8YEWGHBWBLZnsp5AUd,charge,succeeded,2026-08-20 17:54,1590.00,46.41,1543.59,usd,Booking LH-24861 Peterson,5191
+ch_Z5IwoRaqJmJZ3TgDKI5I6etp,charge,succeeded,2026-08-21 21:54,215.00,6.54,208.46,usd,Booking LH-24808 Peterson,8718
+po_J6YvvjTP46YWY8egT9aa0GrJ,payout,paid,2026-08-22 06:00,-3048.18,0.00,-3048.18,usd,Payout to Harbor Trust ****4410,
+ch_pDsTyY6DmxytKW617EaDcWm5,charge,succeeded,2026-08-22 17:12,210.00,6.39,203.61,usd,Booking LH-24849 Mensah,3049
+ch_WkiDuoJWBfoDBPCAO8pUE0DW,charge,succeeded,2026-08-23 18:10,780.00,22.92,757.08,usd,Booking LH-24665 Watson,4701
+po_Almot74hGsxpsNmpmgHRsunK,payout,paid,2026-08-25 06:00,-5441.12,0.00,-5441.12,usd,Payout to Harbor Trust ****4410,
+ch_KLx6KorP847nV8Be94orZCOP,charge,succeeded,2026-08-25 13:10,910.00,26.69,883.31,usd,Booking LH-24883 Lopez,1602
+po_FyCAH5X0ueUGrcXlsQqfzxO7,payout,paid,2026-08-28 06:00,-3167.72,0.00,-3167.72,usd,Payout to Harbor Trust ****4410,
+ch_Jyqs7ykYXd8Cj6aonzzwO5BX,charge,succeeded,2026-08-28 20:09,280.00,8.42,271.58,usd,Booking LH-24757 Edwards,6607
+ch_LpgC5wU08EMpydnPzdhKtV6p,charge,succeeded,2026-08-29 16:09,465.00,13.78,451.22,usd,Booking LH-24839 Peterson,3542
+po_jj05Ex2g64KB0p2K4hamqNct,payout,paid,2026-08-31 06:00,-8668.78,0.00,-8668.78,usd,Payout to Harbor Trust ****4410,
+ch_zAjgUXloBzI4ZJLgEIwNy6xf,charge,succeeded,2026-08-31 12:37,590.00,17.41,572.59,usd,Booking LH-24623 Johnson,4827
+ch_ImZtM0UySY8DNCUuv9PV3cqu,charge,succeeded,2026-08-31 16:20,430.00,12.77,417.23,usd,Booking LH-24652 Alvarez,9105
+ch_Qrrlsx7SrwNwhhVY1QNHkVz9,charge,succeeded,2026-09-01 08:01,870.00,25.53,844.47,usd,Booking LH-24704 Harris,7615
+ch_Rzf8ZATh5SjeCxikjQ7rCdZu,charge,succeeded,2026-09-02 13:10,1025.00,30.02,994.98,usd,Booking LH-24700 Alvarez,8505
+re_d5UQBhCMXFN3hWM1MQruvTTh,refund,succeeded,2026-09-02 13:34,-400.00,0.00,-400.00,usd,Refund LH-24589 Clark,5173
+re_0bjw41ZC9LPfOI13R7WUbGj5,refund,succeeded,2026-09-02 17:04,-260.00,0.00,-260.00,usd,Refund LH-24605 Morris,7302
+po_ZQBlI6YK4ckD6Y7zFplZVOg3,payout,paid,2026-09-03 06:00,-6276.52,0.00,-6276.52,usd,Payout to Harbor Trust ****4410,
+ch_8LWzl0FFjL0QMzQUstQyQh7d,charge,succeeded,2026-09-03 08:52,2080.00,60.62,2019.38,usd,Booking LH-24822 Alvarez,1765
+re_HYpRHvkWOrttiqSOv15PEhTr,refund,succeeded,2026-09-03 21:03,-340.00,0.00,-340.00,usd,Refund LH-24615 Davis,9774
+re_cgmdioQROBHnytGLuaPNS4vq,refund,succeeded,2026-09-04 12:49,-240.00,0.00,-240.00,usd,Refund LH-24612 Gutierrez,9864
+ch_635JV2v0Al0DkJ8WXSoSUfyZ,charge,succeeded,2026-09-04 18:56,1090.00,31.91,1058.09,usd,Booking LH-24721 Lewis,4975
+ch_VA0xFGbmWkcV1YgX13oHIU7B,charge,succeeded,2026-09-05 08:34,460.00,13.64,446.36,usd,Booking LH-24844 Cooper,8806

@@ -1,0 +1,57 @@
+﻿Report ID,Report Name,Employee,Submitted,Report Status,Line ID,Expense Date,Category,Merchant,City,Amount,Receipt Attached,Memo
+ER-2324,July field work,Luis Bennett,07/31/2026,Paid,EXL-58209,07/28/2026,Per diem,Per diem - M&IE,Idaho Falls,$61.00,No,T-26-071 per diem
+ER-2324,July field work,Luis Bennett,07/31/2026,Paid,EXL-58211,07/28/2026,Lodging,La Quinta Idaho Falls,Idaho Falls,138.67,Yes,T-26-071 night of 07/28
+ER-2324,July field work,Luis Bennett,07/31/2026,Paid,EXL-58220,07/28/2026,Fuel,Chevron,Idaho Falls,$63.81,Yes,Truck 14 fuel
+ER-2324,July field work,Luis Bennett,07/31/2026,Paid,EXL-58214,07/29/2026,Per diem,Per diem - M&IE,Idaho Falls,$61.00,No,T-26-071 per diem
+ER-2324,July field work,Luis Bennett,07/31/2026,Paid,EXL-58215,07/29/2026,Lodging,La Quinta Idaho Falls,Idaho Falls,123.72,Yes,T-26-071 night of 07/29
+ER-2324,July field work,Luis Bennett,07/31/2026,Paid,EXL-58218,07/30/2026,Per diem,Per diem - M&IE,Idaho Falls,61.00,No,T-26-071 per diem
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58248,08/03/2026,Per diem,Per diem - M&IE,Seattle,79.00,No,T-26-073 per diem
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58251,08/03/2026,Lodging,Courtyard Seattle,Seattle,228.43,Yes,T-26-073 night of 08/03
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58253,08/04/2026,Per diem,Per diem - M&IE,Seattle,$79.00,No,T-26-073 per diem
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58254,08/04/2026,Lodging,Courtyard Seattle,Seattle,214.64,Yes,T-26-073 night of 08/04
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58267,08/04/2026,Meals,Rock Bottom Brewery,Seattle,$27.29,Yes,Dinner
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58256,08/05/2026,Per diem,Per diem - M&IE,Seattle,79.00,No,T-26-073 per diem
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58258,08/05/2026,Lodging,Courtyard Seattle,Seattle,234.49,Yes,T-26-073 night of 08/05
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58260,08/06/2026,Per diem,Per diem - M&IE,Seattle,$79.00,No,T-26-073 per diem
+ER-2361,Aug 1-15,Kwame Foster,08/17/2026,Submitted,EXL-58264,08/06/2026,Car rental,Enterprise Rent-A-Car,Seattle,258.69,Yes,T-26-073 4-day rental
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58321,08/06/2026,Per diem,Per diem - M&IE,Twin Falls,61.00,No,T-26-077 per diem
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58324,08/06/2026,Fuel,Pilot Travel Center,Twin Falls,63.92,Yes,Truck 9 fuel - day trip
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58325,08/17/2026,Per diem,Per diem - M&IE,Missoula,61.00,No,T-26-078 per diem
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58327,08/17/2026,Lodging,La Quinta Missoula,Missoula,146.89,Yes,T-26-078 night of 08/17
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58339,08/17/2026,Fuel,Maverik,Missoula,$60.99,No,Truck 9 fuel
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58330,08/18/2026,Per diem,Per diem - M&IE,Missoula,61.00,No,T-26-078 per diem
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58332,08/18/2026,Lodging,La Quinta Missoula,Missoula,211.07,Yes,T-26-078 night of 08/18 (only room left - rodeo week)
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58335,08/19/2026,Per diem,Per diem - M&IE,Missoula,$61.00,No,T-26-078 per diem
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58336,08/19/2026,Lodging,La Quinta Missoula,Missoula,135.45,Yes,T-26-078 night of 08/19
+ER-2368,August field expenses,Amara Collins,09/01/2026,Submitted,EXL-58337,08/20/2026,Per diem,Per diem - M&IE,Missoula,$61.00,No,T-26-078 per diem
+ER-2372,Aug 16-31,Kwame Foster,09/01/2026,Submitted,EXL-58283,08/06/2026,Car rental,Enterprise Rent-A-Car,Seattle,258.69,Yes,Rental car - trip T-26-073
+ER-2372,Aug 16-31,Kwame Foster,09/01/2026,Submitted,EXL-58270,08/19/2026,Per diem,Per diem - M&IE,Bend,61.00,No,T-26-074 per diem
+ER-2372,Aug 16-31,Kwame Foster,09/01/2026,Submitted,EXL-58271,08/19/2026,Lodging,La Quinta Bend,Bend,146.94,Yes,T-26-074 night of 08/19
+ER-2372,Aug 16-31,Kwame Foster,09/01/2026,Submitted,EXL-58287,08/19/2026,Airfare,Alaska Airlines,Boise,201.01,No,Flight to site
+ER-2372,Aug 16-31,Kwame Foster,09/01/2026,Submitted,EXL-58274,08/20/2026,Per diem,Per diem - M&IE,Bend,61.00,No,T-26-074 per diem
+ER-2372,Aug 16-31,Kwame Foster,09/01/2026,Submitted,EXL-58276,08/20/2026,Lodging,La Quinta Bend,Bend,151.36,Yes,T-26-074 night of 08/20
+ER-2372,Aug 16-31,Kwame Foster,09/01/2026,Submitted,EXL-58279,08/21/2026,Per diem,Per diem - M&IE,Bend,61.00,No,T-26-074 per diem
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58221,07/29/2026,Lodging,La Quinta Idaho Falls,Idaho Falls,123.72,Yes,T-26-071 hotel (missed on last report)
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58225,08/10/2026,Per diem,Per diem - M&IE,Lewiston,61.00,No,T-26-072 per diem
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58226,08/10/2026,Lodging,La Quinta Lewiston,Lewiston,140.92,Yes,T-26-072 night of 08/10
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58239,08/10/2026,Supplies,Grainger,Lewiston,$74.99,No,Bailers and nitrile gloves
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58243,08/10/2026,Parking,City of Lewiston parking,Lewiston,14.00,No,Site parking
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58230,08/11/2026,Lodging,La Quinta Lewiston,Lewiston,132.49,Yes,T-26-072 night of 08/11
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58235,08/11/2026,Per diem,Per diem - M&IE,Lewiston,$79.00,No,T-26-072 per diem
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58246,08/11/2026,Parking,City of Lewiston parking,Lewiston,14.00,No,Site parking
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58233,08/12/2026,Per diem,Per diem - M&IE,Lewiston,61.00,No,T-26-072 per diem
+ER-2382,August 1-31,Luis Bennett,09/02/2026,Submitted,EXL-58247,08/12/2026,Parking,City of Lewiston parking,Lewiston,14.00,No,Site parking
+ER-2397,August expenses,Rebecca Alvarez,09/03/2026,Submitted,EXL-58320,08/09/2026,Meals,Bittercreek Alehouse,Boise,62.45,Yes,Client lunch - Ada County
+ER-2397,August expenses,Rebecca Alvarez,09/03/2026,Submitted,EXL-58316,08/20/2026,Meals,Local client lunch - Boise,Boise,$65.83,Yes,Lunch with city engineer (not travel)
+ER-2397,August expenses,Rebecca Alvarez,09/03/2026,Submitted,EXL-58288,08/24/2026,Per diem,Per diem - M&IE,Denver,79.00,No,T-26-075 per diem
+ER-2397,August expenses,Rebecca Alvarez,09/03/2026,Submitted,EXL-58291,08/24/2026,Lodging,Residence Inn Denver,Denver,$245.00,Yes,T-26-075 night of 08/24
+ER-2397,August expenses,Rebecca Alvarez,09/03/2026,Submitted,EXL-58295,08/25/2026,Per diem,Per diem - M&IE,Denver,79.00,No,T-26-075 per diem
+ER-2397,August expenses,Rebecca Alvarez,09/03/2026,Submitted,EXL-58296,08/25/2026,Lodging,Residence Inn Denver,Denver,$245.00,Yes,T-26-075 night of 08/25
+ER-2397,August expenses,Rebecca Alvarez,09/03/2026,Submitted,EXL-58297,08/26/2026,Per diem,Per diem - M&IE,Denver,$79.00,No,T-26-075 per diem
+ER-2436,Aug 2026,Tomasz Nguyen,09/03/2026,Submitted,EXL-58299,08/24/2026,Per diem,Per diem - M&IE,Denver,$79.00,No,T-26-076 per diem
+ER-2436,Aug 2026,Tomasz Nguyen,09/03/2026,Submitted,EXL-58301,08/24/2026,Lodging,Residence Inn Denver,Denver,245.00,Yes,T-26-076 night of 08/24
+ER-2436,Aug 2026,Tomasz Nguyen,09/03/2026,Submitted,EXL-58312,08/24/2026,Supplies,Home Depot,Denver,75.00,No,Sample cooler and ice
+ER-2436,Aug 2026,Tomasz Nguyen,09/03/2026,Submitted,EXL-58302,08/25/2026,Per diem,Per diem - M&IE,Denver,79.00,No,T-26-076 per diem
+ER-2436,Aug 2026,Tomasz Nguyen,09/03/2026,Submitted,EXL-58303,08/25/2026,Lodging,Residence Inn Denver,Denver,245.00,Yes,T-26-076 night of 08/25
+ER-2436,Aug 2026,Tomasz Nguyen,09/03/2026,Submitted,EXL-58307,08/26/2026,Per diem,Per diem - M&IE,Denver,$79.00,No,T-26-076 per diem
+ER-2436,Aug 2026,Tomasz Nguyen,09/03/2026,Submitted,EXL-58310,08/27/2026,Per diem,Per diem - M&IE,Denver,79.00,No,T-26-076 per diem

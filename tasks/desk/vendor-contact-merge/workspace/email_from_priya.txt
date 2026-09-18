@@ -1,0 +1,8 @@
+From: Priya Natarajan <priya@ironwoodfab.com>
+To: you
+Date: Wed, 3 Sep 2026 09:14
+Subject: vendor list for the new system
+
+Can you merge my purchasing sheet with the export accounting sent into one clean list? One row per vendor, I do not care which spelling you keep as long as it is the real company name without the Inc/LLC noise. We stopped using Glassworks Optical in August, leave them out entirely.
+
+Where the two files disagree on payment terms, mine is right, accounting never updated theirs (for example Driftwood Studio is Net 15, not Net 60). Keep the phone and email if either file has them. Columns: vendor, contact, email, phone, category, payment terms.

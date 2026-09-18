@@ -1,0 +1,12 @@
+{
+  "book": "Gary Phillips",
+  "cash_limit": 75,
+  "credit_window": 60,
+  "hire": "Dorothy Howard",
+  "mgr": "Kimberly Rogers",
+  "new_limit": 200,
+  "old_limit": 300,
+  "owner": "Joshua Morris",
+  "window": 30,
+  "wrong_window": 45
+}

@@ -1,0 +1,130 @@
+{
+  "AF-26001": {
+    "amount": 31580.0,
+    "date": "2026-01-22",
+    "gain": 738.97,
+    "open": 0.0,
+    "rate": 1.0735,
+    "tag": "partial"
+  },
+  "AF-26004": {
+    "amount": 16750.0,
+    "date": "2026-02-06",
+    "gain": 97.15,
+    "open": 0.0,
+    "rate": 1.0854,
+    "tag": "plain_5"
+  },
+  "AF-26010": {
+    "amount": 22025.8,
+    "date": "2026-02-14",
+    "gain": 185.01,
+    "open": 0.0,
+    "rate": 1.0851,
+    "tag": "weekend_invoice"
+  },
+  "AF-26013": {
+    "amount": 18765.5,
+    "date": "2026-02-14",
+    "gain": 326.52,
+    "open": 0.0,
+    "rate": 1.0851,
+    "tag": "plain_3"
+  },
+  "AF-26016": {
+    "amount": 9920.25,
+    "date": "2026-02-21",
+    "gain": 19.84,
+    "open": 0.0,
+    "rate": 1.0957,
+    "tag": "plain_6"
+  },
+  "AF-26019": {
+    "amount": 13860.25,
+    "date": "2026-02-26",
+    "gain": 26.34,
+    "open": 0.0,
+    "rate": 1.0995,
+    "tag": "short_fee"
+  },
+  "AF-26022": {
+    "amount": 16465.0,
+    "date": "2026-02-27",
+    "gain": 126.78,
+    "open": 0.0,
+    "rate": 1.0954,
+    "tag": "plain_2"
+  },
+  "AF-26025": {
+    "amount": 3705.0,
+    "date": "2026-03-02",
+    "gain": 28.53,
+    "open": 0.0,
+    "rate": 1.09,
+    "tag": "easter_monday_receipt"
+  },
+  "AF-26028": {
+    "amount": 17285.25,
+    "date": "2026-03-10",
+    "gain": 843.52,
+    "open": 0.0,
+    "rate": 1.0832,
+    "tag": "two_in_one_a"
+  },
+  "AF-26031": {
+    "amount": 3785.0,
+    "date": "2026-03-12",
+    "gain": 193.41,
+    "open": 0.0,
+    "rate": 1.0809,
+    "tag": "two_in_one_b"
+  },
+  "AF-26037": {
+    "amount": 3740.0,
+    "date": "2026-04-01",
+    "gain": 14.96,
+    "open": 0.0,
+    "rate": 1.1025,
+    "tag": "plain_1"
+  },
+  "AF-26040": {
+    "amount": 25275.25,
+    "date": "2026-04-03",
+    "gain": 649.58,
+    "open": 0.0,
+    "rate": 1.0977,
+    "tag": "good_friday_invoice"
+  },
+  "AF-26043": {
+    "amount": 28585.0,
+    "date": "2026-05-03",
+    "gain": -583.13,
+    "open": 0.0,
+    "rate": 1.1234,
+    "tag": "plain_4"
+  },
+  "AF-26046": {
+    "amount": 35835.5,
+    "date": "2026-05-07",
+    "gain": 89.59,
+    "open": 17917.5,
+    "rate": 1.1163,
+    "tag": "partial_open"
+  },
+  "AF-26049": {
+    "amount": 32670.5,
+    "date": "2026-05-22",
+    "gain": -114.35,
+    "open": 0.0,
+    "rate": 1.1181,
+    "tag": "plain_0"
+  },
+  "AF-26052": {
+    "amount": 20040.8,
+    "date": "2026-06-19",
+    "gain": 0.0,
+    "open": 20040.8,
+    "rate": 1.1053,
+    "tag": "unpaid"
+  }
+}

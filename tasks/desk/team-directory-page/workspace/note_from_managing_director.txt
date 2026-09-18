@@ -1,0 +1,16 @@
+From: Sam Osei, Managing Director
+To: you
+Date: Mon, 14 Sep 2026 08:40
+Subject: new staff directory page
+
+The printed directory by the stage door is two seasons out of date. I would like a directory page we can put on the backstage screen and send round - one HTML file, nothing it has to load, no scripts (the screens are locked down).
+
+Group people by department, with each person's name, job title, work email and desk extension.
+
+Names: use the name people actually go by. The Preferred name field is what they asked us to use - some people typed only a first name there, some typed their whole name. If it is empty, use the legal name. Please do not print someone's legal first name when they have told us otherwise.
+
+Anyone whose employment has ended is off the page. A few people have given notice and HR already marks them Terminated with their last day; they are still with us until that day, so keep them. People on leave are still staff.
+
+Some people hold two jobs here. List everyone once, under their main job.
+
+Sam

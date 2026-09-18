@@ -1,0 +1,22 @@
+August invoices into Xero
+
+Use Xero's SalesInvoiceTemplate.csv columns as they are.
+
+- One row per invoice line. The contact, email, invoice number, reference (the job ref), invoice date and due date go
+  on every row of the invoice. The delivery fee is its own line: InventoryItemCode blank, Description "Delivery",
+  Quantity 1.
+- Only Sent and Paid invoices. Void and Draft stay out.
+- ContactName must be exactly the contact name we already have in Xero (xero_contacts_export.csv), otherwise Xero
+  makes a duplicate contact. JobFlow lets staff type whatever, so match on the email address.
+- Dates: our Xero is set up for Australia, so DD/MM/YYYY. JobFlow exports month first.
+- Due date from the invoice terms: 14 days or 30 days after the invoice date, "20th of following month" is the 20th
+  of the next month, "Due on receipt" is the invoice date.
+- UnitAmount is the ex-GST price as a plain number. We import tax exclusive.
+- Discount is the invoice's Discount % on each printing and design line. Never discount delivery or gift vouchers.
+- AccountCode: 210 Design Income for DES- items, 260 Other Revenue for delivery, 835 Gift Voucher Liability for
+  gift vouchers, 200 Sales for everything else.
+- TaxType, spelled as Xero has them: GST on Income for Australian customers; GST Free Income for customers outside
+  Australia (exports), delivery included; BAS Excluded for gift vouchers.
+- Currency AUD.
+
+Bec

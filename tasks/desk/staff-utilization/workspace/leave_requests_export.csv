@@ -1,0 +1,11 @@
+Employee ID,Employee,Leave Type,Start,End,Days,Status,Submitted
+E103,Priya Raman,Vacation,2026-08-27,2026-09-02,5,Approved,2026-08-15
+E102,Kenneth Oduya,Vacation,2026-09-04,2026-09-08,3,Approved,2026-08-23
+E106,Omar Haddad,Personal,2026-09-11,2026-09-11,0.5,Approved,2026-08-30
+E104,Tomasz Wojcik,Vacation,2026-09-16,2026-09-18,3,Rejected,2026-09-04
+E106,Omar Haddad,Jury duty,2026-09-17,2026-09-17,1,Pending,2026-09-05
+E108,Luis Ortega,Vacation,2026-09-21,2026-09-25,5,Approved,2026-09-09
+E104,Tomasz Wojcik,Sick,2026-09-24,2026-09-24,1,Approved,2026-09-12
+E108,Luis Ortega,Vacation,2026-09-28,2026-09-29,2,Cancelled,2026-09-16
+E105,Grace Lin,Sick,2026-09-29,2026-09-29,1,Approved,2026-09-17
+E101,Dana Mossbank,Vacation,2026-10-12,2026-10-16,5,Pending,2026-09-30

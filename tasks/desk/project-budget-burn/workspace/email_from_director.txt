@@ -1,0 +1,15 @@
+From: Alma Reyes <areyes@tidewatermaritime.org>
+To: Finance <finance@tidewatermaritime.org>
+Date: Mon, 7 Sep 2026 08:31
+Subject: West Gallery - budget burn for the capital committee
+
+The capital committee meets on the 15th and wants to see where the West Gallery project stands against the board budget, cost code by cost code: budget, spent, committed and remaining, with totals. Please keep the math live so the treasurer can follow it.
+
+How I count:
+- Spent is every posted invoice. Invoices against a PO belong to that PO's cost code; invoices with no PO carry their own cost code. Voided invoices are not spent.
+- Committed is what we still owe on open POs: the PO amount plus approved change orders, less what has been invoiced against it - never less than zero. Pending and rejected change orders are not commitments yet. Closed and cancelled POs have nothing left committed.
+- Remaining is budget less spent less committed.
+
+The AP export writes the PO reference however the clerk typed it, sorry.
+
+Alma

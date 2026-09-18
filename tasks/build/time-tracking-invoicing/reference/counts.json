@@ -1,0 +1,679 @@
+{
+  "baseline": {
+    "EXPORT_COLUMNS": [
+      "Date",
+      "Consultant",
+      "Client",
+      "Hours",
+      "Billable",
+      "Invoice"
+    ],
+    "EXPORT_ROWS": 251,
+    "FILTER_COUNT": 39,
+    "FILTER_FIELD": "Billable",
+    "FILTER_VALUE": "No",
+    "KPI_1": "Unbilled amount",
+    "KPI_1_VALUE": "79,372.50",
+    "KPI_2": "Unbilled hours",
+    "KPI_2_VALUE": 311.75,
+    "KPI_3": "Billable hours, August 2026",
+    "KPI_3_VALUE": 289.75,
+    "KPI_4": "Clients with unbilled time",
+    "KPI_4_VALUE": 23,
+    "MAIN_ENTITY": "time entry",
+    "MAIN_ENTITY_PLURAL": "time entries",
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "amount": "270.00",
+      "billable": true,
+      "billed_hours": 1.0,
+      "client": "Nettlefield Farms",
+      "consultant": "Marcus Iyer",
+      "date": "2026-08-26",
+      "file_date": "2026-08-26",
+      "file_duration": "1.00",
+      "file_lines": [
+        241
+      ],
+      "id": "TE-40232",
+      "invoice": "",
+      "minutes": 60,
+      "rate": 270,
+      "role": "Senior"
+    },
+    "REQUIRED_FIELD": "Client",
+    "SCOPED_KPI_1_VALUE": "8,767.50",
+    "SCOPE_COUNT": 22,
+    "SCOPE_RULE": "their own time entries (Nadia Okafor)",
+    "SEARCH_COUNT": 6,
+    "SEARCH_TERM": "Vantage",
+    "SORT_FIELD": "Duration (hours)",
+    "SORT_TOP": "TE-40217",
+    "STAFF_ROLE": "Consultant",
+    "VIEWER_ROLE": "Read-only",
+    "search_client_has_duplicate_row": true
+  },
+  "change_1_report": {
+    "august_all_consultants": {
+      "billed_amount": "72,917.50",
+      "billed_hours": 289.75
+    },
+    "july_all_consultants": {
+      "billed_amount": "76,730.00",
+      "billed_hours": 308.25
+    },
+    "per_consultant": {
+      "Chloe Brandt": {
+        "august": {
+          "billed_amount": "3,440.00",
+          "billed_hours": 17.5
+        },
+        "july": {
+          "billed_amount": "5,947.50",
+          "billed_hours": 30.75
+        }
+      },
+      "Daniel Reyes": {
+        "august": {
+          "billed_amount": "12,767.50",
+          "billed_hours": 43.0
+        },
+        "july": {
+          "billed_amount": "10,032.50",
+          "billed_hours": 34.5
+        }
+      },
+      "Eleanor Voss": {
+        "august": {
+          "billed_amount": "2,485.00",
+          "billed_hours": 6.5
+        },
+        "july": {
+          "billed_amount": "6,607.50",
+          "billed_hours": 16.0
+        }
+      },
+      "Graham Achebe": {
+        "august": {
+          "billed_amount": "10,405.00",
+          "billed_hours": 25.0
+        },
+        "july": {
+          "billed_amount": "5,790.00",
+          "billed_hours": 15.0
+        }
+      },
+      "Hana Kobayashi": {
+        "august": {
+          "billed_amount": "5,205.00",
+          "billed_hours": 27.75
+        },
+        "july": {
+          "billed_amount": "5,502.50",
+          "billed_hours": 30.5
+        }
+      },
+      "Luis Ortega": {
+        "august": {
+          "billed_amount": "5,455.00",
+          "billed_hours": 30.25
+        },
+        "july": {
+          "billed_amount": "3,707.50",
+          "billed_hours": 21.25
+        }
+      },
+      "Marcus Iyer": {
+        "august": {
+          "billed_amount": "6,640.00",
+          "billed_hours": 23.75
+        },
+        "july": {
+          "billed_amount": "7,665.00",
+          "billed_hours": 27.75
+        }
+      },
+      "Nadia Okafor": {
+        "august": {
+          "billed_amount": "8,767.50",
+          "billed_hours": 31.5
+        },
+        "july": {
+          "billed_amount": "6,347.50",
+          "billed_hours": 20.25
+        }
+      },
+      "Owen Mensah": {
+        "august": {
+          "billed_amount": "4,330.00",
+          "billed_hours": 21.0
+        },
+        "july": {
+          "billed_amount": "7,952.50",
+          "billed_hours": 41.25
+        }
+      },
+      "Priya Raman": {
+        "august": {
+          "billed_amount": "3,967.50",
+          "billed_hours": 19.75
+        },
+        "july": {
+          "billed_amount": "2,262.50",
+          "billed_hours": 11.25
+        }
+      },
+      "Sofia Lindqvist": {
+        "august": {
+          "billed_amount": "4,335.00",
+          "billed_hours": 16.0
+        },
+        "july": {
+          "billed_amount": "11,705.00",
+          "billed_hours": 42.5
+        }
+      },
+      "Tom Whitaker": {
+        "august": {
+          "billed_amount": "5,120.00",
+          "billed_hours": 27.75
+        },
+        "july": {
+          "billed_amount": "3,210.00",
+          "billed_hours": 17.25
+        }
+      }
+    }
+  },
+  "change_2_discount": {
+    "boundary_test": {
+      "discount": "1,006.25",
+      "gross": "10,062.50",
+      "hours_discount": 40.25,
+      "hours_no_discount": 40.0,
+      "net": "9,056.25",
+      "rate": 250,
+      "total_no_discount": "10,000.00"
+    },
+    "discounted_client": {
+      "august_total": "15,825.00",
+      "client": "Ellery Textiles",
+      "discount": "1,582.50",
+      "net": "14,242.50"
+    },
+    "threshold": "10,000.00 (strictly over, before discount)",
+    "undiscounted_client": {
+      "august_total": "5,610.00",
+      "client": "Northwind Energy Cooperative"
+    }
+  },
+  "change_3_draft": {
+    "august_total": "3,150.00",
+    "client": "Evergreen Credit Union",
+    "client_unbilled": "3,150.00",
+    "entries": [
+      "TE-40192",
+      "TE-40201",
+      "TE-40207"
+    ],
+    "line_count": 3
+  },
+  "clients": {
+    "active": 52,
+    "dedupe_rule": "same client code after dropping the C- prefix and leading zeros",
+    "exact_duplicate_example": {
+      "client": "Nettlefield Farms",
+      "code": "C-0294",
+      "file_lines": [
+        47,
+        53
+      ]
+    },
+    "exact_duplicate_rows": 2,
+    "file_rows_excluding_header": 64,
+    "inactive": 8,
+    "same_code_example": {
+      "client": "Larkfield Printing",
+      "codes_as_written": [
+        "C-0728",
+        "C-728"
+      ],
+      "file_lines": [
+        12,
+        38
+      ]
+    },
+    "same_code_rows": 2,
+    "search_word_exact_duplicate": "Nettlefield",
+    "unique_clients": 60,
+    "wrong_count_only_exact_duplicates_removed": 62
+  },
+  "date_dependence": "No figure depends on the test date; all imported entries are dated July or August 2026.",
+  "entries": {
+    "billable": 212,
+    "duplicate_examples": [
+      {
+        "amount": "765.00",
+        "billable": true,
+        "billed_hours": 4.5,
+        "client": "Vantage Fleet Solutions",
+        "consultant": "Owen Mensah",
+        "date": "2026-07-16",
+        "file_date": "16-Jul-2026",
+        "file_duration": "4.32",
+        "file_lines": [
+          74,
+          196
+        ],
+        "id": "TE-40072",
+        "invoice": "INV-2607-0367",
+        "minutes": 259,
+        "rate": 170,
+        "role": "Associate"
+      },
+      {
+        "amount": "0.00",
+        "billable": false,
+        "billed_hours": 4.0,
+        "client": "Westbridge Community Bank",
+        "consultant": "Nadia Okafor",
+        "date": "2026-07-21",
+        "file_date": "07/21/2026",
+        "file_duration": "3.82",
+        "file_lines": [
+          85,
+          93
+        ],
+        "id": "TE-40090",
+        "invoice": "",
+        "minutes": 229,
+        "rate": null,
+        "role": "Senior"
+      }
+    ],
+    "duration_parse_examples": [
+      {
+        "amount": "105.00",
+        "billable": true,
+        "billed_hours": 0.5,
+        "client": "Fairhaven Senior Living",
+        "consultant": "Priya Raman",
+        "date": "2026-08-26",
+        "file_date": "Aug 26 2026",
+        "file_duration": "0:20",
+        "file_lines": [
+          242
+        ],
+        "id": "TE-40233",
+        "invoice": "",
+        "minutes": 20,
+        "rate": 210,
+        "role": "Associate"
+      },
+      {
+        "amount": "297.50",
+        "billable": true,
+        "billed_hours": 1.75,
+        "client": "Jasper Ridge Winery",
+        "consultant": "Priya Raman",
+        "date": "2026-07-31",
+        "file_date": "2026-07-31",
+        "file_duration": "1.67",
+        "file_lines": [
+          140
+        ],
+        "id": "TE-40137",
+        "invoice": "INV-2607-0234",
+        "minutes": 100,
+        "rate": 170,
+        "role": "Associate"
+      },
+      {
+        "amount": "210.00",
+        "billable": true,
+        "billed_hours": 1.0,
+        "client": "Fairhaven Senior Living",
+        "consultant": "Priya Raman",
+        "date": "2026-08-05",
+        "file_date": "05-Aug-2026",
+        "file_duration": "59 min",
+        "file_lines": [
+          157
+        ],
+        "id": "TE-40154",
+        "invoice": "",
+        "minutes": 59,
+        "rate": 210,
+        "role": "Associate"
+      },
+      {
+        "amount": "1,215.00",
+        "billable": true,
+        "billed_hours": 4.5,
+        "client": "Driftwood Home Goods",
+        "consultant": "Sofia Lindqvist",
+        "date": "2026-07-20",
+        "file_date": "07/20/2026",
+        "file_duration": "4h 29m",
+        "file_lines": [
+          88
+        ],
+        "id": "TE-40085",
+        "invoice": "INV-2607-0635",
+        "minutes": 269,
+        "rate": 270,
+        "role": "Senior"
+      }
+    ],
+    "exact_duplicate_rows": 8,
+    "file_rows_excluding_header": 259,
+    "invoiced_in_file": 105,
+    "late_july_unbilled_entries": [
+      "TE-40123",
+      "TE-40126",
+      "TE-40127",
+      "TE-40129",
+      "TE-40132",
+      "TE-40134",
+      "TE-40138"
+    ],
+    "longest_entry": {
+      "amount": "2,092.50",
+      "billable": true,
+      "billed_hours": 7.75,
+      "client": "Nettlefield Farms",
+      "consultant": "Daniel Reyes",
+      "date": "2026-08-21",
+      "file_date": "08/21/2026",
+      "file_duration": "7h 45m",
+      "file_lines": [
+        226
+      ],
+      "id": "TE-40217",
+      "invoice": "",
+      "minutes": 465,
+      "rate": 270,
+      "role": "Senior"
+    },
+    "non_billable": 39,
+    "per_consultant": {
+      "Chloe Brandt": 22,
+      "Daniel Reyes": 26,
+      "Eleanor Voss": 18,
+      "Graham Achebe": 14,
+      "Hana Kobayashi": 23,
+      "Luis Ortega": 20,
+      "Marcus Iyer": 22,
+      "Nadia Okafor": 22,
+      "Owen Mensah": 23,
+      "Priya Raman": 19,
+      "Sofia Lindqvist": 22,
+      "Tom Whitaker": 20
+    },
+    "unique_entries": 251
+  },
+  "invoice_check": {
+    "billed_hours": 20.25,
+    "client": "Kittering Dairy Cooperative",
+    "client_unbilled_before": "5,955.00",
+    "client_unbilled_wrong": {
+      "late_july_missed": "5,272.50",
+      "non_billable_included": "6,150.00"
+    },
+    "excluded_late_july": [
+      {
+        "amount": "682.50",
+        "billable": true,
+        "billed_hours": 1.75,
+        "client": "Kittering Dairy Cooperative",
+        "consultant": "Eleanor Voss",
+        "date": "2026-07-31",
+        "file_date": "2026-07-31",
+        "file_duration": "1h 45m",
+        "file_lines": [
+          135
+        ],
+        "id": "TE-40132",
+        "invoice": "",
+        "minutes": 105,
+        "rate": 390,
+        "role": "Partner"
+      }
+    ],
+    "excluded_non_billable_august": [
+      {
+        "amount": "0.00",
+        "billable": false,
+        "billed_hours": 0.5,
+        "client": "Kittering Dairy Cooperative",
+        "consultant": "Eleanor Voss",
+        "date": "2026-08-03",
+        "file_date": "August 03, 2026",
+        "file_duration": "0:30",
+        "file_lines": [
+          144
+        ],
+        "id": "TE-40141",
+        "invoice": "",
+        "minutes": 30,
+        "rate": null,
+        "role": "Partner"
+      }
+    ],
+    "july_invoice_total": "682.50",
+    "line_count": 6,
+    "lines": [
+      {
+        "amount": "292.50",
+        "billable": true,
+        "billed_hours": 0.75,
+        "client": "Kittering Dairy Cooperative",
+        "consultant": "Eleanor Voss",
+        "date": "2026-08-12",
+        "file_date": "08/12/26",
+        "file_duration": "0:45",
+        "file_lines": [
+          176
+        ],
+        "id": "TE-40172",
+        "invoice": "",
+        "minutes": 45,
+        "rate": 390,
+        "role": "Partner"
+      },
+      {
+        "amount": "1,500.00",
+        "billable": true,
+        "billed_hours": 6.0,
+        "client": "Kittering Dairy Cooperative",
+        "consultant": "Nadia Okafor",
+        "date": "2026-08-17",
+        "file_date": "08/17/26",
+        "file_duration": "6:00",
+        "file_lines": [
+          205
+        ],
+        "id": "TE-40196",
+        "invoice": "",
+        "minutes": 360,
+        "rate": 250,
+        "role": "Senior"
+      },
+      {
+        "amount": "437.50",
+        "billable": true,
+        "billed_hours": 1.75,
+        "client": "Kittering Dairy Cooperative",
+        "consultant": "Nadia Okafor",
+        "date": "2026-08-19",
+        "file_date": "August 19, 2026",
+        "file_duration": "1.75",
+        "file_lines": [
+          212
+        ],
+        "id": "TE-40203",
+        "invoice": "",
+        "minutes": 105,
+        "rate": 250,
+        "role": "Senior"
+      },
+      {
+        "amount": "1,750.00",
+        "billable": true,
+        "billed_hours": 7.0,
+        "client": "Kittering Dairy Cooperative",
+        "consultant": "Nadia Okafor",
+        "date": "2026-08-24",
+        "file_date": "08/24/2026",
+        "file_duration": "7.00",
+        "file_lines": [
+          230
+        ],
+        "id": "TE-40221",
+        "invoice": "",
+        "minutes": 420,
+        "rate": 250,
+        "role": "Senior"
+      },
+      {
+        "amount": "1,000.00",
+        "billable": true,
+        "billed_hours": 4.0,
+        "client": "Kittering Dairy Cooperative",
+        "consultant": "Nadia Okafor",
+        "date": "2026-08-27",
+        "file_date": "Aug 27 2026",
+        "file_duration": "227 min",
+        "file_lines": [
+          244
+        ],
+        "id": "TE-40235",
+        "invoice": "",
+        "minutes": 227,
+        "rate": 250,
+        "role": "Senior"
+      },
+      {
+        "amount": "292.50",
+        "billable": true,
+        "billed_hours": 0.75,
+        "client": "Kittering Dairy Cooperative",
+        "consultant": "Eleanor Voss",
+        "date": "2026-08-28",
+        "file_date": "08/28/2026",
+        "file_duration": "0.67",
+        "file_lines": [
+          248
+        ],
+        "id": "TE-40239",
+        "invoice": "",
+        "minutes": 40,
+        "rate": 390,
+        "role": "Partner"
+      }
+    ],
+    "month": "2026-08",
+    "total": "5,272.50",
+    "unbilled_drop_after_both_invoices": "5,955.00",
+    "wrong_totals": {
+      "including_late_july": "5,955.00",
+      "including_non_billable": "5,467.50",
+      "no_rounding": "5,185.83",
+      "rounded_to_nearest_quarter": "5,210.00"
+    }
+  },
+  "locked_examples": {
+    "admin_edit": {
+      "amount": "420.00",
+      "billable": true,
+      "billed_hours": 1.5,
+      "client": "Fairhaven Senior Living",
+      "consultant": "Marcus Iyer",
+      "date": "2026-07-02",
+      "file_date": "2026-07-02",
+      "file_duration": "1:30",
+      "file_lines": [
+        16
+      ],
+      "id": "TE-40015",
+      "invoice": "INV-2607-0654",
+      "minutes": 90,
+      "rate": 280,
+      "role": "Senior"
+    },
+    "consultant_edit": {
+      "amount": "2,160.00",
+      "billable": true,
+      "billed_hours": 6.75,
+      "client": "Ellery Textiles",
+      "consultant": "Nadia Okafor",
+      "date": "2026-07-17",
+      "file_date": "07/17/26",
+      "file_duration": "6:43",
+      "file_lines": [
+        81
+      ],
+      "id": "TE-40079",
+      "invoice": "INV-2607-0428",
+      "minutes": 403,
+      "rate": 320,
+      "role": "Senior"
+    }
+  },
+  "rates": {
+    "file_rows_excluding_header": 180,
+    "join_example": {
+      "associate": "150.00",
+      "client": "Kittering Dairy Cooperative",
+      "clients_file_code": "C-0665",
+      "partner": "390.00",
+      "rates_file_code": "665",
+      "senior": "250.00"
+    },
+    "negative_rate": {
+      "client": "Orchard Lane Grocers",
+      "client_has_entries": false,
+      "code": "C-0140",
+      "file_value": "-$200.00",
+      "role": "Associate"
+    },
+    "roles": [
+      "Partner",
+      "Senior",
+      "Associate"
+    ]
+  },
+  "restricted_consultant": {
+    "name": "Nadia Okafor",
+    "rate_for_invoice_client": 250,
+    "role": "Senior"
+  },
+  "rounding_check": {
+    "billed_hours": [
+      0.25,
+      1.5,
+      0.75
+    ],
+    "minutes": [
+      7,
+      76,
+      45
+    ],
+    "nearest_quarter_wrong": [
+      0.0,
+      1.25,
+      0.75
+    ],
+    "unrounded_wrong": [
+      0.12,
+      1.27,
+      0.75
+    ]
+  },
+  "rules": {
+    "amount": "billed hours x the client's hourly rate for the consultant's role",
+    "invoice": "one invoice per client per month holding that client's billable, uninvoiced entries dated in that month",
+    "rounding": "Each entry is rounded UP to the next 15 minutes before billing (7 min -> 0.25 h, 1:16 -> 1.50 h, 0:45 -> 0.75 h).",
+    "unbilled": "billable entries with no invoice"
+  },
+  "seed": 0
+}

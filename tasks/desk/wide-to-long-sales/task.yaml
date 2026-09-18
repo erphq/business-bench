@@ -1,0 +1,77 @@
+id: wide-to-long-sales
+track: desk
+category: reformatting
+title: Reshape the by-month sales report for the planning tool upload
+ask: |
+  We're loading our wholesale sales history into Stockcast. Can you turn the by-month sales report into their upload format and save it as sales_long.csv? Their template and my notes from the onboarding call are in the folder.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the month header row says only Jul..Dec, Jan..Aug; the year sits in a merged row above (2025 over Jul-Dec, 2026 over Jan-Aug), so a reader sees the year once per merge and 'Jul' and 'Aug' each appear twice; stamping one year on every column, or letting the second Jul/Aug overwrite the first, moves or loses rows (checks: one row per customer-month; customer code and month)
+- |-
+  blank cells are months with no sales; melting the grid without dropping them adds a zero row for every empty month (checks: row count, 191 rows; one row per customer-month)
+- |-
+  the report carries a TOTAL column, a subtotal row per region (Total Northeast ...) and a grand TOTAL row with no customer code; melting them uploads fake customers and a TOTAL month (check: one row per customer-month)
+- |-
+  three months are net returns written as negative amounts and must stay negative (check: net sales)
+- |-
+  stockcast_upload_2025-06.csv is last year's upload in exactly the target shape; the notes say it is already loaded, so appending it adds Jan-Jun 2025 rows (checks: one row per customer-month; row count)
+checks:
+- type: csv_columns
+  name: Stockcast template columns, exact order
+  path: sales_long.csv
+  columns:
+  - Record ID
+  - Customer Code
+  - Month
+  - Net Sales
+  exact: true
+- type: csv_set_equal
+  name: one row per customer-month
+  path: sales_long.csv
+  column: Record ID
+  ref: sales_long.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: sales_long.csv
+  equals_ref: sales_long.csv
+- type: csv_values_match
+  name: customer code and month
+  path: sales_long.csv
+  ref: sales_long.csv
+  key: Record ID
+  columns:
+  - Customer Code
+  - Month
+  min_accuracy: 1.0
+  must_match_keys:
+  - EMB-1111-202507
+  - EMB-1111-202508
+  - EMB-1111-202512
+  - EMB-1111-202601
+  - EMB-1111-202608
+  - EMB-1219-202608
+  - EMB-1333-202508
+  - EMB-1333-202608
+  - EMB-1583-202512
+  - EMB-1583-202601
+  - EMB-1757-202508
+  - EMB-1896-202511
+- type: csv_values_match
+  name: net sales
+  path: sales_long.csv
+  ref: sales_long.csv
+  key: Record ID
+  columns:
+  - Net Sales
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - EMB-1493-202509
+  - EMB-1111-202602
+  - EMB-1454-202512

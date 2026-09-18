@@ -1,0 +1,35 @@
+{
+  "naive": {
+    "count": {
+      "Airshows & Events": 8,
+      "Email Newsletter": 6,
+      "Flight Club Referrals": 14,
+      "Google Ads": 30,
+      "Instagram": 15,
+      "Radio": 0,
+      "Untracked": 155,
+      "YouTube": 6
+    },
+    "rev": {
+      "Airshows & Events": 67017.0,
+      "Email Newsletter": 56217.0,
+      "Flight Club Referrals": 51306.0,
+      "Google Ads": 189662.0,
+      "Instagram": 83073.0,
+      "Radio": 0.0,
+      "Untracked": 848589.0,
+      "YouTube": 29100.0
+    }
+  },
+  "q2_leads": 196,
+  "utm_guess_counts": {
+    "Airshows & Events": 14,
+    "Email Newsletter": 13,
+    "Flight Club Referrals": 16,
+    "Google Ads": 63,
+    "Instagram": 31,
+    "Radio": 0,
+    "Untracked": 38,
+    "YouTube": 21
+  }
+}

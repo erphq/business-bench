@@ -1,0 +1,21 @@
+QuickBooks customer import - rules
+
+Use the template (QBO_Customer_Import_Template.csv), same columns, same order.
+
+- Only Active accounts. Leads and Inactive accounts stay in the CRM.
+- Display Name: commercial accounts use the account name; residential accounts use the contact's first and last
+  name. QuickBooks will not accept a display name that is already used by another customer OR by a vendor:
+    * if two customers in this import end up with the same name, add their city in parentheses,
+      e.g. "Dana Cruz (Boise)"
+    * if a customer has the same name as one of our vendors (qbo_vendor_list.csv), add " (Customer)" to the
+      customer, e.g. "Acme Supply (Customer)"
+- Company Name: the account name for commercial accounts, blank for residential.
+- First Name / Last Name: the primary contact.
+- Phone as (206) 555-0142. No extensions, the phone field chokes on them.
+- Billing address split into Street 1, Street 2 (suite, unit, apt - only if there is one), City, State (two-letter
+  code), ZIP (five digits - drop any +4, and Excel ate the leading zero on a few New England ZIPs), Country US.
+- Terms must be one of QuickBooks' terms: Due on receipt, Net 15, Net 30, Net 60. COD and upon receipt are Due on
+  receipt; anything with Net 30 in it is Net 30.
+- Taxable: No for tax-exempt accounts, Yes for everyone else.
+
+Marisol

@@ -1,0 +1,12 @@
+Our accountant needs the stock valued at cost as of 30 September, by department, with a grand total.
+
+Count is the till's on-hand report. Cost is what we last paid - Rosa logs every delivery on the receipts
+sheet, so the latest line for an item is its cost now.
+
+The till goes negative when we sell something before the delivery is checked in. Those are really zero, don't
+let them knock the value down.
+
+If we have no cost for something, do not guess one. List those items on the sheet, flagged, so Rosa can chase
+the invoices, and leave them out of the totals.
+
+Frank

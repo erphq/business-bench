@@ -1,0 +1,10 @@
+From: Marisol Ortiz <mortiz@oakhurstpeds.org>
+To: you
+Date: Mon, 31 Aug 2026 17:02
+Subject: petty cash for August
+
+Dana counted the box this afternoon and I witnessed it. Can you reconcile petty cash for me and work out the replenishment check, coded by account so I can hand it to accounting? Put it in one workbook with the totals as formulas.
+
+The fund is $400. We topped it back up to $400 on 14 August, so this covers what has happened since then; the receipts from before that went in with the first check.
+
+Accounts: postage and shipping 6610, office supplies 6600, staff kitchen and refreshments 6450, waiting room and patient supplies 6520. The receipt is what counts - if the log and a receipt disagree, the receipt is right. If there is no receipt for a voucher, don't expense it: code it to 1360 missing receipts until Dana finds it. Whatever is left over or short after all that goes to 6990 cash over/short.

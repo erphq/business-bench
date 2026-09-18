@@ -1,0 +1,82 @@
+id: vendor-statement-reconcile
+track: desk
+category: bookkeeping
+title: Tie out the Keystone supply statement to our books
+ask: |
+  Keystone's August statement is in the folder with our ledger for them. Reconcile the two before we pay, Luis's note has how he likes it done. Save it as vendor_recon.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the statement prints 'INV 0418102' and 'CM 0418240' while the ledger uses '418102' and 'CM418240'; matching the raw strings leaves every line unmatched (checks: one row per open item; status per document)
+- |-
+  credit memo 418000 on the statement was never entered in our books, and credits print with a trailing CR and must be negative (checks: status per document; difference per document)
+- |-
+  invoices 417890 and 417767 are still open on the statement but check 10381 dated 08/28 paid them and had not reached the supplier by its 08/28 activity date; they are paid - check in transit with our amount 0.00, not 'not in our books' and not matched (checks: status per document; difference per document)
+- |-
+  invoice 417838 is 1,443.47 on the statement and 1,443.74 in our ledger, and 417780 differs by one cent; both are amount differs, which a match within a dollar or a cent calls matched (checks: status per document; difference per document)
+- |-
+  bill 418023 is dated after the statement's 08/28 activity date and is open only in our books (check: status per document)
+- |-
+  invoice 417908 is on the statement but was never entered as a bill (check: status per document)
+- |-
+  the ledger report also carries nine June and July bills with zero open balance and the checks that paid them, under a four-line preamble with CRLF endings (checks: one row per open item; row count)
+- |-
+  the difference column must add up to the statement's total due less our open balance (check: variance ties to the balances)
+checks:
+- type: csv_columns
+  name: note's columns
+  path: vendor_recon.csv
+  columns:
+  - reference
+  - type
+  - statement_amount
+  - our_amount
+  - difference
+  - status
+- type: csv_set_equal
+  name: one row per open item
+  path: vendor_recon.csv
+  column: reference
+  ref: vendor_recon.csv
+  normalize:
+  - digits
+- type: csv_row_count
+  name: row count
+  path: vendor_recon.csv
+  equals_ref: vendor_recon.csv
+- type: csv_values_match
+  name: status per document
+  path: vendor_recon.csv
+  ref: vendor_recon.csv
+  key: reference
+  columns:
+  - status
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys: &id001
+  - '417890'
+  - '417767'
+  - '418000'
+  - '417908'
+  - '417838'
+  - '417780'
+  - '418023'
+  - '417759'
+- type: csv_values_match
+  name: difference per document
+  path: vendor_recon.csv
+  ref: vendor_recon.csv
+  key: reference
+  columns:
+  - statement_amount
+  - our_amount
+  - difference
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys: *id001
+- type: custom
+  name: variance ties to the balances
+  module: check.py

@@ -1,0 +1,70 @@
+Modifier,Group,Price Change,Applies To
+Whole milk,Milk,0,Coffee
+Whole milk,Milk,0,Tea
+Whole milk,Milk,free,Cold Drinks
+Oat Milk,Milk,+$0.75,Coffee
+Skim milk,Milk,free,Coffee
+Skim milk,Milk,$0.00,Tea
+Skim milk,Milk,free,Cold Drinks
+Oat milk,Milk,+$0.75,Coffee
+Oat milk,Milk,75c,Tea
+Oat milk,Milk,75c,Cold Drinks
+Almond milk,Milk,+$0.75,Coffee
+Almond milk,Milk,0.75,Tea
+Almond milk,Milk,0.75,Cold Drinks
+Soy milk,Milk,0.60,Coffee
+Soy milk,Milk,0.60,Tea
+Soy milk,Milk,0.60,Cold Drinks
+Half & half,Milk,+$0.50,Coffee
+Half & half,Milk,0.50,Tea
+Half & half,Milk,0.50,Cold Drinks
+Coconut milk,Milk,0.75,Coffee
+Coconut milk,Milk,+$0.75,Tea
+Coconut milk,Milk,0.75,Cold Drinks
+Vanilla,Syrup,+$0.60,Coffee
+Vanilla,Syrup,+$0.60,Tea
+Vanilla,Syrup,60c,Cold Drinks
+Caramel,Syrup,+$0.60,Coffee
+Caramel,Syrup,0.60,Tea
+Caramel,Syrup,60c,Cold Drinks
+Hazelnut,Syrup,+$0.60,Coffee
+Hazelnut,Syrup,+$0.60,Tea
+Hazelnut,Syrup,+$0.60,Cold Drinks
+Sugar-free vanilla,Syrup,+$0.60,Coffee
+Sugar-free vanilla,Syrup,+$0.60,Tea
+Sugar-free vanilla,Syrup,60c,Cold Drinks
+caramel,Syrup,60c,Cold Drinks
+Lavender,Syrup,0.75,Coffee
+Lavender,Syrup,75c,Tea
+Soy milk,Milk,0.60,Coffee
+Lavender,Syrup,+$0.75,Cold Drinks
+Pumpkin spice,Syrup,0.85,Coffee
+Pumpkin spice,Syrup,+$0.85,Tea
+Pumpkin spice,Syrup,0.85,Cold Drinks
+Honey,Syrup,+$0.40,Coffee
+Honey,Syrup,40c,Tea
+Honey,Syrup,+$0.40,Cold Drinks
+Extra shot,Espresso,1.00,Coffee
+Extra shot,Espresso,1.00,Cold Drinks
+Decaf,Espresso,$0.00,Coffee
+Decaf,Espresso,0,Cold Drinks
+Half-caf,Espresso,$0.00,Coffee
+Half-caf,Espresso,0,Cold Drinks
+Whipped cream,Extras,50c,Coffee
+Whipped cream,Extras,0.50,Cold Drinks
+Cold foam,Extras,+$1.25,Cold Drinks
+Extra hot,Extras,$0.00,Coffee
+Extra hot,Extras,0,Tea
+Iced,Extras,free,Coffee
+Iced,Extras,0,Tea
+Light ice,Extras,0,Cold Drinks
+Add bacon,Food add-ons,+2.50,Food
+Add avocado,Food add-ons,1.75,Food
+Gluten-free bread,Food add-ons,+1.25,Food
+Add egg,Food add-ons,+$1.50,Food
+Toasted,Food add-ons,$0.00,Food
+Warmed,Pastry,0,Pastry
+Side of butter,Pastry,0.50,Pastry
+Side of jam,Pastry,0.50,Pastry
+Extra tea bag,Tea,0.50,Tea
+Lemon slice,Tea,0,Tea

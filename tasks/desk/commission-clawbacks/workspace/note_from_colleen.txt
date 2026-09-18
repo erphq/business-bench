@@ -1,0 +1,5 @@
+We have not run clawbacks since the June 15 statement. Can you go through every refund that is not already
+on that statement's clawback list and tell me what we take back? One line per refund in clawbacks.csv:
+refund_id, rep, clawback, recovered, written_off. Put a line in even when the clawback comes to zero.
+
+- Colleen

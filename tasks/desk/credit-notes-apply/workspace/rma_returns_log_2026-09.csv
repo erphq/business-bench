@@ -1,0 +1,23 @@
+﻿Warehouse returns log - September 2026
+RMA,Received,Customer,Orig Invoice,SKU,Item,Qty Returned,Return Reason,Inspection
+RMA-2609-102,2026-09-27,Hound Hollow Grooming Inc.,INV-30417,KC-TR-SB,Salmon bites treats 12 oz (case of 12),6,Ordered in error,Accepted
+RMA-2609-102,2026-09-27,Hound Hollow Grooming Inc.,INV-30417,KC-BR-SL,Slicker brush (case of 6),5,Manufacturer recall,Accepted
+RMA-2609-110,2026-09-27,MUDROOM DOG WASH,INV-30485,KC-AQ-FL,Aquarium filter cartridges (24),6,Manufacturer recall,Accepted
+RMA-2609-110,09/27/2026,MUDROOM DOG WASH,INV-30485,KC-DF-30,Grain-free dog food 30 lb,10,Wrong item shipped,Accepted
+RMA-2609-110,09/27/2026,MUDROOM DOG WASH,INV-30485,KC-TY-RO,Rope toy assortment (case of 24),3,Overstock,Accepted
+RMA-2609-113,2026-09-17,Mountain Mutt Outfitters,INV-30390,KC-DT-KIT,Dental care kit (case of 12),8,Wrong item shipped,Accepted
+RMA-2609-113,2026-09-17,Mountain Mutt Outfitters,INV-30390,KC-BR-SL,Slicker brush (case of 6),9,Ordered in error,Accepted
+RMA-2609-113,09/17/2026,Mountain Mutt Outfitters,INV-30390,KC-FL-3,Flea and tick drops 3-pack (case of 6),9,Manufacturer recall,Accepted
+RMA-2609-122,2026-09-15,Tailwind Pet Market LLC,INV-30424,KC-AQ-FL,Aquarium filter cartridges (24),5,Overstock,Accepted
+RMA-2609-130,2026-09-22,Bayside Bark & Bath LLC,30451,KC-TY-RO,Rope toy assortment (case of 24),2,Damaged in transit,Accepted
+RMA-2609-130,09/22/2026,Bayside Bark & Bath LLC,30451,KC-CR-M,Wire crate medium,4,Ordered in error,Rejected - opened / not resaleable
+RMA-2609-134,09/06/2026,Barkside Grooming,INV-30425,KC-BR-SL,Slicker brush (case of 6),6,Wrong item shipped,Pending inspection
+RMA-2609-134,09/06/2026,Barkside Grooming,INV-30425,KC-FL-3,Flea and tick drops 3-pack (case of 6),2,Ordered in error,Pending inspection
+RMA-2609-137,09/07/2026,The Feed Bin,INV-30433,KC-LT-40,Clumping litter 40 lb,3,Wrong item shipped,Accepted
+RMA-2609-137,2026-09-07,The Feed Bin,INV-30433,KC-DF-30,Grain-free dog food 30 lb,9,Damaged in transit,Accepted
+RMA-2609-137,09/07/2026,The Feed Bin,INV-30433,KC-DT-KIT,Dental care kit (case of 12),11,Damaged in transit,Accepted
+RMA-2609-156,09/19/2026,The Feed Bin,INV-30429,KC-CR-M,Wire crate medium,9,Damaged in transit,Accepted
+RMA-2609-156,09/19/2026,The Feed Bin,INV-30429,KC-FL-3,Flea and tick drops 3-pack (case of 6),4,Overstock,Accepted
+RMA-2609-166,2026-09-19,Whisker Lane Pets LLC,INV-30434,KC-CL-PRO,Professional clipper kit,1,Overstock,Accepted
+RMA-2609-167,09/06/2026,KITTY CORNER PET SHOP,INV-30421,KC-TY-RO,Rope toy assortment (case of 24),3,Manufacturer recall,Accepted
+RMA-2609-190,09/07/2026,Fin & Feather Aquatics LLC,INV-30468,KC-CH-BU,Bully sticks 6 in (bulk 50),1,Overstock,Accepted

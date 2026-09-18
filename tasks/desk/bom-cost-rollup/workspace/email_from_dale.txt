@@ -1,0 +1,21 @@
+From: Dale Morgan <dale@ironwoodfab.com>
+To: you
+Date: Wed, 3 Sep 2026 16:05
+Subject: material cost per product
+
+Ruth (our accountant) needs a standard material cost for the five things we actually sell: IW-7230, IW-4830, IW-SR5, IW-MC2 and IW-TS1. Material only - no labor, no powder coat, no freight.
+
+Engineering exported the bills of materials this morning; the subassemblies have their own bills in the same export. Use whatever revision is current; engineering changed the drawer slides in the spring and the old revision is still sitting in the system.
+
+Prices: use Kwame's August price list. Ignore the 2025 one, it's only there because nobody cleans up this folder.
+
+-----Original Message-----
+
+From: Dale Morgan <dale@ironwoodfab.com>
+To: you
+Date: Wed, 3 Sep 2026 16:22
+Subject: RE: material cost per product
+
+Forgot one thing. We switched caster suppliers in July and the new casters (CST-5) aren't on the August list yet. Silverline quoted $14.98 each, use that.
+
+Please build it so I can change a price and see the product costs move - Ruth will ask again when steel goes up.

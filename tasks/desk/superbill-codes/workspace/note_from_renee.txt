@@ -1,0 +1,16 @@
+Charge entry for this week's superbills
+
+The superbills and therapy slips are in the folder. The charge import wants one row per procedure code we actually billed, saved as superbill_lines.csv:
+
+  line_ref       encounter number, a hyphen, the five-digit code (40412-97110)
+  encounter_no   digits only
+  account_no     as printed (A12345)
+  service_date   YYYY-MM-DD, the date of the visit
+  cpt_code       the five-digit code only, no modifiers attached
+  modifiers      every modifier that applies to that line, two characters each, separated by a space, in the order the form gives them; blank if none
+  units          billed units (not minutes)
+  charge         units times the fee from fee_schedule.csv in effect on the date of service. Ignore the fees printed on the forms, the form stock is old.
+
+Anything crossed out or voided on a slip was not billed.
+
+Renee

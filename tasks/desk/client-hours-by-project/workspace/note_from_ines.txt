@@ -1,0 +1,13 @@
+Account reviews are the week after next and I want Q3's hours (July to September) for every client project, one row per project, with how much of it we can bill.
+
+Most of us are in the tracker. Nadia and Tomasz log on the phone timer app, which exports on its own, so both files count.
+
+Our own time - portfolio, pitches, admin - does not go in. It shows up under Driftwood Studio in the tracker and Internal on the timer app.
+
+Projects get renamed now and then when a client changes their mind about what to call things. The project code in projects.xlsx never changes, so treat the same code as the same project and use the name it has now.
+
+Anything logged to Revisions (no charge) is not billable, whatever the Billable box says - people tick it out of habit.
+
+Columns: client, project, billable_hours, unbillable_hours, total_hours. Hours as numbers to two decimals.
+
+Ines

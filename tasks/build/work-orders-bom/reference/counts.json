@@ -1,0 +1,478 @@
+{
+  "seed": 0,
+  "attempt": 12,
+  "baseline": {
+    "STAFF_ROLE": "Line supervisor",
+    "VIEWER_ROLE": "Read-only (the accountant)",
+    "MAIN_ENTITY": "work order",
+    "MAIN_ENTITY_PLURAL": "work orders",
+    "restricted_user": "Sam Whitaker",
+    "restricted_line": "Line 2 - Carts",
+    "SCOPE_COUNT": 35,
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "work_order": "WO-3164",
+      "line": "Line 1 - Tables",
+      "product": "SNK-1C18",
+      "status": "In Progress"
+    },
+    "KPI_1": {
+      "name": "open work orders",
+      "value": 18,
+      "scoped_value": 9,
+      "definition": "Planned, Released, or In Progress"
+    },
+    "KPI_2": {
+      "name": "work orders in progress",
+      "value": 9
+    },
+    "KPI_3": {
+      "name": "WIP value",
+      "value": 65174.24,
+      "definition": "sum over in-progress work orders of quantity x the product's BOM material cost",
+      "naive_counting_repeated_row": 68266.24
+    },
+    "KPI_4": {
+      "name": "parts below reorder point",
+      "value": 6,
+      "parts": [
+        "001020",
+        "001053",
+        "002011",
+        "002041",
+        "002070",
+        "002091"
+      ]
+    },
+    "SEARCH_TERM": "SHF-DUN-2036",
+    "SEARCH_COUNT": 3,
+    "FILTER_FIELD": "line",
+    "FILTER_VALUE": "Line 3 - Shelving",
+    "FILTER_COUNT": 23,
+    "SORT_FIELD": "quantity",
+    "SORT_TOP": {
+      "work_order": "WO-3103",
+      "qty": 120,
+      "product": "SHF-1848-4T"
+    },
+    "text_sort_top_would_be": {
+      "work_order": "WO-3104",
+      "file_value": "80"
+    },
+    "EXPORT_ROWS": 84,
+    "EXPORT_COLUMNS": [
+      "work order number",
+      "product",
+      "quantity",
+      "line",
+      "status",
+      "due date"
+    ],
+    "REQUIRED_FIELD": "a product",
+    "test_line": "Line 1 - Tables"
+  },
+  "parts": {
+    "file_rows_excluding_header": 93,
+    "exact_duplicate_rows": 3,
+    "unpadded_number_duplicate_rows": 2,
+    "unique_parts": 88,
+    "components": 68,
+    "finished_goods": 20,
+    "duplicate_rows": [
+      {
+        "written_as": "1060",
+        "part": "001060",
+        "kind": "exact_duplicate"
+      },
+      {
+        "written_as": "002032",
+        "part": "002032",
+        "kind": "unpadded_duplicate"
+      },
+      {
+        "written_as": "002041",
+        "part": "002041",
+        "kind": "unpadded_duplicate"
+      },
+      {
+        "written_as": "002070",
+        "part": "002070",
+        "kind": "exact_duplicate"
+      },
+      {
+        "written_as": "002080",
+        "part": "002080",
+        "kind": "exact_duplicate"
+      }
+    ],
+    "component_rows_written_without_leading_zeros": 23,
+    "unpadded_example": {
+      "written_as": "1021",
+      "part": "001021"
+    },
+    "comma_quantity_example": {
+      "part": "003010",
+      "description": "Bolt 1/4-20 x 3/4 SS",
+      "file_value": "2,400",
+      "on_hand": 2400,
+      "naive_misreadings": [
+        2,
+        2.4
+      ]
+    },
+    "below_reorder_point": [
+      "001020",
+      "001053",
+      "002011",
+      "002041",
+      "002070",
+      "002091"
+    ]
+  },
+  "boms": {
+    "file_rows_excluding_header": 173,
+    "exact_duplicate_lines": 4,
+    "orphan_lines": 1,
+    "unique_component_lines": 168,
+    "finished_goods_with_bom": 20,
+    "repeated_lines": [
+      {
+        "parent": "TBL-2448",
+        "component": "003010",
+        "written_as": "3010"
+      },
+      {
+        "parent": "TBL-3048",
+        "component": "005020",
+        "written_as": "005020"
+      },
+      {
+        "parent": "CRT-1827-2S",
+        "component": "002012",
+        "written_as": "002012"
+      },
+      {
+        "parent": "CRT-BUS-3S",
+        "component": "003010",
+        "written_as": "003010"
+      }
+    ],
+    "rollup_product": {
+      "code": "CRT-BUS-3S",
+      "components": 11,
+      "lines": [
+        {
+          "component": "001012",
+          "description": "SS304 sheet 18ga 36x96",
+          "qty_per": 0.75,
+          "unit_cost": 165.28,
+          "written_as": "1012"
+        },
+        {
+          "component": "001040",
+          "description": "Cart upright SS 1in x 36in",
+          "qty_per": 4,
+          "unit_cost": 11.88,
+          "written_as": "1040"
+        },
+        {
+          "component": "002011",
+          "description": "Caster 5in swivel",
+          "qty_per": 2,
+          "unit_cost": 11.16,
+          "written_as": "002011"
+        },
+        {
+          "component": "002012",
+          "description": "Caster 5in rigid",
+          "qty_per": 2,
+          "unit_cost": 10.9,
+          "written_as": "2012"
+        },
+        {
+          "component": "002051",
+          "description": "Push handle SS 24in",
+          "qty_per": 1,
+          "unit_cost": 20.0,
+          "written_as": "002051"
+        },
+        {
+          "component": "002061",
+          "description": "Perimeter bumper strip 6ft",
+          "qty_per": 2,
+          "unit_cost": 11.09,
+          "written_as": "002061"
+        },
+        {
+          "component": "003010",
+          "description": "Bolt 1/4-20 x 3/4 SS",
+          "qty_per": 24,
+          "unit_cost": 0.16,
+          "written_as": "003010"
+        },
+        {
+          "component": "003011",
+          "description": "Nylock nut 1/4-20 SS",
+          "qty_per": 24,
+          "unit_cost": 0.08,
+          "written_as": "003011"
+        },
+        {
+          "component": "003012",
+          "description": "Hex bolt 3/8-16 x 1 SS",
+          "qty_per": 8,
+          "unit_cost": 0.36,
+          "written_as": "3012"
+        },
+        {
+          "component": "005010",
+          "description": "Carton kit cart",
+          "qty_per": 1,
+          "unit_cost": 8.78,
+          "written_as": "005010"
+        },
+        {
+          "component": "005030",
+          "description": "Serial plate label",
+          "qty_per": 1,
+          "unit_cost": 0.96,
+          "written_as": "5030"
+        }
+      ],
+      "bolt_line_rows_in_file": 2,
+      "unit_material_cost": 276.16,
+      "naive_unit_material_cost_counting_repeated_line": 280.0
+    },
+    "orphan": {
+      "parent": "SHF-WALL-36",
+      "component_as_written": "9950",
+      "component_padded": "009950",
+      "description": "Wall anchor kit",
+      "bom_lines_without_it": 4
+    }
+  },
+  "work_orders": {
+    "file_rows_excluding_header": 87,
+    "unique_work_orders": 84,
+    "duplicate_rows": [
+      {
+        "written_as": "WO-3174",
+        "work_order": "WO-3174",
+        "status": "In Progress",
+        "kind": "exact_duplicate"
+      },
+      {
+        "written_as": "WO-3123",
+        "work_order": "WO-3123",
+        "status": "Completed",
+        "kind": "exact_duplicate"
+      },
+      {
+        "written_as": "3131",
+        "work_order": "WO-3131",
+        "status": "Completed",
+        "kind": "unprefixed_number"
+      }
+    ],
+    "by_status": {
+      "Planned": 4,
+      "Released": 5,
+      "In Progress": 9,
+      "Completed": 64,
+      "Cancelled": 2
+    },
+    "status_words": {
+      "Completed": [
+        "Completed",
+        "Complete",
+        "Closed"
+      ],
+      "Cancelled": [
+        "Cancelled",
+        "Void"
+      ],
+      "In Progress": [
+        "In Progress",
+        "WIP"
+      ],
+      "Released": [
+        "Released",
+        "Rel."
+      ],
+      "Planned": [
+        "Planned",
+        "planned"
+      ]
+    },
+    "by_line": {
+      "Line 1 - Tables": 26,
+      "Line 2 - Carts": 35,
+      "Line 3 - Shelving": 23
+    },
+    "line_words": {
+      "Line 1 - Tables": [
+        "Line 1",
+        "L1",
+        "Tables"
+      ],
+      "Line 2 - Carts": [
+        "Line 2",
+        "L2",
+        "Carts"
+      ],
+      "Line 3 - Shelving": [
+        "Line 3",
+        "L3",
+        "Shelving"
+      ]
+    },
+    "impossible_dates": {
+      "work_order": "WO-3181",
+      "product": "SHF-2460-4T",
+      "start": "2026-09-20",
+      "due": "2026-09-17",
+      "file_values": {
+        "Start Date": "2026-09-20",
+        "Due Date": "9/17/2026"
+      }
+    }
+  },
+  "tests": {
+    "availability": {
+      "product": "CRT-2436-2S",
+      "line": "Line 2 - Carts",
+      "qty": 24,
+      "component": "002010",
+      "component_description": "Caster 5in swivel with brake",
+      "qty_per": 2,
+      "needed": 48,
+      "on_hand": 40,
+      "short_by": 8,
+      "other_components_sufficient": true
+    },
+    "flow": {
+      "product": "SHF-2448-4T",
+      "line": "Line 3 - Shelving",
+      "qty": 10,
+      "finished_on_hand_before": 22,
+      "finished_on_hand_after": 32,
+      "components": [
+        {
+          "component": "001050",
+          "description": "Shelving post chrome 74in",
+          "qty_per": 4,
+          "issued": 40,
+          "before": 574,
+          "after": 534,
+          "reorder_point": 120
+        },
+        {
+          "component": "002031",
+          "description": "Wire shelf chrome 24x48",
+          "qty_per": 4,
+          "issued": 40,
+          "before": 492,
+          "after": 452,
+          "reorder_point": 120
+        },
+        {
+          "component": "002040",
+          "description": "Split sleeve pair",
+          "qty_per": 16,
+          "issued": 160,
+          "before": 2057,
+          "after": 1897,
+          "reorder_point": 600
+        },
+        {
+          "component": "002021",
+          "description": "Leveling foot for shelving post",
+          "qty_per": 4,
+          "issued": 40,
+          "before": 777,
+          "after": 737,
+          "reorder_point": 160
+        },
+        {
+          "component": "005011",
+          "description": "Carton shelving 4-tier",
+          "qty_per": 1,
+          "issued": 10,
+          "before": 358,
+          "after": 348,
+          "reorder_point": 90
+        },
+        {
+          "component": "005030",
+          "description": "Serial plate label",
+          "qty_per": 1,
+          "issued": 10,
+          "before": 1066,
+          "after": 1056,
+          "reorder_point": 300
+        }
+      ],
+      "unit_material_cost": 184.16,
+      "wip_increase": 1841.6,
+      "wip_during": 67015.84
+    }
+  },
+  "changes": {
+    "c1_august_2026_units_completed_by_line": {
+      "Line 1 - Tables": 46,
+      "Line 2 - Carts": 130,
+      "Line 3 - Shelving": 120
+    },
+    "c1_august_2026_material_cost_by_line": {
+      "Line 1 - Tables": 23645.98,
+      "Line 2 - Carts": 30761.1,
+      "Line 3 - Shelving": 25287.0
+    },
+    "c1_august_2026_work_orders_completed": 10,
+    "c1_on_time": {
+      "completed": 64,
+      "on_time": 43,
+      "rate_percent": 67.2,
+      "rule": "Completed On on or before Due Date"
+    },
+    "c1_on_time_restricted_line": {
+      "completed": 24,
+      "on_time": 15,
+      "rate_percent": 62.5
+    },
+    "c1_on_time_bounds_percent": [
+      67.1,
+      67.3
+    ],
+    "c1_on_time_restricted_bounds_percent": [
+      62.4,
+      62.6
+    ],
+    "c2_purchase_request_test": {
+      "part": "QA-BOLT",
+      "on_hand": 50,
+      "reorder_point": 40,
+      "unit_cost": 0.1,
+      "qty_per_kit": 4,
+      "first_order_qty": 5,
+      "on_hand_after_first": 30,
+      "request_qty": 50,
+      "second_order_qty": 2,
+      "on_hand_after_second": 22,
+      "request_qty_if_updated": 58,
+      "on_hand_after_receipt": [
+        72,
+        80
+      ]
+    },
+    "c3_quality_check_test": {
+      "qty": 10,
+      "good": 9,
+      "scrap": 1
+    },
+    "c1_naive_august_units_with_repeated_rows": {
+      "Line 1 - Tables": 46,
+      "Line 2 - Carts": 130,
+      "Line 3 - Shelving": 120
+    }
+  }
+}

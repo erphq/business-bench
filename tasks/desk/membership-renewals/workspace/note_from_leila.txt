@@ -1,0 +1,31 @@
+Renewal list for October - and the lapsed list
+
+Every month I send renewal letters to members whose membership runs out the following month, and a
+'we miss you' letter to members who have lapsed. It's the 15th of September, so this round is
+October renewals.
+
+A few rules, because the export does not know them:
+
+1. Grace period. Members keep their benefits for a while after their membership runs out, and they
+   are still members during that time. Annual members get 30 days after their expiration date;
+   monthly sustainers get 10 days after the date they are paid through. Count the grace days from
+   the day after: a membership that expires on 1 August is in grace through 31 August and lapsed from
+   1 September. Anyone still in their grace period goes on neither list - the front desk handles them.
+   The Status column in the export says Expired the day after expiry, so please don't go by it.
+
+2. Monthly sustainers are charged every month on the same day, so each charge pays them through the
+   same date the next month. The system shows them Active forever and leaves Expiration blank - go by
+   the last payment. They renew automatically, so they are never on the renewal list, only on the
+   lapsed list if the charges have stopped.
+
+3. Comped memberships (board, volunteers, honorary - Payment Method says Comp) don't get either letter.
+
+4. When someone upgrades, the system gives them a new member number and leaves the old record behind.
+   Same email means same person; only their newest record counts.
+
+Please save it as renewals.csv, one line per member who gets a letter: member_id, name, email,
+list (DUE or LAPSED) and expires - the date the membership ran out or runs out (for sustainers the
+paid-through date), written like 2026-10-04.
+
+Thank you!
+Leila

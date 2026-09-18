@@ -1,0 +1,41 @@
+{
+  "combo_skus": [
+    "DB20-10L-BLUE",
+    "DB20-10L-YELLOW",
+    "DB20-20L-BLUE",
+    "DB20-20L-YELLOW",
+    "FV11-L-NAVY",
+    "FV11-L-RUST",
+    "FV11-M-NAVY",
+    "FV11-M-RUST",
+    "FV11-S-NAVY",
+    "FV11-S-RUST",
+    "FV11-XL-NAVY",
+    "FV11-XL-RUST",
+    "TJ24-L-OLIVE",
+    "TJ24-M-OLIVE",
+    "TJ24-S-OLIVE",
+    "WB10-1L-BLUE",
+    "WB10-1L-GREEN",
+    "WS3P-L",
+    "WS3P-M",
+    "WS3P-S"
+  ],
+  "no_option_skus": [
+    "CS01",
+    "HL300",
+    "MC01"
+  ],
+  "out_of_stock_skus": [
+    "FV11-L-SAND",
+    "MC01",
+    "RS03-M",
+    "SP40-LONG",
+    "TJ24-XL-OLIVE",
+    "TN2P-ORANGE",
+    "TP22-RED",
+    "WB10-750ML-ORANGE",
+    "WS3P-XL"
+  ],
+  "variants": 47
+}

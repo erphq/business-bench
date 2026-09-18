@@ -1,0 +1,18 @@
+Return reasons - how we bucket them
+
+The RMA screen is free text so the reasons are all over the place. Put each one in the bucket whose keyword it contains:
+
+  Sizing: small, large, fit, tight, short
+  Damaged: broken, torn, damaged, cracked, scratched
+  Not as described: described, expected, photos, picture
+  Changed mind: mind, needed, mistake, cheaper
+  Wrong item: wrong, different item
+
+Every reason in the export contains one of those words. Count units (the Qty column), not RMAs.
+
+Two other things. Exchanges and store credits are still returns - the item came back - so they count toward the return rate along with refunds. But exchanges do not cost us a refund, so when you total refunded dollars use refunds and store credits only, even though the export prints an amount on every row.
+
+Also we renamed Camp Stove to Summit Stove on May 1 (same SKU CS-01); both names show up in both exports. Report it once, as Summit Stove.
+Return rate = units returned / units sold in the quarter.
+
+- Mateo

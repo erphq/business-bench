@@ -1,0 +1,18 @@
+Scoring the member survey
+
+Same as last year, please - the 2025 summary is in the folder so you can see the layout. Here is how we
+score it:
+
+- Strongly agree is 5, Agree 4, Neither agree nor disagree 3, Disagree 2, Strongly disagree 1.
+- Questions 4, 7 and 9 are worded the other way round (agreeing means something is wrong), so score them
+  in reverse: Strongly agree is 1 up to Strongly disagree 5. That way a higher average is always better
+  and the board can read the whole column the same way.
+- N/A isn't a score, and neither is a question someone skipped. Leave them out of both the average and
+  the number of responses.
+- A few people filled it in twice. Count each member once, using their last submission - the form
+  doesn't care about capital letters in the email but they're the same person.
+- Our own test runs from foundrycommons.co addresses don't count.
+
+Save it as survey_summary.csv with question (Q1 to Q10), responses and average (two decimals).
+
+Amara

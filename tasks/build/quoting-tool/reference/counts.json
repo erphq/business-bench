@@ -1,0 +1,566 @@
+{
+  "seed": 0,
+  "company": "Fernhill Furniture Works",
+  "admin": "the owner",
+  "reps": [
+    "Jordan Price",
+    "Aaliyah Brooks",
+    "Sven Lindqvist"
+  ],
+  "restricted_login": "Aaliyah Brooks",
+  "rules": {
+    "margin_floor_after_discount": 0.3,
+    "discount_needs_approval_over": 0.1,
+    "unit_cost": "board feet x material cost per board foot + labor cost",
+    "margin": "(unit price x (1 - discount) - unit cost) / (unit price x (1 - discount))",
+    "win_rate": "won / (won + lost); Expired, Sent, and Draft excluded"
+  },
+  "baseline": {
+    "staff_role": "Sales Rep",
+    "viewer_role": "Viewer",
+    "main_entity": "quote",
+    "main_entity_plural": "quotes",
+    "scope_rule": "quotes owned by Aaliyah Brooks",
+    "scope_count": 43,
+    "out_of_scope_example": {
+      "quote": "Q-2174",
+      "customer": "Mateo Parker",
+      "rep": "Jordan Price",
+      "status": "Sent",
+      "discount": 0,
+      "total": 4350.0,
+      "file_lines": [
+        135
+      ]
+    },
+    "kpis": [
+      {
+        "name": "Open quotes (Draft or Sent)",
+        "value": 44
+      },
+      {
+        "name": "Win rate (won / (won + lost))",
+        "value_pct": 45.5,
+        "won": 30,
+        "lost": 36
+      },
+      {
+        "name": "Out for decision (Sent value after discount)",
+        "value": 147369.5
+      },
+      {
+        "name": "Won value after discount",
+        "value": 144238.7
+      }
+    ],
+    "scoped_kpi_1": 17,
+    "search": {
+      "term": "Mitchell",
+      "customer": "Amanda Mitchell",
+      "count": 2,
+      "quotes": [
+        "Q-2134",
+        "Q-2204"
+      ]
+    },
+    "filter": {
+      "field": "Status",
+      "value": "Won",
+      "count": 30
+    },
+    "sort": {
+      "field": "Total",
+      "top": {
+        "quote": "Q-2172",
+        "customer": "Yuki Watson",
+        "rep": "Sven Lindqvist",
+        "status": "Sent",
+        "discount": 0,
+        "total": 17515.0,
+        "file_lines": [
+          130,
+          131,
+          132
+        ]
+      }
+    },
+    "export": {
+      "rows": 120,
+      "columns": [
+        "Quote No",
+        "Customer",
+        "Rep",
+        "Status",
+        "Total"
+      ]
+    },
+    "required_field": "Customer",
+    "wrong": {
+      "win_rate_over_all_quotes_pct": 25.0,
+      "win_rate_counting_expired_as_lost_pct": 39.5,
+      "scope_if_rep_matched_as_written": 38
+    }
+  },
+  "products": {
+    "file_rows_excluding_header": 64,
+    "exact_duplicate_rows": 2,
+    "rekeyed_duplicate_rows": 2,
+    "rekeyed_forms": [
+      "frm-sb",
+      "STD-DT84 "
+    ],
+    "unique_products": 60,
+    "per_collection": {
+      "Shaker": 15,
+      "Mid-Century": 15,
+      "Farmhouse": 15,
+      "Studio": 15
+    },
+    "shk_dt72": {
+      "board_feet": 44,
+      "labor": 1280.0,
+      "labor_file_value": "$1,280.00"
+    },
+    "shk_dc": {
+      "board_feet": 7,
+      "labor": 310.0
+    }
+  },
+  "materials": {
+    "file_rows_excluding_header": 62,
+    "exact_duplicate_rows": 2,
+    "unique_materials": 60,
+    "highest_cost": {
+      "code": "MAH-84-FAS",
+      "cost": 18.22,
+      "file_value": "$18.22"
+    },
+    "text_sort_top": {
+      "code": "CHE-44-FAS",
+      "file_value": "9.60"
+    },
+    "wal_84_fas": 16.37,
+    "wal_44_fas": 12.4
+  },
+  "quotes": {
+    "file_rows_excluding_header": 216,
+    "duplicate_line_rows": 5,
+    "quotes": 120,
+    "per_status": {
+      "Won": 30,
+      "Lost": 36,
+      "Expired": 10,
+      "Sent": 24,
+      "Draft": 20
+    },
+    "per_rep": {
+      "Jordan Price": 47,
+      "Aaliyah Brooks": 43,
+      "Sven Lindqvist": 30
+    },
+    "item17_quote_with_duplicated_line": {
+      "quote": "Q-2165",
+      "customer": "Stephanie Rogers",
+      "rep": "Aaliyah Brooks",
+      "status": "Won",
+      "discount": 0.05,
+      "total": 7153.5,
+      "file_lines": [
+        116,
+        118
+      ],
+      "discount_as_written": "5%",
+      "total_with_duplicate_kept": 11224.25,
+      "total_ignoring_discount": 7530.0
+    },
+    "negative_quantity": {
+      "quote": "Q-2187",
+      "customer": "Westbrook Plumbing",
+      "rep": "Sven Lindqvist",
+      "status": "Draft",
+      "discount": 0.1,
+      "total": -4527.0,
+      "file_lines": [
+        157,
+        158
+      ],
+      "sku": "STD-DT84",
+      "qty": -2
+    },
+    "win_rate": {
+      "company_pct": 45.5,
+      "won": 30,
+      "lost": 36,
+      "decided": 66,
+      "restricted_decided": 21,
+      "restricted_pct": 28.6,
+      "restricted_won": 6,
+      "restricted_lost": 15,
+      "mark_lost_quote": {
+        "quote": "Q-2173",
+        "customer": "Brian Hall",
+        "rep": "Aaliyah Brooks",
+        "status": "Sent",
+        "discount": 0,
+        "total": 3910.0,
+        "file_lines": [
+          133,
+          134
+        ]
+      },
+      "company_after_mark_lost_pct": 44.8,
+      "restricted_after_mark_lost_pct": 27.3
+    },
+    "margin_flagged_open_quotes": [
+      {
+        "quote": "Q-2185",
+        "customer": "Paul Morales",
+        "rep": "Aaliyah Brooks",
+        "status": "Sent",
+        "discount": 0,
+        "total": 12995.0,
+        "file_lines": [
+          152,
+          153,
+          154
+        ],
+        "lines": [
+          {
+            "sku": "FRM-DT96",
+            "material": "WO-64-FAS",
+            "qty": 2,
+            "unit_price": 2900.0,
+            "unit_cost": 2284.5,
+            "board_feet": 69,
+            "labor": 1560.0,
+            "material_cost_per_bf": 10.5,
+            "margin_before_discount_pct": 21.22,
+            "margin_after_discount_pct": 21.22
+          },
+          {
+            "sku": "STD-CON",
+            "material": "CHE-84-SEL",
+            "qty": 2,
+            "unit_price": 990.0,
+            "unit_cost": 618.5,
+            "board_feet": 15,
+            "labor": 455.0,
+            "material_cost_per_bf": 10.9,
+            "margin_before_discount_pct": 37.53,
+            "margin_after_discount_pct": 37.53
+          },
+          {
+            "sku": "FRM-DC",
+            "material": "POP-44-SEL",
+            "qty": 7,
+            "unit_price": 745.0,
+            "unit_cost": 336.8,
+            "board_feet": 8,
+            "labor": 310.0,
+            "material_cost_per_bf": 3.35,
+            "margin_before_discount_pct": 54.79,
+            "margin_after_discount_pct": 54.79
+          }
+        ]
+      },
+      {
+        "quote": "Q-2204",
+        "customer": "Amanda Mitchell",
+        "rep": "Jordan Price",
+        "status": "Sent",
+        "discount": 0.1,
+        "total": 2448.0,
+        "file_lines": [
+          187
+        ],
+        "lines": [
+          {
+            "sku": "STD-DT72",
+            "material": "SAP-84-FAS",
+            "qty": 1,
+            "unit_price": 2720.0,
+            "unit_cost": 1780.32,
+            "board_feet": 42,
+            "labor": 1215.0,
+            "material_cost_per_bf": 13.46,
+            "margin_before_discount_pct": 34.55,
+            "margin_after_discount_pct": 27.27
+          }
+        ]
+      },
+      {
+        "quote": "Q-2205",
+        "customer": "Oakhurst Pediatrics",
+        "rep": "Jordan Price",
+        "status": "Sent",
+        "discount": 0,
+        "total": 9855.0,
+        "file_lines": [
+          188,
+          189
+        ],
+        "lines": [
+          {
+            "sku": "MCM-DT72",
+            "material": "ASH-84-FAS",
+            "qty": 1,
+            "unit_price": 2385.0,
+            "unit_cost": 1747.04,
+            "board_feet": 44,
+            "labor": 1410.0,
+            "material_cost_per_bf": 7.66,
+            "margin_before_discount_pct": 26.75,
+            "margin_after_discount_pct": 26.75
+          },
+          {
+            "sku": "STD-DR6",
+            "material": "MAH-64-SEL",
+            "qty": 2,
+            "unit_price": 3735.0,
+            "unit_cost": 2254.0,
+            "board_feet": 51,
+            "labor": 1540.0,
+            "material_cost_per_bf": 14.0,
+            "margin_before_discount_pct": 39.65,
+            "margin_after_discount_pct": 39.65
+          }
+        ]
+      },
+      {
+        "quote": "Q-2215",
+        "customer": "Cynthia Ward",
+        "rep": "Jordan Price",
+        "status": "Draft",
+        "discount": 0.05,
+        "total": 4750.0,
+        "file_lines": [
+          207,
+          208
+        ],
+        "lines": [
+          {
+            "sku": "MCM-CT",
+            "material": "SAP-84-FAS",
+            "qty": 1,
+            "unit_price": 1180.0,
+            "unit_cost": 812.28,
+            "board_feet": 18,
+            "labor": 570.0,
+            "material_cost_per_bf": 13.46,
+            "margin_before_discount_pct": 31.16,
+            "margin_after_discount_pct": 27.54
+          },
+          {
+            "sku": "SHK-DT96",
+            "material": "HIC-84-FAS",
+            "qty": 1,
+            "unit_price": 3820.0,
+            "unit_cost": 2082.6,
+            "board_feet": 60,
+            "labor": 1560.0,
+            "material_cost_per_bf": 8.71,
+            "margin_before_discount_pct": 45.48,
+            "margin_after_discount_pct": 42.61
+          }
+        ]
+      }
+    ],
+    "q_a_flagged": {
+      "quote": "Q-2205",
+      "customer": "Oakhurst Pediatrics",
+      "rep": "Jordan Price",
+      "status": "Sent",
+      "discount": 0,
+      "total": 9855.0,
+      "file_lines": [
+        188,
+        189
+      ],
+      "line": {
+        "sku": "MCM-DT72",
+        "material": "ASH-84-FAS",
+        "qty": 1,
+        "unit_price": 2385.0,
+        "unit_cost": 1747.04,
+        "board_feet": 44,
+        "labor": 1410.0,
+        "material_cost_per_bf": 7.66,
+        "margin_before_discount_pct": 26.75,
+        "margin_after_discount_pct": 26.75
+      }
+    },
+    "q_c_flagged_after_discount": {
+      "quote": "Q-2204",
+      "customer": "Amanda Mitchell",
+      "rep": "Jordan Price",
+      "status": "Sent",
+      "discount": 0.1,
+      "total": 2448.0,
+      "file_lines": [
+        187
+      ],
+      "line": {
+        "sku": "STD-DT72",
+        "material": "SAP-84-FAS",
+        "qty": 1,
+        "unit_price": 2720.0,
+        "unit_cost": 1780.32,
+        "board_feet": 42,
+        "labor": 1215.0,
+        "material_cost_per_bf": 13.46,
+        "margin_before_discount_pct": 34.55,
+        "margin_after_discount_pct": 27.27
+      },
+      "discount_as_written": "0.1"
+    },
+    "q_b_not_flagged": {
+      "quote": "Q-2192",
+      "customer": "Stephanie Long",
+      "rep": "Sven Lindqvist",
+      "status": "Sent",
+      "discount": 0.1,
+      "total": 8370.0,
+      "file_lines": [
+        166,
+        167,
+        168
+      ],
+      "line": {
+        "sku": "SHK-BN48",
+        "material": "WAL-64-SEL",
+        "qty": 1,
+        "unit_price": 870.0,
+        "unit_cost": 536.12,
+        "board_feet": 14,
+        "labor": 360.0,
+        "material_cost_per_bf": 12.58,
+        "margin_before_discount_pct": 38.38,
+        "margin_after_discount_pct": 31.53
+      }
+    }
+  },
+  "app_items": {
+    "line_test": {
+      "sku": "SHK-DT72",
+      "material": "WAL-84-FAS",
+      "board_feet": 44,
+      "material_cost_per_bf": 16.37,
+      "labor": 1280.0,
+      "unit_cost": 2000.28,
+      "unit_price": 4250.0,
+      "margin_pct": 52.93
+    },
+    "floor_test": {
+      "price": 3000.0,
+      "discount": 0.05,
+      "net": 2850.0,
+      "margin_after_discount_pct": 29.81,
+      "margin_without_discount_pct": 33.32,
+      "floor_price_no_discount": 2857.54
+    },
+    "discount_test": {
+      "discount": 0.12,
+      "unit_price": 4250.0,
+      "margin_after_discount_pct": 46.52,
+      "allowed_without_approval": 0.1
+    },
+    "conversion_test": {
+      "lines": [
+        {
+          "sku": "SHK-DT72",
+          "material": "WAL-84-FAS",
+          "qty": 1,
+          "unit_price": 4250.0,
+          "unit_cost": 2000.28
+        },
+        {
+          "sku": "SHK-DC",
+          "material": "WAL-44-FAS",
+          "qty": 6,
+          "unit_price": 640.0,
+          "unit_cost": 396.8,
+          "margin_after_discount_pct": 34.74
+        }
+      ],
+      "discount": 0.05,
+      "subtotal": 8090.0,
+      "total": 7685.5
+    }
+  },
+  "changes": {
+    "1_won_value_by_collection_imported": {
+      "Shaker": 34729.0,
+      "Mid-Century": 19619.7,
+      "Farmhouse": 35092.0,
+      "Studio": 54798.0
+    },
+    "1_won_value_by_collection_with_item25": {
+      "Shaker": 42414.5,
+      "Mid-Century": 19619.7,
+      "Farmhouse": 35092.0,
+      "Studio": 54798.0
+    },
+    "1_rep_win_rates_after_items_19_and_25": {
+      "Jordan Price": {
+        "won": 17,
+        "lost": 10,
+        "win_rate_pct": 63.0
+      },
+      "Aaliyah Brooks": {
+        "won": 7,
+        "lost": 16,
+        "win_rate_pct": 30.4
+      },
+      "Sven Lindqvist": {
+        "won": 7,
+        "lost": 11,
+        "win_rate_pct": 38.9
+      }
+    },
+    "1_restricted_won_value_by_collection_with_item25": {
+      "Shaker": 14896.5,
+      "Mid-Century": 0.0,
+      "Farmhouse": 16636.75,
+      "Studio": 18418.5
+    },
+    "1_restricted_shaker_won_value_imported": 7211.0,
+    "1_per_extra_conversion_test": {
+      "won_value": 7685.5,
+      "restricted_won": 1,
+      "restricted_decided": 1
+    },
+    "2_deposit_rate": 0.5,
+    "2_deposit_on_item25_order": 3842.75,
+    "3_shop_review_at_or_over": 10000.0,
+    "3_tests": {
+      "over": {
+        "sku": "SHK-DT96",
+        "material": "WAL-84-FAS",
+        "qty": 2,
+        "unit_price": 5000.0,
+        "total": 10000.0
+      },
+      "under": {
+        "sku": "SHK-DT96",
+        "material": "WAL-84-FAS",
+        "qty": 2,
+        "unit_price": 4995.0,
+        "total": 9990.0
+      },
+      "margins_pct": {
+        "5000": 49.16,
+        "4995": 49.11
+      }
+    },
+    "2_second_order_test": {
+      "sku": "SHK-DC",
+      "material": "WAL-44-FAS",
+      "qty": 2,
+      "unit_price": 640.0,
+      "discount": 0,
+      "total": 1280.0,
+      "deposit": 640.0,
+      "margin_pct": 38.0
+    }
+  }
+}

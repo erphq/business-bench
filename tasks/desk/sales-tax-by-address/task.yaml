@@ -1,0 +1,72 @@
+id: sales-tax-by-address
+track: desk
+category: spreadsheet
+title: Sales tax on each September order
+ask: |
+  I need the sales tax worked out on each of this month's orders before I invoice them. Use the accountants' rate table and save orders_tax.csv - my note has the rest.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  rates go by ZIP range inside each state with an 'all other ZIPs' row; the first row for a state gives Boulder's rate to Durango and Longmont, both range ends count (80310, 80951, 98499), and Taos 87571 shares Santa Fe's 875 prefix but is outside 87501-87509 (checks: tax per order; rate per order)
+- |-
+  shipping is taxed only in Washington, Texas and New Mexico per the Shipping sheet; taxing it everywhere or nowhere moves every order with a shipping charge (check: tax per order)
+- |-
+  four exempt customers pay nothing, St. Brigid Academy's certificate expired on 5 September so its two later orders are taxable, and the homeschool co-op asks but is not exempt (check: tax per order)
+- |-
+  Oregon, California, Utah, Idaho and Nebraska orders are not on the table and carry no tax (checks: tax per order; rate per order)
+- |-
+  the Ship To is one free-text field: some addresses spell the state out ('New Mexico'), some drop the commas, and some carry ZIP+4, so a split on commas or the last token misreads state and ZIP (checks: tax per order; rate per order)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: orders_tax.csv
+  columns:
+  - order_id
+  - state
+  - zip
+  - rate
+  - tax
+- type: csv_set_equal
+  name: every order
+  path: orders_tax.csv
+  column: order_id
+  ref: orders_tax.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: orders_tax.csv
+  equals_ref: orders_tax.csv
+- type: csv_values_match
+  name: tax per order
+  path: orders_tax.csv
+  ref: orders_tax.csv
+  key: order_id
+  columns:
+  - tax
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0
+  must_match_keys:
+  - LLK-30414
+  - LLK-30420
+  - LLK-30423
+  - LLK-30427
+  - LLK-30431
+  - LLK-30432
+  - LLK-30445
+  - LLK-30456
+  - LLK-30460
+  - LLK-30461
+  - LLK-30466
+  - LLK-30468
+  - LLK-30476
+  - LLK-30478
+  - LLK-30487
+  - LLK-30490
+  - LLK-30498
+- type: custom
+  name: rate per order
+  module: check.py

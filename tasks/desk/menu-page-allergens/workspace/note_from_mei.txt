@@ -1,0 +1,16 @@
+From: Mei Tanaka
+To: you
+Date: Sun, 13 Sep 2026 22:15
+Subject: menu page for the website and the QR code
+
+We open the fall menu on Tuesday and I need the menu as a single web page - it goes behind the QR code on the tables and on the website, so one HTML file with everything in it and no scripts - the website builder strips them.
+
+Keep the sections in the order they are in the workbook. Every dish with its price and its allergens.
+
+Guests do not know our kitchen codes, so write the allergens out in words (gluten, soy, sesame and so on). The Allergen key tab says what each code means. V and GF are in the same column but they are not allergens, so they must never show up as one.
+
+Prices: the Fall price changes tab has the new prices from the 15th, and those are the prices on this menu.
+
+Anything on Kenji's 86 list stays off the page.
+
+Mei

@@ -1,0 +1,74 @@
+id: regional-sales-monthly
+track: desk
+category: reports
+title: Q2 sales by territory from the monthly exports
+ask: |
+  Ramona needs the Q2 sales by territory - territories down the side, months across - from the monthly exports in this folder. Save it as regional.xlsx with live formulas, plus memo.md with what she should know. Her note says how she counts them.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  every monthly export overlaps the previous month by a few days, so the last orders of April are in both the April and May files and the last orders of May are in both the May and June files; each order counts once, in the month of its own date (checks: Pacific May; Atlantic quarter total)
+- |-
+  the April file opens with late-March orders, which belong to Q1 and are not April sales; reading the file name as the month counts them twice over (check: Atlantic quarter total)
+- |-
+  13 credit memos (CM- ids) carry negative amounts written in parentheses and must be netted into the month they were issued, not dropped and not added as positives (checks: Pacific May; quarter total)
+- |-
+  the April and June exports end with a TOTAL line whose amount a plain sum of the column swallows, roughly doubling the quarter (check: quarter total)
+- |-
+  Mountain has no rows at all in the 2026-05 export - a gap in the file, not a month of zero sales; its quarter total covers two months and the memo must say the month is missing (checks: Mountain quarter total; memo names the missing month)
+- |-
+  amounts are '$1,234.50', '1,234.50 USD' and plain text, dates come in three formats, the June export renamed every column and quotes every field, and two files carry a BOM or CRLF endings (check: quarter total, all territories)
+checks:
+- type: file_exists
+  name: regional.xlsx exists
+  path: regional.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: regional.xlsx
+  min_count: 12
+- type: xlsx_no_errors
+  name: no error cells
+  path: regional.xlsx
+- type: xlsx_value_present
+  name: Atlantic quarter total
+  path: regional.xlsx
+  expected: 393445.0
+  rel_tol: 1.0e-06
+  near_text: atlantic
+- type: xlsx_value_present
+  name: Mountain quarter total (two months, no invented May)
+  path: regional.xlsx
+  expected: 237215.55
+  rel_tol: 1.0e-06
+  near_text: mountain
+- type: xlsx_value_present
+  name: Pacific May (duplicate rows and a credit memo)
+  path: regional.xlsx
+  expected: 141789.07
+  rel_tol: 1.0e-06
+  near_text: pacific
+- type: xlsx_value_present
+  name: quarter total, all territories
+  path: regional.xlsx
+  expected: 1747317.16
+  rel_tol: 1.0e-07
+  near_text: total
+- type: text_numbers_present
+  name: memo carries the quarter and Mountain totals
+  path: memo.md
+  numbers:
+  - 1747317.16
+  - 237215.55
+  rel_tol: 0.005
+- type: text_sentence_matches
+  name: memo says Mountain is missing from the May export
+  path: memo.md
+  all:
+  - \bmountain\b
+  - (\bmay\b|\b2026-05\b|\b05/2026\b)
+  - |-
+    (\bno\b[^.;]{0,40}\b(rows|data|orders|sales|records|entries)\b|\bmissing\b|\bgap\b|\babsent\b|\bnot (in|present in|included in) the (export|file|data)\b|\bblank\b|\bempty\b)
+  none:
+  - |-
+    (rather than (a |an )?(missing|gap)|\bnot (a |an )?(missing|gap)\b|no evidence of (a |an )?(missing|gap))

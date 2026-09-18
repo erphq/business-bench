@@ -1,0 +1,81 @@
+submitted_at,ticket_id,reason_code,customer,message_excerpt
+2026-01-01T17:08:00,T-26-00441,BIL-ERR,Hollowell Electric,See attached photo
+2026-01-06T07:39:00,T-26-00447,BIL-ERR,Yellowtail Seafood,Second time this month
+2026-01-09T13:59:00,T-26-00453,CSR-COMM,Umber Ceramics,Second time this month
+2026-01-09T16:51:00,T-26-00454,PKP-MISS,Vantage Point Media,Second time this month
+2026-01-12T07:05:00,T-26-00455,DMG-GOODS,Hollowell Electric,Please call me back
+2026-01-15T12:02:00,T-26-00462,BIL-ERR,Saltmarsh Kayaks,Please call me back
+2026-01-15T14:46:00,T-26-00463,BIL-ERR,Mossbank Accounting,See attached photo
+2026-01-16T09:46:00,T-26-00475,PKP-MISS,Uptown Fitness,See attached photo
+2026-01-17T10:07:00,T-26-00479,STF-DRV,Blue Heron Consulting,Order ref in subject
+2026-01-18T18:02:00,T-26-00480,BIL-ERR,Dorsey Freight,See attached photo
+2026-01-23T09:11:00,T-26-00495,INQ-GEN,Kingfisher Charters,Thanks for the great service
+2026-01-25T07:17:00,T-26-00499,DMG-GOODS,Mossbank Accounting,Order ref in subject
+2026-01-28T13:50:00,T-26-00502,INQ-GEN,Wren & Sparrow Bookshop,Thanks for the great service
+2026-01-28T16:03:00,T-26-00505,CSR-COMM,Everline Insurance,See attached photo
+2026-02-02T15:14:00,T-26-00511,BIL-ERR,Wren & Sparrow Bookshop,Second time this month
+2026-02-03T11:48:00,T-26-00514,DLV-LATE,Uptown Fitness,Second time this month
+2026-02-04T07:28:00,T-26-00521,DMG-GOODS,Westbrook Plumbing,Second time this month
+2026-02-05T10:50:00,T-26-00528,INQ-GEN,Granite Peak Outfitters,Thanks for the great service
+2026-02-09T14:35:00,T-26-00539,CSR-COMM,Umber Ceramics,Order ref in subject
+2026-02-11T07:54:00,T-26-00547,DLV-LATE,Redwood Property Mgmt,See attached photo
+2026-02-11T13:43:00,T-26-00549,CSR-COMM,Vantage Point Media,See attached photo
+2026-02-15T10:36:00,T-26-00557,PKP-MISS,Saltmarsh Kayaks,See attached photo
+2026-02-17T17:53:00,T-26-00566,DMG-GOODS,Tamarack Brewing,Order ref in subject
+2026-02-19T16:41:00,T-26-00574,DLV-LATE,Yellowtail Seafood,See attached photo
+2026-02-21T17:51:00,T-26-00581,CSR-COMM,Quill & Ink Print Shop,See attached photo
+2026-02-24T09:52:00,T-26-00584,DMG-GOODS,Foxglove Interiors,Second time this month
+2026-02-25T07:58:00,T-26-00591,INQ-GEN,Mossbank Accounting,Thanks for the great service
+2026-02-25T08:13:00,T-26-00593,PKP-MISS,Lakeside Veterinary,Please call me back
+2026-02-26T09:35:00,T-26-00599,INQ-GEN,Quarry Road Nursery,Thanks for the great service
+2026-02-26T14:13:00,T-26-00602,CSR-COMM,Acme Industrial,Please call me back
+2026-02-28T15:35:00,T-26-00604,CSR-COMM,Yellowtail Seafood,Order ref in subject
+2026-03-09T09:17:00,T-26-00627,STF-DRV,Larkspur Yoga,See attached photo
+2026-03-09T14:38:00,T-26-00628,DLV-LATE,Cedar & Pine Landscaping,Second time this month
+2026-03-09T16:53:00,T-26-00631,STF-DRV,Brightwater Dental,Second time this month
+2026-03-12T08:37:00,T-26-00634,STF-DRV,Riverbend Physio,See attached photo
+2026-03-12T12:10:00,T-26-00636,CSR-COMM,Quill & Ink Print Shop,Second time this month
+2026-03-15T15:11:00,T-26-00648,STF-DRV,Oakhurst Pediatrics,See attached photo
+2026-03-19T14:21:00,T-26-00659,CSR-COMM,Oakhurst Pediatrics,Second time this month
+2026-03-20T08:30:00,T-26-00663,DMG-GOODS,Kingfisher Charters,Please call me back
+2026-03-22T14:15:00,T-26-00668,DLV-LATE,Everline Insurance,Second time this month
+2026-03-23T13:42:00,T-26-00672,DLV-LATE,Everline Insurance,See attached photo
+2026-03-24T15:03:00,T-26-00675,DMG-GOODS,Cedar & Pine Landscaping,Order ref in subject
+2026-04-01T13:02:00,T-26-00697,DLV-LATE,Northfield Auto Body,Second time this month
+2026-04-04T12:07:00,T-26-00703,INQ-GEN,Riverbend Physio,Thanks for the great service
+2026-04-11T15:36:00,T-26-00708,PKP-MISS,Foxglove Interiors,See attached photo
+2026-04-12T17:11:00,T-26-00712,CSR-COMM,Wren & Sparrow Bookshop,Order ref in subject
+2026-04-13T14:47:00,T-26-00714,BIL-ERR,Orchard Hill Dental,Second time this month
+2026-04-15T07:00:00,T-26-00721,DLV-LATE,Meridian Title,Second time this month
+2026-04-17T08:09:00,T-26-00727,PKP-MISS,Brightwater Dental,Please call me back
+2026-04-17T18:02:00,T-26-00729,DLV-LATE,Kingfisher Charters,Order ref in subject
+2026-04-21T11:18:00,T-26-00734,DLV-LATE,Orchard Hill Dental,Order ref in subject
+2026-04-21T17:22:00,T-26-00740,INQ-GEN,Riverbend Physio,Thanks for the great service
+2026-04-25T16:07:00,T-26-00750,DLV-LATE,Pinnacle Roofing,Please call me back
+2026-04-26T09:44:00,T-26-00751,DLV-LATE,Pinnacle Roofing,Order ref in subject
+2026-04-27T12:49:00,T-26-00757,BIL-ERR,Glassworks Optical,See attached photo
+2026-05-01T09:58:00,T-26-00763,DLV-LATE,Pemberton HVAC,See attached photo
+2026-05-04T16:29:00,T-26-00776,BIL-ERR,Fernbrook Montessori,Order ref in subject
+2026-05-05T07:14:00,T-26-00781,DMG-GOODS,Driftwood Studio,Please call me back
+2026-05-05T14:41:00,T-26-00782,CSR-COMM,Juniper Street Cafe,Second time this month
+2026-05-06T14:55:00,T-26-00785,DLV-LATE,Foxglove Interiors,See attached photo
+2026-05-15T16:39:00,T-26-00798,DLV-LATE,Yellowtail Seafood,See attached photo
+2026-05-20T10:17:00,T-26-00801,DLV-LATE,Lakeside Veterinary,See attached photo
+2026-05-20T10:31:00,T-26-00803,DLV-LATE,Dorsey Freight,Please call me back
+2026-05-21T08:02:00,T-26-00806,DMG-GOODS,Orchard Hill Dental,Order ref in subject
+2026-05-21T13:05:00,T-26-00809,CSR-COMM,Redwood Property Mgmt,Order ref in subject
+2026-05-23T10:42:00,T-26-00810,CSR-COMM,Brightwater Dental,Order ref in subject
+2026-05-24T12:57:00,T-26-00812,DLV-LATE,Quill & Ink Print Shop,Please call me back
+2026-05-27T13:17:00,T-26-00815,STF-DRV,Kingfisher Charters,Please call me back
+2026-05-28T08:12:00,T-26-00818,CSR-COMM,Lakeside Veterinary,Second time this month
+2026-05-30T14:10:00,T-26-00822,PKP-MISS,Kingfisher Charters,Second time this month
+2026-06-01T07:41:00,T-26-00824,DMG-GOODS,Foxglove Interiors,Second time this month
+2026-06-03T16:50:00,T-26-00833,DMG-GOODS,Vantage Point Media,Second time this month
+2026-06-04T16:40:00,T-26-00836,DLV-LATE,Silverline Logistics,Order ref in subject
+2026-06-11T17:18:00,T-26-00852,BIL-ERR,Granite Peak Outfitters,Second time this month
+2026-06-14T14:48:00,T-26-00856,PKP-MISS,Brightwater Dental,See attached photo
+2026-06-15T11:00:00,T-26-00857,CSR-COMM,Glassworks Optical,Please call me back
+2026-06-15T17:13:00,T-26-00859,STF-DRV,Blue Heron Consulting,Order ref in subject
+2026-06-22T07:43:00,T-26-00870,BIL-ERR,Meridian Title,See attached photo
+2026-06-23T09:48:00,T-26-00877,INQ-GEN,Valley Forge Storage,Thanks for the great service
+2026-06-28T16:30:00,T-26-00890,DLV-LATE,Juniper Street Cafe,See attached photo

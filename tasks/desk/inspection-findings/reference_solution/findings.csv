@@ -1,0 +1,13 @@
+finding_ref,site,source,inspection_date,description,severity,due_date
+FM-26-0425-3,Maple Street,fire,2026-08-06,Extension cord used as permanent wiring in Toddler Room 2,medium,2026-09-16
+FM-26-0499-1,Maple Street,fire,2026-09-02,Fire door to the east hallway held open with a door wedge,medium,2026-09-09
+LIC-2026-11802-1,Riverside,licensing,2026-08-18,Lead teacher's pediatric first aid and CPR certification expired,high,2026-09-01
+LIC-2026-11802-2,Riverside,licensing,2026-08-18,Medication log missing parent authorization for one child,medium,2026-09-17
+LIC-2026-11802-4,Riverside,licensing,2026-08-18,Cot spacing less than 18 inches in the Infant Room,low,2026-10-17
+HD-77849-2,Hilltop,health,2026-08-27,No thermometer in the kitchen reach-in cooler,medium,2026-09-06
+HD-77849-4,Hilltop,health,2026-08-27,Stained ceiling tile above dry storage,low,2026-11-25
+HD-77849-5,Hilltop,health,2026-08-27,Food handler card not on file for the assistant cook,low,2026-11-25
+LC-5538-R-1,Riverside,insurance,2026-09-10,"Mulch under climber only 4 in deep, 9 in required",high,2026-10-10
+LC-5538-R-2,Riverside,insurance,2026-09-10,Toddler yard gate latch does not self-close,medium,2026-09-24
+LC-5538-R-3,Riverside,insurance,2026-09-10,Swing hanger bolt missing its locking nut,high,2026-09-17
+LC-5361-R-4,Riverside,insurance,2026-03-12,Sand box has no cover,low,2026-11-09

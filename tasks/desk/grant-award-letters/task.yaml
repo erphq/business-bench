@@ -1,0 +1,104 @@
+id: grant-award-letters
+track: desk
+category: extraction
+title: Log this year's grant award letters into the tracker
+ask: |
+  Go through the funder letters in the folder and put the key details of every grant into grants.csv, one row per grant. Dana's note has the columns I need.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  two grants are multi-year and state the award by year, one in prose and one in a table; the total is the sum and the year columns are split, and one-year grants carry 0 in year 2 (check: award amounts)
+- |-
+  three letters give a reporting deadline as a rule (six months after the period begins; within 60, 45 or 90 days after it ends) and the date must be computed (check: report due dates)
+- |-
+  one letter names the amount requested before the smaller amount awarded (check: award amounts)
+- |-
+  one grant has an amendment letter that raises the award, extends the period and moves the final report to 60 days after the new end date, which is 29 February 2028; the row must carry the amended values and the amendment is not a second row (checks: award amounts; grant period; report due dates; one row per awarded grant)
+- 'one letter is a declination and must not produce a row (check: declined request absent)'
+- 'one award letter is an image-only scan (checks: one row per awarded grant; grant period)'
+- |-
+  dates appear in five formats across the letters; the tracker wants YYYY-MM-DD (check: grant period)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: grants.csv
+  columns:
+  - grant_ref
+  - funder
+  - total_amount
+  - year1_amount
+  - year2_amount
+  - period_start
+  - period_end
+  - interim_report_due
+  - final_report_due
+- type: csv_set_equal
+  name: one row per awarded grant
+  path: grants.csv
+  column: grant_ref
+  ref: grants.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: grants.csv
+  equals_ref: grants.csv
+- type: csv_values_match
+  name: funder names
+  path: grants.csv
+  ref: grants.csv
+  key: grant_ref
+  columns:
+  - funder
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: award amounts
+  path: grants.csv
+  ref: grants.csv
+  key: grant_ref
+  columns:
+  - total_amount
+  - year1_amount
+  - year2_amount
+  numeric: true
+  tolerance: 0.5
+  min_accuracy: 1.0
+  must_match_keys:
+  - HTCF-2758
+  - SF/2026/79
+  - MHF-G15409
+  - WCF-2026990
+- type: csv_values_match
+  name: grant period
+  path: grants.csv
+  ref: grants.csv
+  key: grant_ref
+  columns:
+  - period_start
+  - period_end
+  min_accuracy: 1.0
+  must_match_keys:
+  - WCF-2026990
+  - NSCT-26-562
+- type: csv_values_match
+  name: report due dates
+  path: grants.csv
+  ref: grants.csv
+  key: grant_ref
+  columns:
+  - interim_report_due
+  - final_report_due
+  min_accuracy: 1.0
+  must_match_keys:
+  - HTCF-2758
+  - MHF-G15409
+  - SF/2026/79
+  - WCF-2026990
+- type: text_not_contains
+  name: declined request absent
+  path: grants.csv
+  phrases:
+  - GPF-3263
+  - granite peak

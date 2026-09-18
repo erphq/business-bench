@@ -1,0 +1,20 @@
+From: Ruth Achebe
+To: you
+Date: Mon, 14 Sep 2026 07:55
+Subject: August scorecard page
+
+I want the August scorecard as a web page I can open in the Thursday branch meeting and email to the managers afterwards - one file, nothing to install, and no scripts because our email filter strips them.
+
+Every metric we track, with August's number, the target and whether we met it or missed it - just the words Met or Missed. And a line at the top with how many targets we met.
+
+Not every number is better when it goes up. Lower is better for: Staff turnover; Complaints per 100 visits; Callbacks for re-cleans; Supply cost per site; Lost-time injuries. Everything else we want higher. Landing exactly on a target counts as meeting it.
+
+Show rates as percentages - the tracker stores them as decimals and the managers do not read 0.943 as 94.3%.
+
+New client inquiries has no target yet (sales still has not agreed one), so show the number but no Met or Missed - put No target.
+
+If somebody revised a number in the tracker, the revision is the one that counts.
+
+Carpet cleaning went with the Eastside branch sale in June, so that line is finished - it does not belong on the scorecard any more.
+
+Ruth

@@ -1,0 +1,32 @@
+From: Nadia Brooks <nadia@sablecreekcleaning.com>
+To: Walter Lindgren <walter@lindgrenosei.cpa>
+Date: Mon, 6 Apr 2026 08:02
+Subject: federal deposits now that Tallyrun dropped tax service
+
+Walter, Tallyrun confirmed they stopped depositing our federal payroll taxes with the December payrolls, so nothing has gone to EFTPS for any check date from December 5 on. I have the regular register and the off-cycle sheet they sent. How do I work out what we owe and when each one was due?
+
+-----Original Message-----
+
+From: Walter Lindgren <walter@lindgrenosei.cpa>
+To: Nadia Brooks <nadia@sablecreekcleaning.com>
+Date: Mon, 6 Apr 2026 11:37
+Subject: RE: federal deposits now that Tallyrun dropped tax service
+
+Nadia, you are a semiweekly depositor, so here is how it works.
+
+What goes in a deposit: the federal income tax you withheld, plus Social Security and Medicare - both the employees' share that came out of their checks and your matching employer share. State income tax, state unemployment (SUI) and FUTA are NOT part of it; FUTA is its own quarterly deposit and the state taxes are paid on the state site.
+
+When it is due goes by the check date, not the pay period. Checks dated Wednesday, Thursday or Friday are due the following Wednesday. Checks dated Saturday, Sunday, Monday or Tuesday are due the following Friday. In other words the Wednesday-Friday period and the Saturday-Tuesday period each get three business days after the period closes.
+
+Holidays: if any of those three weekdays after the period closes is a bank holiday, you get one extra business day for each holiday. Use the Federal Reserve list in the holiday file - the days your own office is closed do not count, the banks are open.
+
+Off-cycle runs (bonuses, final checks) are payrolls like any other. If two check dates fall in the same Wednesday-Friday or Saturday-Tuesday period they go in as one deposit, EXCEPT when the check dates are in different quarters: then it is two deposits, one for each quarter's 941, even though they are due on the same day.
+
+-----Original Message-----
+
+From: Walter Lindgren <walter@lindgrenosei.cpa>
+To: Nadia Brooks <nadia@sablecreekcleaning.com>
+Date: Mon, 6 Apr 2026 11:52
+Subject: RE: federal deposits now that Tallyrun dropped tax service
+
+One more thing - send me the list before you pay anything so I can work out the late-deposit penalty. One line per deposit with the due date, the amount, which quarter's 941 it belongs to and the check dates it covers.

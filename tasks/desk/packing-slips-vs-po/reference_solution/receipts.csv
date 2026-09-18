@@ -1,0 +1,17 @@
+po_line,sku,qty_ordered,qty_received,qty_open,substitute_sku,status
+PO-20964-1,TB-700x28-PV,6,6,0,,received
+PO-20964-2,TB-29x2.4-SV,10,10,0,,received
+PO-20964-3,CB-BRK-ROAD,20,20,0,,received
+PO-20964-4,HT-BLK-3M,12,12,0,,received
+PO-20964-5,CN-KMC-X11,10,6,4,,partial
+PO-20494-1,HL-300,8,8,0,HL-400,received
+PO-20494-2,TL-50,12,9,3,,partial
+PO-20494-3,LK-UBOLT-M,10,10,0,,received
+PO-20494-4,BL-HANDLE-B,20,0,20,,open
+PO-20876-1,CS-11-32,8,8,0,,received
+PO-20876-2,BP-DISC-R,20,20,0,,received
+PO-20876-3,RT-160-6B,8,6,2,,partial
+PO-20876-4,DR-RD-11M,10,0,10,,open
+PO-20530-1,TR-700x32-GRV,24,22,2,,partial
+PO-20530-2,TR-29x2.4-TRL,12,6,6,,partial
+PO-20530-3,SL-SEAL-16,12,12,0,,received

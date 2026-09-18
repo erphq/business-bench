@@ -1,0 +1,18 @@
+Anniversary dinner - catering comparison
+
+We're confirmed at 85 guests (when we asked for quotes it was about 80) and we're doing a buffet. The four quotes are in catering_quotes. I need quote_comparison.csv with one row per quote so the partners can compare like for like:
+
+quote_ref - the quote or estimate number as printed
+caterer
+pricing_basis - per_person or flat
+guests_billed - how many guests we'd actually pay for at 85
+food_beverage - the food cost for our dinner at that count
+service_charge - the caterer's service charge in dollars
+gratuity_included - yes if the quote already covers staff gratuity, no if not
+gratuity - what we'd add under our policy: 18% of food_beverage when gratuity isn't included, 0 when it is
+fees - delivery, setup and rental charges we'd have to pay (nothing optional)
+total - food_beverage + service_charge + gratuity + fees
+
+Leave sales tax out, it's the same rate for all of them. Plain numbers please.
+
+Sarah

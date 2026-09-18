@@ -1,0 +1,119 @@
+id: permission-forms-scanned
+track: desk
+category: extraction
+title: Match the scanned field trip slips to the class roster
+ask: |
+  Ms. Osei scanned the field trip permission slips that came back. Please match them up with her class roster and save it as consents.csv - her note says what the office needs.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  every slip is an image-only scan with a slight skew and dust; there is no text layer (checks: student and guardian names; permission and signature)
+- |-
+  three families used last year's form, which reads 'I, <guardian>, parent or legal guardian of <student>', so the guardian's name comes first (check: student and guardian names)
+- |-
+  two guardians have a different last name from the child, and the slip for Joshua Garcia calls the child Josh; the roster id and spelling are what the office wants (checks: one row per roster student; student and guardian names)
+- |-
+  one slip ticks 'may attend' and 'Yes' for photos but the signature and date lines are blank; per the note it grants nothing (checks: permission and signature; photo release)
+- |-
+  one parent ticked 'may NOT attend'; a reading that looks for the word attend marks it yes (check: permission and signature)
+- |-
+  one family sent two slips, a week apart; the later one switches the photo release to yes and was scanned before the earlier one (checks: photo release; date signed)
+- |-
+  one roster student returned nothing and still needs a row with no in the yes/no columns (checks: one row per roster student; permission and signature)
+- |-
+  a signed slip for a Room 2 sibling of a Room 4 student is in the stack and is not on the roster (checks: row count; other-class slip left out)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: consents.csv
+  columns:
+  - student_id
+  - student_name
+  - guardian_name
+  - guardian_phone
+  - form_returned
+  - permission
+  - photo_release
+  - signed
+  - date_signed
+- type: csv_set_equal
+  name: one row per roster student
+  path: consents.csv
+  column: student_id
+  ref: consents.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: consents.csv
+  equals_ref: consents.csv
+- type: csv_values_match
+  name: student and guardian names
+  path: consents.csv
+  ref: consents.csv
+  key: student_id
+  columns:
+  - student_name
+  - guardian_name
+  normalize:
+  - alnum
+  min_accuracy: 1.0
+  must_match_keys:
+  - FM-2047
+  - FM-2054
+  - FM-2061
+  - FM-2089
+  - FM-2096
+- type: csv_values_match
+  name: guardian phone
+  path: consents.csv
+  ref: consents.csv
+  key: student_id
+  columns:
+  - guardian_phone
+  normalize:
+  - digits
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: permission and signature
+  path: consents.csv
+  ref: consents.csv
+  key: student_id
+  columns:
+  - form_returned
+  - permission
+  - signed
+  min_accuracy: 1.0
+  must_match_keys:
+  - FM-2068
+  - FM-2075
+  - FM-2103
+- type: csv_values_match
+  name: photo release
+  path: consents.csv
+  ref: consents.csv
+  key: student_id
+  columns:
+  - photo_release
+  min_accuracy: 1.0
+  must_match_keys:
+  - FM-2075
+  - FM-2082
+- type: csv_values_match
+  name: date signed
+  path: consents.csv
+  ref: consents.csv
+  key: student_id
+  columns:
+  - date_signed
+  min_accuracy: 1.0
+  must_match_keys:
+  - FM-2075
+  - FM-2082
+- type: text_not_contains
+  name: other-class slip left out
+  path: consents.csv
+  phrases:
+  - Kenneth

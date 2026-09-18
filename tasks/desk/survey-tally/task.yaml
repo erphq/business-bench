@@ -1,0 +1,65 @@
+id: survey-tally
+track: desk
+category: spreadsheet
+title: Member survey scores per question
+ask: |
+  The member survey closed - can you score it for the board, question by question? The responses export is in the folder; save survey_summary.csv the way Amara's note describes.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  questions 4, 7 and 9 are negatively worded and scored in reverse (Strongly agree = 1); scoring them like the others flips their averages around 3 (check: average per question)
+- |-
+  N/A and skipped answers are neither scores nor responses; counting N/A as 0 or as a neutral 3 moves both the counts and the averages, most on the meeting room and events questions (checks: responses per question; average per question)
+- |-
+  13 members submitted twice, some with the email in capitals on the second go; each counts once with the last submission, so keeping the first or both moves every count and several averages (checks: responses per question; average per question)
+- |-
+  three staff test runs from foundrycommons.co addresses answer 5 and 1 alternately (check: responses per question)
+- |-
+  question 8 was added on 6 August, so earlier submissions are blank for it and answers mix 'Strongly agree' with 'Strongly Agree' (check: responses per question)
+- |-
+  last year's summary sits in the folder with the same layout and different figures (check: average per question)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: survey_summary.csv
+  columns:
+  - question
+  - responses
+  - average
+- type: csv_set_equal
+  name: one row per question
+  path: survey_summary.csv
+  column: question
+  ref: survey_summary.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: survey_summary.csv
+  equals_ref: survey_summary.csv
+- type: csv_values_match
+  name: responses per question
+  path: survey_summary.csv
+  ref: survey_summary.csv
+  key: question
+  columns:
+  - responses
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: average per question
+  path: survey_summary.csv
+  ref: survey_summary.csv
+  key: question
+  columns:
+  - average
+  numeric: true
+  tolerance: 0.006
+  min_accuracy: 1.0
+  must_match_keys:
+  - Q4
+  - Q7
+  - Q9

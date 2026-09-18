@@ -1,0 +1,217 @@
+Quote No,Quote Date,Rep,Customer,Status,Discount,SKU,Material,Qty,Unit Price,Decision Date
+Q-2101,11/03/2025,Jordan Price,Copperfield Law,Won,0,MCM-NS,POP-64-FAS,1,$750.00,"November 21, 2025"
+Q-2102,"November 05, 2025",sven lindqvist,Lisa Reyes,Won,12%,STD-BST,CHE-44-FAS,4,600.00,2025-12-07
+Q-2102,"November 05, 2025",sven lindqvist,Lisa Reyes,Won,12%,MCM-DT96,SAP-64-SEL,1,"$4,415.00",2025-12-07
+Q-2102,"November 05, 2025",sven lindqvist,Lisa Reyes,Won,12%,MCM-DT96,SAP-64-SEL,1,"$4,415.00",2025-12-07
+Q-2103,11/06/2025,Jordan Price,Westbrook Plumbing,Lost,0.05,STD-DT60,POP-64-FAS,1,"2,925.00",12/11/25
+Q-2104,07-Nov-2025,Jordan Price,Westbrook Plumbing,Won,15%,STD-DT72,CHE-84-FAS,1,"4,360.00",12/01/2025
+Q-2105,"November 08, 2025",Aaliyah Brooks,Amy Reed,Lost,5%,STD-BFQ,POP-64-SEL,1,2970.00,12/13/2025
+Q-2105,"November 08, 2025",Aaliyah Brooks,Amy Reed,Lost,5%,MCM-DT72,POP-84-FAS,2,3605.00,12/13/2025
+Q-2105,"November 08, 2025",Aaliyah Brooks,Amy Reed,Lost,5%,MCM-BST,WAL-44-FAS,8,820.00,12/13/2025
+Q-2106,2025-11-09,Jordan Price,Kathleen Baker,Won,0%,MCM-DT60,HM-84-FAS,1,3265.00,2025-12-07
+Q-2107,11/15/25,Sven Lindqvist,Jennifer Ramos,Lost,10%,FRM-DT72,SAP-84-FAS,1,"$3,610.00",09-Dec-2025
+Q-2108,2025-11-26,Jordan Price,Daniel Cruz,Expired,0.15,SHK-DR6 ,wo-44-sel,2,4250.00,
+Q-2108,2025-11-26,Jordan Price,Daniel Cruz,Expired,0.15,MCM-DT60,CHE-64-FAS,1,"$3,815.00",
+Q-2109,27-Nov-2025,Aaliyah Brooks,John Scott,Lost,0,MCM-DT84,SAP-84-FAS,1,"$3,425.00",04-Jan-2026
+Q-2110,2025-11-28,Jordan Price,Kathleen Baker,Lost,0.05,MCM-DC,ash-44-sel,4,605.00,12/18/25
+Q-2111,12/04/25,Jordan Price,Hiroshi Stewart,Lost,12%,MCM-WD,MAH-44-FAS,1,2515.00,01/06/26
+Q-2112,12/10/2025,Sven Lindqvist,Shirley Lewis,Lost,15%,STD-BN48,WAL-44-FAS,1,"$1,175.00",12/22/25
+Q-2112,12/10/2025,Sven Lindqvist,Shirley Lewis,Lost,15%,MCM-DT60,SAP-64-FAS,1,"$3,635.00",12/22/25
+Q-2113,"December 10, 2025",Aaliyah Brooks,Thomas Murphy,Lost,0.15,FRM-NS,che-64-fas,2,955.00,2025-12-29
+Q-2114,2025-12-11,Aaliyah Brooks ,Cynthia Thomas,Expired,15%,MCM-NS ,MAH-44-FAS,1,"1,365.00",
+Q-2114,2025-12-11,Aaliyah Brooks ,Cynthia Thomas,Expired,15%,FRM-DT96,SAP-64-FAS,1,4230.00,
+Q-2115,11-Dec-2025,Aaliyah Brooks,Hiroshi Adams,Lost,0.05,STD-CT,WO-84-FAS,1,1235.00,26-Dec-2025
+Q-2115,11-Dec-2025,Aaliyah Brooks,Hiroshi Adams,Lost,0.05,MCM-NS,che-44-fas,2,855.00,26-Dec-2025
+Q-2116,12/16/2025,Jordan Price,Northfield Auto Body,Lost,0.15,MCM-CT,POP-64-SEL,1,"1,630.00",01/08/2026
+Q-2116,12/16/2025,Jordan Price,Northfield Auto Body,lost,0.15,SHK-DT96,MAH-84-FAS,1,"$5,315.00",01/08/2026
+Q-2117,16-Dec-2025,Jordan Price,Wei Morgan,Won,5%,STD-DT60,CHE-84-FAS,2,3285.00,2026-01-07
+Q-2118,12/17/2025,Jordan Price ,Nancy Richardson,Won,15%,SHK-BN48,HM-44-FAS,1,870.00,2026-01-12
+Q-2118,12/17/2025,Jordan Price ,Nancy Richardson,Won,15%,STD-CON,wo-64-fas,2,"$1,245.00",2026-01-12
+Q-2118,12/17/2025,Jordan Price ,Nancy Richardson,Won,15%,FRM-DC,WO-64-FAS,3,$760.00,2026-01-12
+Q-2119,12/21/25,Aaliyah Brooks,Juniper Street Cafe,Won,0.05,STD-SB,RO-64-FAS,1,"2,710.00",12/27/2025
+Q-2120,12/30/25,Jordan Price ,Nancy Nelson,Won,0.05,STD-DT72,RO-84-FAS,1,"3,035.00",01-Feb-2026
+Q-2120,12/30/25,Jordan Price ,Nancy Nelson,Won,0.05,shk-sb,HM-44-FAS,2,2855.00,01-Feb-2026
+Q-2120,12/30/25,Jordan Price ,Nancy Nelson,won,0.05,SHK-CON,HM-84-FAS,1,"1,270.00",01-Feb-2026
+Q-2121,01/08/26,aaliyah brooks,William Osei,Lost,0.12,FRM-DT96,MAH-84-FAS,1,"$5,935.00",2026-02-17
+Q-2121,01/08/26,aaliyah brooks,William Osei,Lost,0.12,shk-ct,SAP-64-FAS,2,1520.00,2026-02-17
+Q-2122,01/10/26,Sven Lindqvist ,Hiroshi Johnson,Lost,5%,STD-CT,MAH-84-SEL,1,1475.00,2026-02-01
+Q-2122,01/10/26,Sven Lindqvist ,Hiroshi Johnson,Lost,5%,STD-SB ,WAL-64-FAS,2,4415.00,2026-02-01
+Q-2123,2026-01-13,Jordan Price ,Cynthia Thomas,Won,10%,SHK-DT72,WAL-64-FAS,1,4725.00,2026-02-21
+Q-2123,2026-01-13,Jordan Price ,Cynthia Thomas,Won,10%,FRM-DT72,POP-84-FAS,1,"$3,580.00",2026-02-21
+Q-2124,2026-01-28,Sven Lindqvist,Westbrook Plumbing,Won,5%,STD-DT60,CHE-64-SEL,1,"$2,990.00","February 20, 2026"
+Q-2125,01/30/2026,Sven Lindqvist,Ronald Williams,Won,10%,MCM-DC,ASH-44-SEL,2,$790.00,02/20/2026
+Q-2126,01/31/26,Sven Lindqvist,Tomasz Evans,Lost,12%,MCM-BFQ,WO-44-FAS,1,"$2,945.00",15-Feb-2026
+Q-2127,02/03/26,Jordan Price,Charles Robinson,Lost,10%,MCM-DR6,ASH-64-FAS,1,"$4,005.00",21-Feb-2026
+Q-2128,"February 08, 2026",Aaliyah Brooks,Eric Ross,Won,5%,SHK-DT72,WO-84-FAS,1,"$3,335.00",02/17/2026
+Q-2128,"February 08, 2026",Aaliyah Brooks,Eric Ross,won,5%,STD-DT84,MAH-84-FAS,2,4215.00,02/17/2026
+Q-2128,"February 08, 2026",Aaliyah Brooks,Eric Ross,Won,5%,FRM-DT60,RO-84-SEL,1,"$3,270.00",02/17/2026
+Q-2129,2026-02-09,Aaliyah Brooks,Nancy Richardson,Expired,0,FRM-DT72,HIC-84-FAS,1,3485.00,
+Q-2130,"February 18, 2026",Sven Lindqvist,Dorsey Freight,Won,0.1,SHK-DC,WO-64-FAS,5,780.00,06-Mar-2026
+Q-2131,"February 28, 2026",Aaliyah Brooks,Jacob Smith,Lost,0%,SHK-BFQ,SAP-44-FAS,1,"$2,990.00",03/12/26
+Q-2131,"February 28, 2026",Aaliyah Brooks,Jacob Smith,Lost,0%,SHK-CT,hic-64-sel,2,1005.00,03/12/26
+Q-2131,"February 28, 2026",Aaliyah Brooks,Jacob Smith,Lost,0%,MCM-BS4,WAL-64-FAS,1,"$1,930.00",03/12/26
+Q-2132,2026-03-05,Aaliyah Brooks ,Timothy Lopez,lost,,STD-BFQ,MAH-64-FAS,1,"4,030.00",03/28/26
+Q-2132,2026-03-05,Aaliyah Brooks ,Timothy Lopez,Lost,,SHK-DT60,POP-84-FAS,1,2270.00,03/28/26
+Q-2132,2026-03-05,Aaliyah Brooks ,Timothy Lopez,Lost,,FRM-CON,POP-84-FAS,1,900.00,03/28/26
+Q-2133,03/12/26,Jordan Price,Ronald Williams,Lost,5%,STD-DT72,HIC-84-FAS,2,"$3,145.00",23-Mar-2026
+Q-2133,03/12/26,Jordan Price,Ronald Williams,Lost,5%,FRM-DT72,ASH-64-FAS,1,"$3,715.00",23-Mar-2026
+Q-2134,2026-03-18,Aaliyah Brooks,Amanda Mitchell,lost,15%,SHK-DT60,HM-64-FAS,1,3295.00,04/20/26
+Q-2134,2026-03-18,Aaliyah Brooks,Amanda Mitchell,Lost,15%,SHK-BFQ,CHE-64-SEL,1,3360.00,04/20/26
+Q-2134,2026-03-18,Aaliyah Brooks,Amanda Mitchell,Lost,15%,MCM-BN48,WAL-44-SEL,1,1000.00,04/20/26
+Q-2135,2026-03-18,Aaliyah Brooks,Lisa Reyes,Won,,SHK-BN48,MAH-64-SEL,1,960.00,31-Mar-2026
+Q-2135,2026-03-18,Aaliyah Brooks,Lisa Reyes,Won,,STD-BST,CHE-64-FAS,2,545.00,31-Mar-2026
+Q-2135,2026-03-18,Aaliyah Brooks,Lisa Reyes,Won,,STD-CT,HIC-84-FAS,1,"1,150.00",31-Mar-2026
+Q-2136,2026-03-20,jordan price,Pemberton HVAC,lost,15%,FRM-CON,HIC-64-SEL,1,1275.00,"April 20, 2026"
+Q-2136,2026-03-20,jordan price,Pemberton HVAC,Lost,15%,MCM-DR6,POP-64-FAS,2,3590.00,"April 20, 2026"
+Q-2136,2026-03-20,jordan price,Pemberton HVAC,Lost,15%,MCM-WD,WO-44-FAS,1,2735.00,"April 20, 2026"
+Q-2137,"March 27, 2026",Aaliyah Brooks,Kenneth Hughes,Expired,12%,STD-DC,pop-64-fas,6,610.00,
+Q-2138,03/27/2026,Aaliyah Brooks,Kenneth Hughes,Expired,15%,SHK-DC ,WAL-64-SEL,7,740.00,
+Q-2139,04/02/2026,Aaliyah Brooks,Kenneth Hughes,Lost,0%,MCM-DT84,pop-84-fas,1,3515.00,05/01/2026
+Q-2139,04/02/2026,Aaliyah Brooks,Kenneth Hughes,Lost,0%,MCM-DT84 ,ASH-84-FAS,1,"$3,065.00",05/01/2026
+Q-2140,04/02/26,Jordan Price,Ronald Kelly,Won,15%,MCM-WD,WO-64-FAS,1,2825.00,"April 11, 2026"
+Q-2141,04/12/2026,JORDAN PRICE,Lisa Reyes,Expired,10%,MCM-DC,ash-44-sel,2,$855.00,
+Q-2142,04/14/26,Aaliyah Brooks,Mateo Parker,won,0.05,FRM-BN48,RO-64-FAS,1,"$1,110.00",05/22/26
+Q-2142,04/14/26,Aaliyah Brooks,Mateo Parker,Won,0.05,STD-DT84,RO-64-SEL,2,"$2,945.00",05/22/26
+Q-2143,04/15/26,Jordan Price,Jennifer Ramos,Won,5%,STD-DR6,CHE-44-FAS,1,"$3,170.00",05-May-2026
+Q-2143,04/15/26,Jordan Price,Jennifer Ramos,Won,5%,STD-SB,RO-44-SEL,1,"$3,325.00",05-May-2026
+Q-2144,"April 16, 2026",Aaliyah Brooks,Pemberton HVAC,lost,12%,SHK-BST,CHE-44-FAS,7,$705.00,2026-05-11
+Q-2144,"April 16, 2026",Aaliyah Brooks,Pemberton HVAC,Lost,12%,SHK-DT84,ASH-64-SEL,1,3250.00,2026-05-11
+Q-2145,20-Apr-2026,Sven Lindqvist,Pemberton HVAC,Lost,12%,SHK-WD,wal-64-fas,1,2475.00,10-May-2026
+Q-2145,20-Apr-2026,Sven Lindqvist,Pemberton HVAC,Lost,12%,FRM-BS4,HIC-64-FAS,1,"1,935.00",10-May-2026
+Q-2146,04/24/2026,Jordan Price,Chloe Roberts,Lost,0.12,STD-BN48,hic-44-fas,1,825.00,05/07/2026
+Q-2146,04/24/2026,Jordan Price,Chloe Roberts,Lost,0.12,MCM-SB,pop-44-sel,1,"$3,850.00",05/07/2026
+Q-2147,2026-04-29,Jordan Price,Harbor Light Marine,Won,0%,FRM-CON,ASH-64-FAS,1,"$1,325.00",06/03/26
+Q-2147,2026-04-29,Jordan Price,Harbor Light Marine,Won,0%,FRM-DR6,SAP-64-FAS,1,3600.00,06/03/26
+Q-2148,2026-04-29,Jordan Price,Kathleen Baker,Expired,12%,SHK-DT60,ASH-84-SEL,1,3120.00,
+Q-2148,2026-04-29,Jordan Price,Kathleen Baker,Expired,12%,MCM-DT60 ,WO-84-SEL,1,"$3,290.00",
+Q-2149,2026-05-02,jordan price,Ryan Chavez,Won,0.15,FRM-BS4,WAL-44-FAS,1,2850.00,"May 16, 2026"
+Q-2150,2026-05-07,Sven Lindqvist,Patricia Jones,Won,5%,MCM-BN48 ,HIC-64-SEL,1,$835.00,06/07/26
+Q-2151,"May 07, 2026",Aaliyah Brooks,Patricia Moore,Lost,10%,STD-WD,CHE-64-SEL,1,1885.00,2026-05-30
+Q-2151,"May 07, 2026",Aaliyah Brooks,Patricia Moore,Lost,10%,FRM-DC,MAH-44-FAS,7,$690.00,2026-05-30
+Q-2152,05/07/2026,Jordan Price,Paul Morales,Lost,0,STD-BN48,WO-44-FAS,1,795.00,"June 13, 2026"
+Q-2152,05/07/2026,Jordan Price,Paul Morales,Lost,0,STD-WD,HIC-64-FAS,2,1610.00,"June 13, 2026"
+Q-2153,"May 08, 2026",Sven Lindqvist,Meridian Title,Expired,12%,MCM-BFQ,WO-64-FAS,1,3580.00,
+Q-2153,"May 08, 2026",Sven Lindqvist,Meridian Title,Expired,12%,STD-SB,wal-64-fas,1,3395.00,
+Q-2153,"May 08, 2026",Sven Lindqvist,Meridian Title,Expired,12%,SHK-DR6,RO-44-SEL,1,"3,330.00",
+Q-2154,12-May-2026,Aaliyah Brooks,Brightwater Dental,Expired,5%,MCM-WD,ASH-64-FAS,2,"$2,220.00",
+Q-2155,2026-05-14,Sven Lindqvist,Anna Wright,Lost,,SHK-DC,RO-44-FAS,2,625.00,"June 01, 2026"
+Q-2156,2026-05-14,Aaliyah Brooks,Westbrook Plumbing,Won,0%,FRM-SB ,RO-64-SEL,2,"$2,615.00",06/23/26
+Q-2156,2026-05-14,Aaliyah Brooks,Westbrook Plumbing,Won,0%,FRM-DT84,CHE-84-SEL,1,"3,175.00",06/23/26
+Q-2156,2026-05-14,Aaliyah Brooks,Westbrook Plumbing,Won,0%,FRM-DT84,CHE-84-SEL,1,"3,175.00",06/23/26
+Q-2157,2026-05-19,Jordan Price,Betty Bailey,Won,0%,SHK-CON,POP-84-FAS,1,945.00,31-May-2026
+Q-2157,2026-05-19,Jordan Price,Betty Bailey,Won,0%,MCM-CON,ASH-84-FAS,1,1250.00,31-May-2026
+Q-2157,2026-05-19,Jordan Price,Betty Bailey,Won,0%,FRM-CT,WO-64-SEL,1,1525.00,31-May-2026
+Q-2158,05/20/2026,Jordan Price,Wei Morgan,Expired,12%,MCM-CON,RO-64-SEL,1,"1,535.00",
+Q-2158,05/20/2026,Jordan Price,Wei Morgan,Expired,12%,FRM-BN48,RO-64-FAS,1,"$1,040.00",
+Q-2159,05/22/26,Jordan Price,Deborah Rivera,won,5%,STD-DR6,CHE-44-FAS,2,"$3,480.00",06/02/2026
+Q-2160,05/23/2026,Sven Lindqvist,Gary Turner,Lost,,FRM-DR6,SAP-64-FAS,1,"$4,520.00",21-Jun-2026
+Q-2160,05/23/2026,Sven Lindqvist,Gary Turner,Lost,,SHK-DC,sap-44-fas,7,$830.00,21-Jun-2026
+Q-2160,05/23/2026,Sven Lindqvist,Gary Turner,Lost,,STD-DT96,WAL-64-FAS,1,4515.00,21-Jun-2026
+Q-2161,05/28/2026,Sven Lindqvist,Patricia Cooper,Lost,12%,FRM-SB,HIC-64-FAS,2,4380.00,06/21/26
+Q-2162,05/31/26,Sven Lindqvist ,Gary Turner,Lost,,MCM-DT72,HM-84-FAS,1,3365.00,"June 30, 2026"
+Q-2163,31-May-2026,Sven Lindqvist,Leila Martin,Lost,0.05,MCM-BN48,HIC-64-FAS,1,"$1,035.00",06/23/2026
+Q-2163,31-May-2026,Sven Lindqvist,Leila Martin,Lost,0.05,STD-DC,ash-64-fas,5,$620.00,06/23/2026
+Q-2163,31-May-2026,Sven Lindqvist,Leila Martin,lost,0.05,STD-DT96 ,ASH-64-FAS,2,3345.00,06/23/2026
+Q-2164,06/04/2026,Jordan Price,Stephanie Long,Won,0.05,MCM-DT96,MAH-64-FAS,1,"$4,640.00",06/22/2026
+Q-2165,06/14/26,Aaliyah Brooks,Stephanie Rogers,Won,5%,frm-dr6,WAL-64-SEL,1,4285.00,25-Jun-2026
+Q-2165,06/14/26,Aaliyah Brooks,Stephanie Rogers,Won,5%,frm-dr6,WAL-64-SEL,1,4285.00,25-Jun-2026
+Q-2165,06/14/26,Aaliyah Brooks,Stephanie Rogers,Won,5%,SHK-DT60,CHE-64-FAS,1,3245.00,25-Jun-2026
+Q-2166,"June 20, 2026",Aaliyah Brooks,Dorothy Ortiz,lost,0.05,SHK-CT ,CHE-84-FAS,1,"$1,185.00","July 11, 2026"
+Q-2167,2026-06-26,Sven Lindqvist,Ronald Wilson,Won,15%,FRM-BS4,RO-44-FAS,1,"1,635.00",2026-07-01
+Q-2167,2026-06-26,Sven Lindqvist,Ronald Wilson,Won,15%,STD-CT ,WO-84-FAS,2,1230.00,2026-07-01
+Q-2168,07/04/2026,Aaliyah Brooks,Glassworks Optical,Lost,,SHK-SB,hic-44-fas,1,3520.00,"August 05, 2026"
+Q-2168,07/04/2026,Aaliyah Brooks,Glassworks Optical,Lost,,MCM-BFQ,POP-64-SEL,1,3250.00,"August 05, 2026"
+Q-2169,"July 13, 2026",Aaliyah Brooks,Cynthia Bennett,Lost,5%,STD-BS4,che-44-sel,1,2000.00,"July 27, 2026"
+Q-2169,"July 13, 2026",Aaliyah Brooks,Cynthia Bennett,Lost,5%,FRM-DT96,POP-84-FAS,2,3850.00,"July 27, 2026"
+Q-2169,"July 13, 2026",Aaliyah Brooks,Cynthia Bennett,Lost,5%,STD-DT60,HIC-84-FAS,1,"2,995.00","July 27, 2026"
+Q-2170,2026-07-15,Jordan Price,Jeffrey Foster,Won,15%,STD-BS4 ,ASH-44-FAS,1,"1,890.00",23-Aug-2026
+Q-2171,"July 20, 2026",Aaliyah Brooks,Leila Hill,Draft,0%,MCM-DT60,HM-84-FAS,1,"2,660.00",
+Q-2171,"July 20, 2026",Aaliyah Brooks,Leila Hill,Draft,0%,STD-NS,ASH-44-SEL,1,765.00,
+Q-2172,"July 20, 2026",Sven Lindqvist,Yuki Watson,Sent,,std-sb,HIC-64-SEL,2,3200.00,
+Q-2172,"July 20, 2026",Sven Lindqvist,Yuki Watson,Sent,,SHK-DT96,RO-84-FAS,2,"$4,140.00",
+Q-2172,"July 20, 2026",Sven Lindqvist,Yuki Watson,Sent,,MCM-DT72,HIC-84-FAS,1,2835.00,
+Q-2173,"July 21, 2026",AALIYAH BROOKS,Brian Hall,sent,0%,frm-ns,HM-64-SEL,1,"$1,015.00",
+Q-2173,"July 21, 2026",AALIYAH BROOKS,Brian Hall,Sent,0%,STD-BFQ,HIC-64-FAS,1,2895.00,
+Q-2174,"July 22, 2026",jordan price,Mateo Parker,Sent,,SHK-DC,SAP-44-FAS,6,725.00,
+Q-2175,"July 23, 2026",Jordan Price,Jacob Smith,lost,0,FRM-BFQ,WAL-44-FAS,1,2995.00,21-Aug-2026
+Q-2176,25-Jul-2026,Aaliyah Brooks,Brightwater Dental,Sent,0,STD-DT60,CHE-84-FAS,1,"$3,400.00",
+Q-2177,"July 27, 2026",Aaliyah Brooks,Stephanie Rogers,Sent,,MCM-DT60,WO-64-SEL,1,"2,935.00",
+Q-2178,2026-07-30,Jordan Price,Brightwater Dental,Won,0.12,SHK-DT84,WAL-64-SEL,2,"$4,025.00",24-Aug-2026
+Q-2178,2026-07-30,Jordan Price,Brightwater Dental,Won,0.12,SHK-DT84,WAL-64-SEL,2,"$4,025.00",24-Aug-2026
+Q-2178,2026-07-30,Jordan Price,Brightwater Dental,Won,0.12,SHK-WD,CHE-44-SEL,2,2475.00,24-Aug-2026
+Q-2179,30-Jul-2026,Aaliyah Brooks,Cynthia Bennett,Sent,,shk-dt84,che-84-sel,1,"3,690.00",
+Q-2179,30-Jul-2026,Aaliyah Brooks,Cynthia Bennett,Sent,,FRM-BS4,CHE-44-FAS,2,"$1,795.00",
+Q-2180,07/30/2026,Aaliyah Brooks,Emily Mensah,Lost,0.12,MCM-DT84,WO-64-SEL,2,"3,880.00",08/24/2026
+Q-2181,2026-07-31,Sven Lindqvist,Daniel Cruz,Draft,0%,SHK-DR6,CHE-44-FAS,1,"$3,510.00",
+Q-2182,2026-07-31,Sven Lindqvist,Glassworks Optical,Sent,0.05,SHK-DC,HM-44-FAS,4,705.00,
+Q-2183,2026-07-31,sven lindqvist,Robert Cox,Draft,,MCM-DT72,POP-64-SEL,1,"3,060.00",
+Q-2183,2026-07-31,sven lindqvist,Robert Cox,Draft,,STD-DT96,CHE-64-FAS,1,3350.00,
+Q-2184,"August 01, 2026",Jordan Price,Amy Harris,Draft,0%,STD-BST ,RO-64-FAS,2,480.00,
+Q-2184,"August 01, 2026",Jordan Price,Amy Harris,Draft,0%,STD-DT60,CHE-84-SEL,1,2910.00,
+Q-2184,"August 01, 2026",Jordan Price,Amy Harris,Draft,0%,shk-dt60,SAP-84-FAS,2,3185.00,
+Q-2185,"August 01, 2026",Aaliyah Brooks,Paul Morales,Sent,0%,FRM-DT96,wo-64-fas,2,"$2,900.00",
+Q-2185,"August 01, 2026",Aaliyah Brooks,Paul Morales,Sent,0%,STD-CON,CHE-84-SEL,2,990.00,
+Q-2185,"August 01, 2026",Aaliyah Brooks,Paul Morales,Sent,0%,FRM-DC,pop-44-sel,7,745.00,
+Q-2186,2026-08-01,Sven Lindqvist,Quill & Ink Print Shop,Won,0.1,FRM-CON,ASH-84-FAS,1,1060.00,09/01/26
+Q-2186,2026-08-01,Sven Lindqvist,Quill & Ink Print Shop,Won,0.1,FRM-BN48,MAH-44-FAS,2,"$1,155.00",09/01/26
+Q-2187,"August 02, 2026",Sven Lindqvist,Westbrook Plumbing,Draft,0.1,frm-bs4,WO-44-FAS,2,1860.00,
+Q-2187,"August 02, 2026",Sven Lindqvist,Westbrook Plumbing,Draft,0.1,STD-DT84,WAL-84-FAS,-2,4375.00,
+Q-2188,08/03/2026,Jordan Price,John Scott,Draft,5%,FRM-WD,HIC-44-FAS,1,1890.00,
+Q-2189,08/03/26,Aaliyah Brooks,Westbrook Plumbing,Sent,0,STD-CT,HIC-84-SEL,1,"$1,240.00",
+Q-2189,08/03/26,Aaliyah Brooks,Westbrook Plumbing,Sent,0,SHK-DC ,RO-44-SEL,4,$760.00,
+Q-2190,08/04/26,jordan price,Chloe Kim,Draft,0.05,FRM-BST,SAP-64-FAS,4,$765.00,
+Q-2190,08/04/26,jordan price,Chloe Kim,Draft,0.05,MCM-BST,ASH-64-SEL,3,$630.00,
+Q-2191,04-Aug-2026,Jordan Price,Larkspur Yoga,Draft,0%,SHK-BST,ASH-44-FAS,3,625.00,
+Q-2191,04-Aug-2026,Jordan Price,Larkspur Yoga,Draft,0%,SHK-CON ,POP-64-FAS,1,"1,035.00",
+Q-2192,08/04/2026,Sven Lindqvist,Stephanie Long,Sent,10%,shk-bn48,WAL-64-SEL,1,870.00,
+Q-2192,08/04/2026,Sven Lindqvist,Stephanie Long,Sent,10%,SHK-WD,SAP-64-FAS,1,2420.00,
+Q-2192,08/04/2026,Sven Lindqvist,Stephanie Long,Sent,10%,SHK-BFQ,ASH-44-FAS,2,3005.00,
+Q-2193,"August 06, 2026",Jordan Price,Glassworks Optical,Draft,5%,STD-CON,WO-84-FAS,1,"$1,330.00",
+Q-2194,2026-08-06,SVEN LINDQVIST,James Carter,Lost,5%,SHK-DT60,ASH-84-FAS,2,"2,340.00",09/12/26
+Q-2194,2026-08-06,SVEN LINDQVIST,James Carter,lost,5%,SHK-NS,MAH-64-SEL,1,910.00,09/12/26
+Q-2194,2026-08-06,SVEN LINDQVIST,James Carter,Lost,5%,MCM-BN48,WAL-64-FAS,1,1065.00,09/12/26
+Q-2195,08/06/2026,Aaliyah Brooks,Patricia Moore,Draft,0,STD-NS,HIC-44-SEL,1,855.00,
+Q-2196,07-Aug-2026,Jordan Price,John Scott,sent,,STD-DT96,ash-64-sel,2,"3,330.00",
+Q-2196,07-Aug-2026,Jordan Price,John Scott,Sent,,STD-BS4,HM-44-FAS,1,"1,465.00",
+Q-2196,07-Aug-2026,Jordan Price,John Scott,Sent,,MCM-DT96,HIC-64-SEL,1,"$3,395.00",
+Q-2197,2026-08-10,Sven Lindqvist,Hollowell Electric,Draft,10%,MCM-DT60,RO-64-FAS,2,"$3,415.00",
+Q-2198,2026-08-10,Jordan Price,Thistle & Thread Alterations,won,15%,MCM-CT ,CHE-84-SEL,1,1700.00,08/30/26
+Q-2199,08/10/26,Jordan Price,William Osei,Sent,,STD-DT72,HM-64-SEL,2,2820.00,
+Q-2200,12-Aug-2026,Aaliyah Brooks,Cynthia Ward,Sent,0.05,MCM-BN48,WO-64-FAS,1,980.00,
+Q-2200,12-Aug-2026,Aaliyah Brooks,Cynthia Ward,Sent,0.05,SHK-WD,CHE-64-FAS,2,2335.00,
+Q-2201,2026-08-14,Aaliyah Brooks,Hiroshi Adams,Draft,0,mcm-bn48,ash-44-fas,2,935.00,
+Q-2202,2026-08-15,jordan price,Larkspur Yoga,Draft,0%,MCM-BFQ,SAP-44-FAS,1,3100.00,
+Q-2203,08/17/2026,Aaliyah Brooks,Oakhurst Pediatrics,draft,0%,std-bst,ASH-64-SEL,4,$600.00,
+Q-2203,08/17/2026,Aaliyah Brooks,Oakhurst Pediatrics,Draft,0%,STD-NS,POP-64-FAS,1,$690.00,
+Q-2203,08/17/2026,Aaliyah Brooks,Oakhurst Pediatrics,Draft,0%,MCM-DT72,CHE-84-FAS,2,4110.00,
+Q-2204,"August 20, 2026",Jordan Price,Amanda Mitchell,Sent,0.1,STD-DT72,SAP-84-FAS,1,2720.00,
+Q-2205,2026-08-20,Jordan Price,Oakhurst Pediatrics,Sent,0,MCM-DT72,ash-84-fas,1,"2,385.00",
+Q-2205,2026-08-20,Jordan Price,Oakhurst Pediatrics,Sent,0,STD-DR6,MAH-64-SEL,2,"$3,735.00",
+Q-2206,"August 22, 2026",Aaliyah Brooks,Quarry Road Nursery,Draft,0%,MCM-DT60,WO-84-FAS,1,3750.00,
+Q-2207,08/23/2026,Sven Lindqvist,Paul Morales,Sent,10%,SHK-WD,hm-44-sel,1,2335.00,
+Q-2208,08/23/2026,Aaliyah Brooks,Paul Morales,Draft,0%,STD-DT72 ,MAH-84-FAS,1,"$3,830.00",
+Q-2209,08/24/2026,Sven Lindqvist,Eric Ross,Sent,5%,SHK-BN48,HIC-64-FAS,2,1090.00,
+Q-2209,08/24/2026,Sven Lindqvist,Eric Ross,Sent,5%,FRM-DT72,RO-84-FAS,1,3720.00,
+Q-2210,08/26/2026,aaliyah brooks,Brightwater Dental,Sent,10%,STD-DT60,SAP-64-SEL,1,3010.00,
+Q-2210,08/26/2026,aaliyah brooks,Brightwater Dental,Sent,10%,STD-CON,RO-64-FAS,1,"$1,290.00",
+Q-2211,27-Aug-2026,Jordan Price,Ronald Williams,Sent,0%,STD-DT60,CHE-84-SEL,1,2690.00,
+Q-2212,30-Aug-2026,Sven Lindqvist,Dorothy Ortiz,Draft,,STD-WD,ASH-44-SEL,2,1920.00,
+Q-2212,30-Aug-2026,Sven Lindqvist,Dorothy Ortiz,Draft,,frm-bn48,CHE-64-SEL,1,"$1,035.00",
+Q-2213,"September 03, 2026",Sven Lindqvist,Hiroshi Johnson,sent,5%,MCM-WD,RO-64-FAS,1,"$1,945.00",
+Q-2213,"September 03, 2026",Sven Lindqvist,Hiroshi Johnson,sent,5%,MCM-WD,RO-64-FAS,1,"$1,945.00",
+Q-2213,"September 03, 2026",Sven Lindqvist,Hiroshi Johnson,Sent,5%,FRM-CT,SAP-64-SEL,1,"1,490.00",
+Q-2213,"September 03, 2026",Sven Lindqvist,Hiroshi Johnson,Sent,5%,FRM-DT60,WO-84-FAS,1,3150.00,
+Q-2214,09/04/2026,Aaliyah Brooks,Patricia Cooper,Sent,0%,mcm-wd,WAL-44-SEL,1,"2,505.00",
+Q-2214,09/04/2026,Aaliyah Brooks,Patricia Cooper,Sent,0%,FRM-WD,POP-44-SEL,1,"1,800.00",
+Q-2214,09/04/2026,Aaliyah Brooks,Patricia Cooper,Sent,0%,STD-DR6,RO-44-SEL,1,3235.00,
+Q-2215,"September 05, 2026",Jordan Price,Cynthia Ward,draft,5%,MCM-CT,SAP-84-FAS,1,1180.00,
+Q-2215,"September 05, 2026",Jordan Price,Cynthia Ward,Draft,5%,SHK-DT96,hic-84-fas,1,"3,820.00",
+Q-2216,"September 06, 2026",jordan price,Cynthia Ward,Sent,5%,FRM-DT84,HM-84-SEL,1,"$3,845.00",
+Q-2217,09/06/26,Aaliyah Brooks,Dana Cook,Draft,0.1,FRM-BST,WO-44-SEL,2,795.00,
+Q-2218,09/08/26,Jordan Price,Robert Cox,Sent,,MCM-DT60,POP-64-FAS,1,3170.00,
+Q-2219,09/09/2026,Aaliyah Brooks,Dana Young,Sent,0%,FRM-BST,ASH-64-SEL,5,505.00,
+Q-2219,09/09/2026,Aaliyah Brooks,Dana Young,Sent,0%,SHK-DC,MAH-44-FAS,8,655.00,
+Q-2219,09/09/2026,Aaliyah Brooks,Dana Young,Sent,0%,MCM-WD,WAL-64-SEL,1,"2,175.00",
+Q-2220,09/09/26,Jordan Price,Tomasz Evans,draft,0.1,SHK-DR6 ,WO-44-FAS,1,"4,475.00",
+Q-2220,09/09/26,Jordan Price,Tomasz Evans,Draft,0.1,FRM-SB,HM-64-SEL,1,3510.00,
+Q-2220,09/09/26,Jordan Price,Tomasz Evans,draft,0.1,STD-NS ,ASH-44-FAS,1,765.00,

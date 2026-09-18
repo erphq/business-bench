@@ -1,0 +1,11 @@
+ref_no,duplicate_of,vendor,invoice_no,amount,days_apart
+BILL-2028,BILL-2024,Tamarack Brewing,Inv #28813,9690.12,0
+BILL-2030,BILL-2025,Tamarack Brewing,28803,2008.28,1
+BILL-2059,BILL-2054,Thistle & Thread Alterations,#46044,161.40,5
+BILL-2060,BILL-2052,Thistle & Thread Alterations,INV-46064,3604.16,5
+BILL-2075,BILL-2066,Blue Heron Consulting,#38312,4408.07,5
+BILL-2079,BILL-2077,Blue Heron Consulting,#38276,7997.55,1
+BILL-2092,BILL-2082,Ivy Lane Florist,INV57082,7065.22,3
+BILL-2094,BILL-2093,Kingfisher Charters,Inv #15809,8553.45,2
+BILL-2113,BILL-2106,Silverline Logistics,25581,7420.17,5
+BILL-2119,BILL-2096,Northfield Auto Body,Inv #41155,9050.78,15

@@ -1,0 +1,21 @@
+From: Renata Mensah <renata@lanternstreettheatre.org>
+To: Sam Ortiz <sam@lanternstreettheatre.org>
+Date: Sat, 12 Sep 2026 16:40
+Subject: August close - accruals
+
+Sam,
+
+Could you put together the August accrual entry before I close the month on Monday? Same approach as July:
+
+1. We accrue anything that was delivered or performed on or before 31 August that is not already in August's AP. "In August's AP" means the bill is posted to the Aug 2026 period in the register - the bill date on its own does not tell you that.
+2. If the vendor's bill has come in (the register runs to today), accrue the bill amount and use its invoice number as the reference. If there is no bill yet, use the PO number and the estimate.
+3. If a bill covers days on both sides of 31 August, accrue only the August share: the bill amount times the number of service days in August divided by the number of days in the billing period, counting both the first and the last day, rounded to the cent.
+4. July's accrual entry reversed on 1 August. Anything on it that has been billed into August is taken care of; anything still waiting on a bill has to be accrued again.
+5. Skip anything under $250 - not worth the entry.
+
+Nothing for September services or deposits on future shows, obviously.
+
+Send it back as accruals.csv with one line per item: reference, vendor, gl_account (the four-digit account) and amount. No total line and no credit side - I post the 2150 credit myself.
+
+Thanks,
+Renata

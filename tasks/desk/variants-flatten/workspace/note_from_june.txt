@@ -1,0 +1,12 @@
+From: June Okafor <june@granitepeak.com>
+To: you
+Date: Tue, 8 Sep 2026 17:40
+Subject: catalog into Stockwell
+
+The fall catalog sheet is the current one - ignore the spring upload file, those prices are old.
+
+How I write the sheet, since it only makes sense to me: a line with a code is the product and its price. The indented lines under it are the sizes and colours in the order the Options column gives them. When a line says "S, M, L / Olive" I mean every one of those sizes in olive, and the stock figure is for each of them. A blank price means the product price. "+10" means ten dollars more than the product price. A full price like $59.00 is that variant's own price (clearance).
+
+Our SKUs are the product code followed by each option value, with dashes, all capitals - TJ24-M-OLIVE. Things without sizes or colours just use the product code.
+
+Sold out, on order, a dash, or a minus number (the till oversold it) all mean none on the shelf. Keep those in, I want them to show as sold out, not disappear.

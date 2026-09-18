@@ -1,0 +1,47 @@
+id: payroll-journal-entry
+track: desk
+category: bookkeeping
+title: Journal entry for the 4 September payroll
+ask: |
+  Grace needs the journal entry for today's payroll so she can import it. The register and our chart of accounts are in the folder, and her email explains how she books it. Save it as payroll_je.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the company's own Social Security, Medicare, FUTA, SUI, 401(k) match and medical contribution are in a second block below the employee totals; reading only the employee table gives an entry that still balances but leaves out 6,600.53 of cost and the matching liabilities (checks: account amounts; debits equal credits)
+- |-
+  wages are expensed at gross; 401(k), medical premiums and the garnishment are credited to payables rather than netted out of the wage lines (check: account amounts)
+- |-
+  2115 carries both halves of Social Security and Medicare and 2140/2145 include the company's match and medical contribution; one person is past the Social Security wage base so that column is not 6.2% of gross (check: account amounts)
+- |-
+  reimbursements are paid inside net pay but sit outside gross earnings; they debit 6310, and adding them to wages or leaving them out unbalances the lines (checks: account amounts; debits equal credits)
+- |-
+  Deborah's salary as owner belongs in 6030 officer compensation, though the register lists the owner in the office department (check: account amounts)
+- |-
+  the employee table ends in a Company totals row and the employer block has its own total; summing whole columns doubles every figure (checks: account amounts; debits equal credits)
+checks:
+- type: csv_columns
+  name: import columns
+  path: payroll_je.csv
+  columns:
+  - account_number
+  - account_name
+  - debit
+  - credit
+- type: csv_set_equal
+  name: accounts used
+  path: payroll_je.csv
+  column: account_number
+  ref: payroll_je.csv
+  normalize:
+  - digits
+- type: csv_row_count
+  name: one line per account
+  path: payroll_je.csv
+  equals_ref: payroll_je.csv
+- type: custom
+  name: account amounts
+  module: check.py
+- type: custom
+  name: debits equal credits
+  module: check_balance.py

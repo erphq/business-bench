@@ -1,0 +1,456 @@
+{
+  "seed": 0,
+  "company": "Bellhaven Foods",
+  "admin": "Carla Brennan (procurement lead)",
+  "category_managers": {
+    "Rosa Delgado": [
+      "Ingredients",
+      "Packaging"
+    ],
+    "Dev Malhotra": [
+      "Logistics"
+    ],
+    "Mei Chen": [
+      "Facilities"
+    ],
+    "Tom Okafor": [
+      "IT & Services"
+    ]
+  },
+  "restricted_login": "Rosa Delgado",
+  "valid_for_test_dates": "2026-09-01 to 2027-12-01 (insurance expiries are on or before 2026-08-28 or in 2028)",
+  "baseline": {
+    "staff_role": "Category Manager",
+    "viewer_role": "Viewer",
+    "main_entity": "vendor",
+    "main_entity_plural": "vendors",
+    "scope_rule": "vendors in Rosa Delgado's categories, Ingredients and Packaging",
+    "scope_count": 54,
+    "out_of_scope_example": {
+      "name": "Highway 30 Carriers",
+      "vendor_no": "V-0088",
+      "category": "Logistics",
+      "manager": "Dev Malhotra",
+      "stage": "Approved"
+    },
+    "kpis": [
+      {
+        "name": "Vendors in onboarding (stage New, Documents, or Review)",
+        "value": 50
+      },
+      {
+        "name": "Approved vendors",
+        "value": 58
+      },
+      {
+        "name": "Approved vendors with insurance lapsed or expiring within 30 days",
+        "value": 6
+      },
+      {
+        "name": "Annual spend with approved vendors",
+        "value": 8648502.69
+      }
+    ],
+    "scoped_kpi_1": 24,
+    "search": {
+      "term": "Lakeshore",
+      "count": 2,
+      "matches": [
+        "Lakeshore Flour Mills",
+        "Lakeshore Sugar Refining"
+      ],
+      "count_without_dedupe": 3
+    },
+    "filter": {
+      "field": "Category",
+      "value": "Packaging",
+      "count": 22,
+      "count_exact_text_match": 17
+    },
+    "sort": {
+      "field": "Annual Spend",
+      "top": "Copper Kettle Grain Co.",
+      "top_file_value": "$479,615.05",
+      "top_numeric": 479615.05,
+      "text_sort_top": "Cold Chain Transport Inc.",
+      "text_sort_top_file_value": "97691.25"
+    },
+    "export": {
+      "rows": 116,
+      "columns": [
+        "Vendor No",
+        "Vendor Name",
+        "Category",
+        "Tax ID",
+        "Stage",
+        "Annual Spend"
+      ]
+    },
+    "required_field": "Category"
+  },
+  "vendors": {
+    "file_rows_excluding_header": 126,
+    "exact_duplicate_rows": 6,
+    "reentered_duplicate_rows": 4,
+    "unique_vendors_after_dedupe": 116,
+    "dedupe_rule": "Two rows are the same vendor when their Tax ID digits match (dash or no dash). Rows with a blank Tax ID are all different vendors.",
+    "wrong_counts": {
+      "no_dedupe": 126,
+      "exact_rows_only": 120,
+      "blank_tax_ids_collapsed": 112
+    },
+    "per_category": {
+      "Ingredients": 32,
+      "Packaging": 22,
+      "Logistics": 22,
+      "Facilities": 22,
+      "IT & Services": 18
+    },
+    "per_manager": {
+      "Rosa Delgado": 54,
+      "Dev Malhotra": 22,
+      "Mei Chen": 22,
+      "Tom Okafor": 18
+    },
+    "restricted_scope_if_category_matched_as_written": 41,
+    "per_stage": {
+      "New": 18,
+      "Documents": 22,
+      "Review": 10,
+      "Approved": 58,
+      "Rejected": 8
+    },
+    "blank_tax_id_vendors": [
+      "Heartland Dairy",
+      "Ironbridge Consulting",
+      "Keystone Packaging Inc.",
+      "Summit Roofing Inc.",
+      "Sweetwater Honey LLC"
+    ],
+    "unpadded_number_rows": 8,
+    "reentered_groups": [
+      {
+        "name": "Pioneer Industrial Supply",
+        "category": "Facilities",
+        "numbers": [
+          "V-0040",
+          "SUP-2857"
+        ],
+        "tax_ids_as_written": [
+          "39-5934900",
+          "395934900"
+        ],
+        "names_as_written": [
+          "Pioneer Industrial Supply",
+          "PIONEER INDUSTRIAL SUPPLY"
+        ],
+        "file_lines": [
+          77,
+          104
+        ]
+      },
+      {
+        "name": "Lakeshore Sugar Refining",
+        "category": "Ingredients",
+        "numbers": [
+          "V-0054",
+          "SUP-2058"
+        ],
+        "tax_ids_as_written": [
+          "37-5911986",
+          "375911986"
+        ],
+        "names_as_written": [
+          "Lakeshore Sugar Refining",
+          "LAKESHORE SUGAR REFINING"
+        ],
+        "file_lines": [
+          16,
+          121
+        ]
+      },
+      {
+        "name": "Brightpath Software Inc.",
+        "category": "IT & Services",
+        "numbers": [
+          "V-0082",
+          "SUP-2534"
+        ],
+        "tax_ids_as_written": [
+          "95-6464495",
+          "956464495"
+        ],
+        "names_as_written": [
+          "Brightpath Software Inc.",
+          "Brightpath Software, Inc."
+        ],
+        "file_lines": [
+          107,
+          119
+        ]
+      },
+      {
+        "name": "Sunridge Flour Mills",
+        "category": "Ingredients",
+        "numbers": [
+          "V-0090",
+          "SUP-2313"
+        ],
+        "tax_ids_as_written": [
+          "38-7286061",
+          "387286061"
+        ],
+        "names_as_written": [
+          "Sunridge Flour Mills",
+          "SUNRIDGE FLOUR MILLS"
+        ],
+        "file_lines": [
+          39,
+          80
+        ]
+      }
+    ],
+    "exact_duplicate_vendors": [
+      "Bramble Hill Produce",
+      "Cornerstone Janitorial",
+      "Great Lakes Logistics",
+      "Keystone Pallet Supply",
+      "Northstar Films LLC",
+      "Riverbend Nut Company"
+    ]
+  },
+  "documents": {
+    "file_rows_excluding_header": 275,
+    "duplicate_rows": 4,
+    "required": {
+      "all vendors": [
+        "W-9",
+        "Certificate of Insurance",
+        "Code of Conduct"
+      ],
+      "Ingredients vendors also": [
+        "Food Safety Certificate"
+      ]
+    },
+    "vendors_with_complete_documents": 68,
+    "vendor_a_unpadded_numbers": {
+      "name": "Ridgeway Closures",
+      "vendor_no": "V-0035",
+      "category": "Packaging",
+      "manager": "Rosa Delgado",
+      "stage": "Approved",
+      "numbers_as_filed": [
+        "0035",
+        "V-35",
+        "v-0035"
+      ],
+      "documents": [
+        "W-9",
+        "Certificate of Insurance",
+        "Code of Conduct"
+      ]
+    },
+    "vendor_c_filed_under_second_number": {
+      "name": "Pioneer Industrial Supply",
+      "vendor_no": "V-0040",
+      "category": "Facilities",
+      "manager": "Mei Chen",
+      "stage": "Approved",
+      "second_number": "SUP-2857",
+      "documents_under_second_number": [
+        "W-9",
+        "Certificate of Insurance"
+      ],
+      "file_lines": [
+        95,
+        110,
+        121
+      ]
+    },
+    "vendor_b_missing_food_safety": {
+      "name": "Harvest Valley Honey LLC",
+      "vendor_no": "V-0010",
+      "category": "Ingredients",
+      "manager": "Rosa Delgado",
+      "stage": "Documents",
+      "has": [
+        "W-9",
+        "Certificate of Insurance",
+        "Code of Conduct"
+      ],
+      "missing": [
+        "Food Safety Certificate"
+      ]
+    },
+    "vendor_d_packaging_complete": {
+      "name": "Ironclad Corrugated",
+      "vendor_no": "V-0074",
+      "category": "Packaging",
+      "manager": "Rosa Delgado",
+      "stage": "Approved",
+      "has": [
+        "W-9",
+        "Certificate of Insurance",
+        "Code of Conduct"
+      ]
+    },
+    "vendor_f_expiry_before_issue": {
+      "name": "Highway 30 Transport Inc.",
+      "vendor_no": "V-0087",
+      "category": "Logistics",
+      "manager": "Dev Malhotra",
+      "stage": "Review",
+      "issued": "2026-03-16",
+      "expires": "2025-03-16",
+      "file_values": [
+        "2026-03-16",
+        "16-Mar-2025"
+      ]
+    },
+    "vendor_g_new_packaging": {
+      "name": "Pinnacle Carton Co.",
+      "vendor_no": "V-0069",
+      "category": "Packaging",
+      "manager": "Rosa Delgado",
+      "stage": "New"
+    },
+    "vendor_e_window_test": {
+      "name": "Cornerstone Landscaping",
+      "vendor_no": "V-0066",
+      "category": "Facilities",
+      "manager": "Mei Chen",
+      "stage": "Approved"
+    },
+    "vendor_e2_renewal_task_test": {
+      "name": "Clearview Labels & Print",
+      "vendor_no": "V-0100",
+      "category": "Packaging",
+      "manager": "Rosa Delgado",
+      "stage": "Approved"
+    },
+    "lapsed_approved_vendors": [
+      {
+        "name": "Brightpath CPA Group",
+        "vendor_no": "V-0039",
+        "category": "IT & Services",
+        "manager": "Tom Okafor",
+        "stage": "Approved",
+        "coi_expires": "2026-02-11",
+        "coi_expires_file_value": "02/11/2026",
+        "coi_document_name_as_written": "Certificate of Insurance"
+      },
+      {
+        "name": "Brightpath Legal LLP",
+        "vendor_no": "V-0112",
+        "category": "IT & Services",
+        "manager": "Tom Okafor",
+        "stage": "Approved",
+        "coi_expires": "2026-01-05",
+        "coi_expires_file_value": "January 05, 2026",
+        "coi_document_name_as_written": "Certificate of Insurance"
+      },
+      {
+        "name": "Copper Kettle Orchards",
+        "vendor_no": "V-0033",
+        "category": "Ingredients",
+        "manager": "Rosa Delgado",
+        "stage": "Approved",
+        "coi_expires": "2026-05-01",
+        "coi_expires_file_value": "2026-05-01",
+        "coi_document_name_as_written": "Certificate of Insurance"
+      },
+      {
+        "name": "Frontier Logistics",
+        "vendor_no": "V-0050",
+        "category": "Logistics",
+        "manager": "Dev Malhotra",
+        "stage": "Approved",
+        "coi_expires": "2025-11-11",
+        "coi_expires_file_value": "11-Nov-2025",
+        "coi_document_name_as_written": "Certificate of Insurance"
+      },
+      {
+        "name": "Precision Mechanical",
+        "vendor_no": "V-0076",
+        "category": "Facilities",
+        "manager": "Mei Chen",
+        "stage": "Approved",
+        "coi_expires": "2026-07-15",
+        "coi_expires_file_value": "07/15/2026",
+        "coi_document_name_as_written": "Certificate of Insurance"
+      },
+      {
+        "name": "Sunridge Honey LLC",
+        "vendor_no": "V-0078",
+        "category": "Ingredients",
+        "manager": "Rosa Delgado",
+        "stage": "Approved",
+        "coi_expires": "2026-07-30",
+        "coi_expires_file_value": "2026-07-30",
+        "coi_document_name_as_written": "Cert. of Insurance"
+      }
+    ]
+  },
+  "app_items": {
+    "approved_after_vendor_b_approved": 59,
+    "window_test": {
+      "in_window_days_from_today": 20,
+      "out_of_window_days_from_today": 45,
+      "figure_in_window": 7,
+      "figure_out_of_window": 6
+    }
+  },
+  "changes": {
+    "1_approved_spend_by_category": {
+      "Ingredients": 3865317.29,
+      "Packaging": 2603615.98,
+      "Logistics": 942560.56,
+      "Facilities": 375662.55,
+      "IT & Services": 861346.31
+    },
+    "1_lapsed_or_expiring_by_manager": {
+      "Rosa Delgado": 2,
+      "Dev Malhotra": 1,
+      "Mei Chen": 1,
+      "Tom Okafor": 2
+    },
+    "1_lapsed_vendor_names_by_manager": {
+      "Rosa Delgado": [
+        "Copper Kettle Orchards",
+        "Sunridge Honey LLC"
+      ],
+      "Dev Malhotra": [
+        "Frontier Logistics"
+      ],
+      "Mei Chen": [
+        "Precision Mechanical"
+      ],
+      "Tom Okafor": [
+        "Brightpath CPA Group",
+        "Brightpath Legal LLP"
+      ]
+    },
+    "2_restricted_renewal_tasks_from_import": 2,
+    "2_restricted_open_tasks_after_clearview_expiry_set": 3,
+    "2_renewal_task_vendor": {
+      "name": "Clearview Labels & Print",
+      "vendor_no": "V-0100",
+      "category": "Packaging",
+      "manager": "Rosa Delgado",
+      "stage": "Approved"
+    },
+    "2_restricted_lapsed_vendors": [
+      "Copper Kettle Orchards",
+      "Sunridge Honey LLC"
+    ],
+    "3_stages_in_order": [
+      "New",
+      "Documents",
+      "Review",
+      "Compliance",
+      "Approved",
+      "Rejected"
+    ],
+    "3_all_vendors_visible_to_compliance": 116
+  }
+}

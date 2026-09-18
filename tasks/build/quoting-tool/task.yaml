@@ -1,0 +1,64 @@
+id: quoting-tool
+track: build
+category: sales
+title: Quoting app for a custom furniture maker with margin floor, discount approval, and quote-to-order conversion
+ask: |
+  We build custom furniture at Fernhill Furniture Works, and our three sales reps quote from a
+  spreadsheet that never has the right lumber prices. Our product list, our lumber price list, and our
+  quotes since last November are attached. A quote line costs the product's board feet times the lumber
+  price plus the product's labor, no line may go out below a 30% margin after discount, and any discount
+  over 10% needs my approval before the quote is sent. When a customer accepts, the quote should turn
+  into an order without anyone retyping it. Reps should only see their own quotes, our bookkeeper needs
+  to see everything without changing anything, and I want a dashboard with open quotes, what's out for
+  a decision, what we've won, and our win rate (won out of won or lost); send me an admin login and one
+  for Aaliyah Brooks.
+seed:
+  - seed/products.csv
+  - seed/materials.csv
+  - seed/quotes.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email (the owner).
+      password: Admin password.
+    restricted:
+      user: Login for Aaliyah Brooks, sales rep.
+      password: Aaliyah's password.
+    notes: >
+      Free text. Must say the restricted login is Aaliyah Brooks. May include other rep or bookkeeper
+      logins, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "owner@fernhill.example", "password": "..."},
+      "restricted": {"user": "aaliyah@fernhill.example", "password": "..."},
+      "notes": "restricted login is Aaliyah Brooks. Restart: docker compose restart quotes."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 21, 25]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - products.csv has 2 exact duplicates and 2 rows re-keyed as frm-sb and "STD-DT84 " (64 rows -> 60 products); materials.csv has 2 exact duplicates (62 -> 60) (item 15)
+  - labor costs and lumber prices partly written as "$1,280.00" and "$18.22"; a text sort puts CHE-44-FAS first and unread strings zero the line cost (items 16, 20)
+  - quotes.csv has one row per line with 5 lines exported twice; counting rows gives 216 quotes, and Q-2165 totals 11,224.25 with its duplicate (items 10, 11, 17)
+  - discounts written 5%, 0.05, 0.1, 0, or blank; reading 0.1 as a tenth of a percent hides Q-2204's margin breach (items 17, 22)
+  - margin must be taken after the quote discount; Q-2204 is 34.55% before and 27.27% after, Q-2215 31.16% before and 27.54% after (items 21, 22)
+  - Rep written AALIYAH BROOKS, aaliyah brooks, or with a trailing space; exact matching gives Aaliyah 38 quotes instead of 43 (item 6)
+  - SKUs and material codes in quotes appear in lower case or with trailing spaces; a literal join leaves lines without cost (items 20, 22)
+  - Q-2187 has a line with quantity -2; must be flagged, not imported silently (item 18)
+  - win rate is won / (won + lost); dividing by all quotes gives 25.0% and counting Expired as lost gives 39.5% (items 8, 19)
+  - discount over 10% (strictly) needs admin approval that the rep cannot give; 10% itself sends (items 23, 24)
+  - marking Won must create the order by itself with the discounted total, and lock the quote (items 25, 26)

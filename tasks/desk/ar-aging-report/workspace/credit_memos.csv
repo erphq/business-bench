@@ -1,0 +1,8 @@
+Credit Memo,Date,Customer,Against Invoice,Amount,Reason
+CM-881,03/14/2026,Driftwood Taqueria,YS-31228,"$1,405.79",Temperature complaint
+CM-882,06/04/2026,Harborview Oyster Bar,YS-31402,$614.41,Temperature complaint
+CM-883,06/10/2026,Driftwood Taqueria,YS-31408,"$1,386.64",Pricing error
+CM-884,06/21/2026,The Saltwater Grill,YS-31432,$479.34,Pricing error
+CM-885,07/27/2026,Harborview Oyster Bar,YS-31514,$152.83,Pricing error
+CM-886,08/18/2026,Riverbend Bistro,,"$2,259.54",Spoiled delivery - goodwill credit
+CM-887,09/04/2026,Copper Kettle Diner,YS-31319,$371.61,Pricing error

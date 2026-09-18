@@ -1,0 +1,56 @@
+{
+  "naive": {
+    "2026-08-03": {
+      "hours_sun": 274.0,
+      "online_all": 5654.13,
+      "online_utc": 5113.45,
+      "per_hour_sun": 90.8,
+      "repairs_opened": 31
+    },
+    "2026-08-10": {
+      "hours_sun": 275.5,
+      "online_all": 7893.87,
+      "online_utc": 5400.43,
+      "per_hour_sun": 94.34,
+      "repairs_opened": 21
+    },
+    "2026-08-17": {
+      "hours_sun": 283.0,
+      "online_all": 7348.85,
+      "online_utc": 6643.949999999999,
+      "per_hour_sun": 82.19,
+      "repairs_opened": 28
+    },
+    "2026-08-24": {
+      "hours_sun": 296.0,
+      "online_all": 6913.650000000001,
+      "online_utc": 4158.08,
+      "per_hour_sun": 87.05,
+      "repairs_opened": 29
+    },
+    "2026-08-31": {
+      "hours_sun": 296.0,
+      "online_all": 5564.25,
+      "online_utc": 5562.89,
+      "per_hour_sun": 85.37,
+      "repairs_opened": 24
+    },
+    "2026-09-07": {
+      "hours_sun": 273.5,
+      "online_all": 6044.12,
+      "online_utc": 5782.39,
+      "per_hour_sun": 89.04,
+      "repairs_opened": 22
+    }
+  },
+  "six_weeks": {
+    "hours": 1733.5,
+    "online": 32489.16,
+    "orders": 219,
+    "per_hour": 86.25,
+    "repairs": 136,
+    "store": 117030.4,
+    "subs": 115,
+    "total": 149519.56
+  }
+}

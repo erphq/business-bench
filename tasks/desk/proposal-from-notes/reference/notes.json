@@ -1,0 +1,42 @@
+{
+  "amounts": {
+    "disposal": 690.0,
+    "highbay": 7670.0,
+    "lift": 1290.0,
+    "permit": 315.0,
+    "troffer": 1960.0,
+    "wallpack": 1110.0
+  },
+  "pole_amount": 3500.0,
+  "pole_unit": 700.0,
+  "qty": {
+    "disposal": 46,
+    "highbay": 26,
+    "lift": 3,
+    "permit": 1,
+    "troffer": 14,
+    "wallpack": 6
+  },
+  "rates_2025": {
+    "disposal": 14.0,
+    "highbay": 275.0,
+    "lift": 406.0,
+    "permit": 299.0,
+    "pole": 647.0,
+    "sensor": 77.0,
+    "troffer": 130.0,
+    "wallpack": 175.0
+  },
+  "rates_2026": {
+    "disposal": 15.0,
+    "highbay": 295.0,
+    "lift": 430.0,
+    "permit": 315.0,
+    "pole": 700.0,
+    "sensor": 83.0,
+    "troffer": 140.0,
+    "wallpack": 185.0
+  },
+  "sensors_option": 2158.0,
+  "total": 13035.0
+}

@@ -1,0 +1,62 @@
+id: bom-cost-rollup
+track: desk
+category: spreadsheet
+title: Material cost per product from the bill of materials
+ask: |
+  Our accountant needs the material cost of each product we sell. Work it out from the BOM export and the price list and give me assembly_costs.xlsx, built so I can change a price later. Dale's email has the details.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the BOM export is single-level parent/component lines three levels deep (product > frame > leg > tube, product > drawer unit > drawer box > sheet); each quantity has to be multiplied by every quantity above it, and taking each line at its own qty-per undercounts legs, tube, shelves and drawer boxes (checks: IW-7230 72in workbench cost; IW-TS1 tool station cost; IW-MC2 mobile cart cost)
+- |-
+  bolts are priced per 100 on the August list (the Per column says 100); reading the Price column as the price of one bolt multiplies the rack's cost several times over (check: IW-SR5 shelving rack cost)
+- |-
+  the drawer unit SA-DRW still has its superseded Rev A lines in the export next to Rev B; counting both doubles the drawer box and adds the old light-duty slides to every product with drawers (checks: IW-7230 72in workbench cost; IW-TS1 tool station cost)
+- |-
+  the new casters are not on the August price list; the second email carries the quote, and the 2025 list still in the folder has an older, lower caster price and lower prices for everything else (checks: IW-MC2 mobile cart cost; IW-4830 48in workbench cost)
+- |-
+  the export has a two-line preamble above the header, a BOM and CRLF endings, and prices on the list are text like '$15.07' under a merged title row (check: IW-4830 48in workbench cost)
+- |-
+  the owner wants to change a price and see costs move, so the product costs must be live formulas (check: live formulas)
+checks:
+- type: file_exists
+  name: assembly_costs.xlsx exists
+  path: assembly_costs.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: assembly_costs.xlsx
+  min_count: 5
+- type: xlsx_no_errors
+  name: no error cells
+  path: assembly_costs.xlsx
+- type: xlsx_value_present
+  name: IW-7230 72in workbench cost
+  path: assembly_costs.xlsx
+  expected: 388.4
+  rel_tol: 0.001
+  near_text: iw-7230
+- type: xlsx_value_present
+  name: IW-4830 48in workbench cost
+  path: assembly_costs.xlsx
+  expected: 283.72
+  rel_tol: 0.001
+  near_text: iw-4830
+- type: xlsx_value_present
+  name: IW-SR5 shelving rack cost
+  path: assembly_costs.xlsx
+  expected: 195.39
+  rel_tol: 0.001
+  near_text: iw-sr5
+- type: xlsx_value_present
+  name: IW-MC2 mobile cart cost
+  path: assembly_costs.xlsx
+  expected: 173.09
+  rel_tol: 0.001
+  near_text: iw-mc2
+- type: xlsx_value_present
+  name: IW-TS1 tool station cost
+  path: assembly_costs.xlsx
+  expected: 364.75
+  rel_tol: 0.001
+  near_text: iw-ts1

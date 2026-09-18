@@ -1,0 +1,37 @@
+id: schedule-to-ics
+track: desk
+category: reformatting
+title: Fall class schedule as a calendar file for the website
+ask: |
+  Can you turn our fall class schedule into a calendar file people can add from the website? Save it as schedule.ics. Jess's note says how she wants it.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  times must carry the Mountain time zone (TZID or correctly converted UTC); floating times with no zone, or UTC computed with September's -06:00 offset, put the post-1-November Open Barn Night an hour off (checks: times carry the time zone; weekly series, occurrences and cancellation)
+- |-
+  the webinar row's times are Eastern ('Times are EASTERN' in the Notes column only), so 12:00 PM is 10:00 in Denver (check: times carry the time zone)
+- |-
+  Puppy Kindergarten and Reactive Rover must each be one VEVENT with a weekly RRULE, and both cross the 1 November clock change, so an RRULE anchored in UTC drifts an hour for the November sessions; Puppy K stops on its end date (UNTIL) and Reactive Rover after '6 sessions' with no end date (COUNT) (check: weekly series, occurrences and cancellation)
+- |-
+  the 10 November Puppy Kindergarten session is cancelled and not made up; it must be removed with EXDATE or a cancelled RECURRENCE-ID override, and the series still runs to 17 November (seven sessions) (check: weekly series, occurrences and cancellation)
+- |-
+  CGC Test Day and the Sat-Sun Fall Agility Fun Match are all-day events: DTSTART;VALUE=DATE with an exclusive end, so the fun match ends 20261109; the workbook's End date is inclusive and midnight-to-midnight times are not all-day (check: all-day events)
+- |-
+  the workbook opens on the finished 'Summer 2026' sheet, which also has a Puppy Kindergarten series, and last spring's .ics in the folder uses floating times, one event per week and an all-day DTEND equal to DTSTART; summer and spring events must not be in the file and the spring file is not a pattern to copy (checks: every fall event and nothing else; times carry the time zone)
+checks:
+- type: file_exists
+  name: schedule.ics exists
+  path: schedule.ics
+- type: custom
+  name: every fall event and nothing else
+  module: check.py
+- type: custom
+  name: times carry the time zone
+  module: check_times.py
+- type: custom
+  name: weekly series, occurrences and cancellation
+  module: check_series.py
+- type: custom
+  name: all-day events
+  module: check_allday.py

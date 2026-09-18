@@ -1,0 +1,27 @@
+From: Jess Okafor <jess@tamarackbrewing.com>
+To: Ruth Mensah <ruth@tamarackbrewing.com>
+Date: Mon, 6 Jul 2026 09:02
+Subject: savings number for the owners
+
+Ruth - the owners asked what my negotiating actually saved in the first half. How do you want it counted so it matches your books?
+
+-----Original Message-----
+
+From: Ruth Mensah <ruth@tamarackbrewing.com>
+To: Jess Okafor <jess@tamarackbrewing.com>
+Date: Mon, 6 Jul 2026 11:40
+Subject: RE: savings number for the owners
+
+Here is how finance counts it, per PO line:
+
+  savings = (the supplier's first quoted unit price, in USD) - (the PO unit cost) x the quantity on the PO
+
+The baseline is Rev 1 of the quote. The later revisions are the result of your negotiating, so measuring against them would hide exactly what we want to show. Use the quantity we actually ordered, not the quantity the supplier quoted on.
+
+Hallertau quotes in euros and Prairie Heritage in Canadian dollars. Convert quotes at our 2026 budget rates, not the day's rate: 1 EUR = 1.08 USD, 1 CAD = 0.73 USD. The PO export is already in USD. Don't round the converted unit price; work each line out in full and round the line's savings to the cent.
+
+Cancelled POs saved nothing. Spot buys without a quote have no baseline, so leave them out of savings. And if a PO came in above the quote, that is negative savings - it stays in, it does not become zero.
+
+By category please, with a total.
+
+Ruth

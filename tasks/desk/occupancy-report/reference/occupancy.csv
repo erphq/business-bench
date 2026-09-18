@@ -1,0 +1,21 @@
+property,month,booked_nights,available_nights,occupancy
+Aspen Hollow,2026-01,15,26,0.5769
+Aspen Hollow,2026-02,14,26,0.5385
+Aspen Hollow,2026-03,20,31,0.6452
+Aspen Hollow,Q1,49,83,0.5904
+Bear Creek Lodge,2026-01,21,31,0.6774
+Bear Creek Lodge,2026-02,15,23,0.6522
+Bear Creek Lodge,2026-03,13,31,0.4194
+Bear Creek Lodge,Q1,49,85,0.5765
+Cedar Loft,2026-01,19,31,0.6129
+Cedar Loft,2026-02,21,28,0.7500
+Cedar Loft,2026-03,12,27,0.4444
+Cedar Loft,Q1,52,86,0.6047
+Fox Den Cabin,2026-01,16,26,0.6154
+Fox Den Cabin,2026-02,16,23,0.6957
+Fox Den Cabin,2026-03,18,31,0.5806
+Fox Den Cabin,Q1,50,80,0.6250
+Summit A-Frame,2026-01,14,28,0.5000
+Summit A-Frame,2026-02,17,28,0.6071
+Summit A-Frame,2026-03,16,31,0.5161
+Summit A-Frame,Q1,47,87,0.5402

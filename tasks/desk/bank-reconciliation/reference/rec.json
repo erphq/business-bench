@@ -1,0 +1,85 @@
+{
+  "adjusted_balance": 20184.41,
+  "bank_ending": 24873.38,
+  "bank_only": [
+    {
+      "amount": -2320.32,
+      "desc": "RETURNED ITEM - NSF ELLINGTON BAKERIES"
+    },
+    {
+      "amount": -15.0,
+      "desc": "RETURNED ITEM FEE"
+    },
+    {
+      "amount": -25.0,
+      "desc": "MONTHLY MAINTENANCE FEE"
+    },
+    {
+      "amount": 7.29,
+      "desc": "INTEREST PAID"
+    }
+  ],
+  "book_adjustments_total": -5053.03,
+  "book_ending": 25237.44,
+  "cleared_check_numbers": [
+    5284,
+    5296,
+    5301,
+    5302,
+    5303,
+    5305,
+    5306,
+    5307,
+    5308,
+    5309,
+    5310,
+    5311,
+    5313,
+    5316,
+    5317,
+    5319,
+    5320,
+    5322
+  ],
+  "deposits_in_transit": [
+    {
+      "amount": 3011.07,
+      "date": "2026-08-31"
+    }
+  ],
+  "deposits_in_transit_total": 3011.07,
+  "naive": {
+    "adj_bank": 26077.22,
+    "dit": 7864.82,
+    "oc": 6660.98
+  },
+  "outstanding_checks": [
+    {
+      "amount": 1039.06,
+      "carried_from_july": true,
+      "num": 5290
+    },
+    {
+      "amount": 609.29,
+      "carried_from_july": false,
+      "num": 5314
+    },
+    {
+      "amount": 3607.66,
+      "carried_from_july": false,
+      "num": 5315
+    },
+    {
+      "amount": 2444.03,
+      "carried_from_july": false,
+      "num": 5321
+    }
+  ],
+  "outstanding_checks_total": 7700.04,
+  "swap": {
+    "bank": 5293.0,
+    "book": 2593.0,
+    "difference": 2700.0,
+    "num": 5305
+  }
+}

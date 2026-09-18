@@ -1,0 +1,8 @@
+Hi,
+
+For the 941 reconciliation I need 2025 payroll by quarter: gross wages, total taxes withheld from employees (federal, state, Social Security and Medicare - the employee side only, not the company match), and net pay. Quarters go by check date, not by the pay period the check covers, because that is how the deposits were made.
+
+PayrollPro exports off-cycle runs separately from the regular register; those count in the quarter they were paid, same as everything else.
+
+Thanks,
+Deborah

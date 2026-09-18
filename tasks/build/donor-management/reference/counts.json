@@ -1,0 +1,444 @@
+{
+  "seed": 0,
+  "organization": "Harbor Lights Community Fund",
+  "admin": "the executive director",
+  "program_officers": {
+    "Nia Robinson": [
+      "Youth Literacy",
+      "Scholarships"
+    ],
+    "Omar Haddad": [
+      "Food Pantry"
+    ],
+    "Grace Kim": [
+      "Senior Meals"
+    ]
+  },
+  "restricted_login": "Nia Robinson",
+  "letter_threshold": 250.0,
+  "valid_for_test_dates": "year-to-date figures assume a test date from 2026-09-06 to 2026-12-31",
+  "baseline": {
+    "staff_role": "Program Officer",
+    "viewer_role": "Viewer",
+    "main_entity": "gift",
+    "main_entity_plural": "gifts",
+    "scope_rule": "gifts to Nia Robinson's programs, Youth Literacy and Scholarships",
+    "scope_count": 70,
+    "scope_count_if_program_matched_as_written": 55,
+    "out_of_scope_example": {
+      "gift": "G-10143",
+      "donor": "Jennifer Castillo",
+      "date": "2026-01-15",
+      "amount": 1250.0,
+      "program": "Food Pantry",
+      "type": "Pledge payment",
+      "file_lines": [
+        144
+      ]
+    },
+    "kpis": [
+      {
+        "name": "Raised year to date (gifts dated 2026)",
+        "value": 73725.75
+      },
+      {
+        "name": "Donor households",
+        "value": 150
+      },
+      {
+        "name": "Outstanding pledges (pledge amount minus payments, summed)",
+        "value": 37225.0
+      },
+      {
+        "name": "Acknowledgement letters owed (gifts of 250.00 or more not acknowledged)",
+        "value": 9
+      }
+    ],
+    "scoped_kpi_1": 36825.5,
+    "search": {
+      "term": "Alvarez",
+      "donor": "Kwame Alvarez",
+      "count": 2,
+      "gifts": [
+        "G-10157",
+        "G-10199"
+      ]
+    },
+    "filter": {
+      "field": "Program",
+      "value": "Food Pantry",
+      "count": 76,
+      "count_if_matched_as_written": 67
+    },
+    "sort": {
+      "field": "Amount",
+      "top": {
+        "gift": "G-10206",
+        "donor": "Paul Collins",
+        "date": "2026-06-30",
+        "amount": 15000.0,
+        "program": "Scholarships",
+        "type": "One-time",
+        "file_lines": [
+          212
+        ]
+      },
+      "top_file_value": "$15,000.00"
+    },
+    "export": {
+      "rows": 228,
+      "columns": [
+        "Gift ID",
+        "Donor",
+        "Gift Date",
+        "Amount",
+        "Program"
+      ]
+    },
+    "required_field": "Program"
+  },
+  "donors": {
+    "file_rows_excluding_header": 190,
+    "exact_duplicate_rows": 8,
+    "reentered_rows": 6,
+    "people": 176,
+    "households": 150,
+    "household_rule": "People are one household when their street address (including any apartment or unit) and ZIP match after ignoring case, periods, extra spaces, and Street/St, Avenue/Ave, Road/Rd, Drive/Dr, Lane/Ln, Court/Ct. People with no address are each their own household. A person entered twice has the same name and the same email ignoring case.",
+    "wrong_counts": {
+      "no_dedupe": 190,
+      "exact_rows_only": 182,
+      "people_not_households": 176,
+      "units_ignored": 147,
+      "no_address_collapsed": 145
+    },
+    "couples": 26,
+    "couple_example": {
+      "members": [
+        "Eric Lewis",
+        "Yuki Ramirez"
+      ],
+      "streets_as_written": [
+        "1329 Ocean Street",
+        "1329 Ocean St"
+      ],
+      "file_lines": [
+        53,
+        162
+      ],
+      "giving_2026": 200.0,
+      "giving_all": 3100.0,
+      "per_member_2026": {
+        "Eric Lewis": 120.0,
+        "Yuki Ramirez": 80.0
+      }
+    },
+    "neighbour_pairs": [
+      {
+        "a": "Edward Ruiz",
+        "a_street": "314 Birch Avenue Apt 2",
+        "b": "Nancy Morgan",
+        "b_street": "314 Birch Avenue Apt 5"
+      },
+      {
+        "a": "Carol Diaz",
+        "a_street": "56 Summit Drive Apt 3",
+        "b": "Marcus Edwards",
+        "b_street": "56 Summit Drive Apt 6"
+      },
+      {
+        "a": "Joseph Campbell",
+        "a_street": "1260 Grant Lane Apt 4",
+        "b": "Jennifer Garcia",
+        "b_street": "1260 Grant Lane Apt 7"
+      }
+    ],
+    "no_address_donors": [
+      "Carol Rogers",
+      "Cynthia Allen",
+      "Dmitri Chavez",
+      "Jennifer Hill",
+      "Ronald Kelly",
+      "Wei Jones"
+    ],
+    "reentered_example": {
+      "name": "Carlos Sanchez",
+      "ids": [
+        "D-00007",
+        "D-00177"
+      ],
+      "rows_as_written": [
+        {
+          "line": 92,
+          "donor_id": "D-00007",
+          "email": "csanchez@yahoo.com",
+          "street": "911 Shore Lane"
+        },
+        {
+          "line": 98,
+          "donor_id": "D-00177",
+          "email": "Csanchez@yahoo.com",
+          "street": "911 Shore Ln."
+        }
+      ],
+      "lifetime_giving": 1525.0,
+      "giving_if_second_id_lost": 225.0,
+      "giving_under_second_id": 1300.0
+    }
+  },
+  "gifts": {
+    "file_rows_excluding_header": 235,
+    "duplicate_rows": 7,
+    "gifts": 228,
+    "per_program": {
+      "Youth Literacy": 54,
+      "Scholarships": 16,
+      "Food Pantry": 76,
+      "Senior Meals": 49,
+      "General Operating": 33
+    },
+    "raised_ytd": {
+      "total": 73725.75,
+      "one_time": 42750.75,
+      "pledge_payments": 30975.0,
+      "with_2026_pledge_commitments_added": 95375.75,
+      "with_duplicate_rows_kept": 74575.75
+    },
+    "letters_owed": {
+      "count": 9,
+      "count_if_strictly_over_250": 4,
+      "exactly_250_unacknowledged": [
+        {
+          "gift": "G-10142",
+          "donor": "Ronald Richardson",
+          "date": "2026-01-15",
+          "amount": 250.0,
+          "program": "Senior Meals",
+          "type": "One-time",
+          "file_lines": [
+            143
+          ]
+        },
+        {
+          "gift": "G-10169",
+          "donor": "Ronald Diaz",
+          "date": "2026-03-09",
+          "amount": 250.0,
+          "program": "General Operating",
+          "type": "One-time",
+          "file_lines": [
+            171
+          ]
+        },
+        {
+          "gift": "G-10170",
+          "donor": "Deborah Myers",
+          "date": "2026-03-11",
+          "amount": 250.0,
+          "program": "Food Pantry",
+          "type": "One-time",
+          "file_lines": [
+            172
+          ]
+        },
+        {
+          "gift": "G-10196",
+          "donor": "William Reed",
+          "date": "2026-05-10",
+          "amount": 250.0,
+          "program": "Food Pantry",
+          "type": "One-time",
+          "file_lines": [
+            202
+          ]
+        },
+        {
+          "gift": "G-10211",
+          "donor": "Jennifer Garcia",
+          "date": "2026-07-11",
+          "amount": 250.0,
+          "program": "General Operating",
+          "type": "One-time",
+          "file_lines": [
+            218
+          ]
+        }
+      ]
+    },
+    "top_gift_household": [
+      "Paul Collins",
+      "Fatima Kelly"
+    ]
+  },
+  "pledges": {
+    "file_rows_excluding_header": 64,
+    "pledges": 64,
+    "outstanding_total": 37225.0,
+    "item20_pledge": {
+      "pledge": "PL-0033",
+      "donor": "Eric Lopez",
+      "program": "Senior Meals",
+      "amount": 1000.0,
+      "schedule": "Quarterly",
+      "start": "2025-04-01",
+      "end": "2026-03-31",
+      "payments": [
+        {
+          "gift": "G-10038",
+          "amount": 250.0,
+          "pledge_id_as_written": "PL-0033"
+        },
+        {
+          "gift": "G-10070",
+          "amount": 250.0,
+          "pledge_id_as_written": "33"
+        },
+        {
+          "gift": "G-10109",
+          "amount": 250.0,
+          "pledge_id_as_written": "PL-0033"
+        }
+      ],
+      "balance": 250.0,
+      "household": [
+        "Eric Lopez",
+        "Angela Lopez"
+      ]
+    },
+    "item22_pledge": {
+      "pledge": "PL-0009",
+      "donor": "Carol Rivera",
+      "program": "Food Pantry",
+      "amount": 1000.0,
+      "schedule": "Annual",
+      "start": "2025-06-01",
+      "end": "2026-05-31",
+      "payments": [],
+      "balance": 1000.0,
+      "household": [
+        "Carol Rivera"
+      ]
+    },
+    "end_before_start": {
+      "pledge": "PL-0004",
+      "donor": "Donald Edwards",
+      "program": "General Operating",
+      "amount": 5000.0,
+      "schedule": "Annual",
+      "start": "2026-02-01",
+      "end": "2025-01-31",
+      "payments": [
+        {
+          "gift": "G-10163",
+          "amount": 5000.0,
+          "pledge_id_as_written": "PL-0004"
+        }
+      ],
+      "balance": 0.0,
+      "file_values": {
+        "start": "2026-02-01",
+        "end": "01/31/25"
+      }
+    }
+  },
+  "app_items": {
+    "payment_test": {
+      "pledge": "PL-0009",
+      "payment": 500.0,
+      "balance_before": 1000.0,
+      "balance_after": 500.0,
+      "outstanding_after": 36725.0,
+      "raised_ytd_after": 74225.75,
+      "overpayment_rejected": 500.01
+    },
+    "letter_test": {
+      "flagged": 250.0,
+      "not_flagged": 249.99,
+      "owed_after_250_gift": 10,
+      "donor_with_no_gifts_or_pledges": "Ingrid Wright"
+    },
+    "restricted_households": 61,
+    "restricted_gift_test_amount": 40.0,
+    "shared_household": {
+      "donor": "Mateo Cook",
+      "visible_gifts_for_restricted": [
+        {
+          "gift": "G-10159",
+          "donor": "Mateo Cook",
+          "date": "2026-02-14",
+          "amount": 150.0,
+          "program": "Youth Literacy",
+          "type": "One-time",
+          "file_lines": [
+            161
+          ]
+        }
+      ],
+      "hidden_gifts_for_restricted": [
+        {
+          "gift": "G-10127",
+          "donor": "Mateo Cook",
+          "date": "2025-11-28",
+          "amount": 75.0,
+          "program": "Food Pantry",
+          "type": "One-time",
+          "file_lines": [
+            128
+          ]
+        },
+        {
+          "gift": "G-10192",
+          "donor": "Mateo Cook",
+          "date": "2026-05-03",
+          "amount": 200.0,
+          "program": "Food Pantry",
+          "type": "One-time",
+          "file_lines": [
+            198
+          ]
+        }
+      ]
+    }
+  },
+  "changes": {
+    "1_lapsed_households": 48,
+    "1_lapsed_households_after_items_22_23_26": 48,
+    "1_lapsed_example": {
+      "household": [
+        "Aisha Bennett"
+      ],
+      "giving_2025": 400.0
+    },
+    "1_not_lapsed_partner_gave_2026": {
+      "household": [
+        "Carlos Walker",
+        "Cynthia Walker"
+      ],
+      "giving_2025": 100.0,
+      "giving_2026": 50.0
+    },
+    "1_lapsed_households_if_counted_per_person": 52,
+    "1_restricted_lapsed_households": 27,
+    "1_payment_test_household_in_lapsed_list": false,
+    "1_shared_household_in_lapsed_list": false,
+    "2_major_donor_households_2026": 20,
+    "2_payment_test_household_2026_before_and_after_items_22_23": [
+      0,
+      1000
+    ],
+    "2_shared_household_2026_before_and_after_item_26": [
+      350.0,
+      390.0
+    ],
+    "2_major_donor_households_after_items_22_23_26": 21,
+    "2_top_gift_household_tagged": [
+      "Paul Collins",
+      "Fatima Kelly"
+    ],
+    "2_major_threshold": 1000.0,
+    "2_near_major_household": {
+      "donor": "Joseph Johnson",
+      "giving_2026": 750.0,
+      "gift_to_reach_threshold": 250.0
+    }
+  }
+}

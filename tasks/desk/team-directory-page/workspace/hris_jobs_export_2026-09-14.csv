@@ -1,0 +1,32 @@
+Employee ID,Legal first name,Legal last name,Preferred name,Dept code,Job title,Job type,Work email,Desk ext,Employment status,Status effective
+LSP1079,Grace,Castillo,,MKT,Marketing Director,Primary,gcastillo@lanternstreetplayhouse.org,2369,Active,07/09/2024
+LSP1137,Susanna,Osei,Sam,ADM,Managing Director,Primary,sosei@lanternstreetplayhouse.org,2274,Active,10/03/2024
+LSP1137,Susanna,Osei,Sam,EDU,Teaching Artist,Secondary,sosei@lanternstreetplayhouse.org,2274,Active,10/09/2025
+LSP1384,Alejandro,Sato,Alex Sato,ADM,Office Coordinator,Primary,asato@lanternstreetplayhouse.org,2227,Active,06/06/2021
+LSP1669,Yuki,Bennett,Yuki Bennett-Underwood,BOX,Ticketing Associate,Primary,ybennett@lanternstreetplayhouse.org,2112,Active,02/03/2019
+LSP1930,Elizabeth,Abara,Liz Abara,PRD,Sound Engineer,Primary,labara@lanternstreetplayhouse.org,2116,Active,12/25/2022
+LSP1962,Margaret,Tanaka,Peggy,PRD,Stage Manager,Primary,ptanaka@lanternstreetplayhouse.org,2154,Active,04/24/2025
+LSP1989,Jonathan,Brooks,Jon Brooks,ADM,Finance Manager,Primary,jbrooks@lanternstreetplayhouse.org,2207,Active,05/08/2025
+LSP2317,Leila,Okafor,,FOH,Concessions Lead,Primary,lokafor@lanternstreetplayhouse.org,2228,Active,08/03/2024
+LSP2317,Leila,Okafor,,BOX,Ticketing Associate,Secondary,lokafor@lanternstreetplayhouse.org,2228,Active,12/12/2025
+LSP2671,Dana,Carrow,,DEV,Grants Writer,Primary,dcarrow@lanternstreetplayhouse.org,2261,Active,02/22/2020
+LSP2853,Rahul,Dunmore,,PRD,Costume Shop Manager,Primary,rdunmore@lanternstreetplayhouse.org,2276,Terminated,06/10/2026
+LSP3093,Marcus,Haddad,,FOH,Usher Captain,Primary,mhaddad@lanternstreetplayhouse.org,2230,Terminated,06/07/2026
+LSP3157,Jamal,Marsh,,BOX,Patron Services Lead,Primary,jmarsh@lanternstreetplayhouse.org,2117,Leave of absence,01/09/2024
+LSP3236,Theodore,Ibsen,Ted,ADM,HR Generalist,Primary,tibsen@lanternstreetplayhouse.org,2367,Active,02/25/2024
+LSP3303,Aisha,Kowalski,,DEV,Donor Relations Associate,Primary,akowalski@lanternstreetplayhouse.org,2385,Active,01/23/2024
+LSP3625,Carlos,Szabo,,EDU,Education Director,Primary,cszabo@lanternstreetplayhouse.org,2309,Active,01/13/2020
+LSP4712,Rebecca,Ellery,Becca,MKT,Social Media Coordinator,Primary,bellery@lanternstreetplayhouse.org,2239,Active,11/02/2023
+LSP4793,Luis,Oyelaran,,SCN,Scenic Painter,Primary,loyelaran@lanternstreetplayhouse.org,2193,Active,02/01/2019
+LSP4795,Iris,Nguyen,,FOH,House Manager,Primary,inguyen@lanternstreetplayhouse.org,2332,Active,03/04/2020
+LSP4808,Tomasz,Lindqvist,,SCN,Scenic Carpenter,Primary,tlindqvist@lanternstreetplayhouse.org,2226,Terminated,09/21/2026
+LSP4946,Mateo,Ramos,,EDU,Youth Program Coordinator,Primary,mramos@lanternstreetplayhouse.org,2144,Active,09/24/2019
+LSP5060,Hiroshi,Varga,,EDU,Teaching Artist,Primary,hvarga@lanternstreetplayhouse.org,2122,Active,01/13/2024
+LSP5204,Noor,Delacroix,,PRD,Lighting Supervisor,Primary,ndelacroix@lanternstreetplayhouse.org,2284,Terminated,08/25/2026
+LSP5324,Zara,Quinlan,,EDU,Teaching Artist,Primary,zquinlan@lanternstreetplayhouse.org,2123,Active,09/25/2022
+LSP6052,Maya,Yilmaz,,SCN,Technical Director,Primary,myilmaz@lanternstreetplayhouse.org,2115,Active,06/16/2021
+LSP6373,Amara,Foster,,DEV,Development Director,Primary,afoster@lanternstreetplayhouse.org,2363,Leave of absence,07/16/2023
+LSP7877,Dmitri,Ferreira,,BOX,Ticketing Associate,Primary,dferreira@lanternstreetplayhouse.org,2234,Active,06/09/2020
+LSP8746,Oscar,Alvarez,,BOX,Box Office Manager,Primary,oalvarez@lanternstreetplayhouse.org,2178,Terminated,07/21/2026
+LSP9491,Nadia,Zelenko,,PRD,Production Manager,Primary,nzelenko@lanternstreetplayhouse.org,2165,Active,08/26/2019
+LSP9570,Emeka,Novak,,MKT,Graphic Designer,Primary,enovak@lanternstreetplayhouse.org,2194,Active,03/24/2025

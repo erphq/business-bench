@@ -1,0 +1,4 @@
+ARG BASE_IMAGE=business-bench:release
+FROM ${BASE_IMAGE}
+COPY --chmod=755 proto-runtime/ /opt/proto/
+RUN test -f /opt/proto/index.mjs

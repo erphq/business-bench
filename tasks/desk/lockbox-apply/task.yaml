@@ -1,0 +1,60 @@
+id: lockbox-apply
+track: desk
+category: bookkeeping
+title: Apply today's lockbox checks to open invoices
+ask: |
+  Please apply this morning's lockbox file against our open invoices - Lucia's email has how she wants it done and the bank's file layout is in the folder. Save applied.csv and unapplied.csv.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the transmission is a record-type file with ragged rows: the check amount is on the type 6 record, the invoice amounts on the type 4 stub lines under it, batch and file trailers carry totals, and every amount is whole cents with no decimal point (checks: applied per invoice and write-offs; nothing misapplied and cash ties to the file total)
+- |-
+  one customer pays a single invoice with two checks in the same batch; both applications stand and the invoice closes (check: applied per invoice and write-offs)
+- |-
+  HARBOR LIGHT HOLDINGS LLC is not a customer, but its check's stub pays two Harbor Light Marine invoices and one Kingfisher Charters invoice; matching by remitter leaves it unapplied (checks: applied per invoice and write-offs; unapplied checks)
+- |-
+  one invoice is short by a few dollars and another by exactly $10.00; both close with the shortfall as a write-off, while a short pay of more than $10.00 applies only what was paid with no write-off (check: applied per invoice and write-offs)
+- |-
+  a check is larger than the invoices on its stub; the stub lines are applied and the excess goes to unapplied (checks: unapplied checks; unapplied amounts)
+- |-
+  a check arrived without a stub and equals one of that customer's open invoices to the cent; the email says do not guess from the amount, so it is unapplied in full (checks: unapplied checks; nothing misapplied and cash ties to the file total)
+- |-
+  yesterday's transmission is in the folder and already posted; its invoices are no longer open and none of its checks belong in either file (checks: nothing misapplied and cash ties to the file total; unapplied checks)
+checks:
+- type: csv_columns
+  name: applied.csv columns
+  path: applied.csv
+  columns:
+  - check_number
+  - invoice_number
+  - amount_applied
+  - write_off
+- type: csv_columns
+  name: unapplied.csv columns
+  path: unapplied.csv
+  columns:
+  - check_number
+  - amount
+  - reason
+- type: custom
+  name: applied per invoice and write-offs
+  module: check.py
+- type: custom
+  name: nothing misapplied and cash ties to the file total
+  module: check_ties.py
+- type: csv_set_equal
+  name: unapplied checks
+  path: unapplied.csv
+  column: check_number
+  ref: unapplied.csv
+- type: csv_values_match
+  name: unapplied amounts
+  path: unapplied.csv
+  ref: unapplied.csv
+  key: check_number
+  columns:
+  - amount
+  numeric: true
+  tolerance: 0.005
+  min_accuracy: 1.0

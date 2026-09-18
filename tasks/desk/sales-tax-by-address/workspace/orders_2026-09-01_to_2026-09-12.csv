@@ -1,0 +1,93 @@
+Order,Order Date,Customer,Account,Ship To,Subtotal,Shipping,Payment
+LLK-30412,09/01/2026,Aspen Ridge Elementary,C-1004,"1230 Hawthorn Blvd, Boulder, CO 80303",487.64,12.50,Card
+LLK-30413,09/01/2026,Sofia Ruiz,C-2063,"1180 Dogwood Ave Apt 236, Austin, TX 78704",444.28,0.00,PO / Net 30
+LLK-30414,09/01/2026,Fatima Johnson,C-2070,"5481 Hill St, Tacoma, Washington 98499",427.65,24.50,Card
+LLK-30415,09/02/2026,Puget Sound Science Center,C-1019,"3376 Dogwood Ave, Seattle, Washington 98109-3763",494.99,18.75,Card
+LLK-30416,09/02/2026,Books & Beakers,C-1023,8889 Maple St Austin TX 78704,42.34,14.95,ACH
+LLK-30417,09/02/2026,Kimberly Ramirez,C-2011,6229 Church St Sacramento CA 95814,540.09,0.00,Card
+LLK-30418,09/02/2026,Lisa Flores,C-2015,"5067 Spruce Blvd, Fort Collins, Colorado 80521",573.14,8.95,PO / Net 30
+LLK-30419,09/02/2026,Kwame Scott,C-2035,"4728 River St Unit 272, Austin, Texas 78704",401.66,14.95,Card
+LLK-30420,09/02/2026,Richard Davis,C-2048,7366 Lake Dr Boulder CO 80310-5170,490.49,0.00,Card
+LLK-30421,09/02/2026,Rahul Adams,C-2058,"4128 Juniper Way Unit 364, Colorado Springs, CO 80918",73.03,18.75,ACH
+LLK-30422,09/03/2026,Books & Beakers,C-1023,"8889 Maple St, Austin, Texas 78704",548.39,0.00,Card
+LLK-30423,09/03/2026,Mesa Verde Homeschool Co-op,C-1037,8596 Birch Ct Durango CO 81301,524.16,12.50,PO / Net 30
+LLK-30424,09/03/2026,George Scott,C-2009,4207 School St Sacramento CA 95814,448.97,14.95,Card
+LLK-30425,09/03/2026,Barbara Peterson,C-2023,"9738 Main St, Tucson, AZ 85719-7033",481.31,14.95,Card
+LLK-30426,09/03/2026,Donna Kelly,C-2025,"8869 Main St, San Antonio, TX 78205-8435",485.97,8.95,ACH
+LLK-30427,09/03/2026,Luis Torres,C-2029,"1894 Church St, Taos, New Mexico 87571",374.53,18.75,Card
+LLK-30428,09/03/2026,Edward Sanchez,C-2040,"2512 Prospect Ave, Las Cruces, New Mexico 88001",313.66,18.75,PO / Net 30
+LLK-30429,09/03/2026,George Haddad,C-2073,"7296 Prospect Ave, Tacoma, Washington 98405-5835",515.50,0.00,Card
+LLK-30430,09/04/2026,Aspen Ridge Elementary,C-1004,"1230 Hawthorn Blvd, Boulder, CO 80303",501.63,0.00,Card
+LLK-30431,09/04/2026,St. Brigid Academy,C-1030,"7254 Ridge Rd Apt 186, Phoenix, Arizona 85016",631.52,0.00,ACH
+LLK-30432,09/04/2026,Donald Hill,C-2000,"9826 Laurel Ct, Boulder, Colorado 80310",461.86,0.00,Card
+LLK-30433,09/04/2026,David Williams,C-2004,"3651 Water St, Santa Fe, NM 87505-1535",506.53,0.00,PO / Net 30
+LLK-30434,09/04/2026,Daniel Wilson,C-2010,4992 Hickory Pl Suite 435 Omaha NE 68102,405.21,0.00,Card
+LLK-30435,09/04/2026,Paul Harris,C-2014,"2914 Cedar Ln, Omaha, Nebraska 68102-9714",366.93,0.00,Card
+LLK-30436,09/04/2026,Joshua Smith,C-2024,953 Juniper Way Boulder CO 80302,440.51,8.95,ACH
+LLK-30437,09/04/2026,Marcus Flores,C-2026,3199 Mill Rd Colorado Springs CO 80918-9426,360.88,0.00,Card
+LLK-30438,09/04/2026,Jennifer Reyes,C-2034,2456 Highland Ave Apt 30 Portland OR 97209,216.42,14.95,PO / Net 30
+LLK-30439,09/04/2026,Nancy Rivera,C-2043,"5176 Willow Way, Bellingham, WA 98225-4575",518.30,0.00,Card
+LLK-30440,09/04/2026,Sharon Ross,C-2044,8549 Maple St Suite 449 Boise ID 83702,432.74,0.00,Card
+LLK-30441,09/04/2026,Patricia Garcia,C-2055,"5581 Hickory Pl, Boulder, CO 80302",236.15,0.00,ACH
+LLK-30442,09/04/2026,Christopher Nelson,C-2069,"7907 Walnut St Ste 321, Austin, Texas 78745",184.63,0.00,Card
+LLK-30443,09/04/2026,George Nguyen,C-2074,"8091 Cedar Ln, Salt Lake City, UT 84101",466.99,0.00,PO / Net 30
+LLK-30444,09/05/2026,Books & Beakers,C-1023,"8889 Maple St, Austin, Texas 78704",585.40,24.50,Card
+LLK-30445,09/05/2026,Karen Lopez,C-2003,1121 Market St Taos NM 87571,632.68,24.50,Card
+LLK-30446,09/05/2026,Donna Mensah,C-2006,"2592 Willow Way, Houston, Texas 77002-9014",609.49,0.00,ACH
+LLK-30447,09/05/2026,Ingrid Baker,C-2018,5285 Walnut St Denver CO 80205,326.64,0.00,Card
+LLK-30448,09/05/2026,Chloe Roberts,C-2019,"3455 Juniper Way, Boise, Idaho 83702",91.06,18.75,PO / Net 30
+LLK-30449,09/05/2026,Betty Rodriguez,C-2039,1948 Pine Rd Fort Collins CO 80521,42.08,8.95,Card
+LLK-30450,09/05/2026,William Torres,C-2057,"3132 Magnolia Dr, Denver, Colorado 80205",340.17,0.00,Card
+LLK-30451,09/06/2026,Rio Grande STEM Academy,C-1011,"5429 Water St, Albuquerque, NM 87102",567.32,14.95,ACH
+LLK-30452,09/06/2026,Christopher Robinson,C-2031,3009 Alder St Boulder CO 80302-5114,483.71,0.00,Card
+LLK-30453,09/06/2026,Michelle King,C-2032,"9790 Church St, Salt Lake City, UT 84101",58.31,12.50,PO / Net 30
+LLK-30454,09/06/2026,Charles Mendoza,C-2038,"1025 Elm Dr # 70, Mesa, Arizona 85201",574.84,24.50,Card
+LLK-30455,09/06/2026,Amara Adams,C-2045,"3973 Union St, Boise, ID 83702",298.82,0.00,Card
+LLK-30456,09/06/2026,Yuki Bailey,C-2046,6441 Chestnut Ave Colorado Springs CO 80951,482.10,0.00,ACH
+LLK-30457,09/06/2026,Donald Thomas,C-2052,5871 Water St Boulder CO 80302,489.35,0.00,Card
+LLK-30458,09/06/2026,Sofia Harris,C-2065,"3130 Bridge St, Las Cruces, NM 88001",138.13,12.50,PO / Net 30
+LLK-30459,09/06/2026,George Garcia,C-2071,"8094 Church St, Boulder, Colorado 80302-5114",505.38,12.50,Card
+LLK-30460,09/07/2026,St. Brigid Academy,C-1030,"7254 Ridge Rd Apt 186, Phoenix, Arizona 85016",262.56,0.00,Card
+LLK-30461,09/07/2026,Ronald Morris,C-2002,"3024 Highland Ave, Tacoma, WA 98499",376.24,18.75,ACH
+LLK-30462,09/07/2026,Sharon Edwards,C-2030,"9843 Church St, Fort Collins, Colorado 80521",474.51,0.00,Card
+LLK-30463,09/07/2026,Emily Okafor,C-2050,7140 Park Ave Sacramento CA 95814,385.08,0.00,PO / Net 30
+LLK-30464,09/07/2026,Hiroshi Ward,C-2051,"3035 Water St, San Antonio, Texas 78205",350.30,18.75,Card
+LLK-30465,09/07/2026,Elizabeth Nguyen,C-2064,"4198 Ridge Rd, Albuquerque, NM 87110",586.62,0.00,Card
+LLK-30466,09/08/2026,Susan Patel,C-2001,"7415 Ridge Rd, Colorado Springs, CO 80951",621.68,0.00,ACH
+LLK-30467,09/08/2026,Jeffrey Scott,C-2042,2641 Main St Salt Lake City UT 84101,549.98,24.50,Card
+LLK-30468,09/08/2026,Andrew Adams,C-2060,"2794 Market St, Boulder, Colorado 80310",595.25,0.00,PO / Net 30
+LLK-30469,09/08/2026,Fatima Gonzalez,C-2075,"2744 Oak Ave # 412, Tacoma, WA 98405",537.11,0.00,Card
+LLK-30470,09/09/2026,Stephanie Peterson,C-2005,"2687 Ridge Rd, Longmont, Colorado 80501",448.10,0.00,Card
+LLK-30471,09/09/2026,Linda Lewis,C-2007,"2835 Hickory Pl, Flagstaff, AZ 86001",611.52,8.95,ACH
+LLK-30472,09/09/2026,Eric Morgan,C-2008,"2564 School St, Portland, OR 97209-6463",168.25,0.00,Card
+LLK-30473,09/09/2026,Melissa Lopez,C-2017,"2844 River St, Eugene, Oregon 97401",77.42,24.50,PO / Net 30
+LLK-30474,09/09/2026,Daniel Young,C-2021,"1880 Church St Apt 105, Tempe, AZ 85281",139.05,12.50,Card
+LLK-30475,09/09/2026,Angela Harris,C-2027,"359 Oak Ave Unit 423, Longmont, CO 80501",453.69,0.00,Card
+LLK-30476,09/09/2026,Robert Adams,C-2059,"1160 Birch Ct, Colorado Springs, Colorado 80951",475.01,18.75,ACH
+LLK-30477,09/10/2026,Aspen Ridge Elementary,C-1004,1230 Hawthorn Blvd Boulder CO 80303-5121,440.68,0.00,Card
+LLK-30478,09/10/2026,St. Brigid Academy,C-1030,"7254 Ridge Rd Apt 186, Phoenix, Arizona 85016",262.51,0.00,PO / Net 30
+LLK-30479,09/10/2026,Kimberly Mensah,C-2013,3879 Main St Tucson AZ 85719,434.66,0.00,Card
+LLK-30480,09/10/2026,Jennifer Hernandez,C-2033,"9771 Poplar Rd, Austin, Texas 78704",125.10,12.50,Card
+LLK-30481,09/10/2026,Yuki Watson,C-2041,9153 Poplar Rd Austin TX 78704,391.83,0.00,ACH
+LLK-30482,09/10/2026,Betty Adams,C-2047,"5687 Park Ave # 294, Sacramento, California 95814",167.88,0.00,Card
+LLK-30483,09/10/2026,Kevin Thompson,C-2053,"9838 Ash St, San Antonio, TX 78205",597.19,14.95,PO / Net 30
+LLK-30484,09/10/2026,Dorothy Price,C-2056,"1832 Laurel Ct, Phoenix, AZ 85016-2112",518.67,0.00,Card
+LLK-30485,09/10/2026,Timothy Kim,C-2068,1417 Hawthorn Blvd Houston TX 77002-9014,366.83,0.00,Card
+LLK-30486,09/11/2026,Puget Sound Science Center,C-1019,"3376 Dogwood Ave, Seattle, WA 98109",466.45,0.00,ACH
+LLK-30487,09/11/2026,Mesa Verde Homeschool Co-op,C-1037,"8596 Birch Ct, Durango, Colorado 81301",571.68,0.00,Card
+LLK-30488,09/11/2026,Patricia Chavez,C-2012,9844 Cedar Ln Durango CO 81301,166.41,0.00,PO / Net 30
+LLK-30489,09/11/2026,Leila Baker,C-2037,"4786 Prospect Ave, Omaha, NE 68102",293.86,0.00,Card
+LLK-30490,09/11/2026,Donna Collins,C-2054,9711 Walnut St Taos NM 87571,361.14,18.75,Card
+LLK-30491,09/11/2026,Aisha Evans,C-2062,"3092 Chestnut Ave, Albuquerque, NM 87110-7770",273.62,0.00,ACH
+LLK-30492,09/12/2026,Rio Grande STEM Academy,C-1011,5429 Water St Albuquerque NM 87102,303.23,0.00,Card
+LLK-30493,09/12/2026,Puget Sound Science Center,C-1019,3376 Dogwood Ave Seattle WA 98109-3763,262.33,0.00,PO / Net 30
+LLK-30494,09/12/2026,Donna Watson,C-2016,184 Water St Boulder CO 80302,167.10,0.00,Card
+LLK-30495,09/12/2026,Nicholas Young,C-2020,5136 Birch Ct Salt Lake City UT 84101,509.13,0.00,Card
+LLK-30496,09/12/2026,Jacob Scott,C-2022,"9305 Hickory Pl, Santa Fe, NM 87505",84.50,12.50,ACH
+LLK-30497,09/12/2026,Edward Diaz,C-2028,"2299 Lake Dr, Boise, ID 83702-1914",249.73,0.00,Card
+LLK-30498,09/12/2026,Mateo Stewart,C-2036,"4657 Poplar Rd, Colorado Springs, CO 80951",613.13,12.50,PO / Net 30
+LLK-30499,09/12/2026,Marcus Robinson,C-2049,5217 Ridge Rd Tacoma WA 98405-5835,573.38,0.00,Card
+LLK-30500,09/12/2026,Karen Lindqvist,C-2061,"4437 Maple St, Olympia, Washington 98501",453.43,0.00,Card
+LLK-30501,09/12/2026,Jeffrey Nguyen,C-2066,8688 Main St Ste 417 Longmont CO 80501,258.48,0.00,ACH
+LLK-30502,09/12/2026,Sarah Allen,C-2067,"7951 Hawthorn Blvd, Omaha, Nebraska 68102",106.31,14.95,Card
+LLK-30503,09/12/2026,Ryan Perez,C-2072,4091 Mill Rd Olympia WA 98501-6507,278.23,0.00,PO / Net 30

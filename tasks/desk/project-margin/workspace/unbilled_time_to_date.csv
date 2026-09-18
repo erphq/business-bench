@@ -1,0 +1,235 @@
+Time logged but not yet invoiced
+as at 06/30/2026
+Date,Job Code,Staff,Role,Task,Hours,Cost rate
+2026-04-01,P-2401,Angela Martin,Drafter,FF&E schedule,31.5,44.00
+2026-04-01,P-2405,Chloe Moore,Site manager,punch list,12.5,65.00
+2026-04-01,P-2405,Jennifer Davis,Site manager,site visit,29.5,65.00
+2026-04-01,P-2405,Thomas Anderson,Principal,millwork detailing,18.0,96.00
+2026-04-02,P-2401,Steven Sanchez,Designer,FF&E schedule,7.0,58.00
+2026-04-02,P-2402,Carol Collins,Site manager,punch list,28.0,65.00
+2026-04-02,P-2406,Christopher Murphy,Designer,schematic design,22.5,58.00
+2026-04-02,P-2406,Donna Mensah,Principal,construction documents,8.5,96.00
+2026-04-02,P-2408,Sarah Thomas,Principal,FF&E schedule,7.5,96.00
+2026-04-03,P-2401,Nancy Myers,Project architect,site visit,16.0,72.00
+2026-04-03,P-2402,Ingrid Ward,Site manager,punch list,18.0,65.00
+2026-04-04,P-2401,Kenneth Gomez,Designer,site visit,35.5,58.00
+2026-04-04,P-2402,Kathleen Watson,Site manager,FF&E schedule,16.5,65.00
+2026-04-04,P-2403,Shirley Moore,Project architect,punch list,11.5,72.00
+2026-04-04,P-2405,Hiroshi Hall,Site manager,permit set,36.5,65.00
+2026-04-04,P-2406,Joseph Parker,Drafter,site visit,29.5,44.00
+2026-04-04,P-2408,Michael Kim,Principal,FF&E schedule,12.5,96.00
+2026-04-05,P-2401,Wei Evans,Designer,millwork detailing,21.0,58.00
+2026-04-05,P-2402,Karen Gutierrez,Principal,client revisions,21.0,96.00
+2026-04-05,P-2402,Michael Lindqvist,Designer,construction documents,22.5,58.00
+2026-04-05,P-2405,Kevin Richardson,Principal,site visit,11.0,96.00
+2026-04-06,P-2403,Donna Peterson,Designer,FF&E schedule,18.0,58.00
+2026-04-07,P-2402,Charles Castillo,Principal,FF&E schedule,23.0,96.00
+2026-04-07,P-2402,Jonathan Phillips,Drafter,client revisions,8.5,44.00
+2026-04-09,P-2401,Jason Brooks,Project architect,FF&E schedule,11.5,72.00
+2026-04-09,P-2408,Mary Brooks,Principal,client revisions,23.0,96.00
+2026-04-10,P-2401,Matthew Chavez,Designer,punch list,32.0,58.00
+2026-04-10,P-2402,Edward Miller,Designer,punch list,35.5,58.00
+2026-04-10,P-2403,Angela Perez,Project architect,schematic design,24.0,72.00
+2026-04-10,P-2409,Charles Martin,Site manager,schematic design,16.0,65.00
+2026-04-11,P-2401,Susan Diaz,Site manager,permit set,17.0,65.00
+2026-04-11,P-2403,John Johnson,Site manager,construction documents,11.5,65.00
+2026-04-11,P-2409,William Green,Drafter,punch list,23.0,44.00
+2026-04-12,P-2407,Jonathan Johnson,Principal,construction documents,10.0,96.00
+2026-04-13,P-2402,William Nelson,Principal,permit set,26.5,96.00
+2026-04-13,P-2404,Sarah Bennett,Project architect,schematic design,17.5,72.00
+2026-04-14,P-2403,Paul Cook,Principal,punch list,21.5,96.00
+2026-04-14,P-2405,Paul Brown,Designer,site visit,36.0,58.00
+2026-04-14,P-2406,Eric Martinez,Principal,site visit,14.0,96.00
+2026-04-15,P-2403,Omar Rivera,Designer,site visit,10.5,58.00
+2026-04-15,P-2405,Amara Edwards,Project architect,client revisions,21.0,72.00
+2026-04-15,P-2405,Karen Gomez,Project architect,punch list,13.0,72.00
+2026-04-15,P-2408,Yuki Rivera,Drafter,construction documents,14.5,44.00
+2026-04-15,P-2409,Chloe Rodriguez,Drafter,client revisions,26.5,44.00
+2026-04-16,P-2406,Marcus Parker,Project architect,millwork detailing,34.5,72.00
+2026-04-16,P-2407,Shirley Young,Designer,punch list,23.0,58.00
+2026-04-17,P-2404,Jessica Phillips,Designer,permit set,18.5,58.00
+2026-04-17,P-2406,Emily Bailey,Drafter,schematic design,32.5,44.00
+2026-04-17,P-2407,Hiroshi Ruiz,Project architect,site visit,30.5,72.00
+2026-04-17,P-2408,Nadia Bennett,Site manager,construction documents,35.5,65.00
+2026-04-18,P-2405,Timothy Clark,Site manager,permit set,30.5,65.00
+2026-04-18,P-2407,Jacob Nguyen,Drafter,permit set,15.5,44.00
+2026-04-18,P-2407,Kenneth Bennett,Principal,client revisions,17.0,96.00
+2026-04-19,P-2401,Luis Jackson,Designer,FF&E schedule,19.0,58.00
+2026-04-19,P-2405,Sandra Cruz,Designer,client revisions,21.5,58.00
+2026-04-20,P-2402,Rahul Haddad,Site manager,FF&E schedule,25.5,65.00
+2026-04-21,P-2401,Hiroshi Anderson,Principal,FF&E schedule,27.0,96.00
+2026-04-21,P-2401,Nadia Harris,Principal,permit set,17.5,96.00
+2026-04-21,P-2401,Thomas Moore,Designer,punch list,22.5,58.00
+2026-04-21,P-2402,Rebecca Reyes,Project architect,permit set,17.5,72.00
+2026-04-21,P-2402,Yuki Ruiz,Project architect,millwork detailing,11.5,72.00
+2026-04-21,P-2405,Melissa Bailey,Drafter,permit set,28.0,44.00
+2026-04-21,P-2408,Susan Rogers,Drafter,client revisions,31.5,44.00
+2026-04-22,P-2402,Amanda Stewart,Site manager,FF&E schedule,21.0,65.00
+2026-04-22,P-2407,Angela Moore,Project architect,punch list,14.5,72.00
+2026-04-22,P-2408,Barbara Kelly,Project architect,punch list,25.0,72.00
+2026-04-23,P-2402,Karen Williams,Drafter,schematic design,29.0,44.00
+2026-04-24,P-2404,Amanda Murphy,Designer,millwork detailing,36.0,58.00
+2026-04-24,P-2407,Daniel Murphy,Drafter,site visit,12.5,44.00
+2026-04-24,P-2407,Thomas Cruz,Principal,schematic design,16.0,96.00
+2026-04-24,P-2408,Kathleen Nguyen,Site manager,construction documents,30.5,65.00
+2026-04-25,P-2402,Deborah Rodriguez,Drafter,permit set,31.5,44.00
+2026-04-25,P-2405,Edward Murphy,Drafter,millwork detailing,18.5,44.00
+2026-04-26,P-2404,James Jones,Project architect,FF&E schedule,25.0,72.00
+2026-04-26,P-2404,Kathleen Bennett,Project architect,permit set,15.0,72.00
+2026-04-26,P-2405,Carol Thompson,Drafter,construction documents,9.0,44.00
+2026-04-26,P-2405,James Gutierrez,Principal,FF&E schedule,29.5,96.00
+2026-04-26,P-2406,Angela Peterson,Project architect,permit set,29.0,72.00
+2026-04-26,P-2407,Ingrid Gomez,Project architect,permit set,6.5,72.00
+2026-04-26,P-2407,Linda Evans,Drafter,site visit,31.5,44.00
+2026-04-27,P-2407,Jennifer Okafor,Project architect,schematic design,25.0,72.00
+2026-04-28,P-2402,Jonathan Phillips,Project architect,construction documents,17.5,72.00
+2026-04-28,P-2407,Deborah Morgan,Drafter,punch list,22.0,44.00
+2026-04-28,P-2408,Stephanie Ruiz,Designer,schematic design,14.5,58.00
+2026-04-29,P-2404,Melissa Carter,Designer,site visit,24.5,58.00
+2026-04-29,P-2405,Rahul Phillips,Site manager,client revisions,32.5,65.00
+2026-04-29,P-2406,Brian Gonzalez,Drafter,millwork detailing,7.0,44.00
+2026-04-29,P-2407,Steven Green,Drafter,punch list,15.0,44.00
+2026-04-29,P-2409,Charles Chavez,Site manager,FF&E schedule,8.5,65.00
+2026-04-30,P-2404,Aisha Alvarez,Site manager,permit set,34.0,65.00
+2026-04-30,P-2405,Ryan Young,Site manager,permit set,22.0,65.00
+2026-04-30,P-2405,Sandra Turner,Principal,FF&E schedule,23.0,96.00
+2026-04-30,P-2405,Sharon Miller,Drafter,schematic design,16.0,44.00
+2026-04-30,P-2406,Stephanie Sanchez,Project architect,punch list,28.0,72.00
+2026-04-30,P-2407,Rebecca Alvarez,Site manager,site visit,7.0,65.00
+2026-05-01,P-2405,Omar Brown,Principal,permit set,30.5,96.00
+2026-05-01,P-2407,Ronald Murphy,Designer,permit set,37.0,58.00
+2026-05-02,P-2401,Fatima Walker,Drafter,client revisions,6.5,44.00
+2026-05-02,P-2405,Gary Cox,Site manager,permit set,20.0,65.00
+2026-05-02,P-2407,Ronald Edwards,Principal,client revisions,37.0,96.00
+2026-05-03,P-2403,Chloe Morales,Designer,millwork detailing,24.5,58.00
+2026-05-03,P-2403,Daniel Patel,Project architect,permit set,34.0,72.00
+2026-05-03,P-2407,James Ramirez,Project architect,site visit,25.0,72.00
+2026-05-03,P-2409,Laura Nelson,Principal,punch list,18.0,96.00
+2026-05-04,P-2401,Carol Price,Designer,client revisions,12.5,58.00
+2026-05-04,P-2406,Deborah Anderson,Principal,permit set,26.0,96.00
+2026-05-05,P-2403,Timothy Myers,Principal,millwork detailing,28.0,96.00
+2026-05-07,P-2401,Mary Diaz,Drafter,client revisions,14.5,44.00
+2026-05-07,P-2402,Nicholas Anderson,Project architect,permit set,25.0,72.00
+2026-05-08,P-2404,Jessica Edwards,Principal,site visit,21.5,96.00
+2026-05-09,P-2404,Ingrid Jackson,Site manager,punch list,17.5,65.00
+2026-05-09,P-2407,Charles White,Project architect,client revisions,13.0,72.00
+2026-05-09,P-2407,Marcus Long,Project architect,schematic design,23.0,72.00
+2026-05-09,P-2407,Ryan Wood,Designer,schematic design,14.5,58.00
+2026-05-10,P-2404,Emily Lewis,Project architect,schematic design,13.5,72.00
+2026-05-10,P-2407,Kevin Brooks,Site manager,millwork detailing,8.5,65.00
+2026-05-11,P-2405,Kwame Howard,Principal,punch list,7.5,96.00
+2026-05-12,P-2406,Michelle Alvarez,Principal,permit set,27.0,96.00
+2026-05-12,P-2408,Charles Nelson,Principal,construction documents,29.5,96.00
+2026-05-14,P-2402,Christopher Peterson,Principal,site visit,6.0,96.00
+2026-05-14,P-2404,Richard Ruiz,Drafter,schematic design,24.0,44.00
+2026-05-14,P-2405,Nadia Gutierrez,Project architect,millwork detailing,18.5,72.00
+2026-05-15,P-2401,George Smith,Principal,construction documents,8.5,96.00
+2026-05-15,P-2402,Robert Thompson,Principal,FF&E schedule,10.0,96.00
+2026-05-15,P-2406,Priya Sanchez,Designer,millwork detailing,11.0,58.00
+2026-05-15,P-2406,Richard Ward,Designer,FF&E schedule,16.5,58.00
+2026-05-15,P-2409,Sandra Lindqvist,Site manager,schematic design,21.0,65.00
+2026-05-16,P-2401,Carlos Taylor,Principal,client revisions,24.5,96.00
+2026-05-16,P-2401,Omar Adams,Designer,construction documents,14.0,58.00
+2026-05-16,P-2403,Jacob Watson,Designer,schematic design,10.5,58.00
+2026-05-16,P-2404,Stephanie Tanaka,Designer,client revisions,20.0,58.00
+2026-05-17,P-2405,Patricia Robinson,Project architect,schematic design,31.5,72.00
+2026-05-17,P-2407,Joshua Cook,Designer,client revisions,27.5,58.00
+2026-05-17,P-2409,Amanda Osei,Drafter,schematic design,31.0,44.00
+2026-05-18,P-2405,Marcus Garcia,Site manager,schematic design,12.5,65.00
+2026-05-19,P-2401,Angela Campbell,Site manager,construction documents,20.5,65.00
+2026-05-19,P-2402,Mark Gomez,Drafter,millwork detailing,14.0,44.00
+2026-05-19,P-2403,Brian Roberts,Site manager,punch list,16.0,65.00
+2026-05-20,P-2402,Michael Kim,Principal,site visit,28.5,96.00
+2026-05-20,P-2404,Cynthia Rogers,Principal,punch list,28.0,96.00
+2026-05-21,P-2401,Jacob Gutierrez,Designer,site visit,32.5,58.00
+2026-05-21,P-2402,Sharon Wilson,Principal,punch list,30.5,96.00
+2026-05-21,P-2403,Cynthia Martinez,Principal,construction documents,20.0,96.00
+2026-05-22,P-2403,Kevin Robinson,Principal,punch list,26.5,96.00
+2026-05-22,P-2403,Kimberly Williams,Drafter,site visit,28.5,44.00
+2026-05-23,P-2403,Edward Gonzalez,Site manager,site visit,16.0,65.00
+2026-05-23,P-2403,Kimberly Lee,Principal,permit set,31.5,96.00
+2026-05-23,P-2405,Hiroshi Reed,Drafter,FF&E schedule,12.5,44.00
+2026-05-23,P-2405,Patricia Edwards,Drafter,schematic design,31.0,44.00
+2026-05-23,P-2407,Amara Watson,Site manager,millwork detailing,25.0,65.00
+2026-05-24,P-2401,Elizabeth Kelly,Project architect,punch list,36.0,72.00
+2026-05-24,P-2405,Steven Carter,Site manager,construction documents,17.0,65.00
+2026-05-25,P-2407,Melissa Perez,Drafter,schematic design,28.5,44.00
+2026-05-26,P-2405,Anthony Carter,Drafter,schematic design,32.0,44.00
+2026-05-26,P-2407,Jacob Price,Designer,schematic design,14.5,58.00
+2026-05-26,P-2407,Joseph Price,Designer,schematic design,9.0,58.00
+2026-05-27,P-2403,Carlos Miller,Drafter,FF&E schedule,11.5,44.00
+2026-05-28,P-2401,Angela Alvarez,Project architect,construction documents,30.0,72.00
+2026-05-28,P-2405,Jacob Thompson,Drafter,punch list,10.0,44.00
+2026-05-28,P-2405,Mark Diaz,Site manager,millwork detailing,19.0,65.00
+2026-05-28,P-2408,Anna Jackson,Site manager,site visit,8.0,65.00
+2026-05-29,P-2401,Eric Lee,Site manager,permit set,13.5,65.00
+2026-05-29,P-2401,Karen Foster,Designer,punch list,22.5,58.00
+2026-05-29,P-2402,Edward White,Site manager,schematic design,33.0,65.00
+2026-05-29,P-2407,Tomasz Rodriguez,Project architect,schematic design,37.0,72.00
+2026-05-30,P-2406,Carol Thompson,Principal,client revisions,25.0,96.00
+2026-05-31,P-2403,Kimberly White,Site manager,millwork detailing,26.5,65.00
+2026-06-01,P-2403,Kenneth Wilson,Designer,punch list,32.0,58.00
+2026-06-01,P-2404,Ronald Reed,Principal,FF&E schedule,37.0,96.00
+2026-06-01,P-2404,Sandra Anderson,Site manager,client revisions,9.0,65.00
+2026-06-01,P-2407,Deborah Brown,Project architect,millwork detailing,28.5,72.00
+2026-06-01,P-2408,Patricia Green,Drafter,site visit,31.0,44.00
+2026-06-04,P-2405,Amanda Robinson,Project architect,client revisions,18.0,72.00
+2026-06-04,P-2405,Jessica Bailey,Project architect,construction documents,19.5,72.00
+2026-06-04,P-2406,Jonathan Evans,Drafter,construction documents,9.0,44.00
+2026-06-04,P-2408,Sarah Anderson,Project architect,permit set,30.5,72.00
+2026-06-05,P-2404,Amanda Lopez,Drafter,construction documents,17.5,44.00
+2026-06-05,P-2407,Donna Johnson,Project architect,site visit,25.0,72.00
+2026-06-06,P-2401,Jennifer Bailey,Principal,FF&E schedule,29.5,96.00
+2026-06-06,P-2403,Edward Cox,Project architect,millwork detailing,34.0,72.00
+2026-06-06,P-2405,Kwame Mendoza,Project architect,construction documents,15.5,72.00
+2026-06-06,P-2405,Nadia Smith,Drafter,construction documents,13.5,44.00
+2026-06-07,P-2405,Kathleen Parker,Principal,permit set,36.5,96.00
+2026-06-07,P-2407,Dorothy Sanchez,Project architect,millwork detailing,28.5,72.00
+2026-06-08,P-2403,Tomasz Jackson,Site manager,FF&E schedule,37.0,65.00
+2026-06-08,P-2405,David Hernandez,Designer,punch list,18.0,58.00
+2026-06-08,P-2407,Paul Rivera,Project architect,millwork detailing,6.5,72.00
+2026-06-09,P-2405,Dana Kim,Designer,FF&E schedule,12.0,58.00
+2026-06-09,P-2409,Kathleen Peterson,Drafter,FF&E schedule,31.0,44.00
+2026-06-10,P-2401,Kenneth Baker,Designer,millwork detailing,23.0,58.00
+2026-06-10,P-2403,Sarah Perez,Drafter,site visit,23.5,44.00
+2026-06-11,P-2401,Linda Cooper,Project architect,construction documents,21.0,72.00
+2026-06-12,P-2402,Mary Lee,Site manager,schematic design,10.5,65.00
+2026-06-12,P-2402,Nadia Nelson,Principal,millwork detailing,19.5,96.00
+2026-06-12,P-2407,Donald Harris,Site manager,FF&E schedule,15.5,65.00
+2026-06-14,P-2401,William Hernandez,Project architect,site visit,17.0,72.00
+2026-06-14,P-2402,David Allen,Drafter,client revisions,18.5,44.00
+2026-06-16,P-2403,Yuki Alvarez,Project architect,construction documents,6.0,72.00
+2026-06-16,P-2405,Karen Gutierrez,Designer,construction documents,27.0,58.00
+2026-06-16,P-2407,Linda Haddad,Site manager,FF&E schedule,10.5,65.00
+2026-06-17,P-2401,Matthew Garcia,Principal,FF&E schedule,17.0,96.00
+2026-06-17,P-2403,Angela Anderson,Project architect,client revisions,25.0,72.00
+2026-06-17,P-2404,Gary Castillo,Site manager,construction documents,28.5,65.00
+2026-06-17,P-2407,John Chavez,Principal,site visit,7.5,96.00
+2026-06-17,P-2407,Timothy Gomez,Designer,FF&E schedule,33.5,58.00
+2026-06-17,P-2408,Kevin Wright,Drafter,construction documents,37.5,44.00
+2026-06-17,P-2408,Laura Turner,Site manager,site visit,29.0,65.00
+2026-06-18,P-2402,Carol Mensah,Project architect,FF&E schedule,15.0,72.00
+2026-06-18,P-2405,George Flores,Principal,construction documents,12.5,96.00
+2026-06-19,P-2402,Steven Mendoza,Designer,client revisions,25.5,58.00
+2026-06-19,P-2403,Andrew Castillo,Designer,permit set,35.0,58.00
+2026-06-19,P-2405,Amy Bennett,Project architect,millwork detailing,26.5,72.00
+2026-06-20,P-2401,Hiroshi Thompson,Site manager,schematic design,11.0,65.00
+2026-06-21,P-2401,Kwame Mendoza,Drafter,FF&E schedule,20.0,44.00
+2026-06-21,P-2402,Andrew Nelson,Principal,site visit,13.0,96.00
+2026-06-21,P-2406,Matthew Ross,Designer,schematic design,18.0,58.00
+2026-06-21,P-2406,Paul Martinez,Principal,permit set,32.5,96.00
+2026-06-22,P-2405,Sarah Kim,Designer,construction documents,27.5,58.00
+2026-06-22,P-2405,Yuki Torres,Site manager,permit set,19.5,65.00
+2026-06-22,P-2408,Hiroshi Ross,Principal,millwork detailing,28.5,96.00
+2026-06-23,P-2406,Andrew Miller,Designer,millwork detailing,37.5,58.00
+2026-06-24,P-2402,Brian Gonzalez,Project architect,FF&E schedule,19.0,72.00
+2026-06-24,P-2405,Kenneth Reyes,Drafter,construction documents,18.5,44.00
+2026-06-24,P-2407,George Ward,Site manager,client revisions,11.5,65.00
+2026-06-24,P-2407,Robert Williams,Principal,site visit,27.5,96.00
+2026-06-24,P-2407,Ronald King,Drafter,construction documents,37.0,44.00
+2026-06-25,P-2401,Anna Stewart,Project architect,schematic design,29.0,72.00
+2026-06-25,P-2409,Kathleen Phillips,Site manager,permit set,15.5,65.00
+2026-06-26,P-2405,Omar Lewis,Project architect,construction documents,20.0,72.00
+2026-06-26,P-2406,Leila Torres,Project architect,schematic design,26.0,72.00
+2026-06-28,P-2407,Laura Young,Site manager,punch list,32.0,65.00
+2026-06-30,P-2408,Joshua Evans,Project architect,FF&E schedule,24.0,72.00

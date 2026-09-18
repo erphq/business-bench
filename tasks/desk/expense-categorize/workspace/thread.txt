@@ -1,0 +1,74 @@
+From: Sam Delgado <sam@larkspur.co>
+To: Dana Whitfield <dana@larkspur.co>
+Date: Sat, 29 Aug 2026 09:12
+Subject: August card coding — a few questions
+
+Hi Dana,
+
+Starting on the August card statement today. Before I code everything per the
+January policy, a few things I noticed:
+
+- A lot of Uber rides this month, several at odd hours (early morning / late night).
+- Blue Bottle shows up as both the bean subscription and cafe stops.
+- Notion billed again.
+- A few charges I can't identify at all from the description.
+
+Should I just follow the policy doc as written?
+
+Sam Delgado
+Bookkeeper, Larkspur Analytics
+
+
+From: Dana Whitfield <dana@larkspur.co>
+To: Sam Delgado <sam@larkspur.co>
+Date: Sat, 29 Aug 2026 14:47
+Subject: Re: August card coding — a few questions
+
+Mostly yes, the policy stands. Amazon is Office unless I tell you otherwise.
+For the ones you can't identify, don't guess — flag them and I'll look.
+Let me think about the Uber thing, I'll come back to you on it.
+
+Dana Whitfield
+
+
+From: Sam Delgado <sam@larkspur.co>
+To: Dana Whitfield <dana@larkspur.co>
+Date: Sun, 30 Aug 2026 18:03
+Subject: Re: August card coding — a few questions
+
+Thanks. Draft is done: all Ubers under Travel per policy, the Blue Bottle
+subscription under Office and the cafe stops under Meals, Notion under Marketing
+like last month. Tell me if you want anything changed before I close August.
+
+Sam Delgado
+
+
+From: Dana Whitfield <dana@larkspur.co>
+To: Sam Delgado <sam@larkspur.co>
+Date: Mon, 31 Aug 2026 08:21
+Subject: Re: August card coding — a few questions
+
+Three changes for August, please:
+
+1. Uber: rides before 9am or after 7pm are people getting to and from the
+   office. Code those as Commuting, not Travel. Midday Ubers are client visits
+   and stay Travel.
+2. Blue Bottle: put anything from Blue Bottle under Meals — subscription, beans,
+   cafe, all of it. I don't want to keep splitting it.
+3. Notion: engineering took the workspace over this month, so the Notion charge
+   is Software from this month on, not Marketing.
+
+Everything else exactly per the policy doc. Anything you genuinely can't place,
+mark it REVIEW and I'll clear it.
+
+Dana Whitfield
+
+
+From: Sam Delgado <sam@larkspur.co>
+To: Dana Whitfield <dana@larkspur.co>
+Date: Mon, 31 Aug 2026 09:02
+Subject: Re: August card coding — a few questions
+
+Got it — applying those three to the August file now. Final version tonight.
+
+Sam Delgado

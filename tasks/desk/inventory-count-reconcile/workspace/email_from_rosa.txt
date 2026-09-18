@@ -1,0 +1,12 @@
+From: Rosa Delgado <rosa@nightjar.coffee>
+To: you
+Date: Sat, 12 Sep 2026 15:40
+Subject: count sheets from this morning
+
+Both count sheets are in the folder with the stock export from this morning.
+
+A few things: Devon started in aisle A by mistake and did A14 before I sent him over to B, so that bin is on both sheets. Count it once. Some of aisle A still has the old shelf labels from before the August renumbering, so Maria wrote whatever was on the label; the relabel list is in the folder.
+
+Where they counted in cases, use the case quantity from the export to get to eaches. If a bin is not on either sheet nobody counted it, so the count for that stock is zero. The system has a couple of negative quantities, compare against what it actually says.
+
+I want one line per item that is off, with what the system has, what we counted, and the difference. Items that match do not need to be in it. - Rosa

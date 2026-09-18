@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Alder Creek Food Co-op//Calendar//EN
+BEGIN:VEVENT
+UID:leadership-20261005@aldercreek.coop
+DTSTAMP:20260915T120000Z
+DTSTART;TZID=America/Chicago:20261005T150000
+DTEND;TZID=America/Chicago:20261005T160000
+RRULE:FREQ=MONTHLY;BYDAY=1MO
+SUMMARY:Monthly leadership meeting
+LOCATION:Back office / break room
+ORGANIZER;CN=Cynthia Ward:mailto:cynthia@aldercreek.coop
+ATTENDEE;CN=Cynthia Ward;PARTSTAT=ACCEPTED:mailto:cynthia.ward@aldercreek.coop
+ATTENDEE;CN=Marcus Wright;PARTSTAT=ACCEPTED:mailto:marcus.wright@aldercreek.coop
+ATTENDEE;CN=Sarah White;PARTSTAT=ACCEPTED:mailto:sarah.white@aldercreek.coop
+ATTENDEE;CN=Rahul Smith;PARTSTAT=ACCEPTED:mailto:rahul.smith@aldercreek.coop
+ATTENDEE;CN=Amanda Cook;PARTSTAT=ACCEPTED:mailto:amanda.cook@aldercreek.coop
+ATTENDEE;CN=Marcus Rodriguez;PARTSTAT=DECLINED:mailto:marcus.rodriguez@aldercreek.coop
+END:VEVENT
+END:VCALENDAR

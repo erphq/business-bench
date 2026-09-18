@@ -1,0 +1,102 @@
+[
+  {
+    "amount": 9058.56,
+    "check_dates": [
+      "2025-12-05"
+    ],
+    "due_date": "2025-12-10",
+    "period_end": "2025-12-05",
+    "quarter": "2025-Q4"
+  },
+  {
+    "amount": 8671.99,
+    "check_dates": [
+      "2025-12-19"
+    ],
+    "due_date": "2025-12-24",
+    "period_end": "2025-12-19",
+    "quarter": "2025-Q4"
+  },
+  {
+    "amount": 1734.64,
+    "check_dates": [
+      "2025-12-23"
+    ],
+    "due_date": "2025-12-29",
+    "period_end": "2025-12-23",
+    "quarter": "2025-Q4"
+  },
+  {
+    "amount": 2012.08,
+    "check_dates": [
+      "2025-12-31"
+    ],
+    "due_date": "2026-01-07",
+    "period_end": "2026-01-02",
+    "quarter": "2025-Q4"
+  },
+  {
+    "amount": 9457.03,
+    "check_dates": [
+      "2026-01-02"
+    ],
+    "due_date": "2026-01-07",
+    "period_end": "2026-01-02",
+    "quarter": "2026-Q1"
+  },
+  {
+    "amount": 8336.38,
+    "check_dates": [
+      "2026-01-16"
+    ],
+    "due_date": "2026-01-22",
+    "period_end": "2026-01-16",
+    "quarter": "2026-Q1"
+  },
+  {
+    "amount": 8334.05,
+    "check_dates": [
+      "2026-01-30"
+    ],
+    "due_date": "2026-02-04",
+    "period_end": "2026-01-30",
+    "quarter": "2026-Q1"
+  },
+  {
+    "amount": 7718.1,
+    "check_dates": [
+      "2026-02-13"
+    ],
+    "due_date": "2026-02-19",
+    "period_end": "2026-02-13",
+    "quarter": "2026-Q1"
+  },
+  {
+    "amount": 8513.3,
+    "check_dates": [
+      "2026-02-27"
+    ],
+    "due_date": "2026-03-04",
+    "period_end": "2026-02-27",
+    "quarter": "2026-Q1"
+  },
+  {
+    "amount": 8838.89,
+    "check_dates": [
+      "2026-03-13"
+    ],
+    "due_date": "2026-03-18",
+    "period_end": "2026-03-13",
+    "quarter": "2026-Q1"
+  },
+  {
+    "amount": 10896.19,
+    "check_dates": [
+      "2026-03-26",
+      "2026-03-27"
+    ],
+    "due_date": "2026-04-01",
+    "period_end": "2026-03-27",
+    "quarter": "2026-Q1"
+  }
+]

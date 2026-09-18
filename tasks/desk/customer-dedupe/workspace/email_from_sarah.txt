@@ -1,0 +1,23 @@
+From: Sarah Whitfield
+Sent: Wednesday, September 10, 2026 4:51 PM
+Subject: RE: HubSpot import - old customer list
+
+Hi,
+
+Before the old customer export goes into HubSpot, a few rules so the import wizard
+doesn't choke and we don't end up with a mess:
+
+1. Use HubSpot's template columns exactly (hubspot_template.csv is in the folder).
+2. Lifecycle stage: set everyone to "lead", except the people in vip.txt - they are
+   existing accounts, so they should be "customer".
+3. Drop anyone we don't have an email address for. HubSpot keys contacts on email
+   and there is nothing we can do with the rest.
+4. The old system double-entered a lot of people over the years. One row per
+   person, please - it's the same person if it's the same email.
+5. Don't spend time prettifying names - whatever casing the export has is fine,
+   HubSpot's dedupe and the reps will tidy those up later.
+
+The export itself is untouched from the old system, so expect it to be ugly.
+
+Thanks!
+Sarah

@@ -1,0 +1,14 @@
+account,label,basis,amount,Mill Shop,Finishing,Install,Showroom,Admin
+6100,Rent,sqft,13900.00,7042.66,2502.00,2038.67,1482.67,834.00
+6120,Property insurance,sqft,1124.48,569.74,202.41,164.92,119.94,67.47
+6210,Electric,sqft,3169.38,1605.82,570.49,464.84,338.07,190.16
+6220,Gas,sqft,608.61,308.36,109.55,89.26,64.92,36.52
+6230,Water & sewer,sqft,304.02,154.04,54.72,44.59,32.43,18.24
+6300,Janitorial,sqft,1308.74,663.10,235.57,191.95,139.60,78.52
+6310,Building repairs,sqft,1344.83,681.38,242.07,197.24,143.45,80.69
+6400,IT support,headcount,1214.99,356.12,209.48,377.06,125.69,146.64
+6410,Software subscriptions,headcount,730.67,214.16,125.98,226.76,75.59,88.18
+6500,Payroll service,headcount,270.14,79.18,46.58,83.83,27.95,32.60
+6510,HR & benefits platform,headcount,394.50,115.63,68.02,122.43,40.81,47.61
+6600,Phones & internet,headcount,642.34,188.27,110.75,199.35,66.45,77.52
+6700,Office supplies,headcount,300.17,87.98,51.75,93.16,31.05,36.23

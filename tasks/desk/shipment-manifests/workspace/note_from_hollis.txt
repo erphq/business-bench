@@ -1,0 +1,15 @@
+Shipping check, week of Sept 8
+
+All of last week's manifests are in the manifests folder - Northline for wholesale cartons, AeroPac for export, and PostPoint labels from ShipDesk. I want to compare what shipping cost us against what we charged on each order, so I need shipments.csv with one row per shipment:
+
+tracking_no - the shipment's tracking or AWB number, no spaces. If a shipment went as several boxes, use the master (first box's) number.
+carrier - Northline, AeroPac or PostPoint.
+ship_date - the manifest date, YYYY-MM-DD.
+order_no - our order number as SB-12345.
+packages - how many boxes went in that shipment.
+weight_lb - actual total weight in pounds, 2 decimals (1 kg = 2.20462 lb, 16 oz = 1 lb). Not the billed or dimensional weight.
+cost - everything that carrier charges us for the shipment, surcharges and insurance included. Duties the customer pays and declared values are not our cost.
+
+Labels we voided never shipped and don't belong in the list.
+
+Hollis

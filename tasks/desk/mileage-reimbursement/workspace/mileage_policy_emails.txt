@@ -1,0 +1,42 @@
+From: Denise Park <dpark@brightsidehomehealth.org>
+To: Field staff <field@brightsidehomehealth.org>
+Date: Mon, 6 Jan 2025 08:05
+Subject: Mileage rate for 2025
+
+Hi all,
+
+For 2025 we reimburse business driving at 70 cents a mile. Keep logging every trip in MileTrack.
+
+Denise
+
+-----Original Message-----
+
+From: Denise Park <dpark@brightsidehomehealth.org>
+To: Field staff <field@brightsidehomehealth.org>
+Date: Tue, 16 Dec 2025 15:30
+Subject: Mileage reimbursement from January 1, 2026
+
+Hi all,
+
+Starting January 1, 2026 the rate goes up to 72.5 cents a mile. A few reminders, because the auditors asked us to apply the policy exactly:
+
+- Personal trips are not reimbursed and are ignored for everything below.
+- Driving between home and the office is commuting and is not reimbursed.
+- Each day, your first business trip out of home and your last business trip back home each have your normal one-way commute taken off them, never below zero (unless that trip is to or from the office, which is commuting and pays nothing). Your commute distance is on the HR staff sheet.
+- A trip marked round trip is two legs, out and back, each at the distance on the line. If a round trip starts at home, the way out is your first trip out of home and the way back is your last trip home.
+- Everything else (patient to patient, office to patient, supply runs) is reimbursed in full.
+
+Denise
+
+-----Original Message-----
+
+From: Denise Park <dpark@brightsidehomehealth.org>
+To: you
+Date: Fri, 4 Sep 2026 17:10
+Subject: August mileage
+
+Can you run August mileage for payroll? MileTrack exported a bit wide, I only want August trips. Dorothy still logs on an odometer sheet instead of the app; that workbook is in the folder too.
+
+I need a file with one line per clinician: employee ID, name, reimbursable miles, and the reimbursement in dollars (their August miles times the rate, rounded to the cent).
+
+Denise

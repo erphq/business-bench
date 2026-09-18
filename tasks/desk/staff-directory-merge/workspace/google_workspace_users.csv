@@ -1,0 +1,49 @@
+Email Address [Required],First Name [Required],Last Name [Required],Status [READ ONLY],Org Unit Path [Required],Employee ID,Department,Work Phone Extension
+gary.wilson@riverbendphysio.com,Gary,Wilson,Active,/Staff/Physio,1164,Physio,250
+yuki.clark@riverbendphysio.com,Yuki,Clark,Active,/Staff/Billing,,Billing,301
+chloe.watson@riverbendphysio.com,Chloe,Watson,Active,/Staff/Physio,1075,Physio,230
+nadia.gomez@riverbendphysio.com,Nadia,Gomez,Active,/Staff/OT,1008,OT,263
+priya.johnson@riverbendphysio.com,Priya,Johnson,Active,/Staff/Physio,1024,Physio,227
+donald.mensah@riverbendphysio.com,Donald,Mensah,Active,/Staff/Admin,1031,Admin,308
+kevin.stewart@riverbendphysio.com,Kevin,Stewart,Active,/Staff/OT,1089,OT,605
+barbara.hernandez@riverbendphysio.com,Barbara,Hernandez,Active,/Staff/Billing,1077,Billing,298
+hiroshi.rivera@riverbendphysio.com,Hiroshi,Rivera,Active,/Staff/Physio,,Physio,220
+wei.gonzalez@riverbendphysio.com,Wei,Gonzalez,Active,/Staff/Physio,1159,Physio,223
+charles.flores@riverbendphysio.com,Charles,Flores,Active,/Staff/Physio,1152,Physio,238
+joseph.hill@riverbendphysio.com,Joseph,Hill,Active,/Staff/Billing,,Billing,295
+donna.campbell@riverbendphysio.com,Donna,Campbell,Active,/Staff/Physio,1067,Physio,225
+jeffrey.lopez@riverbendphysio.com,Jeffrey,Lopez,Active,/Staff/Physio,1140,Physio,205
+kevin.cooper@riverbendphysio.com,Kevin,Cooper,Active,/Staff/Reception,1027,Reception,286
+kenneth.rogers@riverbendphysio.com,Kenneth,Rogers,Suspended,/Former staff,1035,Physio,
+amy.bennett@riverbendphysio.com,Amy,Bennett,Active,/Staff/Physio,1014,Physio,240
+deborah.green@riverbendphysio.com,Deborah,Green,Active,/Staff/Admin,1047,Admin,306
+scheduling@riverbendphysio.com,Scheduling,Riverbend,Active,/Shared mailboxes,,,101
+marcus.ortiz@riverbendphysio.com,Marcus,Ortiz,Active,/Staff/Physio,1110,Physio,234
+anna.edwards@riverbendphysio.com,Anna,Edwards,Active,/Staff/Physio,1094,Physio,208
+william.haddad@riverbendphysio.com,William,Haddad,Active,/Staff/Physio,1166,Physio,201
+richard.richardson@riverbendphysio.com,Richard,Richardson,Active,/Staff/OT,1136,OT,268
+marcus.cox@riverbendphysio.com,Marcus,Cox,Active,/Staff/Billing,1146,Billing,290
+carlos.lewis@riverbendphysio.com,Carlos,Lewis,Suspended,/Former staff,1123,OT,
+steven.morgan@riverbendphysio.com,Steven,Morgan,Active,/Staff/Admin,1132,Admin,312
+kim.ramirez@riverbendphysio.com,Kim,Ramirez,Active,/Staff/Physio,1018,Physio,214
+rebecca.phillips@riverbendphysio.com,Rebecca,Phillips,Suspended,/Former staff,1049,Billing,
+richard.myers@riverbendphysio.com,Richard,Myers,Active,/Staff/OT,1009,OT,261
+dorothy.parker@riverbendphysio.com,Dorothy,Parker,Active,/Staff/Reception,1098,Reception,274
+david.harris@riverbendphysio.com,David,Harris,Active,/Staff/Reception,1057,Reception,282
+deborah.davis@riverbendphysio.com,Deborah,Davis,Active,/Contractors,,IT,
+billing@riverbendphysio.com,Billing,Team,Active,/Shared mailboxes,,,300
+amy.nelson@riverbendphysio.com,Amy,Nelson,Active,/Staff/Reception,1026,Reception,287
+rahul.ramos@riverbendphysio.com,Rahul,Ramos,Active,/Staff/OT,1154,OT,251
+fax@riverbendphysio.com,Fax,Inbox,Active,/Shared mailboxes,,,
+maggie.howard@riverbendphysio.com,Maggie,Howard,Active,/Staff/Reception,1087,Reception,279
+stephanie.alvarez@riverbendphysio.com,Stephanie,Alvarez,Active,/Staff/Billing,1078,Billing,304
+amara.torres@riverbendphysio.com,Amara,Torres,Active,/Staff/OT,1040,OT,259
+fatima.walker@riverbendphysio.com,Fatima,Walker,Active,/Staff/Physio,1114,Physio,245
+barbara.mendoza@riverbendphysio.com,Barbara,Mendoza,Active,/Staff/Physio,1129,Physio,209
+frontdesk@riverbendphysio.com,Front,Desk,Active,/Shared mailboxes,,,100
+chris.morris@riverbendphysio.com,Chris,Morris,Active,/Staff/OT,1070,OT,255
+joshua.peterson@riverbendphysio.com,Joshua,Peterson,Active,/Staff/Reception,1104,Reception,269
+andrew.moore@riverbendphysio.com,Andrew,Moore,Active,/Staff/Physio,1056,Physio,601
+jacob.rodriguez@riverbendphysio.com,Jacob,Rodriguez,Active,/Staff/Physio,1038,Physio,243
+kenneth.ward@riverbendphysio.com,Kenneth,Ward,Active,/Staff/Physio,1054,Physio,216
+jeffrey.gutierrez@riverbendphysio.com,Jeffrey,Gutierrez,Active,/Staff/Reception,1059,Reception,277

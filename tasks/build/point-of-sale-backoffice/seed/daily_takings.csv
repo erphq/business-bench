@@ -1,0 +1,118 @@
+Date,Store,Transactions,Gross Sales,Discounts,Card Sales,Cash Counted,Closed By,Notes
+01-Jul-2026,HARBOR ST.,203,2134.57,$70.31,1651.87,403.82,Nina Castillo,street fair
+"Jul 1, 2026",Mill Road,94,"1,041.26",$13.34,778.95,248.74,Chloe Kim,short staffed
+7/2/2026,Harbor Street,218,2257.54,$41.85,1714.97,$497.90,Tomasz Nowak,street fair
+02-Jul-2026,Mill Road,98,1035.37,$34.22,$738.96,$262.19,Mateo Ruiz,
+"Jul 3, 2026",Harbor Street,164,"$1,733.09",$38.21,"1,286.24",408.64,Tomasz Nowak,catering pickup
+7/3/2026,Mill Rd,125,1249.18,25.94,1032.15,166.89,Owen Brooks,
+7/4/2026,Harbor Street,239,"2,412.06",84.26,"$1,735.44",592.36,Tomasz Nowak,card reader offline 30 min
+"Jul 4, 2026",Mill Road,175,1953.07,$75.37,1533.46,344.24,Chloe Kim,
+7/5/2026,Harbor Street,268,"$2,856.64",103.21,"$2,349.40",405.25,Nina Castillo,rain all day
+7/5/2026,Mill Road,151,"$1,549.80",$18.63,"1,147.19",383.98,Owen Brooks,
+"Jul 6, 2026",Harbor St,186,"$2,053.43",$53.59,"1,705.57",291.64,Nina Castillo,
+7/7/2026,Harbor Street,219,"$2,364.37",$66.36,"$1,807.11",490.90,Leila Haddad,street fair
+"Jul 7, 2026",Mill Rd,128,"1,290.30",16.23,935.56,338.51,Mateo Ruiz,
+"Jul 8, 2026",Harbor Street,181,2013.07,32.52,"$1,689.97",290.58,Leila Haddad,espresso machine down 2 hrs
+08-Jul-2026,Mill Road,112,"1,178.85",34.53,$838.49,$308.56,Owen Brooks,espresso machine down 2 hrs
+09-Jul-2026,Harbor Street,195,"$2,223.24",44.22,"1,636.94",539.65,Leila Haddad,
+2026-07-09,Mill Road,105,"1,119.95",$27.76,898.15,154.18,Owen Brooks,card reader offline 30 min
+"Jul 10, 2026",Harbor Street,226,"$2,365.21",55.39,"$1,966.08",299.84,Nina Castillo,
+"Jul 10, 2026",Mill Road,134,"$1,282.05",25.81,989.38,$231.41,Mateo Ruiz,
+2026-07-11,Harbor Street,302,"$3,199.64",$40.13,"2,567.04",$605.03,Nina Castillo,short staffed
+7/11/2026,Mill Road,166,1766.01,60.09,"$1,460.32",$245.60,Mateo Ruiz,catering pickup
+2026-07-12,Harbor St,253,2558.86,$101.83,"1,778.54",680.92,Leila Haddad,street fair
+"Jul 12, 2026",Mill Road,210,"2,025.81",41.55,"$1,581.08",403.18,Mateo Ruiz,short staffed
+2026-07-13,Harbor St,144,1682.22,$54.65,1203.58,398.72,Nina Castillo,
+14-Jul-2026,Harbor Street,175,"$1,834.37",31.58,"$1,446.02",356.77,Nina Castillo,catering pickup
+7/14/2026,Mill Rd,104,"1,212.27",28.79,948.76,221.41,Owen Brooks,
+"Jul 15, 2026",Harbor Street,212,"$2,018.81",21.32,1561.27,436.22,Leila Haddad,
+"Jul 15, 2026",Mill Road,97,"1,084.94",31.00,$776.59,277.35,Chloe Kim,street fair
+2026-07-16,HARBOR ST.,220,2227.42,$29.36,1755.02,443.04,Leila Haddad,espresso machine down 2 hrs
+"Jul 16, 2026",MILL RD,124,1271.31,13.78,"$1,062.82",194.71,Mateo Ruiz,card reader offline 30 min
+7/17/2026,HARBOR ST.,186,"$2,009.73",61.86,"1,525.82",422.05,Leila Haddad,catering pickup
+2026-07-17,Mill Road,131,"1,313.93",$47.67,"$1,076.19",176.63,Owen Brooks,street fair
+"Jul 18, 2026",Harbor Street,262,"2,715.98",$81.85,"$2,054.54",$579.59,Nina Castillo,
+"Jul 18, 2026",MILL RD,225,"2,251.60",$65.98,"$1,685.69",$499.93,Owen Brooks,catering pickup
+19-Jul-2026,HARBOR ST.,336,"3,352.50",73.58,"$2,584.50",653.53,Nina Castillo,espresso machine down 2 hrs
+2026-07-19,Mill Road,175,"1,823.05",$41.27,1371.84,$409.94,Owen Brooks,street fair
+2026-07-20,Harbor Street,169,1952.37,20.58,"1,480.54",$450.87,Nina Castillo,
+2026-07-21,Harbor Street,148,"1,667.25",30.27,"$1,386.24",250.74,Leila Haddad,short staffed
+7/21/2026,Mill Road,145,"1,491.39",$26.48,1085.37,389.61,Owen Brooks,catering pickup
+22-Jul-2026,Harbor Street,175,"1,746.68",$64.38,"1,274.59",407.71,Nina Castillo,card reader offline 30 min
+22-Jul-2026,Mill Rd,147,"1,513.74",18.16,"$1,257.47",238.11,Chloe Kim,
+23-Jul-2026,Harbor Street,212,"2,097.36",23.69,"1,699.03",366.84,Leila Haddad,short staffed
+"Jul 23, 2026",Mill Rd,117,"$1,183.00",38.78,$870.29,$273.93,Owen Brooks,
+"Jul 24, 2026",HARBOR ST.,205,"$2,395.60",26.61,"$1,711.79",$657.20,Tomasz Nowak,
+24-Jul-2026,Mill Road,147,1560.79,20.58,1285.53,$254.68,Mateo Ruiz,rain all day
+25-Jul-2026,Harbor Street,336,"$3,370.31",$64.82,"2,479.53",$825.96,Leila Haddad,catering pickup
+25-Jul-2026,Mill Road,203,"$2,008.78",44.48,1509.87,454.43,Owen Brooks,catering pickup
+26-Jul-2026,Harbor St,295,"3,279.85",$75.18,"2,332.22",875.07,Nina Castillo,
+7/26/2026,Mill Road,216,"2,054.15",23.33,"$1,514.89",515.93,Owen Brooks,
+7/27/2026,HARBOR ST.,227,"2,378.10",$62.81,"1,746.24",540.97,Nina Castillo,rain all day
+24-Jul-2026,Mill Road,147,1560.79,20.58,1285.53,$254.68,Mateo Ruiz,rain all day
+"Jul 28, 2026",Harbor Street,147,"1,667.11",30.62,"1,328.57",307.92,Nina Castillo,
+7/28/2026,Mill Road,98,"$1,086.32",$29.99,818.82,237.51,Owen Brooks,espresso machine down 2 hrs
+2026-07-29,Harbor Street,205,"2,282.60",$33.46,1900.51,350.93,Nina Castillo,
+2026-07-29,Mill Road,124,1434.49,42.03,1011.11,383.56,Owen Brooks,espresso machine down 2 hrs
+30-Jul-2026,Harbor Street,196,2202.29,59.58,"1,786.61",356.10,Leila Haddad,catering pickup
+"Jul 30, 2026",Mill Rd,141,"1,409.74",43.42,1027.73,338.59,Owen Brooks,
+31-Jul-2026,Harbor Street,176,1901.29,$44.76,1349.90,506.63,Nina Castillo,
+"Jul 31, 2026",Mill Road,92,"$1,001.99",34.00,798.36,169.63,Chloe Kim,
+8/1/2026,Harbor St,312,3145.73,$76.18,"$2,557.83",$509.52,Leila Haddad,street fair
+2026-07-29,Mill Road,124,1434.49,42.03,1011.11,383.56,Owen Brooks,espresso machine down 2 hrs
+01-Aug-2026,Mill Road,171,1895.16,40.70,"1,459.57",393.02,Owen Brooks,
+"Aug 2, 2026",Harbor Street,278,"2,731.77",80.71,"2,165.93",485.04,Nina Castillo,short staffed
+"Aug 2, 2026",Mill Road,149,"$1,579.62",26.11,"1,225.01",329.92,Owen Brooks,espresso machine down 2 hrs
+"Aug 3, 2026",Harbor St,162,"1,759.40",$69.22,"$1,438.47",251.71,Leila Haddad,street fair
+04-Aug-2026,Harbor Street,241,"2,395.17",51.75,"1,987.96",$344.54,Tomasz Nowak,
+8/4/2026,MILL RD,99,1079.56,37.36,824.61,226.40,Mateo Ruiz,rain all day
+05-Aug-2026,Harbor St,159,"$1,619.87",16.37,1264.90,338.60,Nina Castillo,
+2026-08-05,Mill Rd,119,"$1,225.66",16.70,926.53,282.43,Owen Brooks,
+06-Aug-2026,HARBOR ST.,204,"2,170.42",$80.41,"1,589.61",500.40,Leila Haddad,card reader offline 30 min
+8/6/2026,Mill Road,90,"$1,045.84",39.49,$831.04,$169.07,Owen Brooks,
+2026-08-07,Harbor Street,173,"1,799.46",32.34,"1,398.74",$368.38,Leila Haddad,
+"Aug 7, 2026",Mill Road,151,"$1,487.18",43.02,"1,224.47",226.92,Mateo Ruiz,rain all day
+2026-08-08,HARBOR ST.,290,"$2,850.86",92.88,"$2,234.59",523.39,Leila Haddad,
+2026-08-08,Mill Road,145,1636.61,36.74,"1,215.01",384.86,Chloe Kim,rain all day
+8/9/2026,Harbor Street,307,3056.00,58.14,"$2,392.37",$605.49,Nina Castillo,
+8/9/2026,Mill Road,181,"1,900.48",$65.29,"$1,462.75",$372.44,Mateo Ruiz,rain all day
+2026-08-10,Harbor Street,175,"1,711.68",27.00,1234.37,450.31,Nina Castillo,
+"Aug 11, 2026",Harbor St,210,"2,247.49",$36.10,"1,598.42",603.68,Nina Castillo,
+11-Aug-2026,Mill Road,130,"$1,451.27",36.20,1132.62,$282.45,Chloe Kim,
+2026-08-12,Harbor Street,143,"$1,674.08",61.78,"$1,247.66",367.50,Leila Haddad,
+8/12/2026,Mill Road,103,1076.35,$24.49,$869.80,$182.11,Mateo Ruiz,espresso machine down 2 hrs
+"Aug 13, 2026",Harbor Street,225,"$2,284.37",89.47,"$1,656.68",538.22,Tomasz Nowak,short staffed
+8/13/2026,Mill Road,93,"$1,065.33",$37.03,841.29,$187.31,Owen Brooks,
+14-Aug-2026,Harbor Street,178,1786.06,67.15,1392.95,325.96,Nina Castillo,short staffed
+14-Aug-2026,MILL RD,106,"$1,262.46",$41.55,896.05,324.86,Owen Brooks,
+8/15/2026,Harbor Street,245,"$3,612.75",75.87,2829.50,$707.38,Leila Haddad,short staffed
+8/15/2026,Mill Road,225,"$2,171.53",37.50,1693.73,$440.30,Owen Brooks,short staffed
+2026-08-16,HARBOR ST.,271,2707.40,28.84,2115.43,$563.42,Nina Castillo,
+16-Aug-2026,Mill Road,153,1681.43,18.53,1275.99,386.91,Owen Brooks,
+2026-08-17,HARBOR ST.,191,2191.30,55.10,"$1,599.44",508.62,Nina Castillo,
+8/18/2026,Harbor Street,167,1812.02,$66.46,1283.44,$459.43,Leila Haddad,
+18-Aug-2026,MILL RD,134,"$1,569.26",$22.58,"1,198.81",$347.87,Owen Brooks,
+2026-08-19,Harbor Street,184,"2,167.89",$33.65,"1,671.00",465.45,Leila Haddad,
+"Aug 19, 2026",Mill Rd,107,"$1,114.41",32.96,858.10,$223.35,Mateo Ruiz,
+"Aug 20, 2026",Harbor Street,244,"2,387.99",$55.58,1714.91,617.50,Nina Castillo,
+8/20/2026,Mill Road,125,1336.68,43.80,$999.68,295.67,Owen Brooks,street fair
+21-Aug-2026,Harbor Street,155,1756.57,46.10,1338.42,372.05,Nina Castillo,short staffed
+8/21/2026,Mill Road,127,"1,246.48",$42.82,$995.83,$207.83,Owen Brooks,
+2026-08-22,Harbor Street,257,2657.02,86.14,2174.44,$396.44,Leila Haddad,card reader offline 30 min
+8/22/2026,Mill Road,134,1534.87,49.72,"$1,212.69",267.17,Mateo Ruiz,short staffed
+8/23/2026,Harbor St,301,3346.49,$40.02,"2,763.03",$543.44,Nina Castillo,rain all day
+2026-08-23,Mill Road,196,2131.84,79.74,1711.60,$340.50,Owen Brooks,catering pickup
+2026-08-24,Harbor St,158,"$1,842.65",56.69,"$1,323.73",462.23,Nina Castillo,card reader offline 30 min
+"Aug 25, 2026",Harbor Street,172,1663.21,26.48,"1,350.96",285.77,Nina Castillo,espresso machine down 2 hrs
+8/25/2026,Mill Rd,137,"$1,326.77",19.66,"1,019.18",287.93,Chloe Kim,
+26-Aug-2026,Harbor St,165,"1,677.14",41.85,"1,339.90",295.39,Nina Castillo,card reader offline 30 min
+8/26/2026,MILL RD,150,1534.76,26.16,"$1,199.94",$306.31,Owen Brooks,
+27-Aug-2026,Harbor Street,185,"1,898.38",61.02,"$1,374.14",463.22,Nina Castillo,card reader offline 30 min
+2026-08-27,Mill Road,104,"1,112.95",$13.29,830.50,$269.16,Chloe Kim,
+28-Aug-2026,Harbor Street,182,"2,122.66",$84.33,"1,496.80",541.53,Leila Haddad,
+8/28/2026,Mill Road,87,"$1,024.22",19.27,740.34,264.61,Chloe Kim,
+29-Aug-2026,HARBOR ST.,241,"$2,772.24",$99.76,"2,092.22",580.26,Leila Haddad,
+2026-08-29,Mill Rd,192,"$2,009.97",62.89,"$1,497.22",$449.86,Owen Brooks,
+30-Aug-2026,Harbor Street,231,2438.24,77.94,"$2,001.43",360.13,Tomasz Nowak,
+"Aug 30, 2026",Mill Rd,167,1662.73,56.30,"$1,279.88",326.55,Owen Brooks,espresso machine down 2 hrs
+"Aug 31, 2026",Harbor Street,168,1723.64,44.85,"1,362.22",316.57,Leila Haddad,short staffed

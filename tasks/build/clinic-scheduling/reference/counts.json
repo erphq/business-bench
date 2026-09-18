@@ -1,0 +1,774 @@
+{
+  "seed": 0,
+  "clinic": "Northshore Physiotherapy",
+  "admin": "the clinic director",
+  "therapists": [
+    "Lena Fischer",
+    "Sam Okafor",
+    "Priya Nair",
+    "Marcus Bell",
+    "Hana Sato",
+    "Diego Ramos"
+  ],
+  "restricted_login": "Lena Fischer",
+  "roster_pattern": {
+    "Lena Fischer": [
+      {
+        "weekday": "Mon",
+        "start": "08:00",
+        "end": "11:00"
+      },
+      {
+        "weekday": "Wed",
+        "start": "13:00",
+        "end": "16:00"
+      },
+      {
+        "weekday": "Fri",
+        "start": "09:00",
+        "end": "12:00"
+      }
+    ],
+    "Sam Okafor": [
+      {
+        "weekday": "Mon",
+        "start": "13:00",
+        "end": "16:00"
+      },
+      {
+        "weekday": "Thu",
+        "start": "08:00",
+        "end": "11:00"
+      }
+    ],
+    "Priya Nair": [
+      {
+        "weekday": "Tue",
+        "start": "08:00",
+        "end": "11:00"
+      },
+      {
+        "weekday": "Wed",
+        "start": "13:00",
+        "end": "16:00"
+      }
+    ],
+    "Marcus Bell": [
+      {
+        "weekday": "Tue",
+        "start": "16:00",
+        "end": "19:00"
+      },
+      {
+        "weekday": "Fri",
+        "start": "13:00",
+        "end": "16:00"
+      }
+    ],
+    "Hana Sato": [
+      {
+        "weekday": "Wed",
+        "start": "08:00",
+        "end": "11:00"
+      },
+      {
+        "weekday": "Sat",
+        "start": "09:00",
+        "end": "12:00"
+      }
+    ],
+    "Diego Ramos": [
+      {
+        "weekday": "Mon",
+        "start": "16:00",
+        "end": "19:00"
+      },
+      {
+        "weekday": "Wed",
+        "start": "16:00",
+        "end": "19:00"
+      }
+    ]
+  },
+  "baseline": {
+    "staff_role": "Therapist",
+    "viewer_role": "Viewer",
+    "main_entity": "appointment",
+    "main_entity_plural": "appointments",
+    "scope_rule": "appointments where Lena Fischer is the therapist",
+    "scope_count": 65,
+    "scope_count_if_therapist_matched_as_written": 61,
+    "out_of_scope_example": {
+      "appointment": "A-30235",
+      "date": "2026-09-14",
+      "start": "15:15",
+      "minutes": 45,
+      "patient": "Amy Lindqvist",
+      "therapist": "Sam Okafor",
+      "status": "Booked",
+      "file_lines": [
+        241
+      ]
+    },
+    "kpis": [
+      {
+        "name": "Booked appointments (status Booked)",
+        "value": 49
+      },
+      {
+        "name": "Utilization, August 2026 (completed minutes / rostered minutes)",
+        "value_pct": 58.5,
+        "completed_minutes": 5790,
+        "rostered_minutes": 9900,
+        "pct": 58.5
+      },
+      {
+        "name": "No-shows, August 2026",
+        "value": 15
+      },
+      {
+        "name": "Recall list (active, at least one completed visit, nothing booked)",
+        "value": 57
+      }
+    ],
+    "scoped_kpi_1": 9,
+    "search": {
+      "term": "Jones",
+      "patient": "Ingrid Jones",
+      "count": 3,
+      "appointments": [
+        "A-30172",
+        "A-30224",
+        "A-30242"
+      ]
+    },
+    "filter": {
+      "field": "Status",
+      "value": "No-show",
+      "count": 16,
+      "count_if_matched_as_written": 15
+    },
+    "sort": {
+      "field": "Date and start time",
+      "top": {
+        "appointment": "A-30287",
+        "date": "2026-09-26",
+        "start": "10:45",
+        "minutes": 45,
+        "patient": "Susan Young",
+        "therapist": "Hana Sato",
+        "status": "Booked",
+        "file_lines": [
+          294
+        ]
+      },
+      "top_file_values": [
+        "09/26/2026",
+        "10:45"
+      ],
+      "text_sort_top": {
+        "appointment": "A-30285",
+        "file_values": [
+          "September 26, 2026",
+          "9:00 AM"
+        ]
+      }
+    },
+    "export": {
+      "rows": 287,
+      "columns": [
+        "Date",
+        "Start Time",
+        "Patient",
+        "Therapist",
+        "Status"
+      ]
+    },
+    "required_field": "Patient"
+  },
+  "patients": {
+    "file_rows_excluding_header": 159,
+    "exact_duplicate_rows": 5,
+    "reregistered_rows": 4,
+    "unique_patients": 150,
+    "dedupe_rule": "Same patient when first name, last name (ignoring case) and date of birth (whatever the format) all match. Same name with a different date of birth is a different patient.",
+    "wrong_counts": {
+      "no_dedupe": 159,
+      "exact_rows_only": 154,
+      "name_only_dedupe": 147
+    },
+    "same_name_pairs": [
+      {
+        "name": "Donna Morris",
+        "dobs": [
+          "1964-05-14",
+          "1991-06-09"
+        ]
+      },
+      {
+        "name": "Ronald Edwards",
+        "dobs": [
+          "1963-03-11",
+          "1981-02-19"
+        ]
+      },
+      {
+        "name": "Jessica Nelson",
+        "dobs": [
+          "1942-08-21",
+          "1959-10-29"
+        ]
+      }
+    ],
+    "reregistered": [
+      {
+        "name": "Carlos Nelson",
+        "record_numbers": [
+          "003686",
+          "006058"
+        ],
+        "rows_as_written": [
+          {
+            "line": 118,
+            "record": "006058",
+            "last_name": "NELSON",
+            "dob": "1990-09-11"
+          },
+          {
+            "line": 123,
+            "record": "003686",
+            "last_name": "Nelson",
+            "dob": "11-Sep-1990"
+          }
+        ]
+      },
+      {
+        "name": "Jeffrey Nelson",
+        "record_numbers": [
+          "001318",
+          "008734"
+        ],
+        "rows_as_written": [
+          {
+            "line": 38,
+            "record": "008734",
+            "last_name": "NELSON",
+            "dob": "1949-12-17"
+          },
+          {
+            "line": 136,
+            "record": "001318",
+            "last_name": "Nelson",
+            "dob": "12/17/1949"
+          }
+        ]
+      },
+      {
+        "name": "Melissa Rodriguez",
+        "record_numbers": [
+          "001838",
+          "009255"
+        ],
+        "rows_as_written": [
+          {
+            "line": 14,
+            "record": "009255",
+            "last_name": "RODRIGUEZ",
+            "dob": "1963-07-09"
+          },
+          {
+            "line": 140,
+            "record": "001838",
+            "last_name": "Rodriguez",
+            "dob": "07/09/1963"
+          }
+        ]
+      },
+      {
+        "name": "Jennifer Johnson",
+        "record_numbers": [
+          "006712",
+          "009425"
+        ],
+        "rows_as_written": [
+          {
+            "line": 47,
+            "record": "009425",
+            "last_name": "JOHNSON",
+            "dob": "01/18/1964"
+          },
+          {
+            "line": 51,
+            "record": "006712",
+            "last_name": "Johnson",
+            "dob": "1964-01-18"
+          }
+        ]
+      }
+    ],
+    "per_status": {
+      "Active": 117,
+      "Discharged": 33
+    }
+  },
+  "roster": {
+    "file_rows_excluding_header": 101,
+    "therapists": 6,
+    "august_rostered_hours": {
+      "Lena Fischer": 39.0,
+      "Sam Okafor": 27.0,
+      "Priya Nair": 24.0,
+      "Marcus Bell": 24.0,
+      "Hana Sato": 24.0,
+      "Diego Ramos": 27.0
+    },
+    "no_shifts_on": "2026-09-07"
+  },
+  "appointments": {
+    "file_rows_excluding_header": 293,
+    "duplicate_rows": 6,
+    "appointments": 287,
+    "per_status": {
+      "Completed": 184,
+      "No-show": 16,
+      "Cancelled": 25,
+      "Late cancel": 13,
+      "Booked": 49
+    },
+    "duration_examples": {
+      "1:00": {
+        "appointment": "A-30004",
+        "date": "2026-08-03",
+        "start": "13:15",
+        "minutes": 60,
+        "patient": "Daniel Johnson",
+        "therapist": "Sam Okafor",
+        "status": "No-show",
+        "file_lines": [
+          5
+        ]
+      },
+      "0:45": {
+        "appointment": "A-30007",
+        "date": "2026-08-03",
+        "start": "17:00",
+        "minutes": 45,
+        "patient": "Jessica Nelson",
+        "therapist": "Diego Ramos",
+        "status": "No-show",
+        "file_lines": [
+          9
+        ]
+      },
+      "1h": {
+        "appointment": "A-30012",
+        "date": "2026-08-04",
+        "start": "16:30",
+        "minutes": 60,
+        "patient": "Nancy Kelly",
+        "therapist": "Marcus Bell",
+        "status": "No-show",
+        "file_lines": [
+          14
+        ]
+      },
+      "0:30": {
+        "appointment": "A-30018",
+        "date": "2026-08-05",
+        "start": "10:00",
+        "minutes": 30,
+        "patient": "John Myers",
+        "therapist": "Hana Sato",
+        "status": "Completed",
+        "file_lines": [
+          20
+        ]
+      }
+    },
+    "import_conflict": {
+      "a": {
+        "appointment": "A-30241",
+        "date": "2026-09-15",
+        "start": "16:00",
+        "minutes": 60,
+        "patient": "Jennifer Johnson",
+        "therapist": "Marcus Bell",
+        "status": "Booked",
+        "file_lines": [
+          247
+        ]
+      },
+      "b": {
+        "appointment": "A-30242",
+        "date": "2026-09-15",
+        "start": "16:30",
+        "minutes": 45,
+        "patient": "Ingrid Jones",
+        "therapist": "Marcus Bell",
+        "status": "Booked",
+        "file_lines": [
+          248
+        ]
+      }
+    },
+    "cancelled_overlap_not_conflict": {
+      "cancelled": {
+        "appointment": "A-30236",
+        "date": "2026-09-14",
+        "start": "16:00",
+        "minutes": 45,
+        "patient": "Patricia Wood",
+        "therapist": "Diego Ramos",
+        "status": "Cancelled",
+        "file_lines": [
+          242
+        ]
+      },
+      "booked": {
+        "appointment": "A-30237",
+        "date": "2026-09-14",
+        "start": "16:15",
+        "minutes": 45,
+        "patient": "Kwame Rivera",
+        "therapist": "Diego Ramos",
+        "status": "Booked",
+        "file_lines": [
+          243
+        ]
+      }
+    },
+    "no_show_merge": {
+      "patient": "Carlos Nelson",
+      "record_numbers": [
+        "003686",
+        "006058"
+      ],
+      "no_shows": [
+        {
+          "appointment": "A-30047",
+          "date": "2026-08-10",
+          "start": "14:15",
+          "minutes": 45,
+          "patient": "Carlos Nelson",
+          "therapist": "Sam Okafor",
+          "status": "No-show",
+          "file_lines": [
+            51
+          ],
+          "record_as_written": "003686"
+        },
+        {
+          "appointment": "A-30095",
+          "date": "2026-08-19",
+          "start": "08:15",
+          "minutes": 45,
+          "patient": "Carlos Nelson",
+          "therapist": "Hana Sato",
+          "status": "No-show",
+          "file_lines": [
+            101
+          ],
+          "record_as_written": "006058"
+        }
+      ]
+    },
+    "patients_with_two_or_more_no_shows": 1,
+    "flagged_patients": [
+      "Carlos Nelson"
+    ],
+    "recall": {
+      "count": 57,
+      "includes_cancelled_only": {
+        "patient": "Christopher Ward",
+        "cancelled_appointment": {
+          "appointment": "A-30230",
+          "date": "2026-09-14",
+          "start": "08:15",
+          "minutes": 45,
+          "patient": "Christopher Ward",
+          "therapist": "Lena Fischer",
+          "status": "Cancelled",
+          "file_lines": [
+            236
+          ]
+        },
+        "status_as_written": "Cancelled"
+      },
+      "excludes_discharged": "Kathleen Patel",
+      "excludes_booked_under_second_record": {
+        "patient": "Jeffrey Nelson",
+        "record_numbers": [
+          "001318",
+          "008734"
+        ],
+        "booked_appointment": {
+          "appointment": "A-30234",
+          "date": "2026-09-14",
+          "start": "14:15",
+          "minutes": 45,
+          "patient": "Jeffrey Nelson",
+          "therapist": "Sam Okafor",
+          "status": "Booked",
+          "file_lines": [
+            240
+          ],
+          "record_as_written": "008734"
+        }
+      },
+      "count_if_record_numbers_not_merged": 59,
+      "count_if_discharged_included": 82
+    },
+    "utilization_august": {
+      "clinic": {
+        "completed_minutes": 5790,
+        "rostered_minutes": 9900,
+        "pct": 58.5
+      },
+      "Lena Fischer": {
+        "completed_minutes": 1335,
+        "rostered_minutes": 2340,
+        "pct": 57.1
+      },
+      "Sam Okafor": {
+        "completed_minutes": 1020,
+        "rostered_minutes": 1620,
+        "pct": 63.0
+      },
+      "Priya Nair": {
+        "completed_minutes": 780,
+        "rostered_minutes": 1440,
+        "pct": 54.2
+      },
+      "Marcus Bell": {
+        "completed_minutes": 855,
+        "rostered_minutes": 1440,
+        "pct": 59.4
+      },
+      "Hana Sato": {
+        "completed_minutes": 750,
+        "rostered_minutes": 1440,
+        "pct": 52.1
+      },
+      "Diego Ramos": {
+        "completed_minutes": 1050,
+        "rostered_minutes": 1620,
+        "pct": 64.8
+      }
+    }
+  },
+  "app_items": {
+    "booking_test": {
+      "existing": {
+        "appointment": "A-30247",
+        "date": "2026-09-16",
+        "start": "13:00",
+        "minutes": 45,
+        "patient": "Wei Hall",
+        "therapist": "Lena Fischer",
+        "status": "Booked",
+        "file_lines": [
+          253
+        ]
+      },
+      "cancelled": {
+        "appointment": "A-30250",
+        "date": "2026-09-16",
+        "start": "15:00",
+        "minutes": 45,
+        "patient": "Jacob Evans",
+        "therapist": "Lena Fischer",
+        "status": "Cancelled",
+        "file_lines": [
+          256
+        ]
+      },
+      "overlap_start": "13:30",
+      "back_to_back_start": "13:45",
+      "cancelled_slot_start": "15:00",
+      "minutes": 45,
+      "tester_patient": "Kathleen Ross",
+      "tester_patient_for_cancelled_slot": "Paul Young"
+    },
+    "patient_conflict_test": {
+      "patient": "Jessica Castillo",
+      "existing": {
+        "appointment": "A-30249",
+        "date": "2026-09-16",
+        "start": "14:30",
+        "minutes": 45,
+        "patient": "Jessica Castillo",
+        "therapist": "Priya Nair",
+        "status": "Booked",
+        "file_lines": [
+          255
+        ]
+      },
+      "lena_start": "14:30",
+      "minutes": 30
+    },
+    "baseline_create_slot": {
+      "therapist": "Priya Nair",
+      "date": "2026-09-15",
+      "start": "09:30",
+      "minutes": 45,
+      "second_start": "10:15"
+    },
+    "no_show_test": {
+      "patient": "Kathleen Ross",
+      "no_shows_before": 0,
+      "date": "2026-09-11",
+      "starts": [
+        "09:00",
+        "09:45"
+      ],
+      "minutes": 45,
+      "restricted_existing_that_day": [
+        {
+          "appointment": "A-30221",
+          "date": "2026-09-11",
+          "start": "10:30",
+          "minutes": 45,
+          "patient": "Donna Morris",
+          "therapist": "Lena Fischer",
+          "status": "Completed",
+          "file_lines": [
+            227
+          ]
+        },
+        {
+          "appointment": "A-30222",
+          "date": "2026-09-11",
+          "start": "11:15",
+          "minutes": 45,
+          "patient": "Sofia Richardson",
+          "therapist": "Lena Fischer",
+          "status": "Completed",
+          "file_lines": [
+            228
+          ]
+        }
+      ],
+      "flagged_after": 2
+    },
+    "restricted_day": {
+      "date": "2026-09-14",
+      "appointments": 3,
+      "by_status": {
+        "Booked": 2,
+        "Cancelled": 1
+      }
+    }
+  },
+  "changes": {
+    "1_week_of_2026_08_24_utilization": {
+      "Lena Fischer": {
+        "completed_minutes": 270,
+        "rostered_minutes": 540,
+        "pct": 50.0
+      },
+      "Sam Okafor": {
+        "completed_minutes": 240,
+        "rostered_minutes": 360,
+        "pct": 66.7
+      },
+      "Priya Nair": {
+        "completed_minutes": 195,
+        "rostered_minutes": 360,
+        "pct": 54.2
+      },
+      "Marcus Bell": {
+        "completed_minutes": 225,
+        "rostered_minutes": 360,
+        "pct": 62.5
+      },
+      "Hana Sato": {
+        "completed_minutes": 135,
+        "rostered_minutes": 360,
+        "pct": 37.5
+      },
+      "Diego Ramos": {
+        "completed_minutes": 285,
+        "rostered_minutes": 360,
+        "pct": 79.2
+      }
+    },
+    "1_august_no_shows_by_patient": {
+      "Angela Reed": 1,
+      "Carlos Nelson": 2,
+      "Carol Wilson": 1,
+      "Daniel Johnson": 1,
+      "David Brown": 1,
+      "Jessica Nelson": 1,
+      "Jonathan Castillo": 1,
+      "Michael Kelly": 1,
+      "Nadia Reed": 1,
+      "Nancy Kelly": 1,
+      "Nicholas Harris": 1,
+      "Rebecca Roberts": 1,
+      "Shirley Bailey": 1,
+      "Sofia Richardson": 1
+    },
+    "1_august_no_show_patients": 14,
+    "1_august_patients_with_two_or_more": [
+      "Carlos Nelson"
+    ],
+    "1_restricted_august_no_shows_by_patient": {
+      "Shirley Bailey": 1,
+      "Sofia Richardson": 1
+    },
+    "2_type_minutes": {
+      "Initial Assessment": 60,
+      "Follow-up": 45,
+      "Short Follow-up": 30
+    },
+    "2_restricted_shift_2026_09_23": {
+      "start": "13:00",
+      "end": "16:00",
+      "existing": {
+        "appointment": "A-30274",
+        "date": "2026-09-23",
+        "start": "13:00",
+        "minutes": 45,
+        "patient": "Joseph Howard",
+        "therapist": "Lena Fischer",
+        "status": "Booked",
+        "file_lines": [
+          281
+        ]
+      }
+    },
+    "2_tests": {
+      "short_follow_up_at": "14:00",
+      "short_ends": "14:30",
+      "initial_at": "14:30",
+      "initial_ends": "15:30",
+      "outside_shift": "16:00",
+      "unrostered_day": "2026-09-22 10:00",
+      "runs_past_end": "15:30 Follow-up (ends 16:15)",
+      "ends_at_end": "15:30 Short Follow-up (ends 16:00)"
+    },
+    "3_notes_example": {
+      "appointment": "A-30002",
+      "date": "2026-08-03",
+      "start": "08:45",
+      "minutes": 30,
+      "patient": "Joseph Howard",
+      "therapist": "Lena Fischer",
+      "status": "Completed",
+      "file_lines": [
+        3
+      ],
+      "note": "Neck pain, desk posture"
+    },
+    "3_patient_not_on_restricted_schedule": {
+      "patient": "Richard Brown",
+      "record": "001331"
+    },
+    "3_patient_on_restricted_schedule": {
+      "patient": "Carlos Nelson",
+      "restricted_appointments": [
+        "A-30147"
+      ]
+    }
+  }
+}

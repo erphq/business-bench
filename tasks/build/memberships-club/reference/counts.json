@@ -1,0 +1,625 @@
+{
+  "baseline": {
+    "EXPORT_COLUMNS": [
+      "Member #",
+      "Name",
+      "Plan",
+      "Expires",
+      "Trainer",
+      "Status"
+    ],
+    "EXPORT_ROWS": 220,
+    "FILTER_COUNT": 50,
+    "FILTER_FIELD": "Plan",
+    "FILTER_VALUE": "Quarterly",
+    "KPI_1": "Active members",
+    "KPI_1_VALUE": 152,
+    "KPI_2": "Lapsed members",
+    "KPI_2_VALUE": 37,
+    "KPI_3": "Check-ins in August 2026",
+    "KPI_3_VALUE": 185,
+    "KPI_4": "Cancelled members",
+    "KPI_4_VALUE": 31,
+    "MAIN_ENTITY": "member",
+    "MAIN_ENTITY_PLURAL": "members",
+    "OUT_OF_SCOPE_EXAMPLE": {
+      "expires": "2027-05-31",
+      "file_expires": "05/31/27",
+      "file_lines": [
+        94
+      ],
+      "file_status": "active",
+      "group": "current",
+      "member_no": "M-01380",
+      "name": "Michelle Bailey",
+      "plan": "Quarterly",
+      "trainer": "Kofi Mensah"
+    },
+    "REQUIRED_FIELD": "Plan",
+    "SCOPED_KPI_1_VALUE": 14,
+    "SCOPE_COUNT": 23,
+    "SCOPE_RULE": "members whose trainer is Jess Alvarez",
+    "SEARCH_COUNT": 3,
+    "SEARCH_TERM": "Whitfield",
+    "SORT_FIELD": "Expires",
+    "SORT_TOP": {
+      "expires": "2027-12-30",
+      "file_expires": "30-Dec-2027",
+      "file_lines": [
+        66
+      ],
+      "file_status": "active",
+      "group": "current",
+      "member_no": "M-01513",
+      "name": "Nicholas Howard",
+      "plan": "Annual",
+      "trainer": ""
+    },
+    "STAFF_ROLE": "Trainer",
+    "VIEWER_ROLE": "Read-only"
+  },
+  "change_1_hours": {
+    "august_total": 185,
+    "busiest_count": 25,
+    "busiest_hour": "07:00-07:59",
+    "per_hour": {
+      "05": 5,
+      "06": 14,
+      "07": 25,
+      "08": 11,
+      "09": 11,
+      "10": 8,
+      "11": 5,
+      "12": 12,
+      "13": 5,
+      "14": 5,
+      "15": 7,
+      "16": 13,
+      "17": 22,
+      "18": 14,
+      "19": 16,
+      "20": 8,
+      "21": 4
+    },
+    "side_door_august": 38,
+    "six_am_count": 14,
+    "six_pm_count": 14
+  },
+  "change_2_discount": {
+    "early_annual": {
+      "amount": "627.00",
+      "expires": "2027-05-02",
+      "file_expires": "05/02/2027",
+      "file_lines": [
+        3
+      ],
+      "file_status": "ACTIVE",
+      "group": "current",
+      "member_no": "M-01816",
+      "name": "Dmitri Green",
+      "new_expiry": "2028-05-02",
+      "plan": "Annual",
+      "trainer": ""
+    },
+    "early_quarterly": {
+      "amount": "180.00",
+      "expires": "2027-05-20",
+      "file_expires": "2027-05-20",
+      "file_lines": [
+        61
+      ],
+      "file_status": "Active",
+      "group": "current",
+      "member_no": "M-00763",
+      "name": "Kenneth Ramos",
+      "new_expiry": "2027-08-20",
+      "plan": "Quarterly",
+      "trainer": ""
+    },
+    "lapsed_annual": {
+      "amount": "660.00",
+      "expires": "2026-03-15",
+      "file_expires": "03/15/2026",
+      "file_lines": [
+        58
+      ],
+      "file_status": "Active",
+      "group": "lapsed",
+      "member_no": "M-02482",
+      "name": "Charles Turner",
+      "new_expiry": "test date plus 12 months",
+      "plan": "Annual",
+      "trainer": ""
+    }
+  },
+  "change_3_cancellation": {
+    "active_after_approval": 151,
+    "cancelled_after_approval": 32,
+    "member": {
+      "expires": "2027-05-04",
+      "file_expires": "May 04, 2027",
+      "file_lines": [
+        192
+      ],
+      "file_status": "ACTIVE",
+      "group": "current",
+      "member_no": "M-00622",
+      "name": "Matthew Ramos",
+      "plan": "Annual",
+      "trainer": ""
+    }
+  },
+  "checkins": {
+    "august_rows_without_collapsing": 195,
+    "checkin_member": {
+      "august_file_rows": 11,
+      "august_visits": 9,
+      "expires": "2027-05-19",
+      "file_expires": "19-May-2027",
+      "file_lines": [
+        40
+      ],
+      "file_status": "ACTIVE",
+      "group": "current",
+      "july_visits": 1,
+      "last_visit": "2026-08-31 07:21",
+      "last_visit_file_value": "2026-08-31 07:21",
+      "member_no": "M-00506",
+      "name": "Deborah Anderson",
+      "numbers_as_written": [
+        "00506",
+        "506",
+        "M-00506"
+      ],
+      "plan": "Quarterly",
+      "trainer": "Jess Alvarez"
+    },
+    "double_scan_rows": 12,
+    "file_rows_excluding_header": 238,
+    "restricted_trainer_client_visits_august": 24,
+    "visits_august": 185,
+    "visits_july": 41,
+    "visits_total": 226
+  },
+  "date_dependence": "No imported expiry falls between 2026-09-01 and 2027-02-28, so active and lapsed counts hold for any test date in that window.",
+  "freeze_check": {
+    "days": 30,
+    "member": {
+      "expires": "2027-04-10",
+      "file_expires": "04/10/2027",
+      "file_lines": [
+        191
+      ],
+      "file_status": "Active",
+      "group": "current",
+      "member_no": "M-01669",
+      "name": "Kwame Thomas",
+      "plan": "Monthly",
+      "trainer": ""
+    },
+    "new_expiry": "2027-05-10",
+    "rejected_days": 61
+  },
+  "lapsed_renewal_check": {
+    "amount": "660.00",
+    "member": {
+      "expires": "2026-06-30",
+      "file_expires": "06/30/26",
+      "file_lines": [
+        113
+      ],
+      "file_status": "Active",
+      "group": "lapsed",
+      "member_no": "M-01951",
+      "name": "Amy Bailey",
+      "plan": "Annual",
+      "trainer": ""
+    },
+    "new_expiry": "test date plus 12 months",
+    "wrong_expiry_from_old_date": "2027-06-30"
+  },
+  "members": {
+    "active": 152,
+    "cancelled": 31,
+    "cancelled_by_spelling": {
+      "CANCELLED": 15,
+      "Canceled": 9,
+      "Cancelled": 7
+    },
+    "cancelled_spellings": [
+      "CANCELLED",
+      "Canceled",
+      "Cancelled"
+    ],
+    "dedupe_rule": "same member number after dropping the M prefix, hyphen, and leading zeros; a shared email is not a duplicate",
+    "exact_duplicate_example": {
+      "expires": "2027-04-24",
+      "file_expires": "2027-04-24",
+      "file_lines": [
+        103,
+        105
+      ],
+      "file_status": "ACTIVE",
+      "group": "current",
+      "member_no": "M-00124",
+      "name": "Karen Campbell",
+      "plan": "Monthly",
+      "trainer": ""
+    },
+    "exact_duplicate_rows": 4,
+    "families_sharing_email": {
+      "fam_b": {
+        "email": "brannigans@outlook.com",
+        "members": [
+          {
+            "expires": "2027-03-24",
+            "file_expires": "03/24/27",
+            "file_lines": [
+              64
+            ],
+            "file_status": "ACTIVE",
+            "group": "current",
+            "member_no": "M-02557",
+            "name": "Sean Brannigan",
+            "plan": "Monthly",
+            "trainer": ""
+          },
+          {
+            "expires": "2027-03-25",
+            "file_expires": "03/25/2027",
+            "file_lines": [
+              42
+            ],
+            "file_status": "Active",
+            "group": "current",
+            "member_no": "M-01085",
+            "name": "Maeve Brannigan",
+            "plan": "Monthly",
+            "trainer": "Aiko Tanaka"
+          }
+        ]
+      },
+      "fam_o": {
+        "email": "okonkwo.home@yahoo.com",
+        "members": [
+          {
+            "expires": "2027-03-22",
+            "file_expires": "2027-03-22",
+            "file_lines": [
+              209
+            ],
+            "file_status": "active",
+            "group": "current",
+            "member_no": "M-00102",
+            "name": "Grace Okonkwo",
+            "plan": "Monthly",
+            "trainer": "Mia Kowalczyk"
+          },
+          {
+            "expires": "2027-04-25",
+            "file_expires": "04/25/27",
+            "file_lines": [
+              65
+            ],
+            "file_status": "Active",
+            "group": "current",
+            "member_no": "M-00352",
+            "name": "Daniel Okonkwo",
+            "plan": "Monthly",
+            "trainer": ""
+          }
+        ]
+      },
+      "fam_w": {
+        "email": "thewhitfields@gmail.com",
+        "members": [
+          {
+            "expires": "2027-10-18",
+            "file_expires": "10/18/2027",
+            "file_lines": [
+              140
+            ],
+            "file_status": "Active",
+            "group": "current",
+            "member_no": "M-00143",
+            "name": "Laura Whitfield",
+            "plan": "Annual",
+            "trainer": ""
+          },
+          {
+            "expires": "2027-03-08",
+            "file_expires": "March 08, 2027",
+            "file_lines": [
+              21
+            ],
+            "file_status": "Active",
+            "group": "current",
+            "member_no": "M-00136",
+            "name": "Ethan Whitfield",
+            "plan": "Monthly",
+            "trainer": ""
+          }
+        ]
+      }
+    },
+    "file_rows_excluding_header": 229,
+    "freeze_rejection_member": {
+      "expires": "2027-10-18",
+      "file_expires": "10/18/2027",
+      "file_lines": [
+        140
+      ],
+      "file_status": "Active",
+      "group": "current",
+      "member_no": "M-00143",
+      "name": "Laura Whitfield",
+      "plan": "Annual",
+      "trainer": ""
+    },
+    "impossible_dob": {
+      "expires": "2027-06-04",
+      "file_dob": "2031-04-17",
+      "file_expires": "June 04, 2027",
+      "file_lines": [
+        224
+      ],
+      "file_status": "Active",
+      "group": "current",
+      "member_no": "M-01231",
+      "name": "Jacob Garcia",
+      "plan": "Quarterly",
+      "trainer": "Jess Alvarez"
+    },
+    "lapsed": 37,
+    "lapsed_with_file_status_active": 27,
+    "plan_counts": {
+      "Annual": 68,
+      "Monthly": 102,
+      "Quarterly": 50
+    },
+    "same_number_example": {
+      "expires": "2027-03-17",
+      "file_expires": "03/17/27",
+      "file_lines": [
+        25,
+        110
+      ],
+      "file_status": "Active",
+      "group": "current",
+      "member_no": "M-02445",
+      "name": "Nadia Foster",
+      "numbers_as_written": [
+        "2445",
+        "M-02445"
+      ],
+      "plan": "Monthly",
+      "trainer": "Ravi Desai"
+    },
+    "same_number_rows": 5,
+    "unique_members": 220,
+    "wrong_cancelled_missing_canceled_spelling": 22,
+    "wrong_count_only_exact_duplicates_removed": 225,
+    "wrong_lapsed_including_cancelled": 68,
+    "wrong_lapsed_missing_canceled_spelling": 46,
+    "wrong_lapsed_trusting_file_status": 10
+  },
+  "renewal_check": {
+    "amount": "180.00",
+    "member": {
+      "expires": "2027-04-18",
+      "file_expires": "18-Apr-2027",
+      "file_lines": [
+        72
+      ],
+      "file_status": "active",
+      "group": "current",
+      "member_no": "M-01572",
+      "name": "Betty Thompson",
+      "plan": "Quarterly",
+      "trainer": ""
+    },
+    "new_expiry": "2027-07-18"
+  },
+  "roles": {
+    "cancel_request": {
+      "expires": "2027-05-04",
+      "file_expires": "May 04, 2027",
+      "file_lines": [
+        192
+      ],
+      "file_status": "ACTIVE",
+      "group": "current",
+      "member_no": "M-00622",
+      "name": "Matthew Ramos",
+      "plan": "Annual",
+      "trainer": ""
+    },
+    "cancelled": {
+      "expires": "2026-05-31",
+      "file_expires": "05/31/26",
+      "file_lines": [
+        214
+      ],
+      "file_status": "Canceled",
+      "group": "cancelled",
+      "member_no": "M-01198",
+      "name": "Kwame Stewart",
+      "plan": "Monthly",
+      "trainer": "Tom Brennan"
+    },
+    "checkin_member": {
+      "expires": "2027-05-19",
+      "file_expires": "19-May-2027",
+      "file_lines": [
+        40
+      ],
+      "file_status": "ACTIVE",
+      "group": "current",
+      "member_no": "M-00506",
+      "name": "Deborah Anderson",
+      "plan": "Quarterly",
+      "trainer": "Jess Alvarez"
+    },
+    "dob": {
+      "expires": "2027-06-04",
+      "file_expires": "June 04, 2027",
+      "file_lines": [
+        224
+      ],
+      "file_status": "Active",
+      "group": "current",
+      "member_no": "M-01231",
+      "name": "Jacob Garcia",
+      "plan": "Quarterly",
+      "trainer": "Jess Alvarez"
+    },
+    "door_ok": {
+      "expires": "2027-03-14",
+      "file_expires": "14-Mar-2027",
+      "file_lines": [
+        228
+      ],
+      "file_status": "active",
+      "group": "current",
+      "member_no": "M-01346",
+      "name": "Mary Parker",
+      "plan": "Monthly",
+      "trainer": ""
+    },
+    "early_annual": {
+      "expires": "2027-05-02",
+      "file_expires": "05/02/2027",
+      "file_lines": [
+        3
+      ],
+      "file_status": "ACTIVE",
+      "group": "current",
+      "member_no": "M-01816",
+      "name": "Dmitri Green",
+      "plan": "Annual",
+      "trainer": ""
+    },
+    "early_quarterly": {
+      "expires": "2027-05-20",
+      "file_expires": "2027-05-20",
+      "file_lines": [
+        61
+      ],
+      "file_status": "Active",
+      "group": "current",
+      "member_no": "M-00763",
+      "name": "Kenneth Ramos",
+      "plan": "Quarterly",
+      "trainer": ""
+    },
+    "freeze": {
+      "expires": "2027-04-10",
+      "file_expires": "04/10/2027",
+      "file_lines": [
+        191
+      ],
+      "file_status": "Active",
+      "group": "current",
+      "member_no": "M-01669",
+      "name": "Kwame Thomas",
+      "plan": "Monthly",
+      "trainer": ""
+    },
+    "lapsed_annual": {
+      "expires": "2026-03-15",
+      "file_expires": "03/15/2026",
+      "file_lines": [
+        58
+      ],
+      "file_status": "Active",
+      "group": "lapsed",
+      "member_no": "M-02482",
+      "name": "Charles Turner",
+      "plan": "Annual",
+      "trainer": ""
+    },
+    "lapsed_door": {
+      "expires": "2026-05-07",
+      "file_expires": "05/07/2026",
+      "file_lines": [
+        148
+      ],
+      "file_status": "Active",
+      "group": "lapsed",
+      "member_no": "M-00403",
+      "name": "Carlos Roberts",
+      "plan": "Monthly",
+      "trainer": "Jess Alvarez"
+    },
+    "other_scope": {
+      "expires": "2027-05-31",
+      "file_expires": "05/31/27",
+      "file_lines": [
+        94
+      ],
+      "file_status": "active",
+      "group": "current",
+      "member_no": "M-01380",
+      "name": "Michelle Bailey",
+      "plan": "Quarterly",
+      "trainer": "Kofi Mensah"
+    },
+    "renew_active": {
+      "expires": "2027-04-18",
+      "file_expires": "18-Apr-2027",
+      "file_lines": [
+        72
+      ],
+      "file_status": "active",
+      "group": "current",
+      "member_no": "M-01572",
+      "name": "Betty Thompson",
+      "plan": "Quarterly",
+      "trainer": ""
+    },
+    "renew_lapsed": {
+      "expires": "2026-06-30",
+      "file_expires": "06/30/26",
+      "file_lines": [
+        113
+      ],
+      "file_status": "Active",
+      "group": "lapsed",
+      "member_no": "M-01951",
+      "name": "Amy Bailey",
+      "plan": "Annual",
+      "trainer": ""
+    },
+    "top_expiry": {
+      "expires": "2027-12-30",
+      "file_expires": "30-Dec-2027",
+      "file_lines": [
+        66
+      ],
+      "file_status": "active",
+      "group": "current",
+      "member_no": "M-01513",
+      "name": "Nicholas Howard",
+      "plan": "Annual",
+      "trainer": ""
+    }
+  },
+  "rules": {
+    "active": "not cancelled and expiry on or after the test date",
+    "cancelled": "Status Cancelled, Canceled, or CANCELLED",
+    "double_scan": "a second scan of the same member within 5 minutes is the same visit",
+    "freeze": "up to 60 days; pushes expiry back by the frozen days; a frozen member cannot check in",
+    "lapsed": "not cancelled and expiry before the test date (the file's Status column is stale for lapsed members)",
+    "plan_prices": {
+      "Annual": "660.00",
+      "Monthly": "65.00",
+      "Quarterly": "180.00"
+    },
+    "renewal": "adds one plan term (1, 3, or 12 months) to the current expiry if not yet lapsed, or to the renewal date if lapsed; the renewal amount is the plan price"
+  },
+  "seed": 0,
+  "valid_test_dates": [
+    "2026-09-01",
+    "2027-02-28"
+  ]
+}

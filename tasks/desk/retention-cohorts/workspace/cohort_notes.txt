@@ -1,0 +1,12 @@
+Cohort table - notes for whoever builds it (Leila)
+
+A customer's cohort is the month of their first ever order with us. The web shop opened in July 2025, so between the
+two exports in this folder you have the complete order history. Anyone who bought in 2025 is an existing customer,
+not a new one, and does not belong in a 2026 cohort even if they ordered again this year.
+
+An order that was cancelled, or refunded in full, never happened as far as this table is concerned. A partial refund
+is still a real order.
+
+I want to see, for each month January to June, how many new customers we got, and then how many of those same people
+ordered again one month later, two months later, and so on. A person counts once in a month no matter how many orders
+they placed. Where a later month has not happened yet, leave the cell blank or mark it n/a.

@@ -1,0 +1,56 @@
+id: multi-currency-sales
+track: desk
+category: spreadsheet
+title: First-half sales in dollars across three currencies
+ask: |
+  The bank wants our January to June sales in dollars, month by month, from the three sales files in this folder. Save it as sales_usd.xlsx with live totals - my note to Beatrix says how to convert.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the marketplace statements run from the 16th to the 15th and are named for the payout month, so a statement month is not the sale month; converting or bucketing by statement moves every month's euros, and the first and last statements carry December 2025 and July 2026 sales (checks: March total in dollars; EU marketplace H1 in dollars)
+- |-
+  the marketplace export is semicolon-separated with German numbers ('1.234,56', '45,90'); stripping everything but digits and dots reads 45,90 as 4590 and 1.234,56 as 1.23456 (check: EU marketplace H1 in dollars)
+- |-
+  the marketplace rows carry the item total, a negative fee and the payout; sales are the item total, so summing payouts understates the euros by about 12% (check: EU marketplace H1 in dollars)
+- |-
+  the April GBP average is blank on the rate sheet; the note forbids borrowing March or May, so April's pounds stay unconverted, out of the dollar totals, and the month is flagged (checks: April flagged, no borrowed rate; H1 total in dollars)
+- |-
+  the rate sheet has a one-line preamble and also lists December 2025 and July 2026, which a lookup by position rather than by month misaligns (check: March total in dollars)
+- |-
+  the month and half-year totals must be live formulas that recalculate clean (checks: live formulas; no error cells)
+checks:
+- type: file_exists
+  name: sales_usd.xlsx exists
+  path: sales_usd.xlsx
+- type: xlsx_has_formulas
+  name: live formulas
+  path: sales_usd.xlsx
+  min_count: 7
+- type: xlsx_no_errors
+  name: no error cells
+  path: sales_usd.xlsx
+- type: xlsx_value_present
+  name: March total in dollars
+  path: sales_usd.xlsx
+  expected: 20128.27
+  rel_tol: 0.0005
+  rounding: currency conversion at monthly average rates, rounded to the cent per month
+  near_text: 2026-03
+- type: xlsx_value_present
+  name: EU marketplace H1 in dollars
+  path: sales_usd.xlsx
+  expected: 31317.9
+  rel_tol: 0.0002
+  rounding: currency conversion at monthly average rates, rounded to the cent per month
+  near_text: eu
+- type: xlsx_value_present
+  name: H1 total in dollars
+  path: sales_usd.xlsx
+  expected: 122342.51
+  rel_tol: 0.0001
+  rounding: currency conversion at monthly average rates, rounded to the cent per month
+  near_text: total
+- type: custom
+  name: April flagged, no borrowed rate
+  module: check.py

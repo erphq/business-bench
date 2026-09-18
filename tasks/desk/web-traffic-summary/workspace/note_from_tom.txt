@@ -1,0 +1,17 @@
+Hi Leila,
+
+Before you send the spring numbers round, two things about the Google Analytics exports I dropped in the folder.
+
+1. Lindqvist Digital ran their site audit one day in April - a full crawl of every product page to find broken
+links. Their crawler runs a headless browser, and GA4 did not filter it, so it went in as real visits. You will
+see it: thousands of sessions in a single day, none of them engaged, nobody bought anything, and GA4 could not
+work out where they came from. Please take all of that traffic out and say in the memo which day it was, because
+Mira keeps asking why April looked so good. Do not confuse it with the spring sale email earlier in April - that
+spike was real customers.
+
+2. For users, use the monthly users export, not the daily one. GA4 counts a person once per day in the daily
+numbers, so adding them up counts a returning visitor over and over.
+
+The daily export is the standard last-100-days download, so it starts in February.
+
+Tom

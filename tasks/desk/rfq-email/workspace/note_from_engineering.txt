@@ -1,0 +1,5 @@
+From Thomas Mitchell (engineering), Sept 11
+
+Heads up for the Hollis RFQ. Rev B of the RB-48 sheet has the roller pipe wrong: it says 16 ga, but 16 ga bent in the load test with wet flats on the bench. The roller pipe has to be 14 ga wall (0.083 in), same 1.315 in OD and 102 in length, galvanized. Rev C will fix the sheet but don't hold the RFQ for it. Everything else on Rev B is correct. Ignore the Rev A tab, that's the old design.
+
+Thomas

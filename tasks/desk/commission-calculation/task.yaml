@@ -1,0 +1,59 @@
+id: commission-calculation
+track: desk
+category: spreadsheet
+title: August sales commissions with refund recoveries
+ask: |
+  Work out August commissions for the team sales reps and save them as commissions.xlsx. Everything you need is in the folder - the plan, July's statement, the CRM export, the refunds and Marcus's emails.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the bands are graduated on each rep's cumulative month: every dollar earns its own band's rate, so paying the whole month at the top band reached overpays Kwame Osei by hundreds and rating each deal by its own size is also wrong (check: Osei commission)
+- |-
+  refunds are recovered at the rate the refunded deal was paid: Rebecca Brooks's refunded July deal sat in the 8% band on July's statement although her August never leaves the lower bands, and Daniel Kim's partly refunded August deal (SO-71939) was one of her first of the month at 3% although her month ends in the 8% band (checks: Brooks net payout; Kim net payout)
+- |-
+  Laila Haddad moved to the Senior plan (5% to $40,000, 9% above) from August 1, stated only in Marcus's email; her fully refunded July deal was paid at the standard 3% and is recovered at 3%, not at a senior rate (check: Haddad net payout)
+- |-
+  two August deals name two owners ('Kwame Osei / Daniel Kim'); each rep is credited half, which moves both reps' bands (checks: Osei commission; total net payout)
+- |-
+  the CRM export carries 9 quotes, negotiations and lost deals with amounts under a two-line preamble; only Closed Won counts (check: total net payout)
+- |-
+  Marcus wants the numbers to work from formulas; a pasted-values sheet fails (check: live formulas)
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: commissions.xlsx
+  min_count: 10
+- type: xlsx_no_errors
+  name: no error cells
+  path: commissions.xlsx
+- type: xlsx_value_present
+  name: Osei commission (graduated bands, split deals halved)
+  path: commissions.xlsx
+  expected: 3934.31
+  rel_tol: 0.0001
+  near_text: osei
+- type: xlsx_value_present
+  name: Brooks net payout (July deal recovered at 8%)
+  path: commissions.xlsx
+  expected: 912.67
+  rel_tol: 0.001
+  near_text: brooks
+- type: xlsx_value_present
+  name: Kim net payout (August deal recovered at 3%)
+  path: commissions.xlsx
+  expected: 4543.17
+  rel_tol: 0.0001
+  near_text: kim
+- type: xlsx_value_present
+  name: Haddad net payout (senior plan, July deal at the standard rate)
+  path: commissions.xlsx
+  expected: 2864.29
+  rel_tol: 0.0001
+  near_text: haddad
+- type: xlsx_value_present
+  name: total net payout
+  path: commissions.xlsx
+  expected: 14361.77
+  rel_tol: 1.0e-05
+  near_text: total

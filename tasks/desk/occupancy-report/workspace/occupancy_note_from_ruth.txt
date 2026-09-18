@@ -1,0 +1,17 @@
+Occupancy for the owners' Q1 letter
+
+Each owner wants their cabin's occupancy for January, February and March. We work it the way the owner
+agreements define it:
+
+  occupancy = nights a paying guest stayed / nights the cabin was available to rent
+
+- A night belongs to the date the guest sleeps there. Check-out day is not a night. A stay from 30 March to
+  2 April is two nights in March and one in April.
+- Nights the cabin was blocked - owner holds and maintenance on the blocked-dates calendar - were never
+  available, so they come off the available nights. Events in that calendar end the morning after the last
+  blocked night, the way calendar apps store all-day events. Anything marked cancelled there did not happen.
+- When an owner uses their own cabin we book it in the channel manager as an Owner stay with no payout. That is
+  the owner's time, not a rental: treat those nights as blocked, not occupied.
+- Cancelled reservations are not stays, even where Airbnb paid us a cancellation fee.
+
+Ruth

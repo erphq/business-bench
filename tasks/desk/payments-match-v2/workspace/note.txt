@@ -1,0 +1,9 @@
+Bank export is from this morning. Anything partially paid is still open for the remainder.
+
+Three things that trip people up:
+- Card payments come through Stripe net of their fee (2.9% plus 30 cents). The invoice is paid in full; apply the invoice amount and the difference is our card fee.
+- International wires arrive a little short because intermediary banks take charges, up to about 2%. Treat those as paid in full too.
+- When a reference number and the payer disagree, trust the payer and the amount; people copy the wrong invoice number more often than they pay the wrong bill.
+Anything that is not a payment for an open invoice (a refund, interest, a payment for something already closed) goes in unapplied.csv with the reason, so I can see it.
+
+- Dana

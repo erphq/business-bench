@@ -1,0 +1,37 @@
+Westbrook Plumbing LLC
+Vendor Transaction Report - Keystone Plumbing Supply
+June 1 - August 31, 2026
+
+Date,Transaction Type,Num,Memo,Account,Amount,Open Balance,Payment detail
+06/10/2026,Bill,417534,Pine Ridge Apts bldg C,5000 Job Materials,741.05,0.00,
+06/11/2026,Bill,417552,Pine Ridge Apts bldg C,5000 Job Materials,806.44,0.00,
+06/18/2026,Bill,417581,Quarry Rd warehouse,5000 Job Materials,"2,370.57",0.00,
+06/24/2026,Bill,417602,Oakview Dental buildout,5000 Job Materials,"1,092.94",0.00,
+07/02/2026,Bill,417610,Dunmore office tenant fit-out,5000 Job Materials,917.09,0.00,
+07/03/2026,Bill,417635,Mercer duplex repipe,5000 Job Materials,"1,025.40",0.00,
+07/07/2026,Bill,417659,Mercer duplex repipe,5000 Job Materials,"1,191.89",0.00,
+07/08/2026,Bill Pmt -Check,10342,Keystone Plumbing Supply,1010 Operating Checking,"-3,918.06",0.00,"Applied to 417534, 417581, 417552"
+07/15/2026,Bill,417668,Pine Ridge Apts bldg C,5000 Job Materials,852.76,0.00,
+07/17/2026,Bill,417695,Mercer duplex repipe,5000 Job Materials,163.53,163.53,
+07/20/2026,Bill,417699,Mercer duplex repipe,5000 Job Materials,"2,146.46",0.00,
+07/27/2026,Bill,417727,Oakview Dental buildout,5000 Job Materials,"2,617.43","2,617.43",
+07/29/2026,Bill Pmt -Check,10355,Keystone Plumbing Supply,1010 Operating Checking,"-4,088.95",0.00,"Applied to 417699, 417635, 417610"
+08/03/2026,Bill,417751,Birchwood HOA clubhouse,5000 Job Materials,347.72,347.72,
+08/04/2026,Bill Pmt -Check,10369,Keystone Plumbing Supply,1010 Operating Checking,"-3,137.59",0.00,"Applied to 417668, 417602, 417659"
+08/04/2026,Vendor Credit,CM417759,Return - Dunmore office tenant fit-out,5000 Job Materials,-225.34,-225.34,
+08/05/2026,Bill,417767,Oakview Dental buildout,5000 Job Materials,"1,500.12",0.00,
+08/06/2026,Bill,417780,St. Anne's parish hall,5000 Job Materials,693.72,693.72,
+08/06/2026,Bill,417799,St. Anne's parish hall,5000 Job Materials,"1,172.80","1,172.80",
+08/06/2026,Bill,417810,Oakview Dental buildout,5000 Job Materials,"2,660.12","2,660.12",
+08/07/2026,Bill,417816,Pine Ridge Apts bldg C,5000 Job Materials,"3,193.63","3,193.63",
+08/10/2026,Bill,417838,Mercer duplex repipe,5000 Job Materials,"1,443.74","1,443.74",
+08/10/2026,Bill,417855,Dunmore office tenant fit-out,5000 Job Materials,974.02,974.02,
+08/11/2026,Bill,417879,St. Anne's parish hall,5000 Job Materials,756.15,756.15,
+08/11/2026,Bill,417887,Oakview Dental buildout,5000 Job Materials,820.22,820.22,
+08/18/2026,Bill,417890,Dunmore office tenant fit-out,5000 Job Materials,"1,199.98",0.00,
+08/21/2026,Bill,417932,Oakview Dental buildout,5000 Job Materials,"1,081.14","1,081.14",
+08/25/2026,Bill,417948,Quarry Rd warehouse,5000 Job Materials,"2,158.00","2,158.00",
+08/26/2026,Bill,417969,Pine Ridge Apts bldg C,5000 Job Materials,"1,764.99","1,764.99",
+08/26/2026,Bill,417988,Mercer duplex repipe,5000 Job Materials,"1,954.00","1,954.00",
+08/28/2026,Bill Pmt -Check,10381,Keystone Plumbing Supply,1010 Operating Checking,"-2,700.10",0.00,"Applied to 417890, 417767"
+08/30/2026,Bill,418023,St. Anne's parish hall,5000 Job Materials,925.12,925.12,

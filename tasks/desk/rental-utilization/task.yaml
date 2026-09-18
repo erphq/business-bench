@@ -1,0 +1,71 @@
+id: rental-utilization
+track: desk
+category: spreadsheet
+title: Days out per machine per month for the insurer
+ask: |
+  The insurer wants days out for each of our machines, month by month for January to June. Work it out from the contract history and save it as utilization.csv - Hank's note says how we count.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  rentals cross month ends and a December rental runs into January; putting a whole rental in the month it went out moves days between months and loses January's share (check: days out per month)
+- |-
+  a day is any calendar day off the yard, counting the day out and the day back, so a same-day return is one day; Date Returned minus Date Out gives zero for same-day rentals and undercounts every other rental by one (checks: days out per month; half-year total)
+- |-
+  Skid Steer #2 was rebuilt and renamed Bobcat T76 Track Loader on 2026-04-13; grouping on the contract's Equipment text gives two rows for one machine, and Skid Steer #1 keeps its name (checks: every machine under its current name; row count)
+- |-
+  a machine returned in the morning and rented again that afternoon was out one day, so adding up rental days per contract counts that day twice (check: days out per month)
+- |-
+  cancelled reservations carry a Date Out and a Due Back; 3 contracts are still Out with no return date and count through 30 June (checks: days out per month; half-year total)
+- |-
+  the export has a two-line preamble, CRLF endings, 12-hour times and a trailing space on some equipment names (check: every machine under its current name)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: utilization.csv
+  columns:
+  - machine
+  - jan
+  - feb
+  - mar
+  - apr
+  - may
+  - jun
+  - total
+- type: csv_set_equal
+  name: every machine under its current name
+  path: utilization.csv
+  column: machine
+  ref: utilization.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: utilization.csv
+  equals_ref: utilization.csv
+- type: csv_values_match
+  name: days out per month
+  path: utilization.csv
+  ref: utilization.csv
+  key: machine
+  columns:
+  - jan
+  - feb
+  - mar
+  - apr
+  - may
+  - jun
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: half-year total
+  path: utilization.csv
+  ref: utilization.csv
+  key: machine
+  columns:
+  - total
+  numeric: true
+  tolerance: 0
+  min_accuracy: 1.0

@@ -1,0 +1,17 @@
+Vendor insurance review - 15 September 2026
+
+The certificates vendors sent us are in the certificates folder. For the compliance log I need coi.csv with one row per insurance policy:
+
+  policy_number    as printed
+  insured          the vendor named as the insured
+  carrier          the insurance company that wrote the policy (not the agency)
+  coverage         general_liability, auto_liability, umbrella or workers_comp
+  each_occurrence  general liability and umbrella: each occurrence limit; auto: combined single limit; workers comp: employers' liability each accident
+  aggregate        general liability: general aggregate; umbrella: aggregate; 0 for auto and workers comp
+  effective_date   YYYY-MM-DD
+  expiry_date      YYYY-MM-DD
+  status           expired if the policy's expiry date is before 15 September 2026, otherwise active
+
+Limits as plain numbers. If a vendor sent more than one certificate, only log the most recent one.
+
+Jeffrey Lopez, Compliance

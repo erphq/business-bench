@@ -1,0 +1,43 @@
+id: subscription-status-monthly
+track: desk
+category: spreadsheet
+title: Active subscribers and cancellations by month
+ask: |
+  How many coffee subscribers did we have each month this year, January to June, and how many cancelled? Work it out from the billing export and the help desk tickets and save it as subscriptions.xlsx with the counts as formulas. My note explains how I count.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the free first bag is a $0.00 invoice: trial users are not subscribers until a paid period, and the trial users who emailed to cancel are in the help desk file but are not cancellations (checks: active and cancelled by month; June active subscribers)
+- |-
+  a cancellation takes effect at the end of the paid period, which is usually the month after the ticket; counting tickets by the month received moves most cancellations a month early (checks: active and cancelled by month; April cancellations)
+- |-
+  quarterly subscribers are invoiced once for three months; counting customers invoiced in a month drops them from two months in three (checks: active and cancelled by month; June active subscribers)
+- |-
+  three customers cancel in the winter and resubscribe in April or May under the same customer id: active again from the new paid period, with their earlier cancellation still counted (check: active and cancelled by month)
+- |-
+  failed card charges are retried the next day, so one period has a failed row and a paid row, and cancelled renewals leave a void invoice after the last paid period (check: active and cancelled by month)
+- 'the monthly counts must be live formulas over the invoice data (check: live formulas)'
+checks:
+- type: xlsx_has_formulas
+  name: live formulas
+  path: subscriptions.xlsx
+  min_count: 6
+- type: xlsx_no_errors
+  name: no error cells
+  path: subscriptions.xlsx
+- type: custom
+  name: active and cancelled by month
+  module: check.py
+- type: xlsx_value_present
+  name: June active subscribers
+  path: subscriptions.xlsx
+  expected: 126.0
+  rel_tol: 0.0001
+  near_text: active
+- type: xlsx_value_present
+  name: April cancellations
+  path: subscriptions.xlsx
+  expected: 4.0
+  rel_tol: 0.0001
+  near_text: cancel

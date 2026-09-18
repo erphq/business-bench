@@ -1,0 +1,21 @@
+Beatrix - first-half sales in dollars for the loan application
+
+The bank wants January to June 2026 sales in US dollars, month by month, across all three places we
+sell: the US web store, the EU marketplace and the UK stockists. Here is how I want it done so it
+matches what I told the loan officer:
+
+- Use your monthly average rates, and convert each sale at the rate for the month the sale was made.
+  The marketplace pays us out mid-month to mid-month and names each statement after the month it
+  pays, so a statement month is not the month the sales happened.
+- Marketplace sales are the item totals customers paid, before the marketplace takes its fee.
+- That export comes out of their German office, so the numbers are written 1.234,56.
+- Rounding: add up each month's euros and each month's pounds, convert the month total at that
+  month's rate, and round the dollar figure to the cent.
+- If a rate is missing for a month, do not borrow another month's rate. Leave those sales
+  unconverted, keep them out of the dollar totals, and flag the month so I can fill it in later.
+
+One line per month, 2026-01 to 2026-06, with the dollars from each of the three channels and a total
+for the month, and a half-year total underneath. Keep the totals as formulas please - the bank
+sometimes asks us to change things.
+
+Claire

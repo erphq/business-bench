@@ -1,0 +1,61 @@
+Category,GL Code,Grade,Limit per Item,Notes
+Airfare,6110,Staff,600.00,Receipt required over $75
+Airfare,06110,Manager,900.00,Receipt required over $75
+Airfare,6110,Executive,no limit,Receipt required over $75
+Hotel,6120,Staff,$250.00,
+Hotel,6120,Manager,$325.00,
+Hotel,6120,Executive,450,
+Meals - Travel,6130,Staff,$60.00,
+Meals - Travel,06130,Manager,75.00,
+Meals - Travel,6130,Executive,100.00,
+Client Entertainment,6140,Staff,150.00,
+Client Entertainment,6140,Manager,$300.00,
+Client Entertainment,6140,Executive,600.00,
+Mileage,6150,Staff,300.00,Receipt required over $75
+Mileage,6150,Manager,300.00,
+Mileage,6150,Executive,300.00,
+Taxi & Rideshare,6160,Staff,80.00,
+ Taxi & Rideshare,6160,Manager,100,Receipt required over $75
+Taxi & Rideshare,6160,Executive,150,
+Parking & Tolls,06170,Staff,50,
+Parking & Tolls,6170,Manager,$50.00,Receipt required over $75
+Parking & Tolls,6170,Executive,$75.00,Receipt required over $75
+Rail & Bus,6180,Staff,200.00,
+Rail & Bus,6180,Manager,$250.00,
+Rail & Bus,6180,Executive,300,
+Car Rental,6190,Staff,120.00,
+Car Rental,6190,Manager,150,
+Car Rental,6190,Executive,200,
+Conference Fees,6210,Staff,"$1,500.00",
+Conference Fees,6210,Manager,"2,000.00",
+Conference Fees,6210,Executive,"$3,500.00",Receipt required over $75
+Training & Courses,6220,Staff,"1,200.00",
+Training & Courses,6220,Manager,"$1,500.00",Receipt required over $75
+Training & Courses,06220,Executive,"$2,500.00",
+Books & Subscriptions,6230,Staff,$100.00,Receipt required over $75
+Books & Subscriptions,06230,Manager,150.00,
+Books & Subscriptions,6230,Executive,$250.00,
+Software,6310,Staff,200,
+Software,6310,Manager,$300.00,Receipt required over $75
+Software,6310,Executive,500.00,
+Office Supplies ,06320,Staff,$100.00,
+Office Supplies,6320,Manager,150.00,Receipt required over $75
+Office Supplies,6320,Executive,200,
+Home Office Equipment,6330,Staff,400,
+Home Office Equipment,6330,Manager,$500.00,
+Home Office Equipment,06330,Executive,750.00,Receipt required over $75
+Phone & Internet,6340,Staff,90,
+Phone & Internet,6340,Manager,120,
+Phone & Internet,06340,Executive,$150.00,
+Client Gifts,6410,Staff,$75.00,
+Client Gifts,6410,Manager,150.00,
+Client Gifts ,6410,Executive,250.00,
+Team Events,6420,Staff,$150.00,Receipt required over $75
+Team Events,6420,Manager,500.00,
+Team Events,6420,Executive,"$1,000.00",Receipt required over $75
+Postage & Shipping,6510,Staff,100,
+Postage & Shipping,06510,Manager,150.00,
+Postage & Shipping,06510,Executive,200,
+visa & passport,6520,Staff,250,Receipt required over $75
+ Visa & Passport,6520,Manager,250,
+Visa & Passport,6520,Executive,400.00,Receipt required over $75

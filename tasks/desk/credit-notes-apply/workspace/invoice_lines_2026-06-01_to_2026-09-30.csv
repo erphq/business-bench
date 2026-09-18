@@ -1,0 +1,241 @@
+Invoice,Invoice Date,Customer,SKU,Description,Qty,List Price,Cust Discount,Unit Price,Line Total
+INV-30383,06/05/2026,Scratch & Sniff Pets,KC-TY-RO,Rope toy assortment (case of 24),3,71.30,8%,65.60,196.80
+INV-30383,06/05/2026,Scratch & Sniff Pets,KC-LE-6,Nylon leash 6 ft (case of 10),13,63.50,8%,58.42,759.46
+INV-30383,06/05/2026,Scratch & Sniff Pets,KC-TR-SB,Salmon bites treats 12 oz (case of 12),8,86.00,8%,79.12,632.96
+INV-30384,06/08/2026,Mountain Mutt Outfitters,KC-LE-6,Nylon leash 6 ft (case of 10),11,63.50,12%,55.88,614.68
+INV-30384,06/08/2026,Mountain Mutt Outfitters,KC-TY-RO,Rope toy assortment (case of 24),4,71.30,12%,62.74,250.96
+INV-30384,06/08/2026,Mountain Mutt Outfitters,KC-CH-BU,Bully sticks 6 in (bulk 50),13,96.40,12%,84.83,"1,102.79"
+INV-30384,06/08/2026,Mountain Mutt Outfitters,KC-CF-16,Indoor cat food 16 lb,9,41.20,12%,36.26,326.34
+INV-30384,06/08/2026,Mountain Mutt Outfitters,KC-AQ-FL,Aquarium filter cartridges (24),8,52.80,12%,46.46,371.68
+INV-30385,06/09/2026,Barkside Grooming,KC-BR-SL,Slicker brush (case of 6),9,47.10,10%,42.39,381.51
+INV-30385,06/09/2026,Barkside Grooming,KC-TR-SB,Salmon bites treats 12 oz (case of 12),10,86.00,10%,77.40,774.00
+INV-30385,06/09/2026,Barkside Grooming,KC-SH-OAT,Oatmeal shampoo 1 gal,10,34.90,10%,31.41,314.10
+INV-30385,06/09/2026,Barkside Grooming,KC-LE-6,Nylon leash 6 ft (case of 10),9,63.50,10%,57.15,514.35
+INV-30387,06/19/2026,Whisker Lane Pets,KC-CL-PRO,Professional clipper kit,4,189.00,12%,166.32,665.28
+INV-30387,06/19/2026,Whisker Lane Pets,KC-LE-6,Nylon leash 6 ft (case of 10),10,63.50,12%,55.88,558.80
+INV-30387,06/19/2026,Whisker Lane Pets,KC-AQ-FL,Aquarium filter cartridges (24),4,52.80,12%,46.46,185.84
+INV-30388,06/19/2026,Scratch & Sniff Pets,KC-SH-OAT,Oatmeal shampoo 1 gal,4,34.90,8%,32.11,128.44
+INV-30388,06/19/2026,Scratch & Sniff Pets,KC-DF-30,Grain-free dog food 30 lb,14,58.40,8%,53.73,752.22
+INV-30388,06/19/2026,Scratch & Sniff Pets,KC-CH-BU,Bully sticks 6 in (bulk 50),13,96.40,8%,88.69,"1,152.97"
+INV-30388,06/19/2026,Scratch & Sniff Pets,KC-LE-6,Nylon leash 6 ft (case of 10),5,63.50,8%,58.42,292.10
+INV-30390,06/23/2026,Mountain Mutt Outfitters,KC-AQ-FL,Aquarium filter cartridges (24),7,52.80,12%,46.46,325.22
+INV-30390,06/23/2026,Mountain Mutt Outfitters,KC-BR-SL,Slicker brush (case of 6),11,47.10,12%,41.45,455.95
+INV-30390,06/23/2026,Mountain Mutt Outfitters,KC-DT-KIT,Dental care kit (case of 12),8,68.90,12%,60.63,485.04
+INV-30390,06/23/2026,Mountain Mutt Outfitters,KC-FL-3,Flea and tick drops 3-pack (case of 6),9,118.20,12%,104.02,936.18
+INV-30393,06/25/2026,Fin & Feather Aquatics,KC-TY-RO,Rope toy assortment (case of 24),9,71.30,15%,60.61,545.49
+INV-30393,06/25/2026,Fin & Feather Aquatics,KC-CF-16,Indoor cat food 16 lb,12,41.20,15%,35.02,420.24
+INV-30393,06/25/2026,Fin & Feather Aquatics,KC-BD-L,Orthopedic bed large,11,74.25,15%,63.11,694.21
+INV-30393,06/25/2026,Fin & Feather Aquatics,KC-CL-PRO,Professional clipper kit,11,189.00,15%,160.65,"1,767.15"
+INV-30394,06/26/2026,Hound Hollow Grooming,KC-DT-KIT,Dental care kit (case of 12),5,68.90,10%,62.01,310.05
+INV-30394,06/26/2026,Hound Hollow Grooming,KC-BR-SL,Slicker brush (case of 6),10,47.10,10%,42.39,423.90
+INV-30394,06/26/2026,Hound Hollow Grooming,KC-DF-30,Grain-free dog food 30 lb,6,58.40,10%,52.56,315.36
+INV-30394,06/26/2026,Hound Hollow Grooming,KC-CF-16,Indoor cat food 16 lb,3,41.20,10%,37.08,111.24
+INV-30397,06/26/2026,Fin & Feather Aquatics,KC-LE-6,Nylon leash 6 ft (case of 10),11,63.50,15%,53.98,593.78
+INV-30397,06/26/2026,Fin & Feather Aquatics,KC-TY-RO,Rope toy assortment (case of 24),12,71.30,15%,60.61,727.32
+INV-30397,06/26/2026,Fin & Feather Aquatics,KC-BR-SL,Slicker brush (case of 6),4,47.10,15%,40.04,160.16
+INV-30397,06/26/2026,Fin & Feather Aquatics,KC-CF-16,Indoor cat food 16 lb,11,41.20,15%,35.02,385.22
+INV-30398,06/29/2026,Four Paws Farm Store,KC-BD-L,Orthopedic bed large,12,74.25,12%,65.34,784.08
+INV-30398,06/29/2026,Four Paws Farm Store,KC-DT-KIT,Dental care kit (case of 12),14,68.90,12%,60.63,848.82
+INV-30398,06/29/2026,Four Paws Farm Store,KC-CL-PRO,Professional clipper kit,13,189.00,12%,166.32,"2,162.16"
+INV-30401,06/30/2026,The Feed Bin,KC-BR-SL,Slicker brush (case of 6),10,47.10,12%,41.45,414.50
+INV-30401,06/30/2026,The Feed Bin,KC-BS-25,Wild bird seed 25 lb,12,27.60,12%,24.29,291.48
+INV-30401,06/30/2026,The Feed Bin,KC-CH-BU,Bully sticks 6 in (bulk 50),10,96.40,12%,84.83,848.30
+INV-30401,06/30/2026,The Feed Bin,KC-LE-6,Nylon leash 6 ft (case of 10),11,63.50,12%,55.88,614.68
+INV-30401,06/30/2026,The Feed Bin,KC-BD-L,Orthopedic bed large,9,74.25,12%,65.34,588.06
+INV-30403,06/30/2026,Fin & Feather Aquatics,KC-DT-KIT,Dental care kit (case of 12),14,68.90,15%,58.57,819.98
+INV-30403,06/30/2026,Fin & Feather Aquatics,KC-LT-40,Clumping litter 40 lb,9,22.75,15%,19.34,174.06
+INV-30403,06/30/2026,Fin & Feather Aquatics,KC-CH-BU,Bully sticks 6 in (bulk 50),3,96.40,15%,81.94,245.82
+INV-30403,06/30/2026,Fin & Feather Aquatics,KC-FL-3,Flea and tick drops 3-pack (case of 6),14,118.20,15%,100.47,"1,406.58"
+INV-30403,06/30/2026,Fin & Feather Aquatics,KC-CL-PRO,Professional clipper kit,5,189.00,15%,160.65,803.25
+INV-30404,07/02/2026,Tailwind Pet Market,KC-TR-SB,Salmon bites treats 12 oz (case of 12),6,86.00,15%,73.10,438.60
+INV-30404,07/02/2026,Tailwind Pet Market,KC-CL-PRO,Professional clipper kit,9,189.00,15%,160.65,"1,445.85"
+INV-30404,07/02/2026,Tailwind Pet Market,KC-AQ-FL,Aquarium filter cartridges (24),3,52.80,15%,44.88,134.64
+INV-30407,07/02/2026,Kitty Corner Pet Shop,KC-LE-6,Nylon leash 6 ft (case of 10),5,63.50,15%,53.98,269.90
+INV-30407,07/02/2026,Kitty Corner Pet Shop,KC-CH-BU,Bully sticks 6 in (bulk 50),14,96.40,15%,81.94,"1,147.16"
+INV-30407,07/02/2026,Kitty Corner Pet Shop,KC-FL-3,Flea and tick drops 3-pack (case of 6),11,118.20,15%,100.47,"1,105.17"
+INV-30408,07/03/2026,Bayside Bark & Bath,KC-FL-3,Flea and tick drops 3-pack (case of 6),4,118.20,5%,112.29,449.16
+INV-30408,07/03/2026,Bayside Bark & Bath,KC-BR-SL,Slicker brush (case of 6),12,47.10,5%,44.75,537.00
+INV-30408,07/03/2026,Bayside Bark & Bath,KC-DF-30,Grain-free dog food 30 lb,10,58.40,5%,55.48,554.80
+INV-30411,07/07/2026,Hound Hollow Grooming,KC-LE-6,Nylon leash 6 ft (case of 10),12,63.50,10%,57.15,685.80
+INV-30411,07/07/2026,Hound Hollow Grooming,KC-BS-25,Wild bird seed 25 lb,12,27.60,10%,24.84,298.08
+INV-30411,07/07/2026,Hound Hollow Grooming,KC-SH-OAT,Oatmeal shampoo 1 gal,5,34.90,10%,31.41,157.05
+INV-30411,07/07/2026,Hound Hollow Grooming,KC-BD-L,Orthopedic bed large,10,74.25,10%,66.83,668.30
+INV-30414,07/13/2026,Bayside Bark & Bath,KC-BS-25,Wild bird seed 25 lb,14,27.60,5%,26.22,367.08
+INV-30414,07/13/2026,Bayside Bark & Bath,KC-TR-SB,Salmon bites treats 12 oz (case of 12),10,86.00,5%,81.70,817.00
+INV-30414,07/13/2026,Bayside Bark & Bath,KC-SH-OAT,Oatmeal shampoo 1 gal,10,34.90,5%,33.16,331.60
+INV-30414,07/13/2026,Bayside Bark & Bath,KC-FL-3,Flea and tick drops 3-pack (case of 6),8,118.20,5%,112.29,898.32
+INV-30415,07/15/2026,Fin & Feather Aquatics,KC-BS-25,Wild bird seed 25 lb,9,27.60,15%,23.46,211.14
+INV-30415,07/15/2026,Fin & Feather Aquatics,KC-TY-RO,Rope toy assortment (case of 24),7,71.30,15%,60.61,424.27
+INV-30415,07/15/2026,Fin & Feather Aquatics,KC-TR-SB,Salmon bites treats 12 oz (case of 12),3,86.00,15%,73.10,219.30
+INV-30415,07/15/2026,Fin & Feather Aquatics,KC-AQ-FL,Aquarium filter cartridges (24),13,52.80,15%,44.88,583.44
+INV-30416,07/16/2026,Mudroom Dog Wash,KC-CH-BU,Bully sticks 6 in (bulk 50),13,96.40,5%,91.58,"1,190.54"
+INV-30416,07/16/2026,Mudroom Dog Wash,KC-BD-L,Orthopedic bed large,9,74.25,5%,70.54,634.86
+INV-30416,07/16/2026,Mudroom Dog Wash,KC-LT-40,Clumping litter 40 lb,4,22.75,5%,21.61,86.44
+INV-30416,07/16/2026,Mudroom Dog Wash,KC-LE-6,Nylon leash 6 ft (case of 10),12,63.50,5%,60.33,723.96
+INV-30416,07/16/2026,Mudroom Dog Wash,KC-SH-OAT,Oatmeal shampoo 1 gal,9,34.90,5%,33.16,298.44
+INV-30417,07/20/2026,Hound Hollow Grooming,KC-BR-SL,Slicker brush (case of 6),12,47.10,10%,42.39,508.68
+INV-30417,07/20/2026,Hound Hollow Grooming,KC-TR-SB,Salmon bites treats 12 oz (case of 12),11,86.00,10%,77.40,851.40
+INV-30417,07/20/2026,Hound Hollow Grooming,KC-LE-6,Nylon leash 6 ft (case of 10),14,63.50,10%,57.15,800.10
+INV-30420,07/20/2026,Mudroom Dog Wash,KC-BS-25,Wild bird seed 25 lb,8,27.60,5%,26.22,209.76
+INV-30420,07/20/2026,Mudroom Dog Wash,KC-TY-RO,Rope toy assortment (case of 24),8,71.30,5%,67.74,541.92
+INV-30420,07/20/2026,Mudroom Dog Wash,KC-CL-PRO,Professional clipper kit,10,189.00,5%,179.55,"1,795.50"
+INV-30421,07/20/2026,Kitty Corner Pet Shop,KC-AQ-FL,Aquarium filter cartridges (24),6,52.80,15%,44.88,269.28
+INV-30421,07/20/2026,Kitty Corner Pet Shop,KC-BS-25,Wild bird seed 25 lb,3,27.60,15%,23.46,70.38
+INV-30421,07/20/2026,Kitty Corner Pet Shop,KC-TY-RO,Rope toy assortment (case of 24),14,71.30,15%,60.61,848.54
+INV-30421,07/20/2026,Kitty Corner Pet Shop,KC-CH-BU,Bully sticks 6 in (bulk 50),13,96.40,15%,81.94,"1,065.22"
+INV-30423,07/20/2026,Scratch & Sniff Pets,KC-CL-PRO,Professional clipper kit,11,189.00,8%,173.88,"1,912.68"
+INV-30423,07/20/2026,Scratch & Sniff Pets,KC-DF-30,Grain-free dog food 30 lb,4,58.40,8%,53.73,214.92
+INV-30423,07/20/2026,Scratch & Sniff Pets,KC-CF-16,Indoor cat food 16 lb,10,41.20,8%,37.90,379.00
+INV-30423,07/20/2026,Scratch & Sniff Pets,KC-BR-SL,Slicker brush (case of 6),9,47.10,8%,43.33,389.97
+INV-30423,07/20/2026,Scratch & Sniff Pets,KC-LE-6,Nylon leash 6 ft (case of 10),12,63.50,8%,58.42,701.04
+INV-30424,07/21/2026,Tailwind Pet Market,KC-CL-PRO,Professional clipper kit,7,189.00,15%,160.65,"1,124.55"
+INV-30424,07/21/2026,Tailwind Pet Market,KC-CH-BU,Bully sticks 6 in (bulk 50),8,96.40,15%,81.94,655.52
+INV-30424,07/21/2026,Tailwind Pet Market,KC-BS-25,Wild bird seed 25 lb,7,27.60,15%,23.46,164.22
+INV-30424,07/21/2026,Tailwind Pet Market,KC-TY-RO,Rope toy assortment (case of 24),6,71.30,15%,60.61,363.66
+INV-30424,07/21/2026,Tailwind Pet Market,KC-AQ-FL,Aquarium filter cartridges (24),9,52.80,15%,44.88,403.92
+INV-30425,07/21/2026,Barkside Grooming,KC-CR-M,Wire crate medium,13,84.75,10%,76.28,991.64
+INV-30425,07/21/2026,Barkside Grooming,KC-BR-SL,Slicker brush (case of 6),11,47.10,10%,42.39,466.29
+INV-30425,07/21/2026,Barkside Grooming,KC-CF-16,Indoor cat food 16 lb,3,41.20,10%,37.08,111.24
+INV-30425,07/21/2026,Barkside Grooming,KC-FL-3,Flea and tick drops 3-pack (case of 6),4,118.20,10%,106.38,425.52
+INV-30425,07/21/2026,Barkside Grooming,KC-TY-RO,Rope toy assortment (case of 24),6,71.30,10%,64.17,385.02
+INV-30428,07/22/2026,Mountain Mutt Outfitters,KC-BR-SL,Slicker brush (case of 6),11,47.10,12%,41.45,455.95
+INV-30428,07/22/2026,Mountain Mutt Outfitters,KC-TY-RO,Rope toy assortment (case of 24),13,71.30,12%,62.74,815.62
+INV-30428,07/22/2026,Mountain Mutt Outfitters,KC-CL-PRO,Professional clipper kit,4,189.00,12%,166.32,665.28
+INV-30428,07/22/2026,Mountain Mutt Outfitters,KC-TR-SB,Salmon bites treats 12 oz (case of 12),12,86.00,12%,75.68,908.16
+INV-30428,07/22/2026,Mountain Mutt Outfitters,KC-CF-16,Indoor cat food 16 lb,8,41.20,12%,36.26,290.08
+INV-30429,07/22/2026,The Feed Bin,KC-FL-3,Flea and tick drops 3-pack (case of 6),5,118.20,12%,104.02,520.10
+INV-30429,07/22/2026,The Feed Bin,KC-CH-BU,Bully sticks 6 in (bulk 50),14,96.40,12%,84.83,"1,187.62"
+INV-30429,07/22/2026,The Feed Bin,KC-BS-25,Wild bird seed 25 lb,10,27.60,12%,24.29,242.90
+INV-30429,07/22/2026,The Feed Bin,KC-CR-M,Wire crate medium,10,84.75,12%,74.58,745.80
+INV-30429,07/22/2026,The Feed Bin,KC-LT-40,Clumping litter 40 lb,8,22.75,12%,20.02,160.16
+INV-30430,07/23/2026,Barkside Grooming,KC-DT-KIT,Dental care kit (case of 12),9,68.90,10%,62.01,558.09
+INV-30430,07/23/2026,Barkside Grooming,KC-CF-16,Indoor cat food 16 lb,5,41.20,10%,37.08,185.40
+INV-30430,07/23/2026,Barkside Grooming,KC-BR-SL,Slicker brush (case of 6),6,47.10,10%,42.39,254.34
+INV-30430,07/23/2026,Barkside Grooming,KC-BD-L,Orthopedic bed large,4,74.25,10%,66.83,267.32
+INV-30432,07/24/2026,Hound Hollow Grooming,KC-SH-OAT,Oatmeal shampoo 1 gal,7,34.90,10%,31.41,219.87
+INV-30432,07/24/2026,Hound Hollow Grooming,KC-CH-BU,Bully sticks 6 in (bulk 50),7,96.40,10%,86.76,607.32
+INV-30432,07/24/2026,Hound Hollow Grooming,KC-BS-25,Wild bird seed 25 lb,8,27.60,10%,24.84,198.72
+INV-30432,07/24/2026,Hound Hollow Grooming,KC-BD-L,Orthopedic bed large,4,74.25,10%,66.83,267.32
+INV-30432,07/24/2026,Hound Hollow Grooming,KC-DT-KIT,Dental care kit (case of 12),6,68.90,10%,62.01,372.06
+INV-30433,07/27/2026,The Feed Bin,KC-LT-40,Clumping litter 40 lb,3,22.75,12%,20.02,60.06
+INV-30433,07/27/2026,The Feed Bin,KC-DF-30,Grain-free dog food 30 lb,9,58.40,12%,51.39,462.51
+INV-30433,07/27/2026,The Feed Bin,KC-TY-RO,Rope toy assortment (case of 24),7,71.30,12%,62.74,439.18
+INV-30433,07/27/2026,The Feed Bin,KC-CF-16,Indoor cat food 16 lb,5,41.20,12%,36.26,181.30
+INV-30433,07/27/2026,The Feed Bin,KC-DT-KIT,Dental care kit (case of 12),11,68.90,12%,60.63,666.93
+INV-30434,07/27/2026,Whisker Lane Pets,KC-DF-30,Grain-free dog food 30 lb,9,58.40,12%,51.39,462.51
+INV-30434,07/27/2026,Whisker Lane Pets,KC-CF-16,Indoor cat food 16 lb,10,41.20,12%,36.26,362.60
+INV-30434,07/27/2026,Whisker Lane Pets,KC-CL-PRO,Professional clipper kit,3,189.00,12%,166.32,498.96
+INV-30435,07/29/2026,Whisker Lane Pets,KC-CF-16,Indoor cat food 16 lb,4,41.20,12%,36.26,145.04
+INV-30435,07/29/2026,Whisker Lane Pets,KC-BD-L,Orthopedic bed large,12,74.25,12%,65.34,784.08
+INV-30435,07/29/2026,Whisker Lane Pets,KC-CR-M,Wire crate medium,7,84.75,12%,74.58,522.06
+INV-30435,07/29/2026,Whisker Lane Pets,KC-FL-3,Flea and tick drops 3-pack (case of 6),5,118.20,12%,104.02,520.10
+INV-30435,07/29/2026,Whisker Lane Pets,KC-DF-30,Grain-free dog food 30 lb,13,58.40,12%,51.39,668.07
+INV-30438,07/30/2026,The Feed Bin,KC-CR-M,Wire crate medium,10,84.75,12%,74.58,745.80
+INV-30438,07/30/2026,The Feed Bin,KC-CF-16,Indoor cat food 16 lb,8,41.20,12%,36.26,290.08
+INV-30438,07/30/2026,The Feed Bin,KC-CL-PRO,Professional clipper kit,8,189.00,12%,166.32,"1,330.56"
+INV-30439,07/30/2026,Four Paws Farm Store,KC-BR-SL,Slicker brush (case of 6),12,47.10,12%,41.45,497.40
+INV-30439,07/30/2026,Four Paws Farm Store,KC-CF-16,Indoor cat food 16 lb,8,41.20,12%,36.26,290.08
+INV-30439,07/30/2026,Four Paws Farm Store,KC-DF-30,Grain-free dog food 30 lb,5,58.40,12%,51.39,256.95
+INV-30441,07/30/2026,Scratch & Sniff Pets,KC-LE-6,Nylon leash 6 ft (case of 10),3,63.50,8%,58.42,175.26
+INV-30441,07/30/2026,Scratch & Sniff Pets,KC-CL-PRO,Professional clipper kit,13,189.00,8%,173.88,"2,260.44"
+INV-30441,07/30/2026,Scratch & Sniff Pets,KC-CR-M,Wire crate medium,11,84.75,8%,77.97,857.67
+INV-30444,07/31/2026,Mudroom Dog Wash,KC-LE-6,Nylon leash 6 ft (case of 10),7,63.50,5%,60.33,422.31
+INV-30444,07/31/2026,Mudroom Dog Wash,KC-BR-SL,Slicker brush (case of 6),11,47.10,5%,44.75,492.25
+INV-30444,07/31/2026,Mudroom Dog Wash,KC-CF-16,Indoor cat food 16 lb,3,41.20,5%,39.14,117.42
+INV-30444,07/31/2026,Mudroom Dog Wash,KC-BD-L,Orthopedic bed large,3,74.25,5%,70.54,211.62
+INV-30447,07/31/2026,Whisker Lane Pets,KC-CR-M,Wire crate medium,14,84.75,12%,74.58,"1,044.12"
+INV-30447,07/31/2026,Whisker Lane Pets,KC-DT-KIT,Dental care kit (case of 12),6,68.90,12%,60.63,363.78
+INV-30447,07/31/2026,Whisker Lane Pets,KC-SH-OAT,Oatmeal shampoo 1 gal,5,34.90,12%,30.71,153.55
+INV-30447,07/31/2026,Whisker Lane Pets,KC-TY-RO,Rope toy assortment (case of 24),6,71.30,12%,62.74,376.44
+INV-30447,07/31/2026,Whisker Lane Pets,KC-CF-16,Indoor cat food 16 lb,6,41.20,12%,36.26,217.56
+INV-30448,08/03/2026,Tailwind Pet Market,KC-BD-L,Orthopedic bed large,14,74.25,15%,63.11,883.54
+INV-30448,08/03/2026,Tailwind Pet Market,KC-LE-6,Nylon leash 6 ft (case of 10),11,63.50,15%,53.98,593.78
+INV-30448,08/03/2026,Tailwind Pet Market,KC-TY-RO,Rope toy assortment (case of 24),5,71.30,15%,60.61,303.05
+INV-30448,08/03/2026,Tailwind Pet Market,KC-BS-25,Wild bird seed 25 lb,12,27.60,15%,23.46,281.52
+INV-30448,08/03/2026,Tailwind Pet Market,KC-CL-PRO,Professional clipper kit,13,189.00,15%,160.65,"2,088.45"
+INV-30449,08/05/2026,Kitty Corner Pet Shop,KC-CH-BU,Bully sticks 6 in (bulk 50),3,96.40,15%,81.94,245.82
+INV-30449,08/05/2026,Kitty Corner Pet Shop,KC-AQ-FL,Aquarium filter cartridges (24),13,52.80,15%,44.88,583.44
+INV-30449,08/05/2026,Kitty Corner Pet Shop,KC-BD-L,Orthopedic bed large,4,74.25,15%,63.11,252.44
+INV-30450,08/06/2026,Mudroom Dog Wash,KC-BR-SL,Slicker brush (case of 6),9,47.10,5%,44.75,402.75
+INV-30450,08/06/2026,Mudroom Dog Wash,KC-DF-30,Grain-free dog food 30 lb,9,58.40,5%,55.48,499.32
+INV-30450,08/06/2026,Mudroom Dog Wash,KC-DT-KIT,Dental care kit (case of 12),6,68.90,5%,65.46,392.76
+INV-30451,08/06/2026,Bayside Bark & Bath,KC-CF-16,Indoor cat food 16 lb,11,41.20,5%,39.14,430.54
+INV-30451,08/06/2026,Bayside Bark & Bath,KC-TY-RO,Rope toy assortment (case of 24),4,71.30,5%,67.74,270.96
+INV-30451,08/06/2026,Bayside Bark & Bath,KC-CR-M,Wire crate medium,6,84.75,5%,80.51,483.06
+INV-30454,08/06/2026,Four Paws Farm Store,KC-AQ-FL,Aquarium filter cartridges (24),4,52.80,12%,46.46,185.84
+INV-30454,08/06/2026,Four Paws Farm Store,KC-BS-25,Wild bird seed 25 lb,7,27.60,12%,24.29,170.03
+INV-30454,08/06/2026,Four Paws Farm Store,KC-LT-40,Clumping litter 40 lb,13,22.75,12%,20.02,260.26
+INV-30454,08/06/2026,Four Paws Farm Store,KC-TR-SB,Salmon bites treats 12 oz (case of 12),10,86.00,12%,75.68,756.80
+INV-30455,08/07/2026,The Feed Bin,KC-BS-25,Wild bird seed 25 lb,4,27.60,12%,24.29,97.16
+INV-30455,08/07/2026,The Feed Bin,KC-SH-OAT,Oatmeal shampoo 1 gal,9,34.90,12%,30.71,276.39
+INV-30455,08/07/2026,The Feed Bin,KC-LE-6,Nylon leash 6 ft (case of 10),4,63.50,12%,55.88,223.52
+INV-30455,08/07/2026,The Feed Bin,KC-TY-RO,Rope toy assortment (case of 24),5,71.30,12%,62.74,313.70
+INV-30457,08/10/2026,Tailwind Pet Market,KC-AQ-FL,Aquarium filter cartridges (24),6,52.80,15%,44.88,269.28
+INV-30457,08/10/2026,Tailwind Pet Market,KC-BS-25,Wild bird seed 25 lb,10,27.60,15%,23.46,234.60
+INV-30457,08/10/2026,Tailwind Pet Market,KC-DF-30,Grain-free dog food 30 lb,8,58.40,15%,49.64,397.12
+INV-30457,08/10/2026,Tailwind Pet Market,KC-BR-SL,Slicker brush (case of 6),8,47.10,15%,40.04,320.32
+INV-30458,08/10/2026,The Feed Bin,KC-DF-30,Grain-free dog food 30 lb,6,58.40,12%,51.39,308.34
+INV-30458,08/10/2026,The Feed Bin,KC-SH-OAT,Oatmeal shampoo 1 gal,7,34.90,12%,30.71,214.97
+INV-30458,08/10/2026,The Feed Bin,KC-TR-SB,Salmon bites treats 12 oz (case of 12),10,86.00,12%,75.68,756.80
+INV-30458,08/10/2026,The Feed Bin,KC-LE-6,Nylon leash 6 ft (case of 10),7,63.50,12%,55.88,391.16
+INV-30459,08/13/2026,Barkside Grooming,KC-FL-3,Flea and tick drops 3-pack (case of 6),7,118.20,10%,106.38,744.66
+INV-30459,08/13/2026,Barkside Grooming,KC-CL-PRO,Professional clipper kit,10,189.00,10%,170.10,"1,701.00"
+INV-30459,08/13/2026,Barkside Grooming,KC-TR-SB,Salmon bites treats 12 oz (case of 12),5,86.00,10%,77.40,387.00
+INV-30460,08/13/2026,Scratch & Sniff Pets,KC-LE-6,Nylon leash 6 ft (case of 10),5,63.50,8%,58.42,292.10
+INV-30460,08/13/2026,Scratch & Sniff Pets,KC-LT-40,Clumping litter 40 lb,3,22.75,8%,20.93,62.79
+INV-30460,08/13/2026,Scratch & Sniff Pets,KC-CR-M,Wire crate medium,5,84.75,8%,77.97,389.85
+INV-30460,08/13/2026,Scratch & Sniff Pets,KC-TY-RO,Rope toy assortment (case of 24),4,71.30,8%,65.60,262.40
+INV-30461,08/14/2026,Kitty Corner Pet Shop,KC-TR-SB,Salmon bites treats 12 oz (case of 12),3,86.00,15%,73.10,219.30
+INV-30461,08/14/2026,Kitty Corner Pet Shop,KC-CH-BU,Bully sticks 6 in (bulk 50),3,96.40,15%,81.94,245.82
+INV-30461,08/14/2026,Kitty Corner Pet Shop,KC-CL-PRO,Professional clipper kit,11,189.00,15%,160.65,"1,767.15"
+INV-30461,08/14/2026,Kitty Corner Pet Shop,KC-AQ-FL,Aquarium filter cartridges (24),9,52.80,15%,44.88,403.92
+INV-30461,08/14/2026,Kitty Corner Pet Shop,KC-TY-RO,Rope toy assortment (case of 24),6,71.30,15%,60.61,363.66
+INV-30464,08/14/2026,Four Paws Farm Store,KC-FL-3,Flea and tick drops 3-pack (case of 6),11,118.20,12%,104.02,"1,144.22"
+INV-30464,08/14/2026,Four Paws Farm Store,KC-SH-OAT,Oatmeal shampoo 1 gal,14,34.90,12%,30.71,429.94
+INV-30464,08/14/2026,Four Paws Farm Store,KC-BS-25,Wild bird seed 25 lb,4,27.60,12%,24.29,97.16
+INV-30464,08/14/2026,Four Paws Farm Store,KC-CR-M,Wire crate medium,14,84.75,12%,74.58,"1,044.12"
+INV-30464,08/14/2026,Four Paws Farm Store,KC-TR-SB,Salmon bites treats 12 oz (case of 12),12,86.00,12%,75.68,908.16
+INV-30465,08/17/2026,Whisker Lane Pets,KC-CR-M,Wire crate medium,10,84.75,12%,74.58,745.80
+INV-30465,08/17/2026,Whisker Lane Pets,KC-CF-16,Indoor cat food 16 lb,7,41.20,12%,36.26,253.82
+INV-30465,08/17/2026,Whisker Lane Pets,KC-BD-L,Orthopedic bed large,5,74.25,12%,65.34,326.70
+INV-30468,08/17/2026,Fin & Feather Aquatics,KC-BD-L,Orthopedic bed large,9,74.25,15%,63.11,567.99
+INV-30468,08/17/2026,Fin & Feather Aquatics,KC-CH-BU,Bully sticks 6 in (bulk 50),4,96.40,15%,81.94,327.76
+INV-30468,08/17/2026,Fin & Feather Aquatics,KC-SH-OAT,Oatmeal shampoo 1 gal,11,34.90,15%,29.67,326.37
+INV-30469,08/18/2026,Hound Hollow Grooming,KC-DT-KIT,Dental care kit (case of 12),3,68.90,10%,62.01,186.03
+INV-30469,08/18/2026,Hound Hollow Grooming,KC-DF-30,Grain-free dog food 30 lb,4,58.40,10%,52.56,210.24
+INV-30469,08/18/2026,Hound Hollow Grooming,KC-TR-SB,Salmon bites treats 12 oz (case of 12),4,86.00,10%,77.40,309.60
+INV-30471,08/18/2026,Scratch & Sniff Pets,KC-TR-SB,Salmon bites treats 12 oz (case of 12),14,86.00,8%,79.12,"1,107.68"
+INV-30471,08/18/2026,Scratch & Sniff Pets,KC-CF-16,Indoor cat food 16 lb,10,41.20,8%,37.90,379.00
+INV-30471,08/18/2026,Scratch & Sniff Pets,KC-DF-30,Grain-free dog food 30 lb,3,58.40,8%,53.73,161.19
+INV-30471,08/18/2026,Scratch & Sniff Pets,KC-DT-KIT,Dental care kit (case of 12),9,68.90,8%,63.39,570.51
+INV-30472,08/19/2026,Whisker Lane Pets,KC-CH-BU,Bully sticks 6 in (bulk 50),14,96.40,12%,84.83,"1,187.62"
+INV-30472,08/19/2026,Whisker Lane Pets,KC-FL-3,Flea and tick drops 3-pack (case of 6),8,118.20,12%,104.02,832.16
+INV-30472,08/19/2026,Whisker Lane Pets,KC-CL-PRO,Professional clipper kit,11,189.00,12%,166.32,"1,829.52"
+INV-30473,08/24/2026,Whisker Lane Pets,KC-FL-3,Flea and tick drops 3-pack (case of 6),4,118.20,12%,104.02,416.08
+INV-30473,08/24/2026,Whisker Lane Pets,KC-SH-OAT,Oatmeal shampoo 1 gal,11,34.90,12%,30.71,337.81
+INV-30473,08/24/2026,Whisker Lane Pets,KC-TY-RO,Rope toy assortment (case of 24),9,71.30,12%,62.74,564.66
+INV-30475,08/25/2026,Barkside Grooming,KC-TY-RO,Rope toy assortment (case of 24),12,71.30,10%,64.17,770.04
+INV-30475,08/25/2026,Barkside Grooming,KC-TR-SB,Salmon bites treats 12 oz (case of 12),13,86.00,10%,77.40,"1,006.20"
+INV-30475,08/25/2026,Barkside Grooming,KC-FL-3,Flea and tick drops 3-pack (case of 6),14,118.20,10%,106.38,"1,489.32"
+INV-30475,08/25/2026,Barkside Grooming,KC-LE-6,Nylon leash 6 ft (case of 10),3,63.50,10%,57.15,171.45
+INV-30478,09/01/2026,Mountain Mutt Outfitters,KC-LT-40,Clumping litter 40 lb,8,22.75,12%,20.02,160.16
+INV-30478,09/01/2026,Mountain Mutt Outfitters,KC-TR-SB,Salmon bites treats 12 oz (case of 12),5,86.00,12%,75.68,378.40
+INV-30478,09/01/2026,Mountain Mutt Outfitters,KC-AQ-FL,Aquarium filter cartridges (24),13,52.80,12%,46.46,603.98
+INV-30478,09/01/2026,Mountain Mutt Outfitters,KC-LE-6,Nylon leash 6 ft (case of 10),10,63.50,12%,55.88,558.80
+INV-30481,09/03/2026,Mudroom Dog Wash,KC-CH-BU,Bully sticks 6 in (bulk 50),6,96.40,5%,91.58,549.48
+INV-30481,09/03/2026,Mudroom Dog Wash,KC-LE-6,Nylon leash 6 ft (case of 10),6,63.50,5%,60.33,361.98
+INV-30481,09/03/2026,Mudroom Dog Wash,KC-TR-SB,Salmon bites treats 12 oz (case of 12),8,86.00,5%,81.70,653.60
+INV-30481,09/03/2026,Mudroom Dog Wash,KC-FL-3,Flea and tick drops 3-pack (case of 6),14,118.20,5%,112.29,"1,572.06"
+INV-30483,09/04/2026,Mountain Mutt Outfitters,KC-DF-30,Grain-free dog food 30 lb,8,58.40,12%,51.39,411.12
+INV-30483,09/04/2026,Mountain Mutt Outfitters,KC-BS-25,Wild bird seed 25 lb,8,27.60,12%,24.29,194.32
+INV-30483,09/04/2026,Mountain Mutt Outfitters,KC-BR-SL,Slicker brush (case of 6),14,47.10,12%,41.45,580.30
+INV-30483,09/04/2026,Mountain Mutt Outfitters,KC-CL-PRO,Professional clipper kit,9,189.00,12%,166.32,"1,496.88"
+INV-30485,09/08/2026,Mudroom Dog Wash,KC-CF-16,Indoor cat food 16 lb,10,41.20,5%,39.14,391.40
+INV-30485,09/08/2026,Mudroom Dog Wash,KC-AQ-FL,Aquarium filter cartridges (24),6,52.80,5%,50.16,300.96
+INV-30485,09/08/2026,Mudroom Dog Wash,KC-TY-RO,Rope toy assortment (case of 24),3,71.30,5%,67.74,203.22
+INV-30485,09/08/2026,Mudroom Dog Wash,KC-DF-30,Grain-free dog food 30 lb,10,58.40,5%,55.48,554.80
+INV-30486,09/11/2026,Scratch & Sniff Pets,KC-LT-40,Clumping litter 40 lb,11,22.75,8%,20.93,230.23
+INV-30486,09/11/2026,Scratch & Sniff Pets,KC-TY-RO,Rope toy assortment (case of 24),5,71.30,8%,65.60,328.00
+INV-30486,09/11/2026,Scratch & Sniff Pets,KC-BD-L,Orthopedic bed large,6,74.25,8%,68.31,409.86
+INV-30486,09/11/2026,Scratch & Sniff Pets,KC-CH-BU,Bully sticks 6 in (bulk 50),12,96.40,8%,88.69,"1,064.28"
+INV-30486,09/11/2026,Scratch & Sniff Pets,KC-AQ-FL,Aquarium filter cartridges (24),10,52.80,8%,48.58,485.80

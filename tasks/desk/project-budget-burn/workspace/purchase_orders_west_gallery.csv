@@ -1,0 +1,11 @@
+Purchase orders - project WG-26 West Gallery
+PO Number,Vendor,Cost Code,Description,Issued,PO Amount,Status
+PO-2026-015,Harbor & Finch Builders,WG-01 General conditions,General contractor fee and site supervision,01/12/2026,"$110,500.00",Open
+PO-2026-017,Coastline Demolition & Abatement,WG-02 Demolition and abatement,"Selective demolition, lead paint abatement",01/21/2026,"$42,500.00",Closed
+PO-2026-018,Brightwire Electrical Contractors,WG-03 Electrical,"Branch circuits, panel upgrade, exhibit power",02/10/2026,"$102,000.00",Closed
+PO-2026-021,Brightwire Electrical Contractors,WG-03 Electrical,Exhibit case outlets (added scope),06/03/2026,"$7,600.00",Open
+PO-2026-024,Seaboard Mechanical,WG-04 HVAC,Gallery HVAC with humidity control,02/22/2026,"$87,000.00",Open
+PO-2026-025,Keelhaul Exhibit Studio,WG-05 Exhibit fabrication,Exhibit fabrication and installation,03/05/2026,"$213,000.00",Open
+PO-2026-028,Lumenharbor Lighting,WG-06 Gallery lighting,Track lighting and fixtures,04/07/2026,"$59,250.00",Open
+PO-2026-030,Signal & Tide Media,WG-07 AV and interactive media,Projection and touchscreen interactives,05/11/2026,"$74,000.00",Open
+PO-2026-031,Northbeam AV Integration,WG-07 AV and interactive media,Projection package (vendor replaced),04/07/2026,"$57,500.00",Cancelled

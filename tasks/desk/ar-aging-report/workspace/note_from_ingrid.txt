@@ -1,0 +1,13 @@
+The bank wants our receivables aging as of 31 August for the borrowing base certificate. Tomas pulled
+the exports this morning, so they run a week past month end.
+
+What I need:
+- every customer's balance as it stood on 31 August, split Current / 1-30 / 31-60 / 61-90 / Over 90 days
+  past the due date, with totals
+- a credit memo comes off the invoice it was written against. If it isn't against an invoice, take it off
+  that customer's oldest open invoice.
+
+And a short memo I can forward: total receivables, how much is past due, and the three customers with the
+most money past due and how much each owes past due.
+
+Ingrid

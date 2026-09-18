@@ -1,0 +1,14 @@
+How we count visits (from the front desk)
+
+A visit is a patient we actually treated. The old scheduler wrote Completed and the new one writes
+Arrived; they mean the same thing. Walk-ins are treated patients too, so they are visits, even
+though they never had an appointment number.
+
+The no-show rate is no-shows out of the appointments that were on the book that day - the ones we
+kept plus the ones nobody turned up for. Cancellations came off the book with notice, so they do
+not count against a provider, and walk-ins were never on the book to begin with.
+
+A Rescheduled row is the old slot for an appointment that moved; the new slot has its own row.
+
+Everyone on the roster should be on the report, under the name on the roster - the schedulers
+never agreed on how to write us down.

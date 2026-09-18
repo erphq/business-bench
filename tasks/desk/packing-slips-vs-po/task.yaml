@@ -1,0 +1,95 @@
+id: packing-slips-vs-po
+track: desk
+category: extraction
+title: Match this week's packing slips to the open POs
+ask: |
+  Can you check this week's packing slips against our open purchase orders and give me receipts.csv? The receiving note says what purchasing needs on it.
+followup: null
+timeout_s: 1800
+traps:
+- |-
+  the Cascadia and Trailhead slips print ordered, shipped and backordered quantities side by side; received is what shipped, not what was ordered (check: received quantities)
+- |-
+  Cascadia's second slip is a backorder release for the same PO: one line backordered on the first slip is completed and another is only partly filled, so receipts add across both slips and the second slip's 'Ordered' column repeats the original quantity (checks: received quantities; line status)
+- |-
+  Trailhead shipped HL-400 in place of the HL-300 on the PO; it counts against the HL-300 line with substitute_sku HL-400 and is not a line of its own (checks: substitutions; one row per PO line)
+- |-
+  the Velo Parts slip is an image-only scan that says 'Customer PO: (none given)'; its vendor and SKUs tie it to the one open Velo PO (check: received quantities)
+- |-
+  Summit's packing list is laid out by carton and the gravel tire appears in both cartons; reading one carton under-counts the line (check: received quantities)
+- |-
+  the Trailhead bell and the Velo derailleur hanger are not on any slip; they stay on the list at zero received with status open (checks: line status; one row per PO line)
+checks:
+- type: csv_columns
+  name: requested columns
+  path: receipts.csv
+  columns:
+  - po_line
+  - sku
+  - qty_ordered
+  - qty_received
+  - qty_open
+  - substitute_sku
+  - status
+- type: csv_set_equal
+  name: one row per PO line
+  path: receipts.csv
+  column: po_line
+  ref: receipts.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: receipts.csv
+  equals_ref: receipts.csv
+- type: csv_values_match
+  name: SKUs and ordered quantities
+  path: receipts.csv
+  ref: receipts.csv
+  key: po_line
+  columns:
+  - sku
+  - qty_ordered
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: received quantities
+  path: receipts.csv
+  ref: receipts.csv
+  key: po_line
+  columns:
+  - qty_received
+  - qty_open
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+  must_match_keys:
+  - PO-20964-4
+  - PO-20964-5
+  - PO-20494-2
+  - PO-20876-1
+  - PO-20876-3
+  - PO-20530-1
+- type: csv_values_match
+  name: substitutions
+  path: receipts.csv
+  ref: receipts.csv
+  key: po_line
+  columns:
+  - substitute_sku
+  min_accuracy: 1.0
+  must_match_keys:
+  - PO-20494-1
+- type: csv_values_match
+  name: line status
+  path: receipts.csv
+  ref: receipts.csv
+  key: po_line
+  columns:
+  - status
+  min_accuracy: 1.0
+  must_match_keys:
+  - PO-20964-5
+  - PO-20494-4
+  - PO-20876-4
+  - PO-20530-2

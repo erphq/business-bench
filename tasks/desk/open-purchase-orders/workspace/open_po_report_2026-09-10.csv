@@ -1,0 +1,43 @@
+Open Purchase Orders - all vendors
+As of 09/10/2026
+PO Line,PO Date,Vendor,Item,Description,Qty Ordered,UoM,Unit Cost,Line Status
+4461-01,07/21/2026,BSG Craft Brewing,MLT-2ROW,2-row base malt 55 lb bag,60,EA,43.86,Open
+4461-02,07/21/2026,BSG Craft Brewing,KEG-CAP,"Keg cap, red",6,BX,17.66,Open
+4461-03,07/21/2026,BSG Craft Brewing,HOP-CIT,Citra hop pellets 11 lb,10,EA,137.65,Open
+4461-04,07/21/2026,BSG Craft Brewing,CLN-PBW,PBW cleaner 50 lb pail,50,EA,165.15,Open
+4462-01,07/25/2026,Pacific Packaging,TRY-4X6,"Corrugated tray, 4x6",8,BX,31.28,Open
+4462-02,07/25/2026,Pacific Packaging,CAR-4PK,"4-pack can carrier, black",3,BX,47.09,Open
+4462-03,07/25/2026,Pacific Packaging,LBL-HAZY,"Shrink sleeve, Hazy IPA",3,BX,118.48,Open
+4463-01,07/27/2026,BSG Craft Brewing,YST-US05,Dry yeast US-05 500 g,60,EA,65.15,Open
+4463-02,07/27/2026,BSG Craft Brewing,KEG-CAP,"Keg cap, red",11,BX,18.63,Open
+4463-03,07/27/2026,BSG Craft Brewing,MLT-2ROW,2-row base malt 55 lb bag,24,EA,44.09,Open
+4463-04,07/27/2026,BSG Craft Brewing,CLN-PBW,PBW cleaner 50 lb pail,60,EA,183.33,Open
+4464-01,08/01/2026,BSG Craft Brewing,KEG-CAP,"Keg cap, red",14,BX,23.02,Open
+4464-02,08/01/2026,BSG Craft Brewing,HOP-CIT,Citra hop pellets 11 lb,12,EA,134.35,Open
+4464-03,08/01/2026,BSG Craft Brewing,MLT-2ROW,2-row base malt 55 lb bag,50,EA,42.57,Open
+4465-01,08/03/2026,BSG Craft Brewing,CLN-PBW,PBW cleaner 50 lb pail,50,EA,170.62,Open
+4465-02,08/03/2026,BSG Craft Brewing,YST-US05,Dry yeast US-05 500 g,10,EA,58.72,Open
+4465-03,08/03/2026,BSG Craft Brewing,MLT-2ROW,2-row base malt 55 lb bag,50,EA,41.73,Open
+4466-01,08/07/2026,Promo Print Co,TSH-M,"T-shirt, logo, M",12,EA,11.11,Open
+4466-02,08/07/2026,Promo Print Co,GLS-PNT,"Pint glass, logo",11,BX,77.12,Open
+4466-03,08/07/2026,Promo Print Co,CST-LOGO,"Coaster, logo",8,BX,52.35,Open
+4467-01,08/08/2026,Northwest Can Supply,CAN-16,"16oz can, bright",13,BX,46.38,Open
+4467-02,08/08/2026,Northwest Can Supply,LID-202,"202 can end, silver",11,BX,22.82,Open
+4468-01,08/13/2026,BSG Craft Brewing,CLN-PBW,PBW cleaner 50 lb pail,50,EA,167.98,Open
+4468-02,08/13/2026,BSG Craft Brewing,HOP-CIT,Citra hop pellets 11 lb,40,EA,128.10,Open
+4469-01,08/16/2026,Northwest Can Supply,LID-202,"202 can end, silver",14,BX,25.10,Open
+4469-02,08/16/2026,Northwest Can Supply,CAN-16,"16oz can, bright",5,BX,51.26,Open
+4470-01,08/17/2026,Promo Print Co,TSH-L,"T-shirt, logo, L",50,EA,9.94,Open
+4470-02,08/17/2026,Promo Print Co,CST-LOGO,"Coaster, logo",8,BX,51.22,Open
+4470-03,08/17/2026,Promo Print Co,GLS-PNT,"Pint glass, logo",3,BX,71.69,Open
+4471-01,08/22/2026,Promo Print Co,GLS-PNT,"Pint glass, logo",11,BX,72.52,Open
+4471-02,08/22/2026,Promo Print Co,TSH-L,"T-shirt, logo, L",12,EA,11.19,Open
+4471-03,08/22/2026,Promo Print Co,TSH-M,"T-shirt, logo, M",30,EA,8.13,Open
+4472-01,08/23/2026,BSG Craft Brewing,YST-US05,Dry yeast US-05 500 g,30,EA,55.49,Open
+4472-02,08/23/2026,BSG Craft Brewing,KEG-CAP,"Keg cap, red",4,BX,22.58,Open
+4473-01,08/27/2026,BSG Craft Brewing,KEG-CAP,"Keg cap, red",7,BX,20.69,Open
+4473-02,08/27/2026,BSG Craft Brewing,HOP-CIT,Citra hop pellets 11 lb,20,EA,132.45,Open
+4473-03,08/27/2026,BSG Craft Brewing,CLN-PBW,PBW cleaner 50 lb pail,30,EA,165.91,Open
+4474-01,08/30/2026,BSG Craft Brewing,KEG-CAP,"Keg cap, red",9,BX,19.40,Open
+4474-02,08/30/2026,BSG Craft Brewing,CLN-PBW,PBW cleaner 50 lb pail,24,EA,159.04,Open
+4474-03,08/30/2026,BSG Craft Brewing,HOP-CIT,Citra hop pellets 11 lb,30,EA,137.80,Open

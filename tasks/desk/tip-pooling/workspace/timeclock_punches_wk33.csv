@@ -1,0 +1,141 @@
+Employee,Job,Date,Clock in,Clock out,Paid hours
+"Diaz, Margaret",General Manager,Mon 08/10/2026,4:15 PM,10:00 PM,5.75
+"Green, Susan",Line Cook,Mon 08/10/2026,4:30 PM,10:45 PM,6.25
+"Parker, Deborah",Bartender,Mon 08/10/2026,4:30 PM,10:30 PM,6.00
+"Brown, Gary",Bartender,Mon 08/10/2026,4:45 PM,11:15 PM,6.50
+"Gonzalez, Anthony",Shift Lead,Mon 08/10/2026,4:45 PM,11:30 PM,6.75
+"Stewart, Laura",Server,Mon 08/10/2026,4:45 PM,9:45 PM,5.00
+"Williams, Patricia",Line Cook,Mon 08/10/2026,4:45 PM,9:45 PM,5.00
+"Allen, David",Server,Mon 08/10/2026,5:00 PM,11:30 PM,6.50
+"Johnson, Anna",Dishwasher,Mon 08/10/2026,5:00 PM,11:30 PM,6.50
+"Okafor, Ingrid",Host,Mon 08/10/2026,5:00 PM,9:30 PM,4.50
+"Ramos, Sandra",Busser,Mon 08/10/2026,5:00 PM,10:15 PM,5.25
+"Wright, Laura",Busser,Mon 08/10/2026,5:00 PM,11:00 PM,6.00
+"Wright, Laura",Busser,Tue 08/11/2026,10:15 AM,2:45 PM,4.50
+"Green, Susan",Line Cook,Tue 08/11/2026,10:30 AM,3:15 PM,4.75
+"Parker, Deborah",Bartender,Tue 08/11/2026,10:30 AM,2:45 PM,4.25
+"Carter, Aisha",Server,Tue 08/11/2026,11:15 AM,3:30 PM,4.25
+"Price, James",Host,Tue 08/11/2026,11:15 AM,2:45 PM,3.50
+"Ruiz, Timothy",Dishwasher,Tue 08/11/2026,11:15 AM,3:00 PM,3.75
+"Stewart, Laura",Server,Tue 08/11/2026,11:15 AM,3:15 PM,4.00
+"Williams, Patricia",Line Cook,Tue 08/11/2026,11:15 AM,3:30 PM,4.25
+"Green, Susan",Line Cook,Tue 08/11/2026,4:15 PM,9:45 PM,5.50
+"Price, James",Host,Tue 08/11/2026,4:15 PM,10:15 PM,6.00
+"Ruiz, Timothy",Dishwasher,Tue 08/11/2026,4:15 PM,11:15 PM,7.00
+"Carter, Aisha",Server,Tue 08/11/2026,4:30 PM,11:30 PM,7.00
+"Ramos, Sandra",Busser,Tue 08/11/2026,4:30 PM,9:45 PM,5.25
+"Wright, Laura",Busser,Tue 08/11/2026,4:30 PM,11:30 PM,7.00
+"Brown, Gary",Bartender,Tue 08/11/2026,4:45 PM,11:15 PM,6.50
+"Parker, Deborah",Bartender,Tue 08/11/2026,4:45 PM,9:30 PM,4.75
+"Stewart, Laura",Server,Tue 08/11/2026,4:45 PM,11:00 PM,6.25
+"Williams, Patricia",Line Cook,Tue 08/11/2026,4:45 PM,9:30 PM,4.75
+"Murphy, Jessica",Server,Tue 08/11/2026,5:00 PM,11:15 PM,6.25
+"Green, Susan",Line Cook,Wed 08/12/2026,10:15 AM,3:00 PM,4.75
+"Murphy, Jessica",Server,Wed 08/12/2026,10:30 AM,3:45 PM,5.25
+"Brown, Gary",Bartender,Wed 08/12/2026,10:45 AM,3:45 PM,5.00
+"Price, James",Host,Wed 08/12/2026,10:45 AM,3:15 PM,4.50
+"Reed, Sarah",Server,Wed 08/12/2026,10:45 AM,3:30 PM,4.75
+"Wright, Laura",Busser,Wed 08/12/2026,10:45 AM,3:15 PM,4.50
+"Diaz, Margaret",General Manager,Wed 08/12/2026,11:00 AM,2:45 PM,3.75
+"Ruiz, Timothy",Dishwasher,Wed 08/12/2026,11:00 AM,3:00 PM,4.00
+"Wood, Patricia",Line Cook,Wed 08/12/2026,11:00 AM,2:30 PM,3.50
+"Brown, Gary",Bartender,Wed 08/12/2026,4:15 PM,11:00 PM,6.75
+"Okafor, Ingrid",Host,Wed 08/12/2026,4:15 PM,10:30 PM,6.25
+"Ramos, Sandra",Busser,Wed 08/12/2026,4:15 PM,10:30 PM,6.25
+"Williams, Patricia",Line Cook,Wed 08/12/2026,4:15 PM,9:45 PM,5.50
+"Johnson, Anna",Dishwasher,Wed 08/12/2026,4:30 PM,11:00 PM,6.50
+"Reed, Sarah",Server,Wed 08/12/2026,4:30 PM,11:30 PM,7.00
+"Wright, Laura",Busser,Wed 08/12/2026,4:30 PM,10:15 PM,5.75
+"Green, Susan",Line Cook,Wed 08/12/2026,4:45 PM,10:30 PM,5.75
+"Ortiz, Patricia",Kitchen Manager,Wed 08/12/2026,4:45 PM,10:00 PM,5.25
+"Parker, Deborah",Bartender,Wed 08/12/2026,4:45 PM,11:00 PM,6.25
+"Gonzalez, Anthony",Shift Lead,Wed 08/12/2026,5:00 PM,10:15 PM,5.25
+"Murphy, Jessica",Server,Wed 08/12/2026,5:00 PM,11:30 PM,6.50
+"Okafor, Ingrid",Host,Thu 08/13/2026,10:15 AM,3:45 PM,5.50
+"Wood, Patricia",Line Cook,Thu 08/13/2026,10:15 AM,3:00 PM,4.75
+"Brown, Gary",Bartender,Thu 08/13/2026,10:30 AM,3:15 PM,4.75
+"Diaz, Margaret",General Manager,Thu 08/13/2026,10:45 AM,2:30 PM,3.75
+"Carter, Aisha",Server,Thu 08/13/2026,11:00 AM,3:30 PM,4.50
+"Ramos, Sandra",Busser,Thu 08/13/2026,11:00 AM,3:00 PM,4.00
+"Green, Susan",Line Cook,Thu 08/13/2026,11:15 AM,3:15 PM,4.00
+"Reed, Sarah",Server,Thu 08/13/2026,11:15 AM,3:45 PM,4.50
+"Ruiz, Timothy",Dishwasher,Thu 08/13/2026,11:15 AM,3:15 PM,4.00
+"Green, Susan",Line Cook,Thu 08/13/2026,4:15 PM,10:30 PM,6.25
+"Murphy, Jessica",Server,Thu 08/13/2026,4:15 PM,9:45 PM,5.50
+"Brown, Gary",Bartender,Thu 08/13/2026,4:30 PM,10:00 PM,5.50
+"Gonzalez, Anthony",Shift Lead,Thu 08/13/2026,4:30 PM,9:45 PM,5.25
+"Ortiz, Patricia",Kitchen Manager,Thu 08/13/2026,4:30 PM,11:30 PM,7.00
+"Parker, Deborah",Bartender,Thu 08/13/2026,4:30 PM,11:30 PM,7.00
+"Price, James",Host,Thu 08/13/2026,4:30 PM,10:30 PM,6.00
+"Ruiz, Timothy",Dishwasher,Thu 08/13/2026,4:30 PM,11:15 PM,6.75
+"Ramos, Sandra",Busser,Thu 08/13/2026,4:45 PM,10:45 PM,6.00
+"Wood, Patricia",Line Cook,Thu 08/13/2026,4:45 PM,10:45 PM,6.00
+"Wright, Laura",Busser,Thu 08/13/2026,4:45 PM,11:30 PM,6.75
+"Allen, David",Server,Thu 08/13/2026,5:00 PM,11:30 PM,6.50
+"Green, Susan",Line Cook,Fri 08/14/2026,10:15 AM,3:15 PM,5.00
+"Ortiz, Patricia",Kitchen Manager,Fri 08/14/2026,10:15 AM,3:00 PM,4.75
+"Price, James",Host,Fri 08/14/2026,10:15 AM,3:00 PM,4.75
+"Brown, Gary",Bartender,Fri 08/14/2026,10:30 AM,3:30 PM,5.00
+"Johnson, Anna",Dishwasher,Fri 08/14/2026,10:45 AM,2:30 PM,3.75
+"Wright, Laura",Busser,Fri 08/14/2026,10:45 AM,3:00 PM,4.25
+"Reed, Sarah",Server,Fri 08/14/2026,11:00 AM,2:30 PM,3.50
+"Murphy, Jessica",Server,Fri 08/14/2026,11:15 AM,3:30 PM,4.25
+"Williams, Patricia",Line Cook,Fri 08/14/2026,11:15 AM,3:30 PM,4.25
+"Diaz, Margaret",General Manager,Fri 08/14/2026,4:15 PM,12:30 AM,
+"Parker, Deborah",Bartender,Fri 08/14/2026,4:15 PM,12:30 AM,
+"Ortiz, Patricia",Kitchen Manager,Fri 08/14/2026,4:30 PM,12:30 AM,
+"Reed, Sarah",Server,Fri 08/14/2026,4:30 PM,12:00 AM,
+"Williams, Patricia",Line Cook,Fri 08/14/2026,4:30 PM,12:00 AM,
+"Wood, Patricia",Line Cook,Fri 08/14/2026,4:30 PM,12:30 AM,
+"Brown, Gary",Bartender,Fri 08/14/2026,4:45 PM,12:30 AM,
+"Gonzalez, Anthony",Shift Lead,Fri 08/14/2026,4:45 PM,12:45 AM,
+"Johnson, Anna",Dishwasher,Fri 08/14/2026,4:45 PM,12:45 AM,
+"Stewart, Laura",Server,Fri 08/14/2026,4:45 PM,12:30 AM,
+"Carter, Aisha",Server,Fri 08/14/2026,5:00 PM,11:00 PM,6.00
+"Okafor, Ingrid",Host,Fri 08/14/2026,5:00 PM,12:30 AM,
+"Ramos, Sandra",Busser,Fri 08/14/2026,5:00 PM,12:30 AM,
+"Wright, Laura",Busser,Fri 08/14/2026,5:00 PM,12:15 AM,
+"Brown, Gary",Bartender,Sat 08/15/2026,10:15 AM,2:45 PM,4.50
+"Green, Susan",Line Cook,Sat 08/15/2026,10:15 AM,3:45 PM,5.50
+"Johnson, Anna",Dishwasher,Sat 08/15/2026,10:15 AM,3:00 PM,4.75
+"Williams, Patricia",Line Cook,Sat 08/15/2026,10:15 AM,2:30 PM,4.25
+"Murphy, Jessica",Server,Sat 08/15/2026,10:30 AM,2:45 PM,4.25
+"Ortiz, Patricia",Kitchen Manager,Sat 08/15/2026,10:45 AM,3:15 PM,4.50
+"Ramos, Sandra",Busser,Sat 08/15/2026,10:45 AM,3:30 PM,4.75
+"Allen, David",Server,Sat 08/15/2026,11:00 AM,10:00 PM,11.00
+"Price, James",Host,Sat 08/15/2026,11:00 AM,2:30 PM,3.50
+"Reed, Sarah",Server,Sat 08/15/2026,11:15 AM,2:30 PM,3.25
+"Diaz, Margaret",General Manager,Sat 08/15/2026,4:15 PM,1:00 AM,
+"Green, Susan",Line Cook,Sat 08/15/2026,4:15 PM,12:30 AM,
+"Brown, Gary",Bartender,Sat 08/15/2026,4:30 PM,12:15 AM,
+"Parker, Deborah",Bartender,Sat 08/15/2026,4:30 PM,12:45 AM,
+"Reed, Sarah",Server,Sat 08/15/2026,4:30 PM,12:00 AM,
+"Williams, Patricia",Line Cook,Sat 08/15/2026,4:30 PM,12:00 AM,
+"Murphy, Jessica",Server,Sat 08/15/2026,4:45 PM,11:30 PM,6.75
+"Okafor, Ingrid",Host,Sat 08/15/2026,4:45 PM,11:15 PM,6.50
+"Stewart, Laura",Server,Sat 08/15/2026,4:45 PM,12:15 AM,
+"Ramos, Sandra",Busser,Sat 08/15/2026,5:00 PM,11:15 PM,6.25
+"Ruiz, Timothy",Dishwasher,Sat 08/15/2026,5:00 PM,9:30 PM,4.50
+"Wright, Laura",Busser,Sat 08/15/2026,5:00 PM,1:00 AM,
+"Carter, Aisha",Server,Sun 08/16/2026,10:30 AM,3:30 PM,5.00
+"Ramos, Sandra",Busser,Sun 08/16/2026,10:30 AM,2:45 PM,4.25
+"Brown, Gary",Bartender,Sun 08/16/2026,10:45 AM,3:30 PM,4.75
+"Williams, Patricia",Line Cook,Sun 08/16/2026,10:45 AM,3:15 PM,4.50
+"Allen, David",Server,Sun 08/16/2026,11:00 AM,2:30 PM,3.50
+"Okafor, Ingrid",Host,Sun 08/16/2026,11:00 AM,3:45 PM,4.75
+"Ruiz, Timothy",Dishwasher,Sun 08/16/2026,11:00 AM,3:00 PM,4.00
+"Wood, Patricia",Line Cook,Sun 08/16/2026,11:00 AM,2:45 PM,3.75
+"Diaz, Margaret",General Manager,Sun 08/16/2026,11:15 AM,3:30 PM,4.25
+"Parker, Deborah",Bartender,Sun 08/16/2026,4:15 PM,12:00 AM,
+"Ramos, Sandra",Busser,Sun 08/16/2026,4:15 PM,12:15 AM,
+"Reed, Sarah",Server,Sun 08/16/2026,4:15 PM,12:45 AM,
+"Wright, Laura",Busser,Sun 08/16/2026,4:15 PM,10:00 PM,5.75
+"Diaz, Margaret",General Manager,Sun 08/16/2026,4:30 PM,1:00 AM,
+"Brown, Gary",Bartender,Sun 08/16/2026,4:45 PM,12:15 AM,
+"Okafor, Ingrid",Host,Sun 08/16/2026,4:45 PM,12:30 AM,
+"Allen, David",Server,Sun 08/16/2026,5:00 PM,1:00 AM,
+"Gonzalez, Anthony",Shift Lead,Sun 08/16/2026,5:00 PM,12:00 AM,
+"Murphy, Jessica",Server,Sun 08/16/2026,5:00 PM,12:30 AM,
+"Ruiz, Timothy",Dishwasher,Sun 08/16/2026,5:00 PM,12:45 AM,
+"Williams, Patricia",Line Cook,Sun 08/16/2026,5:00 PM,11:00 PM,6.00
+"Wood, Patricia",Line Cook,Sun 08/16/2026,5:00 PM,12:30 AM,

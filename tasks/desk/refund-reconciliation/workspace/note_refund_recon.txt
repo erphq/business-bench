@@ -1,0 +1,16 @@
+August refund reconciliation - notes to self (and whoever does it this month)
+
+- July's file is the layout. One line per refund in the PMS log, plus a line for anything the processor refunded that
+  has no PMS refund. refund_id is our RF number; if the PMS never had it, use the processor's refund id.
+- Only card refunds go through Clearpath. Refunds we paid by check are not part of this.
+- Match on the refund amount itself (the amount column), not net. On a full refund Clearpath gives back its fee, so
+  net will not equal the refund. Charges, payouts and fees in the export are not refunds. A failed refund is not a refund.
+- A refund can go back to more than one card. Add the pieces up.
+- The front desk sometimes keys the refund a few days after logging it. The export runs to Sep 5 so late-August
+  refunds can be found: if it went through in September, it is 'timing - settled in September'. The July
+  file's timing items should have come through in early August - give each one a line with its July PMS amount
+  and status 'prior month timing'. Anything else created in September belongs to next month.
+- Statuses: matched, timing - settled in September, prior month timing, amount differs, not in processor, not in PMS.
+- Amounts are positive refund amounts. 0.00 where a side has nothing. processor_amount is what actually went through,
+  wherever it landed. difference = pms_amount minus processor_amount, so the column adds up to what is still
+  unexplained.

@@ -1,0 +1,39 @@
+cpt_code,description,fee,effective_from,effective_to
+20550,"Injection, tendon sheath or ligament",95.00,2025-07-01,2026-06-30
+20610,"Arthrocentesis/injection, major joint",145.00,2025-07-01,2026-06-30
+20611,Major joint injection with ultrasound,210.00,2025-07-01,2026-06-30
+29530,"Strapping, knee",38.00,2025-07-01,2026-06-30
+73030,"X-ray shoulder, 2 views",62.00,2025-07-01,2026-06-30
+73560,"X-ray knee, 1 or 2 views",68.00,2025-07-01,2026-06-30
+97035,"Ultrasound, each 15 min",22.00,2025-07-01,2026-06-30
+97110,"Therapeutic exercise, each 15 min",42.00,2025-07-01,2026-06-30
+97112,"Neuromuscular re-education, each 15 min",45.00,2025-07-01,2026-06-30
+97140,"Manual therapy, each 15 min",40.00,2025-07-01,2026-06-30
+97161,"PT evaluation, low complexity",150.00,2025-07-01,2026-06-30
+97162,"PT evaluation, moderate complexity",165.00,2025-07-01,2026-06-30
+97530,"Therapeutic activities, each 15 min",48.00,2025-07-01,2026-06-30
+97750,"Physical performance test, each 15 min",55.00,2025-07-01,2026-06-30
+99202,"New patient visit, straightforward",120.00,2025-07-01,2026-06-30
+99203,"New patient visit, low",175.00,2025-07-01,2026-06-30
+99212,"Established patient, straightforward",85.00,2025-07-01,2026-06-30
+99213,"Established patient, low",130.00,2025-07-01,2026-06-30
+99214,"Established patient, moderate",190.00,2025-07-01,2026-06-30
+20550,"Injection, tendon sheath or ligament",99.00,2026-07-01,
+20610,"Arthrocentesis/injection, major joint",152.00,2026-07-01,
+20611,Major joint injection with ultrasound,219.00,2026-07-01,
+29530,"Strapping, knee",40.00,2026-07-01,
+73030,"X-ray shoulder, 2 views",65.00,2026-07-01,
+73560,"X-ray knee, 1 or 2 views",72.00,2026-07-01,
+97035,"Ultrasound, each 15 min",23.00,2026-07-01,
+97110,"Therapeutic exercise, each 15 min",44.00,2026-07-01,
+97112,"Neuromuscular re-education, each 15 min",47.00,2026-07-01,
+97140,"Manual therapy, each 15 min",42.00,2026-07-01,
+97161,"PT evaluation, low complexity",158.00,2026-07-01,
+97162,"PT evaluation, moderate complexity",172.00,2026-07-01,
+97530,"Therapeutic activities, each 15 min",50.00,2026-07-01,
+97750,"Physical performance test, each 15 min",57.00,2026-07-01,
+99202,"New patient visit, straightforward",125.00,2026-07-01,
+99203,"New patient visit, low",182.00,2026-07-01,
+99212,"Established patient, straightforward",88.00,2026-07-01,
+99213,"Established patient, low",135.00,2026-07-01,
+99214,"Established patient, moderate",198.00,2026-07-01,

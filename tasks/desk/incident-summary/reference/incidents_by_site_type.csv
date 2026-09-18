@@ -1,0 +1,25 @@
+site,type,incidents
+Plant 1,"Slip, trip or fall",5
+Plant 1,Struck by object,7
+Plant 1,Caught in or between,3
+Plant 1,Laceration,22
+Plant 1,Chemical exposure,5
+Plant 1,Strain or sprain,4
+Plant 2,"Slip, trip or fall",6
+Plant 2,Struck by object,10
+Plant 2,Caught in or between,7
+Plant 2,Laceration,5
+Plant 2,Chemical exposure,7
+Plant 2,Strain or sprain,6
+East Fab,"Slip, trip or fall",6
+East Fab,Struck by object,4
+East Fab,Caught in or between,1
+East Fab,Laceration,4
+East Fab,Chemical exposure,4
+East Fab,Strain or sprain,5
+Warehouse,"Slip, trip or fall",0
+Warehouse,Struck by object,0
+Warehouse,Caught in or between,0
+Warehouse,Laceration,0
+Warehouse,Chemical exposure,0
+Warehouse,Strain or sprain,0

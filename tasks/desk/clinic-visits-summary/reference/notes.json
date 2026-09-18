@@ -1,0 +1,29 @@
+{
+  "clinic_no_show_rate": 0.1241,
+  "fee_rows": 82,
+  "no_show_rates": {
+    "Alvarez": 0.1143,
+    "Hernandez": 0.1192,
+    "Mitchell": 0.1233,
+    "Taylor": 0.1399
+  },
+  "provider_aliases": {
+    "Jennifer Hernandez": [
+      "Jennifer Hernandez"
+    ],
+    "Matthew Alvarez": [
+      "Matthew Alvarez"
+    ],
+    "Sandra Mitchell": [
+      "Sandra Mitchell",
+      "Mitchell, Sandra",
+      "S. Mitchell",
+      "SANDRA MITCHELL"
+    ],
+    "Timothy Taylor": [
+      "Timothy Taylor",
+      "Timothy Taylor, DPT"
+    ]
+  },
+  "walk_in_visits": 74
+}

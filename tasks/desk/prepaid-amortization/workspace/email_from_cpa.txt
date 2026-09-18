@@ -1,0 +1,18 @@
+From: Graham Okafor <graham@okaforcpa.com>
+To: Tina Brooks <tina@brightlineclean.com>
+Date: Tue, 12 Jan 2027 08:47
+Subject: Year-end: prepaid expenses
+
+Hi Tina,
+
+No amortization went through 1450 during 2026, so I need the 2026 prepaid schedule before I can close the year. Please use the same method as the 2025 schedule:
+
+- Each policy or contract is expensed by days of coverage: for each month, the amount paid times the days covered in that month, divided by the days in the whole coverage period (count the effective date and the expiry date), rounded to the cent. The last month of coverage takes whatever is left so each item expenses exactly what was paid.
+- Use the dates in the register. It is kept from the final declarations pages, so where a GL memo disagrees, the register wins.
+- A cancelled policy covers through the day before its cancellation date and nothing after. The return premium comes off the prepaid balance when the check arrives; whatever is left of that policy's unused premium that the refund does not cover is expensed in the month of cancellation.
+- Anything in 1450 that is not a prepaid expense should not be on the schedule - tell me and I will reclass it.
+
+What I need: every item with its balance at 1 January, what was paid in 2026, refunds, the expense for each month and the balance at 31 December, plus the monthly totals and a total for the year. Please keep it live.
+
+Thanks,
+Graham

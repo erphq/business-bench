@@ -1,0 +1,25 @@
+From: Tomasz Kowalski <tkowalski@cascadeparcel.com>
+To: shipping@umberceramics.com
+Date: Mon, 17 Aug 2026 13:05
+Subject: Accessorial update - residential deliveries
+
+Hi team,
+
+A heads-up ahead of your next invoice. From September 1 we are adding a residential delivery surcharge of $4.95 per package on ground shipments.
+
+For billing we treat any label that does not carry a business name as a residential delivery, whatever the street address looks like. Your large package and weight terms are unchanged from the rate card.
+
+Best,
+Tomasz
+Cascade Parcel - Account Management
+
+-----Original Message-----
+
+From: Mateo Alvarez <mateo@umberceramics.com>
+To: shipping@umberceramics.com
+Date: Fri, 11 Sep 2026 17:40
+Subject: Re: Accessorial update - residential deliveries
+
+Forwarding so we have it. Cascade's invoice for this week's pickups will show up Monday and I want to check it line by line. For every order in today's export give me order_id, zone, billable_weight and shipping_cost (what Cascade should charge us for that package, all surcharges in).
+
+Mateo

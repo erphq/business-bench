@@ -1,0 +1,17 @@
+Hi,
+
+I'm finally setting up a contract register so we stop getting surprised by renewals. All our signed service contracts are in the contracts folder. I need contracts.csv with one row per contract and these columns:
+
+contract_id - the agreement or contract number as printed
+vendor - the company providing the service, full legal name as written in the contract
+start_date - the date the contract first started
+end_date - the end of the term we are in right now. If a contract has already rolled over, that's the end of the renewal term.
+annual_value - what we pay per year for the contract as it stands today, plain number
+auto_renew - yes or no
+renewal_months - how long each automatic renewal lasts, in months (0 if it doesn't renew automatically)
+notice_deadline - the last day we could send notice so it doesn't roll over at end_date, counting the notice period back from end_date. Blank if it doesn't renew automatically.
+
+Dates as YYYY-MM-DD. If an amendment changed something, use the amended terms (the amendment isn't a separate contract). Take everything as of today, 14 September 2026.
+
+Thanks!
+Renee Green

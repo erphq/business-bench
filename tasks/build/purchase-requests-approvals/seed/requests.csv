@@ -1,0 +1,131 @@
+﻿Request #,Date,Requester,Department,Vendor,Account Code,Description,Amount,Status,Dept Approver,Business Office Approval,PO Number
+PR-27-0001,Jul 01 2026,Grant Howell,Curriculum & Instruction,Beacon Medical Supply,01 2100 4400,tablet cart,827.60,Submitted,,,
+PR-27-0002,2026-07-01,Rita Delgado,Facilities & Maintenance,Rolling Hills Charter Bus,01-8100-5500,custodial service,"$3,269.40",Approved,Marcus Bell,Approved,PO-27-0001
+PR-27-0003,03-Jul-2026,Mei Chen,Technology,Evergreen Landscaping,01-7700-4100,workbooks,4516.30,Dept Approved,Anita Rao,,
+PR-27-0004,07/04/26,Hector Ibanez,FOOD SERVICES,Northstar Assessment Group LLC,13-3700-6500,end-of-life replacement,10212.60,Rejected,Gloria Vance,Rejected,
+PR-27-0005,Jul 04 2026,Victor Hale,Tech,Eagle Signs & Graphics,01-7700-5500,waste hauling,335.95,Approved,Anita Rao,,PO-27-2
+PR-27-0006,04-Jul-2026,Mei Chen,technology,Frontier Computer Recycling LLC,01-7700-5300,association dues,"$1,354.70",Submitted,,,
+PR-27-0007,2026-07-05,Jordan Blake,Technology,Kingsley Moving & Storage LLC,01-7700-4100,core curriculum kits,1817.65,Rejected,Anita Rao,,
+PR-27-0008,07/06/2026,Lucia Moreno,Curriculum and Instruction,Golden State Food Distributors Inc.,0121004400,label printer,"$4,703.15",Rejected,,,
+PR-27-0009,06-Jul-2026,Rita Delgado,Facilities & Maintenance,Metro Fire Protection Inc.,01-8100-4100,textbooks,"$5,263.70",Rejected,,,
+PR-27-0010,2026-07-06,Victor Hale,Tech,Oakridge Lumber,01-7700-4300,cable and connectors,737.35,Rejected,Anita Rao,,
+PR-27-0011,Jul 06 2026,Victor Hale,Technology,Hilltop Mailing Services LLC,01-7700-5200,conference registration,"$1,549.05",Approved,Anita Rao,,PO-27-0004
+PR-27-0012,06-Jul-2026,Luis Ferreira,Transportation,Metro Fire Protection Inc.,01-3600-4300,classroom supplies,912.60,Approved,Denise Harlan,,PO-27-0003
+PR-27-0013,"July 08, 2026",Pam Russo,FOOD SERVICES,Dayspring Occupational Therapy LLC,13-3700-5200,mileage and lodging,194.50,Approved,Gloria Vance,,PO-27-0005
+PR-27-0014,07/10/26,Victor Hale,Tech,Cascade Office Products,01-7700-4400,tablet cart,1839.00,Approved,Anita Rao,,PO27-0006
+PR-27-0015,Jul 10 2026,Karen Whitlock,Transportation,Harbor Electrical Contractors Inc.,01-3600-4300,cable and connectors,"$2,389.40",Approved,Denise Harlan,,PO-27-0007
+PR-27-0016,07/11/26,Luis Ferreira,Transportation,Stellar Science Kits LLC,01-3600-5300,association dues,1000.00,Approved,Denise Harlan,,PO-27-0008
+PR-27-0017,"July 14, 2026",Grant Howell,CURRICULUM & INSTRUCTION,Canyon Water Treatment,01-2100-4300,classroom supplies,105.75,Approved,Yvonne Castillo,,PO27-0010
+PR-27-0018,"July 14, 2026",Lucia Moreno,Curriculum & Instruction,Valley Fleet Fuel,01-2100-5800,therapy services,15475.60,Submitted,,,
+PR-27-0019,Jul 15 2026,Grant Howell,Curriculum & Instruction,Nimbus Cloud Services Inc.,01-2100-4100,workbooks,4212.60,Approved,Yvonne Castillo,Approved,PO-27-9
+PR-27-0020,2026-07-17,Omar Siddiqui,Transp.,Jefferson Plumbing,01-3600-5200,mileage and lodging,2142.20,Approved,Denise Harlan,,PO-27-0011
+PR-27-0021,07/18/26,Lucia Moreno,Curriculum & Instruction,Guardian Background Checks,01-2100-6500,equipment replacement,"$7,340.55",Approved,Yvonne Castillo,Approved,PO-27-0013
+PR-27-0022,07/18/26,Pam Russo,Food Services,Acme Bus Parts,13-3700-5200,conference registration,1133.45,Submitted,,,
+PR-27-0023,"July 18, 2026",Hector Ibanez,Food Service,Precision Auto Glass Inc.,13-3700-5600,equipment repair,"$8,793.80",Approved,Gloria Vance,Approved,PO-27-12
+PR-27-0024,Jul 18 2026,Luis Ferreira,TRANSPORTATION,Riverbend Produce,01-3600-4100,core curriculum kits,3816.80,Rejected,,,
+PR-27-0025,Jul 19 2026,Lucia Moreno,Curriculum & Instruction,Guardian Background Checks,01.2100.6400,capital equipment,16537.80,Approved,Yvonne Castillo,Approved,PO27-0014
+PR-27-0026,Jul 19 2026,Rita Delgado,Facilities & Maintenance,Keystone Therapy Associates,01-8100-5500,waste hauling,1306.20,Submitted,,,
+PR-27-0027,07/20/2026,Ada Park,Facilities & Maintenance,Cobalt Cybersecurity LLC,0181005500,waste hauling,862.95,Submitted,,,
+PR-27-0028,07/20/26,Hector Ibanez,Food Services,Allied Fleet Supply LLC,13-3700-5200,training travel,2200.80,Approved,Gloria Vance,,PO-27-20
+PR-27-0029,07/20/26,Naomi Fisher,Special Education,Rolling Hills Charter Bus,0111805800,consulting services,16029.70,Approved,Terrence Holt,Approved,PO-27-0017
+PR-27-0030,20-Jul-2026,Omar Siddiqui,Transportation,Guardian Background Checks,01 3600 4100,core curriculum kits,"$1,373.35",Approved,Denise Harlan,,PO-27-0018
+PR-27-0031,"July 20, 2026",Karen Whitlock,transportation,Juniper Kitchen Equipment,01-3600-4300,classroom supplies,"$4,125.75",Approved,Denise Harlan,Approved,PO-27-0015
+PR-27-0032,07/21/2026,Rita Delgado,Facilities & Maintenance,Horizon Educational Publishing Inc.,01-8100-5800,therapy services,"$15,395.65",Approved,Marcus Bell,Approved,PO-27-0021
+PR-27-0033,21-Jul-2026,Hector Ibanez,Food Services,Canyon Water Treatment,13 3700 5600,lift rental,5306.30,Submitted,,,
+PR-27-0034,21-Jul-2026,Victor Hale,Technology,Patriot Locksmith LLC,01-7700-5900,phone service,823.50,Approved,Anita Rao,,PO-27-0022
+PR-27-0035,22-Jul-2026,Mei Chen,Technology,Mission Linen Service,01-7700-4200,binder sets,663.80,Approved,Anita Rao,,PO-27-0016
+PR-27-0036,2026-07-23,Ada Park,Facilities & Maintenance,Juniper Kitchen Equipment,0181004400,shop vacuum,486.80,Approved,Marcus Bell,,PO-27-0019
+PR-27-0037,23-Jul-2026,Victor Hale,Technology,Anchor Legal Group,01-7700-4100,textbooks,"$1,561.25",Submitted,,,
+PR-27-0038,"July 24, 2026",Grant Howell,Curriculum & Instruction,Northstar Assessment Group LLC,0121006400,equipment purchase,"$9,984.75",Approved,Yvonne Castillo,Approved,PO-27-0023
+PR-27-0039,"July 24, 2026",Karen Whitlock,Transportation,Madrone Mental Health Inc.,01-3600-6400,installed equipment,"$33,990.50",Dept Approved,Denise Harlan,,
+PR-27-0040,07/25/2026,Rita Delgado,Facilities & Maintenance,Juniper Kitchen Equipment,01-8100-6500,replacement unit,"$21,859.85",Submitted,,,
+PR-27-0041,2026-07-25,Omar Siddiqui,Transportation,Pacific Coast Dairy Inc.,01-3600-6500,equipment replacement,17572.40,Approved,Denise Harlan,Approved,PO-27-0024
+PR-27-0042,26-Jul-2026,Carl Jensen,Special Education,BrightPath Learning,0111804200,binder sets,793.70,Approved,Terrence Holt,,PO-27-0028
+PR-27-0043,2026-07-26,Naomi Fisher,Special Education,Central Valley Tire Inc.,0111804300,replacement filters,3532.10,Submitted,,,
+PR-27-0044,28-Jul-2026,Luis Ferreira,Transportation,Northgate Uniform Rental Inc.,01-3600-5200,training travel,2198.50,Rejected,Denise Harlan,,
+PR-27-0045,29-Jul-2026,Sean Mulligan,Facilities & Maintenance,Harbor Electrical Contractors Inc.,01-8100-5300,annual membership,749.30,Approved,Marcus Bell,,PO-27-0033
+PR-27-0046,Jul 29 2026,Pam Russo,Nutrition Services,Integrity Translation Services,13-3700-5300,annual membership,540.65,Rejected,Gloria Vance,,
+PR-27-0047,Jul 29 2026,Hector Ibanez,Food Services,Crescent Library Services,13-3700-5500,waste hauling,2556.95,Approved,Gloria Vance,Approved,PO-27-25
+PR-27-0048,07/29/26,Omar Siddiqui,transportation,Patriot Locksmith LLC,01-3600-4100,core curriculum kits,457.55,Approved,Denise Harlan,,PO-27-0026
+PR-27-0049,07/29/26,Luis Ferreira,Transportation,Valley Fleet Fuel,01-3600-4300,brake pads,"$1,840.00",Submitted,,,
+PR-27-0050,2026-07-30,Ada Park,Facilities & Maintenance,Quantum Robotics Kits LLC,01.8100.5300,annual membership,350.65,Approved,Marcus Bell,,PO27-0029
+PR-27-0051,2026-07-30,Sean Mulligan,Facilities & Maintenance,Bridgewater Auditors LLC,01.8100.4400,tablet cart,739.65,Approved,Marcus Bell,,PO27-0030
+PR-27-0052,07/30/26,Omar Siddiqui,Transportation,Tri-County Waste Services,01 3600 4200,manuals,585.85,Approved,Denise Harlan,,PO-27-27
+PR-27-0053,07/31/2026,Grant Howell,Curriculum & Instruction,Metro Fire Protection Inc.,01-2100-4400,tablet cart,2870.05,Approved,Yvonne Castillo,Approved,PO-27-0031
+PR-27-0054,08/01/2026,Grant Howell,Curriculum & Instruction,Driftwood Art Supply,01-2100-5200,training travel,697.80,Approved,Yvonne Castillo,,PO27-0035
+PR-27-0055,08/01/2026,Naomi Fisher,Special Education,Driftwood Art Supply,01.1180.5500,waste hauling,2407.25,Approved,Terrence Holt,,PO-27-0032
+PR-27-0056,Aug 01 2026,Luis Ferreira,Transportation,Horizon Educational Publishing Inc.,01-3600-5200,conference registration,2352.35,Submitted,,,
+PR-27-0057,2026-08-02,Lucia Moreno,Curriculum and Instruction,Eagle Signs & Graphics,01-2100-5500,waste hauling,3447.90,Approved,Yvonne Castillo,Approved,PO-27-0036
+PR-27-0058,Aug 02 2026,Pam Russo,Food Services,Patriot Locksmith LLC,13-3700-4300,cleaning supplies,1689.65,Approved,Gloria Vance,,PO27-0037
+PR-27-0059,02-Aug-2026,Hector Ibanez,Food Services,Insight Software Licensing,13.3700.5600,lift rental,3447.20,Dept Approved,Gloria Vance,,
+PR-27-0060,08/02/2026,Pam Russo,Food Services,Beacon Medical Supply,1337005600,lift rental,"$11,178.25",Submitted,,,
+PR-27-0061,"August 02, 2026",Victor Hale,Technology,Oakridge Lumber,01-7700-5300,association dues,119.40,Rejected,,,
+PR-27-0062,02-Aug-2026,Victor Hale,Technology,Bluewater Janitorial,01 7700 5600,lift rental,"$1,372.70",Approved,Anita Rao,,PO-27-0038
+PR-27-0063,Aug 03 2026,Sean Mulligan,Facilities & Maintenance,Gateway Staffing,0181005200,mileage and lodging,185.70,Approved,Marcus Bell,,PO-27-0034
+PR-27-0064,Aug 04 2026,Victor Hale,Technology,Olympus Testing Labs Inc.,01.7700.5600,copier lease,1120.10,Approved,Anita Rao,,PO-27-0039
+PR-27-0065,08/06/26,Lucia Moreno,Curriculum & Instruction,Integrity Translation Services,01 2100 6500,end-of-life replacement,"$35,558.00",Approved,Yvonne Castillo,Approved,PO-27-0042
+PR-27-0066,"August 06, 2026",Sean Mulligan,Facilities & Maintenance,Integrity Translation Services,01-8100-5800,therapy services,"$3,642.80",Submitted,,,
+PR-27-0067,08/06/26,Victor Hale,Technology,Olympus Testing Labs Inc.,0177004300,cable and connectors,1649.90,Submitted,,,
+PR-27-0068,"August 07, 2026",Ben Adler,Curriculum & Instruction,Oakridge Lumber,01-2100-6500,replacement unit,14874.30,Submitted,,,
+PR-27-0069,08/07/2026,Ada Park,Facilities & Maintenance,Vista Hearing Services,01.8100.5900,phone service,2206.85,Submitted,,,
+PR-27-0070,2026-08-07,Priya Nair,Special Education,Integrity Translation Services,01-1180-4100,textbooks,580.80,Approved,Terrence Holt,,PO-27-40
+PR-27-0071,"August 07, 2026",Priya Nair,Special Education,Lantern Special Needs Transport,01.1180.5900,radio licenses,918.75,Rejected,Terrence Holt,,
+PR-27-0072,Aug 07 2026,Jordan Blake,Technology,Keel Marine & Outdoor Ed LLC,01.7700.5200,mileage and lodging,"$1,414.25",Approved,Anita Rao,,PO-27-0041
+PR-27-0073,"August 09, 2026",Ben Adler,Curriculum & Instruction,Keystone Therapy Associates,01-2100-5800,assessment services,"$15,378.50",Approved,Yvonne Castillo,Approved,PO-27-0044
+PR-27-0074,"August 09, 2026",Karen Whitlock,Transportation,Cornerstone HVAC Services,01 3600 6500,equipment replacement,"$11,109.35",Approved,Denise Harlan,Approved,PO-27-0043
+PR-27-0075,"August 10, 2026",Ada Park,Facilities & Maintenance,Integrity Translation Services,01.8100.4300,credit for returned supplies,-480.00,Rejected,,,
+PR-27-0076,08/10/2026,Hector Ibanez,Food Services,Coastline Uniforms LLC,13-3700-5600,equipment repair,"$1,204.25",Approved,Gloria Vance,,PO-27-0045
+PR-27-0077,08/10/2026,Luis Ferreira,Transportation,Bluewater Janitorial,01-3600-6500,equipment replacement,10422.45,Dept Approved,Denise Harlan,,
+PR-27-0078,2026-08-11,Karen Whitlock,Transportation,Patriot Locksmith LLC,01-3600-4100,workbooks,"$2,056.85",Approved,Denise Harlan,,PO-27-0049
+PR-27-0079,08/12/26,Pam Russo,Food Services,Anchor Legal Group,13-3700-6400,installed equipment,19820.80,Approved,Gloria Vance,Approved,PO-27-0050
+PR-27-0080,"August 12, 2026",Karen Whitlock,Transportation,Sunrise Bakery Wholesale,01-3600-6400,equipment purchase,"$9,014.70",Submitted,,,
+PR-27-0081,13-Aug-2026,Tom Okonkwo,Facilities & Maintenance,Cobalt Cybersecurity LLC,01 8100 4100,textbooks,"$5,397.05",Approved,Marcus Bell,Approved,PO-27-0046
+PR-27-0082,08/13/2026,Mei Chen,Technology,Sierra Paint Supply,01-7700-5800,assessment services,"$8,261.85",Approved,Anita Rao,Approved,PO-27-0051
+PR-27-0083,08/13/2026,Luis Ferreira,Transportation,Canyon Water Treatment,01-3600-6400,equipment purchase,"$7,397.65",Approved,Denise Harlan,Approved,PO-27-0047
+PR-27-0084,"August 13, 2026",Omar Siddiqui,Transportation,Mission Linen Service,01-3600-5800,therapy services,17019.80,Submitted,,,
+PR-27-0085,Aug 14 2026,Jordan Blake,Technology,Frontier Computer Recycling LLC,01-7700-5800,assessment services,9196.70,Approved,Anita Rao,Approved,PO-27-0048
+PR-27-0086,"August 15, 2026",Lucia Moreno,Curriculum & Instruction,Paramount Network Solutions,01-2100-4200,binder sets,867.40,Submitted,,,
+PR-27-0087,08/15/2026,Luis Ferreira,Transportation,Crescent Library Services,01-3600-5500,waste hauling,739.90,Rejected,Denise Harlan,,
+PR-27-0088,Aug 15 2026,Luis Ferreira,TRANSPORTATION,Pacific Coast Dairy Inc.,01-3600-5500,custodial service,"$1,118.70",Rejected,Denise Harlan,,
+PR-27-0089,16-Aug-2026,Tom Okonkwo,Facilities & Maintenance,Lumen Classroom Technology,01-8100-6500,equipment replacement,"$16,707.45",Approved,Marcus Bell,Approved,PO-27-0052
+PR-27-0090,08/17/2026,Mei Chen,Technology,Keel Marine & Outdoor Ed LLC,01-7700-5900,phone service,1587.45,Submitted,,,
+PR-27-0091,Aug 17 2026,Omar Siddiqui,Transportation,Jadeite Lab Equipment LLC,01.3600.5600,lift rental,10381.10,Approved,Denise Harlan,Approved,PO-27-0053
+PR-27-0092,18-Aug-2026,Pam Russo,Food Services,Rolling Hills Charter Bus,13-3700-5900,phone service,"$2,791.95",Approved,Gloria Vance,Approved,PO-27-0056
+PR-27-0093,18-Aug-2026,Karen Whitlock,Transportation,Cascade Office Products,01-3600-4400,label printer,1628.40,Approved,Denise Harlan,,PO-27-0054
+PR-27-0094,08/18/2026,Omar Siddiqui,Transportation,Driftwood Art Supply,01-3600-6500,replacement unit,"$17,777.35",Approved,Denise Harlan,Approved,PO-27-0055
+PR-27-0095,"August 20, 2026",Pam Russo,Food Services,Bridgewater Auditors LLC,1337005600,lift rental,5270.60,Approved,Gloria Vance,Approved,PO27-0057
+PR-27-0096,2026-08-21,Lucia Moreno,Curriculum & Instruction,Zenith Copier Leasing Inc.,01-2100-5900,phone service,381.25,Rejected,Yvonne Castillo,,
+PR-27-0097,"August 22, 2026",Tom Okonkwo,Facilities & Maintenance,Frontier Computer Recycling LLC,01-8100-5600,lift rental,"$11,027.90",Approved,Marcus Bell,Approved,PO-27-0058
+PR-27-0098,2026-08-22,Pam Russo,FOOD SERVICES,Delta Diesel Repair,13-3700-6500,replacement unit,10053.15,Approved,Gloria Vance,Approved,PO-27-0059
+PR-27-0099,Aug 22 2026,Mei Chen,Technology,Driftwood Art Supply,01-7700-5300,association dues,912.75,Approved,Anita Rao,,PO-27-0060
+PR-27-0100,08/23/26,Grant Howell,Curriculum & Instruction,Coastline Uniforms LLC,01 2100 4100,core curriculum kits,"$1,712.10",Submitted,,,
+PR-27-0101,Aug 24 2026,Priya Nair,Special Ed,Sunrise Bakery Wholesale,0111806400,equipment purchase,28547.15,Approved,Terrence Holt,Approved,PO-27-0061
+PR-27-0102,Aug 28 2026,Ada Park,Facilities & Maintenance,Crescent Library Services,01.8100.5900,phone service,1441.25,Approved,Marcus Bell,,PO-27-0062
+PR-27-0103,08/28/26,Carl Jensen,Special Education,Bluewater Janitorial,01-1180-5900,phone service,"$2,994.55",Approved,Terrence Holt,Approved,PO-27-0064
+PR-27-0104,"August 29, 2026",Sean Mulligan,Facilities & Maintenance,Bluewater Janitorial,01-8100-6400,installed equipment,"$31,241.30",Dept Approved,Marcus Bell,,
+PR-27-0105,"August 29, 2026",Pam Russo,Food Services,Metro Fire Protection Inc.,13 3700 4400,label printer,563.70,Approved,Gloria Vance,,PO-27-0065
+PR-27-0106,2026-08-29,Priya Nair,Special Education,Cobalt Cybersecurity LLC,01-1180-6500,end-of-life replacement,15442.00,Submitted,,,
+PR-27-0107,2026-08-30,Mei Chen,Technology,Zenith Copier Leasing Inc.,01 7700 5300,annual membership,"$1,452.65",Approved,Anita Rao,,PO-27-0063
+PR-27-0108,2026-08-30,Luis Ferreira,Transportation,Jadeite Lab Equipment LLC,01-3600-5900,radio licenses,752.95,Approved,Denise Harlan,,PO-27-0067
+PR-27-0109,2026-08-30,Omar Siddiqui,TRANSPORTATION,Metro Fire Protection Inc.,01.3600.5500,custodial service,"$1,840.25",Submitted,,,
+PR-27-0110,08/31/26,Ada Park,Facilities & Maintenance,Pacific Coast Dairy Inc.,01-8100-5900,radio licenses,853.05,Approved,Marcus Bell,,PO-27-0068
+PR-27-0111,08/31/26,Sean Mulligan,Facilities & Maintenance,Northgate Uniform Rental Inc.,01 8100 4400,label printer,3312.50,Dept Approved,Marcus Bell,,
+PR-27-0112,Sep 02 2026,Ben Adler,C&I,Integrity Translation Services,01-2100-4300,classroom supplies,"$3,646.50",Approved,Yvonne Castillo,Approved,PO-27-0066
+PR-27-0113,02-Sep-2026,Karen Whitlock,Transportation,Frontier Computer Recycling LLC,01-3600-5300,annual membership,1265.50,Approved,Denise Harlan,,PO-27-0069
+PR-27-0114,Sep 02 2026,Luis Ferreira,Transportation,First Student Transit Parts Inc.,01-3600-5200,conference registration,"$2,098.55",Approved,Denise Harlan,,PO-27-0070
+PR-27-0115,09/03/26,Sean Mulligan,FACILITIES & MAINTENANCE,Monarch Classroom Furniture,01.8100.4300,brake pads,799.75,Submitted,,,
+PR-27-0116,Sep 03 2026,Mei Chen,Technology,Sunrise Bakery Wholesale,01-7700-4300,classroom supplies,2262.15,Approved,Anita Rao,,PO-27-0073
+PR-27-0117,"September 03, 2026",Jordan Blake,Technology,Cobalt Cybersecurity LLC,01.7700.6400,installed equipment,"$18,402.35",Approved,Anita Rao,Approved,PO-27-0071
+PR-27-0118,09/04/2026,Ada Park,M&O,Wavecrest Telecom,01-8100-6500,equipment replacement,30666.50,Approved,Marcus Bell,Approved,PO-27-0075
+PR-27-0119,04-Sep-2026,Victor Hale,technology,Central Valley Tire Inc.,01-7700-5500,custodial service,"$1,018.15",Approved,Anita Rao,,PO-27-0078
+PR-27-0120,2026-09-05,Lucia Moreno,CURRICULUM & INSTRUCTION,Rolling Hills Charter Bus,01-2100-4300,cable and connectors,215.15,Submitted,,,
+PR-27-0121,09/05/2026,Pam Russo,Food Services,Westfield Elevator Inc.,13-3700-5300,annual membership,1284.90,Approved,Gloria Vance,,PO-27-0072
+PR-27-0122,09/05/2026,Mei Chen,Technology,Paramount Network Solutions,01-7700-5200,mileage and lodging,1948.55,Submitted,,,
+PR-27-0123,"September 06, 2026",Mei Chen,Technology,Gateway Staffing,01-7700-5900,phone service,461.85,Submitted,,,
+PR-27-0124,"September 06, 2026",Luis Ferreira,Transportation,Horizon Educational Publishing Inc.,01-3600-5800,consulting services,6644.90,Rejected,Denise Harlan,Rejected,
+PR-27-0125,"September 07, 2026",Carl Jensen,Special Education,Golden State Food Distributors Inc.,01-1180-6500,replacement unit,"$23,805.05",Approved,Terrence Holt,Approved,PO-27-0074
+PR-27-0126,"September 08, 2026",Hector Ibanez,FOOD SERVICES,Upland Irrigation LLC,13-3700-4400,tablet cart,"$3,439.20",Approved,Gloria Vance,Approved,PO-27-0076
+PR-27-0127,08-Sep-2026,Mei Chen,Technology,Evergreen Landscaping,01-7700-5500,custodial service,"$2,598.15",Approved,Anita Rao,Approved,PO-27-0077
+PR-27-0128,Sep 09 2026,Lucia Moreno,Curriculum & Instruction,Kingsley Moving & Storage LLC,01-2100-4100,textbooks,3458.55,Approved,Yvonne Castillo,Approved,PO-27-79
+PR-27-0129,09/09/2026,Tom Okonkwo,Facilities & Maintenance,Orchard Fresh Farms LLC,01-8100-5600,lift rental,"$5,096.50",Rejected,Marcus Bell,Rejected,
+PR-27-0130,09/09/26,Mei Chen,technology,Liberty Playground Equipment Inc.,01-7700-5200,conference registration,"$1,146.40",Approved,Anita Rao,,PO-27-0080

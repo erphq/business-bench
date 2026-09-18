@@ -1,0 +1,9 @@
+JE-2026-07-31-ACC  Month-end accruals July 2026
+Auto-reverse on 08/01/2026: YES
+Date,Reference,Vendor,Account,Memo,Debit,Credit
+07/31/2026,PO-26-0340,Wexford Audit Partners,6210,FY2026 audit fieldwork - July (estimate),"4,389.37",
+07/31/2026,PO-26-0344,Tri-County Waste Services,6110,Dumpster swaps after strike - July,537.48,
+07/31/2026,PO-26-0363,Cobalt Scenic Paints,5130,Paint and sundries - July,601.27,
+07/31/2026,PO-26-0365,Rigging Hands Staffing,5110,Stage crew load-in 07/27 - 07/31,"3,118.19",
+07/31/2026,PO-26-0368,Harbor City Power & Light,6110,Electric service July (estimate),"2,686.44",
+07/31/2026,,,2150,Accrued expenses - July close,,"11,332.75"

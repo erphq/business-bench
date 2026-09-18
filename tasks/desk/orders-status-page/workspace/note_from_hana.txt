@@ -1,0 +1,24 @@
+From: Hana Okafor
+To: you
+Date: Sun, 13 Sep 2026 18:10
+Subject: weekly orders page
+
+Every Monday the packing team asks me where things stand, so I would like a page I can leave open on the packing-bench laptop: one HTML file, no logins, nothing it has to load, and no scripts - that laptop's browser is locked down.
+
+At the top, how many orders are in each status, and the week's revenue. Under that a table with one row per order: order number, customer, status and the order total.
+
+The store uses its own codes for status. We talk about orders like this:
+  AWAITING_PAYMENT = Awaiting payment
+  PAID_UNFULFILLED and PARTIALLY_FULFILLED = To pack (a part-shipped order still has something to pack)
+  ON_HOLD = On hold
+  FULFILLED and IN_TRANSIT = Shipped
+  DELIVERED = Delivered
+  CANCELLED and VOIDED = Cancelled
+
+Order total is the items plus shipping. The export repeats the shipping charge on every line of an order, but we only charge it once.
+
+Cancelled orders stay in the table and in the counts so the team knows not to pack them, but they are not revenue. Everything else is.
+
+Anything tagged test is me trying the checkout - leave those off completely.
+
+Hana

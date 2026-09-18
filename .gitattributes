@@ -1,0 +1,7 @@
+# Fixture bytes are part of the benchmark contract, including line endings.
+tasks/** -text -whitespace
+*.pdf binary
+*.xlsx binary
+*.png binary
+*.jpg binary
+*.sqlite binary

@@ -1,0 +1,294 @@
+Appt ID,Date,Start Time,Duration,Patient ID,Patient,Therapist,Type,Status,Notes
+A-30001,03-Aug-2026,8:00,45 min,006203,Yuki Green,LENA FISCHER,Follow-up,Cancelled,
+A-30002,08/03/2026,8:45am,30,002400,Joseph Howard,Lena Fischer,Short Follow-up,Completed,"Neck pain, desk posture"
+A-30003,03-Aug-2026,9:30,45,005254,Gary Lewis,Lena Fischer,Follow-up,Completed,Tennis elbow
+A-30004,08/03/2026,13:15,1:00,003328,Daniel Johnson,Sam Okafor,Initial Assessment,No-show,
+A-30005,2026-08-03,14:30,45 min,003163,Anna Morales,Sam Okafor,Follow-up,LATE CANCEL,
+A-30006,"August 03, 2026",16:00,60,008027,Ingrid Reed,Diego Ramos,Initial Assessment,Completed,"Neck pain, desk posture"
+A-30006,"August 03, 2026",16:00,60,008027,Ingrid Reed,Diego Ramos,Initial Assessment,Completed,"Neck pain, desk posture"
+A-30007,"August 03, 2026",17:00,0:45,006080,Jessica Nelson,DIEGO RAMOS,Follow-up,No-show,Post-op ACL wk 8
+A-30008,08/03/2026,17:45,0:45,9230,Kwame Rivera,Diego Ramos,Follow-up,Late cancel,
+A-30009,2026-08-04,8am,30,005258,Matthew Richardson,Priya Nair,Short Follow-up,Completed,Rotator cuff repair wk 10
+A-30010,08/04/2026,09:00,0:45,002589,Nicholas Harris,Priya Nair,Follow-up,Completed,Rotator cuff repair wk 10
+A-30011,2026-08-04,9:45am,45 min,009255,Melissa RODRIGUEZ,Priya Nair,Follow-up,Completed,Post-op ACL wk 8
+A-30012,04-Aug-2026,4:30pm,1h,006920,Nancy Kelly,Marcus Bell,Initial Assessment,No-show,Post-op ACL wk 8
+A-30013,"August 04, 2026",17:30,0:45,003693,Joseph Harris,Marcus Bell,Follow-up,Completed,"Low back pain, extension bias"
+A-30014,"August 04, 2026",18:15,30,6711,Matthew Castillo,Marcus Bell,Short Follow-up,COMPLETED,"Low back pain, extension bias"
+A-30015,08/05/2026,8:00 AM,45 min,008182,Carol Wilson,Hana Sato,Follow-up,No-show,Ankle sprain grade II
+A-30016,2026-08-05,8:45am,45 min,7469,Jessica Parker,Hana Sato,Follow-up,COMPLETED,"Low back pain, extension bias"
+A-30017,08/05/26,9:30,30,3394,Dmitri Green,Hana Sato,Short Follow-up,Completed,Tennis elbow
+A-30018,05-Aug-2026,10:00,0:30,007410,John Myers,Hana Sato,Short Follow-up,Completed,
+A-30019,08/05/2026,13:15,45 min,008474,Dana Jackson,Priya Nair,Follow-up,COMPLETED,"Low back pain, extension bias"
+A-30020,"August 05, 2026",13:30,30,8971,Jason Howard,Lena Fischer,Short Follow-up,Completed,Post-op ACL wk 8
+A-30021,2026-08-05,2pm,45,008568,Charles Anderson,Lena Fischer,Follow-up,Completed,Plantar fasciitis
+A-30022,"August 05, 2026",14:00,45 min,005251,Andrew Collins,Priya Nair,Follow-up,Completed,Plantar fasciitis
+A-30023,2026-08-05,2:45 PM,60,9283,Patricia Walker,Lena Fischer,Initial Assessment,Cancelled,Plantar fasciitis
+A-30024,05-Aug-2026,14:45,30 min,7131,Kevin Wilson,Priya Nair,Short Follow-up,Completed,Hip replacement rehab wk 4
+A-30025,2026-08-05,3:30pm,30 min,003927,Christopher Turner,Priya Nair,Short Follow-up,Late cancel,Hip replacement rehab wk 4
+A-30026,08/05/26,4:00 PM,30,009230,Kwame Rivera,Diego Ramos,Short Follow-up,Completed,Plantar fasciitis
+A-30027,"August 05, 2026",16:30,45 min,005717,Christopher Lewis,Diego Ramos,Follow-up,Completed,"Neck pain, desk posture"
+A-30028,05-Aug-2026,17:30,45 min,004200,Luis Kim,Diego Ramos,Follow-up,Completed,Post-op ACL wk 8
+A-30029,08/05/26,6:15pm,0:45,5577,Nadia Reed,Diego Ramos,Follow-up,No-show,"Low back pain, extension bias"
+A-30030,2026-08-06,8:00,45 min,003328,Daniel Johnson,Sam Okafor,Follow-up,COMPLETED,Post-op ACL wk 8
+A-30031,"August 06, 2026",9:00 AM,30,006113,Joseph Cooper,Sam Okafor,Short Follow-up,Cancelled,"Low back pain, extension bias"
+A-30031,"August 06, 2026",9:00 AM,30,006113,Joseph Cooper,Sam Okafor,Short Follow-up,Cancelled,"Low back pain, extension bias"
+A-30032,"August 06, 2026",9:30 AM,0:30,002985,Susan Young,Sam Okafor,Short Follow-up,Completed,"Low back pain, extension bias"
+A-30033,"August 06, 2026",10:00 AM,0:45,006130,James Kim,Sam Okafor,Follow-up,Completed,L knee OA - progress strengthening
+A-30034,"August 07, 2026",09:15,0:45,4975,Shirley Myers,Lena Fischer,Follow-up,Completed,L knee OA - progress strengthening
+A-30035,08/07/2026,10:15am,45 min,008184,Tomasz Tanaka,Lena Fischer,Follow-up,Completed,Rotator cuff repair wk 10
+A-30036,08/07/26,11:00,45,005384,Karen Ward,Lena Fischer,Follow-up,COMPLETED,Tennis elbow
+A-30037,"August 07, 2026",1pm,45 min,001931,Yuki Brown,Marcus Bell,Follow-up,Completed,
+A-30038,08/07/2026,14:15,30 min,006234,Patricia Roberts,Marcus Bell,Short Follow-up,Completed,Post-op ACL wk 8
+A-30039,08/07/26,15:00,1h,003484,Kathleen Ross,Marcus Bell,Initial Assessment,Completed,
+A-30040,08-Aug-2026,09:00,0:45,006401,Angela Young,Hana Sato,Follow-up,Completed,Tennis elbow
+A-30041,08-Aug-2026,10:15,30,7340,Jonathan Cruz,Hana Sato,Short Follow-up,Cancelled,
+A-30042,08/08/2026,10:45am,45,2272,Patricia Cox,Hana Sato,Follow-up,Completed,Plantar fasciitis
+A-30042,08/08/2026,10:45am,45,2272,Patricia Cox,Hana Sato,Follow-up,Completed,Plantar fasciitis
+A-30043,08/10/2026,08:30,45 min,002919,Jessica Harris,Lena Fischer,Follow-up,Completed,
+A-30044,08/10/26,9:15am,0:45,002400,Joseph Howard,Lena Fischer,Follow-up,Completed,
+A-30045,10-Aug-2026,10:15am,45 min,005153,Shirley Bailey,Lena Fischer,Follow-up,Completed,Rotator cuff repair wk 10
+A-30046,10-Aug-2026,13:00,45,006409,Kevin Moore,Sam Okafor,Follow-up,Completed,Hip replacement rehab wk 4
+A-30047,08/10/2026,14:15,45,003686,Carlos Nelson,Sam Okafor,Follow-up,No-show,"Low back pain, extension bias"
+A-30048,08/10/26,3pm,60,7348,Yuki Nguyen,Sam Okafor,Initial Assessment,Completed,
+A-30049,08/10/2026,16:00,45 min,008027,Ingrid Reed,Diego Ramos,Follow-up,Completed,Post-op ACL wk 8
+A-30050,10-Aug-2026,4:45pm,45 min,5318,Dmitri Morgan,Diego Ramos,Follow-up,Completed,Rotator cuff repair wk 10
+A-30051,2026-08-10,6:15 PM,30,009675,Kevin Cox,Diego Ramos,Short Follow-up,Completed,Hip replacement rehab wk 4
+A-30052,"August 11, 2026",8:00 AM,45,003335,Kathleen Wood,Priya Nair,Follow-up,Completed,
+A-30053,11-Aug-2026,8:45,0:30,6484,Rebecca Roberts,Priya Nair,Short Follow-up,No-show,Post-op ACL wk 8
+A-30054,11-Aug-2026,9:15 AM,0:45,2589,Nicholas Harris,Priya Nair,Follow-up,No-show,
+A-30055,11-Aug-2026,10:15 AM,45,008474,Dana Jackson,Priya Nair,Follow-up,Completed,
+A-30055,11-Aug-2026,10:15 AM,45,008474,Dana Jackson,Priya Nair,Follow-up,Completed,
+A-30056,11-Aug-2026,16:15,45,004397,Angela Reed,Marcus Bell,Follow-up,Completed,L knee OA - progress strengthening
+A-30057,08/11/2026,17:15,60,006711,Matthew Castillo,Marcus Bell,Initial Assessment,Completed,"Low back pain, extension bias"
+A-30058,08/12/26,8am,45 min,6031,Melissa Scott,Hana Sato,Follow-up,Cancelled,"Neck pain, desk posture"
+A-30059,08/12/26,09:30,0:45,7410,John Myers,HANA SATO,Follow-up,Completed,L knee OA - progress strengthening
+A-30060,"August 12, 2026",10:15,30 min,004964,Kwame Hall,Hana Sato,Short Follow-up,Completed,Ankle sprain grade II
+A-30061,2026-08-12,13:00,45,4975,Shirley Myers,Lena Fischer,Follow-up,Completed,Ankle sprain grade II
+A-30062,12-Aug-2026,13:00,1:00,006931,Ingrid Wright,Priya Nair,Initial Assessment,Late cancel,"Low back pain, extension bias"
+A-30063,2026-08-12,1:45pm,1:00,009537,Sofia Richardson,Lena Fischer,Initial Assessment,No-show,R shoulder impingement
+A-30064,08/12/2026,14:15,60 min,001371,Susan Scott,Priya Nair,Initial Assessment,Completed,"Neck pain, desk posture"
+A-30065,2026-08-12,14:45,45 min,6401,Angela Young,Lena Fischer,Follow-up,Completed,"Neck pain, desk posture"
+A-30066,12-Aug-2026,16:15,0:45,007129,Patricia Wood,Diego Ramos,Follow-up,Completed,"Low back pain, extension bias"
+A-30066,12-Aug-2026,16:15,0:45,007129,Patricia Wood,Diego Ramos,Follow-up,Completed,"Low back pain, extension bias"
+A-30067,2026-08-12,5:15pm,45,004194,Jeffrey Sanchez,Diego Ramos,Follow-up,COMPLETED,Post-op ACL wk 8
+A-30068,08/12/2026,6:00 PM,0:45,3421,David Brown,Diego Ramos,Follow-up,Completed,Rotator cuff repair wk 10
+A-30069,"August 13, 2026",08:15,30,004628,Jonathan Morales,Sam Okafor,Short Follow-up,Completed,Hip replacement rehab wk 4
+A-30070,08/13/26,9:00 AM,60 min,006026,Mary Rodriguez,Sam Okafor,Initial Assessment,Completed,
+A-30071,13-Aug-2026,10:00,60 min,001639,Paul Rivera,Sam Okafor,Initial Assessment,Completed,
+A-30072,08/14/26,09:30,30,001450,Donald Clark,Lena Fischer,Short Follow-up,Completed,Tennis elbow
+A-30073,08/14/26,10:45,1:00,9647,Ryan Kim,Lena Fischer,Initial Assessment,Completed,Post-op ACL wk 8
+A-30074,14-Aug-2026,1:00 PM,1h,2491,Kimberly Mendoza,Marcus Bell,Initial Assessment,Cancelled,Tennis elbow
+A-30075,08/14/2026,14:15,45,008406,Christopher Ward,Marcus Bell,Follow-up,Completed,Plantar fasciitis
+A-30076,2026-08-14,3:15pm,0:45,008182,Carol Wilson,Marcus Bell,Follow-up,Completed,
+A-30077,08/15/2026,9am,45,007410,John Myers,Hana Sato,Follow-up,Completed,L knee OA - progress strengthening
+A-30078,15-Aug-2026,10:45,60 min,005021,Kenneth Garcia,Hana Sato,Initial Assessment,Completed,Hip replacement rehab wk 4
+A-30079,17-Aug-2026,08:00,0:30,009283,Patricia Walker,Lena Fischer,Short Follow-up,Completed,
+A-30080,17-Aug-2026,8:30am,0:45,007902,Joseph Tanaka,Lena Fischer,Follow-up,COMPLETED,
+A-30081,08/17/26,09:30,30,006416,Paul Young,Lena Fischer,Short Follow-up,Completed,L knee OA - progress strengthening
+A-30082,"August 17, 2026",10:15,30 min,5153,Shirley Bailey,Lena Fischer,Short Follow-up,COMPLETED,
+A-30083,08/17/26,1:00 PM,0:45,3328,Daniel Johnson,Sam Okafor,Follow-up,Completed,"Neck pain, desk posture"
+A-30084,2026-08-17,14:15,30 min,004396,Donna Morris,Sam Okafor,Short Follow-up,Completed,Tennis elbow
+A-30085,17-Aug-2026,2:45pm,0:45,002603,Timothy Alvarez,Sam Okafor,Follow-up,Completed,Hip replacement rehab wk 4
+A-30086,08/17/2026,16:00,0:45,007410,John Myers,Diego Ramos,Follow-up,Completed,L knee OA - progress strengthening
+A-30087,17-Aug-2026,16:45,45,001318,Jeffrey Nelson,Diego Ramos,Follow-up,Completed,Tennis elbow
+A-30088,2026-08-17,5:45 PM,45,008363,Betty Rodriguez,DIEGO RAMOS,Follow-up,Completed,
+A-30089,"August 18, 2026",08:00,0:45,002589,Nicholas Harris,Priya Nair,Follow-up,Completed,"Low back pain, extension bias"
+A-30090,08/18/26,9:00 AM,60 min,7131,Kevin Wilson,Priya Nair,Initial Assessment,Cancelled,Hip replacement rehab wk 4
+A-30091,18-Aug-2026,10am,45 min,3043,Kenneth Hill,Priya Nair,Follow-up,Completed,Tennis elbow
+A-30092,08/18/2026,4pm,45 min,2447,Nadia Wright,Marcus Bell,Follow-up,COMPLETED,Tennis elbow
+A-30093,2026-08-18,16:45,0:30,004397,Angela Reed,Marcus Bell,Short Follow-up,No-show,Tennis elbow
+A-30094,08/18/26,17:15,45 min,001331,Richard Brown,Marcus Bell,Follow-up,Completed,Hip replacement rehab wk 4
+A-30095,08/19/26,8:15,45,006058,Carlos NELSON,Hana Sato,Follow-up,No-show,L knee OA - progress strengthening
+A-30096,"August 19, 2026",09:00,45,7410,John Myers,Hana Sato,Follow-up,Completed,Plantar fasciitis
+A-30097,2026-08-19,9:45,60 min,006409,Kevin Moore,Hana Sato,Initial Assessment,Completed,"Neck pain, desk posture"
+A-30098,08/19/2026,1pm,30,009283,Patricia Walker,Lena Fischer,Short Follow-up,Completed,Post-op ACL wk 8
+A-30099,19-Aug-2026,1pm,60 min,003163,Anna Morales,PRIYA NAIR,Initial Assessment,Completed,Hip replacement rehab wk 4
+A-30100,08/19/26,13:45,45 min,2919,Jessica Harris,Lena Fischer,Follow-up,Completed,
+A-30101,"August 19, 2026",2:30pm,30 min,008971,Jason Howard,Lena Fischer,Short Follow-up,Completed,
+A-30102,08/19/2026,2:45 PM,45 min,006019,Kathleen Jackson,Priya Nair,Follow-up,Completed,R shoulder impingement
+A-30103,19-Aug-2026,3pm,1h,9537,Sofia Richardson,Lena Fischer,Initial Assessment,Completed,Ankle sprain grade II
+A-30104,2026-08-19,4pm,45 min,006521,Jonathan Castillo,Diego Ramos,Follow-up,No-show,"Neck pain, desk posture"
+A-30105,2026-08-19,16:45,60 min,005544,Edward Gray,Diego Ramos,Initial Assessment,Completed,Ankle sprain grade II
+A-30106,08/19/26,6:00 PM,30,006080,Jessica Nelson,Diego Ramos,Short Follow-up,Completed,Tennis elbow
+A-30107,08/20/2026,8:30,1:00,006559,Linda Walker,Sam Okafor,Initial Assessment,Completed,L knee OA - progress strengthening
+A-30108,20-Aug-2026,9:30 AM,30,003102,Emily Adams,Sam Okafor,Short Follow-up,Completed,Ankle sprain grade II
+A-30109,08/20/2026,10:00,30 min,006113,Joseph Cooper,Sam Okafor,Short Follow-up,Completed,L knee OA - progress strengthening
+A-30110,"August 21, 2026",09:00,1:00,005153,Shirley Bailey,Lena Fischer,Initial Assessment,Completed,L knee OA - progress strengthening
+A-30111,08/21/26,10:45,30,001255,Nancy Phillips,Lena Fischer,Short Follow-up,Late cancel,"Neck pain, desk posture"
+A-30112,"August 21, 2026",1:15pm,45,002491,Kimberly Mendoza,MARCUS BELL,Follow-up,Completed,
+A-30113,21-Aug-2026,14:00,45,005021,Kenneth Garcia,Marcus Bell,Follow-up,Completed,
+A-30114,2026-08-21,2:45pm,0:45,007062,Rebecca Bennett,Marcus Bell,Follow-up,Completed,Post-op ACL wk 8
+A-30115,"August 22, 2026",9:15 AM,60 min,007410,John Myers,Hana Sato,Initial Assessment,Completed,Plantar fasciitis
+A-30116,22-Aug-2026,10:15 AM,45 min,002723,Mateo Ross,Hana Sato,Follow-up,Completed,"Low back pain, extension bias"
+A-30117,08/22/2026,11:00,30 min,003394,Dmitri Green,Hana Sato,Short Follow-up,Completed,L knee OA - progress strengthening
+A-30118,08/24/26,08:00,1:00,001931,Yuki Brown,Lena Fischer,Initial Assessment,Late cancel,Tennis elbow
+A-30119,24-Aug-2026,09:30,1:00,008406,Christopher Ward,LENA FISCHER,Initial Assessment,Completed,
+A-30120,24-Aug-2026,1:00 PM,1:00,006559,Linda Walker,Sam Okafor,Initial Assessment,Completed,L knee OA - progress strengthening
+A-30121,24-Aug-2026,14:15,0:45,008439,Amy Lindqvist,Sam Okafor,Follow-up,Cancelled,L knee OA - progress strengthening
+A-30122,08/24/2026,15:15,0:45,4396,Donna Morris,Sam Okafor,Follow-up,Completed,
+A-30123,08/24/26,16:15,60,004401,Donna Morris,Diego Ramos,Initial Assessment,Completed,L knee OA - progress strengthening
+A-30124,24-Aug-2026,5:15 PM,1h,007885,James Adams,Diego Ramos,Initial Assessment,Completed,Post-op ACL wk 8
+A-30125,08/25/26,8:00 AM,60,005204,Ryan Harris,PRIYA NAIR,Initial Assessment,Late cancel,L knee OA - progress strengthening
+A-30126,25-Aug-2026,09:15,30,009122,Amanda Walker,Priya Nair,Short Follow-up,Completed,L knee OA - progress strengthening
+A-30127,2026-08-25,10:00 AM,45,006931,Ingrid Wright,Priya Nair,Follow-up,Completed,Hip replacement rehab wk 4
+A-30128,08/25/26,16:00,60 min,1331,Richard Brown,Marcus Bell,Initial Assessment,Completed,Hip replacement rehab wk 4
+A-30129,08/25/26,5:15pm,30 min,8013,Betty Foster,Marcus Bell,Short Follow-up,COMPLETED,
+A-30130,08/25/2026,17:45,45,003693,Joseph Harris,MARCUS BELL,Follow-up,Late cancel,"Low back pain, extension bias"
+A-30131,26-Aug-2026,8:15 AM,0:45,007469,Jessica Parker,Hana Sato,Follow-up,Completed,Hip replacement rehab wk 4
+A-30132,08/26/26,9am,45 min,003355,Rebecca Lopez,Hana Sato,Follow-up,Cancelled,"Neck pain, desk posture"
+A-30133,08/26/26,10:00 AM,45,006019,Kathleen Jackson,Hana Sato,Follow-up,Completed,"Neck pain, desk posture"
+A-30134,08/26/2026,1:00 PM,45 min,8971,Jason Howard,Lena Fischer,Follow-up,Completed,Post-op ACL wk 8
+A-30135,26-Aug-2026,13:15,45 min,006031,Melissa Scott,Priya Nair,Follow-up,Completed,
+A-30136,"August 26, 2026",14:00,45,006931,Ingrid Wright,Lena Fischer,Follow-up,Completed,
+A-30137,"August 26, 2026",2:15 PM,45 min,005251,Andrew Collins,Priya Nair,Follow-up,Completed,Rotator cuff repair wk 10
+A-30138,2026-08-26,15:00,45 min,005153,Shirley Bailey,Lena Fischer,Follow-up,NO-SHOW,Ankle sprain grade II
+A-30139,08/26/26,3:30 PM,0:30,004196,Wei Hall,Priya Nair,Short Follow-up,COMPLETED,Tennis elbow
+A-30140,2026-08-26,4:15pm,60,007205,Ronald Edwards,Diego Ramos,Initial Assessment,Completed,Post-op ACL wk 8
+A-30141,26-Aug-2026,17:15,45 min,009230,Kwame Rivera,Diego Ramos,Follow-up,Completed,
+A-30142,26-Aug-2026,6:00 PM,60 min,006914,Ryan Bailey,Diego Ramos,Initial Assessment,Completed,L knee OA - progress strengthening
+A-30143,"August 27, 2026",8:00,0:45,004396,Donna Morris,Sam Okafor,Follow-up,Completed,L knee OA - progress strengthening
+A-30144,"August 27, 2026",9:00,45,006234,Patricia Roberts,Sam Okafor,Follow-up,Completed,Post-op ACL wk 8
+A-30145,2026-08-27,10:15am,45,003826,Rahul Allen,Sam Okafor,Follow-up,Completed,
+A-30146,08/28/2026,9:00,45,005254,Gary Lewis,Lena Fischer,Follow-up,Completed,
+A-30147,08/28/2026,09:45,45,003686,Carlos Nelson,Lena Fischer,Follow-up,Completed,
+A-30148,08/28/26,10:30,30,003845,Mark Garcia,Lena Fischer,Short Follow-up,Completed,"Low back pain, extension bias"
+A-30149,"August 28, 2026",11:00 AM,1h,007791,Brian Rodriguez,Lena Fischer,Initial Assessment,Late cancel,Ankle sprain grade II
+A-30150,"August 28, 2026",13:00,45,003826,Rahul Allen,Marcus Bell,Follow-up,Completed,"Neck pain, desk posture"
+A-30151,08/28/2026,13:45,0:45,007885,James Adams,Marcus Bell,Follow-up,Completed,
+A-30152,"August 28, 2026",14:45,45,003417,William Collins,Marcus Bell,Follow-up,Completed,Plantar fasciitis
+A-30153,2026-08-29,9:15 AM,0:45,005021,Kenneth Garcia,Hana Sato,Follow-up,Late cancel,
+A-30154,29-Aug-2026,10:30,45 min,3057,Jonathan Ortiz,HANA SATO,Follow-up,Completed,"Neck pain, desk posture"
+A-30155,08/29/2026,11:15am,45,002465,Michael Kelly,Hana Sato,Follow-up,No-show,Tennis elbow
+A-30156,31-Aug-2026,08:00,30,009537,Sofia Richardson,Lena Fischer,Short Follow-up,Completed,
+A-30157,"August 31, 2026",08:45,30 min,006203,Yuki Green,Lena Fischer,Short Follow-up,Completed,
+A-30158,31-Aug-2026,9:15,45,002400,Joseph Howard,Lena Fischer,Follow-up,Late cancel,Plantar fasciitis
+A-30159,08/31/26,10am,45,009283,Patricia Walker,Lena Fischer,Follow-up,Completed,Tennis elbow
+A-30160,31-Aug-2026,1pm,60,3328,Daniel Johnson,Sam Okafor,Initial Assessment,Completed,Hip replacement rehab wk 4
+A-30161,08/31/2026,14:00,30,7995,Karen Kim,Sam Okafor,Short Follow-up,Completed,Hip replacement rehab wk 4
+A-30162,08/31/26,2:45 PM,45,5749,Sofia Ross,Sam Okafor,Follow-up,Completed,Hip replacement rehab wk 4
+A-30163,08/31/2026,15:30,30,002743,Kathleen Patel,Sam Okafor,Short Follow-up,Completed,Post-op ACL wk 8
+A-30164,31-Aug-2026,4:00 PM,30,006920,Nancy Kelly,DIEGO RAMOS,Short Follow-up,Completed,Rotator cuff repair wk 10
+A-30165,08/31/2026,4:30pm,45,6137,Fatima Long,Diego Ramos,Follow-up,Completed,R shoulder impingement
+A-30166,31-Aug-2026,5:15pm,30 min,5544,Edward Gray,Diego Ramos,Short Follow-up,Completed,L knee OA - progress strengthening
+A-30167,08/31/26,17:45,45,003421,David Brown,Diego Ramos,Follow-up,No-show,L knee OA - progress strengthening
+A-30168,2026-09-01,8:45,45,9122,Amanda Walker,Priya Nair,Follow-up,Completed,
+A-30169,2026-09-01,9:30,45,9255,Melissa RODRIGUEZ,Priya Nair,Follow-up,Completed,L knee OA - progress strengthening
+A-30170,2026-09-01,16:30,45,4397,Angela Reed,Marcus Bell,Follow-up,COMPLETED,"Neck pain, desk posture"
+A-30171,"September 01, 2026",17:45,45,004762,Dana Peterson,Marcus Bell,Follow-up,Completed,
+A-30172,"September 01, 2026",18:30,30,2116,Ingrid Jones,Marcus Bell,Short Follow-up,Completed,Tennis elbow
+A-30173,02-Sep-2026,8am,0:45,008998,Amara Cook,Hana Sato,Follow-up,Completed,
+A-30174,2026-09-02,8:45 AM,45,006019,Kathleen Jackson,Hana Sato,Follow-up,Completed,"Neck pain, desk posture"
+A-30175,"September 02, 2026",10:00,30,006517,Jennifer Myers,Hana Sato,Short Follow-up,COMPLETED,Tennis elbow
+A-30176,2026-09-02,1pm,0:45,7517,Richard Murphy,Priya Nair,Follow-up,Cancelled,L knee OA - progress strengthening
+A-30177,09/02/2026,13:30,0:45,9537,Sofia Richardson,Lena Fischer,Follow-up,Completed,"Neck pain, desk posture"
+A-30178,09/02/26,2:00 PM,60,007131,Kevin Wilson,PRIYA NAIR,Initial Assessment,Cancelled,
+A-30179,09/02/26,14:15,60 min,004335,Sofia Murphy,Lena Fischer,Initial Assessment,Completed,Tennis elbow
+A-30180,09/02/26,3pm,30 min,007902,Joseph Tanaka,Priya Nair,Short Follow-up,Completed,
+A-30181,09/02/2026,15:15,30,6401,Angela Young,Lena Fischer,Short Follow-up,Completed,Tennis elbow
+A-30182,02-Sep-2026,3:30 PM,30,3501,Lisa Robinson,Priya Nair,Short Follow-up,Completed,Rotator cuff repair wk 10
+A-30183,09/02/26,4:00 PM,0:30,5717,Christopher Lewis,Diego Ramos,Short Follow-up,Completed,Ankle sprain grade II
+A-30184,09/02/2026,16:45,30,005577,Nadia Reed,Diego Ramos,Short Follow-up,Completed,Hip replacement rehab wk 4
+A-30185,09/02/2026,5:15 PM,0:45,6920,Nancy Kelly,Diego Ramos,Follow-up,Completed,"Low back pain, extension bias"
+A-30186,09/02/2026,6:00 PM,45,9230,Kwame Rivera,Diego Ramos,Follow-up,Cancelled,"Low back pain, extension bias"
+A-30187,2026-09-03,08:00,45,5544,Edward Gray,Sam Okafor,Follow-up,Completed,Plantar fasciitis
+A-30188,"September 03, 2026",9:00 AM,45,6026,Mary Rodriguez,Sam Okafor,Follow-up,Completed,Hip replacement rehab wk 4
+A-30189,"September 03, 2026",10:00,0:45,008439,Amy Lindqvist,Sam Okafor,Follow-up,COMPLETED,
+A-30190,"September 04, 2026",9:00,60 min,8363,Betty Rodriguez,Lena Fischer,Initial Assessment,Late cancel,Hip replacement rehab wk 4
+A-30191,2026-09-04,10:00,45 min,1592,Cynthia Reyes,Lena Fischer,Follow-up,Completed,Post-op ACL wk 8
+A-30192,09/04/2026,10:45,60,007517,Richard Murphy,Lena Fischer,Initial Assessment,Completed,Post-op ACL wk 8
+A-30193,09/04/26,13:00,45,003693,Joseph Harris,Marcus Bell,Follow-up,Completed,Ankle sprain grade II
+A-30194,04-Sep-2026,14:00,45 min,005206,Kevin Thompson,Marcus Bell,Follow-up,COMPLETED,Hip replacement rehab wk 4
+A-30195,2026-09-04,2:45 PM,45 min,004762,Dana Peterson,Marcus Bell,Follow-up,Cancelled,"Low back pain, extension bias"
+A-30196,09/05/26,9am,45,004964,Kwame Hall,Hana Sato,Follow-up,COMPLETED,R shoulder impingement
+A-30197,2026-09-05,9:45am,60 min,007340,Jonathan Cruz,Hana Sato,Initial Assessment,Cancelled,R shoulder impingement
+A-30198,09/05/2026,10:45,30 min,006409,Kevin Moore,Hana Sato,Short Follow-up,No-show,Plantar fasciitis
+A-30199,09/05/26,11:15,45 min,007902,Joseph Tanaka,Hana Sato,Follow-up,Completed,Rotator cuff repair wk 10
+A-30200,08-Sep-2026,8:00 AM,45,007348,Yuki Nguyen,Priya Nair,Follow-up,Completed,Hip replacement rehab wk 4
+A-30201,08-Sep-2026,8:45,1h,3335,Kathleen Wood,Priya Nair,Initial Assessment,Completed,L knee OA - progress strengthening
+A-30202,"September 08, 2026",9:45am,0:45,1409,Matthew Wood,Priya Nair,Follow-up,CANCELLED,Post-op ACL wk 8
+A-30203,09/08/2026,16:00,45,1931,Yuki Brown,Marcus Bell,Follow-up,Completed,"Low back pain, extension bias"
+A-30204,09/08/26,17:00,45,3417,William Collins,Marcus Bell,Follow-up,Completed,
+A-30205,09/08/26,5:45 PM,1:00,004762,Dana Peterson,Marcus Bell,Initial Assessment,Completed,Rotator cuff repair wk 10
+A-30206,"September 09, 2026",8:15am,60,6409,Kevin Moore,Hana Sato,Initial Assessment,Completed,"Low back pain, extension bias"
+A-30207,2026-09-09,9:30am,60,003394,Dmitri Green,HANA SATO,Initial Assessment,Completed,
+A-30208,09/09/26,1:00 PM,0:45,002919,Jessica Harris,Lena Fischer,Follow-up,Late cancel,
+A-30209,09-Sep-2026,13:00,0:45,001409,Matthew Wood,Priya Nair,Follow-up,Completed,"Neck pain, desk posture"
+A-30210,09/09/26,1:45pm,45,006401,Angela Young,Lena Fischer,Follow-up,Completed,Rotator cuff repair wk 10
+A-30211,09-Sep-2026,13:45,30,003043,Kenneth Hill,Priya Nair,Short Follow-up,Completed,
+A-30212,09/09/26,2:30pm,0:45,005153,Shirley Bailey,Lena Fischer,Follow-up,Completed,Tennis elbow
+A-30213,09-Sep-2026,15:00,30 min,008325,Deborah Sanchez,Priya Nair,Short Follow-up,Completed,L knee OA - progress strengthening
+A-30214,09/09/2026,3:15 PM,45,008027,Ingrid Reed,Lena Fischer,Follow-up,COMPLETED,Post-op ACL wk 8
+A-30215,2026-09-09,4pm,45,006521,Jonathan Castillo,Diego Ramos,Follow-up,Completed,
+A-30216,09-Sep-2026,5pm,45,009675,Kevin Cox,Diego Ramos,Follow-up,Completed,Rotator cuff repair wk 10
+A-30217,09/09/26,5:45 PM,45 min,007129,Patricia Wood,Diego Ramos,Follow-up,COMPLETED,
+A-30218,"September 10, 2026",8:30,45 min,003163,Anna Morales,Sam Okafor,Follow-up,Completed,"Neck pain, desk posture"
+A-30219,"September 10, 2026",9:15 AM,45 min,1450,Donald Clark,SAM OKAFOR,Follow-up,Completed,R shoulder impingement
+A-30220,09/10/2026,10:00,0:45,007995,Karen Kim,Sam Okafor,Follow-up,Completed,Post-op ACL wk 8
+A-30221,09/11/26,10:30,45,4401,Donna Morris,Lena Fischer,Follow-up,Completed,R shoulder impingement
+A-30222,09/11/2026,11:15am,45 min,9537,Sofia Richardson,Lena Fischer,Follow-up,Completed,Rotator cuff repair wk 10
+A-30223,11-Sep-2026,13:15,45,6711,Matthew Castillo,Marcus Bell,Follow-up,Completed,Rotator cuff repair wk 10
+A-30224,09/11/26,2:00 PM,45 min,2116,Ingrid Jones,Marcus Bell,Follow-up,Completed,
+A-30225,"September 11, 2026",15:00,0:45,006182,Omar Alvarez,Marcus Bell,Follow-up,COMPLETED,Post-op ACL wk 8
+A-30226,2026-09-12,9:00 AM,30 min,008066,Rebecca Wood,Hana Sato,Short Follow-up,Completed,R shoulder impingement
+A-30227,2026-09-12,9:45 AM,45 min,8998,Amara Cook,Hana Sato,Follow-up,Completed,Plantar fasciitis
+A-30228,"September 12, 2026",10:30,45,007340,Jonathan Cruz,Hana Sato,Follow-up,Cancelled,
+A-30229,12-Sep-2026,11:15am,0:45,001852,Omar Clark,Hana Sato,Follow-up,Completed,Plantar fasciitis
+A-30230,14-Sep-2026,8:15am,45,008406,Christopher Ward,Lena Fischer,Follow-up,Cancelled,
+A-30231,2026-09-14,9:30am,30 min,009283,Patricia Walker,Lena Fischer,Short Follow-up,BOOKED,
+A-30232,09/14/26,10am,45 min,008184,Tomasz Tanaka,Lena Fischer,Follow-up,BOOKED,
+A-30233,09/14/26,13:15,60,2600,Amara Johnson,Sam Okafor,Initial Assessment,Cancelled,
+A-30234,09/14/2026,14:15,0:45,008734,Jeffrey NELSON,Sam Okafor,Follow-up,Booked,
+A-30235,09/14/26,3:15 PM,45,8439,Amy Lindqvist,Sam Okafor,Follow-up,Booked,
+A-30236,14-Sep-2026,4pm,45 min,007129,Patricia Wood,Diego Ramos,Follow-up,Cancelled,
+A-30237,2026-09-14,16:15,45 min,009230,Kwame Rivera,Diego Ramos,Follow-up,Booked,
+A-30238,"September 14, 2026",17:15,30,5544,Edward Gray,Diego Ramos,Short Follow-up,BOOKED,
+A-30239,09/15/2026,08:00,0:45,6931,Ingrid Wright,Priya Nair,Follow-up,Booked,
+A-30240,09/15/26,08:45,0:45,001838,Melissa Rodriguez,Priya Nair,Follow-up,Booked,
+A-30241,"September 15, 2026",16:00,1h,006712,Jennifer Johnson,Marcus Bell,Initial Assessment,Booked,
+A-30242,"September 15, 2026",16:30,45 min,002116,Ingrid Jones,Marcus Bell,Follow-up,Booked,
+A-30243,15-Sep-2026,5:30 PM,0:45,005270,Tomasz Gray,Marcus Bell,Follow-up,Booked,
+A-30244,2026-09-16,8:00 AM,0:30,7340,Jonathan Cruz,Hana Sato,Short Follow-up,Booked,
+A-30245,16-Sep-2026,9:15 AM,30,007410,John Myers,Hana Sato,Short Follow-up,Booked,
+A-30246,2026-09-16,9:45 AM,60 min,003355,Rebecca Lopez,Hana Sato,Initial Assessment,Booked,
+A-30247,09/16/2026,1pm,0:45,004196,Wei Hall,LENA FISCHER,Follow-up,Booked,
+A-30248,2026-09-16,13:00,60 min,4476,Lisa Campbell,Priya Nair,Initial Assessment,Booked,
+A-30249,09/16/2026,2:30pm,45,006565,Jessica Castillo,Priya Nair,Follow-up,Booked,
+A-30250,09/16/26,3:00 PM,45 min,002877,Jacob Evans,Lena Fischer,Follow-up,Cancelled,
+A-30251,09/16/2026,4:00 PM,45,9675,Kevin Cox,Diego Ramos,Follow-up,Booked,
+A-30252,2026-09-16,5:30pm,0:45,4113,Christopher Edwards,Diego Ramos,Follow-up,Booked,
+A-30253,2026-09-17,8am,45 min,008325,Deborah Sanchez,Sam Okafor,Follow-up,BOOKED,
+A-30254,09/17/2026,08:45,45,001639,Paul Rivera,Sam Okafor,Follow-up,Booked,
+A-30255,2026-09-17,10:15,45 min,2603,Timothy Alvarez,Sam Okafor,Follow-up,Booked,
+A-30256,18-Sep-2026,9:15 AM,0:45,8568,Charles Anderson,Lena Fischer,Follow-up,Booked,
+A-30257,"September 18, 2026",10:45,45,008184,Tomasz Tanaka,Lena Fischer,Follow-up,Booked,
+A-30258,2026-09-18,14:15,60,003417,William Collins,Marcus Bell,Initial Assessment,Booked,
+A-30258,2026-09-18,14:15,60,003417,William Collins,Marcus Bell,Initial Assessment,Booked,
+A-30259,2026-09-18,3:15 PM,0:45,007186,Anna Allen,Marcus Bell,Follow-up,Booked,
+A-30260,19-Sep-2026,09:00,45,7517,Richard Murphy,Hana Sato,Follow-up,Booked,
+A-30261,2026-09-19,10:15am,1:00,003459,George Wright,Hana Sato,Initial Assessment,Booked,
+A-30262,"September 21, 2026",8:15,0:45,6517,Jennifer Myers,Lena Fischer,Follow-up,Cancelled,
+A-30263,09/21/2026,09:15,0:30,008184,Tomasz Tanaka,Lena Fischer,Short Follow-up,Booked,
+A-30264,21-Sep-2026,14:45,1h,002603,Timothy Alvarez,Sam Okafor,Initial Assessment,Booked,
+A-30265,"September 21, 2026",4:15 PM,60 min,005544,Edward Gray,Diego Ramos,Initial Assessment,Booked,
+A-30266,2026-09-21,17:30,1h,006182,Omar Alvarez,Diego Ramos,Initial Assessment,Booked,
+A-30267,"September 22, 2026",08:15,45,003335,Kathleen Wood,Priya Nair,Follow-up,Booked,
+A-30268,22-Sep-2026,9:30,45 min,004113,Christopher Edwards,Priya Nair,Follow-up,Booked,
+A-30269,22-Sep-2026,16:00,1h,8182,Carol Wilson,MARCUS BELL,Initial Assessment,Booked,
+A-30270,09/22/2026,5:15pm,0:30,5270,Tomasz Gray,Marcus Bell,Short Follow-up,Booked,
+A-30271,22-Sep-2026,6:00 PM,45 min,2723,Mateo Ross,Marcus Bell,Follow-up,Booked,
+A-30272,"September 23, 2026",8:15 AM,45,009385,George Cox,HANA SATO,Follow-up,Cancelled,
+A-30273,09/23/2026,9:15,30 min,009675,Kevin Cox,HANA SATO,Short Follow-up,Booked,
+A-30274,09/23/26,1pm,0:45,002400,Joseph Howard,Lena Fischer,Follow-up,Booked,
+A-30275,2026-09-23,1:30pm,45,4196,Wei Hall,Priya Nair,Follow-up,Booked,
+A-30276,"September 23, 2026",2:45pm,45 min,4476,Lisa Campbell,Priya Nair,Follow-up,Booked,
+A-30277,2026-09-23,16:15,1:00,005577,Nadia Reed,Diego Ramos,Initial Assessment,Cancelled,
+A-30278,09/23/2026,18:00,45 min,006182,Omar Alvarez,Diego Ramos,Follow-up,Booked,
+A-30279,2026-09-24,8:30am,45,008182,Carol Wilson,Sam Okafor,Follow-up,Cancelled,
+A-30280,09/25/26,09:00,0:30,005254,Gary Lewis,LENA FISCHER,Short Follow-up,BOOKED,
+A-30281,2026-09-25,9:30,0:45,001592,Cynthia Reyes,Lena Fischer,Follow-up,Cancelled,
+A-30282,25-Sep-2026,10:15,0:45,007791,Brian Rodriguez,Lena Fischer,Follow-up,Booked,
+A-30283,09/25/2026,13:45,45 min,009537,Sofia Richardson,Marcus Bell,Follow-up,Booked,
+A-30284,09/25/2026,14:45,0:45,006113,Joseph Cooper,Marcus Bell,Follow-up,Booked,
+A-30285,"September 26, 2026",9:00 AM,30,007410,John Myers,Hana Sato,Short Follow-up,Booked,
+A-30286,09/26/2026,9:45 AM,45,007671,Amanda Williams,Hana Sato,Follow-up,BOOKED,
+A-30287,09/26/2026,10:45,45,2985,Susan Young,Hana Sato,Follow-up,Booked,

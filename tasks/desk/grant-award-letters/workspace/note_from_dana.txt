@@ -1,0 +1,8 @@
+Hi - the funder letters from this year are in the funder_letters folder (I scanned the Northgate one from the paper copy).
+For the tracker I need grants.csv with these columns, in this order:
+
+grant_ref, funder, total_amount, year1_amount, year2_amount, period_start, period_end, interim_report_due, final_report_due
+
+grant_ref is the funder's own reference/award number exactly as printed. Amounts as plain numbers (no $ or commas). For a one-year grant put the whole award in year1_amount and 0 in year2_amount so the columns add up. Dates as YYYY-MM-DD so the sheet sorts. Where a letter gives a deadline as a rule rather than a date, work the date out.
+
+Thanks, Dana Okafor

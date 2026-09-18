@@ -1,0 +1,163 @@
+{
+  "decoys": [
+    {
+      "amount": 1580.79,
+      "ref": "BILL-2015",
+      "role": "recurring",
+      "vendor": "Copperfield Law"
+    },
+    {
+      "amount": 1580.79,
+      "ref": "BILL-2070",
+      "role": "recurring",
+      "vendor": "Copperfield Law"
+    },
+    {
+      "amount": 1580.79,
+      "ref": "BILL-2114",
+      "role": "recurring",
+      "vendor": "Copperfield Law"
+    },
+    {
+      "amount": 1643.55,
+      "ref": "BILL-2016",
+      "role": "recurring",
+      "vendor": "Cedar & Pine Landscaping"
+    },
+    {
+      "amount": 1643.55,
+      "ref": "BILL-2067",
+      "role": "recurring",
+      "vendor": "Cedar & Pine Landscaping"
+    },
+    {
+      "amount": 2627.63,
+      "ref": "BILL-2018",
+      "role": "recurring",
+      "vendor": "Ivy Lane Florist"
+    },
+    {
+      "amount": 2627.63,
+      "ref": "BILL-2073",
+      "role": "recurring",
+      "vendor": "Ivy Lane Florist"
+    },
+    {
+      "amount": -6114.13,
+      "ref": "BILL-2102",
+      "role": "credit",
+      "vendor": "Cedar & Pine Landscaping"
+    },
+    {
+      "amount": -7932.51,
+      "ref": "BILL-2037",
+      "role": "credit",
+      "vendor": "Copperfield Law"
+    },
+    {
+      "amount": 638.66,
+      "ref": "BILL-2019",
+      "role": "same number other vendor",
+      "vendor": "Cedar & Pine Landscaping"
+    },
+    {
+      "amount": 2912.64,
+      "ref": "BILL-2063",
+      "role": "outside window",
+      "vendor": "Ironwood Fabrication"
+    }
+  ],
+  "pairs": [
+    {
+      "amount": 9690.12,
+      "days_apart": 0,
+      "duplicate_of": "BILL-2024",
+      "invoice_no": "Inv #28813",
+      "kind": "same day",
+      "ref_no": "BILL-2028",
+      "vendor": "Tamarack Brewing"
+    },
+    {
+      "amount": 2008.28,
+      "days_apart": 1,
+      "duplicate_of": "BILL-2025",
+      "invoice_no": "28803",
+      "kind": "vendor variant",
+      "ref_no": "BILL-2030",
+      "vendor": "Tamarack Brewing"
+    },
+    {
+      "amount": 161.4,
+      "days_apart": 5,
+      "duplicate_of": "BILL-2054",
+      "invoice_no": "#46044",
+      "kind": "prefix + keying error",
+      "ref_no": "BILL-2059",
+      "vendor": "Thistle & Thread Alterations"
+    },
+    {
+      "amount": 3604.16,
+      "days_apart": 5,
+      "duplicate_of": "BILL-2052",
+      "invoice_no": "INV-46064",
+      "kind": "prefix",
+      "ref_no": "BILL-2060",
+      "vendor": "Thistle & Thread Alterations"
+    },
+    {
+      "amount": 4408.07,
+      "days_apart": 5,
+      "duplicate_of": "BILL-2066",
+      "invoice_no": "#38312",
+      "kind": "vendor variant",
+      "ref_no": "BILL-2075",
+      "vendor": "Blue Heron Consulting"
+    },
+    {
+      "amount": 7997.55,
+      "days_apart": 1,
+      "duplicate_of": "BILL-2077",
+      "invoice_no": "#38276",
+      "kind": "vendor variant",
+      "ref_no": "BILL-2079",
+      "vendor": "Blue Heron Consulting"
+    },
+    {
+      "amount": 7065.22,
+      "days_apart": 3,
+      "duplicate_of": "BILL-2082",
+      "invoice_no": "INV57082",
+      "kind": "plain",
+      "ref_no": "BILL-2092",
+      "vendor": "Ivy Lane Florist"
+    },
+    {
+      "amount": 8553.45,
+      "days_apart": 2,
+      "duplicate_of": "BILL-2093",
+      "invoice_no": "Inv #15809",
+      "kind": "amount, different number",
+      "ref_no": "BILL-2094",
+      "vendor": "Kingfisher Charters"
+    },
+    {
+      "amount": 7420.17,
+      "days_apart": 5,
+      "duplicate_of": "BILL-2106",
+      "invoice_no": "25581",
+      "kind": "amount, different number",
+      "ref_no": "BILL-2113",
+      "vendor": "Silverline Logistics"
+    },
+    {
+      "amount": 9050.78,
+      "days_apart": 15,
+      "duplicate_of": "BILL-2096",
+      "invoice_no": "Inv #41155",
+      "kind": "prefix, 15 days",
+      "ref_no": "BILL-2119",
+      "vendor": "Northfield Auto Body"
+    }
+  ],
+  "register_rows": 122
+}

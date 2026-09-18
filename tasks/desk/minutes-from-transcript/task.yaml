@@ -1,0 +1,38 @@
+id: minutes-from-transcript
+track: desk
+category: drafting
+title: Minutes from the leadership meeting recording
+ask: |
+  Can you turn the transcript of our last leadership meeting into proper minutes? My guidelines for minutes are in the folder with the invite and the staff list. Save them as minutes.md.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  the transcript file is named and stamped with its upload date, October 12; the meeting was Monday, October 5 per the invite, and relative dates resolve from it (next Friday October 16 not October 23, two weeks from today October 19 not October 26) (check: minutes facts)
+- |-
+  two decisions are reversed later in the meeting: the freezer goes to Northwind at $9,400 once Polar Tech ($8,650) cannot get the part, and Christmas Eve closing moves from 3 pm to 5 pm (checks: freezer repair decision; minutes facts)
+- |-
+  owners are named by first name only; the directory has two people called Marcus and the invite shows Marcus Wright attended while Marcus Rodriguez declined (check: minutes facts)
+- |-
+  'next Friday', 'two weeks from today', 'the end of the month' and 'before our next meeting' must become calendar dates; the guidelines define next Friday as the following week's and the invite's recurrence gives the first Monday of November (check: minutes facts)
+- |-
+  the 14 bulk bins are approved early and never revisited, while the Sunday opening idea is parked and is not a decision (checks: bulk bins decision; minutes facts)
+checks:
+- type: file_exists
+  name: minutes.md exists
+  path: minutes.md
+- type: text_sentence_matches
+  name: freezer repair decision
+  path: minutes.md
+  all:
+  - northwind
+  - \b9,?400\b
+- type: text_sentence_matches
+  name: bulk bins decision
+  path: minutes.md
+  all:
+  - bulk
+  - (?<![\d$,.])14(?![\d,.])|\bfourteen\b
+- type: custom
+  name: minutes facts
+  module: check.py

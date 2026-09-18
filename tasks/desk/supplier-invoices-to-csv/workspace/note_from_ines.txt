@@ -1,0 +1,18 @@
+August bills for the import
+
+Everything from suppliers for August is in supplier_documents_2026-08. The accounting import takes one row per line on the template. How to fill it:
+
+- line_ref: the document number exactly as printed, a hyphen, then the line number (1, 2, 3 ... in the order you enter the lines for that document).
+- vendor_id: from vendor_list.csv.
+- document_type: invoice or credit_note.
+- document_date: YYYY-MM-DD.
+- currency: the currency the document is in (USD or EUR). Leave the amounts in that currency - I convert when I post. Plain numbers, no symbols or thousands separators.
+- description as printed on the line.
+- discount_pct: the discount percent printed on the line, 0 if there is none. line_amount is after that discount.
+- Freight, delivery and discounts printed under the item table are lines too: enter them after the items, quantity 1, unit price and line amount equal to the amount (negative for a discount). Do not enter subtotal, tax or total rows.
+- document_total: what that document is for, on every line of it - not the account balance.
+- Credit memos: make quantity, line_amount and document_total negative so they net off; unit_price stays positive.
+
+Statements are not bills - skip them.
+
+- Ines

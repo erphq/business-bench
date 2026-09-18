@@ -1,0 +1,85 @@
+Billing event log
+Exported 07/02/2026 - includes the 2025 book
+Event ID,Logged,Account,Event,Plan,Billing period,Contract amount,Effective date,Note
+EV-9012,10-Jun-2024,Lakeside Veterinary,new,Business,Monthly,$ 499.00,,
+EV-9011,06/23/2024,Kestrel Analytics,new,Business,Monthly,499.00,,
+EV-9019,2024-06-23,Silverline Logistics,new,Business (annual),,"$5,388.00",,
+EV-9006,30-Jun-2024,Foxglove Interiors,new,Team (annual),Annual,"$ 2,148.00",,
+EV-9014,06/30/2024,Northfield Auto Body,new,Starter (annual),Annual,528.00,,
+EV-9034,2024-07-01,Larkspur Yoga,new,Team (annual),,"$2,148.00",,
+EV-9026,07/06/2024,Copperfield Law,new,Starter (annual),Annual,528.00,,
+EV-9001,2024-08-04,Acme Industrial,new,Starter,Monthly,$49.00,,
+EV-9030,28-Aug-2024,Glassworks Optical,new,Scale (annual),Annual,"$ 12,840.00",,
+EV-9005,09/05/2024,Ellington Bakeries,new,Team,Monthly,199.00,,
+EV-9020,09/11/2024,Tamarack Brewing,new,Starter (annual),Annual,528.00,,
+EV-9002,09/29/2024,Brightwater Dental,new,Business (annual),Annual,"5,388.00",,
+EV-9032,11/15/2024,Ivy Lane Florist,new,Scale,Monthly,"1,190.00",,
+EV-9013,2025-01-08,Meridian Title,new,Starter (annual),,$528.00,,
+EV-9009,21-Jan-2025,Ironwood Fabrication,new,Business (annual),Annual,"$ 5,388.00",,
+EV-9017,01/23/2025,Quarry Road Nursery,new,Scale (annual),Annual,"12,840.00",,
+EV-9016,2025-01-25,Pinnacle Roofing,new,Team (annual),,"$2,148.00",,
+EV-9027,04-Feb-2025,Driftwood Studio,new,Team (annual),Annual,"$ 2,148.00",,
+EV-9021,31-Mar-2025,Uptown Fitness,new,Starter,Monthly,$ 49.00,,
+EV-9024,07-Apr-2025,Yellowtail Seafood,new,Team,Monthly,$ 199.00,,
+EV-9010,2025-04-22,Juniper Street Cafe,new,Scale,Monthly,"$1,190.00",,
+EV-9022,2025-05-07,Vantage Point Media,new,Scale,Monthly,"$1,190.00",,
+EV-9029,06/11/2025,Fernbrook Montessori,new,Starter,Monthly,49.00,,
+EV-9033,15-Jun-2025,Kingfisher Charters,new,Starter (annual),Annual,$ 528.00,,
+EV-9004,2025-06-24,Dorsey Freight,new,Team (annual),,"$2,148.00",,
+EV-9028,2025-07-30,Everline Insurance,new,Starter (annual),,$528.00,,
+EV-9007,2025-08-18,Granite Peak Outfitters,new,Starter (annual),,$528.00,,
+EV-9015,23-Aug-2025,Oakhurst Pediatrics,new,Team,Monthly,$ 199.00,,
+EV-9008,08/31/2025,Harbor Light Marine,new,Business,Monthly,499.00,,
+EV-9003,04-Sep-2025,Cedar & Pine Landscaping,new,Team (annual),Annual,"$ 2,148.00",,
+EV-9018,14-Sep-2025,Redwood Property Mgmt,new,Team,Monthly,$ 199.00,,
+EV-9025,2025-10-25,Blue Heron Consulting,new,Business (annual),,"$5,388.00",,
+EV-9023,11/02/2025,Westbrook Plumbing,new,Starter (annual),Annual,528.00,,
+EV-9031,2025-11-03,Hollowell Electric,new,Team (annual),,"$2,148.00",,
+EV-9035,01/10/2026,Mossbank Accounting,new,Team (annual),Annual,"2,148.00",,
+EV-9052,2026-02-03,Foxglove Interiors Group,Trial start,Business (annual),,"$5,388.00",,"14-day trial, not billed"
+EV-9059,02/06/2026,Meridian Title,Upgrade,Team (annual),Annual,"2,148.00",,new price effective today
+EV-9057,11-Feb-2026,Cedar & Pine Landscaping,Downgrade,Starter (annual),Annual,$ 528.00,,new price effective today
+EV-9077,02/11/2026,Hollowell Electric,Cancellation,Team (annual),Annual,"2,148.00",2026-02-13,effective 2026-02-13
+EV-9038,02/18/2026,Pemberton HVAC,new,Business,Monthly,499.00,,
+EV-9048,18-Feb-2026,Brightwater Dental Group,Trial start,Scale (annual),Annual,"$ 12,840.00",,"14-day trial, not billed"
+EV-9051,18-Feb-2026,Ellington Bakeries Group,Trial start,Starter,Monthly,$ 49.00,,"14-day trial, not billed"
+EV-9066,01-Mar-2026,Driftwood Studio,Upgrade,Business (annual),Annual,"$ 5,388.00",,new price effective today
+EV-9054,04-Mar-2026,Brightwater Dental Group,new,Team,Monthly,$ 199.00,,converted from trial
+EV-9061,2026-03-04,Lakeside Veterinary,Upgrade,Scale,Monthly,"$1,190.00",,new price effective today
+EV-9050,03/06/2026,Dorsey Freight Group,Trial start,Business,Monthly,499.00,,"14-day trial, not billed"
+EV-9065,03/12/2026,Mossbank Accounting,Downgrade,Starter (annual),Annual,528.00,,new price effective today
+EV-9076,2026-03-12,Pemberton HVAC,Cancellation,Business,Monthly,$499.00,2026-03-14,effective 2026-03-14
+EV-9080,03/13/2026,Mossbank Accounting,Cancellation,Starter (annual),Annual,528.00,2026-03-15,effective 2026-03-15
+EV-9082,2026-03-13,Hollowell Electric,Reactivation,Business,Monthly,$499.00,,came back on a monthly plan
+EV-9045,19-Mar-2026,Wren & Sparrow Bookshop,new,Team (annual),Annual,"$ 2,148.00",,
+EV-9060,20-Mar-2026,Granite Peak Outfitters,Upgrade,Scale (annual),Annual,"$ 12,840.00",,new price effective today
+EV-9041,03/22/2026,Saltmarsh Kayaks,new,Team (annual),Annual,"2,148.00",,
+EV-9067,2026-03-26,Juniper Street Cafe,Cancellation,Scale,Monthly,"$1,190.00",2026-05-12,effective 2026-05-12
+EV-9056,04/01/2026,Acme Industrial,Upgrade,Scale,Monthly,"1,190.00",,new price effective today
+EV-9044,04/02/2026,Valley Forge Storage,new,Team,Monthly,199.00,,
+EV-9055,2026-04-04,Ironwood Fabrication,Downgrade,Team (annual),,"$2,148.00",,new price effective today
+EV-9079,2026-04-10,Kingfisher Charters,Cancellation,Starter (annual),,$528.00,2026-04-12,effective 2026-04-12
+EV-9047,04/14/2026,Acme Industrial Group,Trial start,Team (annual),Annual,"2,148.00",,"14-day trial, not billed"
+EV-9069,16-Apr-2026,Lakeside Veterinary,Cancellation,Scale,Monthly,"$ 1,190.00",2026-05-18,effective 2026-05-18
+EV-9039,17-Apr-2026,Quill & Ink Print Shop,new,Team,Monthly,$ 199.00,,
+EV-9068,04/18/2026,Acme Industrial,Cancellation,Scale,Monthly,"1,190.00",2026-05-20,effective 2026-05-20
+EV-9070,2026-04-21,Harbor Light Marine,Cancellation,Business,Monthly,$499.00,2026-05-23,effective 2026-05-23
+EV-9042,26-Apr-2026,Thistle & Thread Alterations,new,Business,Monthly,$ 499.00,,
+EV-9063,26-Apr-2026,Larkspur Yoga,Upgrade,Business (annual),Annual,"$ 5,388.00",,new price effective today
+EV-9053,04/28/2026,Acme Industrial Group,new,Starter,Monthly,49.00,,converted from trial
+EV-9081,05-May-2026,Pemberton HVAC,Reactivation,Starter,Monthly,$ 49.00,,came back on a monthly plan
+EV-9037,2026-05-08,Orchard Hill Dental,new,Starter,Monthly,$49.00,,
+EV-9040,2026-05-12,Riverbend Physio,new,Scale (annual),,"$12,840.00",,
+EV-9046,2026-05-14,Zephyr Bike Works,new,Team,Monthly,$199.00,,
+EV-9064,2026-05-19,Silverline Logistics,Downgrade,Team (annual),,"$2,148.00",,new price effective today
+EV-9049,2026-05-20,Cedar & Pine Landscaping Group,Trial start,Scale (annual),,"$12,840.00",,"14-day trial, not billed"
+EV-9043,2026-05-25,Umber Ceramics,new,Starter,Monthly,$49.00,,
+EV-9062,05/25/2026,Dorsey Freight,Upgrade,Business (annual),Annual,"5,388.00",,new price effective today
+EV-9078,02-Jun-2026,Northfield Auto Body,Cancellation,Starter (annual),Annual,$ 528.00,2026-06-05,effective 2026-06-05
+EV-9073,2026-06-05,Ironwood Fabrication,Cancellation,Team (annual),,"$2,148.00",2026-06-07,effective 2026-06-07
+EV-9036,06-Jun-2026,Nightjar Coffee Roasters,new,Starter (annual),Annual,$ 528.00,,
+EV-9074,06/06/2026,Ellington Bakeries,Cancellation,Team,Monthly,199.00,2026-06-08,effective 2026-06-08
+EV-9071,06/08/2026,Vantage Point Media,Cancellation,Scale,Monthly,"1,190.00",2026-07-14,effective 2026-07-14
+EV-9072,13-Jun-2026,Quarry Road Nursery,Cancellation,Scale (annual),Annual,"$ 12,840.00",2026-07-19,effective 2026-07-19
+EV-9058,2026-06-18,Kestrel Analytics,Upgrade,Scale,Monthly,"$1,190.00",,new price effective today
+EV-9075,24-Jun-2026,Westbrook Plumbing,Cancellation,Starter (annual),Annual,$ 528.00,2026-06-26,effective 2026-06-26

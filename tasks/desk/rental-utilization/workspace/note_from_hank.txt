@@ -1,0 +1,17 @@
+Utilization for the insurance renewal
+
+The insurer wants to know how hard each machine works: days out per machine for every month,
+January to June. The contract history from the counter system is in the folder, with the fleet list.
+
+How we count a day: any calendar day the machine was off the yard. The day it goes out counts and the
+day it comes back counts, whatever the time. Out at 7 in the morning and back by 5 the same day is one
+day. If a machine comes back in the morning and goes out again that afternoon, that is still one day -
+the insurer wants days the machine was out, not contract-days.
+
+A rental that runs over a month end counts in both months, each day in its own month. Cancelled
+reservations never left the yard. Anything still out when I ran the export counts through 30 June.
+
+One line for every machine on the fleet list, under the name it has now, even if it didn't go out.
+Columns: machine, jan, feb, mar, apr, may, jun, total. Save it as utilization.csv.
+
+- Hank

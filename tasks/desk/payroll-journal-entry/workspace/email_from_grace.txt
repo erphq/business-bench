@@ -1,0 +1,14 @@
+From: Grace Lindqvist <grace@mossbank.cpa>
+To: you
+Date: Fri, 4 Sep 2026 10:15
+Subject: journal entry for today's payroll
+
+Can you turn today's payroll register into the journal entry for the books? One entry dated the check date, one line per account, and it has to balance.
+
+The import takes account_number, account_name, debit and credit.
+
+- Wages go in at gross by department: field techs to 6010, office to 6020. Deborah's salary is officer compensation, 6030.
+- What the company pays on top - its half of Social Security and Medicare, FUTA and SUI - is payroll tax expense, 6110, and it's owed until the provider files, so it's a liability too. Social Security and Medicare, both halves, sit together in 2115.
+- What comes out of people's pay is owed to somebody else, not an expense: withholding to 2110 and 2120, 401(k) to 2140, their medical premium to 2145, the garnishment to 2150. Our 401(k) match (6130) and our medical contribution (6120) are owed to the same places.
+- Mileage and tool reimbursements are paid with payroll but they aren't wages - 6310.
+- Net pay, checks and direct deposit alike, comes out of operating checking, 1010.

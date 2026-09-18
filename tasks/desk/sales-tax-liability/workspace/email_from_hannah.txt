@@ -1,0 +1,13 @@
+From: Hannah Osei <hannah@mossbank.cpa>
+To: you
+Date: Tue, 7 Jul 2026 09:40
+Subject: Q2 sales tax return
+
+Please build the Q2 upload for the return on the template - one row per local jurisdiction you had sales in, with gross, exempt and taxable sales and the tax due.
+
+How the state wants it:
+- Pickups at a yard are taxed where the yard is. Deliveries are taxed where they were delivered, and the jurisdiction goes by the ZIP code in the rate table. The town in the address is only the post office name - a lot of the county outside the city limits still has a Cedar Falls or Millbrook address.
+- A sale is exempt only if the customer's certificate was valid on the sale date. The POS doesn't check expiry dates, so don't trust its exempt flag.
+- Use the rate in force on the sale date. Millbrook went up on 1 May.
+- Work out the tax on each jurisdiction's taxable sales (at each rate if its rate changed), add it up and round once to the cent for the jurisdiction. The POS rounds every receipt, so its tax collected column will not match what we owe, and that's expected.
+- Voided invoices are not sales.

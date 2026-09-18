@@ -1,0 +1,27 @@
+From: Dmitri Alvarez <dmitri@bluemesaflight.com>
+To: Sofia Reyes <sofia@bluemesaflight.com>
+Date: Wed, 1 Jul 2026 17:02
+Subject: Q2 marketing - where did students come from?
+
+Before we set the Q3 budget I want to see, for each marketing source, how many leads came in during April, May and June and how much training revenue they turned into. Can you get that together?
+
+-----Original Message-----
+
+From: Sofia Reyes <sofia@bluemesaflight.com>
+To: you
+Date: Thu, 2 Jul 2026 08:41
+Subject: FW: Q2 marketing - where did students come from?
+
+Could you do this one for Dmitri? The CRM export and my campaign code sheet are in the folder.
+
+How to count it:
+- A lead belongs to the quarter it came in (the Created date), April 1 to June 30. The export runs a bit either side.
+- Ignore anything we submitted ourselves to test the form - those are all bluemesaflight.com addresses.
+- The website builder tacks tracking onto the campaign code, so you'll see things like GADS-PPL-Q2?utm_source=google&utm_medium=cpc or ig-disc-spring%20. The code is just the part in front of the junk, and capitals don't matter.
+- The source is whatever my sheet says for that code. If the code isn't on my sheet, or there's no code at all, put the lead under Untracked. Please don't go by the utm tags - the builder fills those in on its own and they're wrong half the time.
+- Revenue is the deal value on Closed Won leads only. Proposals and lost deals have quoted prices on them; those aren't money.
+
+Save it as lead_sources.csv with source, leads, revenue - one line for every source on my sheet (even if it got nothing) plus Untracked.
+
+Thanks!
+Sofia

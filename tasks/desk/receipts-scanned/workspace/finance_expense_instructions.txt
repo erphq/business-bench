@@ -1,0 +1,13 @@
+Expense reports - receipts
+
+Use the template: one row per receipt.
+
+  receipt_no  the receipt, check, folio, trip, ticket or invoice number printed on it (just the number)
+  date        the date on the receipt, as YYYY-MM-DD (for the hotel, the checkout date)
+  merchant    the business name as printed at the top
+  subtotal    before tax
+  tax         0 if none is shown separately
+  tip         0 if none
+  total       what was actually charged to the card, tip included
+
+Amounts as plain numbers. If a receipt shows up twice, report it once - we reimburse each charge one time.

@@ -1,0 +1,19 @@
+LITTLE ACORN EARLY LEARNING - CORRECTIVE ACTION LIST
+
+Every open finding from any inspection (fire, licensing, health, insurance) goes on the list, one row per finding.
+
+finding_ref      the report number and the item number where the finding was FIRST reported, joined with a hyphen
+                 (FM-26-0000-3, LC-0000-R-2). A finding that comes back on a later report keeps its first reference.
+site             Maple Street, Riverside or Hilltop
+source           fire, licensing, health or insurance
+inspection_date  date of the inspection where it was first reported, YYYY-MM-DD
+description      as the inspector wrote it
+severity         high, medium or low on our scale:
+                   high   - imminent hazard, high risk, health code Priority, insurer Priority 1
+                   medium - serious, medium risk, health code Priority Foundation, insurer Priority 2
+                   low    - minor, low risk, health code Core, insurer Priority 3
+                 If a later report changes the classification, use the latest one.
+due_date         the date it must be corrected by, YYYY-MM-DD. Work it out when the report gives a number of days;
+                 'immediately' means the inspection date. A later report's new date replaces the old one.
+
+Anything corrected on site, corrected during the inspection, or closed on a later report is not open and stays off the list.

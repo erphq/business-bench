@@ -1,0 +1,113 @@
+id: volunteer-hours
+track: desk
+category: reports
+title: Volunteer hours per program for the county
+ask: |
+  The county wants our volunteer hours for July and August, per volunteer and per program. Everything is in the folder and Gloria's note explains the sign-ins. Save it as volunteer_hours.csv in the county's format.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  people sign in as nicknames (Bob for Robert), "Last, First", initials, all caps or lower case, with stray spaces; the roster's Goes by column resolves each to one id, and a name-as-typed grouping splits one volunteer into several (checks: volunteers who served; pantry and tutoring hours; total hours)
+- |-
+  overnight shelter shifts run from 9pm to 7am, so time out is earlier than time in; a plain difference goes negative (check: overnight shelter hours)
+- |-
+  17 shifts were signed on both the kiosk and a clipboard and 8 kiosk taps were recorded twice; each shift counts once (check: pantry and tutoring hours)
+- |-
+  three staff sign in on the same kiosk and clipboards and the roster has three inactive volunteers with no sign-ins; neither belongs in the file (checks: volunteers who served; row count)
+- |-
+  the meal delivery clipboard runs into September; those rows are outside the period (check: meal delivery hours)
+- |-
+  clipboards use a 12-hour clock ("9:15 PM") and dates as MM/DD/YYYY on four sheets with merged titles; the kiosk uses 24-hour times and ISO dates (check: total hours)
+checks:
+- type: csv_columns
+  name: county template columns
+  path: volunteer_hours.csv
+  columns:
+  - volunteer_id
+  - volunteer_name
+  - pantry_hours
+  - meal_delivery_hours
+  - overnight_shelter_hours
+  - tutoring_hours
+  - total_hours
+- type: csv_set_equal
+  name: volunteers who served
+  path: volunteer_hours.csv
+  column: volunteer_id
+  ref: volunteer_hours.csv
+  normalize:
+  - strip
+  - lower
+- type: csv_row_count
+  name: row count
+  path: volunteer_hours.csv
+  equals_ref: volunteer_hours.csv
+- type: csv_values_match
+  name: overnight shelter hours
+  path: volunteer_hours.csv
+  ref: volunteer_hours.csv
+  key: volunteer_id
+  columns:
+  - overnight_shelter_hours
+  must_match_keys:
+  - V-1041
+  - V-1051
+  - V-1052
+  - V-1055
+  - V-1060
+  - V-1070
+  - V-1083
+  - V-1086
+  - V-1093
+  - V-1100
+  - V-1104
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: pantry and tutoring hours
+  path: volunteer_hours.csv
+  ref: volunteer_hours.csv
+  key: volunteer_id
+  columns:
+  - pantry_hours
+  - tutoring_hours
+  must_match_keys:
+  - V-1061
+  - V-1066
+  - V-1068
+  - V-1073
+  - V-1090
+  - V-1096
+  - V-1098
+  - V-1108
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: meal delivery hours
+  path: volunteer_hours.csv
+  ref: volunteer_hours.csv
+  key: volunteer_id
+  columns:
+  - meal_delivery_hours
+  must_match_keys:
+  - V-1041
+  - V-1051
+  - V-1055
+  - V-1083
+  - V-1086
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0
+- type: csv_values_match
+  name: total hours
+  path: volunteer_hours.csv
+  ref: volunteer_hours.csv
+  key: volunteer_id
+  columns:
+  - total_hours
+  numeric: true
+  tolerance: 0.01
+  min_accuracy: 1.0

@@ -1,0 +1,4 @@
+line_id,amount,reason
+BK-63271,6.36,bank interest
+BK-63275,763.50,"supplier refund, not a customer payment"
+BK-63278,2613.67,invoice already closed; not in the open list

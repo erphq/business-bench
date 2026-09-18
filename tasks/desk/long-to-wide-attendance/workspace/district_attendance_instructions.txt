@@ -1,0 +1,20 @@
+Out-of-School-Time Grant - attendance submission (fall session)
+Lakemont Unified School District, Expanded Learning Office
+
+Please return attendance on the attached template, one file per program.
+
+- One row per enrolled student, including students who did not attend. Do not include
+  visitors, siblings or trial-day guests. Delete the example row.
+- Student Name must be the legal name as it appears on your enrollment roster, written
+  Last, First. Do not use nicknames.
+- Rows in alphabetical order by Student Name.
+- Keep the date columns exactly as they are in the template, one per scheduled session.
+- Codes:  P = present   T = tardy   E = excused absence   U = unexcused absence
+- Leave a cell blank when you have no record for that student on that day. Do not fill
+  blanks with U; we treat a blank as not scheduled or unknown.
+
+Program rules we agreed with Gearhouse:
+- Sessions start at 3:30 PM. A check-in after 3:40 PM is T; 3:40 PM or earlier is P.
+- Excused and unexcused absences come from the coach's absence sheet (Excused? Y = E, N = U).
+- If a student has a Robotics Club check-in on a day the coach also marked them absent, the
+  check-in stands (they arrived late after the coach took the register).

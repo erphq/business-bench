@@ -1,0 +1,11 @@
+Reorder run for this week.
+
+Anything at or below its reorder point needs ordering - but count what is already on order (whatever hasn't arrived yet on open POs) as if it were on the shelf, and count both the floor and the back room. Cancelled POs are not coming.
+
+How much: enough to get us through the vendor's lead time plus four weeks of sales. So average daily sales x (lead time in days + 28), minus what we have and what's on order. Vendors only sell in packs, so round up to a full pack.
+
+Do not reorder anything from Kestrel Components - we are dropping the brand and selling through what's left. Same for the 9-speed chains, nobody asks for them anymore.
+
+Send me reorder.csv with sku, description, supplier and order_qty (in units, not packs), one line per item we need to order.
+
+Nadia

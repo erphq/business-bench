@@ -1,0 +1,76 @@
+id: price-list-page
+track: desk
+category: tooling
+title: Fall wholesale price list page for shop buyers
+ask: |
+  Can you make our fall wholesale price list page for the shop buyers from the catalog export? Nadia's note has the rules. Save it as index.html.
+followup: null
+timeout_s: 1200
+traps:
+- |-
+  wholesale prices are typed as text in six styles ('$2.25', '2.25', 'USD 2.25', '2.25 ea', '$3.5', a leading space) beside a retail column that is roughly double (check: page structure: unit and pack prices)
+- |-
+  the pack price is price each times pack size less 10% on a box of 6 and 15% on a box of 12, with no discount on notebooks or prints; pack sizes are typed '6 pk', 'box of 12', '12-pack', 'set of 3', 'single' (checks: key pack prices; page structure: unit and pack prices)
+- |-
+  discontinued lines are marked Discontinued, DISC or disc. in the status column (checks: discontinued lines left off; page structure: one row per product)
+- |-
+  'Paper boats' has an Active status but its name was typed 'DISCONTINUED - Paper boats' (checks: discontinued lines left off; page structure: one row per product)
+- |-
+  the Wedding category is discontinued in full, so it has no section at all (check: discontinued lines left off)
+- |-
+  the note sets the category order (Holiday first); the export is in SKU order and an alphabetical page puts Art Prints first (check: page structure: category order)
+- |-
+  last fall's wholesale price file sits beside the export with older prices (check: page structure: unit and pack prices)
+checks:
+- type: file_exists
+  name: index.html exists
+  path: index.html
+- type: text_contains_all
+  name: every live product listed
+  path: index.html
+  phrases:
+  - Balloon bouquet
+  - Bee study print
+  - Botanical fern print
+  - Candlelit window
+  - Confetti burst
+  - Dot grid journal
+  - Evening lantern
+  - Forget-me-nots
+  - Harbor map print
+  - Hummingbird note
+  - Letterpress alphabet
+  - Lined jotter trio
+  - Paper crane
+  - Party hat corgi
+  - Pine sprig
+  - Pocket notebook kraft
+  - Pressed fern
+  - Quiet harbor
+  - Rocket candle
+  - Snowy owl
+  - Starry sleigh ride
+  - Tiny cactus
+  - Willow branch
+- type: text_not_contains
+  name: discontinued lines left off
+  path: index.html
+  phrases:
+  - Frosted pinecone
+  - Grateful garden
+  - Blue bicycle
+  - Paper boats
+  - Just married tandem
+  - Rings and roses
+- type: text_numbers_present
+  name: key pack prices
+  path: index.html
+  numbers:
+  - 21.42
+  - 19.38
+  - 14.31
+  - 15.12
+  rel_tol: 1.0e-07
+- type: custom
+  name: page structure
+  module: check.py

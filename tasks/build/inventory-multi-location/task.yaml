@@ -1,0 +1,61 @@
+id: inventory-multi-location
+track: build
+category: inventory
+title: Multi-warehouse inventory app with transfers, reasoned adjustments, reorder alerts, and stock valuation
+ask: |
+  We're a janitorial and restaurant supply distributor with warehouses in Reno, Sacramento, and
+  Stockton, and I need to know what we have where and what it's worth. Our item list and each
+  warehouse's stock counts are attached; they were pasted together from three spreadsheets, so tidy
+  them up on the way in. Staff need to move stock between warehouses and adjust counts, with a reason
+  on every adjustment, and I want a reorder list of anything at or below its reorder point plus our
+  stock value at cost on a dashboard. Each warehouse lead should see and change only their own
+  warehouse's stock, our bookkeeper needs to see everything without changing anything, and I run the
+  users and settings. Give me an admin login and a login for Marisol Vega, who runs Sacramento.
+seed:
+  - seed/items.csv
+  - seed/stock.csv
+timeout_per_turn_s: 3600
+
+# The harness must leave this file in the workspace root when the build turn ends.
+# Testers reach the app only through it.
+result_contract:
+  path: RESULT.json
+  fields:
+    url: Login page of the app, reachable from outside the build machine (no localhost or private LAN address).
+    admin:
+      user: Admin username or email.
+      password: Admin password.
+    restricted:
+      user: Login for Marisol Vega, the Sacramento warehouse lead.
+      password: That lead's password.
+    notes: >
+      Free text. Must confirm the restricted login is Marisol Vega (Sacramento). May include a
+      bookkeeper login, how to restart the app, and anything else a tester needs.
+  example: |
+    {
+      "url": "https://example-app.host/login",
+      "admin": {"user": "admin@example.com", "password": "..."},
+      "restricted": {"user": "marisol@example.com", "password": "..."},
+      "notes": "restricted login is Marisol Vega (Warehouse Lead, Sacramento). Bookkeeper: books@example.com / ... Restart: systemctl restart stock."
+    }
+
+checklist: checklist.md
+reference: reference/counts.json          # grader-only; never mounted for the harness
+core_items: [1, 3, 5, 6, 8, 14, 15, 21, 24]
+changes:
+  - changes/1.md
+  - changes/2.md
+  - changes/3.md
+
+# Authoring notes only; never shown to the harness.
+traps:
+  - items.csv has 4 exact duplicate rows and 2 rows repeating an item number with a trailing space and the description in capitals (106 rows -> 100 items; 102 on exact-row dedupe) (item 15)
+  - 25 item numbers start with 0 and 32 stock rows wrote them without it (01038 as 1038); reading Item # as a number or linking on the raw text orphans stock or invents 4-digit items (item 16)
+  - warehouse written as RNO / RENO / Reno NV, SAC / sacramento / Sacramento CA, STK / stockton / "Stockton " so a verbatim import creates up to twelve warehouses and breaks the scope count of 79 (items 6, 10, 17)
+  - stock.csv has 5 exact duplicate rows (236 rows -> 231 stock items) and CRLF line endings (items 11, 17)
+  - 17 unit costs are "$3,480.00"-style strings, including the highest; a text sort puts 17605 Floor stripper first and a failed parse zeroes the valuation (items 8, 18)
+  - on-hand above 999 is written "1,450"; a text sort on On Hand puts a 99 first (item 10)
+  - 36362 Wet floor sign at Stockton has On Hand -4; must be flagged or corrected, not silently kept (item 19; the valuation accepts either treatment)
+  - 7 stock items sit exactly at their reorder point; a strict below-the-point rule shows 22 alerts instead of 29 (items 8, 20)
+  - category written in other capitals on 9 item rows; a grouped report shows more than seven categories (change 1)
+  - a transfer must post both sides in one step and a stock adjustment must change value by quantity x unit cost; two independent edits or a stored value field drift (items 21, 24)

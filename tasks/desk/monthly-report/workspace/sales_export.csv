@@ -1,0 +1,907 @@
+order_id,order_date,region,product_line,amount
+SO-10001,1 Jan 2026,West,Subscriptions,"$1,121.20"
+SO-10002,1 Jan 2026,North,Services,"$2,441.92"
+SO-10003,2026-01-01,East,Subscriptions,$145.10
+SO-10004,01/01/2026,West,Subscriptions,$167.83
+SO-10005,01/01/2026,East,Subscriptions,"$1,400.65"
+SO-10006,1 Jan 2026,South,Hardware,$917.24
+SO-10007,2026-01-02,South,Services,"$4,739.56"
+SO-10008,2026-01-02,South,Subscriptions,"$1,375.54"
+SO-10009,2026-01-02,South,Services,"$5,163.77"
+SO-10010,01/03/2026,East,Subscriptions,$562.32
+SO-10011,01/03/2026,North,Services,"$4,833.31"
+SO-10012,3 Jan 2026,South,Hardware,"$7,178.26"
+SO-10013,4 Jan 2026,South,Subscriptions,$259.44
+SO-10014,4 Jan 2026,South,Services,"$1,996.53"
+SO-10015,2026-01-04,West,Services,"$4,282.35"
+SO-10016,01/04/2026,South,Hardware,"$7,324.79"
+SO-10017,01/04/2026,West,Hardware,"$8,419.39"
+SO-10018,01/04/2026,West,Hardware,"$3,447.15"
+SO-10019,2026-01-05,West,Services,"$4,787.82"
+SO-10020,2026-01-05,South,Hardware,"$5,943.31"
+SO-10021,01/05/2026,South,Services,$425.13
+SO-10022,01/06/2026,North,Subscriptions,"$1,107.57"
+SO-10023,6 Jan 2026,South,Hardware,"$5,545.50"
+SO-10024,6 Jan 2026,East,Services,$483.60
+SO-10025,01/06/2026,North,Subscriptions,"$1,333.48"
+SO-10026,7 Jan 2026,East,Subscriptions,$346.29
+SO-10027,2026-01-07,East,Subscriptions,$546.67
+SO-10028,7 Jan 2026,South,Hardware,"$5,818.86"
+SO-10029,7 Jan 2026,South,Subscriptions,"$1,329.64"
+SO-10030,7 Jan 2026,North,Hardware,$640.95
+SO-10031,2026-01-07,North,Hardware,"$5,394.44"
+SO-10032,01/07/2026,East,Subscriptions,"$1,222.00"
+SO-10033,8 Jan 2026,West,Subscriptions,"$1,359.58"
+SO-10034,01/08/2026,North,Subscriptions,$862.07
+SO-10035,8 Jan 2026,West,Services,$765.61
+SO-10036,2026-01-08,South,Hardware,"$5,397.36"
+SO-10037,2026-01-08,South,Subscriptions,$371.68
+SO-10038,8 Jan 2026,North,Services,"$5,725.41"
+SO-10039,01/09/2026,North,Hardware,"$8,420.35"
+SO-10040,2026-01-09,East,Services,$479.24
+SO-10041,9 Jan 2026,East,Services,"$2,533.03"
+SO-10042,01/09/2026,West,Hardware,"$8,829.11"
+SO-10043,9 Jan 2026,East,Subscriptions,$146.91
+SO-10044,01/09/2026,East,Subscriptions,$824.72
+SO-10045,2026-01-09,North,Subscriptions,$404.84
+SO-10046,01/09/2026,West,Services,"$4,282.73"
+SO-10047,2026-01-10,South,Services,"$3,993.92"
+SO-10048,01/10/2026,West,Services,"$1,402.98"
+SO-10049,2026-01-10,South,Hardware,"$3,666.01"
+SO-10050,01/10/2026,South,Hardware,"$2,717.69"
+SO-10051,2026-01-10,West,Subscriptions,$432.33
+SO-10052,2026-01-10,East,Subscriptions,"$1,197.46"
+SO-10053,11 Jan 2026,South,Subscriptions,$237.54
+SO-10054,01/11/2026,South,Services,"$5,125.50"
+SO-10055,01/11/2026,South,Subscriptions,$449.63
+SO-10056,11 Jan 2026,South,Subscriptions,"$1,456.82"
+SO-10057,01/12/2026,West,Subscriptions,"$1,145.39"
+SO-10058,01/12/2026,North,Subscriptions,$82.25
+SO-10059,2026-01-13,East,Services,$561.94
+SO-10060,01/13/2026,West,Subscriptions,"$1,274.69"
+SO-10061,2026-01-14,North,Services,"$3,016.34"
+SO-10062,01/14/2026,West,Services,$387.00
+SO-10063,2026-01-14,North,Services,"$3,449.61"
+SO-10064,01/14/2026,North,Subscriptions,"$1,169.36"
+SO-10065,14 Jan 2026,North,Subscriptions,$829.23
+SO-10066,2026-01-16,North,Services,"$2,965.41"
+SO-10067,2026-01-16,North,Hardware,"$7,177.94"
+SO-10068,2026-01-16,East,Services,"$4,253.57"
+SO-10069,16 Jan 2026,West,Subscriptions,$264.52
+SO-10070,01/16/2026,West,Subscriptions,$455.42
+SO-10071,17 Jan 2026,South,Subscriptions,"$1,478.26"
+SO-10072,2026-01-17,South,Subscriptions,$827.10
+SO-10073,17 Jan 2026,North,Hardware,$504.56
+SO-10229,14 Feb 2026,South,Services,"$3,813.30"
+SO-10074,17 Jan 2026,East,Hardware,"$4,165.41"
+SO-10075,01/17/2026,South,Hardware,"$2,525.07"
+SO-10076,2026-01-17,East,Hardware,"$4,158.91"
+SO-10077,17 Jan 2026,West,Hardware,"$2,515.10"
+SO-10078,01/17/2026,South,Services,"$5,454.02"
+SO-10079,01/17/2026,North,Services,"$3,232.40"
+SO-10080,2026-01-17,South,Services,"$5,748.70"
+SO-10081,01/17/2026,East,Subscriptions,$636.61
+SO-10082,2026-01-18,East,Subscriptions,$453.19
+SO-10083,18 Jan 2026,South,Hardware,"$7,880.89"
+SO-10084,18 Jan 2026,North,Hardware,"$4,690.12"
+SO-10085,2026-01-18,South,Subscriptions,"$1,265.40"
+SO-10266,02/22/2026,North,Hardware,"$3,623.49"
+SO-10086,2026-01-18,South,Hardware,"$6,046.18"
+SO-10087,2026-01-18,West,Services,"$5,674.67"
+SO-10088,18 Jan 2026,South,Hardware,"$8,728.17"
+SO-10089,19 Jan 2026,West,Services,$501.18
+SO-10090,19 Jan 2026,North,Services,"$4,641.70"
+SO-10091,19 Jan 2026,East,Subscriptions,"$1,432.12"
+SO-10092,01/19/2026,East,Subscriptions,"$1,104.59"
+SO-10093,20 Jan 2026,North,Subscriptions,$638.91
+SO-10094,20 Jan 2026,West,Subscriptions,$967.00
+SO-10095,20 Jan 2026,West,Hardware,$763.03
+SO-10096,2026-01-20,West,Subscriptions,$215.44
+SO-10097,2026-01-21,East,Hardware,"$8,744.07"
+SO-10098,01/22/2026,North,Subscriptions,"$1,439.11"
+SO-10099,22 Jan 2026,East,Subscriptions,$826.73
+SO-10100,2026-01-22,South,Services,"$1,353.58"
+SO-10101,22 Jan 2026,West,Hardware,"$6,929.40"
+SO-10102,2026-01-22,South,Hardware,"$2,670.31"
+SO-10103,23 Jan 2026,West,Services,"$2,753.01"
+SO-10104,01/23/2026,East,Subscriptions,$561.22
+SO-10105,23 Jan 2026,West,Subscriptions,$232.22
+SO-10106,2026-01-24,East,Hardware,"$3,619.27"
+SO-10107,2026-01-24,East,Hardware,"$8,808.90"
+SO-10108,24 Jan 2026,North,Subscriptions,$703.33
+SO-10109,01/24/2026,South,Hardware,"$3,547.99"
+SO-10110,24 Jan 2026,North,Hardware,$769.64
+SO-10111,01/24/2026,North,Hardware,"$6,532.62"
+SO-10112,2026-01-25,South,Subscriptions,"$1,332.89"
+SO-10113,2026-01-25,South,Hardware,"$1,909.42"
+SO-10114,2026-01-25,North,Hardware,"$7,539.59"
+SO-10115,2026-01-26,North,Subscriptions,$730.57
+SO-10116,26 Jan 2026,East,Subscriptions,$186.38
+SO-10117,01/26/2026,East,Subscriptions,$846.39
+SO-10118,26 Jan 2026,East,Hardware,"$8,580.26"
+SO-10119,26 Jan 2026,West,Hardware,"$6,394.45"
+SO-10120,01/26/2026,West,Hardware,"$2,225.68"
+SO-10121,26 Jan 2026,East,Services,"$5,861.32"
+SO-10122,26 Jan 2026,North,Services,"$5,739.22"
+SO-10123,01/27/2026,East,Subscriptions,$262.28
+SO-10124,2026-01-27,West,Hardware,"$2,590.52"
+SO-10125,27 Jan 2026,East,Subscriptions,"$1,017.82"
+SO-10126,28 Jan 2026,East,Services,"$3,721.41"
+SO-10127,01/28/2026,West,Hardware,"$1,481.23"
+SO-10128,01/28/2026,West,Hardware,"$2,368.64"
+SO-10129,2026-01-28,West,Subscriptions,"$1,415.84"
+SO-10130,28 Jan 2026,East,Subscriptions,"$1,046.30"
+SO-10131,01/28/2026,East,Services,$297.10
+SO-10132,28 Jan 2026,North,Hardware,$523.76
+SO-10133,01/28/2026,North,Services,"$2,511.78"
+SO-10134,29 Jan 2026,East,Hardware,"$7,345.23"
+SO-10135,2026-01-29,East,Hardware,"$1,375.48"
+SO-10136,29 Jan 2026,East,Subscriptions,$801.34
+SO-10137,29 Jan 2026,South,Subscriptions,$161.11
+SO-10138,01/29/2026,West,Services,"$3,768.64"
+SO-10139,01/29/2026,West,Hardware,"$1,528.82"
+SO-10169,02/04/2026,North,Hardware,"$3,856.09"
+SO-10140,29 Jan 2026,North,Hardware,$589.74
+SO-10141,30 Jan 2026,East,Services,"$2,629.34"
+SO-10142,01/30/2026,West,Subscriptions,"$1,249.62"
+SO-10143,30 Jan 2026,North,Services,"$1,585.01"
+SO-10144,30 Jan 2026,North,Services,"$3,169.37"
+SO-10145,2026-01-31,East,Subscriptions,$563.91
+SO-10146,2026-01-31,North,Subscriptions,$410.98
+SO-10122-R,2026-01-31,North,Services,"(5,739.22)"
+SO-10147,31 Jan 2026,West,Hardware,"$4,434.21"
+SO-10148,31 Jan 2026,West,Hardware,$969.56
+SO-10149,2026-01-31,East,Services,"$2,700.88"
+SO-10141-R,2026-01-31,East,Services,"(2,629.34)"
+SO-10150,2026-01-31,North,Services,"$2,281.33"
+SO-10151,2026-01-31,East,Subscriptions,$583.65
+SO-10152,02/01/2026,West,Subscriptions,$318.01
+SO-10153,2026-02-01,East,Subscriptions,$873.82
+SO-10154,1 Feb 2026,West,Subscriptions,"$1,114.67"
+SO-10155,02/01/2026,South,Services,"$5,569.69"
+SO-10156,2026-02-01,West,Hardware,$933.00
+SO-10157,2026-02-02,East,Services,$642.76
+SO-10158,2 Feb 2026,East,Subscriptions,"$1,096.46"
+SO-10159,2 Feb 2026,West,Hardware,$760.77
+SO-10160,2026-02-02,West,Subscriptions,$583.30
+SO-10161,2 Feb 2026,East,Hardware,"$6,742.38"
+SO-10162,2026-02-02,East,Hardware,"$4,972.55"
+SO-10163,02/02/2026,North,Subscriptions,$307.52
+SO-10164,02/02/2026,North,Subscriptions,$388.98
+SO-10304,2026-02-28,East,Services,"$3,065.74"
+SO-10165,02/03/2026,South,Subscriptions,$827.46
+SO-10166,2026-02-03,South,Services,"$1,499.94"
+SO-10167,3 Feb 2026,North,Hardware,"$2,569.34"
+SO-10168,02/04/2026,West,Hardware,"$2,468.81"
+SO-10169,02/04/2026,North,Hardware,"$3,856.09"
+SO-10170,2026-02-04,North,Hardware,"$6,130.30"
+SO-10171,2026-02-04,East,Subscriptions,$495.05
+SO-10172,2026-02-04,West,Subscriptions,"$1,094.94"
+SO-10173,4 Feb 2026,North,Hardware,"$7,773.07"
+SO-10174,02/04/2026,East,Hardware,"$1,972.91"
+SO-10175,02/05/2026,East,Hardware,"$4,166.99"
+SO-10176,02/05/2026,South,Hardware,"$1,862.63"
+SO-10177,02/05/2026,East,Hardware,"$3,551.45"
+SO-10178,02/05/2026,West,Subscriptions,"$1,054.18"
+SO-10179,02/05/2026,West,Hardware,"$5,102.03"
+SO-10180,6 Feb 2026,East,Subscriptions,$241.65
+SO-10181,2026-02-06,West,Services,"$2,292.36"
+SO-10182,02/06/2026,North,Services,"$1,474.57"
+SO-10183,02/07/2026,West,Subscriptions,$852.18
+SO-10184,02/07/2026,North,Subscriptions,"$1,411.89"
+SO-10185,02/07/2026,South,Services,"$4,423.46"
+SO-10186,7 Feb 2026,North,Services,"$2,011.72"
+SO-10187,2026-02-07,South,Subscriptions,"$1,309.00"
+SO-10188,7 Feb 2026,South,Subscriptions,$777.75
+SO-10189,02/08/2026,East,Hardware,"$3,727.35"
+SO-10190,2026-02-08,North,Hardware,$743.40
+SO-10191,02/08/2026,South,Subscriptions,"$1,367.66"
+SO-10192,2026-02-08,East,Services,"$3,063.74"
+SO-10193,2026-02-08,North,Subscriptions,"$1,432.19"
+SO-10194,02/08/2026,West,Services,$735.81
+SO-10195,2026-02-09,West,Hardware,$647.22
+SO-10196,02/09/2026,East,Hardware,"$5,080.66"
+SO-10197,2026-02-09,North,Hardware,$788.89
+SO-10198,02/09/2026,North,Hardware,"$5,710.82"
+SO-10199,02/09/2026,South,Subscriptions,$91.76
+SO-10200,2026-02-09,East,Subscriptions,"$1,317.02"
+SO-10201,02/09/2026,East,Subscriptions,"$1,275.62"
+SO-10202,02/09/2026,South,Subscriptions,"$1,376.30"
+SO-10203,2026-02-10,East,Subscriptions,"$1,328.37"
+SO-10204,10 Feb 2026,South,Hardware,"$4,175.56"
+SO-10205,10 Feb 2026,North,Services,"$1,962.81"
+SO-10206,10 Feb 2026,South,Subscriptions,"$1,491.38"
+SO-10207,02/10/2026,North,Hardware,"$2,107.25"
+SO-10208,02/10/2026,North,Subscriptions,"$1,393.60"
+SO-10209,02/11/2026,North,Subscriptions,$347.02
+SO-10210,02/11/2026,West,Subscriptions,$512.00
+SO-10211,02/11/2026,North,Subscriptions,$242.15
+SO-10212,11 Feb 2026,South,Services,"$3,545.38"
+SO-10213,11 Feb 2026,East,Services,"$2,380.63"
+SO-10214,02/11/2026,West,Services,$737.05
+SO-10215,2026-02-11,West,Subscriptions,"$1,483.35"
+SO-10216,12 Feb 2026,East,Hardware,"$8,543.87"
+SO-10217,02/12/2026,South,Subscriptions,$739.69
+SO-10218,02/13/2026,South,Subscriptions,$771.65
+SO-10219,02/13/2026,East,Services,"$2,472.57"
+SO-10220,2026-02-13,West,Hardware,"$5,651.01"
+SO-10221,2026-02-13,South,Hardware,"$6,001.43"
+SO-10222,13 Feb 2026,South,Hardware,"$2,711.64"
+SO-10223,2026-02-13,West,Hardware,"$3,871.63"
+SO-10224,13 Feb 2026,South,Services,"$5,571.30"
+SO-10225,02/14/2026,East,Subscriptions,$407.39
+SO-10226,02/14/2026,South,Subscriptions,$883.59
+SO-10227,14 Feb 2026,South,Hardware,"$4,767.20"
+SO-10228,02/14/2026,East,Services,"$5,845.00"
+SO-10155,02/01/2026,South,Services,"$5,569.69"
+SO-10229,14 Feb 2026,South,Services,"$3,813.30"
+SO-10230,02/14/2026,South,Subscriptions,$601.37
+SO-10231,2026-02-15,South,Services,"$3,031.41"
+SO-10232,02/15/2026,East,Hardware,"$2,336.37"
+SO-10233,2026-02-15,West,Hardware,"$1,929.52"
+SO-10234,02/15/2026,West,Hardware,$982.75
+SO-10235,15 Feb 2026,East,Services,"$5,553.79"
+SO-10236,2026-02-15,North,Hardware,"$7,776.14"
+SO-10237,2026-02-16,West,Services,"$5,304.67"
+SO-10238,2026-02-16,West,Hardware,"$5,988.32"
+SO-10239,16 Feb 2026,West,Subscriptions,"$1,287.62"
+SO-10240,02/17/2026,South,Services,"$3,611.44"
+SO-10241,02/17/2026,West,Hardware,"$3,095.82"
+SO-10242,2026-02-17,East,Subscriptions,$311.55
+SO-10243,17 Feb 2026,South,Subscriptions,$974.55
+SO-10244,2026-02-17,South,Services,$375.63
+SO-10245,2026-02-17,North,Subscriptions,$541.99
+SO-10246,17 Feb 2026,South,Subscriptions,"$1,414.27"
+SO-10247,2026-02-18,West,Hardware,"$2,965.27"
+SO-10248,18 Feb 2026,West,Hardware,$777.24
+SO-10249,02/18/2026,South,Subscriptions,"$1,094.81"
+SO-10250,02/18/2026,South,Subscriptions,$121.28
+SO-10251,18 Feb 2026,East,Subscriptions,$130.19
+SO-10252,02/18/2026,West,Subscriptions,$653.72
+SO-10253,2026-02-19,North,Services,"$2,199.80"
+SO-10254,02/19/2026,North,Services,"$2,423.73"
+SO-10255,19 Feb 2026,West,Hardware,"$4,954.56"
+SO-10256,02/19/2026,North,Hardware,$472.08
+SO-10257,20 Feb 2026,East,Hardware,"$2,446.45"
+SO-10258,2026-02-20,North,Subscriptions,$442.51
+SO-10259,2026-02-20,West,Hardware,"$3,018.16"
+SO-10260,21 Feb 2026,North,Services,"$3,220.45"
+SO-10261,2026-02-21,South,Subscriptions,$763.62
+SO-10262,21 Feb 2026,North,Hardware,"$6,136.67"
+SO-10263,2026-02-21,East,Subscriptions,$791.63
+SO-10264,2026-02-22,North,Subscriptions,$163.47
+SO-10265,2026-02-22,North,Hardware,"$6,448.51"
+SO-10266,02/22/2026,North,Hardware,"$3,623.49"
+SO-10267,22 Feb 2026,North,Subscriptions,"$1,261.79"
+SO-10268,2026-02-23,South,Subscriptions,$87.82
+SO-10269,2026-02-23,East,Subscriptions,$378.41
+SO-10270,02/23/2026,East,Subscriptions,$710.87
+SO-10271,02/23/2026,North,Subscriptions,$133.14
+SO-10272,2026-02-23,West,Hardware,$728.79
+SO-10273,2026-02-23,West,Hardware,"$8,531.26"
+SO-10274,02/23/2026,West,Subscriptions,$505.39
+SO-10275,23 Feb 2026,West,Hardware,"$5,120.63"
+SO-10276,23 Feb 2026,North,Services,"$1,028.24"
+SO-10277,2026-02-23,East,Subscriptions,"$1,152.85"
+SO-10278,2026-02-23,South,Hardware,"$3,255.18"
+SO-10279,2026-02-24,East,Subscriptions,$599.42
+SO-10280,24 Feb 2026,East,Hardware,"$2,055.79"
+SO-10281,2026-02-24,East,Hardware,"$3,326.75"
+SO-10282,24 Feb 2026,North,Subscriptions,$376.91
+SO-10283,02/24/2026,West,Subscriptions,$806.36
+SO-10284,02/24/2026,South,Hardware,"$8,820.14"
+SO-10285,2026-02-24,East,Subscriptions,"$1,462.32"
+SO-10286,2026-02-25,West,Services,"$2,787.48"
+SO-10287,2026-02-25,East,Hardware,"$2,311.59"
+SO-10288,2026-02-25,South,Subscriptions,$892.19
+SO-10289,25 Feb 2026,South,Services,"$1,187.08"
+SO-10290,02/26/2026,North,Hardware,"$1,462.65"
+SO-10291,2026-02-26,East,Services,"$1,514.06"
+SO-10292,02/26/2026,East,Subscriptions,$473.22
+SO-10293,26 Feb 2026,South,Hardware,$814.17
+SO-10257-R,26 Feb 2026,East,Hardware,"(2,446.45)"
+SO-10294,02/26/2026,West,Hardware,"$8,020.16"
+SO-10295,2026-02-26,East,Hardware,"$7,156.31"
+SO-10296,27 Feb 2026,North,Services,"$1,545.90"
+SO-10297,2026-02-27,West,Subscriptions,"$1,269.42"
+SO-10298,02/27/2026,North,Subscriptions,$767.99
+SO-10260-R,2026-02-27,North,Services,"(1,610.22)"
+SO-10305-R,28 Feb 2026,South,Hardware,"(7,082.33)"
+SO-10299,2026-02-28,South,Subscriptions,"$1,226.58"
+SO-10300,2026-02-28,West,Services,$675.61
+SO-10301,2026-02-28,West,Hardware,$656.07
+SO-10302,28 Feb 2026,South,Services,"$4,757.70"
+SO-10303,2026-02-28,East,Hardware,"$2,091.41"
+SO-10304,2026-02-28,East,Services,"$3,065.74"
+SO-10305,2026-02-28,South,Hardware,"$7,082.33"
+SO-10306,28 Feb 2026,South,Services,$286.81
+SO-10307,1 Mar 2026,West,Hardware,"$2,684.27"
+SO-10308,1 Mar 2026,South,Hardware,"$8,268.98"
+SO-10309,2026-03-02,East,Services,"$4,425.34"
+SO-10310,2 Mar 2026,South,Subscriptions,"$1,052.37"
+SO-10311,03/02/2026,South,Subscriptions,$838.97
+SO-10312,2026-03-02,East,Services,"$5,156.30"
+SO-10313,2 Mar 2026,East,Hardware,"$2,869.54"
+SO-10314,03/02/2026,South,Hardware,"$1,180.47"
+SO-10315,2026-03-03,West,Subscriptions,$327.41
+SO-10316,03/03/2026,South,Services,$961.78
+SO-10317,3 Mar 2026,West,Hardware,"$7,840.08"
+SO-10318,03/03/2026,East,Subscriptions,"$1,011.50"
+SO-10319,2026-03-03,East,Subscriptions,"$1,042.72"
+SO-10320,4 Mar 2026,West,Services,$478.53
+SO-10321,4 Mar 2026,South,Hardware,"$6,944.84"
+SO-10322,03/05/2026,East,Hardware,"$2,968.81"
+SO-10323,03/06/2026,West,Subscriptions,$522.48
+SO-10324,6 Mar 2026,East,Subscriptions,"$1,269.89"
+SO-10325,6 Mar 2026,East,Subscriptions,$341.21
+SO-10326,6 Mar 2026,West,Subscriptions,$931.77
+SO-10327,7 Mar 2026,South,Subscriptions,"$1,017.06"
+SO-10328,2026-03-07,East,Hardware,"$1,551.36"
+SO-10329,2026-03-08,West,Hardware,"$4,483.59"
+SO-10330,8 Mar 2026,South,Subscriptions,$226.64
+SO-10331,8 Mar 2026,South,Hardware,"$5,548.72"
+SO-10332,2026-03-08,East,Services,"$1,018.11"
+SO-10333,03/08/2026,West,Subscriptions,$624.90
+SO-10334,9 Mar 2026,South,Hardware,"$2,493.97"
+SO-10335,03/09/2026,East,Hardware,"$5,882.99"
+SO-10336,03/09/2026,West,Hardware,"$2,607.98"
+SO-10337,2026-03-09,South,Hardware,"$5,167.22"
+SO-10338,03/09/2026,South,Subscriptions,$788.24
+SO-10339,9 Mar 2026,South,Subscriptions,$334.24
+SO-10340,9 Mar 2026,South,Hardware,"$5,799.73"
+SO-10341,03/09/2026,West,Services,"$2,296.19"
+SO-10342,03/10/2026,South,Hardware,"$2,689.37"
+SO-10343,10 Mar 2026,East,Hardware,"$2,871.66"
+SO-10344,10 Mar 2026,South,Services,"$5,093.72"
+SO-10345,2026-03-10,East,Hardware,"$3,825.12"
+SO-10346,2026-03-11,West,Subscriptions,"$1,021.04"
+SO-10347,2026-03-11,South,Hardware,$570.44
+SO-10348,03/11/2026,East,Services,"$3,544.11"
+SO-10349,11 Mar 2026,East,Hardware,"$2,631.23"
+SO-10350,03/12/2026,East,Hardware,"$7,237.94"
+SO-10351,2026-03-12,East,Hardware,$980.60
+SO-10352,12 Mar 2026,East,Services,"$4,745.16"
+SO-10353,12 Mar 2026,East,Services,"$5,519.17"
+SO-10354,03/12/2026,East,Subscriptions,$599.84
+SO-10355,13 Mar 2026,East,Hardware,"$2,702.52"
+SO-10356,03/14/2026,East,Services,"$1,500.08"
+SO-10357,03/14/2026,West,Hardware,"$8,367.53"
+SO-10358,2026-03-14,South,Hardware,"$1,500.50"
+SO-10359,03/14/2026,East,Services,"$1,756.91"
+SO-10360,2026-03-15,West,Hardware,"$8,267.16"
+SO-10361,15 Mar 2026,East,Subscriptions,$754.47
+SO-10362,03/15/2026,West,Services,"$5,626.92"
+SO-10363,16 Mar 2026,West,Subscriptions,"$1,047.57"
+SO-10364,03/16/2026,West,Subscriptions,"$1,404.75"
+SO-10365,16 Mar 2026,West,Subscriptions,"$1,281.89"
+SO-10366,2026-03-16,South,Hardware,"$1,487.34"
+SO-10367,2026-03-16,West,Services,"$5,665.18"
+SO-10368,17 Mar 2026,West,Services,"$5,104.04"
+SO-10369,2026-03-17,West,Hardware,"$1,701.26"
+SO-10370,03/17/2026,South,Subscriptions,$252.75
+SO-10371,2026-03-17,West,Subscriptions,$807.34
+SO-10372,17 Mar 2026,South,Hardware,"$6,265.91"
+SO-10373,2026-03-18,West,Services,"$3,277.91"
+SO-10374,18 Mar 2026,East,Subscriptions,$292.28
+SO-10375,2026-03-19,East,Subscriptions,"$1,359.55"
+SO-10376,03/19/2026,West,Hardware,"$8,069.05"
+SO-10377,20 Mar 2026,South,Hardware,"$6,715.93"
+SO-10378,2026-03-21,East,Services,$359.53
+SO-10797,2026-06-14,East,Hardware,"$8,881.59"
+SO-10379,21 Mar 2026,South,Services,"$3,382.58"
+SO-10380,03/21/2026,South,Services,"$2,211.17"
+SO-10381,03/21/2026,East,Hardware,"$1,769.48"
+SO-10382,22 Mar 2026,South,Subscriptions,"$1,365.21"
+SO-10383,2026-03-22,South,Subscriptions,"$1,033.74"
+SO-10384,03/22/2026,West,Subscriptions,$397.99
+SO-10385,2026-03-22,East,Subscriptions,"$1,008.95"
+SO-10386,22 Mar 2026,East,Hardware,"$6,223.41"
+SO-10387,23 Mar 2026,South,Hardware,"$4,826.31"
+SO-10388,2026-03-23,West,Subscriptions,$645.78
+SO-10389,03/23/2026,South,Services,"$4,771.94"
+SO-10390,24 Mar 2026,West,Services,"$4,347.83"
+SO-10391,03/24/2026,East,Services,"$4,101.01"
+SO-10392,24 Mar 2026,West,Hardware,"$4,271.72"
+SO-10393,2026-03-25,South,Subscriptions,"$1,302.69"
+SO-10394,03/25/2026,West,Subscriptions,$236.37
+SO-10395,2026-03-25,South,Services,"$2,545.00"
+SO-10396,03/25/2026,South,Services,"$4,029.37"
+SO-10397,03/26/2026,South,Services,"$1,475.79"
+SO-10398,03/27/2026,West,Subscriptions,$481.48
+SO-10399,2026-03-27,West,Services,"$2,853.76"
+SO-10400,27 Mar 2026,West,Subscriptions,$675.47
+SO-10401,2026-03-27,West,Services,"$1,676.43"
+SO-10402,2026-03-27,South,Hardware,"$4,035.33"
+SO-10038,8 Jan 2026,North,Services,"$5,725.41"
+SO-10403,28 Mar 2026,East,Subscriptions,$189.71
+SO-10404,2026-03-28,West,Hardware,"$7,605.14"
+SO-10405,28 Mar 2026,South,Subscriptions,$291.77
+SO-10406,03/28/2026,East,Hardware,"$4,544.47"
+SO-10407,2026-03-29,East,Hardware,"$1,780.16"
+SO-10408,2026-03-29,South,Subscriptions,$720.58
+SO-10409,29 Mar 2026,West,Hardware,$715.14
+SO-10410,03/29/2026,East,Services,"$4,788.28"
+SO-10411,03/29/2026,South,Services,"$3,336.11"
+SO-10412,03/30/2026,East,Hardware,"$3,086.77"
+SO-10413,31 Mar 2026,South,Hardware,"$7,492.79"
+SO-10414,03/31/2026,West,Services,"$2,864.29"
+SO-10415,2026-03-31,West,Subscriptions,"$1,270.51"
+SO-10416,31 Mar 2026,South,Subscriptions,$160.14
+SO-10417,31 Mar 2026,South,Subscriptions,$477.30
+SO-10418,31 Mar 2026,South,Subscriptions,"$1,394.98"
+SO-10419,03/31/2026,East,Services,$608.68
+SO-10420,04/01/2026,East,Subscriptions,"$1,214.00"
+SO-10421,2026-04-01,South,Subscriptions,$712.59
+SO-10422,1 Apr 2026,North,Services,"$2,560.20"
+SO-10423,2026-04-01,West,Subscriptions,$703.55
+SO-10424,1 Apr 2026,South,Subscriptions,$377.08
+SO-10425,1 Apr 2026,South,Subscriptions,$537.00
+SO-10426,2026-04-02,North,Subscriptions,"$1,028.25"
+SO-10427,2 Apr 2026,East,Subscriptions,"$1,484.89"
+SO-10428,2026-04-02,East,Subscriptions,"$1,424.53"
+SO-10429,2 Apr 2026,North,Subscriptions,$903.70
+SO-10430,04/02/2026,North,Services,"$4,970.92"
+SO-10431,2026-04-02,North,Hardware,"$3,092.25"
+SO-10432,2026-04-03,North,Subscriptions,"$1,024.65"
+SO-10433,04/03/2026,North,Subscriptions,$714.31
+SO-10434,3 Apr 2026,North,Services,"$2,825.44"
+SO-10435,2026-04-03,West,Hardware,"$5,068.25"
+SO-10436,04/03/2026,South,Services,"$1,066.08"
+SO-10437,2026-04-04,West,Hardware,"$1,359.89"
+SO-10438,2026-04-04,West,Hardware,"$3,107.03"
+SO-10439,04/04/2026,East,Hardware,"$4,998.78"
+SO-10440,4 Apr 2026,South,Hardware,"$2,227.70"
+SO-10441,04/04/2026,North,Subscriptions,"$1,265.26"
+SO-10442,4 Apr 2026,South,Subscriptions,$833.23
+SO-10443,2026-04-05,North,Services,"$4,973.91"
+SO-10444,5 Apr 2026,West,Services,"$2,149.44"
+SO-10445,2026-04-05,North,Hardware,"$7,445.94"
+SO-10446,2026-04-05,South,Subscriptions,"$1,315.95"
+SO-10447,5 Apr 2026,South,Hardware,"$6,068.47"
+SO-10448,04/05/2026,North,Services,"$1,064.66"
+SO-10449,04/06/2026,West,Hardware,$953.70
+SO-10450,04/06/2026,South,Subscriptions,$403.48
+SO-10451,2026-04-06,North,Subscriptions,$791.28
+SO-10452,2026-04-06,East,Services,"$1,821.39"
+SO-10453,6 Apr 2026,North,Subscriptions,$226.02
+SO-10454,04/06/2026,East,Hardware,"$1,934.07"
+SO-10455,2026-04-07,East,Hardware,"$1,714.06"
+SO-10456,04/07/2026,West,Subscriptions,$651.21
+SO-10457,2026-04-07,South,Subscriptions,"$1,217.41"
+SO-10458,2026-04-07,East,Hardware,"$4,158.76"
+SO-10459,2026-04-08,West,Hardware,"$6,639.88"
+SO-10460,2026-04-08,West,Hardware,"$8,132.17"
+SO-10461,8 Apr 2026,East,Services,"$5,905.19"
+SO-10462,9 Apr 2026,South,Subscriptions,$652.67
+SO-10463,04/09/2026,West,Hardware,"$5,988.26"
+SO-10464,9 Apr 2026,North,Subscriptions,"$1,288.84"
+SO-10465,9 Apr 2026,West,Subscriptions,"$1,301.14"
+SO-10466,04/10/2026,West,Services,"$5,633.17"
+SO-10467,04/10/2026,North,Services,"$2,315.35"
+SO-10468,10 Apr 2026,North,Hardware,"$3,463.94"
+SO-10307,1 Mar 2026,West,Hardware,"$2,684.27"
+SO-10469,10 Apr 2026,East,Services,"$2,790.71"
+SO-10470,10 Apr 2026,West,Hardware,"$5,991.57"
+SO-10471,2026-04-11,East,Services,$834.44
+SO-10472,2026-04-11,North,Subscriptions,$171.15
+SO-10473,04/11/2026,South,Subscriptions,"$1,194.02"
+SO-10474,2026-04-11,East,Hardware,"$8,655.61"
+SO-10475,11 Apr 2026,East,Hardware,"$3,630.13"
+SO-10476,2026-04-12,South,Services,$919.32
+SO-10477,2026-04-12,East,Subscriptions,"$1,457.20"
+SO-10478,12 Apr 2026,South,Hardware,"$8,708.51"
+SO-10479,04/12/2026,East,Subscriptions,"$1,056.51"
+SO-10480,2026-04-12,South,Services,"$4,798.17"
+SO-10481,12 Apr 2026,South,Services,"$1,168.66"
+SO-10482,12 Apr 2026,East,Subscriptions,$885.14
+SO-10483,2026-04-13,East,Services,$959.21
+SO-10484,04/13/2026,West,Subscriptions,$486.62
+SO-10485,13 Apr 2026,East,Services,"$1,112.78"
+SO-10486,2026-04-13,North,Services,"$1,236.23"
+SO-10487,04/13/2026,North,Hardware,"$1,158.60"
+SO-10488,13 Apr 2026,North,Services,"$3,371.82"
+SO-10489,2026-04-13,East,Hardware,"$4,216.06"
+SO-10466-R,04/13/2026,West,Services,"(5,633.17)"
+SO-10490,13 Apr 2026,West,Hardware,"$5,440.59"
+SO-10491,2026-04-13,South,Services,"$2,582.43"
+SO-10492,14 Apr 2026,North,Hardware,"$4,232.72"
+SO-10493,2026-04-14,South,Subscriptions,$639.15
+SO-10494,04/15/2026,East,Subscriptions,$864.02
+SO-10495,15 Apr 2026,North,Services,"$3,924.89"
+SO-10496,15 Apr 2026,East,Hardware,"$3,879.73"
+SO-10497,04/15/2026,West,Subscriptions,"$1,485.65"
+SO-10498,04/16/2026,North,Subscriptions,$447.90
+SO-10499,16 Apr 2026,West,Services,$716.49
+SO-10500,2026-04-16,South,Subscriptions,"$1,005.03"
+SO-10501,04/16/2026,East,Subscriptions,"$1,375.96"
+SO-10502,04/16/2026,East,Subscriptions,"$1,382.18"
+SO-10503,2026-04-16,East,Subscriptions,$897.85
+SO-10504,04/18/2026,East,Subscriptions,"$1,266.13"
+SO-10505,04/18/2026,North,Hardware,"$4,454.59"
+SO-10506,2026-04-18,West,Subscriptions,$229.65
+SO-10507,04/18/2026,West,Services,"$4,369.92"
+SO-10508,2026-04-18,South,Services,"$4,408.19"
+SO-10509,18 Apr 2026,South,Hardware,"$8,760.80"
+SO-10510,04/18/2026,South,Hardware,"$4,980.08"
+SO-10511,04/19/2026,West,Hardware,"$5,471.48"
+SO-10512,19 Apr 2026,East,Subscriptions,"$1,273.83"
+SO-10513,2026-04-19,East,Subscriptions,$644.70
+SO-10514,2026-04-19,West,Services,"$1,268.38"
+SO-10515,04/19/2026,West,Hardware,$533.53
+SO-10516,04/20/2026,South,Services,"$3,339.36"
+SO-10517,04/20/2026,North,Services,$890.33
+SO-10518,20 Apr 2026,North,Subscriptions,$926.27
+SO-10519,2026-04-20,South,Subscriptions,$614.35
+SO-10520,04/20/2026,East,Hardware,"$5,962.66"
+SO-10521,20 Apr 2026,West,Hardware,"$6,407.55"
+SO-10522,20 Apr 2026,South,Subscriptions,$159.56
+SO-10523,2026-04-20,East,Subscriptions,$412.64
+SO-10524,20 Apr 2026,West,Hardware,"$8,821.08"
+SO-10525,04/20/2026,South,Subscriptions,$220.85
+SO-10526,04/20/2026,East,Subscriptions,$518.52
+SO-10527,2026-04-20,North,Services,"$5,374.45"
+SO-10528,2026-04-21,South,Subscriptions,$80.84
+SO-10529,2026-04-21,East,Services,$844.57
+SO-10530,2026-04-21,South,Subscriptions,$213.28
+SO-10531,21 Apr 2026,South,Hardware,"$1,531.55"
+SO-10532,2026-04-21,South,Subscriptions,$752.96
+SO-10533,21 Apr 2026,North,Hardware,$631.73
+SO-10534,04/21/2026,West,Subscriptions,$197.32
+SO-10535,04/21/2026,North,Hardware,"$2,333.12"
+SO-10536,22 Apr 2026,East,Hardware,"$1,613.94"
+SO-10537,2026-04-22,South,Subscriptions,"$1,405.61"
+SO-10538,04/22/2026,South,Subscriptions,"$1,110.03"
+SO-10539,22 Apr 2026,North,Services,"$5,084.13"
+SO-10540,22 Apr 2026,North,Hardware,"$3,915.04"
+SO-10541,04/22/2026,South,Subscriptions,"$1,355.68"
+SO-10542,2026-04-23,West,Services,"$3,310.29"
+SO-10543,23 Apr 2026,West,Hardware,"$2,128.14"
+SO-10544,23 Apr 2026,East,Hardware,"$6,608.66"
+SO-10545,2026-04-23,South,Hardware,"$7,877.98"
+SO-10546,2026-04-23,North,Hardware,"$2,940.87"
+SO-10547,2026-04-23,West,Hardware,"$5,640.46"
+SO-10548,04/24/2026,East,Hardware,"$4,975.07"
+SO-10549,04/24/2026,East,Subscriptions,"$1,133.78"
+SO-10550,04/24/2026,East,Hardware,"$7,943.32"
+SO-10551,04/24/2026,East,Hardware,"$4,814.51"
+SO-10552,2026-04-24,West,Hardware,"$3,799.62"
+SO-10553,04/24/2026,East,Subscriptions,$897.96
+SO-10554,2026-04-25,West,Hardware,"$7,605.31"
+SO-10555,04/26/2026,West,Hardware,"$2,707.26"
+SO-10556,26 Apr 2026,North,Subscriptions,$671.69
+SO-10557,04/26/2026,North,Hardware,"$2,436.88"
+SO-10558,2026-04-27,South,Hardware,"$7,184.63"
+SO-10559,2026-04-27,South,Subscriptions,$618.90
+SO-10560,27 Apr 2026,West,Subscriptions,"$1,184.08"
+SO-10561,28 Apr 2026,North,Hardware,"$1,038.60"
+SO-10562,04/28/2026,North,Hardware,"$4,662.15"
+SO-10563,29 Apr 2026,North,Services,"$1,663.63"
+SO-10564,04/29/2026,West,Subscriptions,$698.88
+SO-10565,2026-04-29,South,Hardware,$658.11
+SO-10566,2026-04-29,East,Subscriptions,"$1,295.65"
+SO-10567,2026-04-29,West,Subscriptions,$375.17
+SO-10568,04/29/2026,South,Subscriptions,$851.11
+SO-10569,29 Apr 2026,West,Subscriptions,$454.84
+SO-10570,2026-04-29,South,Hardware,"$6,438.63"
+SO-10571,04/30/2026,West,Services,$908.88
+SO-10542-R,04/30/2026,West,Services,"(3,310.29)"
+SO-10572,2026-04-30,East,Subscriptions,$712.84
+SO-10573,30 Apr 2026,North,Hardware,"$5,470.85"
+SO-10574,2026-04-30,South,Services,"$1,628.92"
+SO-10575,1 May 2026,West,Subscriptions,"$1,087.35"
+SO-10576,1 May 2026,East,Subscriptions,$327.29
+SO-10577,1 May 2026,East,Subscriptions,$511.72
+SO-10578,2026-05-01,South,Subscriptions,$623.33
+SO-10579,2026-05-01,East,Subscriptions,"$1,360.64"
+SO-10580,05/02/2026,North,Subscriptions,$208.37
+SO-10581,2026-05-02,West,Hardware,"$1,320.40"
+SO-10582,3 May 2026,East,Subscriptions,$122.36
+SO-10583,4 May 2026,West,Subscriptions,$80.93
+SO-10584,4 May 2026,West,Services,"$5,562.04"
+SO-10585,05/04/2026,North,Hardware,"$8,159.33"
+SO-10586,2026-05-05,West,Subscriptions,"$1,415.05"
+SO-10587,2026-05-05,East,Subscriptions,$882.03
+SO-10588,2026-05-05,South,Subscriptions,$635.67
+SO-10589,5 May 2026,South,Services,"$4,318.27"
+SO-10590,5 May 2026,North,Services,"$3,797.19"
+SO-10591,2026-05-06,South,Hardware,"$6,429.31"
+SO-10592,2026-05-06,East,Services,"$1,093.49"
+SO-10593,2026-05-06,South,Subscriptions,$615.36
+SO-10594,6 May 2026,North,Services,"$2,769.24"
+SO-10595,05/06/2026,North,Subscriptions,$776.95
+SO-10596,05/07/2026,South,Subscriptions,"$1,096.88"
+SO-10597,05/07/2026,West,Services,"$1,569.04"
+SO-10598,2026-05-07,East,Subscriptions,$372.72
+SO-10599,2026-05-07,South,Subscriptions,$475.37
+SO-10600,8 May 2026,North,Services,"$1,437.98"
+SO-10601,2026-05-08,East,Hardware,"$5,596.55"
+SO-10602,2026-05-08,South,Hardware,"$7,214.46"
+SO-10495,15 Apr 2026,North,Services,"$3,924.89"
+SO-10603,05/08/2026,South,Services,"$5,466.67"
+SO-10604,9 May 2026,South,Hardware,"$3,369.51"
+SO-10605,05/09/2026,West,Hardware,"$2,910.34"
+SO-10606,9 May 2026,North,Subscriptions,"$1,417.20"
+SO-10607,05/09/2026,South,Subscriptions,"$1,279.68"
+SO-10608,05/09/2026,North,Services,"$1,511.95"
+SO-10609,9 May 2026,West,Services,"$1,463.45"
+SO-10610,2026-05-09,West,Subscriptions,$257.27
+SO-10611,05/10/2026,South,Subscriptions,"$1,106.57"
+SO-10612,05/10/2026,North,Services,"$2,386.78"
+SO-10613,05/11/2026,South,Subscriptions,$188.00
+SO-10614,05/11/2026,East,Hardware,"$4,114.55"
+SO-10615,05/11/2026,West,Subscriptions,$180.06
+SO-10616,05/11/2026,North,Subscriptions,"$1,367.85"
+SO-10617,05/11/2026,East,Hardware,"$7,404.92"
+SO-10618,2026-05-11,West,Hardware,"$3,741.53"
+SO-10619,05/12/2026,East,Hardware,"$3,866.66"
+SO-10620,2026-05-12,North,Subscriptions,"$1,280.56"
+SO-10621,05/12/2026,East,Subscriptions,$477.67
+SO-10622,2026-05-13,West,Hardware,"$4,557.98"
+SO-10623,13 May 2026,East,Services,"$5,469.12"
+SO-10624,2026-05-13,North,Subscriptions,$85.69
+SO-10625,05/13/2026,East,Hardware,"$4,540.50"
+SO-10626,2026-05-13,East,Services,"$2,461.33"
+SO-10627,2026-05-13,West,Subscriptions,$922.63
+SO-10628,2026-05-13,North,Subscriptions,$870.78
+SO-10629,14 May 2026,West,Hardware,"$3,347.86"
+SO-10630,05/14/2026,South,Hardware,$622.90
+SO-10631,2026-05-14,West,Services,"$1,143.09"
+SO-10632,14 May 2026,North,Services,"$4,047.93"
+SO-10633,2026-05-14,East,Services,"$2,229.63"
+SO-10634,2026-05-14,West,Subscriptions,$255.06
+SO-10635,14 May 2026,South,Subscriptions,$849.67
+SO-10636,05/15/2026,East,Hardware,"$1,296.59"
+SO-10637,15 May 2026,North,Subscriptions,$845.80
+SO-10638,15 May 2026,South,Hardware,"$5,873.05"
+SO-10639,05/15/2026,East,Subscriptions,"$1,491.57"
+SO-10640,2026-05-15,West,Services,"$2,928.51"
+SO-10641,15 May 2026,South,Hardware,"$8,507.77"
+SO-10642,15 May 2026,North,Subscriptions,$123.75
+SO-10643,05/16/2026,North,Services,$935.32
+SO-10644,2026-05-16,East,Subscriptions,$128.65
+SO-10645,16 May 2026,North,Subscriptions,"$1,438.29"
+SO-10646,2026-05-17,South,Hardware,"$2,403.13"
+SO-10647,2026-05-17,East,Hardware,"$1,537.29"
+SO-10648,2026-05-17,North,Hardware,"$8,248.12"
+SO-10649,05/17/2026,West,Subscriptions,$663.53
+SO-10650,05/17/2026,South,Subscriptions,"$1,074.43"
+SO-10651,2026-05-17,East,Hardware,"$7,176.92"
+SO-10652,2026-05-17,South,Hardware,$503.43
+SO-10653,17 May 2026,North,Subscriptions,"$1,137.38"
+SO-10654,2026-05-18,South,Hardware,"$7,327.53"
+SO-10655,2026-05-18,East,Services,"$4,953.34"
+SO-10656,05/18/2026,East,Hardware,"$5,453.15"
+SO-10657,18 May 2026,South,Hardware,"$4,771.42"
+SO-10658,18 May 2026,South,Hardware,"$3,761.61"
+SO-10659,05/18/2026,East,Subscriptions,$736.88
+SO-10660,18 May 2026,South,Subscriptions,"$1,488.14"
+SO-10661,2026-05-18,East,Services,"$2,210.94"
+SO-10662,05/18/2026,South,Services,"$1,259.74"
+SO-10663,18 May 2026,North,Hardware,"$3,044.65"
+SO-10664,05/18/2026,West,Hardware,"$7,908.63"
+SO-10665,2026-05-18,South,Subscriptions,"$1,488.76"
+SO-10666,2026-05-19,South,Subscriptions,"$1,035.22"
+SO-10667,19 May 2026,North,Services,"$2,763.72"
+SO-10668,2026-05-20,West,Subscriptions,"$1,460.53"
+SO-10669,05/20/2026,North,Services,"$3,534.59"
+SO-10670,2026-05-20,East,Services,"$5,268.82"
+SO-10671,20 May 2026,West,Hardware,"$6,174.46"
+SO-10672,05/20/2026,East,Services,"$3,789.77"
+SO-10673,20 May 2026,South,Hardware,"$3,464.45"
+SO-10674,2026-05-21,East,Services,"$3,256.86"
+SO-10675,05/21/2026,South,Services,$694.02
+SO-10676,05/21/2026,East,Subscriptions,$478.49
+SO-10677,2026-05-21,West,Subscriptions,$306.61
+SO-10678,2026-05-21,South,Services,"$1,130.21"
+SO-10679,2026-05-21,North,Subscriptions,"$1,331.96"
+SO-10680,22 May 2026,West,Hardware,"$8,050.33"
+SO-10681,22 May 2026,West,Subscriptions,"$1,054.79"
+SO-10682,05/22/2026,South,Subscriptions,$643.99
+SO-10683,05/22/2026,North,Subscriptions,$711.98
+SO-10684,05/23/2026,East,Services,$800.52
+SO-10685,05/23/2026,West,Services,"$2,313.26"
+SO-10686,23 May 2026,West,Services,"$4,457.57"
+SO-10687,05/24/2026,West,Hardware,"$5,989.28"
+SO-10688,05/24/2026,North,Subscriptions,$200.66
+SO-10689,24 May 2026,East,Subscriptions,$993.85
+SO-10690,24 May 2026,North,Services,"$1,035.42"
+SO-10691,24 May 2026,North,Subscriptions,$779.06
+SO-10692,24 May 2026,North,Hardware,"$2,919.51"
+SO-10693,2026-05-24,West,Hardware,"$8,291.43"
+SO-10694,2026-05-24,West,Hardware,"$2,992.44"
+SO-10695,05/25/2026,East,Hardware,"$5,667.05"
+SO-10696,05/25/2026,North,Subscriptions,"$1,325.94"
+SO-10697,25 May 2026,North,Hardware,"$7,870.90"
+SO-10698,25 May 2026,North,Services,"$1,422.10"
+SO-10699,05/25/2026,East,Services,"$5,235.50"
+SO-10700,05/25/2026,North,Subscriptions,$81.20
+SO-10701,25 May 2026,West,Hardware,$528.98
+SO-10702,2026-05-25,West,Hardware,"$4,662.60"
+SO-10703,05/26/2026,North,Hardware,"$7,264.17"
+SO-10704,05/26/2026,West,Subscriptions,"$1,106.76"
+SO-10705,2026-05-26,East,Subscriptions,"$1,046.99"
+SO-10706,2026-05-26,West,Services,"$5,856.60"
+SO-10707,05/26/2026,West,Services,"$1,534.95"
+SO-10708,05/26/2026,North,Hardware,"$6,193.91"
+SO-10709,26 May 2026,South,Subscriptions,"$1,125.23"
+SO-10710,27 May 2026,South,Hardware,"$2,564.00"
+SO-10711,2026-05-27,West,Hardware,"$4,958.58"
+SO-10712,2026-05-27,West,Subscriptions,"$1,212.10"
+SO-10713,05/27/2026,North,Subscriptions,"$1,203.35"
+SO-10714,27 May 2026,South,Hardware,"$1,721.84"
+SO-10715,28 May 2026,North,Subscriptions,"$1,219.85"
+SO-10716,28 May 2026,East,Services,"$1,251.34"
+SO-10717,2026-05-28,West,Services,"$2,275.58"
+SO-10718,2026-05-29,East,Services,"$1,909.49"
+SO-10719,29 May 2026,West,Hardware,"$8,176.76"
+SO-10720,05/29/2026,West,Subscriptions,$939.35
+SO-10721,2026-05-30,South,Hardware,"$1,464.33"
+SO-10722,30 May 2026,West,Subscriptions,"$1,453.03"
+SO-10723,2026-05-30,South,Hardware,"$3,644.19"
+SO-10724,05/31/2026,West,Services,"$1,713.00"
+SO-10725,31 May 2026,East,Hardware,"$1,746.26"
+SO-10726,1 Jun 2026,East,Subscriptions,$118.01
+SO-10727,2026-06-01,North,Hardware,"$6,437.07"
+SO-10728,2026-06-01,West,Services,"$5,066.23"
+SO-10729,1 Jun 2026,North,Subscriptions,$973.55
+SO-10524,20 Apr 2026,West,Hardware,"$8,821.08"
+SO-10730,1 Jun 2026,South,Subscriptions,"$1,228.24"
+SO-10731,2 Jun 2026,South,Services,"$1,266.48"
+SO-10732,06/02/2026,South,Hardware,"$7,040.65"
+SO-10733,2 Jun 2026,South,Subscriptions,"$1,169.92"
+SO-10734,2026-06-02,South,Subscriptions,"$1,372.00"
+SO-10735,06/03/2026,North,Services,"$3,731.41"
+SO-10736,06/03/2026,South,Services,"$5,054.11"
+SO-10737,2026-06-03,West,Hardware,$561.73
+SO-10738,2026-06-03,South,Services,"$2,815.70"
+SO-10739,06/03/2026,North,Hardware,"$7,460.76"
+SO-10740,06/03/2026,North,Subscriptions,"$1,058.25"
+SO-10741,3 Jun 2026,East,Services,"$3,087.96"
+SO-10742,06/04/2026,South,Hardware,"$4,901.17"
+SO-10743,4 Jun 2026,South,Subscriptions,"$1,151.74"
+SO-10744,06/04/2026,South,Subscriptions,"$1,310.85"
+SO-10745,2026-06-04,North,Hardware,"$2,382.35"
+SO-10746,4 Jun 2026,East,Services,"$1,740.24"
+SO-10747,06/04/2026,South,Hardware,"$6,741.81"
+SO-10748,2026-06-05,South,Services,"$3,867.85"
+SO-10749,5 Jun 2026,East,Services,"$2,351.19"
+SO-10750,5 Jun 2026,West,Hardware,"$7,893.23"
+SO-10751,6 Jun 2026,North,Hardware,"$7,280.56"
+SO-10752,2026-06-06,West,Services,"$5,314.65"
+SO-10753,06/06/2026,West,Hardware,"$7,194.20"
+SO-10754,06/06/2026,East,Hardware,"$8,674.64"
+SO-10755,2026-06-06,North,Services,"$3,580.09"
+SO-10756,7 Jun 2026,West,Hardware,"$8,123.81"
+SO-10757,7 Jun 2026,North,Subscriptions,$416.87
+SO-10758,06/07/2026,South,Services,"$2,462.62"
+SO-10759,7 Jun 2026,West,Subscriptions,"$1,455.28"
+SO-10760,8 Jun 2026,East,Hardware,"$4,544.35"
+SO-10761,2026-06-08,North,Subscriptions,$779.15
+SO-10762,2026-06-08,East,Hardware,"$8,864.21"
+SO-10763,8 Jun 2026,East,Hardware,"$6,090.43"
+SO-10764,2026-06-08,North,Services,"$1,341.93"
+SO-10765,2026-06-08,West,Services,"$3,328.93"
+SO-10766,2026-06-08,North,Services,$425.57
+SO-10767,06/08/2026,South,Subscriptions,"$1,326.04"
+SO-10768,2026-06-09,North,Subscriptions,"$1,130.58"
+SO-10769,2026-06-09,South,Hardware,"$1,826.08"
+SO-10770,9 Jun 2026,North,Services,"$2,614.05"
+SO-10771,10 Jun 2026,North,Hardware,"$7,480.29"
+SO-10772,10 Jun 2026,North,Subscriptions,"$1,093.08"
+SO-10773,10 Jun 2026,East,Hardware,"$2,660.15"
+SO-10774,06/11/2026,West,Hardware,$488.47
+SO-10775,11 Jun 2026,West,Subscriptions,"$1,051.66"
+SO-10776,06/11/2026,South,Hardware,"$3,530.93"
+SO-10777,2026-06-11,North,Subscriptions,$447.45
+SO-10778,2026-06-11,East,Subscriptions,$985.20
+SO-10779,2026-06-12,North,Subscriptions,$871.86
+SO-10780,2026-06-12,East,Hardware,"$8,103.82"
+SO-10781,12 Jun 2026,South,Hardware,"$8,016.08"
+SO-10782,12 Jun 2026,West,Subscriptions,"$1,411.33"
+SO-10783,2026-06-12,East,Services,"$2,456.31"
+SO-10784,12 Jun 2026,West,Hardware,$412.76
+SO-10785,2026-06-12,East,Hardware,"$8,698.29"
+SO-10786,12 Jun 2026,North,Subscriptions,"$1,043.54"
+SO-10787,2026-06-12,South,Services,"$5,148.25"
+SO-10788,2026-06-12,West,Services,"$2,127.53"
+SO-10789,2026-06-13,East,Subscriptions,$975.03
+SO-10790,13 Jun 2026,South,Services,"$4,797.55"
+SO-10791,06/13/2026,South,Services,"$5,091.88"
+SO-10792,2026-06-13,West,Hardware,"$6,068.38"
+SO-10793,06/13/2026,North,Hardware,"$7,113.02"
+SO-10794,06/13/2026,South,Hardware,"$3,393.63"
+SO-10795,13 Jun 2026,North,Hardware,"$5,683.81"
+SO-10796,2026-06-14,East,Subscriptions,$636.69
+SO-10797,2026-06-14,East,Hardware,"$8,881.59"
+SO-10799,06/14/2026,West,Services,"$5,745.88"
+SO-10809,17 Jun 2026,West,Hardware,"$6,899.89"
+SO-10798,06/14/2026,West,Subscriptions,$86.48
+SO-10799,06/14/2026,West,Services,"$5,745.88"
+SO-10800,06/14/2026,South,Hardware,"$6,766.05"
+SO-10801,15 Jun 2026,North,Subscriptions,$464.57
+SO-10802,2026-06-15,North,Subscriptions,"$1,146.95"
+SO-10803,15 Jun 2026,East,Subscriptions,$889.02
+SO-10804,2026-06-15,South,Services,"$3,058.62"
+SO-10805,15 Jun 2026,North,Subscriptions,$633.22
+SO-10806,06/15/2026,South,Hardware,"$7,204.60"
+SO-10807,2026-06-16,West,Services,"$3,676.78"
+SO-10808,16 Jun 2026,East,Subscriptions,$157.72
+SO-10762-R,06/17/2026,East,Hardware,"(8,864.21)"
+SO-10809,17 Jun 2026,West,Hardware,"$6,899.89"
+SO-10810,06/17/2026,South,Hardware,"$6,488.13"
+SO-10811,06/17/2026,West,Hardware,"$2,762.09"
+SO-10812,06/17/2026,East,Services,"$5,992.95"
+SO-10813,17 Jun 2026,North,Hardware,"$7,016.94"
+SO-10814,17 Jun 2026,South,Subscriptions,$252.62
+SO-10815,06/18/2026,East,Services,"$1,374.92"
+SO-10816,06/18/2026,East,Subscriptions,$217.55
+SO-10817,06/18/2026,South,Subscriptions,"$1,294.51"
+SO-10818,06/19/2026,East,Subscriptions,"$1,070.66"
+SO-10819,06/19/2026,East,Subscriptions,$798.97
+SO-10820,19 Jun 2026,West,Services,$428.44
+SO-10821,2026-06-19,West,Services,"$1,729.66"
+SO-10800-R,19 Jun 2026,South,Hardware,"(3,383.03)"
+SO-10822,19 Jun 2026,South,Subscriptions,$764.48
+SO-10823,19 Jun 2026,North,Subscriptions,$584.35
+SO-10824,20 Jun 2026,West,Hardware,"$3,402.71"
+SO-10825,2026-06-20,East,Subscriptions,$215.43
+SO-10826,20 Jun 2026,South,Subscriptions,"$1,288.37"
+SO-10827,2026-06-20,East,Hardware,"$8,125.82"
+SO-10828,06/20/2026,West,Subscriptions,$156.36
+SO-10829,2026-06-20,North,Subscriptions,"$1,397.76"
+SO-10830,2026-06-21,East,Subscriptions,$85.10
+SO-10831,2026-06-21,West,Subscriptions,$755.90
+SO-10832,21 Jun 2026,West,Services,"$5,430.69"
+SO-10833,2026-06-21,South,Subscriptions,$185.31
+SO-10780-R,06/21/2026,East,Hardware,"(4,051.91)"
+SO-10811-R,21 Jun 2026,West,Hardware,"(2,762.09)"
+SO-10834,2026-06-22,West,Services,"$3,095.58"
+SO-10835,06/22/2026,West,Services,"$1,494.46"
+SO-10836,2026-06-22,South,Services,$995.20
+SO-10837,2026-06-22,East,Subscriptions,"$1,483.90"
+SO-10838,06/22/2026,East,Subscriptions,$638.87
+SO-10839,2026-06-22,North,Services,$928.89
+SO-10840,06/23/2026,North,Hardware,"$6,191.89"
+SO-10841,06/23/2026,East,Hardware,"$3,812.24"
+SO-10842,06/23/2026,North,Services,"$4,555.45"
+SO-10843,06/23/2026,North,Hardware,"$5,670.29"
+SO-10844,23 Jun 2026,South,Hardware,"$8,451.37"
+SO-10845,23 Jun 2026,West,Subscriptions,"$1,480.00"
+SO-10846,24 Jun 2026,North,Hardware,"$8,619.54"
+SO-10847,24 Jun 2026,West,Subscriptions,"$1,275.95"
+SO-10848,24 Jun 2026,East,Subscriptions,$726.87
+SO-10849,2026-06-24,South,Subscriptions,"$1,392.64"
+SO-10850,25 Jun 2026,South,Services,"$2,210.96"
+SO-10851,06/25/2026,South,Subscriptions,$645.94
+SO-10852,06/25/2026,North,Hardware,$695.06
+SO-10853,2026-06-25,East,Subscriptions,"$1,366.19"
+SO-10854,25 Jun 2026,East,Hardware,"$7,287.64"
+SO-10855,2026-06-25,North,Hardware,"$2,369.60"
+SO-10856,2026-06-25,West,Hardware,"$8,578.89"
+SO-10809-R,25 Jun 2026,West,Hardware,"(6,899.89)"
+SO-10857,06/26/2026,East,Services,"$3,640.33"
+SO-10858,26 Jun 2026,West,Services,$824.73
+SO-10859,26 Jun 2026,East,Services,"$5,305.77"
+SO-10860,06/26/2026,East,Hardware,"$1,528.74"
+SO-10861,2026-06-26,West,Services,"$2,764.37"
+SO-10840-R,2026-06-26,North,Hardware,"(3,095.95)"
+SO-10862,26 Jun 2026,South,Subscriptions,"$1,390.08"
+SO-10810-R,26 Jun 2026,South,Hardware,"(6,488.13)"
+SO-10863,06/27/2026,East,Subscriptions,$701.77
+SO-10864,06/27/2026,East,Services,"$3,905.12"
+SO-10865,2026-06-27,East,Services,$293.62
+SO-10866,27 Jun 2026,North,Subscriptions,"$1,339.79"
+SO-10867,27 Jun 2026,South,Subscriptions,"$1,438.76"
+SO-10868,28 Jun 2026,West,Hardware,"$7,097.71"
+SO-10869,06/28/2026,South,Subscriptions,"$1,203.04"
+SO-10870,06/28/2026,South,Subscriptions,$912.83
+SO-10871,29 Jun 2026,West,Hardware,"$2,803.94"
+SO-10872,06/29/2026,West,Subscriptions,$211.70
+SO-10873,2026-06-30,North,Subscriptions,$463.77
+SO-10874,2026-06-30,North,Subscriptions,$940.89
+SO-10875,06/30/2026,West,Services,"$1,944.13"
+SO-10876,2026-06-30,West,Hardware,"$4,844.68"
+SO-10877,06/30/2026,East,Subscriptions,$910.33
+SO-10878,06/30/2026,East,Services,$776.19
+SO-10879,06/30/2026,South,Services,"$2,947.65"
+SO-10880,06/30/2026,West,Subscriptions,$220.40

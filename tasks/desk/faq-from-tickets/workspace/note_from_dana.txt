@@ -1,0 +1,12 @@
+Website FAQ
+
+We keep answering the same things by email. I want an FAQ page with the five questions customers ask us most,
+most-asked first. Just the five, don't pad it out.
+
+How to count: go by the July and August tickets. Count each customer once per question - people email two or
+three times about the same thing when we're slow ("any update?") and that shouldn't push a question up the list.
+
+Answers have to follow the policy doc that took effect 1 August. Do not copy what the team replied in the
+tickets, some of those replies (and the old saved replies) are out of date.
+
+Dana

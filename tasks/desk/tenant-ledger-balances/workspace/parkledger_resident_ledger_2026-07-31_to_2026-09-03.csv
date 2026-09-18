@@ -1,0 +1,111 @@
+﻿ParkLedger - Resident ledger detail
+Pine Hollow Community | Posted 07/31/2026 - 09/03/2026
+NOTE: automatic late fees disabled 08/01/2026 - 08/31/2026 (v6 upgrade)
+Lot,Resident,Date Posted,Date Received,Type,Description,Charge,Payment
+A-01,Rebecca Garcia,08/01/2026,,Lot Rent,Lot rent August 2026,635.00,
+A-01,Rebecca Garcia,08/01/2026,,Water/Sewer,Water/sewer - July meter read,65.25,
+A-01,Rebecca Garcia,08/01/2026,,Trash,Trash service August,24.00,
+A-01,Rebecca Garcia,08/03/2026,08/03/2026,Payment,Payment - Check,,724.25
+A-02,Kimberly Rogers,08/01/2026,,Lot Rent,Lot rent August 2026,545.00,
+A-02,Kimberly Rogers,08/01/2026,,Water/Sewer,Water/sewer - July meter read,86.84,
+A-02,Kimberly Rogers,08/01/2026,,Trash,Trash service August,24.00,
+A-02,Kimberly Rogers,08/02/2026,08/02/2026,Payment,Payment - Check,,655.84
+A-03,Gary Phillips,08/01/2026,,Lot Rent,Lot rent August 2026,565.00,
+A-03,Gary Phillips,08/01/2026,,Water/Sewer,Water/sewer - July meter read,53.51,
+A-03,Gary Phillips,08/01/2026,,Trash,Trash service August,24.00,
+A-03,Gary Phillips,08/03/2026,08/03/2026,Payment,Payment - Money order,,254.25
+A-03,Gary Phillips,08/22/2026,08/22/2026,Payment,Payment - Money order,,388.26
+A-04,Joshua Morris,08/01/2026,,Lot Rent,Lot rent August 2026,545.00,
+A-04,Joshua Morris,08/01/2026,,Water/Sewer,Water/sewer - July meter read,45.35,
+A-04,Joshua Morris,08/01/2026,,Trash,Trash service August,24.00,
+A-04,Joshua Morris,09/02/2026,09/01/2026,Payment,Payment - Drop box,,614.35
+A-05,Dorothy Howard,08/01/2026,,Lot Rent,Lot rent August 2026,545.00,
+A-05,Dorothy Howard,08/01/2026,,Water/Sewer,Water/sewer - July meter read,44.57,
+A-05,Dorothy Howard,08/01/2026,,Trash,Trash service August,24.00,
+A-05,Dorothy Howard,08/04/2026,08/04/2026,Payment,Payment - Money order,,613.57
+A-06,Margaret Cook,08/01/2026,,Lot Rent,Lot rent August 2026,635.00,
+A-06,Margaret Cook,08/01/2026,,Water/Sewer,Water/sewer - July meter read,60.57,
+A-06,Margaret Cook,08/01/2026,,Trash,Trash service August,24.00,
+A-06,Margaret Cook,08/02/2026,08/02/2026,Payment,Payment - Money order,,719.57
+A-07,Sarah Torres,08/01/2026,,Lot Rent,Lot rent August 2026,635.00,
+A-07,Sarah Torres,08/01/2026,,Water/Sewer,Water/sewer - July meter read,72.35,
+A-07,Sarah Torres,08/01/2026,,Trash,Trash service August,24.00,
+A-07,Sarah Torres,08/04/2026,08/04/2026,Payment,Payment - Money order,,731.35
+A-08,Sarah Foster,08/01/2026,,Lot Rent,Lot rent August 2026,660.00,
+A-08,Sarah Foster,08/01/2026,,Water/Sewer,Water/sewer - July meter read,67.27,
+A-08,Sarah Foster,08/01/2026,,Trash,Trash service August,24.00,
+A-08,Sarah Foster,08/01/2026,08/01/2026,Payment,Payment - Check,,751.27
+A-09,Richard Richardson,08/01/2026,,Lot Rent,Lot rent August 2026,635.00,
+A-09,Richard Richardson,08/01/2026,,Water/Sewer,Water/sewer - July meter read,89.62,
+A-09,Richard Richardson,08/01/2026,,Trash,Trash service August,24.00,
+A-09,Richard Richardson,08/01/2026,08/01/2026,Payment,Payment - Money order,,748.62
+A-10,Steven Morgan,08/01/2026,,Lot Rent,Lot rent August 2026,585.00,
+A-10,Steven Morgan,08/01/2026,,Water/Sewer,Water/sewer - July meter read,47.59,
+A-10,Steven Morgan,08/01/2026,,Trash,Trash service August,24.00,
+A-10,Steven Morgan,08/02/2026,08/02/2026,Payment,Payment - Check,,585.00
+B-01,Marcus Cox,08/01/2026,,Lot Rent,Lot rent August 2026,585.00,
+B-01,Marcus Cox,08/01/2026,,Water/Sewer,Water/sewer - July meter read,72.90,
+B-01,Marcus Cox,08/01/2026,,Trash,Trash service August,24.00,
+B-01,Marcus Cox,08/02/2026,08/02/2026,Payment,Payment - Money order,,681.90
+B-02,Charles Flores,08/01/2026,,Lot Rent,Lot rent August 2026,565.00,
+B-02,Charles Flores,08/01/2026,,Water/Sewer,Water/sewer - July meter read,41.70,
+B-02,Charles Flores,08/01/2026,,Trash,Trash service August,24.00,
+B-02,Charles Flores,08/06/2026,08/06/2026,Payment,Payment - Check,,630.70
+B-04,Richard Myers,08/01/2026,,Lot Rent,Lot rent August 2026,635.00,
+B-04,Richard Myers,08/01/2026,,Water/Sewer,Water/sewer - July meter read,87.32,
+B-04,Richard Myers,08/01/2026,,Trash,Trash service August,24.00,
+B-04,Richard Myers,08/01/2026,08/01/2026,Payment,Payment - Money order,,746.32
+B-05,Elizabeth Ruiz,07/31/2026,,Balance Forward,Balance at 07/31/2026,,109.09
+B-05,Elizabeth Ruiz,08/01/2026,,Lot Rent,Lot rent August 2026,565.00,
+B-05,Elizabeth Ruiz,08/01/2026,,Water/Sewer,Water/sewer - July meter read,87.67,
+B-05,Elizabeth Ruiz,08/01/2026,,Trash,Trash service August,24.00,
+B-05,Elizabeth Ruiz,08/01/2026,08/01/2026,Payment,Payment - Check,,567.58
+B-06,Kevin Stewart,08/01/2026,,Lot Rent,Lot rent August 2026,585.00,
+B-06,Kevin Stewart,08/01/2026,,Water/Sewer,Water/sewer - July meter read,47.50,
+B-06,Kevin Stewart,08/01/2026,,Trash,Trash service August,24.00,
+B-06,Kevin Stewart,08/02/2026,08/02/2026,Payment,Payment - ACH,,656.50
+B-07,Wei Gonzalez,07/31/2026,,Balance Forward,Balance at 07/31/2026,52.00,
+B-07,Wei Gonzalez,08/01/2026,,Lot Rent,Lot rent August 2026,660.00,
+B-07,Wei Gonzalez,08/01/2026,,Water/Sewer,Water/sewer - July meter read,48.14,
+B-07,Wei Gonzalez,08/01/2026,,Trash,Trash service August,24.00,
+B-07,Wei Gonzalez,08/03/2026,08/03/2026,Payment,Payment - ACH,,660.00
+B-08,Dorothy Parker,08/01/2026,,Lot Rent,Lot rent August 2026,545.00,
+B-08,Dorothy Parker,08/01/2026,,Water/Sewer,Water/sewer - July meter read,82.58,
+B-08,Dorothy Parker,08/01/2026,,Trash,Trash service August,24.00,
+B-08,Dorothy Parker,08/03/2026,08/03/2026,Payment,Payment - ACH,,651.58
+B-09,Kenneth Ward,08/01/2026,,Lot Rent,Lot rent August 2026,565.00,
+B-09,Kenneth Ward,08/01/2026,,Water/Sewer,Water/sewer - July meter read,43.89,
+B-09,Kenneth Ward,08/01/2026,,Trash,Trash service August,24.00,
+B-09,Kenneth Ward,08/04/2026,08/04/2026,Payment,Payment - ACH,,632.89
+B-10,Yuki Clark,08/01/2026,,Lot Rent,Lot rent August 2026,545.00,
+B-10,Yuki Clark,08/01/2026,,Water/Sewer,Water/sewer - July meter read,79.25,
+B-10,Yuki Clark,08/01/2026,,Trash,Trash service August,24.00,
+B-10,Yuki Clark,08/01/2026,08/01/2026,Payment,Payment - ACH,,648.25
+C-01,Priya Morris,08/01/2026,,Lot Rent,Lot rent August 2026,660.00,
+C-01,Priya Morris,08/01/2026,,Water/Sewer,Water/sewer - July meter read,70.05,
+C-01,Priya Morris,08/01/2026,,Trash,Trash service August,24.00,
+C-01,Priya Morris,08/08/2026,08/04/2026,Payment,Payment - Mailed check,,754.05
+C-02,Jeffrey Gutierrez,08/01/2026,,Lot Rent,Lot rent August 2026,660.00,
+C-02,Jeffrey Gutierrez,08/01/2026,,Water/Sewer,Water/sewer - July meter read,54.66,
+C-02,Jeffrey Gutierrez,08/01/2026,,Trash,Trash service August,24.00,
+C-02,Jeffrey Gutierrez,08/02/2026,08/02/2026,Payment,Payment - ACH,,738.66
+C-03,Kimberly Davis,08/01/2026,,Lot Rent,Lot rent August 2026,585.00,
+C-03,Kimberly Davis,08/01/2026,,Water/Sewer,Water/sewer - July meter read,81.37,
+C-03,Kimberly Davis,08/01/2026,,Trash,Trash service August,24.00,
+C-03,Kimberly Davis,08/22/2026,08/22/2026,Payment,Payment - Cashier's check,,415.16
+C-04,Priya Johnson,08/01/2026,,Lot Rent,Lot rent August 2026,660.00,
+C-04,Priya Johnson,08/01/2026,,Water/Sewer,Water/sewer - July meter read,52.32,
+C-04,Priya Johnson,08/01/2026,,Trash,Trash service August,24.00,
+C-04,Priya Johnson,09/02/2026,08/31/2026,Payment,Payment - Drop box,,736.32
+C-06,Barbara Patel,08/01/2026,,Lot Rent,Lot rent August 2026,610.00,
+C-06,Barbara Patel,08/01/2026,,Water/Sewer,Water/sewer - July meter read,84.62,
+C-06,Barbara Patel,08/01/2026,,Trash,Trash service August,24.00,
+C-06,Barbara Patel,08/03/2026,08/03/2026,Payment,Payment - Check,,718.62
+C-07,Stephanie Alvarez,08/01/2026,,Lot Rent,Lot rent August 2026,660.00,
+C-07,Stephanie Alvarez,08/01/2026,,Water/Sewer,Water/sewer - July meter read,58.55,
+C-07,Stephanie Alvarez,08/01/2026,,Trash,Trash service August,24.00,
+C-07,Stephanie Alvarez,08/01/2026,08/01/2026,Payment,Payment - Check,,742.55
+C-10,Chloe Watson,08/01/2026,,Lot Rent,Lot rent August 2026,660.00,
+C-10,Chloe Watson,08/01/2026,,Water/Sewer,Water/sewer - July meter read,44.47,
+C-10,Chloe Watson,08/01/2026,,Trash,Trash service August,24.00,
+C-10,Chloe Watson,08/05/2026,08/05/2026,Payment,Payment - Drop box,,728.47
