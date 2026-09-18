@@ -81,6 +81,9 @@ def make_table(lines):
     cells=[cells[0]]+cells[2:]
     cols=len(cells[0]); widths=([WIDTH*.39,WIDTH*.305,WIDTH*.305] if cols==3 else [WIDTH/cols]*cols)
     if cells[0][0]=='Category': widths=[WIDTH*.25,WIDTH*.10,WIDTH*.65]
+    if cols==5: widths=[WIDTH*x for x in (.21,.08,.27,.27,.17)]
+    if cells[0][0]=='Deliverable': widths=[WIDTH*.21,WIDTH*.38,WIDTH*.41]
+    if cols==2: widths=[WIDTH*.27,WIDTH*.73]
     data=[[Paragraph('<b>'+inline(cell)+'</b>' if i==0 else inline(cell),CELL) for cell in row] for i,row in enumerate(cells)]
     t=Table(data,colWidths=widths,repeatRows=1,hAlign='LEFT')
     t.setStyle(TableStyle([('LINEABOVE',(0,0),(-1,0),.8,INK),('LINEBELOW',(0,0),(-1,0),.5,INK),

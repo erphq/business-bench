@@ -1,6 +1,7 @@
 """Build the paper and result report from the verified two-system ledger summary."""
 import json
 from pathlib import Path
+from paper_details import detail_tables
 ROOT=Path(__file__).resolve().parents[1]
 
 def tables():
@@ -21,6 +22,8 @@ def tables():
 def main():
     result,efficiency=tables()
     paper=(ROOT/'paper/benchmark.md').read_text().replace('<!-- result-table -->',result).replace('<!-- efficiency-table -->',efficiency)
+    for marker, generated in detail_tables().items():
+        paper = paper.replace(marker, generated)
     (ROOT/'SPEC.md').write_text(paper)
     report='# Latest complete desk comparison\n\n**Proto + DeepSeek V4.1 Flash: 507/561 (90.4%). Codex + GPT-5.6-sol: 473/561 (84.3%).**\n\n'
     report+='All 187 tasks, three repetitions per system, one shared conservative-v7 scorer. All 1,122 attempts are retained. The lead is 34 passes, or 6.06 percentage points. This is the completed 2026-09-16 comparison, not a later Proto-vs-Proto development experiment.\n\n'+result+'\n\n'

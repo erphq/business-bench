@@ -15,12 +15,35 @@ import yaml
 
 
 class ReleaseTests(unittest.TestCase):
+    def test_detail_analysis_reconciles(self):
+        from collections import Counter, defaultdict
+        rows = [json.loads(line) for line in (ROOT / 'results/latest/attempts.jsonl').read_text().splitlines()]
+        expected = {'proto-deepseek': {0: 3, 1: 8, 2: 29, 3: 147},
+                    'codex-sol': {0: 13, 1: 16, 2: 17, 3: 141}}
+        pairs = {}
+        for system in expected:
+            selected = [row for row in rows if row['harness'] == system]
+            grouped = defaultdict(list)
+            for row in selected:
+                grouped[row['task']].append(row)
+            self.assertEqual(Counter(sum(r['passed'] for r in group) for group in grouped.values()), expected[system])
+            pairs[system] = {(r['task'], r['run']): r['passed'] for r in selected}
+        matrix = Counter((value, pairs['codex-sol'][key]) for key, value in pairs['proto-deepseek'].items())
+        self.assertEqual(matrix, {(True, True): 431, (True, False): 76, (False, True): 42, (False, False): 12})
+        sys.path.insert(0, str(ROOT / 'docs'))
+        from paper_details import detail_tables
+        spec = (ROOT / 'SPEC.md').read_text()
+        for marker, output in detail_tables().items():
+            self.assertIn(output, spec)
+            self.assertNotIn(marker, spec)
+
     def test_paper_layout_and_embedded_typography(self):
         from pypdf import PdfReader
         reader = PdfReader(ROOT / 'docs/business-harness-bench-spec.pdf')
-        self.assertEqual(len(reader.pages), 5, 'Unexpected overflow or near-empty extra page')
+        self.assertEqual(len(reader.pages), 9, 'Unexpected overflow or near-empty extra page')
         expected_sections = ['1. Introduction', '2. Benchmark design', '3. Evaluation protocol',
-                             '6. Conclusion', 'Appendix A.']
+                             '4. Category results', '5. Worked example', '6. Scoring integrity',
+                             '9. Conclusion', 'Appendix A.', 'Appendix B.']
         for page, heading in zip(reader.pages, expected_sections):
             self.assertIn(heading, page.extract_text())
         embedded = set()
