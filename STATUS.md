@@ -22,6 +22,10 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Recently shipped
 
+- 2026-09-18: v2 direction agreed and published: thesis for an AI-research
+  audience, seven capability axes, 100 tasks with planted truth and check type
+  (`docs/v2/`), human-baseline protocol with approved budget, /roadmap page.
+
 - 2026-09-18: v1.0.0 initial commit (full-1 snapshot), then the corrected
   two-system frozen-scorer comparison and redesigned paper (collaborator).
 - 2026-09-17: businessbench.org site (`site/`), MIT license, `Site` workflow,
@@ -30,6 +34,9 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Next up
 
+0. v2 order of work (docs/v2/README.md section 9): three new check types in
+   grade.py, generator library additions (event logs, constraint checker,
+   adversarial injector), then author axes 4, 6, 7 first.
 1. Independent stratified audit of 50 desk tasks (7 per category) by reviewers
    outside ERP.AI, verdicts committed under `docs/audits/`.
 2. Independent review of the 7 equivalence graders against adversarial wrong

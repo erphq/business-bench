@@ -1,0 +1,30 @@
+---
+import Base from "@/layouts/Base.astro";
+import { readRepoFile, REPO } from "@/lib/data";
+import { renderMarkdown } from "@/lib/markdown";
+const base = `${REPO}/blob/main/docs/v2/`;
+// The three v2 documents render on one page; cross-links between them become anchors.
+const rewire = (md: string) => md.replace(/\]\(tasks\.md\)/g, "](#the-100-tasks)").replace(/\]\(human-baseline\.md\)/g, "](#human-baseline-protocol)").replace(/\]\(README\.md\)/g, "](#specification)");
+const spec = renderMarkdown(rewire(readRepoFile("docs/v2/README.md")), { stripFirstH1: true, linkBase: base });
+const tasks = renderMarkdown(rewire(readRepoFile("docs/v2/tasks.md")), { stripFirstH1: true, linkBase: base });
+const human = renderMarkdown(rewire(readRepoFile("docs/v2/human-baseline.md")), { stripFirstH1: true, linkBase: base });
+const toc = [
+  { depth: 2, id: "specification", text: "Specification" }, ...spec.toc.map((t) => ({ ...t, depth: 3 })),
+  { depth: 2, id: "the-100-tasks", text: "The 100 tasks" }, ...tasks.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
+  { depth: 2, id: "human-baseline-protocol", text: "Human baseline protocol" },
+];
+const desc = "Business Harness Bench v2: why business work is where agent correctness can be measured, seven capability axes, 100 tasks with planted truth and executable checks, difficulty bands, sealed variants, and a commissioned human baseline.";
+---
+<Base title="Roadmap" description={desc} path="/roadmap">
+  <p class="kicker">v2 · agreed direction 2026-09-18 · authoring not started</p>
+  <h1>Roadmap: Business Harness Bench v2</h1>
+  <p class="lede">The thesis, the seven capability axes, the 100 tasks with their planted truth and check type, the difficulty bands, the sealed-variant policy, and the human baseline we are commissioning. Rendered from <a href={base} rel="noopener">docs/v2</a> in the repository; disputes and suggestions are GitHub issues.</p>
+  <div class="two">
+    <nav class="toc" aria-label="Contents">{toc.map((t) => <a href={`#${t.id}`} class={`d${t.depth}`}>{t.text}</a>)}</nav>
+    <div>
+      <article class="prose"><h2 id="specification">Specification</h2><div set:html={spec.html} /></article>
+      <article class="prose" style="max-width:none"><h2 id="the-100-tasks">The 100 tasks</h2><div set:html={tasks.html} /></article>
+      <article class="prose"><h2 id="human-baseline-protocol">Human baseline protocol</h2><div set:html={human.html} /></article>
+    </div>
+  </div>
+</Base>

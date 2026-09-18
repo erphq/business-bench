@@ -11,14 +11,23 @@ const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_p
 const desc = "Does the agent deliver business work an owner can actually use? 187 desk tasks and 20 app-build tasks with executable checks, and a complete two-system desk comparison of 1,122 attempts.";
 ---
 <Base title="Business Harness Bench" description={desc} path="/">
-  <p class="kicker">A benchmark for agents that do business work</p>
-  <h1>Does the agent deliver work an owner can actually use?</h1>
-  <p class="lede">Business Harness Bench scores the handoff, not the conversation: reconciled files, correct imports, source-grounded memos, and applications whose permissions and records hold up under use and change. Every task ships with its inputs, an owner's ask, executable checks, a generator, and a reference solution.</p>
+  <p class="kicker">A verifiable benchmark for agents that do business work</p>
+  <h1>Business work is the domain where agent correctness can actually be measured.</h1>
+  <p class="lede">Code benchmarks have exact verifiers and a narrow, contaminated domain. Work benchmarks have economic breadth and rubric or LLM-judge grading, so they measure plausibility. Business work has messy, long-horizon inputs and a deliverable with a ground truth: a reconciliation balances or it does not. Business Harness Bench uses that to measure what other benchmarks cannot: conjunctive correctness, reliability over repeated attempts, and whether an agent verifies its own work before handing it over.</p>
   <div class="actions">
     <a class="btn primary" href="/results">See the results</a>
+    <a class="btn" href="/roadmap">Read the v2 thesis</a>
     <a class="btn" href="/tasks">Browse the tasks</a>
     <a class="btn" href={REPO} rel="noopener">Run it yourself</a>
   </div>
+
+  <h2 style="margin-top:40px">Why this moves anything</h2>
+  <div class="grid c3">
+    <div class="card"><h3>Conjunctive correctness</h3><p>A task passes only when every required check passes. Agents routinely satisfy most checks and earn nothing, which is exactly the property that separates a demo from delegation. The per-check versus per-task gap is a published number here, not a footnote.</p></div>
+    <div class="card"><h3>Reliability, not capability</h3><p>An owner runs the process every month, so the unit is pass-all-k over repeated attempts, not pass@k. Three repetitions today, five in v2, and the per-repetition rows are the claim, not the aggregate.</p></div>
+    <div class="card"><h3>Procedurally generated, verifiable economics</h3><p>Every task is a generator with a seed and a planted truth: the fraud ring, the real churn cause, the optimal schedule's cost. That gives contamination-resistant sealed variants, a tunable difficulty axis, and, when we choose, an RL environment for economically valuable work with dense exact rewards.</p></div>
+  </div>
+  <p class="muted" style="margin-top:16px">No rubric, no LLM judge, no institutional gatekeeper. The site is the venue; the release discipline (hashed manifests, receipts per verdict, raw and frozen scores side by side, a public dispute process, a commissioned human baseline) is what anyone can check. The <a href="/roadmap">v2 specification</a> organises 100 new tasks by the capability they isolate.</p>
 
   <div class="grid c4" style="margin-top:40px">
     <div class="stat"><div class="num">{desk.length}</div><div class="lbl">desk tasks, seven categories, each with a reference solution</div></div>
