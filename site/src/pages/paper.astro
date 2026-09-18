@@ -6,9 +6,10 @@ const { html, toc } = renderMarkdown(readRepoFile("SPEC.md"), { stripFirstH1: tr
 const desc = "Business Bench: Evaluating Agents on Business Deliverables. The full paper: design, evaluation protocol, frozen scoring, results, resource use, validity, and how to run and audit the benchmark.";
 ---
 <Base title="Paper" description={desc} path="/paper">
-  <p class="kicker">Paper and specification · v1.0.0</p>
+  <p class="kicker">Paper and specification · v1.1.0</p>
   <h1>Business Bench: Evaluating Agents on Business Deliverables</h1>
-  <p class="lede">The complete specification as released in the repository. Sections 1 to 6 are the paper; Appendix A covers running, scoring, and release validation. Result tables are the release\u2019s recorded numbers.</p>
+  <p class="muted" style="margin-top:8px">Somesh Misra, Somnath Misra, Shashank Dixit · ERP AI Research · September 2026</p>
+  <p class="lede">The paper as released in the repository. Sections 1 to 6 are the argument, design, protocol, results, resource use, and limitations; Appendix A covers running, scoring, and release validation. Result tables are the recorded numbers of the current release.</p>
   <div class="actions">
     <a class="btn" href={`${REPO}/blob/main/docs/business-harness-bench-spec.pdf`} rel="noopener">PDF</a>
     <a class="btn" href={`${REPO}/blob/main/SPEC.md`} rel="noopener">Markdown source</a>
