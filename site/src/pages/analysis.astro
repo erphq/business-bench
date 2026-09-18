@@ -1,0 +1,80 @@
+---
+import Base from "@/layouts/Base.astro";
+import Bar from "@/components/Bar.astro";
+import { ARMS, SUMMARY_BY_ID, CATEGORIES, CATEGORY_LABEL, findings, crossArm, scorerDelta, provenance, REPO } from "@/lib/data";
+const F = Object.fromEntries(ARMS.map((a) => [a.id, findings(a.id)]));
+const X = crossArm();
+const prov = provenance();
+const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
+const D = Object.fromEntries(ARMS.map((a) => [a.id, scorerDelta(a.id)]));
+const pct = (x: number, d = 1) => (x * 100).toFixed(d) + "%";
+const pp = (x: number, d = 1) => (x * 100).toFixed(d);
+const maxFailed = Math.max(...ARMS.flatMap((a) => Object.keys(F[a.id].failedDist).map(Number)));
+const desc = "Findings from the Business Bench desk comparison: the conjunctive gap between check-level and task-level pass rates, near-miss failures, pass@k versus pass^k, category divergence, cost per pass, and scorer sensitivity.";
+---
+<Base title="Findings" description={desc} path="/analysis">
+  <p class="kicker">Derived from the released ledger at build time · {prov.campaign}</p>
+  <h1>Findings</h1>
+  <p class="lede">Seven observations from 1,122 attempts, each with its number, its computation, and its caveat. None of these is a claim about models in general. They are what the two configured systems did on this workload, and they are the phenomena Business Bench exists to measure.</p>
+
+  <h2 id="definitions">Definitions</h2>
+  <div class="prose">
+    <p>A task <i>t</i> has a set of required checks <i>C<sub>t</sub></i>. An attempt passes iff every <i>c</i> ∈ <i>C<sub>t</sub></i> passes. With <i>k</i> = {prov.repetitions} repetitions per task:</p>
+    <ul>
+      <li><b>pass@1</b>: mean attempt pass rate. Equal to the headline pass rate.</li>
+      <li><b>pass@k</b>: fraction of tasks with at least one passing repetition. What a demo shows.</li>
+      <li><b>pass^k</b>: fraction of tasks where all <i>k</i> repetitions pass (the τ-bench consistency metric). What an owner experiences.</li>
+      <li><b>check rate</b> <i>c̄</i>: passed required checks over all required checks, pooled across attempts.</li>
+      <li><b>conjunctive gap</b>: <i>c̄</i> − pass@1. Credit a partial-credit grader would award that a conjunctive grader does not.</li>
+      <li><b>near miss</b>: a failed attempt with exactly one failed required check.</li>
+    </ul>
+  </div>
+
+  <h2 id="conjunctive-gap">1. The conjunctive gap is 7 to 9 points</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Required checks</th><th class="n">Check rate c̄</th><th class="n">pass@1</th><th class="n">Gap (pp)</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const f = F[a.id]; return <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{f.requiredChecks}</td><td class="n">{pct(f.checkRate, 2)}</td><td class="n">{pct(f.pass1, 2)}</td><td class="n">{pp(f.gap, 2)}</td></tr>; })}</tbody>
+  </table></div>
+  <p>Both systems satisfy well over nine in ten required checks. Scored per check, the two would look nearly saturated and nearly identical. Scored per task, {pp(F[other.id].gap)} and {pp(F[lead.id].gap)} points disappear. The gap is the quantity a rubric or checkpoint grader awards as partial credit, and it is precisely the work an owner would have to redo. Caveat: the gap depends on how many checks a task declares; tasks with more checks have more ways to fail one. The per-category table in finding 4 shows it is not an artifact of one task family.</p>
+
+  <h2 id="near-miss">2. Most failures are one check away</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Failed attempts</th><th class="n">Failed exactly 1 check</th><th class="n">Share</th><th class="n">Mean share of checks passed in a failure</th><th>Single failed check, by type</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const f = F[a.id]; return <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{f.failed}</td><td class="n">{f.singleFail}</td><td class="n">{pct(f.singleFail / f.failed)}</td><td class="n">{pct(f.meanFracInFailures)}</td><td>{f.singleFailTypes.map(([t, n]) => <span class="pill" style="margin-right:6px"><code>{t}</code> {n}</span>)}</td></tr>; })}</tbody>
+  </table></div>
+  <div class="tbl-wrap"><table class="tbl" style="max-width:640px">
+    <thead><tr><th>Failed required checks per failed attempt</th>{ARMS.map((a) => <th class="n">{a.short}</th>)}</tr></thead>
+    <tbody>{Array.from({ length: maxFailed }, (_, i) => i + 1).map((n) => <tr><td>{n}</td>{ARMS.map((a) => <td class="n">{F[a.id].failedDist[n] ?? 0}</td>)}</tr>)}</tbody>
+  </table></div>
+  <p>A failed attempt is usually not a wrong approach. It is a deliverable that is almost right: the address line that kept one unabbreviated suffix, the memo that stated the figure but not the exception, the workbook with one hardcoded cell. The dominant single failure is a task-specific grader, which encodes the business rule the ask buried in an email. This is the strongest argument for treating self-verification as a capability in its own right (v2 axis 6): the systems had the information to catch these and did not check. Caveat: a single failed check can also be a strict check; the false-negative audit on the roadmap is what separates the two readings.</p>
+
+  <h2 id="reliability">3. pass@3 and pass^3 are 20 points apart</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">pass@1</th><th class="n">pass@3</th><th class="n">pass^3</th><th class="n">Spread (pp)</th><th class="n">Tasks with mixed outcomes / 187</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const f = F[a.id]; return <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{pct(f.pass1)}</td><td class="n">{pct(f.passAny)}</td><td class="n">{pct(f.passAll)}</td><td class="n">{pp(f.passAny - f.passAll)}</td><td class="n">{f.mixedTasks}</td></tr>; })}</tbody>
+  </table></div>
+  <p>Ask "can the system do this task?" and the answer is yes for {pct(F[lead.id].passAny, 0)} of tasks. Ask "does it do it every time?" and the answer drops to {pct(F[lead.id].passAll, 0)}. Roughly one task in five has a different outcome depending on the run. For a monthly process that is the number that matters, and it is invisible to any leaderboard that reports pass@1 or best-of-n. Three repetitions estimate pass^3 coarsely; v2 moves to five, and the task-clustered bootstrap on the <a href="/results#headline">results page</a> gives the descriptive interval for the headline difference.</p>
+
+  <h2 id="divergence">4. The systems diverge on text, not numbers</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Category</th>{ARMS.map((a) => <><th class="n">{a.short} check rate</th><th class="n">{a.short} pass@1</th></>)}<th class="n">pass@1 difference (pp)</th></tr></thead>
+    <tbody>{CATEGORIES.map((c) => <tr><td><a href={`/tasks#${c.id}`}>{c.label}</a></td>{ARMS.map((a) => <><td class="n">{pct(F[a.id].byCategory[c.id].checkRate)}</td><td class="n">{pct(F[a.id].byCategory[c.id].taskRate)}</td></>)}<td class="n">{pp(F[lead.id].byCategory[c.id].taskRate - F[other.id].byCategory[c.id].taskRate)}</td></tr>)}</tbody>
+  </table></div>
+  <p>On reformatting, extraction, bookkeeping, and spreadsheets the two systems are within a few points of each other and both are near their check ceilings. The headline difference is concentrated in reports and drafting, where deliverables are prose graded by sentence-level rules, and reversed in tooling. Two readings are consistent with this table: one system is better at source-grounded writing, or the sentence-level checks are stricter on one system's style. The <a href="/results#scorer">frozen scorer's equivalence graders</a> exist because the second reading was true for seven tasks. Until the false-negative audit runs, the honest statement is that the difference lives in the categories where grading text is hardest.</p>
+
+  <h2 id="cost">5. Cost per passing attempt differs by an order of magnitude</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Estimated cost, total USD</th><th class="n">Passing attempts</th><th class="n">USD per pass</th><th class="n">Median wall time</th><th class="n">Input tokens</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const f = F[a.id], s = SUMMARY_BY_ID[a.id]; return <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{s.estimated_cost_sum_usd.toFixed(2)}</td><td class="n">{s.passed}</td><td class="n">{f.costPerPass.toFixed(4)}</td><td class="n">{(f.medianWall / 60).toFixed(1)} min</td><td class="n">{(s.usage.input / 1e6).toFixed(0)}M</td></tr>; })}</tbody>
+  </table></div>
+  <p>The cheaper system does five times the token work and lands a passing deliverable for a tenth of the price. Three caveats carry the weight here: the price table is API list price applied to a subscription route, captured usage omits errored requests, and a flash-tier model on a pinned first-party endpoint is a different product from a frontier model behind a CLI. Cost per pass is the right unit for a buyer; it is not evidence about model quality.</p>
+
+  <h2 id="scorer">6. The scorer moved the gap more than the models did</h2>
+  <p>Under the runner's original grader the lead was {SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed} attempts. Under the frozen scorer, which adds equivalence graders for seven tasks and a stricter base grader, it is {SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed}: the scorer raised {lead.short} by {D[lead.id].up} and {other.short} by {D[other.id].up}. A benchmark whose verdict depends this much on scorer revisions must publish both verdicts and freeze the scorer by hash, which is what this release does. It must also have the scorer reviewed by someone who did not build the leading system, which this release has not yet done. Details on the <a href="/results#scorer">results page</a> and the <a href="/audit#grading-validity">self-audit</a>.</p>
+
+  <h2 id="saturation">7. The clerical band is close to saturated</h2>
+  <p>{X.bothAll} of {X.total} tasks were passed by both systems in every repetition. {X.anyZero} tasks had at least one system at zero for three, and {X.allZero === 1 ? "one task" : `${X.allZero} tasks`} defeated both. For the two systems measured, the current task set separates them on roughly a fifth of its tasks. That is enough to rank, not enough to characterise. It is why v2 defines a difficulty axis with analyst and controller bands from the same generators, and why axes 4, 6, and 7 (adversarial inputs, self-verification, process discovery) target behaviours neither system has been asked to show.</p>
+
+  <hr />
+  <p class="muted">Every figure above is recomputed from <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">results/latest/attempts.jsonl</a> when the site builds; the test suite asserts the derived rates agree with <code>summary.json</code>. Reproduce with <code>python bench/export_campaign.py --verify</code> and the loader in <code>site/src/lib/data.ts</code>.</p>
+</Base>

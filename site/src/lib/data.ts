@@ -136,3 +136,58 @@ export const fmt = {
   int: (n: number) => n.toLocaleString("en-US"),
   m: (n: number) => (n / 1e6).toFixed(1) + "M",
 };
+
+/** Derived phenomena for the findings page. Everything here is recomputed from the ledger at build time. */
+export interface Findings {
+  arm: ArmId; attempts: number; failed: number; requiredChecks: number;
+  checkRate: number; taskRate: number; gap: number;
+  singleFail: number; failedDist: Record<number, number>; meanFracInFailures: number;
+  singleFailTypes: [string, number][];
+  pass1: number; passAny: number; passAll: number; mixedTasks: number;
+  costPerPass: number; medianWall: number;
+  byCategory: Record<string, { checkRate: number; taskRate: number; attempts: number }>;
+}
+const median = (xs: number[]) => { const s = [...xs].sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : 0; };
+export function findings(armId: ArmId): Findings {
+  const ar = attempts().filter((r) => r.harness === armId);
+  const req = ar.flatMap((r) => r.checks.filter((c) => c.required));
+  const checkRate = req.filter((c) => c.passed).length / req.length;
+  const passed = ar.filter((r) => r.passed);
+  const taskRate = passed.length / ar.length;
+  const failedRows = ar.filter((r) => !r.passed);
+  const nFailed = (r: Attempt) => r.checks.filter((c) => c.required && !c.passed).length;
+  const failedDist: Record<number, number> = {};
+  for (const r of failedRows) failedDist[nFailed(r)] = (failedDist[nFailed(r)] ?? 0) + 1;
+  const singleRows = failedRows.filter((r) => nFailed(r) === 1);
+  const types: Record<string, number> = {};
+  for (const r of singleRows) { const t = r.checks.find((c) => c.required && !c.passed)!.type; types[t] = (types[t] ?? 0) + 1; }
+  const meanFracInFailures = failedRows.length ? failedRows.reduce((s, r) => { const rq = r.checks.filter((c) => c.required); return s + rq.filter((c) => c.passed).length / Math.max(1, rq.length); }, 0) / failedRows.length : 0;
+  const byTask: Record<string, boolean[]> = {};
+  for (const r of ar) (byTask[r.task] ??= []).push(r.passed);
+  const tasks = Object.values(byTask);
+  const pass1 = tasks.reduce((s, v) => s + v.filter(Boolean).length / v.length, 0) / tasks.length;
+  const passAny = tasks.filter((v) => v.some(Boolean)).length / tasks.length;
+  const passAll = tasks.filter((v) => v.every(Boolean)).length / tasks.length;
+  const mixedTasks = tasks.filter((v) => v.some(Boolean) && !v.every(Boolean)).length;
+  const cost = ar.reduce((s, r) => s + (r.cost_usd ?? 0), 0);
+  const byCategory: Findings["byCategory"] = {};
+  for (const c of CATEGORIES) {
+    const cr = ar.filter((r) => r.category === c.id); const rq = cr.flatMap((r) => r.checks.filter((k) => k.required));
+    byCategory[c.id] = { checkRate: rq.filter((k) => k.passed).length / rq.length, taskRate: cr.filter((r) => r.passed).length / cr.length, attempts: cr.length };
+  }
+  return {
+    arm: armId, attempts: ar.length, failed: failedRows.length, requiredChecks: req.length, checkRate, taskRate, gap: checkRate - taskRate,
+    singleFail: singleRows.length, failedDist, meanFracInFailures, singleFailTypes: Object.entries(types).sort((a, b) => b[1] - a[1]).slice(0, 4),
+    pass1, passAny, passAll, mixedTasks, costPerPass: cost / passed.length, medianWall: median(ar.map((r) => r.wall_s ?? 0)),
+    byCategory,
+  };
+}
+/** Agreement between systems at task level. */
+export function crossArm() {
+  const m = matrix();
+  const tasks = Object.values(m);
+  const bothAll = tasks.filter((t) => ARMS.every((a) => t[a.id].every((r) => r.passed))).length;
+  const anyZero = tasks.filter((t) => ARMS.some((a) => t[a.id].every((r) => !r.passed))).length;
+  const allZero = tasks.filter((t) => ARMS.every((a) => t[a.id].every((r) => !r.passed))).length;
+  return { bothAll, anyZero, allZero, total: tasks.length };
+}

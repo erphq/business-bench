@@ -5,7 +5,7 @@ const { title, description, path } = Astro.props;
 const site = "https://businessbench.org";
 const url = site + (path === "/" ? "/" : path);
 const nav = [
-  ["/results", "Results"], ["/tasks", "Tasks"], ["/methods", "Methods"], ["/paper", "Paper"],
+  ["/results", "Results"], ["/analysis", "Findings"], ["/tasks", "Tasks"], ["/methods", "Methods"], ["/paper", "Paper"],
   ["/reproduce", "Reproduce"], ["/audit", "Audit"], ["/roadmap", "Roadmap"],
 ];
 const current = (p: string) => (path === p || (p !== "/" && path.startsWith(p + "/"))) ? "page" : undefined;

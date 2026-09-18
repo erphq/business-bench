@@ -34,7 +34,7 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Next up
 
-0. v2 order of work (docs/v2/README.md section 9): three new check types in
+0. v2 order of work (docs/v2/README.md section 11): three new check types in
    grade.py, generator library additions (event logs, constraint checker,
    adversarial injector), then author axes 4, 6, 7 first.
 1. Independent stratified audit of 50 desk tasks (7 per category) by reviewers
