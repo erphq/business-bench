@@ -38,8 +38,8 @@ const desc = "Does the agent deliver business work an owner can actually use? 18
 
   <h2>Findings from the current release</h2>
   <div class="grid c4">
-    <div class="stat"><div class="num">{pp(F[other.id].gap)}–{pp(F[lead.id].gap)}</div><div class="lbl">point conjunctive gap: both systems pass over {Math.floor(Math.min(F[lead.id].checkRate, F[other.id].checkRate) * 100)}% of checks and far fewer tasks</div></div>
-    <div class="stat"><div class="num">{Math.round(F[other.id].singleFail / F[other.id].failed * 100)}–{Math.round(F[lead.id].singleFail / F[lead.id].failed * 100)}%</div><div class="lbl">of failed attempts failed exactly one required check</div></div>
+    <div class="stat"><div class="num">{pp(Math.min(F[lead.id].gap, F[other.id].gap))}–{pp(Math.max(F[lead.id].gap, F[other.id].gap))}</div><div class="lbl">point conjunctive gap: both systems pass over {Math.floor(Math.min(F[lead.id].checkRate, F[other.id].checkRate) * 100)}% of checks and far fewer tasks</div></div>
+    <div class="stat"><div class="num">{Math.round(Math.min(...ARMS.map((a) => F[a.id].singleFail / F[a.id].failed)) * 100)}–{Math.round(Math.max(...ARMS.map((a) => F[a.id].singleFail / F[a.id].failed)) * 100)}%</div><div class="lbl">of failed attempts failed exactly one required check</div></div>
     <div class="stat"><div class="num">{pp(F[lead.id].passAny - F[lead.id].passAll)}</div><div class="lbl">points between pass@3 and pass^3 for the leading system: can do it versus does it every time</div></div>
     <div class="stat"><div class="num">{(F[other.id].costPerPass / F[lead.id].costPerPass).toFixed(1)}×</div><div class="lbl">difference in estimated cost per passing attempt, with the caveats stated</div></div>
   </div>
