@@ -28,8 +28,8 @@ the owner's requirements. Reviewable by design; the release states its own gaps.
 
 - [x] Thesis and capability axes agreed; 100 tasks listed with planted truth and checks
 - [x] Human baseline protocol and budget approved
-- [ ] Check types `plan_feasible`, `forecast_error`, `not_fooled` in grade.py with validator rules
-- [ ] Generator library: event-log emitter, constraint-checker scaffold, adversarial injector
+- [x] Check types `plan_feasible`, `forecast_error`, `not_fooled` in grade.py with validator rules (v1.1.0)
+- [x] Generator library: event-log emitter, constraint-checker scaffold, adversarial injector (v1.1.0)
 - [ ] Axes 4, 6, 7 authored (42 tasks, three bands each)
 - [ ] Axes 3 and 5, then 1 and 2
 - [ ] Human baseline run on 20 v1 pilot + 50 v2 tasks, raw sheets published

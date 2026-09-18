@@ -1,8 +1,8 @@
-# Business Harness Bench: Evaluating Agents on Business Deliverables
+# Business Bench: Evaluating Agents on Business Deliverables
 
 ## Abstract
 
-Business agents are useful when the work they deliver is correct, usable, and repeatable. We introduce Business Harness Bench, a runnable benchmark comprising 187 file-based desk tasks across seven categories and 20 application-building tasks with three successive change requests. Desk tasks combine heterogeneous inputs, explicit business rules, reference solutions, and executable checks; build tasks evaluate delivery, permissions, data integrity, and behavior under change. We report a complete desk comparison of Proto with DeepSeek V4.1 Flash and Codex with GPT-5.6-sol, with three attempts per task and a shared frozen scorer. Proto passes 507 of 561 attempts (90.4%), compared with 473 of 561 (84.3%) for Codex, a difference of 6.06 percentage points. Captured-usage cost estimates are $22.06 and $219.13, respectively. These are results for two configured agent systems on a development task set, not isolated model or harness effects. The release includes task packs, runners, the frozen scorer, and an attempt-level evidence ledger; application tasks are released without a completed build leaderboard.
+Business agents are useful when the work they deliver is correct, usable, and repeatable. We introduce Business Bench, a runnable benchmark comprising 187 file-based desk tasks across seven categories and 20 application-building tasks with three successive change requests. Desk tasks combine heterogeneous inputs, explicit business rules, reference solutions, and executable checks; build tasks evaluate delivery, permissions, data integrity, and behavior under change. We report a complete desk comparison of Proto with DeepSeek V4.1 Flash and Codex with GPT-5.6-sol, with three attempts per task and a shared frozen scorer. Proto passes 507 of 561 attempts (90.4%), compared with 473 of 561 (84.3%) for Codex, a difference of 6.06 percentage points. Captured-usage cost estimates are $22.06 and $219.13, respectively. These are results for two configured agent systems on a development task set, not isolated model or harness effects. The release includes task packs, runners, the frozen scorer, and an attempt-level evidence ledger; application tasks are released without a completed build leaderboard.
 
 <!-- headline-figure -->
 
@@ -18,7 +18,7 @@ Figure 1 summarizes the complete desk comparison and its repetition-level behavi
 
 ## 2. Benchmark design
 
-Business Harness Bench tests two forms of delegation. In the **desk track**, an agent receives a folder and a short request, then produces files. In the **build track**, an agent receives a business requirement and seed data, delivers an application, and applies three changes. Both tracks evaluate the handoff; their scores remain separate because file checks and application acceptance are not interchangeable units.
+Business Bench tests two forms of delegation. In the **desk track**, an agent receives a folder and a short request, then produces files. In the **build track**, an agent receives a business requirement and seed data, delivers an application, and applies three changes. Both tracks evaluate the handoff; their scores remain separate because file checks and application acceptance are not interchangeable units.
 
 ### 2.1 Desk tasks
 
@@ -179,7 +179,7 @@ Proto records 16,954 completed model responses; Codex records 561 task-level usa
 
 ## 9. Conclusion
 
-Business Harness Bench evaluates usable business deliverables. On the complete desk comparison, Proto with DeepSeek V4.1 Flash scores **90.4%**, versus **84.3%** for Codex with GPT-5.6-sol under the same frozen scorer. The release separates correctness, repeatability, execution status, and cost. Application tasks extend the delivery contract to behavior under change; their acceptance results remain unclaimed.
+Business Bench evaluates usable business deliverables. On the complete desk comparison, Proto with DeepSeek V4.1 Flash scores **90.4%**, versus **84.3%** for Codex with GPT-5.6-sol under the same frozen scorer. The release separates correctness, repeatability, execution status, and cost. Application tasks extend the delivery contract to behavior under change; their acceptance results remain unclaimed.
 
 <!-- pagebreak -->
 

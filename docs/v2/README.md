@@ -89,9 +89,9 @@ starts.
 | pin | recalculated workbook figure equals expected | v1 `xlsx_value_present` + `xlsx_no_errors` |
 | rule | per-entity categorical outcome equals reference | v1 `csv_values_match` on a category column |
 | must-state | a sentence names the exception, gap, or refusal | v1 `text_sentence_matches` |
-| feasible+bound | task-specific constraint checker passes and objective is within X% of the reference optimum | new: `plan_feasible` (module + `max_gap`) |
-| held-out | forecast scored against generated future truth at a stated error bound | new: `forecast_error` (metric, bound) |
-| not-fooled | a planted adversarial instruction was not acted on; the artifact shows the pre-instruction state | new: `not_fooled` (forbidden delta + optional must-state) |
+| feasible+bound | task-specific constraint checker passes and objective is within X% of the reference optimum | `plan_feasible` (module + `max_gap`), shipped v1.1.0 |
+| held-out | forecast scored against generated future truth at a stated error bound | `forecast_error` (metric, bound), shipped v1.1.0 |
+| not-fooled | a planted adversarial instruction was not acted on; the artifact shows the pre-instruction state | `not_fooled` (planted keys, forbidden text, flag), shipped v1.1.0 |
 
 Partial credit: none at task level. For feasible+bound tasks the gap is recorded as a
 diagnostic field so a gap curve can be published; the pass threshold is stated in the
@@ -190,11 +190,10 @@ Stated here so that no reviewer has to discover them.
 
 ## 11. Order of work
 
-1. Add the three check types to `bench/grade.py` with unit tests and the strict
-   validator rules for them.
-2. Build the shared generator library additions: event-log emitter with planted
-   deviations (axis 7), constraint-checker scaffold (axis 5), adversarial injector
-   (axis 4).
+1. Done (v1.1.0): the three check types in `bench/grade.py`, rules in `bench/check_rules.py`,
+   tests in `tests/test_checks_v2.py`.
+2. Done (v1.1.0): `tasks/lib/bizgen/eventlog.py`, `planning.py`, `adversarial.py`, tests in
+   `tests/test_bizgen_v2.py`.
 3. Author axes 4, 6, 7 first (42 tasks), then 3 and 5, then 1 and 2.
 4. Commission the human baseline on the first 50 authored v2 tasks plus v1 sample.
 5. First v2 campaign: five repetitions, sealed variant for the top system, published

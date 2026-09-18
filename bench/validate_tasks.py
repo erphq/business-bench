@@ -4,6 +4,7 @@ Usage: validate_tasks.py [task_id ...]"""
 import os, sys, json, hashlib, shutil, subprocess
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from grade import grade
+from check_rules import v2_check_problems
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 root = os.path.join(ROOT, 'tasks', 'desk')
 strict = '--strict' in sys.argv
@@ -134,10 +135,19 @@ for t in ids:
     loose = loose_pins(td) if strict and t not in LEGACY else []
     if loose:
         status = 'BAD'
+    v2 = []
+    if strict:
+        try:
+            import yaml as _y2
+            v2 = v2_check_problems(td, (_y2.safe_load(open(os.path.join(td, 'task.yaml'))) or {}).get('checks') or [])
+        except Exception as e:
+            v2 = [f'could not read checks: {e}']
+        if v2: status = 'BAD'
     print(f'{status:3} {t:22} solution={"pass" if ok_sol else "FAIL" if os.path.isdir(sol) else "MISSING"} workspace={"fail" if ok_ws else "PASSES(!)"} checks={n_checks} traps={n_traps}')
     bad += status == 'BAD'
     for h in collisions: print(f'      raw-input collision: {h[:220]}')
     for h in loose: print(f'      loose tolerance: {h[:240]}')
+    for h in v2: print(f'      v2 check rule: {h[:240]}')
     if g_sol and not g_sol['passed']:
         for c in g_sol['checks']:
             if not c['passed']: print(f'      solution failed: {c["name"]}: {c["detail"][:120]}')

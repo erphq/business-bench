@@ -22,6 +22,12 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Recently shipped
 
+- 2026-09-18: v1.1.0. Grader gains the three v2 check types (`plan_feasible`,
+  `forecast_error`, `not_fooled`) with strict-validator rules and tests; generator
+  library gains the event-log emitter with planted deviations, the planning
+  constraint scaffold, and the adversarial injector; paper retitled Business Bench
+  with authors Somesh Misra, Somnath Misra, Shashank Dixit; Findings page live.
+
 - 2026-09-18: v2 direction agreed and published: thesis for an AI-research
   audience, seven capability axes, 100 tasks with planted truth and check type
   (`docs/v2/`), human-baseline protocol with approved budget, /roadmap page.
@@ -34,9 +40,8 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Next up
 
-0. v2 order of work (docs/v2/README.md section 11): three new check types in
-   grade.py, generator library additions (event logs, constraint checker,
-   adversarial injector), then author axes 4, 6, 7 first.
+0. v2 order of work (docs/v2/README.md section 11): steps 1 and 2 done in v1.1.0;
+   next is authoring axes 4, 6, 7 (42 tasks, three bands each) on the new library.
 1. Independent stratified audit of 50 desk tasks (7 per category) by reviewers
    outside ERP.AI, verdicts committed under `docs/audits/`.
 2. Independent review of the 7 equivalence graders against adversarial wrong
