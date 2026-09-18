@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { ARMS, CATEGORIES, deskTasks, buildTasks, attempts, summary, matrix } from "../src/lib/data";
+import { ARMS, CATEGORIES, deskTasks, buildTasks, attempts, summary, matrix, scorer, readRepoFile } from "../src/lib/data";
 import { slugify, renderMarkdown } from "../src/lib/markdown";
 
 const known = new Set(CATEGORIES.map((c) => c.id));
@@ -27,9 +27,10 @@ describe("task export", () => {
 });
 
 describe("ledger", () => {
-  test("2,244 attempts, four complete arms, every task three times", () => {
+  test("1,122 attempts, two complete arms, every task three times", () => {
     const led = attempts();
-    expect(led.length).toBe(2244);
+    expect(led.length).toBe(1122);
+    expect(ARMS.map((a) => a.id).sort()).toEqual(["codex-sol", "proto-deepseek"]);
     const m = matrix();
     for (const t of deskTasks()) for (const a of ARMS) expect(m[t.id][a.id].map((r) => r.run)).toEqual([1, 2, 3]);
   });
@@ -39,6 +40,7 @@ describe("ledger", () => {
       const arm = led.filter((r) => r.harness === s.harness);
       expect(arm.length).toBe(s.attempts);
       expect(arm.filter((r) => r.passed).length).toBe(s.passed);
+      expect(arm.filter((r) => r.raw_passed).length).toBe(s.raw_passed);
       expect(arm.filter((r) => r.timed_out).length).toBe(s.timed_out);
       const byCat: Record<string, number> = {};
       for (const r of arm) if (r.passed) byCat[r.category] = (byCat[r.category] ?? 0) + 1;
@@ -47,10 +49,25 @@ describe("ledger", () => {
   });
 });
 
+describe("frozen scorer", () => {
+  test("equivalence task list is read from scorer.py and every task exists", () => {
+    const sc = scorer();
+    expect(sc.equivalenceTasks.length).toBe(7);
+    const ids = new Set(deskTasks().map((t) => t.id));
+    for (const t of sc.equivalenceTasks) expect(ids.has(t)).toBe(true);
+    expect(readRepoFile("scoring/frozen-v7/scorer.py")).toContain(`'${sc.equivalenceTasks[0]}'`);
+  });
+  test("every attempt points at the released scorer manifest", () => {
+    const sc = scorer();
+    for (const r of attempts()) expect(r.scorer_manifest_sha256).toBe(sc.manifestSha);
+  });
+});
+
 describe("markdown", () => {
   test("slugify matches the anchors the site links to", () => {
-    expect(slugify("10. Validity, safety, and release boundary")).toBe("10-validity-safety-and-release-boundary");
-    expect(slugify("1. The problem: completion is a contract, not a conversation")).toBe("1-the-problem-completion-is-a-contract-not-a-conversation");
+    expect(slugify("5. Validity and limitations")).toBe("5-validity-and-limitations");
+    expect(slugify("1. Introduction")).toBe("1-introduction");
+    expect(slugify("A.2 Scoring and verification")).toBe("a2-scoring-and-verification");
   });
   test("relative links are rebased and headings get ids", () => {
     const { html, toc } = renderMarkdown("## Hello world\n\nSee [x](docs/a.md).", { linkBase: "https://r/" });

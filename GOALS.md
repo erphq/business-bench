@@ -9,16 +9,17 @@ the owner's requirements. Reviewable by design; the release states its own gaps.
 - [x] Desk track: 187 tasks with generators, checks, references, strict validation
 - [x] Build track: 20 packs with seed data, enterprise baseline checklist, 3 changes
 - [x] Runner, grader, native workbook recalculation, release manifest, ledger export
-- [x] Campaign full-1: four complete desk arms, published as a recorded snapshot
+- [x] Complete desk comparison: two systems, 1,122 attempts, one frozen scorer, raw verdicts retained
+- [x] Per-attempt receipts: original result hash, artifact hashes, scorer manifest hash
 - [x] Specification and paper (SPEC.md, PDF)
 - [x] v1.0.0 public release, MIT
 - [x] businessbench.org: results, task pages, methods, paper, reproduce, self-audit
-- [ ] Elicitation fix and Proto rerun (new campaign label)
+- [ ] Independent review of the frozen scorer's equivalence graders
 - [ ] Independent 50-task audit with committed verdicts
 - [ ] False-negative estimate from failed artifacts; plausible-wrong negative controls
-- [ ] Five repetitions per cell; matched same-model harness control pair
+- [ ] Contemporaneous rerun: five repetitions per cell; matched same-model harness control pair
 - [ ] Proto on ERP.AI platform cell published as its own campaign
-- [ ] Per-attempt scorer and image digests in the runner
+- [ ] Container digest and runtime revision recorded per attempt by the runner
 - [ ] First complete build arm with human acceptance; publish build measures
 - [ ] Human completability baseline on the audited sample
 - [ ] External review request (Epoch AI Benchmark Reviews) once the above land
