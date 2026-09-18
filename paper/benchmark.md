@@ -33,7 +33,7 @@ The desk track contains 187 tasks. Inputs include CSV and XLSX exports, text and
 | Tooling | 9 | Small file-based tool or static page |
 | Total | 187 | Three attempts per reported system |
 
-**Table 1 |** Composition of the desk track. Each task supplies an ask, workspace, generator, checks, and reference solution. Checks and references remain outside the evaluated agent's container.
+**Table 1.** Composition of the desk track. Each task supplies an ask, workspace, generator, checks, and reference solution. Checks and references remain outside the evaluated agent's container.
 
 ### 2.2 Application tasks
 
@@ -65,7 +65,7 @@ Required checks are conjunctive: a task passes only when every required check pa
 
 <!-- result-table -->
 
-**Table 2 |** Complete desk comparison. The primary score is the frozen artifact verdict. Every passing artifact also completed normally; no passing timeout inflates the normal-completion count. Proto has three timeouts overall; Codex has none.
+**Table 2.** Complete desk comparison. The primary score is the frozen artifact verdict. Every passing artifact also completed normally; no passing timeout inflates the normal-completion count. Proto has three timeouts overall; Codex has none.
 
 Proto leads by 34 passing attempts, or **6.06 percentage points**. The recorded task-clustered bootstrap, which keeps each task's three repetitions together, gives a descriptive 95% interval of +1.25 to +11.05 points (20,000 resamples; seed 20260916). Related task families and development exposure limit interpretation beyond this workload.
 
@@ -77,25 +77,25 @@ The aggregate exceeds 90%, but that is not the same as 90% in every repetition. 
 
 <!-- efficiency-table -->
 
-**Table 3 |** Resources across all 561 attempts per system. Costs are captured-usage API-equivalent estimates under the recorded price table, not subscription invoices or reconciled provider bills. Summed task duration is not elapsed campaign time when attempts run concurrently.
+**Table 3.** Resources across all 561 attempts per system. Costs are captured-usage API-equivalent estimates under the recorded price table, not subscription invoices or reconciled provider bills. Summed task duration is not elapsed campaign time when attempts run concurrently.
 
-Proto has lower estimated model cost and a lower median task duration, but performs substantially more token work. Its total task duration is slightly larger and its p90 is worse. The cost result therefore should not be restated as uniformly lower resource consumption. Cached fractions are token-weighted; the associated uncached totals are reported rather than inferred from hit rates alone.
+Proto has lower estimated model cost and median duration, but uses more tokens, slightly more summed task time, and a worse p90. Lower cost therefore does not imply uniformly lower resource use. Cache fractions are token-weighted; uncached totals are reported explicitly.
 
-Proto records 16,954 completed model-response records. Codex usage is captured as 561 per-task aggregates, not 561 API requests. Separate reasoning-token counts are unavailable for Codex, so a cross-system request-count or reasoning-token comparison is not justified. Nine Proto request starts lack completed responses; their additional usage is unknown, not established as zero. Transport first-token latency and turn-start versus intra-turn cache splits are not available in this report.
+Proto records 16,954 completed model responses; Codex records 561 task-level usage aggregates, not API requests. These counts are not directly comparable, and separate Codex reasoning-token counts are unavailable. Nine Proto request starts lack completed responses; their additional usage is unknown. First-token latency and turn-start versus intra-turn cache splits are not available.
 
 ## 5. Validity and limitations
 
-**Task validity.** Most task authoring used model assistance. Mechanical checks provide positive and negative controls but do not replace independent practitioner review or a human performance baseline. The task set was developed by an organization that also develops Proto, and benchmark-driven development limits claims about unseen generalization.
+**Task validity.** Model-assisted authoring and mechanical controls do not replace independent practitioner review or human baselines. The organization developing the suite also develops Proto. Exposure during benchmark-driven development limits claims about unseen generalization.
 
-**Scoring coverage.** A shared deterministic scorer removes one source of comparison drift, not every source of measurement error. The frozen checks are not exhaustive manual acceptance of every artifact. Supplemental visual or semantic findings remain separate from the primary score. No build-track result is inferred from desk performance.
+**Scoring coverage.** A shared scorer controls grading drift, not all measurement error. Its checks are not exhaustive manual acceptance. Supplemental visual and semantic findings remain separate from the primary score; desk results establish no build-track performance.
 
-**Configuration and timing.** The systems use different models and different sampling controls, and the cohorts were not run contemporaneously. Provider behavior, tools, skills, and runtime choices may all contribute. The result is an end-to-end configuration comparison; it does not identify an isolated causal harness effect.
+**Configuration and timing.** Models and sampling controls differ, and cohorts were not contemporaneous. Provider behavior, tools, skills, and runtime choices may contribute. This comparison identifies an end-to-end result, not a causal harness-only effect.
 
-**Reproduction.** Source, task definitions, hashes, and score records are released. Private credentials, session traces, historical agent binaries, and raw generated artifacts are not. Artifact hashes identify the retained evidence but cannot reconstruct it. The scorer can evaluate independently supplied workspaces, and the runners support new experiments with explicitly recorded configurations.
+**Reproduction.** Source, tasks, hashes, and score records are released; credentials, traces, historical agent binaries, and raw generated artifacts are not. Hashes identify evidence but cannot reconstruct it. The scorer accepts supplied workspaces, and the runners support new, explicitly configured experiments.
 
 ## 6. Conclusion
 
-Business Harness Bench evaluates whether agents satisfy concrete business-delivery contracts. In the complete reported desk comparison, Proto with DeepSeek V4.1 Flash achieves 90.4% versus 84.3% for Codex with GPT-5.6-sol under a shared frozen scorer. The release makes this result inspectable while distinguishing artifact correctness, repeated success, execution status, and resource cost. Its application track extends the same handoff principle to working systems and subsequent changes, with acceptance results left unclaimed until testing is complete.
+Business Harness Bench evaluates usable business deliverables. On the complete desk comparison, Proto with DeepSeek V4.1 Flash scores **90.4%**, versus **84.3%** for Codex with GPT-5.6-sol under the same frozen scorer. The release separates correctness, repeatability, execution status, and cost. Application tasks extend the delivery contract to behavior under change; their acceptance results remain unclaimed.
 
 <!-- pagebreak -->
 

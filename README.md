@@ -119,7 +119,7 @@ python docs/assemble_spec.py
 python docs/render_spec_pdf.py SPEC.md docs/business-harness-bench-spec.pdf
 ```
 
-The premise, technical specification, and current result tables are source-controlled. Generated preview images and QA scratch files are not part of the release.
+The premise, technical specification, and current result tables are source-controlled. The paper embeds the bundled SIL Open Font License Libertinus Serif fonts for consistent regular and bold typography across viewers; attribution and license are in `docs/assets/fonts/`. Generated preview images and QA scratch files are not part of the release.
 
 ## Site
 

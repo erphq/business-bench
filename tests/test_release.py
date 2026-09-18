@@ -15,6 +15,28 @@ import yaml
 
 
 class ReleaseTests(unittest.TestCase):
+    def test_paper_layout_and_embedded_typography(self):
+        from pypdf import PdfReader
+        reader = PdfReader(ROOT / 'docs/business-harness-bench-spec.pdf')
+        self.assertEqual(len(reader.pages), 5, 'Unexpected overflow or near-empty extra page')
+        expected_sections = ['1. Introduction', '2. Benchmark design', '3. Evaluation protocol',
+                             '6. Conclusion', 'Appendix A.']
+        for page, heading in zip(reader.pages, expected_sections):
+            self.assertIn(heading, page.extract_text())
+        embedded = set()
+        for page in reader.pages:
+            for ref in page['/Resources']['/Font'].get_object().values():
+                font = ref.get_object()
+                if 'Libertinus' in str(font.get('/BaseFont')):
+                    descriptor = font['/FontDescriptor'].get_object()
+                    self.assertIn('/FontFile2', descriptor)
+                    embedded.add(str(font['/BaseFont']))
+        self.assertGreaterEqual(len(embedded), 2, 'Regular and bold must both be embedded')
+        first_page = reader.pages[0].extract_text()
+        for row in json.loads((ROOT / 'results/latest/summary.json').read_text()):
+            for passed in row['by_repetition'].values():
+                self.assertIn(f'{passed / 187 * 100:.1f}', first_page)
+
     def test_frozen_scorer_and_paper_agree(self):
         from frozen_release import verify
         verify()

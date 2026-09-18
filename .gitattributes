@@ -5,3 +5,4 @@ tasks/** -text -whitespace
 *.png binary
 *.jpg binary
 *.sqlite binary
+*.ttf binary
