@@ -1,10 +1,10 @@
 """Counterparties and the business clock.
 
 `advance(erp, to)` moves the clock one day at a time. On each workday the actors run in a fixed order: bank,
-vendors (acknowledge, ship, invoice, answer requests), approvers, managers (escalations, journal entries, payment
-runs). Every action goes through the same service functions as the API, under the actor's own user, and is written
-to the audit log with channel 'sim'. Behaviour comes from the scenario's world file (`erp.world`); nothing is random
-at run time, so the same agent actions always produce the same counterparty responses.
+scheduled receipts, vendors (acknowledge, ship, invoice, answer requests), approvers, managers (escalations, journal
+entries, payment runs). Every action goes through the same service functions as the API, under the actor's own user,
+and is written to the audit log with channel 'sim'. Behaviour comes from the scenario's world file (`erp.world`);
+nothing is random at run time, so the same agent actions always produce the same counterparty responses.
 
 World file shape (all keys optional):
   agent_users: [user ids the agent signs in as; the simulator never acts for them]
@@ -20,12 +20,14 @@ World file shape (all keys optional):
   journal_approver: {user, require_support: bool}
   payment_run_approver: {user, release: bool}
   calls: [{party_type, party_id, number, transcript, from?}]
+  receipts: [{day, user, po_id, packing_slip?, lines: [{po_line, qty_received}]}]
+    deliveries a colleague receives on that day (background operations between turns)
 """
 from __future__ import annotations
 
 import json
 
-from . import comms, ledger, payables, purchasing
+from . import comms, ledger, payables, purchasing, receiving
 from .core import Erp, ErpError, add_days, ext_cents, invalid, load_ctx, q4, user_on_leave
 from .pdf import business_document
 
@@ -460,6 +462,15 @@ def bank(erp: Erp, events: list) -> None:
             events)
 
 
+def scheduled_receipts(erp: Erp, events: list) -> None:
+    for r in erp.world.get('receipts', []):
+        if r['day'] != erp.today:
+            continue
+        act(erp, r['user'], 'rcv.post', 'purchase_order', r['po_id'],
+            lambda ctx, r=r: receiving.post_receipt(erp, ctx, r['po_id'], r['lines'], packing_slip=r.get('packing_slip')),
+            events)
+
+
 # ------------------------------------------------------------------------------------------- the clock
 
 def run_day(erp: Erp) -> list[dict]:
@@ -467,6 +478,7 @@ def run_day(erp: Erp) -> list[dict]:
     if not erp.is_workday(erp.today):
         return events
     bank(erp, events)
+    scheduled_receipts(erp, events)
     vendor_acks(erp, events)
     vendor_shipments(erp, events)
     vendor_invoices(erp, events)

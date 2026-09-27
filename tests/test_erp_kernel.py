@@ -162,6 +162,28 @@ class Kernel(unittest.TestCase):
                 payables.approve_run(e, ctx(e, 'val'), own)
         self.assertEqual(c.exception.code, 'preparer_cannot_approve')
 
+    def test_ap_supervisor_voids_without_journal_rights(self):
+        """A void reverses the invoice's own posting under ap.void; a manual journal reversal still needs je.post."""
+        e = self.erp
+        with e.tx():
+            setup.add_user(e, 'hana', 'Hana Brooks', ['staff', 'ap_supervisor'], 'PUR')
+            e.insert('approval_limits', {'user_id': 'riley', 'doc_type': 'purchase_order', 'limit_cents': 10 ** 8})
+            po = purchasing.create_po(e, ctx(e, 'riley'), 'V-MS', [{'sku': 'BR-0750', 'qty': 100,
+                                                                   'need_date': '2026-10-06'}])
+            purchasing.send_po(e, ctx(e, 'riley'), po)
+            receiving.post_receipt(e, ctx(e, 'riley'), po, [{'po_line': 1, 'qty_received': 100}])
+            inv = payables.enter_invoice(e, ctx(e, 'hana'), 'V-MS', 'MS-1', '2026-10-06',
+                                         [{'po_line': 1, 'qty': 100, 'unit_price': 4.12}], po_id=po)
+            payables.validate(e, ctx(e, 'hana'), inv)
+            payables.void_invoice(e, ctx(e, 'hana'), inv, 'billed twice')
+        self.assertEqual(e.val('SELECT status FROM ap_invoices WHERE id = ?', inv), 'voided')
+        self.assertEqual(e.val('SELECT qty_billed FROM po_lines WHERE po_id = ?', po), 0)
+        assert_ties(self, e)
+        with self.assertRaises(ErpError) as c:
+            with e.tx():
+                ledger.reverse(e, ctx(e, 'hana'), e.val('SELECT posted_je FROM ap_invoices WHERE id = ?', inv))
+        self.assertEqual(c.exception.code, 'forbidden')
+
     def test_hard_controls_refuse(self):
         e = self.erp
         r = self.req([{'sku': 'GASKET-9', 'qty': 10000, 'est_unit_price': 0.31, 'vendor': 'V-CS'}])  # 3,100.00
@@ -380,6 +402,26 @@ class Simulator(unittest.TestCase):
             for e in (e1, e2):
                 e.close()
 
+
+    def test_scheduled_receipt_posts_on_its_day(self):
+        with tempfile.TemporaryDirectory() as t:
+            erp = company(t, {'agent_users': ['riley'], 'vendor_default': {'ack_delay': 250}})
+            with erp.tx():
+                setup.add_user(erp, 'luis', 'Luis Ortega', ['staff', 'receiver'], 'PROD')
+                erp.insert('approval_limits', {'user_id': 'riley', 'doc_type': 'purchase_order', 'limit_cents': 10 ** 8})
+                c = load_ctx(erp, 'riley')
+                po = purchasing.create_po(erp, c, 'V-MS', [{'sku': 'BR-0750', 'qty': 100, 'need_date': '2026-10-08'}])
+                purchasing.send_po(erp, c, po)
+            erp.world['receipts'] = [{'day': '2026-10-07', 'user': 'luis', 'po_id': po, 'packing_slip': 'PS-1',
+                                      'lines': [{'po_line': 1, 'qty_received': 100}]}]
+            sim.advance(erp, '2026-10-06')
+            self.assertIsNone(erp.val('SELECT id FROM receipts WHERE po_id = ?', po))
+            events = sim.advance(erp, '2026-10-08')
+            r = erp.one('SELECT * FROM receipts WHERE po_id = ?', po)
+            self.assertEqual((r['receipt_date'], r['received_by'], r['packing_slip']), ('2026-10-07', 'luis', 'PS-1'))
+            self.assertIn({'day': '2026-10-07', 'actor': 'luis', 'action': 'rcv.post', 'object': po}, events)
+            self.assertEqual(erp.val("SELECT COUNT(*) FROM po_acknowledgements WHERE po_id = ?", po), 0)
+            erp.close()
 
 if __name__ == '__main__':
     unittest.main()
