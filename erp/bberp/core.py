@@ -137,6 +137,8 @@ OBJECTS = {
     'call': ('calls', 'id', []),
     'stock_move': ('inventory_txns', 'ref_id', []),
     'vendor_request': ('vendor_requests', 'id', []),
+    'mrp_run': ('mrp_runs', 'id', []),
+    'mrp_suggestion': ('mrp_suggestions', 'id', []),
 }
 
 

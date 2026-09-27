@@ -106,7 +106,10 @@ def hold_so(erp: Erp, ctx: Ctx, so_id: str, reason: str) -> None:
 
 
 def update_so_line(erp: Erp, ctx: Ctx, so_id: str, line: int, changes: dict) -> None:
-    ctx.require('so.create')
+    if set(changes) <= {'promise_date'} and ctx.can('so.promise'):
+        pass                                    # planners move promise dates
+    else:
+        ctx.require('so.create')
     so = _so(erp, so_id)
     sl = erp.one('SELECT * FROM so_lines WHERE so_id = ? AND line = ?', so_id, line)
     if sl is None:

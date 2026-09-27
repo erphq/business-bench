@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from urllib.parse import parse_qs, urlsplit
 
-from . import comms, inventory, ledger, manufacturing, payables, purchasing, receiving, reports, sales
+from . import comms, inventory, ledger, manufacturing, mrp, payables, purchasing, receiving, reports, sales
 from .core import Ctx, Erp, ErpError, forbidden, invalid, limit_cents, load_ctx, not_found, to_cents
 
 WRITE_METHODS = ('POST', 'PATCH', 'PUT', 'DELETE')
@@ -926,6 +926,39 @@ def post_adjustment(erp, ctx, p, q, b):
     aid = inventory.adjust(erp, ctx, b['sku'], b['location'], float(b['qty_delta']), b['reason'], b.get('lot'),
                            b.get('expiry'))
     return {'id': aid, 'moves': erp.all('SELECT * FROM inventory_txns WHERE ref_id = ? ORDER BY id', aid)}
+
+
+# =========================================================================================== planning
+
+@route('POST', '/mrp/runs', 'Run MRP over a horizon of weeks; earlier open suggestions are superseded',
+       action='mrp.run', otype='mrp_run', body={'horizon_weeks': 'default 8', 'firm_days': 'workdays, default 5'})
+def post_mrp_run(erp, ctx, p, q, b):
+    rid = mrp.run(erp, ctx, int(b.get('horizon_weeks', 8)), int(b.get('firm_days', 5)))
+    rows = erp.all('SELECT kind, COUNT(*) AS n, SUM(firm) AS firm, SUM(late) AS late FROM mrp_suggestions '
+                   'WHERE run_id = ? GROUP BY kind ORDER BY kind', rid)
+    return {**erp.one('SELECT * FROM mrp_runs WHERE id = ?', rid), 'summary': rows}
+
+
+@route('GET', '/mrp/runs', 'MRP runs')
+def list_mrp_runs(erp, ctx, p, q, b):
+    return _page(erp.all('SELECT * FROM mrp_runs ORDER BY id'), q)
+
+
+@route('GET', '/mrp/suggestions', 'Suggestions of the latest MRP run (or ?run=)',
+       query={'run': '', 'kind': 'planned_po|planned_wo|expedite|defer|cancel', 'sku': '', 'firm': '1',
+              'status': 'open|released|superseded'})
+def list_mrp_suggestions(erp, ctx, p, q, b):
+    run_id = q.get('run') or erp.val('SELECT id FROM mrp_runs ORDER BY id DESC LIMIT 1')
+    sql, args = _filters(q, {'kind': 'kind', 'sku': 'sku', 'firm': 'firm', 'status': 'status'})
+    return _page(erp.all('SELECT * FROM mrp_suggestions WHERE run_id = ?' + sql + ' ORDER BY id', run_id, *args), q)
+
+
+@route('POST', '/mrp/suggestions/{id}/release', 'Release a planned order: a sent purchase order, or a planned work '
+       'order', action='mrp.release', otype='mrp_suggestion', body={'qty': 'override', 'need_date': 'override',
+                                                                    'vendor': 'override (purchase orders)'})
+def release_mrp_suggestion(erp, ctx, p, q, b):
+    made = mrp.release(erp, ctx, p['id'], b.get('qty'), b.get('need_date'), b.get('vendor'))
+    return {**erp.one('SELECT * FROM mrp_suggestions WHERE id = ?', p['id']), 'created': made}
 
 
 # =========================================================================================== ledger

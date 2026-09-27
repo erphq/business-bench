@@ -247,6 +247,38 @@ class Kernel(unittest.TestCase):
         self.assertEqual((m['revenue'], m['cost']), ('540.00', '135.00'))
 
 
+class Planning(unittest.TestCase):
+    def test_mrp_nets_pegs_and_batches(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            e = company(tmp)
+            from bberp import mrp
+            with e.tx():
+                e.update('items', {'sku': 'GASKET-9'}, {'moq': 1000, 'lead_time_days': 3, 'safety_stock': 50})
+                e.update('items', {'sku': 'VALVE-1'}, {'lead_time_days': 2, 'safety_stock': 0})
+                e.insert('forecasts', {'sku': 'VALVE-1', 'week_start': '2026-10-12', 'qty': 100})
+                e.insert('forecasts', {'sku': 'VALVE-1', 'week_start': '2026-10-19', 'qty': 100})
+                c = load_ctx(e, 'riley')
+                e.insert('approval_limits', {'user_id': 'riley', 'doc_type': 'purchase_order', 'limit_cents': 10 ** 8})
+                po = purchasing.create_po(e, c, 'V-MS', [{'sku': 'BR-0750', 'qty': 150, 'unit_price': 3.87,
+                                                          'need_date': '2026-10-30'}])
+                purchasing.send_po(e, c, po)
+                run1 = mrp.run(e, load_ctx(e, 'ops'), 3, 5)
+                run2 = mrp.run(e, load_ctx(e, 'ops'), 3, 5)
+            rows = lambda r: [(x['kind'], x['sku'], x['qty'], x['need_date'], x['release_date'], x['ref'])  # noqa: E731
+                              for x in e.all('SELECT * FROM mrp_suggestions WHERE run_id = ? ORDER BY id', r)]
+            self.assertEqual(rows(run1), rows(run2))                           # deterministic
+            got = rows(run1)
+            valve = [(q, n, r) for k, s, q, n, r, _ref in got if (k, s) == ('planned_wo', 'VALVE-1')]
+            self.assertEqual(valve, [(100, '2026-10-12', '2026-10-08'), (100, '2026-10-19', '2026-10-15')])  # weekly
+            gasket = [(q, n) for k, s, q, n, _r, _ref in got if (k, s) == ('planned_po', 'GASKET-9')]
+            self.assertEqual(gasket, [(1000, '2026-10-08')])      # components at the WO's release date; MOQ applies
+            expedite = [(q, n, ref) for k, s, q, n, _r, ref in got if k == 'expedite']
+            self.assertEqual(expedite, [(150, '2026-10-08', 'PO-10001/1')])   # the PO arrives after it is needed
+            self.assertEqual(e.val('SELECT COUNT(*) FROM mrp_suggestions WHERE run_id = ? AND status = ?', run1,
+                                   'superseded'), len(rows(run1)))
+            e.close()
+
+
 class Api(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

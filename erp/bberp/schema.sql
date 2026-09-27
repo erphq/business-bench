@@ -170,6 +170,16 @@ CREATE TABLE work_orders (
   status TEXT NOT NULL CHECK (status IN ('planned', 'released', 'in_progress', 'completed', 'closed', 'cancelled')),
   location TEXT NOT NULL, qty_completed REAL NOT NULL DEFAULT 0, qty_scrapped REAL NOT NULL DEFAULT 0,
   created_by TEXT NOT NULL, created_on TEXT NOT NULL, closed_on TEXT, note TEXT);
+CREATE TABLE forecasts (
+  sku TEXT NOT NULL REFERENCES items(sku), week_start TEXT NOT NULL, qty REAL NOT NULL, PRIMARY KEY (sku, week_start));
+CREATE TABLE mrp_runs (
+  id TEXT PRIMARY KEY, run_by TEXT NOT NULL, run_on TEXT NOT NULL, horizon_end TEXT NOT NULL, firm_fence TEXT NOT NULL);
+CREATE TABLE mrp_suggestions (
+  id TEXT PRIMARY KEY, run_id TEXT NOT NULL REFERENCES mrp_runs(id), sku TEXT NOT NULL,
+  kind TEXT NOT NULL CHECK (kind IN ('planned_po', 'planned_wo', 'expedite', 'defer', 'cancel')),
+  qty REAL NOT NULL, need_date TEXT NOT NULL, release_date TEXT, vendor TEXT, ref TEXT, current_date TEXT,
+  firm INTEGER NOT NULL DEFAULT 0, late INTEGER NOT NULL DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'released', 'superseded')), released_as TEXT);
 CREATE TABLE wo_issues (
   id INTEGER PRIMARY KEY AUTOINCREMENT, wo_id TEXT NOT NULL REFERENCES work_orders(id), sku TEXT NOT NULL,
   qty REAL NOT NULL, lot TEXT, location TEXT NOT NULL, issue_date TEXT NOT NULL, user_id TEXT NOT NULL,

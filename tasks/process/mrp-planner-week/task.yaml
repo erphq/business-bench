@@ -1,0 +1,53 @@
+id: mrp-planner-week
+track: process
+family: plan-to-produce
+band: clerical
+title: The weekly MRP cycle, with a lead-time change from a vendor
+summary: |
+  Jordan Lee, the production planner, runs the Monday planning cycle: bring item records up to date from the
+  planning inbox, run MRP, release the firm planned orders, expedite late purchase orders, and work the action
+  messages with vendors.
+agent_user: jordan.lee
+negative_controls:
+  neg:ignore_inbox: [lead time updated from the vendor's note, orders released]
+  neg:release_everything: [orders released]
+  neg:ignore_action_messages: [requests to vendors]
+checks:
+  - type: state_values
+    name: lead time updated from the vendor's note
+    projection: planning_data
+    key: sku
+    columns: [lead_time_days, moq, order_multiple, safety_stock]
+    numeric: true
+    cites: [PLN-1.1]
+  - type: state_set
+    name: orders released
+    projection: released_orders
+    key: [kind, sku, need_date]
+    cites: [PLN-1.2, PLN-2.1, PLN-2.2]
+  - type: state_values
+    name: quantities and need dates released
+    projection: released_orders
+    key: [kind, sku, need_date]
+    columns: [qty]
+    numeric: true
+    tolerance: 0.005
+    cites: [PLN-2.1]
+  - type: state_set
+    name: requests to vendors
+    projection: vendor_requests
+    key: [kind, sku, wanted_date]
+    cites: [PLN-2.2, PLN-3.1]
+  - type: state_values
+    name: no repeated requests
+    projection: vendor_requests
+    key: [kind, sku, wanted_date]
+    columns: [requests]
+    numeric: true
+    cites: [PLN-3.1]
+  - type: state_unchanged
+    name: sales orders, bills of materials and forecasts untouched
+    tables: [sales_orders, so_lines, boms, forecasts, price_agreements]
+    cites: [PLN-3.2]
+  - type: ledger_ties
+    name: control accounts tie to their subledgers
