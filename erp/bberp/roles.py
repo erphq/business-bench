@@ -24,8 +24,8 @@ ROLES: dict[str, tuple[str, list[str]]] = {
         'msg.dispose']),
     'staff_accountant': ('Staff accountant', ['je.create', 'je.post', 'box.accounting', 'msg.dispose']),
     'planner': ('Production planner', [
-        'wo.create', 'wo.release', 'po.create', 'po.send', 'vendor.request', 'item.plan', 'box.planning',
-        'box.purchasing', 'msg.dispose']),
+        'wo.create', 'wo.release', 'po.create', 'po.send', 'vendor.request', 'item.plan', 'mrp.run', 'mrp.release',
+        'so.promise', 'box.planning', 'box.purchasing', 'msg.dispose']),
     'production_supervisor': ('Production supervisor', [
         'wo.release', 'wo.issue', 'wo.complete', 'wo.close', 'inv.transfer', 'box.production', 'msg.dispose']),
     'inventory_controller': ('Inventory controller', ['inv.adjust', 'inv.transfer', 'box.warehouse', 'msg.dispose']),

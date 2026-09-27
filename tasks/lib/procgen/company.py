@@ -49,4 +49,16 @@ def build(path: str, seed: int = 0, start: str = '2026-10-05', months: int = 12,
     history.run(erp, seed, hist_start, add_days(start, -1), close_through, events or {}, skip_month_end)
     with erp.tx():
         erp.set_today(start)
+        install_forecasts(erp, start, weeks=20)
     return Company(erp=erp, seed=seed, start=start, tokens=tokens)
+
+
+def install_forecasts(erp, start: str, weeks: int) -> None:
+    """Weekly sales forecast for finished goods from the week of `start`: the planned monthly volume spread evenly."""
+    from datetime import timedelta
+    from .northgate import FINISHED
+    monday = parse_day(start) - timedelta(days=parse_day(start).weekday())
+    for w in range(weeks):
+        wk = (monday + timedelta(weeks=w)).isoformat()
+        for sku, (_n, _p, base, _bom) in sorted(FINISHED.items()):
+            erp.insert('forecasts', {'sku': sku, 'week_start': wk, 'qty': round(base * 12 / 52)})
