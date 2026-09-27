@@ -14,16 +14,16 @@ const baselineItems = renderMarkdown(baselineMd.slice(baselineMd.indexOf("\n1. "
 const desc = "How Business Bench runs and scores agents: the agent boundary, desk and build protocols, the deterministic grader and its check types, metrics, and the evaluated cells.";
 ---
 <Base title="Methods" description={desc} path="/methods">
-  <p class="kicker">Protocol, grader, metrics</p>
+  <p class="meta">Methods<span class="sep">·</span>desk and build protocols, grading, metrics<span class="sep">·</span>the process track is described <a href="/process">on its own page</a></p>
   <h1>Methods</h1>
-  <p class="lede">A condensed account of how an attempt is executed and judged. The normative text is the <a href="/paper">specification</a>; where this page and the paper differ, the paper wins.</p>
+  <p class="lede">How an attempt is run and judged. The <a href="/paper">paper</a> is the normative text; where this page and the paper differ, the paper holds.</p>
 
   <div class="prose">
     <h2 id="unit">The unit of comparison is the configured system</h2>
     <p>A model does not act alone. Its harness decides how it reads files, invokes tools, manages context, recovers from errors, and delivers artifacts. Each experimental cell is therefore identified by harness, model configuration, provider route, tools, and substrate, and results describe the system that ran. An end-to-end gap between two cells does not, by itself, isolate a harness or a model effect; that needs matched controls.</p>
 
     <h2 id="boundary">Agent boundary</h2>
-    <p>The runner copies only the task workspace into an opaque temporary directory, writes the ask to a prompt file, and calls a harness adapter with three arguments: workspace, prompt file, output directory. In Docker mode the agent sees <code>/run/ws</code> and a per-run copy of its home; the task tree, reference answers, checks, and traps stay on the host. Containers run as the host user with CPU, memory, and process limits. Network access is available for model calls and permitted tooling, so this is not an offline benchmark and not a defence against finding the published tasks online.</p>
+    <p>The runner copies only the task workspace into an opaque temporary directory, writes the ask to a prompt file, and calls a harness adapter with three arguments: workspace, prompt file, output directory. In Docker mode the agent sees <code>/run/ws</code> and a per-run copy of its home; the task tree, reference answers, checks, and traps stay on the host. Containers run as the host user with CPU, memory, and process limits. Network access is available for model calls and permitted tooling, so an agent could in principle find the published tasks online.</p>
     <p>The adapter contract is one shell script per cell, with the model pinned inside it: <a href={`${REPO}/blob/main/harnesses/contract.md`} rel="noopener">harnesses/contract.md</a>.</p>
 
     <h2 id="desk">Desk protocol</h2>
@@ -57,7 +57,7 @@ const desc = "How Business Bench runs and scores agents: the agent boundary, des
     <h2 id="metrics">Metrics</h2>
     <ul>
       <li><strong>Attempt pass rate:</strong> passing artifacts over every scheduled attempt in a complete arm (561 per arm here).</li>
-      <li><strong>All-three success:</strong> tasks passing in all three repetitions, over 187. Observed consistency, not a confidence interval.</li>
+      <li><strong>All-three success:</strong> tasks passing in all three repetitions, over 187. Intervals for both measures are on the <a href="/results#figure-intervals">results page</a>.</li>
       <li><strong>Resources:</strong> median wall time, recorded token usage with cached input priced separately, estimated cost from the bundled price table, with missing observations stated.</li>
       <li><strong>Build measures:</strong> accepted baseline items, core delivery criteria, new change requirements, regressions, time and cost across the sequence.</li>
     </ul>
@@ -70,6 +70,10 @@ const desc = "How Business Bench runs and scores agents: the agent boundary, des
   </table></div>
   <div class="prose">
     <p>Proto cells use builtin skills only and a per-run copy of a bare home, so memory and skills never leak between attempts. The Codex cell uses a benchmark-owned <code>CODEX_HOME</code> and a fake <code>HOME</code> that hides personal skills. The two cohorts were not run at the same time and their sampling controls differ; the comparison is between configured systems, not between models or harnesses in isolation.</p>
-    <p>Further adapters ship without published results in this release: Proto on GLM-5.3 Flash and Qwen 3.8 Flash (recorded in an earlier snapshot in the repository history under the original grader), Proto on GPT-5.6 tiers through a subscription route, and Proto with access to the ERP.AI application platform. A platform-backed cell is a declared experimental condition, not an invisible advantage, and will be reported as its own labeled campaign.</p>
+    <p>Further adapters ship without published results in this release: Proto on GLM-5.3 Flash and Qwen 3.8 Flash (recorded in an earlier snapshot in the repository history under the original grader), Proto on GPT-5.6 tiers through a subscription route, and Proto with access to the ERP.AI application platform. A platform-backed cell is a declared experimental condition and will be reported as its own labelled campaign.</p>
+  </div>
+  <div class="prose">
+    <h2 id="process">Process track</h2>
+    <p>The process track runs an agent in a role inside an ERP over several turns on a business clock, with a simulator acting for vendors, approvers and the bank between turns. It is graded on projections of the final system state, rules over the audit log of every request, and control-account ties. Its protocol, grading and validation are on the <a href="/process">process track page</a> and in its <a href="/process/spec">specification</a>.</p>
   </div>
 </Base>

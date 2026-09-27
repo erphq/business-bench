@@ -1,0 +1,62 @@
+---
+import Base from "@/layouts/Base.astro";
+import { processTasks, FAMILY_LABEL, REPO, type ProcessTask } from "@/lib/data";
+import { renderMarkdown } from "@/lib/markdown";
+export async function getStaticPaths() { return processTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
+const { task } = Astro.props as { task: ProcessTask };
+const day = (d: string) => new Date(d + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const anchor = (c: string) => `clause-${c}`;
+const fileId = (f: string) => `handbook-${f.replace(/\.md$/, "")}`;
+const handbook = task.handbook.map((h) => {
+  const title = (h.markdown.match(/^#\s+(.+)$/m)?.[1] ?? h.file).trim();
+  const md = h.markdown.replace(/\]\(([a-z0-9-]+)\.md\)/g, (_m, f) => `](#${fileId(f + ".md")})`);
+  const html = renderMarkdown(md, { stripFirstH1: true }).html
+    .replace(/<strong>([A-Z]{2,4}-\d+(?:\.\d+)*)<\/strong>/g, (_m, c) => `<strong id="${anchor(c)}">${c}</strong>`);
+  return { ...h, title, html };
+});
+const known = new Set(task.handbook.flatMap((h) => h.clauses));
+const budget = (s: number) => `${Math.round(s / 60)} min`;
+const desc = `${task.title}. A process-track task from Business Bench: the agent works as ${task.agent.title.toLowerCase()} in an ERP for ${task.turns.length} turn${task.turns.length > 1 ? "s" : ""} and is graded on the final system state.`;
+---
+<Base title={task.title} description={desc} path={`/process/${task.id}`} crumbs={[{ name: "Process track", path: "/process" }, { name: task.title, path: `/process/${task.id}` }]}>
+  <p class="meta"><a href="/process">Process track</a><span class="sep">·</span>{FAMILY_LABEL[task.family] ?? task.family}<span class="sep">·</span>{task.band} band<span class="sep">·</span>{task.turns.length} turn{task.turns.length > 1 ? "s" : ""}</p>
+  <h1>{task.title}</h1>
+  <p class="lede">{task.summary}</p>
+  <p class="meta mono" style="font-size:12.5px">{task.id}<span class="sep">·</span>{task.agent.name}, {task.agent.title}, {task.company}<span class="sep">·</span><a href={`${REPO}/tree/main/tasks/process/${task.id}`} rel="noopener">source</a></p>
+
+  <h2 id="turns">The requests</h2>
+  <p class="muted" style="font-size:16px">Each turn is a new agent session on the stated business date, with the ERP as the previous turns left it and the same working folder. The request is sent after a fixed preamble that names the company, the role, the business date, the <code>erp</code> command and the handbook folder.</p>
+  <div>
+    {task.turns.map((t) => (
+      <div class="turn">
+        <div class="when"><b>Turn {t.n}</b>{day(t.date)}<br />from {t.from}<br /><span class="dim">budget {budget(t.budget_s)}</span></div>
+        <blockquote class="ask">{t.request}</blockquote>
+      </div>))}
+    <div class="turn"><div class="when"><b>Grading</b>{day(task.grading_date)}</div><p class="muted" style="margin:0;font-size:16px">The runner advances the clock to this date, lets the counterparties act, and grades the final state.</p></div>
+  </div>
+
+  <h2 id="checks">Checks</h2>
+  <p class="muted" style="font-size:16px">The attempt passes only if every check passes. Clause references point into the handbook below. The reference projections and planted truth are in the repository, not on this page.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:44%">Check</th><th>Type</th><th>Handbook clauses</th></tr></thead>
+    <tbody>{task.checks.map((c) => (
+      <tr><td>{c.name}</td><td><code>{c.type}</code></td>
+        <td><span class="clauses">{c.cites.map((k) => known.has(k) ? <a href={`#${anchor(k)}`}>{k}</a> : <span class="dim mono" style="font-size:12px">{k}</span>)}</span></td></tr>))}</tbody>
+  </table></div>
+
+  <h2 id="negative-controls">Negative controls</h2>
+  <p class="muted" style="font-size:16px">Each negative control is a reference policy with one plausible mistake built in. Validation requires it to fail every check listed here, which shows the checks can tell that mistake from correct work.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:30%">Control</th><th>Must fail</th></tr></thead>
+    <tbody>{task.negative_controls.map((n) => <tr><td><code>{n.name.replace(/^neg:/, "")}</code></td><td>{n.fails.join("; ")}</td></tr>)}</tbody>
+  </table></div>
+
+  <h2 id="handbook">Handbook</h2>
+  <p class="muted" style="font-size:16px">The company policy the agent receives in <code>./handbook</code>. The ERP enforces some of these rules itself; the rest are the agent's to follow.</p>
+  <div class="two">
+    <nav class="toc" aria-label="Handbook contents"><span class="toc-h">Handbook</span>{handbook.map((h) => <a href={`#${fileId(h.file)}`}>{h.title}</a>)}</nav>
+    <div class="prose handbook">
+      {handbook.map((h) => <section id={fileId(h.file)}><h3>{h.title}</h3><div set:html={h.html} /></section>)}
+    </div>
+  </div>
+</Base>

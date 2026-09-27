@@ -1,0 +1,40 @@
+---
+import Base from "@/layouts/Base.astro";
+import { readRepoFile, REPO } from "@/lib/data";
+import { renderMarkdown } from "@/lib/markdown";
+const base = `${REPO}/blob/main/docs/process/`;
+// The three documents render on one page, so links between them become anchors. The worked example in tasks.md
+// spells out a task's planted cases; like the desk traps it stays in the repository.
+const tasksMd = readRepoFile("docs/process/tasks.md");
+const cut = tasksMd.indexOf("\n## 4. Worked example");
+const tasksPart = (cut > 0 ? tasksMd.slice(0, cut) : tasksMd) +
+  `\n\nThe worked example, which walks through \`procure-to-pay-week\` turn by turn with its planted cases, is in [the repository](${base}tasks.md#4-worked-example-b1-procure-to-pay-week).\n`;
+const rewire = (md: string) => md
+  .replace(/\]\(tasks\.md#(4-worked-example[^)]*)\)/g, `](${base}tasks.md#$1)`)
+  .replace(/\]\((?:README|environment|tasks)\.md#([^)]+)\)/g, "](#$1)")
+  .replace(/\]\(README\.md\)/g, "](#specification)")
+  .replace(/\]\(environment\.md\)/g, "](#the-environment)")
+  .replace(/\]\(tasks\.md\)/g, "](#the-tasks)");
+const spec = renderMarkdown(rewire(readRepoFile("docs/process/README.md")), { stripFirstH1: true, linkBase: `${REPO}/blob/main/docs/process/` });
+const env = renderMarkdown(rewire(readRepoFile("docs/process/environment.md")), { stripFirstH1: true, linkBase: `${REPO}/blob/main/docs/process/` });
+const tasks = renderMarkdown(rewire(tasksPart), { stripFirstH1: true, linkBase: `${REPO}/blob/main/docs/process/` });
+const toc = [
+  { depth: 2, id: "specification", text: "Specification" }, ...spec.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
+  { depth: 2, id: "the-environment", text: "The environment" }, ...env.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
+  { depth: 2, id: "the-tasks", text: "The tasks" }, ...tasks.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
+];
+const desc = "Specification of the Business Bench process track: episode model, roles and controls, grading, metrics, isolation, difficulty bands, validation, threats to validity; the bb-erp environment; and the 24 planned tasks.";
+---
+<Base title="Process track specification" description={desc} path="/process/spec" crumbs={[{ name: "Process track", path: "/process" }, { name: "Specification", path: "/process/spec" }]}>
+  <p class="meta"><a href="/process">Process track</a><span class="sep">·</span>specification<span class="sep">·</span>rendered from <a href={`${REPO}/tree/main/docs/process`} rel="noopener">docs/process</a></p>
+  <h1>Process track specification</h1>
+  <p class="lede">The design of the track, the ERP the agent operates, and the planned tasks. This is the working specification; where it and the code differ, the code in the repository is what runs.</p>
+  <div class="two">
+    <nav class="toc" aria-label="Contents">{toc.map((t) => <a href={`#${t.id}`} class={`d${t.depth}`}>{t.text}</a>)}</nav>
+    <div>
+      <article class="prose"><h2 id="specification" style="margin-top:0">Specification</h2><div set:html={spec.html} /></article>
+      <article class="prose"><h2 id="the-environment">The environment</h2><div set:html={env.html} /></article>
+      <article class="prose" style="max-width:none"><h2 id="the-tasks">The tasks</h2><div set:html={tasks.html} /></article>
+    </div>
+  </div>
+</Base>

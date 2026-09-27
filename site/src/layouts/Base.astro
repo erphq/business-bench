@@ -1,67 +1,95 @@
 ---
+import "@fontsource-variable/source-serif-4/opsz.css";
+import "@fontsource-variable/source-serif-4/opsz-italic.css";
+import "@fontsource-variable/inter/index.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
 import "@/styles/global.css";
-interface Props { title: string; description: string; path: string; wide?: boolean }
-const { title, description, path } = Astro.props;
-const site = "https://businessbench.org";
-const url = site + (path === "/" ? "/" : path);
+import { REPO, SITE, ORG, RELEASE } from "@/lib/data";
+interface Crumb { name: string; path: string }
+interface Props { title: string; description: string; path: string; jsonld?: object[]; crumbs?: Crumb[]; noindex?: boolean; ogType?: string }
+const { title, description, path, jsonld = [], crumbs = [], noindex = false, ogType = "website" } = Astro.props;
+const url = SITE + (path === "/" ? "/" : path);
 const nav = [
-  ["/results", "Results"], ["/analysis", "Findings"], ["/tasks", "Tasks"], ["/methods", "Methods"], ["/paper", "Paper"],
-  ["/reproduce", "Reproduce"], ["/audit", "Audit"], ["/roadmap", "Roadmap"],
+  ["/results", "Results"], ["/analysis", "Findings"], ["/tasks", "Tasks"], ["/process", "Process track"], ["/methods", "Methods"],
+  ["/paper", "Paper"], ["/reproduce", "Reproduce"], ["/audit", "Audit"], ["/roadmap", "Roadmap"],
 ];
 const current = (p: string) => (path === p || (p !== "/" && path.startsWith(p + "/"))) ? "page" : undefined;
-const favicon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='#0b0b0b'/><rect x='7' y='17' width='4' height='8' fill='#fcfcfb'/><rect x='14' y='11' width='4' height='14' fill='#2a78d6'/><rect x='21' y='7' width='4' height='18' fill='#fcfcfb'/></svg>`)}`;
+const favicon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='#16161a'/><rect x='7' y='17' width='4' height='8' fill='#fbfaf7'/><rect x='14' y='11' width='4' height='14' fill='#5b93ec'/><rect x='21' y='7' width='4' height='18' fill='#fbfaf7'/></svg>`)}`;
+const breadcrumbLd = crumbs.length ? [{
+  "@context": "https://schema.org", "@type": "BreadcrumbList",
+  itemListElement: [{ name: "Business Bench", path: "/" }, ...crumbs].map((c, i) => ({ "@type": "ListItem", position: i + 1, name: c.name, item: SITE + (c.path === "/" ? "/" : c.path) })),
+}] : [];
+const ld = [...jsonld, ...breadcrumbLd];
+const fullTitle = title === "Business Bench" ? "Business Bench: a verifiable benchmark for AI agents doing business work" : `${title} · Business Bench`;
 ---
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{title === "Business Bench" ? title : `${title} · Business Bench`}</title>
+<title>{fullTitle}</title>
 <meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex" />}
 <link rel="canonical" href={url} />
 <meta property="og:site_name" content="Business Bench" />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={title === "Business Bench" ? fullTitle : title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={url} />
-<meta property="og:type" content="website" />
-<meta property="og:image" content={site + "/og.png"} />
+<meta property="og:type" content={ogType} />
+<meta property="og:image" content={SITE + "/og.png"} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#161615" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href={favicon} />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org", "@type": "Dataset", name: "Business Bench",
-  description, url: site, license: "https://github.com/erphq/business-bench/blob/main/LICENSE",
-  creator: { "@type": "Organization", name: "ERP.AI", url: "https://erp.ai" },
-  distribution: [{ "@type": "DataDownload", encodingFormat: "application/jsonl", contentUrl: "https://github.com/erphq/business-bench/blob/main/results/latest/attempts.jsonl" }],
-})} />
+<link rel="alternate" type="application/jsonl" href={`${REPO}/blob/main/results/latest/attempts.jsonl`} title="Attempt ledger" />
+{ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
 </head>
 <body>
+<a class="sr" href="#main">Skip to content</a>
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="/" aria-label="Business Bench home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="currentColor"/><rect x="7" y="17" width="4" height="8" fill="var(--bg)"/><rect x="14" y="11" width="4" height="14" fill="var(--accent)"/><rect x="21" y="7" width="4" height="18" fill="var(--bg)"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="currentColor"/><rect x="7" y="17" width="4" height="8" fill="var(--bg)"/><rect x="14" y="11" width="4" height="14" fill="var(--s1)"/><rect x="21" y="7" width="4" height="18" fill="var(--bg)"/></svg>
       Business Bench
     </a>
     <nav class="nav" aria-label="Primary">
       {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
-      <a href="https://github.com/erphq/business-bench" rel="noopener">GitHub</a>
+      <a href={REPO} rel="noopener">GitHub</a>
     </nav>
   </div>
 </header>
-<main class="wrap">
+<main id="main" class="wrap">
   <slot />
 </main>
 <footer class="site-foot">
   <div class="wrap">
     <div>
-      <p><strong>Business Bench</strong> v1.0.0 · release <code>complete-desk-comparison-2026-09-16</code></p>
-      <p>A benchmark by <a href="https://erp.ai" rel="noopener">ERP.AI</a>. ERP.AI also develops Proto, one of the evaluated harnesses. That conflict of interest is disclosed on every result page and in the <a href="/paper#5-validity-and-limitations">paper</a>.</p>
+      <h4>Business Bench</h4>
+      <p>A benchmark of AI agents on business work, graded by executable checks against planted ground truth. Release <code>{RELEASE.id}</code>, version {RELEASE.version}.</p>
+      <p>Published by <a href={ORG.url} rel="noopener">{ORG.name}</a>, which also develops Proto, one of the evaluated harnesses. The conflict is stated on every results page and assessed in the <a href="/audit">self-audit</a>.</p>
     </div>
     <div>
-      <p>Code and tasks: MIT, <a href="https://github.com/erphq/business-bench" rel="noopener">erphq/business-bench</a>.</p>
-      <p>Review requests, errata, task disputes: open an issue on GitHub. Every published number is recomputable from <code>results/latest/attempts.jsonl</code>.</p>
+      <h4>Read</h4>
+      <ul>
+        <li><a href="/paper">Paper</a> · <a href="/methods">Methods</a></li>
+        <li><a href="/results">Desk results</a> · <a href="/analysis">Findings</a></li>
+        <li><a href="/process">Process track (pilot)</a></li>
+        <li><a href="/tasks">Task inventory</a></li>
+        <li><a href="/audit">Self-audit</a> · <a href="/roadmap">Roadmap</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Data and code</h4>
+      <ul>
+        <li><a href={REPO} rel="noopener">erphq/business-bench</a> (MIT)</li>
+        <li><a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">Attempt ledger</a>, every verdict</li>
+        <li><a href="/reproduce">Reproduce a run</a></li>
+        <li><a href={`${REPO}/issues`} rel="noopener">Report an error or dispute a task</a></li>
+      </ul>
     </div>
   </div>
 </footer>

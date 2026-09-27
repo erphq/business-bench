@@ -1,0 +1,16 @@
+---
+/** Grouped counts for a small integer x (e.g. failed checks per failed attempt), one colour per system. */
+interface Series { label: string; slot: number; counts: Record<number, number> }
+interface Props { xs: number[]; series: Series[]; label: string; xLabel: string }
+const { xs, series, label, xLabel } = Astro.props;
+const max = Math.max(1, ...series.flatMap((s) => xs.map((x) => s.counts[x] ?? 0)));
+const cols = `grid-template-columns:repeat(${xs.length},minmax(0,1fr))`;
+---
+<div class="chart" role="img" aria-label={label}>
+  <div class="keys" aria-hidden="true">{series.map((s) => <span><i class={`pt c-${s.slot}`}></i>{s.label}</span>)}</div>
+  <div class="hist" style={cols} aria-hidden="true">
+    {xs.map((x) => <div class="g">{series.map((s) => { const n = s.counts[x] ?? 0; return <div class={`b c-${s.slot}`} style={`height:${((n / max) * 100).toFixed(1)}%`}><span>{n}</span></div>; })}</div>)}
+  </div>
+  <div class="hist-x" style={cols} aria-hidden="true">{xs.map((x) => <span>{x}</span>)}</div>
+  <p class="dim" style="font-size:12px;margin:6px 0 0">{xLabel}</p>
+</div>

@@ -1,108 +1,108 @@
 ---
 import Base from "@/layouts/Base.astro";
-import Bar from "@/components/Bar.astro";
-import { ARMS, SUMMARY_BY_ID, CATEGORIES, deskTasks, buildTasks, attempts, matrix, provenance, findings, crossArm, fmt, REPO } from "@/lib/data";
-const desk = deskTasks(), build = buildTasks(), led = attempts(), m = matrix(), prov = provenance();
-const noneTasks = desk.filter((t) => ARMS.every((a) => m[t.id][a.id].every((r) => !r.passed)));
-const allTasks = desk.filter((t) => ARMS.every((a) => m[t.id][a.id].every((r) => r.passed)));
-const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
+import Figure from "@/components/Figure.astro";
+import DotChart from "@/components/DotChart.astro";
+import { ARMS, SUMMARY_BY_ID, deskTasks, buildTasks, processTasks, provenance, findings, crossArm, intervals, scorerDelta, REPO, SITE, ORG, AUTHORS, RELEASE, REPS } from "@/lib/data";
+const desk = deskTasks(), build = buildTasks(), proc = processTasks(), prov = provenance();
 const F = Object.fromEntries(ARMS.map((a) => [a.id, findings(a.id)]));
+const I = Object.fromEntries(ARMS.map((a) => [a.id, intervals(a.id)]));
+const D = Object.fromEntries(ARMS.map((a) => [a.id, scorerDelta(a.id)]));
 const X = crossArm();
-const pp = (x: number) => (x * 100).toFixed(1);
-const gap = SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed;
-const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed;
-const desc = "Does the agent deliver business work an owner can actually use? 187 desk tasks and 20 app-build tasks with executable checks, and a complete two-system desk comparison of 1,122 attempts.";
+const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
+const bs = prov.paired_task_bootstrap;
+const pp = (x: number, d = 1) => (x * 100).toFixed(d);
+const pct = (x: number, d = 1) => `${pp(x, d)}%`;
+const range = (xs: number[], d = 1) => { const [a, b] = [Math.min(...xs), Math.max(...xs)]; return a.toFixed(d) === b.toFixed(d) ? a.toFixed(d) : `${a.toFixed(d)}–${b.toFixed(d)}`; };
+const attemptsTotal = ARMS.reduce((n, a) => n + SUMMARY_BY_ID[a.id].attempts, 0);
+const desc = `A verifiable benchmark for AI agents doing business work: ${desk.length} desk tasks with a complete ${ARMS.length}-system comparison of ${attemptsTotal.toLocaleString("en-US")} attempts, ${build.length} application-build tasks, and a process track that runs agents inside an ERP. Executable checks, no model judge.`;
+const cite = `@misc{businessbench2026,
+  title        = {Business Bench: Evaluating Agents on Business Deliverables},
+  author       = {${AUTHORS.map((a) => { const p = a.split(" "); return `${p.slice(1).join(" ")}, ${p[0]}`; }).join(" and ")}},
+  year         = {2026},
+  howpublished = {\\url{${SITE}}},
+  note         = {Release ${RELEASE.id}}
+}`;
+const jsonld = [
+  { "@context": "https://schema.org", "@type": "WebSite", name: "Business Bench", url: SITE + "/", publisher: { "@type": "Organization", name: ORG.name, url: ORG.url } },
+  {
+    "@context": "https://schema.org", "@type": "Dataset", name: "Business Bench", url: SITE + "/", description: desc,
+    version: RELEASE.version, datePublished: RELEASE.date, isAccessibleForFree: true,
+    license: `${REPO}/blob/main/LICENSE`, keywords: ["AI agents", "benchmark", "business work", "ERP", "evaluation", "executable checks", "pass^k"],
+    creator: [{ "@type": "Organization", name: ORG.name, url: ORG.url }, ...AUTHORS.map((a) => ({ "@type": "Person", name: a }))],
+    citation: `${AUTHORS.join(", ")}. Business Bench: Evaluating Agents on Business Deliverables. ${ORG.name}, 2026.`,
+    variableMeasured: ["attempt pass rate (pass@1)", "pass^3", "required-check pass rate", "wall time", "estimated cost"],
+    distribution: [{ "@type": "DataDownload", encodingFormat: "application/jsonl", contentUrl: `${REPO}/blob/main/results/latest/attempts.jsonl` }],
+  },
+];
 ---
-<Base title="Business Bench" description={desc} path="/">
-  <p class="kicker">Business Bench · a verifiable benchmark for agents doing business work</p>
-  <h1>Business work is the domain where agent correctness can actually be measured.</h1>
-  <p class="lede">Code benchmarks have exact verifiers, a narrow domain, and documented contamination and reward hacking. Work benchmarks have economic breadth and grade by rubric, checkpoint, or expert preference, so they measure plausibility. Business work has long-horizon, many-document inputs and a deliverable with a ground truth. Business Bench uses that to measure conjunctive correctness, repeat reliability, and self-verification with executable checks only: no rubric, no LLM judge, no partial credit.</p>
-  <div class="actions">
-    <a class="btn primary" href="/analysis">Read the findings</a>
-    <a class="btn" href="/results">Results</a>
-    <a class="btn" href="/roadmap">v2 specification</a>
-    <a class="btn" href={REPO} rel="noopener">Repository</a>
-  </div>
+<Base title="Business Bench" description={desc} path="/" jsonld={jsonld}>
+  <p class="meta">Benchmark<span class="sep">·</span>version {RELEASE.version}<span class="sep">·</span>desk results of {new Date(RELEASE.date + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}<span class="sep">·</span>MIT licence</p>
+  <h1>Business Bench</h1>
+  <p class="lede">A benchmark of AI agents on business work. Every task is generated with a planted ground truth and graded by executable checks. Grading uses no rubric or model judge, and an attempt passes only if every required check passes.</p>
+  <p class="byline">{AUTHORS.join(", ")}<span class="dim"> · {ORG.name} Research</span></p>
+  <nav class="links" aria-label="Main documents">
+    <a href="/paper">Paper</a><a href="/results">Desk results</a><a href="/analysis">Findings</a><a href="/process">Process track</a>
+    <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">Attempt ledger</a><a href={REPO} rel="noopener">Code</a><a href="#cite">Cite</a>
+  </nav>
 
-  <h2 style="margin-top:40px">What it measures</h2>
-  <div class="prose">
-    <p>A task <i>t</i> declares required checks <i>C<sub>t</sub></i> over the files the agent leaves behind: exact identifier sets, keyed values, workbook figures after native recalculation, sentence-level text rules, task-specific graders. An attempt passes iff every check in <i>C<sub>t</sub></i> passes. Each task runs <i>k</i> = {prov.repetitions} times in a fresh workspace. Four numbers follow:</p>
-    <ul>
-      <li><b>pass@1</b>, the mean attempt pass rate, and <b>pass^k</b>, the fraction of tasks passed in all <i>k</i> repetitions. The second is what an owner experiences.</li>
-      <li><b>Check rate</b> <i>c̄</i>, passed required checks over all required checks, and the <b>conjunctive gap</b> <i>c̄</i> − pass@1: the credit a partial-credit grader awards for work the owner would have to redo.</li>
-      <li><b>Near-miss share</b>, the fraction of failures one check away from passing: how often the agent had what it needed and did not verify.</li>
-      <li><b>Cost per pass</b>, from captured usage at list price, beside wall time and token work.</li>
-    </ul>
-    <p>Every task is a generator with a seed and a planted truth, so the same task exists as sealed variants and at several difficulty bands, and the whole set can become an environment with dense exact rewards. Verdicts are bound by receipts to a hashed scorer; raw and frozen verdicts are both published.</p>
-  </div>
+  <section class="abstract" aria-labelledby="abstract">
+    <h2 id="abstract">Abstract</h2>
+    <p>Business work gives an agent long inputs spread across many documents and asks for a deliverable whose correctness can be checked: a workbook whose figures reconcile, an import file the destination system accepts, a memo whose amounts and exceptions match the sources. Business Bench turns such work into seeded task generators with planted truth, and grades each attempt with checks that run against the files, applications or system state the agent leaves behind. The release has three tracks. The desk track has {desk.length} tasks and a complete comparison of two configured systems over {attemptsTotal.toLocaleString("en-US")} attempts, scored by a frozen, hashed scorer with the original verdicts kept beside it. The build track releases {build.length} application specifications without scores. The process track, in pilot, places an agent in a role inside an ERP for several business days and grades the final state of the system and its audit log.</p>
+    <p>The measurements are chosen for what an owner of the work would experience: whether the whole deliverable is right, whether it is right every time, and what a correct result costs.</p>
+  </section>
 
-  <h2>Findings from the current release</h2>
-  <div class="grid c4">
-    <div class="stat"><div class="num">{pp(Math.min(F[lead.id].gap, F[other.id].gap))}–{pp(Math.max(F[lead.id].gap, F[other.id].gap))}</div><div class="lbl">point conjunctive gap: both systems pass over {Math.floor(Math.min(F[lead.id].checkRate, F[other.id].checkRate) * 100)}% of checks and far fewer tasks</div></div>
-    <div class="stat"><div class="num">{Math.round(Math.min(...ARMS.map((a) => F[a.id].singleFail / F[a.id].failed)) * 100)}–{Math.round(Math.max(...ARMS.map((a) => F[a.id].singleFail / F[a.id].failed)) * 100)}%</div><div class="lbl">of failed attempts failed exactly one required check</div></div>
-    <div class="stat"><div class="num">{pp(F[lead.id].passAny - F[lead.id].passAll)}</div><div class="lbl">points between pass@3 and pass^3 for the leading system: can do it versus does it every time</div></div>
-    <div class="stat"><div class="num">{(F[other.id].costPerPass / F[lead.id].costPerPass).toFixed(1)}×</div><div class="lbl">difference in estimated cost per passing attempt, with the caveats stated</div></div>
-  </div>
-  <p class="muted" style="margin-top:16px">Seven findings with their computation and caveats are on the <a href="/analysis">findings page</a>. {X.bothAll} of {X.total} tasks are passed by both systems every time; the current set separates them on about a fifth of its tasks, which is why v2 adds difficulty bands and three new capability axes.</p>
+  <Figure n={1} id="figure-1">
+    <DotChart
+      label={`Desk track pass rates with 95% intervals: ${ARMS.map((a) => `${a.system} pass@1 ${pct(I[a.id].pass1.value)}, pass^3 ${pct(I[a.id].passAll.value)}`).join("; ")}.`}
+      domain={[0.6, 1]} ticks={[0.6, 0.7, 0.8, 0.9, 1]}
+      keys={[{ label: "pass@1, attempts passed", shape: "" }, { label: `pass^${REPS}, tasks passed in all ${REPS} repetitions`, shape: "ring" }]}
+      rows={[...ARMS].sort((a, b) => I[b.id].pass1.value - I[a.id].pass1.value).map((a) => ({
+        label: a.system, sub: a.harness, slot: a.slot, link: true,
+        points: [
+          { value: I[a.id].pass1.value, lo: I[a.id].pass1.ci[0], hi: I[a.id].pass1.ci[1], title: `pass@1 ${pct(I[a.id].pass1.value)}` },
+          { value: I[a.id].passAll.value, lo: I[a.id].passAll.ci[0], hi: I[a.id].passAll.ci[1], shape: "ring", title: `pass^3 ${pct(I[a.id].passAll.value)}` },
+        ],
+        valueText: pct(I[a.id].pass1.value), valueSub: `pass^${REPS} ${pct(I[a.id].passAll.value)}`,
+      }))}
+    />
+    <Fragment slot="caption">Desk track, complete comparison ({desk.length} tasks, {REPS} repetitions per system, frozen scorer). Filled points are attempt pass rates; open points are the share of tasks passed in all {REPS} repetitions. Whiskers are 95% percentile intervals from 20,000 bootstrap resamples of tasks, each task's repetitions kept together. The paired difference in attempt pass rate is +{bs.difference_percentage_points.toFixed(1)} points (95% interval +{bs.bootstrap_95_percent_interval_pp[0].toFixed(1)} to +{bs.bootstrap_95_percent_interval_pp[1].toFixed(1)}). The systems differ in model, harness, sampling and run dates, so the figure compares configured systems; it does not isolate a model or a harness. <a href="/results">Full results</a>.</Fragment>
+  </Figure>
 
-  <h2>Where it sits</h2>
+  <h2 id="tracks">Three tracks</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Benchmark</th><th>Verifier</th><th>Domain</th><th>What it cannot tell you</th></tr></thead>
+    <thead><tr><th style="width:12%">Track</th><th style="width:26%">The agent receives</th><th style="width:30%">What is graded</th><th class="n">Tasks</th><th>Status</th></tr></thead>
     <tbody>
-      <tr><td>SWE-bench Verified</td><td>Unit tests</td><td>Python repositories</td><td>Rated Flawed by Epoch AI (Sept 2026): contamination, and an OpenAI audit finding flawed tests in a majority of the audited sample.</td></tr>
-      <tr><td>Terminal-Bench 4.0</td><td>Test scripts</td><td>Shell tasks</td><td>Epoch counts 30 of 66 tasks with scoring defects, including a verifier pipe an agent can write "pass" to.</td></tr>
-      <tr><td>GDPval</td><td>Expert pairwise preference</td><td>44 occupations</td><td>Which deliverable a professional prefers, not whether it is correct.</td></tr>
-      <tr><td>TheAgentCompany</td><td>Checkpoints with partial credit</td><td>Simulated software company</td><td>Partial credit hides the conjunctive gap; some checkpoints are LLM-assessed.</td></tr>
-      <tr><td>τ-bench</td><td>Database state</td><td>Customer-service tool calls</td><td>Introduced pass^k, which this benchmark adopts; single-domain, dialogue-shaped.</td></tr>
-      <tr><td>SpreadsheetBench</td><td>Cell-level exact match</td><td>Single spreadsheets</td><td>One file, one question; no cross-document state, no process.</td></tr>
-      <tr><td><b>Business Bench</b></td><td>Executable checks on artifacts, conjunctive</td><td>Business deliverables and applications</td><td>Whether a result generalises past this workload; see the <a href="/audit">self-audit</a> for every other limit.</td></tr>
+      <tr><td><a href="/tasks#desk"><b>Desk</b></a></td><td>A folder of business files, some deliberately messy, and a short request from the owner.</td><td>The files it leaves: identifier sets, keyed values, workbooks after native recalculation, sentence-level text rules.</td><td class="n">{desk.length}</td><td><span class="status ok">Results published</span><div class="dim" style="font-size:12.5px">{ARMS.length} systems, {attemptsTotal.toLocaleString("en-US")} attempts</div></td></tr>
+      <tr><td><a href="/tasks#build"><b>Build</b></a></td><td>A requirement and seed data for an internal application, then three change requests.</td><td>A 14-item enterprise baseline and an application checklist, worked by a tester on the live application.</td><td class="n">{build.length}</td><td><span class="status warn">Tasks released</span><div class="dim" style="font-size:12.5px">no scores published</div></td></tr>
+      <tr><td><a href="/process"><b>Process</b></a></td><td>A role in an ERP, the company handbook, and requests from colleagues over several business days.</td><td>The final ERP state, the audit log of every request, control-account ties, and any notes asked for.</td><td class="n">{proc.length}</td><td><span class="status warn">Pilot</span><div class="dim" style="font-size:12.5px">validated; 24 tasks planned</div></td></tr>
     </tbody>
   </table></div>
+  <p class="muted" style="font-size:16px">There is no combined score across tracks. Each track reports its own measures.</p>
 
-  <h2>Complete desk comparison</h2>
-  <p class="muted">Pass rate over all 561 attempts per system under the shared frozen scorer. Failures and timeouts stay in the denominator. The systems use different models and were not run at the same time, so this compares two configured systems, not a harness or a model in isolation.</p>
-  <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th style="width:36%">Frozen pass rate</th><th class="n">Passed / 561</th><th class="n">Raw / 561</th><th class="n">All {prov.repetitions} of {prov.repetitions} / 187</th><th class="n">Mean cost</th></tr></thead>
-    <tbody>
-      {ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; return (
-        <tr>
-          <td><span class="sys"><i class={`swatch s-${a.slot}`}></i><a href={`/results#${a.id}`}>{a.system}</a></span></td>
-          <td><Bar value={s.pass_rate} series={a.slot} /></td>
-          <td class="n">{s.passed}</td>
-          <td class="n">{s.raw_passed}</td>
-          <td class="n">{s.all_three_pass}</td>
-          <td class="n">{fmt.usd(s.estimated_cost_mean_usd)}</td>
-        </tr>); })}
-    </tbody>
-  </table></div>
-  <p class="muted">{lead.short} leads by {gap} attempts under the frozen scorer and by {rawGap} under the original grader. {noneTasks.length === 1 ? "One task" : `${noneTasks.length} tasks`} passed nowhere; {allTasks.length} passed everywhere. Per-task matrix, category splits, resource use, and the scorer's effect on every verdict are on the <a href="/results">results page</a>.</p>
+  <h2 id="findings">What the desk comparison shows</h2>
+  <ol class="prose">
+    <li><b>Checks are nearly saturated; tasks are not.</b> Both systems pass {range(ARMS.map((a) => F[a.id].checkRate * 100))}% of required checks and {range(ARMS.map((a) => F[a.id].pass1 * 100))}% of attempts. A grader that awarded partial credit would give {range(ARMS.map((a) => F[a.id].gap * 100))} points for deliverables an owner would have to redo. <a href="/analysis#conjunctive-gap">Finding 1</a>.</li>
+    <li><b>Most failures are one check away.</b> {range(ARMS.map((a) => (F[a.id].singleFail / F[a.id].failed) * 100), 0)}% of failed attempts failed exactly one required check, most often the task's own grader, which encodes a business rule stated somewhere in the inputs. <a href="/analysis#near-miss">Finding 2</a>.</li>
+    <li><b>Capability overstates reliability.</b> The leading system passed {pct(F[lead.id].passAny, 0)} of tasks at least once and {pct(F[lead.id].passAll, 0)} in all three repetitions; {F[lead.id].mixedTasks} of {desk.length} tasks changed outcome between runs. <a href="/analysis#reliability">Finding 3</a>.</li>
+    <li><b>The difference sits in written deliverables.</b> The systems are close on spreadsheets, bookkeeping, extraction and reformatting; the gap is in reports and drafting, where grading prose is hardest. <a href="/analysis#divergence">Finding 4</a>.</li>
+    <li><b>The scorer mattered as much as the systems.</b> The frozen scorer raised {lead.short} by {D[lead.id].up} attempts and {other.short} by {D[other.id].up}, turning a raw lead of {SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed} attempts into {SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed}. Both verdicts are published. <a href="/analysis#scorer">Finding 6</a>.</li>
+    <li><b>The current task set separates systems on a minority of tasks.</b> {X.bothAll} of {X.total} tasks were passed by both systems every time, which is why the next version adds harder bands and the process track. <a href="/analysis#saturation">Finding 7</a>.</li>
+  </ol>
 
   <div class="callout warn">
-    <p><strong>Read before comparing.</strong> ERP.AI publishes this benchmark and builds Proto, the leading system. The frozen scorer, including its equivalence rules, was written by the same team, and it raised both systems' scores relative to the original grader. Raw verdicts are published beside frozen ones so the effect is inspectable. An earlier four-system snapshot under the original grader remains in the repository history. All of this is set out on the <a href="/audit">self-audit</a> page.</p>
+    <span class="t">Conflict of interest</span>
+    <p>{ORG.name} publishes this benchmark and develops Proto, the harness of the leading desk system. The frozen scorer was written by the same team after the runs; it raised both systems and raised Proto more. Raw verdicts sit beside frozen ones in the ledger, the earlier four-system snapshot remains in the repository history, and the <a href="/audit">self-audit</a> rates the release against the criteria an independent reviewer would apply.</p>
   </div>
 
-  <h2>Two handoffs, one principle</h2>
-  <div class="grid c2">
-    <div class="card">
-      <h3>Desk track: a folder and a short ask</h3>
-      <p>The agent receives business-shaped exports, spreadsheets, PDFs, and an email or two, then must leave the requested deliverables. Inputs are messy on purpose: merged headers, currency strings, mixed dates, a requirement buried in a thread. Where the files cannot support an answer, the correct deliverable says so.</p>
-      <table class="tbl" style="margin-bottom:0">
-        <tbody>{CATEGORIES.map((c) => <tr><td><a href={`/tasks#${c.id}`}>{c.label}</a></td><td class="n">{desk.filter((t) => t.category === c.id).length}</td><td class="muted">{c.deliverable}</td></tr>)}</tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>Build track: an application, then three changes</h3>
-      <p>The agent must hand over a working application a tester can reach and log into, import the seed data, enforce roles and row-level scope on the server, show a live dashboard, and survive a restart. Then it accommodates three change requests without losing earlier requirements.</p>
-      <p>Twenty applications: CRM, inventory, field service, leave, purchase approvals, invoicing, memberships, events, assets, helpdesk, vendors, expenses, quotes, donors, appointments, property maintenance, recruiting, work orders, point of sale.</p>
-      <p class="muted">No build campaign has completed its human acceptance pass. The task packs are released and validated; build scores are not published. <a href="/tasks#build">Browse the build tasks</a>.</p>
-    </div>
-  </div>
-
-  <h2>Mechanics</h2>
+  <h2 id="grading">How an attempt is judged</h2>
   <div class="grid c3">
-    <div class="card"><h3>Executable checks, conjunctive</h3><p>A task passes only when every required check passes: exact identifier sets, keyed values, live spreadsheet formulas recalculated in LibreOffice, sentence-level text rules, and task-specific graders. A percentage of checks is not a pass.</p></div>
-    <div class="card"><h3>One frozen scorer, hashed</h3><p>Every attempt in the release was scored by the same immutable package. Each verdict is bound by a receipt to the original result hash, the output-file hashes, and the scorer manifest, so a rescoring can never be confused with a rerun.</p></div>
-    <div class="card"><h3>Reliability beside accuracy</h3><p>Three repetitions per task. The site reports attempt-level pass rate and the share of tasks passed all three times, alongside wall time, token usage, and estimated model cost.</p></div>
+    <div class="card"><h3>Conjunctive checks</h3><p>Each task declares required checks over its outputs. Workbooks are recalculated natively before grading, so cached values cannot pass; text rules match within a sentence, so a figure and its caveat must appear together.</p></div>
+    <div class="card"><h3>A frozen, hashed scorer</h3><p>Every released verdict comes from one immutable scorer package. A receipt binds each verdict to the attempt's result hash, its output-file hashes and the scorer manifest, so a rescore cannot be mistaken for a rerun.</p></div>
+    <div class="card"><h3>Repetitions and resources</h3><p>Each task runs {REPS} times in a fresh workspace. Results report pass@1 and pass^{REPS} with task-level intervals, alongside wall time, token use and estimated cost per passing attempt.</p></div>
   </div>
-  <p style="margin-top:24px">The full paper is on the <a href="/paper">paper page</a>; the protocol and grader are summarised under <a href="/methods">methods</a>; the setup and run commands are under <a href="/reproduce">reproduce</a>.</p>
+  <p style="margin-top:24px">Definitions and the protocol are under <a href="/methods">methods</a>; the argument and its limits are in the <a href="/paper">paper</a>; the commands to rerun everything are under <a href="/reproduce">reproduce</a>.</p>
+
+  <h2 id="cite">Cite</h2>
+  <pre class="cite" aria-label="BibTeX citation">{cite}</pre>
+  <p class="muted" style="font-size:16px">Every number on this site is recomputed from <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">results/latest/attempts.jsonl</a> when the site is built. Errors and task disputes are <a href={`${REPO}/issues`} rel="noopener">GitHub issues</a>; accepted corrections produce a new version and are never applied silently to a published release.</p>
 </Base>

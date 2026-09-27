@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export task metadata for the site: site/src/data/tasks.json.
+"""Export task metadata for the site: site/src/data/tasks.json (desk, build, and process-track tasks).
 
 Uses the same YAML parser as bench/grade.py so the site shows exactly what the grader reads.
 Reference answers, tolerances, and traps are deliberately not exported.
@@ -61,17 +61,50 @@ def build():
         })
     return out
 
+CLAUSE = re.compile(r"^\*\*([A-Z]{2,4}-\d+(?:\.\d+)*)\*\*", re.M)
+
+def process():
+    """Process-track pilot tasks. The turns come from running each generator at seed 0 into a temporary folder;
+    only who asks, when, and what is kept (never the agent's token, the planted truth, or the reference)."""
+    import subprocess, tempfile
+    root = os.path.join(ROOT, "tasks", "process"); out = []
+    for tid in sorted(os.listdir(root)):
+        d = os.path.join(root, tid); p = os.path.join(d, "task.yaml")
+        if not os.path.isfile(p): continue
+        y = yaml.safe_load(open(p)) or {}
+        with tempfile.TemporaryDirectory() as tmp:
+            subprocess.run([sys.executable, "gen.py", "--seed", "0", "--out", tmp], cwd=d, check=True,
+                           stdout=subprocess.DEVNULL)
+            meta = json.load(open(os.path.join(tmp, "meta.json"), encoding="utf-8"))
+        handbook = []
+        for f in sorted(os.listdir(os.path.join(d, "handbook"))):
+            text = open(os.path.join(d, "handbook", f), encoding="utf-8").read()
+            handbook.append({"file": f, "clauses": CLAUSE.findall(text), "markdown": text})
+        out.append({
+            "id": tid, "title": str(y.get("title") or tid), "family": str(y.get("family") or ""), "band": str(y.get("band") or ""),
+            "summary": " ".join(str(y.get("summary") or "").split()),
+            "agent": {"name": meta["agent_name"], "title": meta["agent_title"]}, "company": meta["company"],
+            "start": meta["start"], "grading_date": meta["grading_date"],
+            "turns": [{"n": t["n"], "date": t["date"], "budget_s": t["budget_s"], "from": f'{t["from_name"]} ({t["from_title"]})',
+                       "request": t["request"].strip()} for t in meta["turns"]],
+            "checks": [{"type": str(c.get("type")), "name": str(c.get("name") or c.get("type")), "cites": list(c.get("cites") or [])}
+                       for c in (y.get("checks") or [])],
+            "negative_controls": [{"name": k, "fails": list(v or [])} for k, v in (y.get("negative_controls") or {}).items()],
+            "handbook": handbook,
+        })
+    return out
+
 def main():
-    data = {"desk": desk(), "build": build()}
+    data = {"desk": desk(), "build": build(), "process": process()}
     text = json.dumps(data, indent=1, ensure_ascii=False, sort_keys=True) + "\n"
     if "--check" in sys.argv:
         cur = open(OUT, encoding="utf-8").read() if os.path.exists(OUT) else ""
         if cur != text:
             print("site/src/data/tasks.json is stale; run python3 site/scripts/export_tasks.py", file=sys.stderr); sys.exit(1)
-        print(f"tasks.json fresh: {len(data['desk'])} desk, {len(data['build'])} build"); return
+        print(f"tasks.json fresh: {len(data['desk'])} desk, {len(data['build'])} build, {len(data['process'])} process"); return
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     open(OUT, "w", encoding="utf-8").write(text)
-    print(f"wrote {os.path.relpath(OUT, ROOT)}: {len(data['desk'])} desk, {len(data['build'])} build")
+    print(f"wrote {os.path.relpath(OUT, ROOT)}: {len(data['desk'])} desk, {len(data['build'])} build, {len(data['process'])} process")
 
 if __name__ == "__main__":
     main()

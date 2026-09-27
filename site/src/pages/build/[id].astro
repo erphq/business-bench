@@ -5,12 +5,12 @@ export async function getStaticPaths() { return buildTasks().map((t) => ({ param
 const { task } = Astro.props as { task: BuildTask };
 const desc = `${task.title}. A build-track task from Business Bench with seed data, a ${task.checklistItems}-item acceptance checklist, and three change requests.`;
 ---
-<Base title={task.title} description={desc} path={`/build/${task.id}`}>
-  <p class="kicker"><a href="/tasks">Tasks</a> · <a href="/tasks#build">build</a> · {task.category}</p>
+<Base title={task.title} description={desc} path={`/build/${task.id}`} crumbs={[{ name: "Tasks", path: "/tasks" }, { name: task.title, path: `/build/${task.id}` }]}>
+  <p class="meta"><a href="/tasks">Tasks</a><span class="sep">·</span><a href="/tasks#build">build</a><span class="sep">·</span>{task.category}</p>
   <h1>{task.title}</h1>
-  <p class="muted mono" style="margin-top:8px">{task.id} · {task.timeout_per_turn_s} s per turn · <a href={`${REPO}/tree/main/tasks/build/${task.id}`} rel="noopener">source</a></p>
+  <p class="meta mono" style="margin-top:12px;font-size:12.5px">{task.id}<span class="sep">·</span>{task.timeout_per_turn_s} s per turn<span class="sep">·</span><a href={`${REPO}/tree/main/tasks/build/${task.id}`} rel="noopener">source</a></p>
 
-  <h2>The ask</h2>
+  <h2>The request</h2>
   <blockquote class="ask">{task.ask}</blockquote>
   <p class="muted">Seed files the agent must import: <code>{task.seed.join("</code>, <code>")}</code>. The agent must leave a <code>RESULT.json</code> with a reachable URL, an admin login, and the named restricted login.</p>
 

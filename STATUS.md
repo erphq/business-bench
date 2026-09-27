@@ -22,6 +22,16 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Recently shipped
 
+- 2026-09-26: process track pilot. bb-erp (the benchmark's own ERP: purchasing,
+  receiving, payables, ledger, sales, manufacturing, MRP; hard controls; audit
+  log; business clock; counterparty simulator), a runner that drives agents
+  turn by turn through harness adapters, six check types plus audit rules, and
+  six validated pilot tasks with oracles and negative controls. Smoke attempts
+  by Proto and Codex CLI (both gpt-5.6-sol) found three task defects, all fixed;
+  no process scores are published. Site redesigned (serif text, figures with
+  task-bootstrap intervals, process track pages, sitemap with lastmod, new
+  share image).
+
 - 2026-09-18: v1.1.0. Grader gains the three v2 check types (`plan_feasible`,
   `forecast_error`, `not_fooled`) with strict-validator rules and tests; generator
   library gains the event-log emitter with planted deviations, the planning

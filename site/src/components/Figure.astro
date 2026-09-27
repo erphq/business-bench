@@ -1,0 +1,8 @@
+---
+interface Props { n?: number | string; id?: string }
+const { n, id } = Astro.props;
+---
+<figure class="fig" id={id}>
+  <slot />
+  <figcaption>{n != null && <b>Figure {n}. </b>}<slot name="caption" /></figcaption>
+</figure>

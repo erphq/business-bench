@@ -2,7 +2,9 @@
 import Base from "@/layouts/Base.astro";
 import Bar from "@/components/Bar.astro";
 import Reps from "@/components/Reps.astro";
-import { ARMS, SUMMARY_BY_ID, CATEGORIES, CATEGORY_LABEL, deskTasks, attempts, matrix, provenance, prices, scorer, scorerDelta, fmt, REPO } from "@/lib/data";
+import Figure from "@/components/Figure.astro";
+import DotChart from "@/components/DotChart.astro";
+import { ARMS, SUMMARY_BY_ID, CATEGORIES, CATEGORY_LABEL, deskTasks, attempts, matrix, provenance, prices, scorer, scorerDelta, intervals, fmt, REPO } from "@/lib/data";
 const desk = deskTasks(), led = attempts(), m = matrix(), prov = provenance(), price = prices(), sc = scorer();
 const reps = prov.repetitions as number, total = ARMS.length * reps;
 const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
@@ -17,15 +19,22 @@ const failTypes = Object.fromEntries(ARMS.map((a) => {
 }));
 const bs = prov.paired_task_bootstrap;
 const eqSet = new Set(sc.equivalenceTasks);
+const I = Object.fromEntries(ARMS.map((a) => [a.id, intervals(a.id)]));
+const byRate = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].pass_rate - SUMMARY_BY_ID[a.id].pass_rate);
+const [lead, other] = byRate;
+const catRate = (arm: string, c: string) => { const b = SUMMARY_BY_ID[arm].by_category[c]; return b.passed / b.attempts; };
+const pctx = (x: number, d = 1) => `${(x * 100).toFixed(d)}%`;
+const catSizes = CATEGORIES.map((c) => desk.filter((t) => t.category === c.id).length).sort((a, b) => a - b);
 const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two systems, one frozen scorer with raw verdicts retained, per-task matrix, resource use, and provenance.";
 ---
 <Base title="Results" description={desc} path="/results">
-  <p class="kicker">Desk track · {prov.campaign} · snapshot {prov.scorecard_snapshot_utc.slice(0, 10)}</p>
-  <h1>Results</h1>
-  <p class="lede">All 187 desk tasks, {reps} repetitions per system, one shared frozen scorer. Every scheduled attempt is in the denominator. The numbers below are recomputed at build time from the released attempt ledger; raw verdicts from the runner's original grader are shown beside the frozen ones throughout.</p>
+  <p class="meta">Desk track<span class="sep">·</span>release <code>{prov.campaign}</code><span class="sep">·</span>snapshot {prov.scorecard_snapshot_utc.slice(0, 10)}</p>
+  <h1>Desk results</h1>
+  <p class="lede">All {desk.length} desk tasks, {reps} repetitions per system, one frozen scorer. Every scheduled attempt is in the denominator. Each number is recomputed from the released attempt ledger when the site is built, and the original grader's raw verdicts are shown beside the frozen ones throughout.</p>
 
   <div class="callout">
-    <p><strong>What this table is.</strong> An end-to-end comparison of two configured systems on a development task set. They use different models and sampling controls, and their cohorts were not run at the same time. The Codex cohort is the same three repetitions recorded in the earlier four-system snapshot; the Proto cohort is a later runtime revision. Neither difference is a harness or model effect on its own. See <a href="#scorer">scorer</a> and <a href="#provenance">provenance</a>.</p>
+    <span class="t">What is being compared</span>
+    <p>Two configured systems on a development task set. They use different models and sampling controls, and their cohorts were not run at the same time: the Codex cohort is the three repetitions recorded in the earlier four-system snapshot, and the Proto cohort is a later runtime revision. Neither difference is a harness or a model effect on its own. See <a href="#scorer">scorer</a> and <a href="#provenance">provenance</a>.</p>
   </div>
 
   <h2 id="headline">Frozen and raw scores</h2>
@@ -39,7 +48,23 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
         <td class="n">{(s.median_wall_s / 60).toFixed(2)}</td><td class="n">{(s.p90_wall_s / 60).toFixed(2)}</td><td class="n">{s.estimated_cost_mean_usd.toFixed(4)}</td>
       </tr>); })}</tbody>
   </table></div>
-  <p class="muted">The lead is {bs.difference_percentage_points.toFixed(2)} percentage points under the frozen scorer. A paired, task-clustered bootstrap ({fmt.int(bs.samples)} resamples, seed {bs.seed}, each task's {reps} repetitions kept together) gives a descriptive 95% interval of +{bs.bootstrap_95_percent_interval_pp[0].toFixed(2)} to +{bs.bootstrap_95_percent_interval_pp[1].toFixed(2)} points. That is uncertainty over these task families, not evidence about unseen tasks.</p>
+  <p class="muted">The lead is {bs.difference_percentage_points.toFixed(2)} percentage points under the frozen scorer. A paired, task-clustered bootstrap ({fmt.int(bs.samples)} resamples, seed {bs.seed}, each task's {reps} repetitions kept together) gives a descriptive 95% interval of +{bs.bootstrap_95_percent_interval_pp[0].toFixed(2)} to +{bs.bootstrap_95_percent_interval_pp[1].toFixed(2)} points. It describes uncertainty over these task families and says nothing about unseen tasks.</p>
+
+  <Figure n={1} id="figure-intervals">
+    <DotChart
+      label={`Attempt pass rate and pass^${reps} per system with 95% task-bootstrap intervals.`}
+      domain={[0.6, 1]} ticks={[0.6, 0.7, 0.8, 0.9, 1]}
+      keys={[{ label: "pass@1", shape: "" }, { label: `pass^${reps}`, shape: "ring" }, { label: `pass@${reps}`, shape: "sq" }]}
+      rows={byRate.map((a) => ({ label: a.system, sub: a.harness, slot: a.slot, link: true,
+        points: [
+          { value: I[a.id].pass1.value, lo: I[a.id].pass1.ci[0], hi: I[a.id].pass1.ci[1], title: `pass@1 ${pctx(I[a.id].pass1.value)}` },
+          { value: I[a.id].passAll.value, lo: I[a.id].passAll.ci[0], hi: I[a.id].passAll.ci[1], shape: "ring", title: `pass^${reps} ${pctx(I[a.id].passAll.value)}` },
+          { value: I[a.id].passAny.value, shape: "sq", title: `pass@${reps} ${pctx(I[a.id].passAny.value)}` },
+        ],
+        valueText: pctx(I[a.id].pass1.value), valueSub: `[${pctx(I[a.id].pass1.ci[0])}, ${pctx(I[a.id].pass1.ci[1])}]` }))}
+    />
+    <Fragment slot="caption">Attempt pass rate (pass@1, filled), share of tasks passed in all {reps} repetitions (pass^{reps}, open) and in at least one (pass@{reps}, square). Whiskers: 95% percentile intervals from 20,000 bootstrap resamples of the {desk.length} tasks, repetitions kept together; the value column gives the pass@1 interval. The distance between the square and the open circle is the reliability gap discussed in <a href="/analysis#reliability">finding 3</a>.</Fragment>
+  </Figure>
 
   <h2 id="repetitions">By repetition</h2>
   <div class="tbl-wrap"><table class="tbl">
@@ -49,18 +74,31 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
         {Array.from({ length: reps }, (_, i) => <td class="n">{s.by_repetition[String(i + 1)]} / 187</td>)}
         {Array.from({ length: reps }, (_, i) => <td class="n">{s.raw_by_repetition[String(i + 1)]} / 187</td>)}</tr>); })}</tbody>
   </table></div>
-  <p class="muted">An aggregate above 90% is not 90% in every repetition; the per-repetition rows are the reliability claim, not the total.</p>
+  <p class="muted">The pass count moves between repetitions of the same tasks, by up to {Math.max(...ARMS.map((a) => { const r = Object.values(SUMMARY_BY_ID[a.id].by_repetition) as number[]; return Math.max(...r) - Math.min(...r); }))} tasks for one system.</p>
 
   <h2 id="categories">By category</h2>
-  <p class="muted">Frozen passes out of tasks × {reps} per category. Bars share one scale.</p>
+  <Figure n={2} id="figure-categories">
+    <DotChart
+      label="Frozen attempt pass rate by task category for each system."
+      domain={[0.4, 1]} ticks={[0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]}
+      keys={byRate.map((a) => ({ label: a.system, slot: a.slot }))}
+      rows={CATEGORIES.map((c) => ({ label: c.label, sub: `${desk.filter((t) => t.category === c.id).length} tasks`, link: true,
+        points: byRate.map((a) => ({ value: catRate(a.id, c.id), slot: a.slot, title: `${a.short} ${pctx(catRate(a.id, c.id))}` })),
+        valueText: `${((catRate(lead.id, c.id) - catRate(other.id, c.id)) * 100 >= 0 ? "+" : "−")}${Math.abs((catRate(lead.id, c.id) - catRate(other.id, c.id)) * 100).toFixed(1)} pp`,
+        valueSub: `${lead.short} − ${other.short}` }))}
+    />
+    <Fragment slot="caption">Frozen attempt pass rate per category ({reps} repetitions of each task). The value column is the difference between the two systems in percentage points. Categories hold {catSizes[0]} to {catSizes[catSizes.length - 1]} tasks, so in the smallest one task is {(100 / catSizes[0]).toFixed(0)} points of a system's rate and in the largest {(100 / catSizes[catSizes.length - 1]).toFixed(1)}.</Fragment>
+  </Figure>
+  <details><summary>Counts by category</summary>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Category</th><th class="n">Attempts</th>{ARMS.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></th>)}</tr></thead>
+    <thead><tr><th>Category</th><th class="n">Attempts</th>{ARMS.map((a) => <th class="n"><span class="sys" style="justify-content:flex-end"><i class={`swatch s-${a.slot}`}></i>{a.short}</span></th>)}</tr></thead>
     <tbody>{CATEGORIES.map((c) => (
       <tr>
         <td><a href={`/tasks#${c.id}`}>{c.label}</a></td><td class="n">{desk.filter((t) => t.category === c.id).length * reps}</td>
-        {ARMS.map((a) => { const b = SUMMARY_BY_ID[a.id].by_category[c.id]; return <td><Bar value={b.passed / b.attempts} series={a.slot} label={`${b.passed} / ${b.attempts}`} /></td>; })}
+        {ARMS.map((a) => { const b = SUMMARY_BY_ID[a.id].by_category[c.id]; return <td class="n">{b.passed} / {b.attempts}</td>; })}
       </tr>))}</tbody>
   </table></div>
+  </details>
 
   <h2 id="scorer">What the frozen scorer changed</h2>
   <p>Every attempt was scored twice: once by the runner's grader at run time (the raw verdict) and once by the frozen <code>conservative-v7</code> package released under <a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">{sc.dir}</a> (the primary verdict). The frozen package carries its own copy of the task definitions and base grader, plus task-specific equivalence graders for {sc.equivalenceTasks.length} tasks that accept alternative valid representations (a rate written as a fraction or a percentage, a schedule laid out as a table or as cards). Its manifest digest is <code class="mono" style="word-break:break-all">{sc.manifestSha}</code> and every receipt in the ledger points to it.</p>
@@ -93,7 +131,7 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
     <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; const p = price[a.model] ?? price["openai/" + a.model]; return (
       <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{fmt.m(s.usage.input)}</td><td class="n">{fmt.m(s.usage.cached_input)}</td><td class="n">{fmt.m(s.usage.uncached_input)}</td><td class="n">{fmt.m(s.usage.output)}</td><td class="n">{s.estimated_cost_sum_usd.toFixed(2)}</td><td class="n">{(s.sum_wall_s / 3600).toFixed(1)}</td><td class="mono">{p ? `${p.input} / ${p.cached_input} / ${p.output}` : "n/a"}</td></tr>); })}</tbody>
   </table></div>
-  <p class="muted">Costs are captured-usage estimates under <a href={`${REPO}/blob/main/bench/prices.json`} rel="noopener">bench/prices.json</a>, not invoices. Codex ran through a subscription and is priced at API list price. The cheaper system did far more token work; lower cost is not lower resource use. Summed task time is not elapsed campaign time.</p>
+  <p class="muted">Costs are estimates from captured usage and the list prices in <a href={`${REPO}/blob/main/bench/prices.json`} rel="noopener">bench/prices.json</a>. Codex ran through a subscription and is priced at API list price. The cheaper system did far more token work. Summed task time adds attempt durations; attempts ran in parallel, so the campaign took less elapsed time.</p>
 
   <h2 id="matrix">Per-task matrix</h2>
   <p class="muted">{reps} squares per cell, one per repetition. Green is a frozen pass; a green square with a hollow centre passed under the frozen scorer but failed under the original grader; grey is a fail; a hollow grey centre is a timeout. {noneTasks.length === 1 ? "One task" : `${noneTasks.length} tasks`} passed nowhere; {allTasks.length} passed everywhere.</p>
