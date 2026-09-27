@@ -5,6 +5,7 @@
   "bench/build_run.py": "989a03189402bd9b4586d29cc366c9d5919ee90958e9e151665c6817351c1825",
   "bench/check_rules.py": "a757cea580a493430370573b0a507917f0b0b33056a74b2c174d279e006dab60",
   "bench/export_campaign.py": "2963c315912099bfafe5867b3b473483c84701b0eb0d3c14a03d24c5fa57216f",
+  "bench/export_process_campaign.py": "2c8b44d1eb97bbef48a90fe0d244b7a17e7a49d9ec2876a9fd6e66e685c3ea46",
   "bench/failures.py": "49984e27576fa9807f42760ec8befd5e047ade32c00a97f6db39d2f5827a654e",
   "bench/frozen_release.py": "b3b63a784cef48dff78a2a206edf60cfec48194458000bbf4bbcf23ba220d96a",
   "bench/grade.py": "1c261d4af4303e2d7ecd15dfb002678d8fbd0f8b0db557ee517d743ddd7907ca",

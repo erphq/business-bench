@@ -9,6 +9,7 @@ __pycache__/
 homes/
 results/*
 !results/latest/
+!results/process/
 tmp/
 output/
 node_modules/
