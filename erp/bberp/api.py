@@ -569,7 +569,9 @@ def get_ap_invoice(erp, ctx, p, q, b):
        body={'vendor': 'required', 'invoice_no': 'required, as printed', 'invoice_date': 'required', 'po_id': '',
              'source_msg': 'inbox message id', 'note': '',
              'lines': '[{kind: item|freight|tax|other, po_line?, sku?, description?, qty?, unit_price?, amount?, '
-                      'account?, department?}]'})
+                      'account?, department?}]: item for anything billed against a PO line, stock or non-stock '
+                      '(po_line, qty and unit_price as billed); freight, tax and other take an amount and are not '
+                      'matched to the PO'})
 def post_ap_invoice(erp, ctx, p, q, b):
     _need(b, 'vendor', 'invoice_no', 'invoice_date', 'lines')
     return _inv_view(erp, payables.enter_invoice(erp, ctx, b['vendor'], b['invoice_no'], b['invoice_date'], b['lines'],
@@ -578,7 +580,7 @@ def post_ap_invoice(erp, ctx, p, q, b):
 
 @route('PATCH', '/ap-invoices/{id}/lines/{line}', 'Correct an entry error on an unposted invoice line',
        action='ap.update_line', otype='ap_invoice',
-       body={'qty': '', 'unit_price': '', 'amount': '', 'account': '', 'po_line': '', 'description': ''})
+       body={'kind': '', 'qty': '', 'unit_price': '', 'amount': '', 'account': '', 'po_line': '', 'description': ''})
 def patch_ap_line(erp, ctx, p, q, b):
     payables.update_invoice_line(erp, ctx, p['id'], int(p['line']), b)
     return _inv_view(erp, p['id'])
@@ -613,7 +615,9 @@ def approve_invoice(erp, ctx, p, q, b):
     return _inv_view(erp, p['id'])
 
 
-@route('POST', '/ap-invoices/{id}/reject', 'Reject an unposted invoice', action='ap.reject', otype='ap_invoice',
+@route('POST', '/ap-invoices/{id}/reject', 'Reject an unposted invoice the company will not pay. The vendor '
+       'invoice number stays taken, so correct an entry error with PATCH on the line instead', action='ap.reject',
+       otype='ap_invoice',
        body={'reason': 'required'})
 def reject_invoice(erp, ctx, p, q, b):
     payables.reject_invoice(erp, ctx, p['id'], b.get('reason'))

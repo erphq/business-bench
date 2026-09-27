@@ -118,6 +118,12 @@ class Kernel(unittest.TestCase):
                                          [{'po_line': 1, 'qty': 560, 'unit_price': 4.12}], po_id=po)
         m = payables.match(e, inv)[0]
         self.assertAlmostEqual(m['price_variance_pct'], 6.46, places=2)
+        with self.assertRaises(ErpError) as c:      # a PO line is billed as an item line, never as an unmatched one
+            with e.tx():
+                payables.enter_invoice(e, ctx(e, 'riley'), 'V-MS', 'MS-88214', '2026-10-08',
+                                       [{'kind': 'other', 'po_line': 1, 'amount': 2307.20, 'account': '6250'}],
+                                       po_id=po)
+        self.assertEqual(c.exception.code, 'invalid')
         with e.tx():
             payables.place_hold(e, ctx(e, 'riley'), inv, 'price', 1, 'billed 4.12 vs PO 3.87')
         with self.assertRaises(ErpError) as c:
