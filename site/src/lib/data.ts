@@ -64,6 +64,30 @@ export interface ProcessTask {
   handbook: { file: string; clauses: string[]; markdown: string }[];
 }
 export function processTasks(): ProcessTask[] { return (tasksJson as any).process as ProcessTask[]; }
+/** A published process-track campaign: results/process/<label>/ (provenance, summary and the attempt ledger). */
+export interface ProcessCell { system: string; harness: string; model: string; route: string; effort: string }
+export interface ProcessAttempt {
+  run_id: string; task: string; harness: string; seed: number; run: number; passed: boolean; breach: boolean; error: boolean;
+  checks: { name: string; type: string; passed: boolean; breach: boolean }[];
+  turns: { n: number; date: string; exit_code: number; timed_out: boolean; wall_s: number }[];
+  wall_s: number; usage: { requests: number; input: number; cached_input: number; output: number; reasoning: number };
+  cost_usd: number | null;
+}
+export interface ProcessCampaign {
+  label: string; repetitions: number; seed: number; cells: Record<string, ProcessCell>; conditions: string[];
+  tasks: string[]; bench_commit_at_run: string; ledger_sha256: string; summary: Record<string, any>; attempts: ProcessAttempt[];
+}
+export function processCampaign(label: string): ProcessCampaign {
+  const dir = `results/process/${label}`;
+  const prov = JSON.parse(read(`${dir}/provenance.json`));
+  return {
+    label, repetitions: prov.repetitions, seed: prov.seed, cells: prov.cells, conditions: prov.conditions, tasks: prov.tasks,
+    bench_commit_at_run: prov.bench_commit_at_run, ledger_sha256: prov.ledger_sha256,
+    summary: JSON.parse(read(`${dir}/summary.json`)),
+    attempts: read(`${dir}/attempts.jsonl`).split("\n").filter(Boolean).map((l) => JSON.parse(l)),
+  };
+}
+export const PROCESS_PILOT = "pilot-process-2026-09-27";
 export const FAMILY_LABEL: Record<string, string> = {
   "requisitions-and-purchasing": "Requisitions and purchasing", "receiving-matching-paying": "Receiving, matching and paying",
   "finance-questions": "Finance questions", "record-to-report": "Record to report", "plan-to-produce": "Plan to produce",

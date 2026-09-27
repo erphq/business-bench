@@ -22,6 +22,14 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Recently shipped
 
+- 2026-09-27: process track pilot campaign `pilot-process-2026-09-27`. Proto CLI
+  0.2.119 and Codex CLI 0.158.0-alpha.2.1, both on gpt-5.6-sol through a ChatGPT
+  subscription, each ran the six pilot tasks five times from seed 0. Both passed
+  30/30 with no breaches. Median time per attempt: Proto 290 s, Codex 164 s.
+  Input tokens: Proto 38.8M (47% cached), Codex 22.7M (89% cached). Local mode,
+  before the practitioner review; published as provisional with its ledger in
+  `results/process/`, verified in CI by `export_process_campaign.py --verify`.
+
 - 2026-09-26: process track pilot. bb-erp (the benchmark's own ERP: purchasing,
   receiving, payables, ledger, sales, manufacturing, MRP; hard controls; audit
   log; business clock; counterparty simulator), a runner that drives agents

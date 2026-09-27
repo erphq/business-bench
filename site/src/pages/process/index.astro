@@ -1,7 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Figure from "@/components/Figure.astro";
-import { processTasks, FAMILY_LABEL, REPO } from "@/lib/data";
+import { processTasks, processCampaign, FAMILY_LABEL, PROCESS_PILOT, REPO } from "@/lib/data";
 const tasks = processTasks();
 const p2p = tasks.find((t) => t.id === "procure-to-pay-week")!;
 const day = (d: string) => new Date(d + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
@@ -12,16 +12,65 @@ const steps = [
   { title: "Match and hold", what: "Enter and match the week's invoices, hold what does not match, and leave a note.", before: "Before this turn the vendors invoiced for what they shipped." },
 ];
 const negs = tasks.reduce((n, t) => n + t.negative_controls.length, 0);
+const camp = processCampaign(PROCESS_PILOT);
+const cells = ["proto-sol-sub", "codex-sol"].filter((c) => camp.cells[c]);
+const short = (c: string) => camp.cells[c].system.split(" / ")[0];
+const median = (xs: number[]) => { const s = [...xs].sort((a, b) => a - b), n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
+const stat = (rs: typeof camp.attempts) => {
+  const input = rs.reduce((n, r) => n + r.usage.input, 0), cached = rs.reduce((n, r) => n + r.usage.cached_input, 0);
+  return { passed: rs.filter((r) => r.passed).length, n: rs.length, breaches: rs.filter((r) => r.breach).length,
+    errors: rs.filter((r) => r.error).length, wall: median(rs.map((r) => r.wall_s)), input, perAttempt: input / rs.length,
+    cachedShare: input ? cached / input : 0 };
+};
+const byTask = camp.tasks.map((t) => ({ task: tasks.find((x) => x.id === t), id: t,
+  s: Object.fromEntries(cells.map((c) => [c, stat(camp.attempts.filter((a) => a.task === t && a.harness === c))])) }));
+const all = Object.fromEntries(cells.map((c) => [c, stat(camp.attempts.filter((a) => a.harness === c))]));
+const mins = (s: number) => (s / 60).toFixed(1);
+const mtok = (n: number) => (n / 1e6).toFixed(n >= 1e7 ? 1 : 2) + "M";
+const pctf = (x: number) => `${Math.round(x * 100)}%`;
+const runDate = new Date("2026-09-27T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+const ledger = `${REPO}/blob/main/results/process/${camp.label}`;
+const [pa, pb] = cells;
 const desc = "Agents take a role inside an ERP for several business days and are graded on the final system state and the audit log. Design, grading and six pilot tasks.";
 ---
 <Base title="Process track" description={desc} path="/process" crumbs={[{ name: "Process track", path: "/process" }]}>
-  <p class="meta">Track<span class="sep">·</span>pilot<span class="sep">·</span>{tasks.length} tasks, {checks} checks, {negs} negative controls<span class="sep">·</span>no published scores</p>
+  <p class="meta">Track<span class="sep">·</span>pilot<span class="sep">·</span>{tasks.length} tasks, {checks} checks, {negs} negative controls<span class="sep">·</span>pilot campaign published, provisional</p>
   <h1>Process track</h1>
   <p class="lede">Business processes run inside an ERP. The agent holds a role at a manufacturer, works through requests from colleagues over several business days, and is graded on the state it leaves in the system and on the audit log of every request it made.</p>
 
   <div class="callout">
     <span class="t">Status</span>
-    <p>Six pilot tasks pass validation. No agent results are published for this track: they wait for a practitioner review of the pilot and a campaign with five repetitions per system. The full design is in the <a href="/process/spec">specification</a>.</p>
+    <p>Six pilot tasks pass validation. The <a href="#campaign">pilot campaign</a> below is the track's first published result. It ran in local mode and before the practitioner review of the tasks, so it is provisional. The full design is in the <a href="/process/spec">specification</a>.</p>
+  </div>
+
+
+  <h2 id="campaign">Pilot campaign</h2>
+  <p class="muted" style="font-size:16px">Label <code>{camp.label}</code>, {runDate}. Each system ran each pilot task {camp.repetitions} times from seed {camp.seed}.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead>
+      <tr><th rowspan="2" style="width:34%;min-width:170px">Task</th><th colspan="2" class="n">Attempts passed</th><th colspan="2" class="n">Median minutes per attempt</th><th colspan="2" class="n">Input tokens per attempt</th></tr>
+      <tr>{[0, 1, 2].map(() => cells.map((c) => <th class="n">{short(c)}</th>))}</tr>
+    </thead>
+    <tbody>
+      {byTask.map((r) => (
+        <tr><td><a href={`/process/${r.id}`}>{r.task?.title ?? r.id}</a></td>
+          {cells.map((c) => <td class="n">{r.s[c].passed}/{r.s[c].n}</td>)}
+          {cells.map((c) => <td class="n">{mins(r.s[c].wall)}</td>)}
+          {cells.map((c) => <td class="n">{mtok(r.s[c].perAttempt)}<div class="dim" style="font-size:12px">{pctf(r.s[c].cachedShare)} cached</div></td>)}
+        </tr>))}
+      <tr><td><b>All six tasks</b></td>
+        {cells.map((c) => <td class="n"><b>{all[c].passed}/{all[c].n}</b></td>)}
+        {cells.map((c) => <td class="n"><b>{mins(all[c].wall)}</b></td>)}
+        {cells.map((c) => <td class="n"><b>{mtok(all[c].perAttempt)}</b><div class="dim" style="font-size:12px">{pctf(all[c].cachedShare)} cached</div></td>)}
+      </tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>Both systems ran {camp.cells[pa].model} at {camp.cells[pa].effort} reasoning effort through a ChatGPT subscription: {short(pa)} as {camp.cells[pa].harness}; {short(pb)} as {camp.cells[pb].harness}. Both passed all {all[pa].n} attempts, with {all[pa].breaches + all[pb].breaches === 0 ? "no breach of a soft control" : `${all[pa].breaches + all[pb].breaches} breaches`} and {all[pa].errors + all[pb].errors === 0 ? "no harness errors" : `${all[pa].errors + all[pb].errors} harness errors`}. At the clerical band these tasks do not separate the two harnesses on correctness.</p>
+    <p>They differ in time and tokens. {short(pb)} took a median of {Math.round(all[pb].wall)} seconds per attempt and {short(pa)} {Math.round(all[pa].wall)}. {short(pa)} sent {(all[pa].input / 1e6).toFixed(1)} million input tokens across its attempts and {short(pb)} {(all[pb].input / 1e6).toFixed(1)} million; the provider served {pctf(all[pb].cachedShare)} of {short(pb)}'s input from its prompt cache and {pctf(all[pa].cachedShare)} of {short(pa)}'s. {short(pa)} places a status message after the conversation on every model call, which changes the end of the prompt and stops the provider reusing the cached prefix. In one run of procure-to-pay-week with the status carried inside tool results instead, its cached share rose to 92% and its wall time did not change. That change is in review as <a href="https://github.com/erphq/proto/pull/601" rel="noopener">erphq/proto#601</a> and is not in the build measured here.</p>
+    <p>ERP.AI develops Proto and publishes this benchmark. The conditions of this run:</p>
+    <ul>{camp.conditions.map((c) => <li>{c}</li>)}</ul>
+    <p>The <a href={`${ledger}/attempts.jsonl`} rel="noopener">attempt ledger</a> has every attempt's verdict, each check's verdict, time and token counts, and SHA-256 hashes of the raw result, the final ERP database and the files the agent left. <code>python bench/export_process_campaign.py --verify</code>, which runs in CI, checks the ledger against the hash in its <a href={`${ledger}/provenance.json`} rel="noopener">provenance</a> and recomputes the <a href={`${ledger}/summary.json`} rel="noopener">summary</a> from it.</p>
   </div>
 
   <div class="prose">
@@ -105,8 +154,8 @@ const desc = "Agents take a role inside an ERP for several business days and are
     <h2 id="next">Next</h2>
     <ol>
       <li>A practitioner review of the pilot by an accounts payable lead, a production planner and a controller.</li>
-      <li>A pilot campaign with five repetitions per system in containers, published under its own label.</li>
-      <li>The remaining 18 tasks, then the analyst and controller bands.</li>
+      <li>The pilot campaign repeated in containers, the isolation the specification requires for official results.</li>
+      <li>Tasks at the analyst band, with 100 to 300 documents a turn, then the remaining catalogue tasks and the controller band.</li>
       <li>Background operations between turns, so an episode can span several weeks of sales, production and receiving.</li>
       <li>A browser interface and a human baseline on the pilot tasks.</li>
     </ol>
