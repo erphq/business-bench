@@ -59,6 +59,10 @@ def _check_line(erp: Erp, inv: dict, ln: dict, i: int) -> dict:
         if row['po_line'] is None and not row['account']:
             raise invalid(f'line {i}: an item line without a PO line needs an account')
     else:
+        if row['po_line'] is not None:
+            raise invalid(f'line {i}: a line billed against a PO line is an item line (kind item, with qty and '
+                          'unit_price as billed), for non-stock PO lines too; freight, tax and other lines are not '
+                          'matched to the PO')
         if ln.get('amount') is None:
             raise invalid(f'line {i}: {kind} lines need an amount')
         row['amount_cents'] = to_cents(ln['amount'])

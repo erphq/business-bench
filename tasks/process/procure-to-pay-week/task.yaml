@@ -24,12 +24,12 @@ checks:
     columns: [qty_ordered, unit_price, lines]
     numeric: true
     tolerance: 0.005
-    cites: [PUR-1.1, PUR-3.1, PUR-4.2, PUR-4.3, PUR-4.5]
+    cites: [PUR-1.1, PUR-3.1, PUR-4.2, PUR-4.3, PUR-4.4, PUR-4.5]
   - type: state_set
     name: PO lines ordered
     projection: po_lines
     key: [vendor, item, ship_to]
-    cites: [PUR-1.1, PUR-3.1, PUR-4.2]
+    cites: [PUR-1.1, PUR-3.1, PUR-4.2, PUR-4.4]
   - type: state_values
     name: PO dates and lead-time risk
     projection: po_lines
@@ -40,7 +40,7 @@ checks:
     name: vendors ordered from
     projection: po_vendors
     key: vendor
-    cites: [PUR-3.1, PUR-3.2]
+    cites: [PUR-3.1, PUR-3.2, PUR-4.4]
   - type: audit_forbidden
     name: nothing ordered from a vendor on quality hold
     rule: order_from_vendor_on_hold
