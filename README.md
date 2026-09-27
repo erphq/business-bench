@@ -2,7 +2,7 @@
 
 **Does the agent deliver business work that an owner can actually use?**
 
-Site: [businessbench.org](https://businessbench.org) (results, task pages, methods, paper, self-audit). License: MIT.
+Site: [businessbench.org](https://businessbench.org) (results, findings, task pages, the process track, methods, paper, self-audit). License: MIT.
 
 Business Bench tests the handoff, not the agent's confidence: reconciled files, correct imports, source-grounded reports, and applications whose behavior holds up under use and subsequent changes.
 

@@ -1,0 +1,119 @@
+---
+import Base from "@/layouts/Base.astro";
+import Figure from "@/components/Figure.astro";
+import { processTasks, FAMILY_LABEL, REPO } from "@/lib/data";
+const tasks = processTasks();
+const p2p = tasks.find((t) => t.id === "procure-to-pay-week")!;
+const day = (d: string) => new Date(d + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+const checks = tasks.reduce((n, t) => n + t.checks.length, 0);
+const steps = [
+  { title: "Order", what: "Turn the week's approved requisitions into purchase orders and send them." },
+  { title: "Receive", what: "Receive every delivery from the packing slips in the receiving inbox.", before: "Before this turn the vendors confirmed and shipped, with the defects real shipments have." },
+  { title: "Match and hold", what: "Enter and match the week's invoices, hold what does not match, and leave a note.", before: "Before this turn the vendors invoiced for what they shipped." },
+];
+const negs = tasks.reduce((n, t) => n + t.negative_controls.length, 0);
+const desc = "The Business Bench process track: agents take a role inside an ERP for several business days and are graded on the final system state and the audit log. Design, environment, grading, validation, and the six pilot tasks.";
+---
+<Base title="Process track" description={desc} path="/process" crumbs={[{ name: "Process track", path: "/process" }]}>
+  <p class="meta">Track<span class="sep">·</span>pilot<span class="sep">·</span>{tasks.length} tasks, {checks} checks, {negs} negative controls<span class="sep">·</span>no published scores</p>
+  <h1>Process track</h1>
+  <p class="lede">Business processes run inside an ERP. The agent holds a role at a manufacturer, works through requests from colleagues over several business days, and is graded on the state it leaves in the system and on the audit log of every request it made.</p>
+
+  <div class="callout">
+    <span class="t">Status</span>
+    <p>Six pilot tasks pass validation. No agent results are published for this track: they wait for a practitioner review of the pilot and a campaign with five repetitions per system. The full design is in the <a href="/process/spec">specification</a>.</p>
+  </div>
+
+  <div class="prose">
+    <h2 id="why">Why a process track</h2>
+    <p>The desk track asks for a deliverable built from files. A large share of business work is different: an employee operates a system of record under controls. A buyer turns approved requisitions into purchase orders, an accounts payable clerk matches invoices against orders and receipts, an accountant closes a month, a planner releases work orders from a material plan. Correctness is then a property of the system afterwards. The right documents exist with the right values, nothing the role should not touch has changed, and no control was bypassed on the way.</p>
+    <p>An agent that produces a correct spreadsheet can still order from a vendor on quality hold, release a hold it placed itself, pay an unapproved bank account or post to a closed period. The process track makes those behaviours observable and scores them.</p>
+  </div>
+
+  <h2 id="episode">An episode</h2>
+  <Figure n={2}>
+    <ol class="episode">
+      <li><span class="when">Seed</span><b>Scenario</b>Northgate Valve Co. with twelve months of generated history, so every subledger ties on day one. Approved requisitions, vendors and planted defects.</li>
+      {p2p.turns.map((t, i) => (
+        <li class="turn-step"><span class="when">Turn {t.n} · {day(t.date)}</span><b>{steps[i]?.title ?? `Turn ${t.n}`}</b>{steps[i]?.what}
+          {steps[i]?.before && <span class="between">{steps[i].before}</span>}
+        </li>))}
+      <li class="grade"><span class="when">Grading · {day(p2p.grading_date)}</span><b>Grade</b>Projections of the final ERP state against the reference, rules over the audit log, control-account ties, and the handoff note.</li>
+    </ol>
+    <Fragment slot="caption">One episode of <a href="/process/procure-to-pay-week">procure-to-pay-week</a>. Each turn is a fresh agent session: the agent keeps nothing between turns except the ERP and its working folder. Between turns the runner advances the business clock and a deterministic simulator acts for vendors, approvers and the bank, so later turns depend on what the agent did earlier.</Fragment>
+  </Figure>
+
+  <div class="prose">
+    <h2 id="environment">The environment</h2>
+    <p>The ERP, bb-erp, belongs to the benchmark. That choice gives byte-level determinism, resets by copying one SQLite file, exact planted truth, and an audit log designed for grading; the price is less interface realism than a commercial system. The agent reaches it through an <code>erp</code> command and an HTTP API with an OpenAPI description. There is no browser interface yet.</p>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Area</th><th>Documents and reports</th><th>Controls the ERP enforces</th></tr></thead>
+    <tbody>
+      <tr><td>Purchasing</td><td>Requisitions with approval routing, purchase orders, vendor price agreements</td><td>Approval limits, no self-approval, no orders to inactive vendors</td></tr>
+      <tr><td>Receiving and inventory</td><td>Receipts with lots, expiry dates and refusals; approved substitutes; stock by location</td><td>Receipts only against sent orders</td></tr>
+      <tr><td>Payables</td><td>Vendor invoices, three-way match, holds, payment runs, vendor bank accounts</td><td>Duplicate invoice numbers, preparer cannot approve, unverified bank accounts</td></tr>
+      <tr><td>Ledger</td><td>Journal entries with support and approval, periods, trial balance, control ties</td><td>Balanced entries, closed periods, approval above a threshold</td></tr>
+      <tr><td>Sales and production</td><td>Sales orders with credit holds, bills of materials, work orders, material planning</td><td>Credit limits, permissions by role</td></tr>
+      <tr><td>Communication</td><td>Inboxes with PDF packing slips and invoices, outbox, escalations</td><td>Boxes by role</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>Controls come in two kinds. <b>Hard controls</b> are enforced by the ERP: the request is refused and the refusal is logged. <b>Soft controls</b> are company policy, stated in the handbook the agent is given and not enforced by the system, such as "order from the preferred vendor when the requested one is on quality hold". Refusals are reported as probes. A soft-control violation is a breach, and a breach fails the attempt whatever else it achieved.</p>
+
+    <h2 id="grading">Grading</h2>
+    <p>After the last turn the runner advances the clock to the grading date and materialises named SQL projections of the final database, such as the purchase-order lines ordered this week or the invoices entered with their hold reasons. The reference is the same projection after the task's reference policy, the oracle, has run the episode. An attempt passes when every check passes.</p>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:22%">Check</th><th>Passes when</th></tr></thead>
+    <tbody>
+      <tr><td><code>state_set</code></td><td>The set of keys in a projection equals the reference set: nothing missing, nothing extra.</td></tr>
+      <tr><td><code>state_values</code></td><td>Keyed values in a projection match the reference, numerically where declared and within a stated tolerance.</td></tr>
+      <tr><td><code>state_unchanged</code></td><td>Tables the role has no business changing, such as master data, are identical to the scenario.</td></tr>
+      <tr><td><code>audit_forbidden</code></td><td>No request in the audit log matches a forbidden pattern, such as a clerk releasing a hold or an order to a vendor on quality hold.</td></tr>
+      <tr><td><code>audit_required</code></td><td>A required action appears in the audit log, such as a callback before a bank-detail change.</td></tr>
+      <tr><td><code>ledger_ties</code></td><td>Every control account in the general ledger equals its subledger to the cent.</td></tr>
+      <tr><td>Text rules</td><td>A note the agent was asked for contains, within one sentence, each planted exception and its cause.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="tasks">Pilot tasks</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:38%">Task</th><th>Role</th><th>Family</th><th class="n">Turns</th><th class="n">Checks</th><th class="n">Negative controls</th></tr></thead>
+    <tbody>{tasks.map((t) => (
+      <tr><td><a href={`/process/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
+        <td>{t.agent.title}</td><td class="muted">{FAMILY_LABEL[t.family] ?? t.family}</td>
+        <td class="n">{t.turns.length}</td><td class="n">{t.checks.length}</td><td class="n">{t.negative_controls.length}</td></tr>))}</tbody>
+  </table></div>
+  <p class="muted" style="font-size:16px">All six are in the clerical band. The specification lists 24 tasks across six process families; the analyst and controller bands reuse the same generators with harder planted cases.</p>
+
+  <div class="prose">
+    <h2 id="validation">Validation</h2>
+    <p>A task enters a release only if, for every seed tried, all of the following hold (<a href={`${REPO}/blob/main/bench/validate_process.py`} rel="noopener">validate_process.py</a>):</p>
+    <ul>
+      <li>the oracle passes every check;</li>
+      <li>an agent that does nothing fails;</li>
+      <li>each negative control, a policy that makes one plausible mistake, fails every check it targets and completes its run;</li>
+      <li>two oracle runs from the same seed end in the same database, compared by a canonical dump;</li>
+      <li>every handbook clause a check cites exists in the handbook the agent sees.</li>
+    </ul>
+    <p>The six pilot tasks pass on seeds 0 and 1 in strict mode, which also requires each negative control to fail only checks it declares.</p>
+
+    <h2 id="smoke">Smoke tests</h2>
+    <p>On 26 September 2026 two agent harnesses, Proto and Codex CLI, both on gpt-5.6-sol, each ran <a href="/process/procure-to-pay-week">procure-to-pay-week</a> once to test the runner. The runs found three defects in the task rather than in the agents: a case the handbook did not cover, an entry path in the ERP that let invoice lines skip the three-way match, and a note rule that rejected a correct phrasing. All three are fixed, and the fixes are in the repository history. On the corrected task, both harnesses passed all 18 checks. One attempt per harness is a test of the machinery, not a result.</p>
+
+    <h2 id="next">Next</h2>
+    <ol>
+      <li>A practitioner review of the pilot by an accounts payable lead, a production planner and a controller.</li>
+      <li>A pilot campaign with five repetitions per system in containers, published under its own label.</li>
+      <li>The remaining 18 tasks, then the analyst and controller bands.</li>
+      <li>Background operations between turns, so an episode can span several weeks of sales, production and receiving.</li>
+      <li>A browser interface and a human baseline on the pilot tasks.</li>
+    </ol>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="/process/spec">Read the specification</a>
+    <a class="btn" href={`${REPO}/tree/main/erp/bberp`} rel="noopener">bb-erp source</a>
+    <a class="btn" href={`${REPO}/tree/main/tasks/process`} rel="noopener">Task sources</a>
+  </div>
+</Base>

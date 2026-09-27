@@ -1,0 +1,31 @@
+---
+/** Rows of points on one shared axis, with optional 95% intervals and a line joining a row's points.
+    Rendered as HTML so labels stay legible at any width. Colour follows the entity (slot), never the rank. */
+type Slot = number | "ink";
+interface Pt { value: number; lo?: number; hi?: number; slot?: Slot; shape?: "" | "ring" | "sq" | "dia"; title?: string }
+interface Row { label: string; sub?: string; slot?: Slot; points: Pt[]; link?: boolean; valueText?: string; valueSub?: string }
+interface Key { label: string; slot?: Slot; shape?: "" | "ring" | "sq" | "dia" }
+interface Props { domain: [number, number]; ticks: number[]; fmt?: (x: number) => string; unit?: string; rows: Row[]; keys?: Key[]; label: string }
+const { domain, ticks, fmt = (x: number) => `${Math.round(x * 100)}%`, unit = "", rows, keys = [], label } = Astro.props;
+const pos = (x: number) => Math.max(0, Math.min(100, ((x - domain[0]) / (domain[1] - domain[0])) * 100));
+const c = (s?: Slot) => `c-${s ?? "ink"}`;
+---
+<div class="chart" role="img" aria-label={label}>
+  {keys.length > 0 && <div class="keys" aria-hidden="true">{keys.map((k) => <span><i class={`pt ${k.shape ?? ""} ${c(k.slot)}`}></i>{k.label}</span>)}</div>}
+  {rows.map((r) => {
+    const vals = r.points.map((p) => p.value);
+    const lo = Math.min(...vals), hi = Math.max(...vals);
+    return (
+      <div class="row">
+        <div class="lab">{r.label}{r.sub && <span class="sub">{r.sub}</span>}</div>
+        <div class="plot" aria-hidden="true">
+          {ticks.map((t) => <i class="grid-line" style={`left:${pos(t).toFixed(2)}%`}></i>)}
+          {r.link && r.points.length > 1 && <i class="link" style={`left:${pos(lo).toFixed(2)}%;width:${(pos(hi) - pos(lo)).toFixed(2)}%`}></i>}
+          {r.points.map((p) => p.lo != null && p.hi != null && <i class={`ci ${c(p.slot ?? r.slot)}`} style={`left:${pos(p.lo).toFixed(2)}%;width:${(pos(p.hi) - pos(p.lo)).toFixed(2)}%`}></i>)}
+          {r.points.map((p) => <i class={`pt ${p.shape ?? ""} ${c(p.slot ?? r.slot)}`} style={`left:${pos(p.value).toFixed(2)}%`} title={p.title}></i>)}
+        </div>
+        <div class="val">{r.valueText}{r.valueSub && <span class="sub">{r.valueSub}</span>}</div>
+      </div>);
+  })}
+  <div class="axis" aria-hidden="true"><span></span><div class="ticks">{ticks.map((t, i) => <span class={`tick${ticks.length > 4 && i % 2 === 1 ? " minor" : ""}`} style={`left:${pos(t).toFixed(2)}%`}>{fmt(t)}</span>)}</div><span class="unit">{unit}</span></div>
+</div>

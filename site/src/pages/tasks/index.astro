@@ -1,16 +1,16 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { ARMS, CATEGORIES, deskTasks, buildTasks, matrix, REPO } from "@/lib/data";
-const desk = deskTasks(), build = buildTasks(), m = matrix();
+import { ARMS, CATEGORIES, deskTasks, buildTasks, processTasks, FAMILY_LABEL, matrix, REPO } from "@/lib/data";
+const desk = deskTasks(), build = buildTasks(), proc = processTasks(), m = matrix();
 const total = ARMS.length * 3;
 const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
-const desc = "All 187 desk tasks and 20 application-build tasks of Business Bench, with the owner's ask, deliverables, and recorded pass counts.";
+const desc = "Every Business Bench task: 187 desk tasks with recorded pass counts, 20 application-build tasks, and the six process-track pilot tasks run inside an ERP.";
 ---
 <Base title="Tasks" description={desc} path="/tasks">
-  <p class="kicker">Task inventory · {desk.length} desk · {build.length} build</p>
+  <p class="meta">Task inventory<span class="sep">·</span>{desk.length} desk<span class="sep">·</span>{build.length} build<span class="sep">·</span>{proc.length} process (pilot)</p>
   <h1>Tasks</h1>
-  <p class="lede">Every task is public in the repository with its generator, workspace, checks, and reference solution. The ask is written the way a non-technical owner would type it; the files are messy on purpose. Author notes and planted traps are kept out of these pages, but they are in the repo.</p>
-  <div class="callout"><p>This is an exposed task set, not a sealed holdout. Each generator takes a seed, so a re-rolled variant with different names and amounts can be produced for a private evaluation. See the <a href="/audit#contamination">contamination note</a>.</p></div>
+  <p class="lede">Every task is public in the repository with its generator, inputs, checks and reference solution. Requests are written the way the person asking would write them, and the input files are messy on purpose. These pages leave out author notes and planted traps; the repository has them.</p>
+  <div class="callout"><p>The task set is exposed: anything public can end up in training data. Each generator takes a seed, so a re-rolled variant with different names and amounts can be produced for a private evaluation. See the <a href="/audit#contamination">contamination note</a>.</p></div>
 
   <h2 id="desk">Desk track</h2>
   <p class="muted">"Passes" counts frozen-scorer passes across {ARMS.length} systems × three repetitions in the complete desk comparison.</p>
@@ -35,5 +35,14 @@ const desc = "All 187 desk tasks and 20 application-build tasks of Business Benc
         <td class="mono" style="font-size:13px">{b.seed.join(", ")}</td>
         <td class="n">{b.checklistItems}</td><td class="n">{b.changes.reduce((n, c) => n + c.items, 0)}</td></tr>))}</tbody>
   </table></div>
+  <h2 id="process">Process track</h2>
+  <p class="muted">Pilot tasks in which the agent works inside an ERP over several business days and is graded on the final system state and the audit log. No scores are published; see the <a href="/process">process track</a> for its status.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th style="width:44%">Task</th><th>Role</th><th>Family</th><th class="n">Turns</th><th class="n">Checks</th></tr></thead>
+    <tbody>{proc.map((t) => (
+      <tr><td><a href={`/process/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
+        <td>{t.agent.title}</td><td class="muted">{FAMILY_LABEL[t.family] ?? t.family}</td><td class="n">{t.turns.length}</td><td class="n">{t.checks.length}</td></tr>))}</tbody>
+  </table></div>
+
   <p>Task format and authoring rules: <a href={`${REPO}/blob/main/docs/task-format.md`} rel="noopener">docs/task-format.md</a>, <a href={`${REPO}/blob/main/docs/authoring-guide.md`} rel="noopener">desk authoring guide</a>, <a href={`${REPO}/blob/main/docs/authoring-guide-build.md`} rel="noopener">build authoring guide</a>.</p>
 </Base>

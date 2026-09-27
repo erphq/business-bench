@@ -15,7 +15,10 @@ function findRoot(): string {
 }
 export const ROOT = findRoot();
 export const REPO = "https://github.com/erphq/business-bench";
+export const SITE = "https://businessbench.org";
 export const SITE_VERSION = "1.0.0";
+export const ORG = { name: "ERP.AI", url: "https://erp.ai" };
+export const AUTHORS = ["Somesh Misra", "Somnath Misra", "Shashank Dixit"];
 
 export type ArmId = string;
 export interface Arm { id: ArmId; system: string; short: string; harness: string; model: string; route: string; slot: number }
@@ -51,6 +54,21 @@ export interface BuildTask {
 export function deskTasks(): DeskTask[] { return (tasksJson as any).desk as DeskTask[]; }
 export function buildTasks(): BuildTask[] { return (tasksJson as any).build as BuildTask[]; }
 
+/** Process-track pilot tasks: an agent works inside bb-erp over several business days; graded on system state. */
+export interface ProcessTask {
+  id: string; title: string; family: string; band: string; summary: string;
+  agent: { name: string; title: string }; company: string; start: string; grading_date: string;
+  turns: { n: number; date: string; budget_s: number; from: string; request: string }[];
+  checks: { type: string; name: string; cites: string[] }[];
+  negative_controls: { name: string; fails: string[] }[];
+  handbook: { file: string; clauses: string[]; markdown: string }[];
+}
+export function processTasks(): ProcessTask[] { return (tasksJson as any).process as ProcessTask[]; }
+export const FAMILY_LABEL: Record<string, string> = {
+  "requisitions-and-purchasing": "Requisitions and purchasing", "receiving-matching-paying": "Receiving, matching and paying",
+  "finance-questions": "Finance questions", "record-to-report": "Record to report", "plan-to-produce": "Plan to produce",
+};
+
 export interface Attempt {
   task: string; category: string; harness: ArmId; run: number;
   passed: boolean; raw_passed: boolean; timed_out: boolean; exit_code: number | null;
@@ -82,6 +100,25 @@ export const ARMS: Arm[] = summary().map((s) => ({ id: s.harness, ...(ARM_META[s
 export const ARM_BY_ID: Record<ArmId, Arm> = Object.fromEntries(ARMS.map((a) => [a.id, a]));
 export const SUMMARY_BY_ID: Record<ArmId, ArmSummary> = Object.fromEntries(summary().map((s) => [s.harness, s]));
 export const REPS = provenance().repetitions as number;
+export const RELEASE = { id: provenance().campaign as string, version: SITE_VERSION, date: (provenance().scorecard_snapshot_utc as string).slice(0, 10) };
+
+/** mulberry32: a small deterministic generator, so every build draws the same bootstrap resamples. */
+function prng(seed: number) {
+  return () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+/** Percentile bootstrap of a mean over tasks. Tasks are resampled with replacement and each task's repetitions stay
+ *  together, so the interval reflects variation across these tasks, not across unseen ones. */
+export function taskBootstrap(perTask: number[], B = 20000, seed = 20260916): [number, number] {
+  const draw = prng(seed), n = perTask.length, means = new Float64Array(B);
+  for (let b = 0; b < B; b++) { let s = 0; for (let i = 0; i < n; i++) s += perTask[Math.floor(draw() * n)]; means[b] = s / n; }
+  means.sort();
+  return [means[Math.floor(0.025 * (B - 1))], means[Math.ceil(0.975 * (B - 1))]];
+}
 
 let _ledger: Attempt[] | null = null;
 export function attempts(): Attempt[] {
@@ -190,4 +227,20 @@ export function crossArm() {
   const anyZero = tasks.filter((t) => ARMS.some((a) => t[a.id].every((r) => !r.passed))).length;
   const allZero = tasks.filter((t) => ARMS.every((a) => t[a.id].every((r) => !r.passed))).length;
   return { bothAll, anyZero, allZero, total: tasks.length };
+}
+
+/** Pass rate and pass^k per system with task-clustered 95% intervals. */
+export function intervals(armId: ArmId) {
+  const byTask: Record<string, boolean[]> = {};
+  for (const r of attempts()) if (r.harness === armId) (byTask[r.task] ??= []).push(r.passed);
+  const tasks = Object.keys(byTask).sort().map((t) => byTask[t]);
+  const frac = tasks.map((v) => v.filter(Boolean).length / v.length);
+  const all = tasks.map((v) => (v.every(Boolean) ? 1 : 0));
+  const any = tasks.map((v) => (v.some(Boolean) ? 1 : 0));
+  const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
+  return {
+    pass1: { value: mean(frac), ci: taskBootstrap(frac) },
+    passAll: { value: mean(all), ci: taskBootstrap(all) },
+    passAny: { value: mean(any), ci: taskBootstrap(any) },
+  };
 }
