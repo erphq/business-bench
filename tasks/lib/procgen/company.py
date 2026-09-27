@@ -25,8 +25,12 @@ def _month_shift(day: str, months: int) -> str:
 
 
 def build(path: str, seed: int = 0, start: str = '2026-10-05', months: int = 12,
-          close_through: str | None = None) -> Company:
-    """The company on the morning of `start`, with history from the first day of the month `months` earlier."""
+          close_through: str | None = None, before_history=None, events: dict | None = None) -> Company:
+    """The company on the morning of `start`, with history from the first day of the month `months` earlier.
+
+    `before_history(erp)` runs after master data and opening balances, before history (for example a price
+    agreement that changes mid-year). `events` maps a business date to callables `fn(erp, history)` that run at
+    the start of that workday, inside history, so planted situations happen in the timeline."""
     hist_start = _month_shift(start, -months)
     last_period = period_of(_month_shift(start, 3))
     if close_through is None:
@@ -39,7 +43,9 @@ def build(path: str, seed: int = 0, start: str = '2026-10-05', months: int = 12,
             erp.update('items', {'sku': sku}, {'safety_stock': round(monthly / 4.3 / 10) * 10})
         opening_balances(erp, hist_start, need)
         history.install_budgets(erp, sorted({int(hist_start[:4]), int(start[:4])}))
-    history.run(erp, seed, hist_start, add_days(start, -1), close_through)
+        if before_history:
+            before_history(erp)
+    history.run(erp, seed, hist_start, add_days(start, -1), close_through, events or {})
     with erp.tx():
         erp.set_today(start)
     return Company(erp=erp, seed=seed, start=start, tokens=tokens)

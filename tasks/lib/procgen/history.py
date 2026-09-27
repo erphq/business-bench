@@ -51,8 +51,9 @@ def monthly_component_need() -> dict[str, float]:
 
 
 class History:
-    def __init__(self, erp: Erp, seed: int, start: str, end: str, close_through: str):
+    def __init__(self, erp: Erp, seed: int, start: str, end: str, close_through: str, events: dict | None = None):
         self.erp, self.seed, self.start, self.end, self.close_through = erp, seed, start, end, close_through
+        self.events = events or {}
         self.r = rng(seed, 'history')
         self.inv_no = {k: v[1] for k, v in INVOICE_SERIES.items()}
         self.vkey = {v[0]: k for k, v in VENDORS.items()}
@@ -87,8 +88,9 @@ class History:
 
     def workday(self, day: str) -> None:
         n = self.nth_workday(day)
-        weekday = parse_day(day).weekday()
         self.bank_clear(day)
+        for fn in self.events.get(day, []):
+            fn(self.erp, self)
         if n == 1:
             self.rent(day)
             self.mro_requisitions(day)
@@ -107,7 +109,7 @@ class History:
             self.utilities(day)
         if n == 11 or self.last_workday(day):
             self.payroll(day)
-        if weekday == 4:
+        if parse_day(day).weekday() == 4:
             self.payment_run(day)
         if self.last_workday(day):
             self.month_end_entries(day)
@@ -382,7 +384,7 @@ class History:
             ledger.close_period(self.erp, self.ctx('priya.raman'), prev)
 
 
-def run(erp: Erp, seed: int, start: str, end: str, close_through: str) -> History:
-    h = History(erp, seed, start, end, close_through)
+def run(erp: Erp, seed: int, start: str, end: str, close_through: str, events: dict | None = None) -> History:
+    h = History(erp, seed, start, end, close_through, events)
     h.run()
     return h

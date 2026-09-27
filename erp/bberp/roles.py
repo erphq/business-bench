@@ -34,6 +34,7 @@ ROLES: dict[str, tuple[str, list[str]]] = {
     'credit_manager': ('Credit manager', ['so.release_hold', 'so.create', 'box.credit', 'msg.dispose']),
     'ar_clerk': ('Accounts receivable clerk', ['ar.cash', 'box.ar', 'msg.dispose']),
     'auditor': ('Auditor (read-only)', ['audit.read', 'box.*']),
+    'analyst': ('Financial analyst (read-only)', ['box.general']),
     'admin': ('Administrator', ['*']),
     # counterparties, used only by the simulator's system users
     'vendor_bot': ('Vendor counterparty', ['po.acknowledge']),
