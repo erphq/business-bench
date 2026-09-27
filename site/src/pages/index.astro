@@ -14,7 +14,7 @@ const pp = (x: number, d = 1) => (x * 100).toFixed(d);
 const pct = (x: number, d = 1) => `${pp(x, d)}%`;
 const range = (xs: number[], d = 1) => { const [a, b] = [Math.min(...xs), Math.max(...xs)]; return a.toFixed(d) === b.toFixed(d) ? a.toFixed(d) : `${a.toFixed(d)}–${b.toFixed(d)}`; };
 const attemptsTotal = ARMS.reduce((n, a) => n + SUMMARY_BY_ID[a.id].attempts, 0);
-const desc = `A verifiable benchmark for AI agents doing business work: ${desk.length} desk tasks with a complete ${ARMS.length}-system comparison of ${attemptsTotal.toLocaleString("en-US")} attempts, ${build.length} application-build tasks, and a process track that runs agents inside an ERP. Executable checks, no model judge.`;
+const desc = `A benchmark of AI agents on business work: ${desk.length} desk tasks with ${attemptsTotal.toLocaleString("en-US")} graded attempts, ${build.length} app builds, and a process track inside an ERP. Executable checks, no model judge.`;
 const cite = `@misc{businessbench2026,
   title        = {Business Bench: Evaluating Agents on Business Deliverables},
   author       = {${AUTHORS.map((a) => { const p = a.split(" "); return `${p.slice(1).join(" ")}, ${p[0]}`; }).join(" and ")}},

@@ -7,7 +7,7 @@ const delta = Object.fromEntries(ARMS.map((a) => [a.id, scorerDelta(a.id)]));
 const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
 const frozenGap = SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed;
 const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed;
-const desc = "A self-assessment of Business Bench against the criteria independent reviewers use: reviewability, task correctness, grading validity, consistency, elicitation adequacy, contamination, human baselines, construct validity, and conflict of interest.";
+const desc = "Business Bench rated against the criteria independent reviewers apply: task correctness, grading validity, contamination, baselines and conflict of interest.";
 ---
 <Base title="Self-audit" description={desc} path="/audit">
   <p class="meta">Self-assessment<span class="sep">·</span>desk release <code>{prov.campaign}</code><span class="sep">·</span>statuses assigned by the authors</p>
