@@ -1,18 +1,23 @@
 """Process track: every task validates (oracle passes, runs are deterministic, the null agent and each negative
 control fail what they should), and vendor documents parse back into the data they were printed from."""
+import json
 import os
+import sqlite3
 import sys
+import tempfile
 import unittest
+from unittest import mock
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'bench'))
 sys.path.insert(0, os.path.join(ROOT, 'erp'))
 sys.path.insert(0, os.path.join(ROOT, 'tasks', 'lib'))
 
+import process_run  # noqa: E402
 import validate_process  # noqa: E402
 from bberp import sim  # noqa: E402
 from bberp.pdf import business_document  # noqa: E402
-from procgen.episode import parse_invoice, parse_packing_slip, pdf_text  # noqa: E402
+from procgen.episode import load_meta, parse_invoice, parse_packing_slip, pdf_text  # noqa: E402
 
 TASKS = sorted(d for d in os.listdir(os.path.join(ROOT, 'tasks', 'process'))
                if os.path.isfile(os.path.join(ROOT, 'tasks', 'process', d, 'task.yaml')))
@@ -23,6 +28,48 @@ class Tasks(unittest.TestCase):
         for task in TASKS:
             with self.subTest(task=task):
                 self.assertEqual(validate_process.validate(task, 0, strict=True), [])
+
+
+class ShellHarness(unittest.TestCase):
+    """The path real agents take: the runner calls harnesses/<name>.sh once per turn with ERP_URL, ERP_TOKEN and the
+    `erp` command on PATH, keeps the folder between turns, and grades the final state."""
+    ADAPTER = """#!/usr/bin/env bash
+set -eu
+WS=$1; PROMPT_FILE=$2; OUT=$3
+erp whoami > "$OUT/whoami.json"
+cp "$PROMPT_FILE" "$OUT/prompt-seen.txt"
+echo "turn $BENCH_TURN" >> "$WS/notes.md"
+"""
+
+    def test_adapter_reaches_the_erp_every_turn(self):
+        task = 'month-end-close'
+        meta = load_meta(process_run.ensure_scenario(task, 0))
+        with tempfile.TemporaryDirectory() as root, tempfile.TemporaryDirectory() as results:
+            os.makedirs(os.path.join(root, 'harnesses'))
+            os.symlink(os.path.join(ROOT, 'erp'), os.path.join(root, 'erp'))
+            adapter = os.path.join(root, 'harnesses', 'selftest.sh')
+            open(adapter, 'w').write(self.ADAPTER)
+            os.chmod(adapter, 0o755)
+            with mock.patch.object(process_run, 'ROOT', root):
+                res = process_run.run_attempt(task, 'selftest', 0, 1, results)
+            self.assertEqual([(t['n'], t['exit_code'], t['timed_out']) for t in res['turns']],
+                             [(t['n'], 0, False) for t in meta['turns']])
+            for t in meta['turns']:
+                turn_dir = os.path.join(res['work_dir'], 'turns', str(t['n']))
+                who = json.load(open(os.path.join(turn_dir, 'out', 'whoami.json')))
+                self.assertEqual((who['data']['id'], who['business_date']), (meta['agent_user'], t['date']))
+                self.assertEqual(open(os.path.join(turn_dir, 'out', 'prompt-seen.txt')).read(),
+                                 open(os.path.join(turn_dir, 'prompt.txt')).read())
+            self.assertEqual(open(os.path.join(res['work_dir'], 'ws', 'notes.md')).read(),
+                             ''.join(f'turn {t["n"]}\n' for t in meta['turns']))
+            db = sqlite3.connect(os.path.join(res['work_dir'], 'final.db'))
+            reads = db.execute("SELECT business_date FROM audit_events WHERE channel = 'api' AND actor = ? AND "
+                               "token_id = ? AND path = '/whoami' ORDER BY id",
+                               (meta['agent_user'], meta['token_id'])).fetchall()
+            db.close()
+            self.assertEqual([r[0] for r in reads], [t['date'] for t in meta['turns']])
+            self.assertEqual(res['grader_errors'], [])
+            self.assertFalse(res['passed'])
 
 
 class Documents(unittest.TestCase):

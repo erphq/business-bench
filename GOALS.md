@@ -40,10 +40,10 @@ the owner's requirements. Reviewable by design; the release states its own gaps.
 ## Process track (spec in docs/process)
 
 - [ ] Spec reviewed and the five open decisions settled (docs/process/README.md section 14)
-- [ ] bb-erp kernel: lifecycles, hard controls, audit log, clock, reports, HTTP API, `erp` command
-- [ ] Counterparty simulator, scenario format, twelve-month history generation
-- [ ] Runner, the six process check types and audit rules, `validate_process.py`
-- [ ] Pilot: six tasks with oracles and negative controls passing validation
+- [x] bb-erp kernel: lifecycles, hard controls, audit log, clock, reports, HTTP API, `erp` command
+- [x] Counterparty simulator, scenario format, twelve-month history generation
+- [x] Runner, the six process check types and audit rules, `validate_process.py`
+- [x] Pilot: six tasks with oracles and negative controls passing validation
 - [ ] Practitioner review of the pilot (AP lead, production planner, controller)
 - [ ] Pilot campaign: five repetitions per cell, published under its own label
 - [ ] Remaining 18 tasks, then the analyst and controller bands
