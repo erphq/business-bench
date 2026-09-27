@@ -95,6 +95,21 @@ echo "turn $BENCH_TURN" >> "$WS/notes.md"
                 self.assertEqual(os.listdir(os.path.join(turn_dir, 'home')), ['session.txt'])
             self.assertEqual(open(login).read(), '{"tokens": "operator"}')
 
+    def test_a_harness_that_does_not_start_is_an_error_not_a_failure(self):
+        task = 'month-end-close'
+        process_run.ensure_scenario(task, 0)
+        with tempfile.TemporaryDirectory() as root, tempfile.TemporaryDirectory() as results:
+            os.makedirs(os.path.join(root, 'harnesses'))
+            os.symlink(os.path.join(ROOT, 'erp'), os.path.join(root, 'erp'))
+            adapter = os.path.join(root, 'harnesses', 'selftest.sh')
+            open(adapter, 'w').write('#!/usr/bin/env bash\nexec /nonexistent/agent "$@"\n')
+            os.chmod(adapter, 0o755)
+            with mock.patch.object(process_run, 'ROOT', root):
+                res = process_run.run_attempt(task, 'selftest', 0, 1, results)
+            self.assertEqual([t['n'] for t in res['turns']], [1])            # the episode stops at the first turn
+            self.assertIn(res['turns'][0]['exit_code'], (126, 127))
+            self.assertIn('did not start', res['error'])
+
 
 class Documents(unittest.TestCase):
     VENDOR = {'id': 'V-1', 'name': 'Keystone Fasteners', 'address': '300 Commerce Drive\nYork, PA 17402',
