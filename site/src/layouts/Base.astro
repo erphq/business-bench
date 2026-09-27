@@ -15,7 +15,6 @@ const nav = [
   ["/paper", "Paper"], ["/reproduce", "Reproduce"], ["/audit", "Audit"], ["/roadmap", "Roadmap"],
 ];
 const current = (p: string) => (path === p || (p !== "/" && path.startsWith(p + "/"))) ? "page" : undefined;
-const favicon = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='#16161a'/><rect x='7' y='17' width='4' height='8' fill='#fbfaf7'/><rect x='14' y='11' width='4' height='14' fill='#5b93ec'/><rect x='21' y='7' width='4' height='18' fill='#fbfaf7'/></svg>`)}`;
 const breadcrumbLd = crumbs.length ? [{
   "@context": "https://schema.org", "@type": "BreadcrumbList",
   itemListElement: [{ name: "Business Bench", path: "/" }, ...crumbs].map((c, i) => ({ "@type": "ListItem", position: i + 1, name: c.name, item: SITE + (c.path === "/" ? "/" : c.path) })),
@@ -43,7 +42,11 @@ const fullTitle = title === "Business Bench" ? "Business Bench: a verifiable ben
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)" />
-<link rel="icon" href={favicon} />
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="alternate" type="application/jsonl" href={`${REPO}/blob/main/results/latest/attempts.jsonl`} title="Attempt ledger" />
 {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
