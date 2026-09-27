@@ -145,9 +145,26 @@ def c_ledger_ties(db_path: str, spec: dict):
     return not bad, 'ties' if not bad else '; '.join(bad)
 
 
+def resolve(spec, values: dict):
+    """Replace '{truth:key}' placeholders (seed-dependent figures) with values from the scenario's truth.json."""
+    if isinstance(spec, dict):
+        return {k: resolve(v, values) for k, v in spec.items()}
+    if isinstance(spec, list):
+        return [resolve(v, values) for v in spec]
+    if isinstance(spec, str):
+        m = re.fullmatch(r'\{truth:(\w+)\}', spec)
+        if m:
+            if m.group(1) not in values:
+                raise KeyError(f'truth.json has no value {m.group(1)!r}')
+            return values[m.group(1)]
+    return spec
+
+
 def grade_process(task_dir: str, final_db: str, start_db: str, ws: str, ref_dir: str, out_dir: str,
                   params: dict) -> dict:
     task = yaml.safe_load(open(os.path.join(task_dir, 'task.yaml'), encoding='utf-8'))
+    truth_path = os.path.join(os.path.dirname(os.path.abspath(ref_dir)), 'truth.json')
+    values = json.load(open(truth_path, encoding='utf-8')).get('values', {}) if os.path.exists(truth_path) else {}
     proj_dir = os.path.join(out_dir, 'projections')
     materialize(task_dir, final_db, params, proj_dir)
     final = sqlite3.connect(f'file:{final_db}?mode=ro', uri=True)
@@ -157,6 +174,7 @@ def grade_process(task_dir: str, final_db: str, start_db: str, ws: str, ref_dir:
         for spec in task.get('checks', []):
             t = spec['type']
             try:
+                spec = resolve(spec, values)
                 if t == 'state_set':
                     ok, detail = c_state_set(proj_dir, ref_dir, spec)
                 elif t == 'state_values':

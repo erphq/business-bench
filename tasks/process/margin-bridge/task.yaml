@@ -1,0 +1,72 @@
+id: margin-bridge
+track: process
+family: finance-questions
+band: clerical
+title: Explain why gross margin fell from August to September
+summary: |
+  The president asks a read-only analyst why gross margin fell in September. The answer, in answer.md, gives both
+  months' margin under the reporting definition and names each discrete cause with its amount and where it is
+  recorded: a supplier price increase, a customer rebate, a write-off, and an unusual freight charge.
+agent_user: noah.kim
+negative_controls:
+  neg:cogs_only: [margin percentages for both months, price increase and its amount, rebate and its amount, write-off and its amount, freight charge and its amount]
+  neg:revenue_side_only: [price increase and its amount, write-off and its amount, freight charge and its amount]
+  neg:miss_price_increase: [price increase and its amount]
+  neg:august_amounts: [price increase and its amount, rebate and its amount, write-off and its amount, freight charge and its amount]
+checks:
+  - type: text_numbers_present
+    name: margin percentages for both months
+    path: answer.md
+    numbers: ['{truth:gm_aug}', '{truth:gm_sep}']
+    rel_tol: 0.002
+    cites: [RPT-1.1, RPT-1.2, RPT-1.3]
+  - type: text_numbers_present
+    name: price increase and its amount
+    path: answer.md
+    numbers: ['{truth:price_increase}']
+    rel_tol: '{truth:price_tol}'
+    cites: [RPT-2.1]
+  - type: text_sentence_matches
+    name: price increase named with its supplier
+    path: answer.md
+    all: ['(?i)dayton|CAST-1', '(?i)\bprice|variance|\bPPV\b']
+    cites: [RPT-2.1]
+  - type: text_numbers_present
+    name: rebate and its amount
+    path: answer.md
+    numbers: ['{truth:rebate}']
+    rel_tol: 0.002
+    cites: [RPT-2.1]
+  - type: text_sentence_matches
+    name: rebate named with its customer
+    path: answer.md
+    all: ['(?i)rebate', '(?i)harbor']
+    cites: [RPT-2.1]
+  - type: text_numbers_present
+    name: write-off and its amount
+    path: answer.md
+    numbers: ['{truth:writeoff}']
+    rel_tol: 0.002
+    cites: [RPT-2.1]
+  - type: text_sentence_matches
+    name: write-off named with what was scrapped
+    path: answer.md
+    all: ['(?i)scrap|write-?off|written off', '(?i)BV-100|porosity|ball valve|valves']
+    cites: [RPT-2.1]
+  - type: text_numbers_present
+    name: freight charge and its amount
+    path: answer.md
+    numbers: ['{truth:freight}']
+    rel_tol: 0.002
+    cites: [RPT-2.1]
+  - type: text_sentence_matches
+    name: freight named with its cause
+    path: answer.md
+    all: ['(?i)freight', '(?i)\bair\b|expedit|dayton|casting']
+    cites: [RPT-2.1]
+  - type: state_values
+    name: read-only analyst changed nothing
+    projection: agent_writes
+    key: who
+    columns: [writes]
+    numeric: true
