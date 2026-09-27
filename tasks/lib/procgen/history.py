@@ -51,9 +51,11 @@ def monthly_component_need() -> dict[str, float]:
 
 
 class History:
-    def __init__(self, erp: Erp, seed: int, start: str, end: str, close_through: str, events: dict | None = None):
+    def __init__(self, erp: Erp, seed: int, start: str, end: str, close_through: str, events: dict | None = None,
+                 skip_month_end: set | None = None):
         self.erp, self.seed, self.start, self.end, self.close_through = erp, seed, start, end, close_through
         self.events = events or {}
+        self.skip_month_end = skip_month_end or set()
         self.r = rng(seed, 'history')
         self.inv_no = {k: v[1] for k, v in INVOICE_SERIES.items()}
         self.vkey = {v[0]: k for k, v in VENDORS.items()}
@@ -111,7 +113,7 @@ class History:
             self.payroll(day)
         if parse_day(day).weekday() == 4:
             self.payment_run(day)
-        if self.last_workday(day):
+        if self.last_workday(day) and period_of(day) not in self.skip_month_end:
             self.month_end_entries(day)
 
     # ------------------------------------------------------------------------------------------- purchasing
@@ -374,6 +376,8 @@ class History:
         erp, ctx = self.erp, self.ctx('omar.haddad')
         for memo, dr, cr, amount, dept in (('Depreciation', '6550', '1550', 3200.00, 'PROD'),
                                            ('Insurance amortization', '6450', '1400', 1500.00, 'ADMIN')):
+            if cr == '1400' and ledger.balance_cents(erp, '1400') < round(amount * 100):
+                continue           # the policy is fully amortized
             je = ledger.create_manual(erp, ctx, day, [{'account': dr, 'debit': amount, 'department': dept},
                                                       {'account': cr, 'credit': amount}], f'{memo} {period_of(day)}')
             ledger.post_manual(erp, ctx, je)
@@ -384,7 +388,8 @@ class History:
             ledger.close_period(self.erp, self.ctx('priya.raman'), prev)
 
 
-def run(erp: Erp, seed: int, start: str, end: str, close_through: str, events: dict | None = None) -> History:
-    h = History(erp, seed, start, end, close_through, events)
+def run(erp: Erp, seed: int, start: str, end: str, close_through: str, events: dict | None = None,
+        skip_month_end: set | None = None) -> History:
+    h = History(erp, seed, start, end, close_through, events, skip_month_end)
     h.run()
     return h
