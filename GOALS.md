@@ -37,8 +37,20 @@ the owner's requirements. Reviewable by design; the release states its own gaps.
 - [ ] Proto reference-harness page with attempt traces
 - [ ] Environment release (generators as RL environment) after the benchmark is established
 
+## Process track (spec in docs/process)
+
+- [ ] Spec reviewed and the five open decisions settled (docs/process/README.md section 14)
+- [ ] bb-erp kernel: lifecycles, hard controls, audit log, clock, reports, HTTP API, `erp` command
+- [ ] Counterparty simulator, scenario format, twelve-month history generation
+- [ ] Runner, the six process check types and audit rules, `validate_process.py`
+- [ ] Pilot: six tasks with oracles and negative controls passing validation
+- [ ] Practitioner review of the pilot (AP lead, production planner, controller)
+- [ ] Pilot campaign: five repetitions per cell, published under its own label
+- [ ] Remaining 18 tasks, then the analyst and controller bands
+- [ ] Browser interface and human baseline on the pilot
+
 ## Non-goals
 
-- A single combined desk plus build score.
+- A single combined score across the desk, build, and process tracks.
 - Claims of universal business competence or unattended production readiness.
 - Weakening a task to improve any participant's score.
