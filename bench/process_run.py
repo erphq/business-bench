@@ -106,11 +106,21 @@ def check_truth(task: str, scenario: str) -> None:
     import csv
     truth = json.load(open(os.path.join(scenario, 'truth.json'), encoding='utf-8'))
     problems = []
-    for proj, rows in truth.get('expect', {}).items():
-        have = list(csv.DictReader(open(os.path.join(scenario, 'reference', f'{proj}.csv'), encoding='utf-8')))
-        for want in rows:
-            if not any(all(str(h.get(k, '')) == str(v) for k, v in want.items()) for h in have):
+    def rows(proj):
+        return list(csv.DictReader(open(os.path.join(scenario, 'reference', f'{proj}.csv'), encoding='utf-8')))
+
+    def matches(h, want):
+        return all(str(h.get(k, '')) == str(v) for k, v in want.items())
+    for proj, wanted in truth.get('expect', {}).items():
+        have = rows(proj)
+        for want in wanted:
+            if not any(matches(h, want) for h in have):
                 problems.append(f'{proj}: no row {want}')
+    for proj, unwanted in truth.get('absent', {}).items():
+        have = rows(proj)
+        for bad in unwanted:
+            if any(matches(h, bad) for h in have):
+                problems.append(f'{proj}: has a row it must not have {bad}')
     if problems:
         raise RuntimeError('reference does not contain the planted truth:\n  ' + '\n  '.join(problems))
 

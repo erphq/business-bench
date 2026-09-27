@@ -12,7 +12,7 @@ World file shape (all keys optional):
   vendor_default: vendor profile applied under every vendor's own profile
   vendors: {vendor id: profile}
     profile: ack_delay (workdays), lead_time_days, moq {sku: qty}, ship {sku|*: ship rule}, invoice {...},
-             requests {expedite: {accept, best_date}, dispute: {accept}, ...}, contact {name, email}
+             requests {expedite: {accept, best_date}, dispute: {accept, answer_delay}, ...}, contact {name, email}
     ship rule: lead_time_days, over_pct, round_to, fill, backorder_days, substitute, lots [{lot, share, expiry}]
     invoice: delay (workdays), prefix, start, prices {sku: unit price}, freight, duplicate {delay, number}
   approvers: {user: {default: approve|reject|none, decisions: {doc id: {decision, reason, to}}}}
@@ -313,6 +313,8 @@ def vendor_request_answers(erp: Erp, events: list) -> None:
     for r in erp.all("SELECT * FROM vendor_requests WHERE status = 'open' AND created_on < ? ORDER BY id", erp.today):
         vp = vendor_profile(erp, r['vendor'])
         rule = vp['requests'].get(r['kind'], {})
+        if erp.add_workdays(r['created_on'], int(rule.get('answer_delay', 1))) > erp.today:
+            continue
         vendor = erp.one('SELECT * FROM vendors WHERE id = ?', r['vendor'])
         name, addr = _vendor_contact(erp, vendor, vp)
         accept = bool(rule.get('accept', r['kind'] in ('defer', 'copy_request')))

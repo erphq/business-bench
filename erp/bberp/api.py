@@ -245,6 +245,14 @@ def post_bank_account(erp, ctx, p, q, b):
                                                b.get('source_ref'), b.get('note'))}
 
 
+@route('GET', '/vendor-bank-accounts', 'Vendor bank accounts (masked), for example the pending changes to verify',
+       query={'status': 'pending|verified|rejected|retired', 'vendor': ''})
+def list_bank_accounts(erp, ctx, p, q, b):
+    sql, args = _filters(q, {'status': 'status', 'vendor': 'vendor'})
+    return _page([_mask(a) for a in erp.all('SELECT * FROM vendor_bank_accounts WHERE 1 = 1' + sql + ' ORDER BY id',
+                                            *args)], q)
+
+
 @route('POST', '/vendor-bank-accounts/{id}/verify', 'Mark a pending bank account verified; the vendor is paid there',
        action='vendor.bank.verify', otype='vendor_bank_account', body={'note': ''})
 def verify_bank_account(erp, ctx, p, q, b):
