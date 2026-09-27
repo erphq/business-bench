@@ -24,7 +24,7 @@ const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ?
   <p class="muted" style="font-size:16px">Sent verbatim as the prompt. The agent works in a copy of the workspace below and sees nothing else.</p>
   <blockquote class="ask">{task.ask}</blockquote>
 
-  <div class="two" style="grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap:32px">
+  <div class="task-files">
     <section>
       <h2 style="margin-top:0">Workspace</h2>
       <ul class="filelist">{task.workspaceFiles.map((f) => <li>{f}</li>)}</ul>

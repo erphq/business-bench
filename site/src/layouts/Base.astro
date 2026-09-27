@@ -11,7 +11,7 @@ interface Props { title: string; description: string; path: string; jsonld?: obj
 const { title, description, path, jsonld = [], crumbs = [], noindex = false, ogType = "website" } = Astro.props;
 const url = SITE + (path === "/" ? "/" : path);
 const nav = [
-  ["/results", "Results"], ["/analysis", "Findings"], ["/tasks", "Tasks"], ["/process", "Process track"], ["/methods", "Methods"],
+  ["/", "Overview"], ["/results", "Results"], ["/analysis", "Findings"], ["/tasks", "Tasks"], ["/process", "Process track"], ["/methods", "Methods"],
   ["/paper", "Paper"], ["/reproduce", "Reproduce"], ["/audit", "Audit"], ["/roadmap", "Roadmap"],
 ];
 const current = (p: string) => (path === p || (p !== "/" && path.startsWith(p + "/"))) ? "page" : undefined;
@@ -41,7 +41,7 @@ const fullTitle = title === "Business Bench" ? "Business Bench: a verifiable ben
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="only light" />
-<meta name="theme-color" content="#fbfaf7" />
+<meta name="theme-color" content="#ffffff" />
 <link rel="icon" href="/favicon.ico" sizes="48x48" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
@@ -59,15 +59,37 @@ const fullTitle = title === "Business Bench" ? "Business Bench: a verifiable ben
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="currentColor"/><rect x="7" y="17" width="4" height="8" fill="var(--bg)"/><rect x="14" y="11" width="4" height="14" fill="var(--s1)"/><rect x="21" y="7" width="4" height="18" fill="var(--bg)"/></svg>
       Business Bench
     </a>
-    <nav class="nav" aria-label="Primary">
-      {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
+    <span class="site-description">A benchmark for AI agents on business work</span>
+    <nav class="header-links" aria-label="Resources">
+      <a href="/paper">Read the paper</a>
       <a href={REPO} rel="noopener">GitHub</a>
     </nav>
   </div>
 </header>
-<main id="main" class="wrap">
-  <slot />
-</main>
+<div class="wiki-layout wrap">
+  <aside class="wiki-sidebar" aria-label="Site navigation and page contents">
+    <details class="wiki-menu" open>
+      <summary>Navigation and contents</summary>
+      <div class="wiki-menu-body">
+        <nav class="wiki-nav" aria-label="Primary">
+          <span class="sidebar-heading">Explore</span>
+          {nav.map(([href, label]) => <a href={href} aria-current={current(href)}>{label}</a>)}
+        </nav>
+        <slot name="contents" />
+      </div>
+    </details>
+  </aside>
+  <main id="main" class="wiki-article" tabindex="-1">
+    <slot />
+  </main>
+</div>
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>(".wiki-menu");
+  const desktop = window.matchMedia("(min-width: 901px)");
+  const setMenuForViewport = () => { if (menu) menu.open = desktop.matches; };
+  setMenuForViewport();
+  desktop.addEventListener("change", setMenuForViewport);
+</script>
 <footer class="site-foot">
   <div class="wrap">
     <div>

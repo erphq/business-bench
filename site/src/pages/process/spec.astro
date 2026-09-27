@@ -29,12 +29,8 @@ const desc = "Specification of the Business Bench process track: episode model, 
   <p class="meta"><a href="/process">Process track</a><span class="sep">·</span>specification<span class="sep">·</span>rendered from <a href={`${REPO}/tree/main/docs/process`} rel="noopener">docs/process</a></p>
   <h1>Process track specification</h1>
   <p class="lede">The design of the track, the ERP the agent operates, and the planned tasks. This is the working specification; where it and the code differ, the code in the repository is what runs.</p>
-  <div class="two">
-    <nav class="toc" aria-label="Contents">{toc.map((t) => <a href={`#${t.id}`} class={`d${t.depth}`}>{t.text}</a>)}</nav>
-    <div>
-      <article class="prose"><h2 id="specification" style="margin-top:0">Specification</h2><div set:html={spec.html} /></article>
-      <article class="prose"><h2 id="the-environment">The environment</h2><div set:html={env.html} /></article>
-      <article class="prose" style="max-width:none"><h2 id="the-tasks">The tasks</h2><div set:html={tasks.html} /></article>
-    </div>
-  </div>
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{toc.map((t) => <a href={`#${t.id}`} class={`d${t.depth}`}>{t.text}</a>)}</nav>
+  <article class="prose"><h2 id="specification" style="margin-top:0">Specification</h2><div set:html={spec.html} /></article>
+  <article class="prose"><h2 id="the-environment">The environment</h2><div set:html={env.html} /></article>
+  <article class="prose" style="max-width:none"><h2 id="the-tasks">The tasks</h2><div set:html={tasks.html} /></article>
 </Base>

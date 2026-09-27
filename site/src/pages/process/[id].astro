@@ -64,10 +64,15 @@ const desc = `${task.title}. A process-track task from Business Bench: the agent
 
   <h2 id="handbook">Handbook</h2>
   <p class="muted" style="font-size:16px">The company policy the agent receives in <code>./handbook</code>. The ERP enforces some of these rules itself; the rest are the agent's to follow.</p>
-  <div class="two">
-    <nav class="toc" aria-label="Handbook contents"><span class="toc-h">Handbook</span>{handbook.map((h) => <a href={`#${fileId(h.file)}`}>{h.title}</a>)}</nav>
-    <div class="prose handbook">
-      {handbook.map((h) => <section id={fileId(h.file)}><h3>{h.title}</h3><div set:html={h.html} /></section>)}
-    </div>
+  <nav slot="contents" class="toc" aria-label="On this page">
+    <span class="toc-h">On this page</span>
+    <a href="#turns">The requests</a>
+    <a href="#checks">Checks</a>
+    <a href="#negative-controls">Negative controls</a>
+    <a href="#handbook">Handbook</a>
+    {handbook.map((h) => <a class="d3" href={`#${fileId(h.file)}`}>{h.title}</a>)}
+  </nav>
+  <div class="prose handbook">
+    {handbook.map((h) => <section id={fileId(h.file)}><h3>{h.title}</h3><div set:html={h.html} /></section>)}
   </div>
 </Base>
