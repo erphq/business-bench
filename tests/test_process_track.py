@@ -13,6 +13,7 @@ sys.path.insert(0, os.path.join(ROOT, 'bench'))
 sys.path.insert(0, os.path.join(ROOT, 'erp'))
 sys.path.insert(0, os.path.join(ROOT, 'tasks', 'lib'))
 
+import export_process_campaign  # noqa: E402
 import process_run  # noqa: E402
 import validate_process  # noqa: E402
 from bberp import sim  # noqa: E402
@@ -109,6 +110,45 @@ echo "turn $BENCH_TURN" >> "$WS/notes.md"
             self.assertEqual([t['n'] for t in res['turns']], [1])            # the episode stops at the first turn
             self.assertIn(res['turns'][0]['exit_code'], (126, 127))
             self.assertIn('did not start', res['error'])
+
+
+class CampaignExport(unittest.TestCase):
+    """A campaign exports to a ledger without local paths, and --verify catches a summary that no longer matches."""
+
+    def test_export_and_verify(self):
+        with tempfile.TemporaryDirectory() as root:
+            raw = os.path.join(root, 'results', 'demo')
+            os.makedirs(raw)
+            json.dump({'campaign': 'demo', 'track': 'process', 'seed': 0, 'repetitions': 2,
+                       'cells': {'cell-a': {}, 'cell-b': {}}, 'conditions': []}, open(os.path.join(raw, 'campaign.json'), 'w'))
+            for cell in ('cell-a', 'cell-b'):
+                for run in (1, 2):
+                    d = os.path.join(raw, f'task-x__{cell}__s0__r{run}')
+                    os.makedirs(os.path.join(d, 'ws', '.proto'))
+                    open(os.path.join(d, 'final.db'), 'wb').write(b'db')
+                    open(os.path.join(d, 'ws', 'note.md'), 'w').write('note')
+                    open(os.path.join(d, 'ws', '.proto', 'session.json'), 'w').write('{}')
+                    passed = cell == 'cell-a' or run == 1
+                    json.dump({'run_id': os.path.basename(d), 'task': 'task-x', 'harness': cell, 'seed': 0, 'run': run,
+                               'passed': passed, 'breach': False, 'error': None, 'work_dir': d,
+                               'checks': [{'name': 'c', 'type': 'state_set', 'passed': passed, 'detail': 'x'}],
+                               'turns': [{'n': 1, 'date': '2026-10-05', 'exit_code': 0, 'timed_out': False, 'wall_s': 5.0}],
+                               'wall_s': 6.0, 'usage': {'input': 10, 'cached_input': 5, 'output': 2}, 'cost_usd': None},
+                              open(os.path.join(d, 'result.json'), 'w'))
+            with mock.patch.object(export_process_campaign, 'ROOT', root), \
+                    mock.patch.object(export_process_campaign, 'PUBLISHED', os.path.join(root, 'results', 'process')):
+                export_process_campaign.export('demo')
+                out = os.path.join(root, 'results', 'process', 'demo')
+                ledger = open(os.path.join(out, 'attempts.jsonl')).read()
+                self.assertNotIn(root, ledger)                      # no local paths
+                self.assertNotIn('.proto', ledger)                  # harness session files are not the agent's work
+                summary = json.load(open(os.path.join(out, 'summary.json')))
+                self.assertEqual((summary['cell-a']['passed'], summary['cell-b']['passed']), (2, 1))
+                self.assertEqual((summary['cell-a']['tasks_passed_every_time'], summary['cell-b']['tasks_passed_every_time']), (1, 0))
+                summary['cell-b']['passed'] = 2
+                json.dump(summary, open(os.path.join(out, 'summary.json'), 'w'))
+                with self.assertRaises(SystemExit):
+                    export_process_campaign.verify_one(out)
 
 
 class Documents(unittest.TestCase):
