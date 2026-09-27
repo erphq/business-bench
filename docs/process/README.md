@@ -290,13 +290,14 @@ same browser interface.
 
 ## 14. Decisions needed
 
-1. **Own ERP or an open-source ERP.** Recommendation: build bb-erp for the pilot. It
-   gives byte-level determinism, resets by copying one SQLite file, exact planted truth,
-   and an audit log designed for grading. An open-source ERP would add credibility and
-   interface realism, at the cost of heavier containers, slower resets, harder clock
-   control, and grading against a schema this project does not control. The scenario
-   format stays backend-neutral ([environment.md §10](environment.md#10-scenario-format))
-   so another system can replay the same scenarios later.
+1. **Own ERP or an open-source ERP.** Decided 2026-09-26: bb-erp, the benchmark's own
+   ERP, with tasks built on enterprise processes. It gives byte-level determinism,
+   resets by copying one SQLite file, exact planted truth, and an audit log designed for
+   grading. An open-source ERP would have added credibility and interface realism, at
+   the cost of heavier containers, slower resets, harder clock control, and grading
+   against a schema this project does not control. The scenario format stays
+   backend-neutral ([environment.md §10](environment.md#10-scenario-format)) so another
+   system can replay the same scenarios later.
 2. **Interface for the pilot.** Recommendation: `erp` command, HTTP, and MCP; the
    browser interface next, for the human baseline.
 3. **Continuous-session mode.** Recommendation: handoff mode only for the first
