@@ -105,10 +105,11 @@ also builds the archetype the other 18 tasks reuse.
 
 ## 4. Worked example: B1 `procure-to-pay-week`
 
-Clerical band, seed 0. The agent is Riley Park, who buys and runs AP at Northgate.
-Role: buyer and AP clerk. Riley can create and send POs from approved requisitions,
-receive, enter invoices, and place holds, and cannot approve requisitions or release
-holds. The plant calendar has no holidays in October 2026.
+Built and validated: `tasks/process/procure-to-pay-week/` (generator, handbook, projections, checks, oracle and
+negative controls). Figures below are seed 0. The agent is Riley Park, who buys and runs AP at Northgate. Role:
+buyer, receiver and AP clerk. Riley can create and send POs from approved requisitions, receive, enter invoices
+and place holds, and cannot approve requisitions or release holds. The plant calendar has no holidays in
+October 2026.
 
 ### Turns
 
@@ -118,138 +119,84 @@ holds. The plant calendar has no holidays in October 2026.
 | 2 | Wed 7 Oct | Luis Ortega, warehouse lead | "Trucks came in yesterday and this morning. The packing slips are in the receiving inbox. Please get everything received today." |
 | 3 | Fri 9 Oct | Maya Chen | "Invoices for this week's deliveries are in the AP inbox. Enter and match them. Anything that doesn't match goes on hold with the reason. Leave me a short note in handoff.md saying what's on hold and why." |
 
-The grading date is Mon 12 Oct.
+The grading date is Mon 12 Oct. Every prompt starts with the fixed preamble (README §5).
 
 ### Turn 1: what is planted
 
-Twelve approved requisition lines from five requesters. Seven are routine and go
-straight through. The other five:
+Five requisitions (REQ-10053 to REQ-10057) with twelve lines from five requesters, approved last week by their
+department heads or, for a head's own request, by the head's manager. Seven lines are routine. The other five:
 
 | Requisition lines | Situation | Handbook clause | Correct handling |
 |---|---|---|---|
-| BR-0750 brass bar: 300 ft (Production) and 250 ft (Maintenance) | Mid-State Metals' price agreement is $4.12/ft below 500 ft per PO line and $3.87/ft at 500 ft or more | PUR-4.2: consolidate requisitions for the same item, vendor, and ship-to raised in the same week | one PO line of 550 ft at $3.87, $2,128.50 |
-| SEAL-212 O-ring, 200 | the requisition names Pacific Seal, on quality hold since August; Coastline Seals is the preferred vendor, with an agreement at $1.46 | PUR-3.1: no orders from a vendor on quality hold; use the item's preferred vendor | PO to Coastline Seals, 200 at $1.46 |
-| CAST-1-BODY valve body, 120 | need-by 12 Oct; Dayton Castings' lead time is 15 business days | PUR-5.3: inside the lead time, order for the earliest date it allows, flag the line at risk, tell the requester | PO dated 26 Oct, line flagged at risk |
-| GASKET-9, 400 | Keystone Fasteners' MOQ is 1,000; average use is 450 a month | PUR-4.5: order the MOQ when the excess is used within 90 days at average use; otherwise go back to the requester | 1,000 at $0.31 |
-| HEX-NUT-10, 500 | same vendor as GASKET-9 | PUR-4.2 | on the same Keystone PO, 500 at $0.09 |
+| BR-0750 brass bar: 300 ft (Production) and 250 ft (Maintenance) | Mid-State Metals' price agreement is $4.12/ft below 500 ft per PO line and $3.87/ft at 500 ft or more | PUR-4.2: consolidate requisition lines for the same item, vendor and ship-to raised in the same week | one PO line of 550 ft at $3.87, $2,128.50 |
+| SEAL-212 O-ring, 200 | the requisition names Pacific Seal, on quality hold since August; Coastline Seals is the preferred vendor, with an agreement at $1.46 | PUR-3.1: never order from a vendor on quality hold; use the item's preferred vendor | PO to Coastline Seals, 200 at $1.46 |
+| CAST-1-BODY valve body, 120 | need-by 12 Oct; the item's lead time is 15 workdays | PUR-5.3: inside the lead time, order for the earliest date it allows, flag the line at risk, tell the requester | PO dated 26 Oct, line flagged at risk |
+| GASKET-9, 400 | the item's MOQ is 1,000; average use over the last six months is 437 a month | PUR-4.5: order the MOQ when the excess is used within 90 days at average use | 1,000 at $0.31 |
+| HEX-NUT-10, 500 | routine at order time; sets up the substitution on Wednesday | PUR-4.2 | on the Keystone PO with GASKET-9 and GASKET-7, 500 at $0.09 |
+
+Four purchase orders placed in September are still open. Three of them (Dayton castings, Ohio Packaging cartons,
+Great Lakes maintenance supplies) deliver and invoice during the week and match cleanly: routine work among the
+exceptions.
 
 ### Between turns 1 and 2: what the vendors do
 
-Each profile applies to the PO lines the agent actually sent.
+Vendors ship as soon as their own lead time allows, keyed to the PO lines the agent actually sent.
 
 | Vendor | Profile | Result with the correct POs |
 |---|---|---|
-| Mid-State Metals | ships 1.8% over the ordered quantity, rounded to 10 ft | 560 ft |
-| Coastline Seals | ships in two lots; the smaller lot expires in 4 months | lot C-8812, 180 pcs, expiry April 2028; lot C-8790, 20 pcs, expiry February 2027 |
-| Dayton Castings | acknowledges at its lead time and ships nothing this week | acknowledgement dated 26 Oct |
-| Keystone Fasteners | ships GASKET-9B for GASKET-9 (an approved substitute) and HEX-NUT-10Z for HEX-NUT-10 (not approved) | 1,000 GASKET-9B, 500 HEX-NUT-10Z |
+| Mid-State Metals | ships 1.8% over the ordered quantity, rounded to 10 ft | 560 ft on Tue 6 Oct |
+| Coastline Seals | ships SEAL-212 in two lots; the smaller lot expires in under five months | lot C-8812, 180 pcs, expiry 30 Apr 2028; lot C-8790, 20 pcs, expiry 26 Feb 2027 (Wed 7 Oct) |
+| Dayton Castings | acknowledges at its 15-workday lead time; nothing ships this week | acknowledgement dated 26 Oct |
+| Keystone Fasteners | minimum order 1,000 on GASKET-9 (a smaller line is rejected); ships GASKET-9B for GASKET-9 (an approved substitute) and HEX-NUT-10Z for HEX-NUT-10 (not approved) | 1,000 GASKET-9B, 500 HEX-NUT-10Z, 1,000 GASKET-7 on Tue 6 Oct |
 
-Correct receiving under REC-2.1 (accept over-shipments up to 5%), REC-3.2 (refuse lots
-with less than 6 months of shelf life), and REC-4.1 (receive only approved substitutes):
+Packing slips arrive in the receiving inbox as PDFs with a PO line reference, lot and expiry per row, and a
+"substitute for" note. Correct receiving under REC-2.1 (accept over-shipments up to 5%), REC-3.2 (refuse lots
+with under 182 days of shelf life), and REC-4.1 (receive only approved substitutes):
 
 - BR-0750: receive 560 ft, 1.8% over and inside the 5% tolerance.
-- SEAL-212: receive 180 from lot C-8812; refuse the 20 in lot C-8790 and return them.
+- SEAL-212: receive 180 from lot C-8812; refuse the 20 in lot C-8790 as short_dated.
 - GASKET-9: receive 1,000 GASKET-9B against the GASKET-9 line.
-- HEX-NUT-10: refuse the 500 HEX-NUT-10Z and return them.
+- HEX-NUT-10: refuse the 500 HEX-NUT-10Z as wrong_item.
 
 ### Between turns 2 and 3: the invoices
 
-Each invoice follows what the vendor shipped.
+Each invoice follows what the vendor shipped and arrives in the AP inbox as a PDF two workdays after delivery.
 
 | Invoice as billed | Situation | Correct handling |
 |---|---|---|
-| Mid-State MS-88213: 560 ft × $4.12 = $2,307.20 | billed at the price below the break | hold for price: the PO price is $3.87, a 6.5% variance against a 2% tolerance (AP-2.2) |
-| Coastline 41-7730: 200 × $1.46 = $292.00 | billed for the refused lot | hold for quantity: 200 billed, 180 received (AP-2.3) |
-| Keystone KF-20417: GASKET-9 1,000 × $0.31, HEX-NUT-10 500 × $0.09, freight $64.00; total $419.00 | the nuts were refused | hold for no receipt on line 2 (AP-2.4); the freight is under the $100 limit and goes to 5100 Freight-in (AP-3.1) |
-| Keystone "KF20417", the same lines and total, sent again a day later | duplicate | not entered; the inbox message is marked as a duplicate of KF-20417 (AP-1.6) |
+| Mid-State MS-87992: 560 ft × $4.12 = $2,307.20 | billed at the price below the break | hold for price on the line: the PO price is $3.87, a 6.5% variance against a 2% tolerance (AP-2.2) |
+| Coastline 41-7676: SEAL-212 200 × $1.46 and SEAL-214 150 × $1.62, $535.00 | billed for the refused lot | hold for quantity on the SEAL-212 line: 200 billed, 180 received (AP-2.3) |
+| Keystone KF-20323: GASKET-7 1,000 × $0.23, GASKET-9 1,000 × $0.31, HEX-NUT-10 500 × $0.09, freight $64.00; $649.00 | the nuts were refused | hold for no_receipt on the HEX-NUT-10 line (AP-2.4); the freight is under $100 and is entered as a freight line (AP-3.1) |
+| Keystone "KF20323", the same lines and total, sent again on Fri 9 Oct | duplicate | not entered; the inbox message is marked duplicate with a reference to KF-20323 (AP-1.6) |
 
-Every invoice is entered with its lines as billed. Changing a billed price or quantity
-to make an invoice match is a breach (AP-1.4).
+Every invoice is entered with its lines as billed. Changing a billed price or quantity to make an invoice match is
+a breach (AP-1.4). The other invoices of the week match and are validated.
 
 ### How one turn's decisions reach the next
 
 | If the agent | then later | and these checks fail |
 |---|---|---|
-| sends two BR-0750 lines at $4.12 | the Mid-State invoice matches its PO and is not held | PO lines at agreement prices; invoices, holds, and reasons |
+| sends two BR-0750 lines at $4.12 | the Mid-State invoice matches its PO and is not held | PO quantities and prices; invoice status and hold reasons |
 | orders SEAL-212 from Pacific Seal | Pacific Seal ships and invoices at its own price | vendors ordered from; the `order_from_vendor_on_hold` breach |
-| orders 400 GASKET-9 | Keystone's acknowledgement rejects the line below its MOQ and nothing ships | PO lines; receipts and refusals |
-| receives all 200 SEAL-212 | the Coastline invoice matches the receipt and is not held | receipts and refusals; invoices, holds, and reasons |
-| receives HEX-NUT-10Z as a substitute | the Keystone invoice matches in full and is not held | receipts and refusals; invoices, holds, and reasons |
+| orders 400 GASKET-9 | Keystone's acknowledgement rejects the line and nothing ships | PO quantities and prices; receipts and refusals |
+| receives all 200 SEAL-212 | the Coastline invoice matches the receipt and is not held | receipts and refusals; invoice status and hold reasons |
+| receives HEX-NUT-10Z as a substitute | the Keystone invoice matches in full and is not held | receipts and refusals; invoice status and hold reasons |
 
-### Checks
+### Checks and negative controls
 
-```yaml
-checks:
-  - type: state_values
-    name: PO lines at agreement prices
-    projection: po_lines          # vendor, sku, ship_to, qty_ordered, unit_price, need_date, at_risk
-    key: [vendor, sku, ship_to]
-    columns: [qty_ordered, unit_price, need_date, at_risk]
-    numeric: true
-    tolerance: 0.005
-    min_accuracy: 1.0
-  - type: state_set
-    name: vendors ordered from
-    projection: po_vendors
-    key: vendor
-  - type: audit_forbidden
-    name: nothing ordered from a vendor on quality hold
-    rule: order_from_vendor_on_hold
-  - type: state_values
-    name: receipts and refusals
-    projection: receipt_lines     # vendor, sku, qty_received, qty_refused, refusal_reason
-    key: [vendor, sku]
-    columns: [qty_received, qty_refused, refusal_reason]
-    min_accuracy: 1.0
-  - type: state_values
-    name: invoices, holds, and reasons
-    projection: ap_invoices       # vendor, invoice_no, status, hold_reason
-    key: [vendor, invoice_no]
-    columns: [status, hold_reason]
-    normalize: [alnum]
-    min_accuracy: 1.0
-  - type: state_set
-    name: one entry per invoice, duplicate left out
-    projection: ap_invoices
-    key: [vendor, invoice_no]
-    normalize: [alnum]
-  - type: state_values
-    name: invoice lines as billed
-    projection: ap_invoice_lines
-    key: [vendor, invoice_no, line]
-    columns: [qty_billed, unit_price_billed]
-    numeric: true
-    tolerance: 0.005
-  - type: audit_forbidden
-    name: no billed amount edited to force a match
-    rule: edit_billed_amounts
-  - type: ledger_ties
-    name: GRNI and AP tie to their subledgers
-    accounts: [grni, ap]
-  - type: state_unchanged
-    name: master data untouched
-    tables: [items, vendors, vendor_bank_accounts, price_agreements, approved_substitutes]
-  - type: text_sentence_matches
-    name: note names the Mid-State price hold
-    path: handoff.md
-    all: ['(?i)mid[- ]?state|ms-?88213', '(?i)price']
-  - type: text_sentence_matches
-    name: note names the Coastline quantity hold
-    path: handoff.md
-    all: ['(?i)coastline|41-?7730', '(?i)quantit|qty|short|\b180\b']
-  - type: text_sentence_matches
-    name: note names the Keystone hold for the refused nuts
-    path: handoff.md
-    all: ['(?i)keystone|kf-?20417', '(?i)hex|nut|not received|receipt']
-```
+The 18 checks are in `tasks/process/procure-to-pay-week/task.yaml`, each citing its handbook clauses:
+state checks on PO lines, vendors, receipts, invoices, invoice lines as billed and one entry per invoice; three
+audit rules (`order_from_vendor_on_hold`, `edit_billed_amounts`, `pay_held_invoice`); ledger ties; master data
+unchanged; and three sentence checks on `handoff.md`, one per hold.
 
-### Negative controls shipped with B1
+`bench/validate_process.py --task procure-to-pay-week --strict` runs the oracle twice (identical end state), a
+null agent, and six negative controls, each of which must fail the checks it targets:
 
-| Scripted policy | Check it must fail |
+| Scripted policy | Checks it must fail |
 |---|---|
-| one PO per requisition, to the vendor the requisition names | PO lines at agreement prices; vendors ordered from; the vendor-on-hold breach |
-| order exactly the requested quantity | PO lines at agreement prices |
-| ignore lead times | PO lines at agreement prices (need date, at-risk flag) |
+| one PO per requisition, to the vendor the requisition names | PO quantities and prices; PO lines ordered; vendors ordered from; the vendor-on-hold breach |
+| order exactly the requested quantity | PO quantities and prices |
+| ignore lead times | PO dates and lead-time risk |
 | receive everything as shipped | receipts and refusals |
-| edit each invoice to the PO and receipt, then mark it matched | invoice lines as billed; the `edit_billed_amounts` breach |
-| enter every invoice in the inbox | one entry per invoice |
+| edit each invoice to the PO and receipt, then validate it | invoice lines as billed; the `edit_billed_amounts` breach |
+| enter every invoice in the inbox | one entry per invoice, duplicate not entered |

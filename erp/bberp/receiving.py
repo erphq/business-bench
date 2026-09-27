@@ -44,6 +44,7 @@ def post_receipt(erp: Erp, ctx: Ctx, po_id: str, lines: list[dict], packing_slip
                             'packing_slip': packing_slip, 'status': 'posted', 'note': note})
     erp.touch('purchase_order', po_id)
     inv_total = grni_total = 0
+    expense: list[tuple] = []
     seen: dict[int, float] = {}
     for i, ln in enumerate(lines, 1):
         n = ln.get('po_line')
@@ -58,10 +59,23 @@ def post_receipt(erp: Erp, ctx: Ctx, po_id: str, lines: list[dict], packing_slip
         reason = ln.get('refusal_reason')
         if refused_qty > 0 and reason not in REFUSAL_REASONS:
             raise invalid(f'line {i}: refusal_reason must be one of {", ".join(REFUSAL_REASONS)}')
+        seen[n] = seen.get(n, pl['qty_received']) + got
+        if pl['sku'] is None:                       # non-stock line: expensed at the PO price on receipt
+            if seen[n] > pl['qty'] * (1 + ceiling) + 1e-9:
+                raise refused('over_receipt_ceiling', f'{po_id} line {n}: receiving {seen[n]:g} of {pl["qty"]:g} '
+                              f'ordered is over the system ceiling of {ceiling:.0%}', ordered=pl['qty'], receiving=seen[n])
+            grni = ext_cents(got, pl['unit_price'])
+            grni_total += grni
+            expense.append((pl['account'], grni, 0, pl['department']))
+            erp.insert('receipt_lines', {'receipt_id': rid, 'line': i, 'po_line': n, 'sku': None, 'qty_received': got,
+                                         'qty_refused': refused_qty, 'refusal_reason': reason if refused_qty else None,
+                                         'value_cents': 0, 'grni_cents': grni})
+            erp.update('po_lines', {'po_id': po_id, 'line': n}, {'qty_received': q4(pl['qty_received'] + got),
+                                                                 'qty_refused': q4(pl['qty_refused'] + refused_qty)})
+            continue
         sku = ln.get('sku') or pl['sku']
         if not erp.val('SELECT 1 FROM items WHERE sku = ? AND active = 1', sku):
             raise invalid(f'line {i}: no active item {sku}')
-        seen[n] = seen.get(n, pl['qty_received']) + got
         if seen[n] > pl['qty'] * (1 + ceiling) + 1e-9:
             raise refused('over_receipt_ceiling', f'{po_id} line {n}: receiving {seen[n]:g} of {pl["qty"]:g} ordered is '
                           f'over the system ceiling of {ceiling:.0%}', ordered=pl['qty'], receiving=seen[n])
@@ -83,8 +97,9 @@ def post_receipt(erp: Erp, ctx: Ctx, po_id: str, lines: list[dict], packing_slip
                                      'value_cents': value, 'grni_cents': grni})
         erp.update('po_lines', {'po_id': po_id, 'line': n}, {'qty_received': q4(pl['qty_received'] + got),
                                                              'qty_refused': q4(pl['qty_refused'] + refused_qty)})
+    stock_grni = grni_total - sum(e[1] for e in expense)
     ledger.post(erp, ctx, erp.today, 'receiving', rid,
-                [('inventory', inv_total, 0), ('ppv', grni_total - inv_total, 0), ('grni', 0, grni_total)],
+                [('inventory', inv_total, 0), ('ppv', stock_grni - inv_total, 0), *expense, ('grni', 0, grni_total)],
                 memo=f'Receipt {rid} against {po_id}')
     purchasing._refresh_po(erp, po_id)
     erp.touch('receipt', rid, created=True)
@@ -103,17 +118,21 @@ def reverse_receipt(erp: Erp, ctx: Ctx, rid: str, reason: str) -> None:
     erp.touch('receipt', rid)
     erp.touch('purchase_order', r['po_id'])
     inv_total = grni_total = 0
+    expense: list[tuple] = []
     for ln in erp.all('SELECT * FROM receipt_lines WHERE receipt_id = ? ORDER BY line', rid):
         pl = erp.one('SELECT * FROM po_lines WHERE po_id = ? AND line = ?', r['po_id'], ln['po_line'])
-        if ln['qty_received']:
+        if ln['sku'] is None:
+            expense.append((pl['account'], 0, ln['grni_cents'], pl['department']))
+        elif ln['qty_received']:
             inv_total += inventory.move(erp, ctx, erp.today, ln['sku'], ln['location'], -ln['qty_received'],
                                         'receipt_reversal', 'receipt', rid, lot=ln['lot'])
         grni_total += ln['grni_cents']
         erp.update('po_lines', {'po_id': r['po_id'], 'line': ln['po_line']},
                    {'qty_received': q4(pl['qty_received'] - ln['qty_received']),
                     'qty_refused': q4(pl['qty_refused'] - ln['qty_refused'])})
+    stock_grni = grni_total - sum(e[2] for e in expense)
     ledger.post(erp, ctx, erp.today, 'receiving', rid,
-                [('inventory', inv_total, 0), ('ppv', -grni_total - inv_total, 0), ('grni', grni_total, 0)],
+                [('inventory', inv_total, 0), ('ppv', -stock_grni - inv_total, 0), *expense, ('grni', grni_total, 0)],
                 memo=f'Reversal of receipt {rid}: {reason}')
     erp.update('receipts', {'id': rid}, {'status': 'reversed', 'reversed_by': ctx.user, 'reversed_on': erp.today,
                                          'reversal_reason': reason})

@@ -22,3 +22,4 @@ paper/*.log
 paper/*.out
 paper/*.xdv
 paper/main.pdf
+.cache/

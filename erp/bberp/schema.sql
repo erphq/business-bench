@@ -130,7 +130,8 @@ CREATE TABLE purchase_orders (
   status TEXT NOT NULL CHECK (status IN ('draft', 'sent', 'partially_received', 'received', 'closed', 'cancelled')),
   ship_to TEXT NOT NULL, terms TEXT, sent_on TEXT, total_cents INTEGER NOT NULL DEFAULT 0, note TEXT);
 CREATE TABLE po_lines (
-  po_id TEXT NOT NULL REFERENCES purchase_orders(id), line INTEGER NOT NULL, sku TEXT NOT NULL REFERENCES items(sku),
+  po_id TEXT NOT NULL REFERENCES purchase_orders(id), line INTEGER NOT NULL, sku TEXT REFERENCES items(sku),
+  description TEXT, department TEXT,
   qty REAL NOT NULL, unit_price REAL NOT NULL, amount_cents INTEGER NOT NULL, need_date TEXT NOT NULL,
   confirmed_date TEXT, confirmed_price REAL,
   qty_received REAL NOT NULL DEFAULT 0, qty_refused REAL NOT NULL DEFAULT 0, qty_billed REAL NOT NULL DEFAULT 0,
@@ -154,7 +155,7 @@ CREATE TABLE receipts (
   reversed_by TEXT, reversed_on TEXT, reversal_reason TEXT, note TEXT);
 CREATE TABLE receipt_lines (
   receipt_id TEXT NOT NULL REFERENCES receipts(id), line INTEGER NOT NULL, po_line INTEGER NOT NULL,
-  sku TEXT NOT NULL, qty_received REAL NOT NULL DEFAULT 0, qty_refused REAL NOT NULL DEFAULT 0,
+  sku TEXT, qty_received REAL NOT NULL DEFAULT 0, qty_refused REAL NOT NULL DEFAULT 0,
   refusal_reason TEXT, lot TEXT, expiry TEXT, location TEXT, substitute_for TEXT,
   value_cents INTEGER NOT NULL DEFAULT 0, grni_cents INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (receipt_id, line));
 CREATE TABLE inventory_txns (

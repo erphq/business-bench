@@ -1,0 +1,282 @@
+#!/usr/bin/env python3
+"""Run process-track tasks: one ERP per attempt, one agent session per turn, graded on the final state.
+
+  process_run.py --task procure-to-pay-week --harness oracle --label dev-oracle
+  process_run.py --task procure-to-pay-week --harness proto-deepseek --runs 5 --parallel 2 --label pilot-proto
+
+Harnesses are the desk track's shell adapters (harnesses/<name>.sh WS PROMPT OUT), called once per turn with
+ERP_URL, ERP_TOKEN and the `erp` command on PATH, or the task's own policies: `oracle`, `null`, `neg:<name>`, which
+drive the same HTTP API with the same token.
+
+Scenarios are generated once per seed into .cache/process/<task>/seed-<n>/ (gen.py), and the reference is the
+oracle's projections, checked against the task's planted truth before it is used. Local runs start bb-erp as a
+local process: not an isolation boundary, for development only.
+"""
+from __future__ import annotations
+
+import argparse
+import concurrent.futures as cf
+import importlib.util
+import json
+import os
+import shutil
+import signal
+import stat
+import subprocess
+import sys
+import tempfile
+import threading
+import time
+import traceback
+
+import yaml
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(ROOT, 'erp'))
+sys.path.insert(0, os.path.join(ROOT, 'tasks', 'lib'))
+
+from process_grade import grade_process, materialize  # noqa: E402
+from procgen.episode import Api, Server, load_meta, preamble  # noqa: E402
+from usage import EXTRACTORS, cost_usd  # noqa: E402
+
+TASKS = os.path.join(ROOT, 'tasks', 'process')
+CACHE = os.path.join(ROOT, '.cache', 'process')
+
+
+def task_dir(task: str) -> str:
+    d = os.path.join(TASKS, task)
+    if not os.path.isfile(os.path.join(d, 'task.yaml')):
+        sys.exit(f'unknown process task {task!r}')
+    return d
+
+
+_POLICY_LOCK = threading.Lock()
+
+
+def load_policies(task: str) -> dict:
+    path = os.path.join(task_dir(task), 'oracle.py')
+    name = f'oracle_{task.replace("-", "_")}'
+    with _POLICY_LOCK:
+        if name not in sys.modules:
+            spec = importlib.util.spec_from_file_location(name, path)
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules[name] = mod           # dataclasses resolve annotations through sys.modules
+            try:
+                spec.loader.exec_module(mod)
+            except BaseException:
+                del sys.modules[name]
+                raise
+        return {'null': lambda *a, **k: None, **sys.modules[name].POLICIES}
+
+
+# ------------------------------------------------------------------------------------------- scenario and reference
+
+def scenario_dir(task: str, seed: int) -> str:
+    return os.path.join(CACHE, task, f'seed-{seed}')
+
+
+def ensure_scenario(task: str, seed: int, rebuild: bool = False) -> str:
+    out = scenario_dir(task, seed)
+    if rebuild:
+        shutil.rmtree(out, ignore_errors=True)
+    if not os.path.exists(os.path.join(out, 'meta.json')):
+        os.makedirs(out, exist_ok=True)
+        env = dict(os.environ, PYTHONPATH=os.pathsep.join([os.path.join(ROOT, 'erp'), os.path.join(ROOT, 'tasks', 'lib')]))
+        subprocess.run([sys.executable, 'gen.py', '--seed', str(seed), '--out', out], cwd=task_dir(task), env=env,
+                       check=True)
+    ref = os.path.join(out, 'reference')
+    if not os.path.exists(os.path.join(ref, '.complete')):
+        with tempfile.TemporaryDirectory(prefix='oracle-') as tmp:
+            res = run_attempt(task, 'oracle', seed, 0, tmp, out, reference_pass=True)
+            if res.get('error'):
+                raise RuntimeError(f'oracle failed while building the reference: {res["error"]}')
+            os.makedirs(ref, exist_ok=True)
+            meta = load_meta(out)
+            materialize(task_dir(task), os.path.join(res['work_dir'], 'final.db'),
+                        {'start': meta['start'], 'agent': meta['agent_user']}, ref)
+        check_truth(task, out)
+        open(os.path.join(ref, '.complete'), 'w').write('ok\n')
+    return out
+
+
+def check_truth(task: str, scenario: str) -> None:
+    """Every row the task says must be in the reference is there: the oracle reproduces the planted truth."""
+    import csv
+    truth = json.load(open(os.path.join(scenario, 'truth.json'), encoding='utf-8'))
+    problems = []
+    for proj, rows in truth.get('expect', {}).items():
+        have = list(csv.DictReader(open(os.path.join(scenario, 'reference', f'{proj}.csv'), encoding='utf-8')))
+        for want in rows:
+            if not any(all(str(h.get(k, '')) == str(v) for k, v in want.items()) for h in have):
+                problems.append(f'{proj}: no row {want}')
+    if problems:
+        raise RuntimeError('reference does not contain the planted truth:\n  ' + '\n  '.join(problems))
+
+
+# ------------------------------------------------------------------------------------------- one attempt
+
+def _erp_bin(dirpath: str) -> str:
+    os.makedirs(dirpath, exist_ok=True)
+    dst = os.path.join(dirpath, 'erp')
+    src = open(os.path.join(ROOT, 'erp', 'bberp', 'cli.py'), encoding='utf-8').read()
+    if not src.startswith('#!'):
+        src = '#!/usr/bin/env python3\n' + src
+    open(dst, 'w', encoding='utf-8').write(src.replace('#!/usr/bin/env python3', f'#!{sys.executable}', 1))
+    os.chmod(dst, os.stat(dst).st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+    return dirpath
+
+
+def _run_shell(harness: str, ws: str, prompt_file: str, out: str, env: dict, timeout: int) -> tuple:
+    adapter = os.path.join(ROOT, 'harnesses', f'{harness}.sh')
+    t0 = time.time()
+    with open(os.path.join(out, 'stdout.txt'), 'wb') as so, open(os.path.join(out, 'stderr.txt'), 'wb') as se:
+        p = subprocess.Popen([adapter, ws, prompt_file, out], stdin=subprocess.DEVNULL, stdout=so, stderr=se, env=env,
+                             start_new_session=True, cwd=ws)
+        try:
+            code, timed_out = p.wait(timeout=timeout + 60), False
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            try:
+                os.killpg(os.getpgid(p.pid), signal.SIGKILL)
+            except Exception:
+                pass
+            code = p.wait()
+    return code, timed_out, round(time.time() - t0, 1)
+
+
+def run_attempt(task: str, harness: str, seed: int, run_idx: int, results_root: str, scenario: str | None = None,
+                reference_pass: bool = False, timeout_override: int | None = None) -> dict:
+    tdir = task_dir(task)
+    scenario = scenario or ensure_scenario(task, seed)
+    meta = load_meta(scenario)
+    run_id = f'{task}__{harness.replace(":", "-")}__s{seed}__r{run_idx}'
+    run_dir = os.path.join(results_root, run_id)
+    if os.path.exists(run_dir):
+        raise FileExistsError(f'attempt already exists: {run_dir}; choose a fresh label')
+    os.makedirs(run_dir)
+    # The agent's working folder and the ERP's files live in separate temporary directories.
+    ws = tempfile.mkdtemp(prefix='ws-')
+    erp_dir = tempfile.mkdtemp(prefix='erp-')
+    shutil.copytree(os.path.join(scenario, 'handbook'), os.path.join(ws, 'handbook'))
+    db = os.path.join(erp_dir, 'company.db')
+    shutil.copyfile(os.path.join(scenario, 'scenario.db'), db)
+    world = os.path.join(erp_dir, 'world.json')
+    shutil.copyfile(os.path.join(scenario, 'world.json'), world)
+    ctl = os.urandom(16).hex()
+    server = Server(db, world, ctl, os.path.join(run_dir, 'erp.log'))
+    bin_dir = _erp_bin(os.path.join(erp_dir, 'bin'))
+    policies = load_policies(task) if not os.path.isfile(os.path.join(ROOT, 'harnesses', f'{harness}.sh')) else None
+    if policies is not None and harness not in policies:
+        server.stop()
+        raise ValueError(f'unknown harness or policy {harness!r}; policies: {sorted(policies)}')
+    turns, error, t_start = [], None, time.time()
+    try:
+        for turn in meta['turns']:
+            n = turn['n']
+            server.advance(turn['date'])
+            tdir_n = os.path.join(run_dir, 'turns', str(n))
+            out = os.path.join(tdir_n, 'out')
+            os.makedirs(out)
+            prompt = preamble(meta, turn)
+            prompt_file = os.path.join(tdir_n, 'prompt.txt')
+            open(prompt_file, 'w', encoding='utf-8').write(prompt)
+            budget = int(timeout_override or turn.get('budget_s', 1200))
+            if policies is None:
+                env = dict(os.environ, ERP_URL=server.url, ERP_TOKEN=meta['token'], BENCH_TIMEOUT_MS=str(budget * 1000),
+                           BENCH_RUN_DIR=run_dir, BENCH_ROOT=ROOT, BENCH_TURN=str(n),
+                           PATH=bin_dir + os.pathsep + os.environ.get('PATH', ''))
+                tmpl = os.path.join(ROOT, 'homes', harness)
+                if os.path.isdir(tmpl):   # a fresh harness home every turn: nothing carries over but the ERP and the folder
+                    home = os.path.join(tdir_n, 'home')
+                    shutil.copytree(tmpl, home)
+                    env['PROTO_BENCH_HOME'] = home
+                code, timed_out, wall = _run_shell(harness, ws, prompt_file, out, env, budget)
+            else:
+                t0, code, timed_out = time.time(), 0, False
+                try:
+                    policies[harness](n, Api(server.url, meta['token']), ws, meta)
+                except Exception:
+                    code = 1
+                    open(os.path.join(out, 'traceback.txt'), 'w').write(traceback.format_exc())
+                    if harness == 'oracle':
+                        error = f'turn {n}: ' + traceback.format_exc(limit=3)
+                wall = round(time.time() - t0, 1)
+            turns.append({'n': n, 'date': turn['date'], 'exit_code': code, 'timed_out': timed_out, 'wall_s': wall})
+        server.advance(meta['grading_date'])
+    finally:
+        server.stop()
+    final_db = os.path.join(run_dir, 'final.db')
+    shutil.copyfile(db, final_db)
+    shutil.copytree(ws, os.path.join(run_dir, 'ws'), ignore=shutil.ignore_patterns('handbook'))
+    shutil.rmtree(erp_dir, ignore_errors=True)
+    fam = 'proto' if harness.startswith('proto') else harness.split('-')[0]
+    usage = EXTRACTORS['proto'](ws, None) if fam == 'proto' else {}
+    if fam == 'codex':
+        usage = {'requests': 0, 'input': 0, 'cached_input': 0, 'output': 0, 'reasoning': 0, 'by_model': {}}
+        for t in turns:
+            u = EXTRACTORS['codex'](ws, os.path.join(run_dir, 'turns', str(t['n']), 'out'))
+            for k in ('requests', 'input', 'cached_input', 'output', 'reasoning'):
+                usage[k] += u.get(k, 0)
+            for m, d in u.get('by_model', {}).items():
+                bm = usage['by_model'].setdefault(m, {k: 0 for k in d})
+                for k, v in d.items():
+                    bm[k] = bm.get(k, 0) + v
+    shutil.rmtree(ws, ignore_errors=True)
+    params = {'start': meta['start'], 'agent': meta['agent_user'], 'token_id': meta['token_id']}
+    if reference_pass:
+        g = {'passed': None, 'breach': None, 'checks': [], 'grader_errors': []}
+    else:
+        g = grade_process(tdir, final_db, os.path.join(scenario, 'scenario.db'), os.path.join(run_dir, 'ws'),
+                          os.path.join(scenario, 'reference'), run_dir, params)
+    prices = json.load(open(os.path.join(HERE, 'prices.json')))
+    res = {'run_id': run_id, 'task': task, 'track': 'process', 'harness': harness, 'seed': seed, 'run': run_idx,
+           'passed': g['passed'], 'breach': g['breach'], 'checks': g['checks'], 'grader_errors': g['grader_errors'],
+           'turns': turns, 'wall_s': round(time.time() - t_start, 1), 'usage': usage,
+           'cost_usd': cost_usd(usage, prices) if usage.get('by_model') else None, 'work_dir': run_dir, 'error': error}
+    json.dump(res, open(os.path.join(run_dir, 'result.json'), 'w'), indent=2)
+    return res
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument('--task', required=True, help='task id, comma-separated ids, or all')
+    ap.add_argument('--harness', required=True, help='adapter name(s) or oracle | null | neg:<name>, comma-separated')
+    ap.add_argument('--seed', type=int, default=0)
+    ap.add_argument('--runs', type=int, default=1)
+    ap.add_argument('--parallel', type=int, default=1)
+    ap.add_argument('--label', required=True)
+    ap.add_argument('--timeout', type=int, default=None, help='override every turn budget (seconds)')
+    ap.add_argument('--rebuild', action='store_true', help='regenerate the scenario and reference')
+    a = ap.parse_args()
+    if os.path.basename(a.label) != a.label or a.label in ('', '.', '..', 'latest'):
+        ap.error('label must be a directory name other than latest')
+    tasks = sorted(d for d in os.listdir(TASKS) if os.path.isfile(os.path.join(TASKS, d, 'task.yaml'))) \
+        if a.task == 'all' else [t.strip() for t in a.task.split(',')]
+    for t in tasks:
+        ensure_scenario(t, a.seed, a.rebuild)
+    root = os.path.join(ROOT, 'results', a.label)
+    os.makedirs(root, exist_ok=False)
+    jobs = [(t, h.strip(), r) for t in tasks for h in a.harness.split(',') for r in range(1, a.runs + 1)]
+    print(f'{len(jobs)} process attempts -> results/{a.label}', flush=True)
+    results = []
+    with cf.ThreadPoolExecutor(max_workers=a.parallel) as ex:
+        futs = {ex.submit(run_attempt, t, h, a.seed, r, root, None, False, a.timeout): (t, h, r) for t, h, r in jobs}
+        for f in cf.as_completed(futs):
+            try:
+                res = f.result()
+            except Exception as e:
+                print(f'[ERROR] {futs[f]}: {type(e).__name__}: {e}', flush=True)
+                continue
+            results.append(res)
+            flag = 'PASS' if res['passed'] else ('BREACH' if res['breach'] else 'FAIL')
+            failed = [c['name'] for c in res['checks'] if not c['passed']]
+            print(f'[{flag}] {res["run_id"]}  {res["wall_s"]}s' + (f'  failed={failed}' if failed else ''), flush=True)
+    json.dump(results, open(os.path.join(root, 'summary.json'), 'w'), indent=2)
+    if len(results) != len(jobs):
+        sys.exit('incomplete matrix: one or more attempts could not produce a result')
+
+
+if __name__ == '__main__':
+    main()
