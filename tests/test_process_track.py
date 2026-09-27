@@ -71,6 +71,30 @@ echo "turn $BENCH_TURN" >> "$WS/notes.md"
             self.assertEqual(res['grader_errors'], [])
             self.assertFalse(res['passed'])
 
+    def test_harness_home_is_fresh_each_turn_and_keeps_no_login(self):
+        task = 'month-end-close'
+        meta = load_meta(process_run.ensure_scenario(task, 0))
+        with tempfile.TemporaryDirectory() as root, tempfile.TemporaryDirectory() as results:
+            os.makedirs(os.path.join(root, 'harnesses'))
+            os.symlink(os.path.join(ROOT, 'erp'), os.path.join(root, 'erp'))
+            login = os.path.join(root, 'operator-auth.json')
+            open(login, 'w').write('{"tokens": "operator"}')
+            os.makedirs(os.path.join(root, 'homes', 'codex-selftest'))
+            os.symlink(login, os.path.join(root, 'homes', 'codex-selftest', 'auth.json'))
+            adapter = os.path.join(root, 'harnesses', 'codex-selftest.sh')
+            open(adapter, 'w').write('#!/usr/bin/env bash\nset -eu\ntest -L "$CODEX_BENCH_HOME/auth.json"\n'
+                                     'ls "$CODEX_BENCH_HOME" > "$3/home-at-start.txt"\n'
+                                     'echo "turn $BENCH_TURN" > "$CODEX_BENCH_HOME/session.txt"\n')
+            os.chmod(adapter, 0o755)
+            with mock.patch.object(process_run, 'ROOT', root):
+                res = process_run.run_attempt(task, 'codex-selftest', 0, 1, results)
+            self.assertEqual([t['exit_code'] for t in res['turns']], [0] * len(meta['turns']))
+            for t in meta['turns']:
+                turn_dir = os.path.join(res['work_dir'], 'turns', str(t['n']))
+                self.assertEqual(open(os.path.join(turn_dir, 'out', 'home-at-start.txt')).read(), 'auth.json\n')
+                self.assertEqual(os.listdir(os.path.join(turn_dir, 'home')), ['session.txt'])
+            self.assertEqual(open(login).read(), '{"tokens": "operator"}')
+
 
 class Documents(unittest.TestCase):
     VENDOR = {'id': 'V-1', 'name': 'Keystone Fasteners', 'address': '300 Commerce Drive\nYork, PA 17402',

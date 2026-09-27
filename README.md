@@ -53,6 +53,7 @@ Use a dedicated account/home with only the authorized tools and skills for this 
 
 ```bash
 mkdir -p homes/codex-sol
+printf '[features]\napps = false\nplugins = false\n' > homes/codex-sol/config.toml
 CODEX_HOME="$PWD/homes/codex-sol" codex login
 export BENCH_RECALC_DOCKER_IMAGE=bench-recalc:release
 python bench/run.py --docker business-bench:release \

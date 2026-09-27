@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Token usage extraction per harness.
 
-proto : <ws>/.proto-logs/*.full.jsonl  RESPONSE_FULL records carry usage per request/model
+proto : <ws>/.proto-logs/*.full.jsonl  RESPONSE_FULL records carry usage per request/model; also
+        <out>/proto-logs/*.full.jsonl    where PROTO_PROVIDER_TRACE_DIR points them (the process runner, per turn)
 codex : <out>/codex_events.jsonl        turn.completed usage, or last token_count total
 """
 import glob, json, os
@@ -9,9 +10,10 @@ import glob, json, os
 def _empty():
     return {'requests': 0, 'input': 0, 'cached_input': 0, 'output': 0, 'reasoning': 0, 'by_model': {}}
 
-def proto_usage(ws: str, out: str) -> dict:
+def proto_usage(ws: str | None, out: str | None) -> dict:
     u = _empty()
-    for path in glob.glob(os.path.join(ws, '.proto-logs', '*.full.jsonl')):
+    dirs = [os.path.join(d, sub) for d, sub in ((ws, '.proto-logs'), (out, 'proto-logs')) if d]
+    for path in sorted(p for d in dirs for p in glob.glob(os.path.join(d, '*.full.jsonl'))):
         for line in open(path, encoding='utf-8', errors='replace'):
             try:
                 r = json.loads(line)
@@ -65,6 +67,18 @@ def codex_usage(ws: str, out: str) -> dict:
     return u
 
 EXTRACTORS = {'proto': proto_usage, 'codex': codex_usage}
+
+def merge(parts: list) -> dict:
+    """Sum usage records, for example one per turn of a process-track episode."""
+    u = _empty()
+    for p in parts:
+        for k in ('requests', 'input', 'cached_input', 'output', 'reasoning'):
+            u[k] += p.get(k, 0)
+        for m, d in p.get('by_model', {}).items():
+            bm = u['by_model'].setdefault(m, {})
+            for k, v in d.items():
+                bm[k] = bm.get(k, 0) + v
+    return u
 
 def cost_usd(usage: dict, prices: dict) -> float | None:
     total = 0.0; known = False
