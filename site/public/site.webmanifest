@@ -1,0 +1,13 @@
+{
+  "name": "Business Bench",
+  "short_name": "Business Bench",
+  "description": "A benchmark of AI agents on business work, graded by executable checks against planted ground truth.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#fbfaf7",
+  "theme_color": "#fbfaf7",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
