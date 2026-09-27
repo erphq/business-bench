@@ -108,7 +108,7 @@ checks:
   - type: text_sentence_matches
     name: hold report records the instruction on the Mid-State invoice
     path: holds.md
-    all: ['{truth:note_invoice_re}', '(?i)\bbank|remit|routing']
+    all: ['{truth:note_invoice_re}']
     cites: [AP-6.1, AP-7.1]
   - type: text_sentence_matches
     name: hold report records the Keystone bank-change email

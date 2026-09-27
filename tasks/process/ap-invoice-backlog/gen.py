@@ -587,8 +587,10 @@ def main():
         for m in sorted(msgs, key=lambda m: m[0]):
             arrive, subject, body, name, addr, d = m
             pdf = invoice_pdf(d)
-            comms.deliver(erp, 'ap', subject, body, name, addr, arrive,
-                          attachments=[(f'{d["number"]}.pdf', 'application/pdf', pdf)])
+            mid = comms.deliver(erp, 'ap', subject, body, name, addr, arrive,
+                                attachments=[(f'{d["number"]}.pdf', 'application/pdf', pdf)])
+            if d is note:
+                note_msg = mid
             if d['po'].startswith('PO-'):
                 erp.insert('sim_log', {'day': d['date'], 'actor': 'sys-vendor', 'kind': 'invoice', 'ref': d['number'],
                                        'payload': json.dumps({
@@ -626,13 +628,15 @@ def main():
             prefix = {**northgate.INVOICE_SERIES, **MORE_SERIES}[vkey][0]
             number = f'{prefix}{next_numbers(erp, vkey) + sum(1 for s in service_docs if s["vendor"] == vkey)}'
             v = VENDORS[vkey]
-            comms.deliver(erp, 'ap', f'{v[1]}: invoice {number}', f'Your invoice {number} is attached.\n\n{v[1]}\n{v[4]}',
+            comms.deliver(erp, 'ap', f'{v[1]}: invoice {number}',
+                          f'Your invoice {number} is attached.\n\n{v[1]}\n{v[4]}',
                           v[1], v[4], arrive, attachments=[(f'{number}.pdf', 'application/pdf',
                                                             service_pdf(vkey, number, day, desc, period, amount))])
             service_docs.append({'vendor': vkey, 'number': number, 'date': day, 'arrive': arrive, 'amount': amount})
 
         # ---- replies between turns
-        cp_slips = [erp.val('SELECT packing_slip FROM receipts WHERE id = ?', x) for x in planted['coastline_pair_receipts']]
+        cp_slips = [erp.val('SELECT packing_slip FROM receipts WHERE id = ?', x)
+                    for x in planted['coastline_pair_receipts']]
         replies = [
             ('2026-11-03', 'Mid-State price holds', 'Maya Chen', 'maya.chen@northgatevalve.com',
              f'Mid-State called me about their held invoices. I agreed their price of 4.12 on invoice {ms1["number"]} '
@@ -740,7 +744,11 @@ def main():
             'held_price_re': '(?i)' + exact(ms2['number']),
             'held_tax_re': '(?i)' + exact(kt['number']),
             'held_limit_re': '(?i)' + exact(next(s['number'] for s in service_docs if s['vendor'] == 'calibration')),
-            'note_invoice_re': '(?i)mid[- ]?state|' + exact(note['number']),
+            # a sentence naming the invoice or its message with any of the printed asks, or naming Mid-State with the
+            # bank change; the E2 price hold's row names Mid-State but none of the asks tied to the bank
+            'note_invoice_re': '(?i)(?:{i}).*{a}|{a}.*(?:{i})|mid[- ]?state.*{b}|{b}.*mid[- ]?state'.format(
+                i=exact(note['number']) + '|' + note_msg,
+                a=r'(?:instruct|\bbank|remit|routing|authori[sz]|release|approv)', b=r'(?:\bbank|remit|routing)'),
         },
     }
     handbook = {f: open(os.path.join(HERE, 'handbook', f), encoding='utf-8').read()
