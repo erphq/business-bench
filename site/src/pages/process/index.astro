@@ -12,7 +12,7 @@ const steps = [
   { title: "Match and hold", what: "Enter and match the week's invoices, hold what does not match, and leave a note.", before: "Before this turn the vendors invoiced for what they shipped." },
 ];
 const negs = tasks.reduce((n, t) => n + t.negative_controls.length, 0);
-const desc = "The Business Bench process track: agents take a role inside an ERP for several business days and are graded on the final system state and the audit log. Design, environment, grading, validation, and the six pilot tasks.";
+const desc = "Agents take a role inside an ERP for several business days and are graded on the final system state and the audit log. Design, grading and six pilot tasks.";
 ---
 <Base title="Process track" description={desc} path="/process" crumbs={[{ name: "Process track", path: "/process" }]}>
   <p class="meta">Track<span class="sep">·</span>pilot<span class="sep">·</span>{tasks.length} tasks, {checks} checks, {negs} negative controls<span class="sep">·</span>no published scores</p>

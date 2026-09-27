@@ -12,8 +12,10 @@ for (const a of ARMS) for (const r of runs[a.id]) for (const c of r.checks) if (
 const med = (xs: number[]) => { const s = xs.filter((x) => x != null).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
 const mean = (xs: (number | null)[]) => { const s = xs.filter((x): x is number => x != null); return s.length ? s.reduce((a, b) => a + b, 0) / s.length : null; };
 const desc = `${task.title}. A ${CATEGORY_LABEL[task.category].toLowerCase()} task from Business Bench: ${task.ask.slice(0, 140)}`;
+// Two tasks can share a title (a task and its variant); the page title then carries the id so each is distinct.
+const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ? `${task.title} (${task.id})` : task.title;
 ---
-<Base title={task.title} description={desc} path={`/tasks/${task.id}`} crumbs={[{ name: "Tasks", path: "/tasks" }, { name: task.title, path: `/tasks/${task.id}` }]}>
+<Base title={pageTitle} description={desc} path={`/tasks/${task.id}`} crumbs={[{ name: "Tasks", path: "/tasks" }, { name: task.title, path: `/tasks/${task.id}` }]}>
   <p class="meta"><a href="/tasks">Tasks</a><span class="sep">·</span>desk<span class="sep">·</span><a href={`/tasks#${task.category}`}>{CATEGORY_LABEL[task.category]}</a></p>
   <h1>{task.title}</h1>
   <p class="meta mono" style="margin-top:12px;font-size:12.5px">{task.id}<span class="sep">·</span>time budget {task.timeout_s} s<span class="sep">·</span><a href={`${REPO}/tree/main/tasks/desk/${task.id}`} rel="noopener">source</a></p>

@@ -20,7 +20,7 @@ const M = matrix();
 const passN = (t: string, arm: string) => M[t][arm].filter((r) => r.passed).length;
 const differ = Object.keys(M).filter((t) => passN(t, lead.id) !== passN(t, other.id)).length;
 const differ2 = Object.keys(M).filter((t) => Math.abs(passN(t, lead.id) - passN(t, other.id)) >= 2).length;
-const desc = "Seven findings from the Business Bench desk comparison: the conjunctive gap between check-level and task-level pass rates, near-miss failures, pass@k versus pass^k, category divergence, cost per pass, scorer sensitivity and saturation.";
+const desc = "Seven findings from the desk comparison: the conjunctive gap, near misses, pass@k versus pass^k, category differences, cost per pass and scorer sensitivity.";
 ---
 <Base title="Findings" description={desc} path="/analysis">
   <p class="meta">Desk track<span class="sep">·</span>computed from the released ledger when the site is built<span class="sep">·</span>release <code>{prov.campaign}</code></p>
