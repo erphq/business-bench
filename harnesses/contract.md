@@ -13,6 +13,8 @@
 | Cell | Data home | Personal skills / plugins | Shell environment |
 |---|---|---|---|
 | proto-glm | per-run copy of `homes/proto-glm` via `PROTO_APP_HOME_OVERRIDE` (BYOK config, model pinned) | none: builtin skills only | operator's real HOME and PATH |
-| codex-sol | `homes/codex-sol` via `CODEX_HOME` (auth.json symlinked, sessions land here) | none: fake `HOME` hides `~/.agents/skills`; its `.zshenv` restores the real HOME for spawned shells | operator's real HOME and PATH |
+| codex-sol | `homes/codex-sol` via `CODEX_HOME` (auth.json symlinked, sessions land here; the process runner gives each turn a fresh copy) | none: fake `HOME` hides `~/.agents/skills`; its `.zshenv` restores the real HOME for spawned shells; the home's `config.toml` turns off the ChatGPT account's apps and plugins | operator's real HOME and PATH |
 
 Known residue: Codex still tries to start a Cloudflare MCP connector attached to the ChatGPT account and logs an auth error; it does not affect runs.
+
+Process track: the runner copies `homes/<cell>` into each turn (symlinks kept, so a login is linked, never copied), deletes `auth.json` and `codex-oauth.json` from the copy after the turn, and points Proto's request traces (`PROTO_PROVIDER_TRACE_DIR`) at the turn's output folder, outside the agent's workspace.

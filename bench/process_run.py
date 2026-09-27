@@ -39,7 +39,7 @@ sys.path.insert(0, os.path.join(ROOT, 'tasks', 'lib'))
 
 from process_grade import grade_process, materialize  # noqa: E402
 from procgen.episode import Api, Server, load_meta, preamble  # noqa: E402
-from usage import EXTRACTORS, cost_usd  # noqa: E402
+from usage import EXTRACTORS, cost_usd, merge  # noqa: E402
 
 TASKS = os.path.join(ROOT, 'tasks', 'process')
 CACHE = os.path.join(ROOT, '.cache', 'process')
@@ -138,6 +138,19 @@ def _erp_bin(dirpath: str) -> str:
     return dirpath
 
 
+CREDENTIAL_FILES = ('auth.json', 'codex-oauth.json')
+
+
+def _scrub(home: str) -> None:
+    """Delete login files from a per-turn harness home before it is kept with the results. The template's login is a
+    symlink to the operator's, so this removes the link and never its target; a harness's own imported copy is removed
+    outright."""
+    for dirpath, _dirs, files in os.walk(home):
+        for f in files:
+            if f in CREDENTIAL_FILES:
+                os.unlink(os.path.join(dirpath, f))
+
+
 def _run_shell(harness: str, ws: str, prompt_file: str, out: str, env: dict, timeout: int) -> tuple:
     adapter = os.path.join(ROOT, 'harnesses', f'{harness}.sh')
     t0 = time.time()
@@ -181,6 +194,7 @@ def run_attempt(task: str, harness: str, seed: int, run_idx: int, results_root: 
     if policies is not None and harness not in policies:
         server.stop()
         raise ValueError(f'unknown harness or policy {harness!r}; policies: {sorted(policies)}')
+    fam = 'proto' if harness.startswith('proto') else harness.split('-')[0]
     turns, error, t_start = [], None, time.time()
     try:
         for turn in meta['turns']:
@@ -197,12 +211,21 @@ def run_attempt(task: str, harness: str, seed: int, run_idx: int, results_root: 
                 env = dict(os.environ, ERP_URL=server.url, ERP_TOKEN=meta['token'], BENCH_TIMEOUT_MS=str(budget * 1000),
                            BENCH_RUN_DIR=run_dir, BENCH_ROOT=ROOT, BENCH_TURN=str(n),
                            PATH=bin_dir + os.pathsep + os.environ.get('PATH', ''))
-                tmpl = os.path.join(ROOT, 'homes', harness)
-                if os.path.isdir(tmpl):   # a fresh harness home every turn: nothing carries over but the ERP and the folder
-                    home = os.path.join(tdir_n, 'home')
-                    shutil.copytree(tmpl, home)
-                    env['PROTO_BENCH_HOME'] = home
-                code, timed_out, wall = _run_shell(harness, ws, prompt_file, out, env, budget)
+                # A fresh harness home every turn: nothing carries over but the ERP and the folder. A login in the
+                # template is a symlink to the operator's and stays one (symlinks=True), so no credential is copied.
+                tmpl, home = os.path.join(ROOT, 'homes', harness), os.path.join(tdir_n, 'home')
+                if os.path.isdir(tmpl):
+                    shutil.copytree(tmpl, home, symlinks=True)
+                    env['CODEX_BENCH_HOME' if fam == 'codex' else 'PROTO_BENCH_HOME'] = home
+                if fam == 'proto':
+                    # Request logs carry token usage; they go beside the turn's output, outside the agent's folder.
+                    env['PROTO_PROVIDER_TRACE_DIR'] = os.path.join(out, 'proto-logs')
+                    if harness.endswith('-sub'):   # the ChatGPT subscription: Proto imports the Codex login, read-only
+                        env.setdefault('CODEX_BENCH_HOME', os.path.join(ROOT, 'homes', 'codex-sol'))
+                try:
+                    code, timed_out, wall = _run_shell(harness, ws, prompt_file, out, env, budget)
+                finally:
+                    _scrub(home)
             else:
                 t0, code, timed_out = time.time(), 0, False
                 try:
@@ -221,18 +244,10 @@ def run_attempt(task: str, harness: str, seed: int, run_idx: int, results_root: 
     shutil.copyfile(db, final_db)
     shutil.copytree(ws, os.path.join(run_dir, 'ws'), ignore=shutil.ignore_patterns('handbook'))
     shutil.rmtree(erp_dir, ignore_errors=True)
-    fam = 'proto' if harness.startswith('proto') else harness.split('-')[0]
-    usage = EXTRACTORS['proto'](ws, None) if fam == 'proto' else {}
-    if fam == 'codex':
-        usage = {'requests': 0, 'input': 0, 'cached_input': 0, 'output': 0, 'reasoning': 0, 'by_model': {}}
-        for t in turns:
-            u = EXTRACTORS['codex'](ws, os.path.join(run_dir, 'turns', str(t['n']), 'out'))
-            for k in ('requests', 'input', 'cached_input', 'output', 'reasoning'):
-                usage[k] += u.get(k, 0)
-            for m, d in u.get('by_model', {}).items():
-                bm = usage['by_model'].setdefault(m, {k: 0 for k in d})
-                for k, v in d.items():
-                    bm[k] = bm.get(k, 0) + v
+    usage = {}
+    if fam in EXTRACTORS:
+        outs = [os.path.join(run_dir, 'turns', str(t['n']), 'out') for t in turns]
+        usage = merge([EXTRACTORS[fam](ws if i == 0 else None, o) for i, o in enumerate(outs)])
     shutil.rmtree(ws, ignore_errors=True)
     params = {'start': meta['start'], 'agent': meta['agent_user'], 'token_id': meta['token_id']}
     if reference_pass:
