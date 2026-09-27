@@ -2,15 +2,22 @@
 
 A benchmark of AI agents on business work. Every task is generated with a planted ground truth and graded by executable checks. Grading uses no rubric or model judge, and an attempt passes only if every required check passes.
 
-[businessbench.org](https://businessbench.org) · [paper](https://businessbench.org/paper) · [desk results](https://businessbench.org/results) · [findings](https://businessbench.org/analysis) · [process track](https://businessbench.org/process) · [self-audit](https://businessbench.org/audit) · MIT licence
+[businessbench.org](https://businessbench.org) · [paper](https://businessbench.org/paper) · [desk results](https://businessbench.org/results) · [findings](https://businessbench.org/analysis) · [process track](https://businessbench.org/process) · [self-audit](https://businessbench.org/audit)
 
-| Track | The agent receives | What is graded | Tasks | Status |
-|---|---|---|---|---|
-| Desk | A folder of business files, some deliberately messy, and a short request | The files it leaves: identifier sets, keyed values, workbooks after native recalculation, sentence-level text rules | 187 | Complete two-system comparison, 1,122 attempts |
-| Build | A requirement and seed data for an internal application, then three change requests | A 14-item enterprise baseline and an application checklist, worked by a tester on the live application | 20 | Tasks released; no scores published |
-| Process | A role in bb-erp, the benchmark's ERP, with a company handbook and requests from colleagues over several business days | The final ERP state, the audit log of every request, control-account ties and any notes asked for | 6 (pilot) | Pilot validated; first campaign running |
+**Three tracks**
 
-**Desk comparison** (release `complete-desk-comparison-2026-09-16`, frozen `conservative-v7` scorer): Proto + DeepSeek V4.1 Flash passed 507 of 561 attempts (90.4%) and Codex + GPT-5.6-sol 473 (84.3%). The paired task-bootstrap difference is +6.1 points, with a 95% interval of +1.2 to +11.1. The two systems differ in model, harness and run dates. ERP.AI publishes the benchmark and develops Proto; the [self-audit](https://businessbench.org/audit) assesses that conflict and the scorer's effect on every verdict.
+- **Desk**, 187 tasks. The agent turns a folder of business files and a short request into deliverables, graded on identifier sets, keyed values, recalculated workbooks and sentence-level text rules. *Complete two-system comparison, 1,122 attempts.*
+- **Build**, 20 applications. The agent builds an internal application from a requirement and seed data, then makes three changes; a tester works a 14-item enterprise baseline and an application checklist. *Tasks released, no scores published.*
+- **Process**, 6 pilot tasks. The agent holds a role in bb-erp, the benchmark's ERP, and works through requests over several business days; graded on the final ERP state, the audit log, control-account ties and requested notes. *Pilot validated, first campaign running.*
+
+**Desk comparison**, release `complete-desk-comparison-2026-09-16`, frozen `conservative-v7` scorer:
+
+| System | Passed | Rate |
+|---|---:|---:|
+| Proto + DeepSeek V4.1 Flash | 507 / 561 | 90.4% |
+| Codex + GPT-5.6-sol | 473 / 561 | 84.3% |
+
+The paired task-bootstrap difference is +6.1 points (95% interval +1.2 to +11.1). The two systems differ in model, harness and run dates. ERP.AI publishes the benchmark and develops Proto; the [self-audit](https://businessbench.org/audit) assesses that conflict and the scorer's effect on every verdict.
 
 This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials or tuning experiments. The repository is public, so its task set is exposed; each generator takes a `--seed` for re-rolled private variants.
 
