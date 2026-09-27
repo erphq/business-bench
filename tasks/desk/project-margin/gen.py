@@ -2,6 +2,9 @@
 """project-margin: revenue, cost and margin per job for an interiors studio, with the loss-makers flagged.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off drafts,unbilled --out DIR     # same draw, those pitfalls removed, same answer
+    python gen.py --mutant credit_brackets --out DIR        # a deliverable that falls for one trap
 
 Business: a nine-job interior fit-out studio. Revenue and costs live on separate sheets of the same
 workbook and are keyed differently, and the hours nobody has invoiced yet are in their own export.
@@ -22,6 +25,26 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "join_key": "Costs sheet keyed by a noisy job name instead of the job code",
+        "drafts": "draft and written-off invoices listed on the Revenue sheet",
+        "unbilled": "unbilled hours in a separate export, costed as hours x cost rate",
+        "credit_brackets": "vendor credits written as bracketed amounts",
+        "format_noise": "text amounts, three date formats, merged titles and instruction rows",
+    },
+    fixed={
+        "missing_job": "one job has no invoiced revenue and must still be reported",
+        "zero_div": "margin % must survive a job with zero revenue",
+    },
+    requires={"credit_brackets": "format_noise"},
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["join_key", "drafts", "unbilled", "credit_brackets", "missing_job", "zero_div", "format_noise"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -52,9 +75,12 @@ def stable_xlsx(path: str, sheets: dict, creator: str = "Export") -> None:
     with _zip.ZipFile(buf, "w", _zip.ZIP_DEFLATED) as out:
         for name, data in items:
             if name == "docProps/core.xml":
-                data = _re.sub(rb"<dcterms:modified[^>]*>[^<]*</dcterms:modified>",
-                               b'<dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-15T09:00:00Z</dcterms:modified>',
-                               data)
+                # Replace the timestamp only and keep the element's own attributes. When openpyxl
+                # serialises through lxml, the xsi namespace is declared on the element rather than
+                # the root, and rewriting the whole element left an undeclared prefix that makes
+                # the workbook unreadable to openpyxl/pandas. Without lxml the bytes are unchanged.
+                data = _re.sub(rb"(<dcterms:modified[^>]*>)[^<]*(</dcterms:modified>)",
+                               rb"\g<1>2026-01-15T09:00:00Z\g<2>", data)
             zi = _zip.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
             zi.compress_type = _zip.ZIP_DEFLATED
             out.writestr(zi, data)
@@ -207,7 +233,7 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverables
 
-def report_sheets(rev_rows, cost_rows, jobs) -> dict:
+def report_sheets(rev_rows, cost_rows, jobs, guard_zero: bool = True) -> dict:
     n, m = len(rev_rows) + 1, len(cost_rows) + 1
     rows = []
     for i, j in enumerate(jobs, start=2):
@@ -215,7 +241,7 @@ def report_sheets(rev_rows, cost_rows, jobs) -> dict:
                      f"=SUMIF(Revenue!$B$2:$B${n},$A{i},Revenue!$C$2:$C${n})",
                      f"=SUMIF(Costs!$B$2:$B${m},$A{i},Costs!$D$2:$D${m})",
                      f"=C{i}-D{i}",
-                     f'=IF(C{i}=0,"n/a",ROUND(E{i}/C{i},4))',
+                     f'=IF(C{i}=0,"n/a",ROUND(E{i}/C{i},4))' if guard_zero else f"=ROUND(E{i}/C{i},4)",
                      f'=IF(E{i}<0,"NEGATIVE","")'])
     last = 1 + len(jobs)
     rows.append(["Total - all jobs", "", f"=SUM(C2:C{last})", f"=SUM(D2:D{last})", f"=SUM(E2:E{last})",
@@ -231,56 +257,107 @@ def report_sheets(rev_rows, cost_rows, jobs) -> dict:
     }
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def workspace_sheets(d: dict, traps: TrapSet) -> dict:
+    """The ledger workbook the agent receives. With every trap on this is exactly the canonical workbook."""
+    noisy = traps.on("format_noise")
+
+    def amount(x: float):
+        if not noisy:
+            return x
+        if x < 0 and not traps.on("credit_brackets"):
+            return f"-${-x:,.2f}"
+        return money_str(x, 5 if x < 0 else 1)
+
+    def when(day, key: str):
+        return date_variant(day, sum(ord(c) for c in key) % 3) if noisy else day
+
+    def job_key(x: dict) -> str:
+        if traps.on("join_key"):
+            return name_noise(rng(sum(ord(c) for c in x["id"])), x["job"]["name"])
+        return x["job"]["code"]
+
+    invoices = d["invoices"] if traps.on("drafts") else [x for x in d["invoices"] if x["status"] == "Invoiced"]
+    costs = d["costs"]
+    if not traps.on("unbilled"):
+        costs = sorted(costs + unbilled_cost_rows(d), key=lambda x: (x["date"], x["id"]))
+    revenue = {"merged_title": "Fees raised - first half 2026",
+               "preamble": [["Status: Invoiced = sent to the client. Draft = not sent."]],
+               "header": ["Invoice No", "Date", "Job Code", "Description", "Amount", "Status"],
+               "rows": [[x["no"], when(x["date"], x["no"]), x["job"]["code"],
+                         x["desc"], money_str(x["amount"], 1) if noisy else x["amount"], x["status"]] for x in invoices],
+               "widths": {"A": 12, "C": 12, "D": 30, "E": 14}}
+    cost_sheet = {"merged_title": "Job costs - first half 2026",
+                  "preamble": [["Entered against the job name. Credits from suppliers show in brackets."]],
+                  "header": ["Cost ID", "Date", "Job" if traps.on("join_key") else "Job Code", "Category", "Detail",
+                             "Amount"],
+                  "rows": [[x["id"], when(x["date"], x["id"]), job_key(x), x["cat"], x["desc"], amount(x["amount"])]
+                           for x in costs],
+                  "widths": {"A": 12, "C": 26, "D": 16, "E": 34, "F": 14}}
+    jobs = {"merged_title": "Job list", "header": ["Job Code", "Job", "Client", "Status"],
+            "rows": [[j["code"], j["name"], j["client"], "Live" if j["code"] != "P-2403" else "Practical completion"]
+                     for j in d["jobs"]], "widths": {"B": 26, "C": 28}}
+    if not noisy:
+        for sheet in (revenue, cost_sheet, jobs):
+            sheet.pop("merged_title", None); sheet.pop("preamble", None)
+    return {"Revenue": revenue, "Costs": cost_sheet, "Jobs": jobs}
+
+
+def unbilled_cost_rows(d: dict) -> list[dict]:
+    """Unbilled hours as Costs-sheet rows, used when the `unbilled` trap is off. Ids and amounts match the
+    reference solution's UB- rows, so the answer is unchanged."""
+    return [{"id": f"UB-{i + 1:03d}", "job": u["job"], "cat": "Unbilled time", "date": u["date"],
+             "amount": round(u["amount"], 2),
+             "desc": f"Unbilled {u['role'].lower()} time, {u['hours']:.1f} h at {u['rate']:.2f}"}
+            for i, u in enumerate(d["unbilled"])]
+
+
+def principal_note(traps: TrapSet) -> str:
+    cost_para = ("Cost is everything the job has consumed. The hours in the unbilled file are hours we have paid for,\n"
+                 "so they are cost at the cost rate on the row, whether or not the client ever sees a bill for them.\n"
+                 if traps.on("unbilled") else
+                 "Cost is everything the job has consumed, including the unbilled hours already on the Costs sheet\n"
+                 "at cost rate, whether or not the client ever sees a bill for them.\n")
+    return ("Job margins for the partners' meeting\n"
+            "\n"
+            "I want to see, job by job, what we have actually earned against what it has actually cost us, and\n"
+            "I want the ones that are under water flagged so we stop arguing about which they are.\n"
+            "\n"
+            "Revenue is what we have invoiced. A draft invoice is not revenue - it is a hope. Anything we wrote\n"
+            "off is not revenue either.\n"
+            "\n"
+            + cost_para +
+            "Supplier credits come off the cost of the job they were raised against.\n"
+            "\n"
+            "Every job on the job list goes on the report, including the ones we have not billed yet.\n"
+            "\n"
+            "- Fatima\n")
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     jobs = {j["code"]: j for j in d["jobs"]}
     neg = d["negatives"]
     worst = neg[0]
 
     # ---- workspace ----
-    stable_xlsx(os.path.join(ws, "project_ledger_2026_h1.xlsx"), {
-        "Revenue": {"merged_title": "Fees raised - first half 2026",
-                    "preamble": [["Status: Invoiced = sent to the client. Draft = not sent."]],
-                    "header": ["Invoice No", "Date", "Job Code", "Description", "Amount", "Status"],
-                    "rows": [[x["no"], date_variant(x["date"], sum(ord(c) for c in x["no"]) % 3), x["job"]["code"],
-                              x["desc"], money_str(x["amount"], 1), x["status"]] for x in d["invoices"]],
-                    "widths": {"A": 12, "C": 12, "D": 30, "E": 14}},
-        "Costs": {"merged_title": "Job costs - first half 2026",
-                  "preamble": [["Entered against the job name. Credits from suppliers show in brackets."]],
-                  "header": ["Cost ID", "Date", "Job", "Category", "Detail", "Amount"],
-                  "rows": [[x["id"], date_variant(x["date"], sum(ord(c) for c in x["id"]) % 3),
-                            name_noise(rng(sum(ord(c) for c in x["id"])), x["job"]["name"]), x["cat"], x["desc"],
-                            money_str(x["amount"], 5 if x["amount"] < 0 else 1)] for x in d["costs"]],
-                  "widths": {"A": 12, "C": 26, "D": 16, "E": 34, "F": 14}},
-        "Jobs": {"merged_title": "Job list", "header": ["Job Code", "Job", "Client", "Status"],
-                 "rows": [[j["code"], j["name"], j["client"], "Live" if j["code"] != "P-2403" else "Practical completion"]
-                          for j in d["jobs"]], "widths": {"B": 26, "C": 28}},
-    }, creator="Studio admin")
-    write_csv(os.path.join(ws, "unbilled_time_to_date.csv"),
-              ["Date", "Job Code", "Staff", "Role", "Task", "Hours", "Cost rate"],
-              [[date_variant(u["date"], 0), u["job"]["code"], u["who"], u["role"], u["task"],
-                f"{u['hours']:.1f}", money_str(u["rate"], 2)] for u in d["unbilled"]],
-              preamble=["Time logged but not yet invoiced", "as at 06/30/2026"])
-    write_text(os.path.join(ws, "note_from_the_principal.txt"),
-               "Job margins for the partners' meeting\n"
-               "\n"
-               "I want to see, job by job, what we have actually earned against what it has actually cost us, and\n"
-               "I want the ones that are under water flagged so we stop arguing about which they are.\n"
-               "\n"
-               "Revenue is what we have invoiced. A draft invoice is not revenue - it is a hope. Anything we wrote\n"
-               "off is not revenue either.\n"
-               "\n"
-               "Cost is everything the job has consumed. The hours in the unbilled file are hours we have paid for,\n"
-               "so they are cost at the cost rate on the row, whether or not the client ever sees a bill for them.\n"
-               "Supplier credits come off the cost of the job they were raised against.\n"
-               "\n"
-               "Every job on the job list goes on the report, including the ones we have not billed yet.\n"
-               "\n"
-               "- Fatima\n")
+    stable_xlsx(os.path.join(ws, "project_ledger_2026_h1.xlsx"), workspace_sheets(d, traps), creator="Studio admin")
+    if traps.on("unbilled"):
+        noisy = traps.on("format_noise")
+        write_csv(os.path.join(ws, "unbilled_time_to_date.csv"),
+                  ["Date", "Job Code", "Staff", "Role", "Task", "Hours", "Cost rate"],
+                  [[date_variant(u["date"], 0), u["job"]["code"], u["who"], u["role"], u["task"],
+                    f"{u['hours']:.1f}", money_str(u["rate"], 2)] for u in d["unbilled"]],
+                  preamble=["Time logged but not yet invoiced", "as at 06/30/2026"] if noisy else None)
+    write_text(os.path.join(ws, "note_from_the_principal.txt"), principal_note(traps))
 
     # ---- reference ----
     write_csv(os.path.join(ref, "job_margins.csv"), ["code", "job", "revenue", "cost", "margin"],
@@ -302,14 +379,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
     tok = worst["name"].split()[0].lower()
-    write_task_yaml(HERE, {
+    spec = {
         "id": "project-margin", "track": "desk", "category": "reports",
         "title": "Margin by job, with the loss-makers flagged",
         "ask": ("Fatima wants to see, job by job, what we have earned against what the job has cost us, with the ones "
                 "losing money flagged. Save it as margins.xlsx with live formulas and write memo.md with the "
                 "headline. Her note says what counts as revenue and cost.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "costs are on a second sheet of the workbook keyed by job name (with case and spacing noise) while "
             "revenue is keyed by job code, so the two only join through the Jobs sheet "
             "(checks: Cedar Point cost; total margin)",
@@ -325,7 +402,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "margin percentage has to survive a job with zero revenue without an error cell (check: no error cells)",
             "amounts are '$12,345.67' text with bracketed negatives, dates come in three formats, and the two "
             "ledger sheets each carry a merged title and an instruction row (check: total margin across all jobs)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "margins.xlsx exists", "path": "margins.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "margins.xlsx", "min_count": 12},
@@ -348,7 +425,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
                      r"\bbelow zero\b|\bunprofitable\b|\bovers?pent\b)"],
              "none": [r"\bbroke even\b", r"\bno (loss|losses)\b"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls. Recorded so the ledger and the
+        # measurement graph can tell a variant attempt from a canonical one.
+        spec["variant"] = {"of": "project-margin", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} invoices={len(d['invoices'])} costs={len(d['costs'])} unbilled={len(d['unbilled'])}")
     for j in d["jobs"]:
         print(f"  {j['code']} {j['name']:24} rev={j['revenue']:>12,.2f} cost={j['cost']:>12,.2f} margin={j['margin']:>12,.2f}")
@@ -391,15 +473,77 @@ def write_naive(d: dict, out: str) -> None:
                "studio is comfortably ahead for the half.\n")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_inputs(d: dict, trap: str) -> tuple[list, list, list, bool]:
+    """(revenue items, cost items, jobs on the report, zero guard) for a deliverable that is right in
+    every respect except that it falls for `trap`."""
+    inv = [x for x in d["invoices"] if x["status"] == "Invoiced"]
+    costs, unbilled, jobs, guard = list(d["costs"]), unbilled_cost_rows(d), list(d["jobs"]), True
+    if trap == "join_key":        # exact join on the job name drops every row whose name carries noise
+        costs = [c for c in costs
+                 if name_noise(rng(sum(ord(ch) for ch in c["id"])), c["job"]["name"]) == c["job"]["name"]]
+    elif trap == "drafts":        # every listed invoice counted as revenue
+        inv = list(d["invoices"])
+    elif trap == "unbilled":      # the unbilled export never opened
+        unbilled = []
+    elif trap == "credit_brackets":  # bracketed credits read as positive cost
+        costs = [dict(c, amount=abs(c["amount"])) for c in costs]
+    elif trap == "format_noise":  # the instruction row taken as the header: first data row of each ledger lost
+        inv = [x for x in d["invoices"][1:] if x["status"] == "Invoiced"]
+        costs = costs[1:]
+    elif trap == "missing_job":   # report built from the revenue sheet, so the unbilled job is absent
+        billed = {x["job"]["code"] for x in inv}
+        jobs = [j for j in jobs if j["code"] in billed]
+    elif trap == "zero_div":      # margin % divides by zero revenue
+        guard = False
+    else:
+        raise KeyError(trap)
+    return inv, costs + unbilled, jobs, guard
+
+
+def mutant_memo(inv: list, costs: list, jobs: list) -> str:
+    rows = []
+    for j in jobs:
+        rev = round(sum(x["amount"] for x in inv if x["job"] is j), 2)
+        cost = round(sum(c["amount"] for c in costs if c["job"] is j), 2)
+        rows.append((j, rev, cost, round(rev - cost, 2)))
+    tr, tc = round(sum(r[1] for r in rows), 2), round(sum(r[2] for r in rows), 2)
+    text = (f"# Job margins, first half 2026\n\nAcross the jobs we invoiced {tr:,.2f} against costs of {tc:,.2f}, "
+            f"a margin of {tr - tc:,.2f}.\n\n")
+    neg = sorted((r for r in rows if r[3] < 0), key=lambda r: r[3])
+    if neg:
+        text += (f"{neg[0][0]['name']} is losing money, the worst at {neg[0][3]:,.2f}."
+                 + "".join(f" {r[0]['name']} is also negative at {r[3]:,.2f}." for r in neg[1:]) + "\n")
+    else:
+        text += "Every job is making money.\n"
+    return text
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    inv, costs, jobs, guard = mutant_inputs(d, trap)
+    os.makedirs(out, exist_ok=True)
+    rev_rows = [[x["no"], x["job"]["name"], x["amount"]] for x in inv]
+    cost_rows = [[c["id"], c["job"]["name"], c["cat"], c["amount"]] for c in costs]
+    stable_xlsx(os.path.join(out, "margins.xlsx"), report_sheets(rev_rows, cost_rows, jobs, guard), creator="mutant")
+    write_text(os.path.join(out, "memo.md"), mutant_memo(inv, costs, jobs))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

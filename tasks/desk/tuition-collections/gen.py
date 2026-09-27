@@ -53,8 +53,8 @@ def stable_xlsx(path: str, sheets: dict, creator: str = "Export") -> None:
     with _zip.ZipFile(buf, "w", _zip.ZIP_DEFLATED) as out:
         for name, data in items:
             if name == "docProps/core.xml":
-                data = _re.sub(rb"<dcterms:modified[^>]*>[^<]*</dcterms:modified>",
-                               b'<dcterms:modified xsi:type="dcterms:W3CDTF">2026-01-15T09:00:00Z</dcterms:modified>',
+                data = _re.sub(rb"(<dcterms:modified[^>]*>)[^<]*(</dcterms:modified>)",
+                               rb"\g<1>2026-01-15T09:00:00Z\g<2>",
                                data)
             zi = _zip.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
             zi.compress_type = _zip.ZIP_DEFLATED

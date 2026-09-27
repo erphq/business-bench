@@ -70,8 +70,8 @@ def normalize_zip(path: str):
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as zout:
         for name, data in items:
             if name == "docProps/core.xml":  # openpyxl re-stamps modified at save time
-                data = re.sub(rb"<dcterms:modified[^>]*>[^<]*</dcterms:modified>",
-                              b'<dcterms:modified xsi:type="dcterms:W3CDTF">2026-07-01T00:00:00Z</dcterms:modified>', data)
+                data = re.sub(rb"(<dcterms:modified[^>]*>)[^<]*(</dcterms:modified>)",
+                              rb"\g<1>2026-07-01T00:00:00Z\g<2>", data)
             zi = zipfile.ZipInfo(name, date_time=(2026, 7, 1, 0, 0, 0))
             zi.compress_type = zipfile.ZIP_DEFLATED
             zi.external_attr = 0o600 << 16
