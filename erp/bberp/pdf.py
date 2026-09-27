@@ -62,7 +62,7 @@ class Doc:
 
 def business_document(title: str, party_lines: list[str], meta: list[tuple[str, str]], columns: list[tuple[str, float]],
                       rows: list[list[str]], totals: list[tuple[str, str]] = (), notes: list[str] = (),
-                      heading: str = '') -> bytes:
+                      heading: str = '', totals_at: tuple[float, float] = (400, 490)) -> bytes:
     """A letterhead, a key/value block, a table and totals: the shape of an invoice or a packing slip.
     `columns` are (header, x position); numeric columns are right-aligned by the caller padding the text."""
     d = Doc()
@@ -94,8 +94,8 @@ def business_document(title: str, party_lines: list[str], meta: list[tuple[str, 
     d.rule(54, y - 6, 558)
     y += 10
     for k, v in totals:
-        d.text(400, y, k, 9, bold=True)
-        d.text(490, y, v, 9)
+        d.text(totals_at[0], y, k, 9, bold=True)
+        d.text(totals_at[1], y, v, 9)
         y += 13
     y += 10
     for n in notes:
