@@ -266,7 +266,7 @@ def void_invoice(erp: Erp, ctx: Ctx, inv_id: str, reason: str) -> None:
     if paid_cents(erp, inv_id):
         raise refused('has_payments', f'{inv_id} has payments; void them first')
     erp.touch('ap_invoice', inv_id)
-    ledger.reverse(erp, ctx, inv['posted_je'], reason=reason)
+    ledger.reverse_posting(erp, ctx, inv['posted_je'], reason=reason)
     for ln in erp.all("SELECT * FROM ap_invoice_lines WHERE inv_id = ? AND grni_cents IS NOT NULL", inv_id):
         pl = erp.one('SELECT * FROM po_lines WHERE po_id = ? AND line = ?', inv['po_id'], ln['po_line'])
         erp.update('po_lines', {'po_id': inv['po_id'], 'line': ln['po_line']},

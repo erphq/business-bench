@@ -22,6 +22,16 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Recently shipped
 
+- 2026-09-27: first analyst-band process task, `ap-invoice-backlog`. The AP
+  supervisor clears three weeks of vendor invoices over three turns: about 200
+  documents from 22 vendors in three layouts, with twelve planted exceptions,
+  four look-alikes, replies and a delivery between turns, and a hold report.
+  Sixteen negative controls; strict validation passes on seeds 0 to 4. bb-erp
+  changes: scheduled receipts in the world file (background receiving between
+  turns), an AP supervisor can void a validated invoice without journal-entry
+  rights, and a new audit rule flags a bank-change request made without a
+  call to the number on file. Committed before any agent attempt.
+
 - 2026-09-27: process track pilot campaign `pilot-process-2026-09-27`. Proto CLI
   0.2.119 and Codex CLI 0.158.0-alpha.2.1, both on gpt-5.6-sol through a ChatGPT
   subscription, each ran the six pilot tasks five times from seed 0. Both passed

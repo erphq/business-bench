@@ -168,6 +168,12 @@ def post_manual(erp: Erp, ctx: Ctx, je_id: str) -> None:
 
 def reverse(erp: Erp, ctx: Ctx, je_id: str, reverse_date: str | None = None, reason: str | None = None) -> str:
     ctx.require('je.post')
+    return reverse_posting(erp, ctx, je_id, reverse_date, reason)
+
+
+def reverse_posting(erp: Erp, ctx: Ctx, je_id: str, reverse_date: str | None = None, reason: str | None = None) -> str:
+    """The reversal itself. A subledger action that undoes its own posting (voiding an invoice) calls this under its
+    own permission, as validating an invoice posts without je.post."""
     je = _je(erp, je_id)
     if je['status'] != 'posted':
         raise refused('bad_status', f'{je_id} is {je["status"]}; only posted entries can be reversed')
