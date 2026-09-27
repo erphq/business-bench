@@ -226,6 +226,10 @@ def run_attempt(task: str, harness: str, seed: int, run_idx: int, results_root: 
                     code, timed_out, wall = _run_shell(harness, ws, prompt_file, out, env, budget)
                 finally:
                     _scrub(home)
+                if code in (126, 127) and wall < 5:   # the harness binary is missing or not executable
+                    error = f'turn {n}: the harness did not start (exit {code}); see turns/{n}/out/stderr.txt'
+                    turns.append({'n': n, 'date': turn['date'], 'exit_code': code, 'timed_out': False, 'wall_s': wall})
+                    break
             else:
                 t0, code, timed_out = time.time(), 0, False
                 try:
@@ -295,7 +299,7 @@ def main():
                 print(f'[ERROR] {futs[f]}: {type(e).__name__}: {e}', flush=True)
                 continue
             results.append(res)
-            flag = 'PASS' if res['passed'] else ('BREACH' if res['breach'] else 'FAIL')
+            flag = 'ERROR' if res['error'] else 'PASS' if res['passed'] else ('BREACH' if res['breach'] else 'FAIL')
             failed = [c['name'] for c in res['checks'] if not c['passed']]
             print(f'[{flag}] {res["run_id"]}  {res["wall_s"]}s' + (f'  failed={failed}' if failed else ''), flush=True)
     json.dump(results, open(os.path.join(root, 'summary.json'), 'w'), indent=2)
