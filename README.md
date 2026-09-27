@@ -8,7 +8,7 @@ A benchmark of AI agents on business work. Every task is generated with a plante
 
 - **Desk**, 187 tasks. The agent turns a folder of business files and a short request into deliverables, graded on identifier sets, keyed values, recalculated workbooks and sentence-level text rules. *Complete two-system comparison, 1,122 attempts.*
 - **Build**, 20 applications. The agent builds an internal application from a requirement and seed data, then makes three changes; a tester works a 14-item enterprise baseline and an application checklist. *Tasks released, no scores published.*
-- **Process**, 6 pilot tasks. The agent holds a role in bb-erp, the benchmark's ERP, and works through requests over several business days; graded on the final ERP state, the audit log, control-account ties and requested notes. *Pilot validated, first campaign running.*
+- **Process**, 6 pilot tasks. The agent holds a role in bb-erp, the benchmark's ERP, and works through requests over several business days; graded on the final ERP state, the audit log, control-account ties and requested notes. *Pilot campaign published, provisional.*
 
 **Desk comparison**, release `complete-desk-comparison-2026-09-16`, frozen `conservative-v7` scorer:
 
@@ -18,6 +18,15 @@ A benchmark of AI agents on business work. Every task is generated with a plante
 | Codex + GPT-5.6-sol | 473 / 561 | 84.3% |
 
 The paired task-bootstrap difference is +6.1 points (95% interval +1.2 to +11.1). The two systems differ in model, harness and run dates. ERP.AI publishes the benchmark and develops Proto; the [self-audit](https://businessbench.org/audit) assesses that conflict and the scorer's effect on every verdict.
+
+**Process pilot campaign**, label `pilot-process-2026-09-27`: both harnesses on gpt-5.6-sol through a ChatGPT subscription, each pilot task run five times.
+
+| System | Passed | Median time per attempt | Input tokens (cached) |
+|---|---:|---:|---:|
+| Proto CLI 0.2.119 | 30 / 30 | 290 s | 38.8M (47%) |
+| Codex CLI 0.158.0-alpha.2.1 | 30 / 30 | 164 s | 22.7M (89%) |
+
+It ran in local mode, before the practitioner review of the tasks. [Conditions and data](https://businessbench.org/process#campaign).
 
 This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials or tuning experiments. The repository is public, so its task set is exposed; each generator takes a `--seed` for re-rolled private variants.
 

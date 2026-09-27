@@ -45,7 +45,8 @@ the owner's requirements. Reviewable by design; the release states its own gaps.
 - [x] Runner, the six process check types and audit rules, `validate_process.py`
 - [x] Pilot: six tasks with oracles and negative controls passing validation
 - [ ] Practitioner review of the pilot (AP lead, production planner, controller)
-- [ ] Pilot campaign: five repetitions per cell, published under its own label
+- [x] Pilot campaign: five repetitions per cell, published under its own label (`pilot-process-2026-09-27`, local mode)
+- [ ] The pilot campaign repeated in containers
 - [ ] Remaining 18 tasks, then the analyst and controller bands
 - [ ] Browser interface and human baseline on the pilot
 

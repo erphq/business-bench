@@ -36,7 +36,7 @@ const desc = "Every Business Bench task: 187 desk tasks with recorded pass count
         <td class="n">{b.checklistItems}</td><td class="n">{b.changes.reduce((n, c) => n + c.items, 0)}</td></tr>))}</tbody>
   </table></div>
   <h2 id="process">Process track</h2>
-  <p class="muted">Pilot tasks in which the agent works inside an ERP over several business days and is graded on the final system state and the audit log. No scores are published; see the <a href="/process">process track</a> for its status.</p>
+  <p class="muted">Pilot tasks in which the agent works inside an ERP over several business days and is graded on the final system state and the audit log. A provisional pilot campaign is published on the <a href="/process#campaign">process track</a> page.</p>
   <div class="tbl-wrap"><table class="tbl">
     <thead><tr><th style="width:44%">Task</th><th>Role</th><th>Family</th><th class="n">Turns</th><th class="n">Checks</th></tr></thead>
     <tbody>{proc.map((t) => (

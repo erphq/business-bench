@@ -1,0 +1,118 @@
+{
+  "codex-sol": {
+    "attempts": 30,
+    "breaches": 0,
+    "by_task": {
+      "margin-bridge": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "month-end-close": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "mrp-planner-week": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "payment-run": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "procure-to-pay-week": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "requisition-approval-queue": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      }
+    },
+    "errors": 0,
+    "estimated_cost_usd": 23.1828,
+    "median_wall_s": 164.1,
+    "p90_wall_s": 354.8,
+    "pass_rate": 1.0,
+    "passed": 30,
+    "tasks": 6,
+    "tasks_passed_at_least_once": 6,
+    "tasks_passed_every_time": 6,
+    "usage": {
+      "cached_input": 20251136,
+      "input": 22690323,
+      "output": 266278,
+      "reasoning": 0,
+      "requests": 50
+    }
+  },
+  "proto-sol-sub": {
+    "attempts": 30,
+    "breaches": 0,
+    "by_task": {
+      "margin-bridge": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "month-end-close": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "mrp-planner-week": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "payment-run": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "procure-to-pay-week": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      },
+      "requisition-approval-queue": {
+        "attempts": 5,
+        "breaches": 0,
+        "errors": 0,
+        "passed": 5
+      }
+    },
+    "errors": 0,
+    "estimated_cost_usd": 99.4323,
+    "median_wall_s": 289.5,
+    "p90_wall_s": 758.0,
+    "pass_rate": 1.0,
+    "passed": 30,
+    "tasks": 6,
+    "tasks_passed_at_least_once": 6,
+    "tasks_passed_every_time": 6,
+    "usage": {
+      "cached_input": 18071936,
+      "input": 38754644,
+      "output": 473619,
+      "reasoning": 145566,
+      "requests": 1018
+    }
+  }
+}

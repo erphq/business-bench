@@ -1,6 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { processTasks, FAMILY_LABEL, REPO, type ProcessTask } from "@/lib/data";
+import { processTasks, processCampaign, FAMILY_LABEL, PROCESS_PILOT, REPO, type ProcessTask } from "@/lib/data";
 import { renderMarkdown } from "@/lib/markdown";
 export async function getStaticPaths() { return processTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
 const { task } = Astro.props as { task: ProcessTask };
@@ -16,6 +16,12 @@ const handbook = task.handbook.map((h) => {
 });
 const known = new Set(task.handbook.flatMap((h) => h.clauses));
 const budget = (s: number) => `${Math.round(s / 60)} min`;
+const camp = processCampaign(PROCESS_PILOT);
+const median = (xs: number[]) => { const v = [...xs].sort((a, b) => a - b), n = v.length; return n % 2 ? v[(n - 1) / 2] : (v[n / 2 - 1] + v[n / 2]) / 2; };
+const runs = camp.tasks.includes(task.id) ? Object.entries(camp.cells).map(([c, cell]) => {
+  const rs = camp.attempts.filter((a) => a.task === task.id && a.harness === c);
+  return { name: cell.system.split(" / ")[0], passed: rs.filter((r) => r.passed).length, n: rs.length, wall: median(rs.map((r) => r.wall_s)) };
+}) : [];
 const desc = `${task.title}. A process-track task from Business Bench: the agent works as ${task.agent.title.toLowerCase()} in an ERP for ${task.turns.length} turn${task.turns.length > 1 ? "s" : ""} and is graded on the final system state.`;
 ---
 <Base title={task.title} description={desc} path={`/process/${task.id}`} crumbs={[{ name: "Process track", path: "/process" }, { name: task.title, path: `/process/${task.id}` }]}>
@@ -23,6 +29,11 @@ const desc = `${task.title}. A process-track task from Business Bench: the agent
   <h1>{task.title}</h1>
   <p class="lede">{task.summary}</p>
   <p class="meta mono" style="font-size:12.5px">{task.id}<span class="sep">·</span>{task.agent.name}, {task.agent.title}, {task.company}<span class="sep">·</span><a href={`${REPO}/tree/main/tasks/process/${task.id}`} rel="noopener">source</a></p>
+
+  {runs.length > 0 && (
+    <div class="callout"><span class="t">Pilot campaign</span>
+      <p>{runs.map((r) => `${r.name} passed ${r.passed} of ${r.n} attempts, median ${(r.wall / 60).toFixed(1)} minutes`).join("; ")}. Provisional: run in local mode, before the practitioner review. <a href="/process#campaign">Conditions and data</a>.</p>
+    </div>)}
 
   <h2 id="turns">The requests</h2>
   <p class="muted" style="font-size:16px">Each turn is a new agent session on the stated business date, with the ERP as the previous turns left it and the same working folder. The request is sent after a fixed preamble that names the company, the role, the business date, the <code>erp</code> command and the handbook folder.</p>

@@ -1,0 +1,42 @@
+{
+  "campaign": "pilot-process-2026-09-27",
+  "track": "process",
+  "seed": 0,
+  "repetitions": 5,
+  "bench_commit_at_run": "8cca0f6",
+  "cells": {
+    "proto-sol-sub": {
+      "system": "Proto / GPT-5.6 sol",
+      "harness": "Proto CLI 0.2.119, built from erphq/proto 99304109b",
+      "model": "gpt-5.6-sol",
+      "route": "ChatGPT subscription (Codex OAuth)",
+      "effort": "high"
+    },
+    "codex-sol": {
+      "system": "Codex / GPT-5.6 sol",
+      "harness": "Codex CLI 0.158.0-alpha.2.1",
+      "model": "gpt-5.6-sol",
+      "route": "ChatGPT subscription",
+      "effort": "high"
+    }
+  },
+  "conditions": [
+    "Local mode: bb-erp and the agents ran as local processes on one Mac, four attempts at a time, without the container isolation the specification requires for official results.",
+    "Both cells use the same model and route, so the comparison is between harnesses; they ran in the same session, interleaved.",
+    "Harness homes were fresh per turn; the Codex home turned off account apps and plugins.",
+    "The pilot tasks have not had their practitioner review; results are provisional."
+  ],
+  "tasks": [
+    "margin-bridge",
+    "month-end-close",
+    "mrp-planner-week",
+    "payment-run",
+    "procure-to-pay-week",
+    "requisition-approval-queue"
+  ],
+  "attempts": 60,
+  "bench_commit_at_export": "ce6a764f99aa76160e83e796b7cd873148110109",
+  "task_tree_sha1": "0ff9be6aa036da5f413795f61f45458684cd6675",
+  "ledger_sha256": "c24e5383a5981a4294a132349b0fe95c876aa2f9f63d7d36173383c46cd1901e",
+  "exported_utc": "2026-09-27T07:52:31+00:00"
+}
