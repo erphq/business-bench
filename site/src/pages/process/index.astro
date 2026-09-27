@@ -31,7 +31,7 @@ const pctf = (x: number) => `${Math.round(x * 100)}%`;
 const runDate = new Date("2026-09-27T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 const ledger = `${REPO}/blob/main/results/process/${camp.label}`;
 const [pa, pb] = cells;
-const desc = "Agents take a role inside an ERP for several business days and are graded on the final system state and the audit log. Design, grading and six pilot tasks.";
+const desc = "Agents take a role inside an ERP for several business days and are graded on the final system state and the audit log. Design, grading, seven tasks and a pilot campaign.";
 ---
 <Base title="Process track" description={desc} path="/process" crumbs={[{ name: "Process track", path: "/process" }]}>
   <p class="meta">Track<span class="sep">·</span>pilot<span class="sep">·</span>{tasks.length} tasks, {checks} checks, {negs} negative controls<span class="sep">·</span>pilot campaign published, provisional</p>
@@ -40,7 +40,7 @@ const desc = "Agents take a role inside an ERP for several business days and are
 
   <div class="callout">
     <span class="t">Status</span>
-    <p>Six pilot tasks pass validation. The <a href="#campaign">pilot campaign</a> below is the track's first published result. It ran in local mode and before the practitioner review of the tasks, so it is provisional. The full design is in the <a href="/process/spec">specification</a>.</p>
+    <p>Seven tasks pass validation: the six pilot tasks at the clerical band and the first task at the analyst band. The <a href="#campaign">pilot campaign</a> below covers the six pilot tasks and is the track's first published result. It ran in local mode and before the practitioner review of the tasks, so it is provisional. The full design is in the <a href="/process/spec">specification</a>.</p>
   </div>
 
 
@@ -126,15 +126,15 @@ const desc = "Agents take a role inside an ERP for several business days and are
     </tbody>
   </table></div>
 
-  <h2 id="tasks">Pilot tasks</h2>
+  <h2 id="tasks">Tasks</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th style="width:38%">Task</th><th>Role</th><th>Family</th><th class="n">Turns</th><th class="n">Checks</th><th class="n">Negative controls</th></tr></thead>
+    <thead><tr><th style="width:38%">Task</th><th>Role</th><th>Family</th><th>Band</th><th class="n">Turns</th><th class="n">Checks</th><th class="n">Negative controls</th></tr></thead>
     <tbody>{tasks.map((t) => (
       <tr><td><a href={`/process/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
-        <td>{t.agent.title}</td><td class="muted">{FAMILY_LABEL[t.family] ?? t.family}</td>
+        <td>{t.agent.title}</td><td class="muted">{FAMILY_LABEL[t.family] ?? t.family}</td><td class="muted">{t.band}</td>
         <td class="n">{t.turns.length}</td><td class="n">{t.checks.length}</td><td class="n">{t.negative_controls.length}</td></tr>))}</tbody>
   </table></div>
-  <p class="muted" style="font-size:16px">All six are in the clerical band. The specification lists 24 tasks across six process families; the analyst and controller bands reuse the same generators with harder planted cases.</p>
+  <p class="muted" style="font-size:16px">The six pilot tasks are at the clerical band. <a href="/process/ap-invoice-backlog">ap-invoice-backlog</a> is the first at the analyst band: about 200 vendor documents over three turns, twelve planted exceptions, and replies and a delivery between turns. It has no agent results yet. The specification lists 24 tasks across six process families; the analyst and controller bands reuse the same company generator with more volume and harder planted cases.</p>
 
   <div class="prose">
     <h2 id="validation">Validation</h2>
@@ -146,7 +146,7 @@ const desc = "Agents take a role inside an ERP for several business days and are
       <li>two oracle runs from the same seed end in the same database, compared by a canonical dump;</li>
       <li>every handbook clause a check cites exists in the handbook the agent sees.</li>
     </ul>
-    <p>The six pilot tasks pass on seeds 0 and 1 in strict mode, which also requires each negative control to fail only checks it declares.</p>
+    <p>The six pilot tasks pass on seeds 0 and 1 in strict mode, and ap-invoice-backlog on seeds 0 to 4. Strict mode also rejects a negative control that fails only checks it does not declare.</p>
 
     <h2 id="smoke">Smoke tests</h2>
     <p>On 26 September 2026 two agent harnesses, Proto and Codex CLI, both on gpt-5.6-sol, each ran <a href="/process/procure-to-pay-week">procure-to-pay-week</a> once to test the runner. The runs found three defects in the task rather than in the agents: a case the handbook did not cover, an entry path in the ERP that let invoice lines skip the three-way match, and a note rule that rejected a correct phrasing. All three are fixed, and the fixes are in the repository history. On the corrected task, both harnesses passed all 18 checks. One attempt per harness is a test of the machinery, not a result.</p>
@@ -155,7 +155,7 @@ const desc = "Agents take a role inside an ERP for several business days and are
     <ol>
       <li>A practitioner review of the pilot by an accounts payable lead, a production planner and a controller.</li>
       <li>The pilot campaign repeated in containers, the isolation the specification requires for official results.</li>
-      <li>Tasks at the analyst band, with 100 to 300 documents a turn, then the remaining catalogue tasks and the controller band.</li>
+      <li>A campaign on ap-invoice-backlog, more tasks at the analyst band, then the remaining catalogue tasks and the controller band.</li>
       <li>Background operations between turns, so an episode can span several weeks of sales, production and receiving.</li>
       <li>A browser interface and a human baseline on the pilot tasks.</li>
     </ol>
