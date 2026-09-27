@@ -110,5 +110,5 @@ checks:
   - type: text_sentence_matches
     name: note names the Keystone hold for the refused nuts
     path: handoff.md
-    all: ['(?i)keystone|\bKF-?\d{4,}', '(?i)hex|\bnuts?\b|no[t ]+receiv|no[_ ]receipt|nothing (was )?received']
+    all: ['(?i)keystone|\bKF-?\d{4,}', '(?i)hex|\bnuts?\b|no[t ]+receiv|no[-_ ]?receipt|nothing (was )?received|none (were |was )?received|refus']
     cites: [AP-2.4]
