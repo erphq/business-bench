@@ -38,6 +38,7 @@ def build(path: str, seed: int = 0, start: str = '2026-10-05', months: int = 12,
         for sku, monthly in need.items():
             erp.update('items', {'sku': sku}, {'safety_stock': round(monthly / 4.3 / 10) * 10})
         opening_balances(erp, hist_start, need)
+        history.install_budgets(erp, sorted({int(hist_start[:4]), int(start[:4])}))
     history.run(erp, seed, hist_start, add_days(start, -1), close_through)
     with erp.tx():
         erp.set_today(start)

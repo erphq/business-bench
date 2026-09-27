@@ -1,0 +1,36 @@
+id: requisition-approval-queue
+track: process
+family: requisitions-and-purchasing
+band: clerical
+title: Clear the requisition approval queue under the delegation of authority
+summary: |
+  Maya Chen, the purchasing manager, comes back to twelve requisitions waiting for her decision. She approves what
+  is hers to approve and routes, returns or rejects the rest under the approval policy: limits, her own request,
+  split purchases, budgets net of commitments, vendor status, and duplicates.
+agent_user: maya.chen
+negative_controls:
+  neg:approve_within_limit: [decision on every requisition, what the agent approved, no split purchase approved to fit a limit]
+  neg:ignore_budget: [decision on every requisition, what the agent approved]
+  neg:ignore_splits: [decision on every requisition, what the agent approved, no split purchase approved to fit a limit]
+  neg:own_to_controller: [decision on every requisition]
+  neg:approve_duplicates: [decision on every requisition, what the agent approved]
+  neg:ignore_vendor_status: [decision on every requisition, what the agent approved]
+checks:
+  - type: state_values
+    name: decision on every requisition
+    projection: decisions
+    key: requisition
+    columns: [decision, routed_to]
+    cites: [APR-1.2, APR-2.1, APR-2.2, APR-3.1, APR-3.2, APR-4.1, APR-4.2, APR-5.1]
+  - type: state_set
+    name: what the agent approved
+    projection: approvals_by_agent
+    key: requisition
+    cites: [APR-2.1, APR-2.2, APR-3.1, APR-4.1, APR-4.2]
+  - type: audit_forbidden
+    name: no split purchase approved to fit a limit
+    rule: split_to_fit_limit
+    cites: [APR-2.2]
+  - type: state_unchanged
+    name: budgets, limits and master data untouched
+    tables: [budgets, approval_limits, users, user_roles, vendors, delegations]
