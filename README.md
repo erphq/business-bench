@@ -1,27 +1,40 @@
 # Business Bench
 
-**Does the agent deliver business work that an owner can actually use?**
+A benchmark of AI agents on business work. Every task is generated with a planted ground truth and graded by executable checks. Grading uses no rubric or model judge, and an attempt passes only if every required check passes.
 
-Site: [businessbench.org](https://businessbench.org) (results, findings, task pages, the process track, methods, paper, self-audit). License: MIT.
+[businessbench.org](https://businessbench.org) · [paper](https://businessbench.org/paper) · [desk results](https://businessbench.org/results) · [findings](https://businessbench.org/analysis) · [process track](https://businessbench.org/process) · [self-audit](https://businessbench.org/audit) · MIT licence
 
-Business Bench tests the handoff, not the agent's confidence: reconciled files, correct imports, source-grounded reports, and applications whose behavior holds up under use and subsequent changes.
+| Track | The agent receives | What is graded | Tasks | Status |
+|---|---|---|---|---|
+| Desk | A folder of business files, some deliberately messy, and a short request | The files it leaves: identifier sets, keyed values, workbooks after native recalculation, sentence-level text rules | 187 | Complete two-system comparison, 1,122 attempts |
+| Build | A requirement and seed data for an internal application, then three change requests | A 14-item enterprise baseline and an application checklist, worked by a tester on the live application | 20 | Tasks released; no scores published |
+| Process | A role in bb-erp, the benchmark's ERP, with a company handbook and requests from colleagues over several business days | The final ERP state, the audit log of every request, control-account ties and any notes asked for | 6 (pilot) | Pilot validated; first campaign running |
 
-- **Desk:** 187 tasks across seven categories, each with inputs, an ask, checks, a generator, and a reference solution.
-- **Build:** 20 business applications, each with seed data, an acceptance checklist, and three change requests.
-- **Latest complete comparison:** **Proto + DeepSeek V4.1 Flash: 507/561 (90.4%)**, versus **Codex + GPT-5.6-sol: 473/561 (84.3%)**. All 187 tasks × 3 repetitions × 2 systems = **1,122 attempts**, evaluated by the same frozen conservative-v7 scorer. Every pass and failure is retained. No incomplete build scores are published.
+**Desk comparison** (release `complete-desk-comparison-2026-09-16`, frozen `conservative-v7` scorer): Proto + DeepSeek V4.1 Flash passed 507 of 561 attempts (90.4%) and Codex + GPT-5.6-sol 473 (84.3%). The paired task-bootstrap difference is +6.1 points, with a 95% interval of +1.2 to +11.1. The two systems differ in model, harness and run dates. ERP.AI publishes the benchmark and develops Proto; the [self-audit](https://businessbench.org/audit) assesses that conflict and the scorer's effect on every verdict.
 
-This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials, tuning experiments, or a development diary. The repository is public; its task set is therefore exposed, not an independent sealed holdout. Each generator takes a `--seed` for re-rolled private variants.
+This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials or tuning experiments. The repository is public, so its task set is exposed; each generator takes a `--seed` for re-rolled private variants.
+
+## Repository layout
+
+| Path | Contents |
+|---|---|
+| `tasks/desk`, `tasks/build`, `tasks/process` | Task generators, inputs, checks, handbooks and reference solutions |
+| `erp/bberp` | bb-erp, the ERP the process track runs agents in |
+| `bench/` | Runners, graders, validators and result exporters |
+| `harnesses/` | One adapter script per evaluated cell, and the [adapter contract](harnesses/contract.md) |
+| `scoring/frozen-v7` | The frozen desk scorer |
+| `results/latest`, `results/process` | Published desk and process result ledgers |
+| `site/` | businessbench.org, built from this repository |
+| `docs/`, `paper/` | Paper sources, the v2 specification and the process-track specification |
 
 ## Read the paper and specification
 
-- [Research paper](SPEC.md)
-- [Complete specification](SPEC.md)
-- [Specification PDF](docs/business-harness-bench-spec.pdf)
-- [Latest full-arm results and limitations](results/latest/README.md)
-- [Machine-readable summary](results/latest/summary.json) and [sanitized attempt ledger](results/latest/attempts.jsonl)
-- [Provenance](results/latest/provenance.json)
+- [Paper](https://businessbench.org/paper) ([Markdown](SPEC.md), [PDF](docs/business-harness-bench-spec.pdf))
+- [Desk results and limitations](results/latest/README.md): [summary](results/latest/summary.json), [attempt ledger](results/latest/attempts.jsonl), [provenance](results/latest/provenance.json)
+- [Process track specification](docs/process/README.md), [the ERP](docs/process/environment.md) and [the tasks](docs/process/tasks.md)
+- [v2 specification](docs/v2/README.md)
 - [Release verification and fixture notices](docs/validation.md)
-- [Task format](docs/task-format.md), [desk authoring guide](docs/authoring-guide.md), [build authoring guide](docs/authoring-guide-build.md), and [enterprise baseline](docs/build-baseline.md)
+- [Task format](docs/task-format.md), [desk authoring guide](docs/authoring-guide.md), [build authoring guide](docs/authoring-guide-build.md) and [enterprise baseline](docs/build-baseline.md)
 
 ## Requirements
 
@@ -39,6 +52,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python bench/export_campaign.py --verify
+python bench/export_process_campaign.py --verify
 python bench/validate_build.py
 bash docker/build.sh
 export BENCH_RECALC_DOCKER_IMAGE=bench-recalc:release
@@ -103,9 +117,22 @@ python bench/build_grade.py \
 
 Grade each turn, complete its tester sheet, and recheck previous requirements after every change. `--serve` executes the generated start command inside the specified container; inspect untrusted artifacts and use an isolated host. A responding URL or generated sheet is not a completed acceptance test. Report the initial checklist, new requirements, regressions, external reachability, and costs separately. Tester sheets contain generated app logins and must remain private.
 
+## Run the process track
+
+Process tasks run an agent inside bb-erp over several turns on a business clock. `process_run.py` starts one bb-erp server per attempt, calls the harness adapter once per turn with `ERP_URL`, `ERP_TOKEN` and the `erp` command on `PATH`, lets the counterparty simulator act between turns, and grades the final database and audit log. It runs bb-erp and the agent as local processes, which is not an isolation boundary; container mode is on the roadmap.
+
+```bash
+python bench/validate_process.py --seeds 0,1 --strict
+python bench/process_run.py --task procure-to-pay-week --harness oracle --label dev-oracle
+python bench/process_run.py --task all --harness codex-sol --runs 5 --parallel 2 --label my-campaign
+python bench/export_process_campaign.py --label my-campaign
+```
+
+`validate_process.py` checks, for each task and seed, that the oracle passes, an agent that does nothing fails, each negative control fails the checks it targets, two runs end in the same database, and every cited handbook clause exists. Real agents use the same adapters as the desk track (`harnesses/<cell>.sh`); set `CODEX_BIN` or `BENCH_PROTO_CLI` as the adapter describes. Before export, describe the campaign's cells in `results/<label>/campaign.json`; the export writes a public ledger under `results/process/<label>/`.
+
 ## Results and reproducibility
 
-`results/latest/` is the only result release tracked here. New runs stay ignored. Recompute its summary with `python bench/export_campaign.py --verify`; this checks the complete matrix and arithmetic, **not the original artifacts' correctness**. The release ledger keeps per-check verdicts, original result hashes, resource records, and execution status, without private paths or logs.
+`results/latest/` holds the desk release and `results/process/` the published process campaigns; other runs stay ignored. Recompute them with `python bench/export_campaign.py --verify` and `python bench/export_process_campaign.py --verify`; these check the complete matrix and the arithmetic, **not the original artifacts' correctness**. The release ledger keeps per-check verdicts, original result hashes, resource records, and execution status, without private paths or logs.
 
 The release includes the exact [frozen scorer](scoring/frozen-v7/scorer.py) and its fingerprinted task definitions. Run `python scoring/frozen-v7/scorer.py TASK_ID WORKSPACE` with native recalculation configured to score an output workspace. The standard runner's original-grade field and this frozen verdict are distinct; retain both. The verifier checks the full frozen package fingerprint as well as result arithmetic. The original result and receipt hashes were checked against the server records for every exported attempt.
 
@@ -123,4 +150,4 @@ The paper is compiled with **XeLaTeX**, using native booktabs tables, PGFPlots f
 
 ## Site
 
-The public site under `site/` is generated from this repository: task metadata via `python3 site/scripts/export_tasks.py`, results from `results/latest/`, and the paper from `SPEC.md`. Build with `cd site && bun install && bun run build`; deploy with `bunx wrangler deploy` (Cloudflare account access required). The `Site` workflow checks the export is fresh, runs the site tests, and builds on every push.
+The public site under `site/` is generated from this repository: task metadata via `python3 site/scripts/export_tasks.py`, results from `results/latest/` and `results/process/`, the process-track pages from `tasks/process/` and `docs/process/`, and the paper from `SPEC.md`. Build with `cd site && bun install && bun run build`; deploy with `bunx wrangler deploy` (Cloudflare account access required). The `Site` workflow checks the export is fresh, runs the site tests, and builds on every push.
