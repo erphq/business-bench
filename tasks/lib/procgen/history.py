@@ -27,6 +27,21 @@ MRO = [  # department, requester, vendor key, account, description, monthly doll
 APPROVAL_CHAIN = ['maya.chen', 'priya.raman', 'erin.walsh']
 
 
+# department, account, monthly budget in dollars (fiscal year = calendar year)
+BUDGETS = [(d, '6000', w * 1.03) for d, w in WAGES.items()] + [(d, '6050', w * 0.2 * 1.03) for d, w in WAGES.items()] + [
+    ('ADMIN', '6100', 8000), ('PROD', '6150', 3700), ('MAINT', '6200', 2100), ('PROD', '6250', 1200),
+    ('QA', '6250', 500), ('MAINT', '6250', 400), ('ADMIN', '6300', 320), ('ADMIN', '6450', 1500),
+    ('PROD', '6550', 3200)]
+
+
+def install_budgets(erp: Erp, years: list[int]) -> None:
+    for y in years:
+        for m in range(1, 13):
+            for dept, acct, dollars in BUDGETS:
+                erp.insert('budgets', {'department': dept, 'account': acct, 'period': f'{y}-{m:02d}',
+                                       'amount_cents': round(dollars * 100)})
+
+
 def monthly_component_need() -> dict[str, float]:
     need: dict[str, float] = {}
     for sku, (_n, _p, base, bom) in FINISHED.items():
