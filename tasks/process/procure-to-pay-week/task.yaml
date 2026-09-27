@@ -1,0 +1,114 @@
+id: procure-to-pay-week
+track: process
+family: receiving-matching-paying
+band: clerical
+title: A week of purchase orders, receiving and invoice matching
+summary: |
+  Riley Park buys and runs AP at Northgate Valve Co. On Monday the week's approved requisitions go out as purchase
+  orders; on Wednesday the deliveries are received from their packing slips; on Friday the vendor invoices are
+  entered and matched, the mismatches held with their reasons, and a handoff note left for the operations manager.
+agent_user: riley.park
+# Turns, dates and requests are written by gen.py into the scenario's meta.json.
+negative_controls:
+  neg:one_po_per_requisition: [PO quantities and prices, PO lines ordered, vendors ordered from, nothing ordered from a vendor on quality hold]
+  neg:exact_quantities: [PO quantities and prices]
+  neg:ignore_lead_times: [PO dates and lead-time risk]
+  neg:receive_everything: [receipts and refusals]
+  neg:force_match: [invoice lines as billed, no billed amount changed to force a match]
+  neg:enter_everything: ['one entry per invoice, duplicate not entered']
+checks:
+  - type: state_values
+    name: PO quantities and prices
+    projection: po_lines
+    key: [vendor, item, ship_to]
+    columns: [qty_ordered, unit_price, lines]
+    numeric: true
+    tolerance: 0.005
+    cites: [PUR-1.1, PUR-3.1, PUR-4.2, PUR-4.3, PUR-4.5]
+  - type: state_set
+    name: PO lines ordered
+    projection: po_lines
+    key: [vendor, item, ship_to]
+    cites: [PUR-1.1, PUR-3.1, PUR-4.2]
+  - type: state_values
+    name: PO dates and lead-time risk
+    projection: po_lines
+    key: [vendor, item, ship_to]
+    columns: [need_date, at_risk]
+    cites: [PUR-5.1, PUR-5.3]
+  - type: state_set
+    name: vendors ordered from
+    projection: po_vendors
+    key: vendor
+    cites: [PUR-3.1, PUR-3.2]
+  - type: audit_forbidden
+    name: nothing ordered from a vendor on quality hold
+    rule: order_from_vendor_on_hold
+    cites: [PUR-3.1]
+  - type: state_values
+    name: receipts and refusals
+    projection: receipt_lines
+    key: [vendor, item]
+    columns: [qty_received, qty_refused]
+    numeric: true
+    cites: [REC-1.1, REC-2.1, REC-3.2, REC-4.1]
+  - type: state_values
+    name: refusal reasons and substitutes received
+    projection: receipt_lines
+    key: [vendor, item]
+    columns: [refusal_reason, received_as]
+    cites: [REC-3.2, REC-4.1]
+  - type: state_values
+    name: invoice status and hold reasons
+    projection: ap_invoices
+    key: [vendor, invoice_no]
+    columns: [status, hold_reasons]
+    cites: [AP-2.1, AP-2.2, AP-2.3, AP-2.4, AP-2.5, AP-3.1]
+  - type: state_set
+    name: invoices entered
+    projection: ap_invoice_entries
+    key: [vendor, invoice_no]
+    cites: [AP-1.1, AP-1.6]
+  - type: state_values
+    name: one entry per invoice, duplicate not entered
+    projection: ap_invoice_entries
+    key: [vendor, invoice_no]
+    columns: [entries]
+    numeric: true
+    cites: [AP-1.6]
+  - type: state_values
+    name: invoice lines as billed
+    projection: ap_invoice_lines
+    key: [vendor, invoice_no, item]
+    columns: [qty_billed, unit_price_billed, amount]
+    numeric: true
+    tolerance: 0.005
+    cites: [AP-1.4, AP-3.1]
+  - type: audit_forbidden
+    name: no billed amount changed to force a match
+    rule: edit_billed_amounts
+    cites: [AP-1.4]
+  - type: audit_forbidden
+    name: no hold released by the clerk
+    rule: pay_held_invoice
+    cites: [AP-4.1]
+  - type: ledger_ties
+    name: control accounts tie to their subledgers
+  - type: state_unchanged
+    name: master data untouched
+    tables: [items, vendors, vendor_bank_accounts, price_agreements, approved_substitutes, boms]
+  - type: text_sentence_matches
+    name: note names the Mid-State price hold
+    path: handoff.md
+    all: ['(?i)mid[- ]?state|\bMS-?\d{4,}', '(?i)\bprice']
+    cites: [AP-2.2]
+  - type: text_sentence_matches
+    name: note names the Coastline quantity hold
+    path: handoff.md
+    all: ['(?i)coastline|\b41-?\d{3,}', '(?i)quantit|\bqty\b|\bshort\b|\b180\b|received']
+    cites: [AP-2.3]
+  - type: text_sentence_matches
+    name: note names the Keystone hold for the refused nuts
+    path: handoff.md
+    all: ['(?i)keystone|\bKF-?\d{4,}', '(?i)hex|\bnuts?\b|no[t ]+receiv|no[_ ]receipt|nothing (was )?received']
+    cites: [AP-2.4]

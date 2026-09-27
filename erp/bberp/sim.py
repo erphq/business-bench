@@ -112,17 +112,18 @@ def vendor_acks(erp: Erp, events: list) -> None:
             if moq and pl['qty'] < moq:
                 note = f'below our minimum order quantity of {moq:g}'
                 lines.append({'line': pl['line'], 'status': 'rejected', 'note': note})
-                body.append(f'Line {pl["line"]} {pl["sku"]}: cannot accept, {note}.')
+                body.append(f'Line {pl["line"]} {label}: cannot accept, {note}.')
                 continue
             lead = int(rule.get('lead_time_days', vp.get('lead_time_days',
                        erp.val('SELECT lead_time_days FROM items WHERE sku = ?', pl['sku']) or 5)))
+            label = pl['sku'] or pl['description']
             earliest = erp.add_workdays(po['sent_on'], lead)
-            confirmed = max(pl['need_date'], earliest)
+            confirmed = earliest if vp.get('ship_early') else max(pl['need_date'], earliest)
             if not erp.is_workday(confirmed):
                 confirmed = erp.add_workdays(confirmed, 1)
             lines.append({'line': pl['line'], 'status': 'accepted', 'confirmed_date': confirmed,
                           'confirmed_price': pl['unit_price']})
-            body.append(f'Line {pl["line"]} {pl["sku"]} qty {pl["qty"]:g} at {pl["unit_price"]:.4f}: '
+            body.append(f'Line {pl["line"]} {label} qty {pl["qty"]:g} at {pl["unit_price"]:.4f}: '
                         f'confirmed for delivery {confirmed}.')
         if not lines:
             continue
@@ -170,10 +171,10 @@ def vendor_shipments(erp: Erp, events: list) -> None:
         slip_no = f'PS-{po_id.split("-")[-1]}-{len(_logged(erp, "packing_slip", po_id)) + 1}'
         rows, shipped_lines = [], []
         for pl, qty, is_back in items:
-            rule = ship_rule(vp, pl['sku'])
+            rule = ship_rule(vp, pl['sku'] or '')
             now, back = (qty, 0.0) if is_back else _ship_qty(rule, qty)
             sku = rule.get('substitute') or pl['sku']
-            desc = erp.val('SELECT name FROM items WHERE sku = ?', sku) or sku
+            desc = (erp.val('SELECT name FROM items WHERE sku = ?', sku) if sku else pl['description']) or ''
             lots = []
             if rule.get('lots'):
                 left = now
@@ -181,22 +182,26 @@ def vendor_shipments(erp: Erp, events: list) -> None:
                     q = left if i == len(rule['lots']) - 1 else q4(round(now * float(l['share'])))
                     left = q4(left - q)
                     lots.append({'lot': l['lot'], 'qty': q, 'expiry': l.get('expiry')})
-            elif erp.val('SELECT lot_controlled FROM items WHERE sku = ?', sku):
+            elif sku and erp.val('SELECT lot_controlled FROM items WHERE sku = ?', sku):
                 lots.append({'lot': f'{vendor["id"][-3:]}{po_id[-4:]}{pl["line"]}', 'qty': now,
                              'expiry': add_days(erp.today, 720)})
             note = f'substitute for {pl["sku"]}' if sku != pl['sku'] else ''
+            code = sku or 'MISC'
+            ln = str(pl['line'])
             if lots:
                 for l in lots:
-                    rows.append([sku, desc[:34], f'{l["qty"]:g}', l['lot'], l['expiry'] or '', note])
+                    rows.append([ln, code, desc[:26], f'{l["qty"]:g}', l['lot'], l['expiry'] or '', note])
             else:
-                rows.append([sku, desc[:34], f'{now:g}', '', '', note])
+                rows.append([ln, code, desc[:26], f'{now:g}', '', '', note])
             if back:
-                rows.append([pl['sku'], 'BACKORDERED', f'{back:g}', '', '', f'ships {erp.add_workdays(today, int(rule.get("backorder_days", 5)))}'])
+                rows.append([ln, pl['sku'] or 'MISC', 'BACKORDERED', f'{back:g}', '', '',
+                             f'ships {erp.add_workdays(today, int(rule.get("backorder_days", 5)))}'])
             shipped_lines.append((pl, sku, now, lots, back, rule))
         pdf = business_document(
             'PACKING SLIP', _letterhead(vendor),
             [('Slip no.', slip_no), ('Ship date', today), ('Your PO', po_id), ('Ship to', po['ship_to'])],
-            [('Item', 54), ('Description', 150), ('Qty', 330), ('Lot', 370), ('Expiry', 430), ('Note', 490)], rows,
+            [('PO line', 54), ('Item', 92), ('Description', 170), ('Qty', 300), ('Lot', 340), ('Expiry', 395),
+             ('Note', 455)], rows,
             notes=['Please report any discrepancy within 48 hours.'], heading=vendor['name'])
         name, addr = _vendor_contact(erp, vendor, vp)
 
@@ -221,11 +226,11 @@ def vendor_shipments(erp: Erp, events: list) -> None:
 def _invoice_pdf(vendor: dict, number: str, day: str, po_id: str, lines: list[dict], freight: float,
                  terms: str | None) -> bytes:
     rows, total = [], 0
-    for i, l in enumerate(lines, 1):
+    for l in lines:
         amt = ext_cents(l['qty'], l['unit_price'])
         total += amt
         p = l['unit_price']
-        rows.append([str(i), l['sku'], l['description'][:30], f'{l["qty"]:g}',
+        rows.append([str(l['po_line']), l['sku'] or 'MISC', l['description'][:30], f'{l["qty"]:g}',
                      f'{p:.2f}' if round(p, 2) == p else f'{p:.4f}', f'{amt / 100:,.2f}'])
     totals = [('Subtotal', f'{total / 100:,.2f}')]
     if freight:
@@ -235,7 +240,8 @@ def _invoice_pdf(vendor: dict, number: str, day: str, po_id: str, lines: list[di
     return business_document(
         'INVOICE', _letterhead(vendor),
         [('Invoice no.', number), ('Invoice date', day), ('Your PO', po_id), ('Terms', terms or 'Net 30')],
-        [('#', 54), ('Item', 72), ('Description', 170), ('Qty', 350), ('Unit price', 400), ('Amount', 480)], rows, totals,
+        [('PO line', 54), ('Item', 100), ('Description', 190), ('Qty', 350), ('Unit price', 400), ('Amount', 480)],
+        rows, totals,
         notes=[f'Remit to {vendor["name"]}. Questions: {vendor["email"] or ""}'], heading=vendor['name'])
 
 
@@ -259,9 +265,10 @@ def vendor_invoices(erp: Erp, events: list) -> None:
             line_no = int(s['ref'].split('/')[-1])
             pl = erp.one('SELECT * FROM po_lines WHERE po_id = ? AND line = ?', po['id'], line_no)
             sku = s['payload']['ordered_sku']
-            price = inv.get('prices', {}).get(sku, pl['unit_price'])
+            price = inv.get('prices', {}).get(sku or '', pl['unit_price'])
             lines.append({'po_line': line_no, 'sku': sku, 'qty': s['payload']['qty'], 'unit_price': float(price),
-                          'description': erp.val('SELECT name FROM items WHERE sku = ?', sku) or sku})
+                          'description': (erp.val('SELECT name FROM items WHERE sku = ?', sku) if sku else
+                                          pl['description']) or ''})
         if not lines:
             continue
         n = erp.val("SELECT COUNT(*) FROM sim_log WHERE kind = 'invoice' AND actor = ? AND payload LIKE ?",
@@ -280,8 +287,9 @@ def vendor_invoices(erp: Erp, events: list) -> None:
                           f'Please find attached invoice {number} for your PO {po["id"]}.\n\n{name}', name, addr,
                           erp.today, attachments=[(f'{number}.pdf', 'application/pdf', pdf)], created_by=ctx.user)
             if dup:
+                dup_no = dup.get('number') or (number.replace(dup['strip'], '') if dup.get('strip') else number)
                 _log(erp, ctx.user, 'invoice_dup_due', p['slip'], {
-                    'date': erp.add_workdays(erp.today, int(dup.get('delay', 1))), 'number': dup.get('number', number),
+                    'date': erp.add_workdays(erp.today, int(dup.get('delay', 1))), 'number': dup_no,
                     'vendor': vendor['id'], 'po': po['id'], 'lines': lines, 'freight': freight})
         act(erp, _actor(erp, 'vendor'), 'vendor.invoice', 'purchase_order', po['id'], do, events)
     for due in erp.all("SELECT * FROM sim_log WHERE kind = 'invoice_dup_due' ORDER BY id"):

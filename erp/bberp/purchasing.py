@@ -232,15 +232,23 @@ def _refresh_po(erp: Erp, po_id: str) -> None:
 
 
 def _add_line(erp: Erp, ctx: Ctx, po: dict, ln: dict, line_no: int) -> None:
+    """A stock line names an item; a non-stock line (services, supplies) gives a description and an expense account."""
     sku = ln.get('sku')
-    it = erp.one('SELECT * FROM items WHERE sku = ?', sku)
-    if it is None or not it['active']:
-        raise invalid(f'line {line_no}: no active item {sku!r}')
+    if sku:
+        it = erp.one('SELECT * FROM items WHERE sku = ?', sku)
+        if it is None or not it['active']:
+            raise invalid(f'line {line_no}: no active item {sku!r}')
+    else:
+        if not ln.get('description') or not ln.get('account'):
+            raise invalid(f'line {line_no}: give an item, or a description and an expense account')
+        if ln.get('unit_price') is None:
+            raise invalid(f'line {line_no}: non-stock lines need unit_price')
+        it = {'lead_time_days': 5}
     qty = q4(ln.get('qty') or 0)
     if qty <= 0:
         raise invalid(f'line {line_no}: quantity must be positive')
     price = ln.get('unit_price')
-    if price is None:
+    if price is None and sku:
         price = agreement_price(erp, po['vendor'], sku, qty, erp.today)
         if price is None:
             raise invalid(f'line {line_no}: {po["vendor"]} has no price agreement for {sku}; give unit_price')
@@ -250,6 +258,7 @@ def _add_line(erp: Erp, ctx: Ctx, po: dict, ln: dict, line_no: int) -> None:
     need = ln.get('need_date') or erp.add_workdays(erp.today, it['lead_time_days'] or 0)
     refs = ln.get('req_refs') or []
     account = ln.get('account')
+    department = ln.get('department')
     for ref in refs:
         rid, rline = ref.get('req_id'), ref.get('line')
         req = erp.one('SELECT * FROM requisitions WHERE id = ?', rid)
@@ -263,14 +272,18 @@ def _add_line(erp: Erp, ctx: Ctx, po: dict, ln: dict, line_no: int) -> None:
         if rl['sku'] != sku:
             raise invalid(f'{rid} line {rline} is for {rl["sku"]}, not {sku}')
         account = account or rl['account']
+        department = department or req['department']
         erp.touch('requisition', rid)
         erp.update('requisition_lines', {'req_id': rid, 'line': rline}, {'po_id': po['id'], 'po_line': line_no})
         if not erp.val('SELECT 1 FROM requisition_lines WHERE req_id = ? AND po_id IS NULL', rid):
             erp.update('requisitions', {'id': rid}, {'status': 'converted'})
-    erp.insert('po_lines', {'po_id': po['id'], 'line': line_no, 'sku': sku, 'qty': qty, 'unit_price': price,
+    if account and not erp.val('SELECT 1 FROM accounts WHERE code = ? AND active = 1', account):
+        raise invalid(f'line {line_no}: no active account {account}')
+    erp.insert('po_lines', {'po_id': po['id'], 'line': line_no, 'sku': sku, 'description': ln.get('description'),
+                            'department': department, 'qty': qty, 'unit_price': price,
                             'amount_cents': ext_cents(qty, price), 'need_date': need,
-                            'account': account or erp.account('inventory'), 'note': ln.get('note'),
-                            'at_risk': 1 if ln.get('at_risk') else 0})
+                            'account': (account or erp.account('inventory')) if sku else account,
+                            'note': ln.get('note'), 'at_risk': 1 if ln.get('at_risk') else 0})
 
 
 def create_po(erp: Erp, ctx: Ctx, vendor: str, lines: list[dict], ship_to: str | None = None,
