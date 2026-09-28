@@ -18,7 +18,7 @@ A benchmark that tests itself reports its own defects, so the findings section b
 | # | Item | Where | Status |
 |---|---|---|---|
 | 1 | Trap switches and per-trap mutants | `tasks/lib/bizgen/traps.py`, `bench/validate_traps.py`, `bench/check_retrofit.py`, `docs/authoring-traps.md` | 72 generators: all 71 targets plus project-margin |
-| 1 | Difficulty settings (size, rules, noise, trap count) | `tasks/lib/bizgen/knobs.py` | pilot on saturated tasks |
+| 1 | Difficulty settings (size, rules, noise, trap count, cross-document) | `tasks/lib/bizgen/knobs.py`, `bench/validate_knobs.py`, `docs/authoring-knobs.md` | 10 saturated tasks, 234 settings validated on 3 seeds |
 | 2 | Measurement graph | `bench/measure_graph.py`, `bench/trap_links.py` | built |
 | 3 | Difficulty model | `bench/difficulty.py` | first fit (2 systems) |
 | 4 | Delegation envelope | `bench/envelope.py`, `docs/envelope.md` | built; `run.py` now records `started_utc` |
@@ -103,6 +103,8 @@ A benchmark that tests itself reports its own defects, so the findings section b
 - monthly-report and quote-comparison differ in xlsx/pdf bytes.
 - contract-renewal-summary (PDF), commission-calculation and petty-cash-reconcile workspaces don't regenerate byte-identically across environments. Their checks and references do.
 - bom-cost-rollup's `notes.json` differs between Python 3.11 and 3.12 through float summation. No check depends on it.
+- commission-clawbacks: at HEAD, `emit` crashes when the planted ">120 days" refund lands after 31 August and is filtered out. The published seed is unaffected.
+- Tasks that can't take difficulty settings because their checks are pinned to one draw: payments-match, payments-match-v2, quote-comparison and customer-dedupe.
 - 12 generators had an lxml timestamp bug (`stable_xlsx`), now fixed.
 
 **Process track.** mrp-planner-week seed 2: the `ignore_inbox` negative control doesn't fail "orders released". Seed 2's inbox doesn't change which orders get released, so the control can't show anything. This fails on `main` too.
@@ -133,7 +135,7 @@ Process audit coverage, from `bench/handbook.py lint`:
 
 **Saturation.** 116 of 187 tasks are saturated, meaning every published attempt passed. Only one of them has trap switches, because the retrofit targets were chosen for discrimination.
 
-**Why settings were needed.** With trap switches and seeds alone, no setting is credibly harder than the published one, since switches only make a task easier. That is why item 1 now includes difficulty settings.
+**Why settings were needed.** With trap switches and seeds alone, no setting is credibly harder than the published one, since switches only make a task easier. That is why item 1 now includes difficulty settings. On the 10 knobbed tasks, `renew.py search` finds 74 of 78 settings credibly harder. Nearly all of that prediction comes from a stated prior of about +0.5 logit per level, not from data, so each proposal is a hypothesis for the next run to test, not a measurement.
 
 **Sealed variants** at matched predicted difficulty verify on the tasks where the reference solution passes locally.
 
