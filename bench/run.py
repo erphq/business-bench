@@ -94,6 +94,7 @@ def run_one(tasks_root: str, task_id: str, harness: str, run_idx: int, label: st
     u = EXTRACTORS.get(fam, lambda ws, out: {})(ws, out)
     prices = json.load(open(os.path.join(ROOT, 'bench', 'prices.json')))
     res = {'run_id': run_id, 'task': task_id, 'category': task.get('category'), 'harness': harness, 'run': run_idx,
+           'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(t0)),
            'exit_code': exit_code, 'timed_out': timed_out, 'wall_s': wall, 'passed': g['passed'],
            'checks': g['checks'], 'grader_errors': g.get('grader_errors', []),
            'usage': u, 'cost_usd': cost_usd(u, prices) if u else None,

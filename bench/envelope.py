@@ -321,7 +321,7 @@ def load_records(paths: list[str]) -> list[dict]:
 
 
 def start_time(r: dict, run_dir: str | None) -> tuple[float | None, str]:
-    """When the attempt started. run.py does not record it, so fall back to file times in the run folder:
+    """When the attempt started: run.py's recorded started_utc; for older attempts, file times in the run folder:
     prompt.txt is written just before the agent starts; result.json mtime minus wall time is a later bound."""
     if r.get("started_utc"):
         return parse_utc(r["started_utc"]), "recorded started_utc"
