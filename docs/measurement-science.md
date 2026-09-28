@@ -38,7 +38,7 @@ A benchmark that tests itself reports its own defects, so the findings section b
 - **Unit tests:** `python -m unittest discover -s tests` fails only the 3 environment tests that also fail on `main` here: packing-slip PDF parsing, ap-invoice-backlog and procure-to-pay-week.
 - **Desk validation:** `bench/validate_tasks.py --strict` gives task-for-task the same results as `main` in the same environment.
 - **Campaign exports:** `bench/export_campaign.py --verify` verifies 1,122 attempts and the frozen scorer fingerprint. `bench/export_process_campaign.py --verify` passes.
-- **Process validation:** `bench/validate_process.py --strict` passes on every task whose scenario builds without pdftotext, and on payment-run with `--faults lost-writes`. The one exception is mrp-planner-week seed 2 (see task defects), which fails on `main` too.
+- **Process validation:** `bench/validate_process.py --strict` passes on seeds 0–4 for freight-accrual-revision, month-end-close, payment-run, payment-run-need-to-know and requisition-approval-queue. It also passes on payment-run with `--faults lost-writes`. Two pre-existing defects that also fail on `main` (see task defects): margin-bridge seeds 3–4 and mrp-planner-week seed 2.
 - **Scorer gate:** the `check.py` fallback (commit `dbd13bf`) has 70 control items, 0 flips and 0 violations.
 
 ## Findings
@@ -107,7 +107,9 @@ A benchmark that tests itself reports its own defects, so the findings section b
 - Tasks that can't take difficulty settings because their checks are pinned to one draw: payments-match, payments-match-v2, quote-comparison and customer-dedupe.
 - 12 generators had an lxml timestamp bug (`stable_xlsx`), now fixed.
 
-**Process track.** mrp-planner-week seed 2: the `ignore_inbox` negative control doesn't fail "orders released". Seed 2's inbox doesn't change which orders get released, so the control can't show anything. This fails on `main` too.
+**Process track.**
+- margin-bridge seeds 3 and 4: `gen.py` crashes with a ZeroDivisionError at `price_tol` when `cast_ppv` is 0. It also fails on `main`. Strict validation of margin-bridge passes on seeds 0–2.
+- mrp-planner-week seed 2: the `ignore_inbox` negative control doesn't fail "orders released". Seed 2's inbox doesn't change which orders get released, so the control can't show anything. This fails on `main` too.
 
 ### bb-erp
 
