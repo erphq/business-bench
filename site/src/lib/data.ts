@@ -179,6 +179,19 @@ export function scorer(): Scorer {
   return (_scorer = { dir, manifestSha, equivalenceTasks, fileCount: Object.keys(manifest.files ?? {}).length, recipe: manifest.recipe, notes: manifest.notes });
 }
 
+/** Retain original grader errors as ungraded, rather than classifying them as agent failures. */
+export function scorerTransitions(rows: Pick<Attempt, "passed" | "raw_passed" | "raw_grader_error_count">[]) {
+  const counts = { passToPass: 0, failToPass: 0, ungradedToPass: 0, passToFail: 0, failToFail: 0, ungradedToFail: 0 };
+  for (const row of rows) {
+    if (row.raw_grader_error_count) counts[row.passed ? "ungradedToPass" : "ungradedToFail"]++;
+    else if (row.raw_passed) counts[row.passed ? "passToPass" : "passToFail"]++;
+    else counts[row.passed ? "failToPass" : "failToFail"]++;
+  }
+  const rawPasses = counts.passToPass + counts.passToFail;
+  const frozenPasses = counts.passToPass + counts.failToPass + counts.ungradedToPass;
+  return { ...counts, rawPasses, frozenPasses, net: frozenPasses - rawPasses, attempts: rows.length };
+}
+
 /** How the frozen scorer changed verdicts relative to the runner's original grader. */
 export function scorerDelta(armId: ArmId) {
   const rs = attempts().filter((r) => r.harness === armId);
@@ -188,7 +201,70 @@ export function scorerDelta(armId: ArmId) {
   const upEq = up.filter((r) => eq.has(r.task)).length;
   const byCat: Record<string, number> = {};
   for (const r of up) byCat[r.category] = (byCat[r.category] ?? 0) + 1;
-  return { up: up.length, down: down.length, upEq, upOther: up.length - upEq, byCat };
+  return { ...scorerTransitions(rs), up: up.length, down: down.length, upEq, upOther: up.length - upEq, byCat };
+}
+
+/** Two distinct partial-check metrics. Only the attempt-weighted mean shares the
+ * acceptance rate's weighting, so its gap has the per-attempt conjunction interpretation. */
+export function contractMetrics(rows: Pick<Attempt, "passed" | "checks">[]) {
+  if (!rows.length) throw new Error("Contract metrics require at least one attempt.");
+  let requiredChecks = 0, checksPassed = 0, fractionSum = 0, accepted = 0;
+  for (const row of rows) {
+    const checks = row.checks.filter((check) => check.required);
+    if (!checks.length) throw new Error("An acceptance contract must contain required checks.");
+    const count = checks.filter((check) => check.passed).length;
+    if (row.passed !== (count === checks.length)) throw new Error("Acceptance disagrees with required-check conjunction.");
+    requiredChecks += checks.length;
+    checksPassed += count;
+    fractionSum += count / checks.length;
+    accepted += Number(row.passed);
+  }
+  const attemptRate = accepted / rows.length;
+  const meanCheckFraction = fractionSum / rows.length;
+  return { attempts: rows.length, accepted, requiredChecks, checksPassed, attemptRate,
+    meanCheckFraction, pooledCheckRate: checksPassed / requiredChecks, gap: meanCheckFraction - attemptRate };
+}
+
+/** Reweight the observed within-category rates; this is a sensitivity calculation,
+ * not a prediction for new tasks. Omitted categories receive zero weight. */
+export function workloadComparison(weights: Record<string, number>) {
+  const known = new Set(CATEGORIES.map((category) => category.id));
+  for (const [id, weight] of Object.entries(weights)) {
+    if (!known.has(id) || !Number.isFinite(weight) || weight < 0) throw new Error("Use nonnegative finite weights for known desk categories.");
+  }
+  const total = Object.values(weights).reduce((sum, weight) => sum + weight, 0);
+  if (!(total > 0) || !Number.isFinite(total)) throw new Error("At least one category must have positive weight.");
+  const normalized = Object.fromEntries(CATEGORIES.map((category) => [category.id, (weights[category.id] ?? 0) / total]));
+  const rates: Record<ArmId, number> = {};
+  for (const arm of ARMS) {
+    rates[arm.id] = CATEGORIES.reduce((sum, category) => {
+      const rows = attempts().filter((row) => row.harness === arm.id && row.category === category.id);
+      return sum + normalized[category.id] * passes(rows) / rows.length;
+    }, 0);
+  }
+  return { weights: normalized, rates, difference: rates["proto-deepseek"] - rates["codex-sol"] };
+}
+
+/** Stable orientation: every difference is Proto + DeepSeek minus Codex + Sol,
+ * in rate units (multiply by 100 for percentage points), irrespective of ranking. */
+export function deskComparison() {
+  const left = "proto-deepseek", right = "codex-sol";
+  const leftRows = attempts().filter((row) => row.harness === left);
+  const rightRows = attempts().filter((row) => row.harness === right);
+  const categories = CATEGORIES.map((category) => {
+    const l = leftRows.filter((row) => row.category === category.id);
+    const r = rightRows.filter((row) => row.category === category.id);
+    const leftPassed = passes(l), rightPassed = passes(r);
+    return { ...category, tasks: new Set(l.map((row) => row.task)).size, attempts: l.length,
+      leftPassed, rightPassed, leftRate: leftPassed / l.length, rightRate: rightPassed / r.length,
+      passDifference: leftPassed - rightPassed, difference: leftPassed / l.length - rightPassed / r.length };
+  });
+  const released = workloadComparison(Object.fromEntries(categories.map((category) => [category.id, category.tasks])));
+  const equalCategories = workloadComparison(Object.fromEntries(categories.map((category) => [category.id, 1])));
+  const rawDifference = rawPasses(leftRows) / leftRows.length - rawPasses(rightRows) / rightRows.length;
+  const frozenDifference = passes(leftRows) / leftRows.length - passes(rightRows) / rightRows.length;
+  return { left, right, categories, released, equalCategories, rawDifference, frozenDifference,
+    scorerSensitivity: frozenDifference - rawDifference, passDifference: passes(leftRows) - passes(rightRows) };
 }
 
 export const fmt = {
@@ -201,18 +277,20 @@ export const fmt = {
 /** Derived phenomena for the findings page. Everything here is recomputed from the ledger at build time. */
 export interface Findings {
   arm: ArmId; attempts: number; failed: number; requiredChecks: number;
-  checkRate: number; taskRate: number; gap: number;
+  /** checkRate is the legacy pooled alias; use an explicit metric in new presentation. */
+  checkRate: number; pooledCheckRate: number; meanCheckFraction: number; taskRate: number; gap: number;
   singleFail: number; failedDist: Record<number, number>; meanFracInFailures: number;
   singleFailTypes: [string, number][];
   pass1: number; passAny: number; passAll: number; mixedTasks: number;
   costPerPass: number; medianWall: number;
-  byCategory: Record<string, { checkRate: number; taskRate: number; attempts: number }>;
+  byCategory: Record<string, { checkRate: number; pooledCheckRate: number; meanCheckFraction: number; taskRate: number; attempts: number }>;
 }
 const median = (xs: number[]) => { const s = [...xs].sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : 0; };
 export function findings(armId: ArmId): Findings {
   const ar = attempts().filter((r) => r.harness === armId);
   const req = ar.flatMap((r) => r.checks.filter((c) => c.required));
-  const checkRate = req.filter((c) => c.passed).length / req.length;
+  const contract = contractMetrics(ar);
+  const checkRate = contract.pooledCheckRate;
   const passed = ar.filter((r) => r.passed);
   const taskRate = passed.length / ar.length;
   const failedRows = ar.filter((r) => !r.passed);
@@ -233,11 +311,12 @@ export function findings(armId: ArmId): Findings {
   const cost = ar.reduce((s, r) => s + (r.cost_usd ?? 0), 0);
   const byCategory: Findings["byCategory"] = {};
   for (const c of CATEGORIES) {
-    const cr = ar.filter((r) => r.category === c.id); const rq = cr.flatMap((r) => r.checks.filter((k) => k.required));
-    byCategory[c.id] = { checkRate: rq.filter((k) => k.passed).length / rq.length, taskRate: cr.filter((r) => r.passed).length / cr.length, attempts: cr.length };
+    const cr = ar.filter((r) => r.category === c.id);
+    const metrics = contractMetrics(cr);
+    byCategory[c.id] = { checkRate: metrics.pooledCheckRate, pooledCheckRate: metrics.pooledCheckRate, meanCheckFraction: metrics.meanCheckFraction, taskRate: metrics.attemptRate, attempts: cr.length };
   }
   return {
-    arm: armId, attempts: ar.length, failed: failedRows.length, requiredChecks: req.length, checkRate, taskRate, gap: checkRate - taskRate,
+    arm: armId, attempts: ar.length, failed: failedRows.length, requiredChecks: req.length, checkRate, pooledCheckRate: checkRate, meanCheckFraction: contract.meanCheckFraction, taskRate, gap: contract.gap,
     singleFail: singleRows.length, failedDist, meanFracInFailures, singleFailTypes: Object.entries(types).sort((a, b) => b[1] - a[1]).slice(0, 4),
     pass1, passAny, passAll, mixedTasks, costPerPass: cost / passed.length, medianWall: median(ar.map((r) => r.wall_s ?? 0)),
     byCategory,

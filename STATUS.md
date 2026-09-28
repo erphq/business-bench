@@ -1,84 +1,59 @@
 # Status
 
-Business Bench: a runnable benchmark for agents doing business work.
-Public site: https://businessbench.org. Repo: erphq/business-bench (public from v1.0.0).
+Repository evidence snapshot: 2026-09-28. Public site: [businessbench.org](https://businessbench.org).
+Implemented means source is present; published means a named result ledger is released.
+Neither label establishes independent review or deployment readiness.
 
-## Current state (2026-09-17)
+## Published evidence
 
-v1.0.0 is the first public release. It contains 187 desk tasks, 20 build task
-packs, the runner and grader, the frozen `conservative-v7` scorer, and the
-complete desk comparison `complete-desk-comparison-2026-09-16`: Proto + DeepSeek
-V4.1 Flash 507/561 (raw 447) versus Codex + GPT-5.6-sol 473/561 (raw 431),
-1,122 attempts, raw and frozen verdicts both in the ledger. Build scores are not
-published: no arm has completed a human acceptance pass.
+| Track | Implemented inventory | Published evaluation | Boundary |
+|---|---|---|---|
+| Desk | 187 tasks | `complete-desk-comparison-2026-09-16`: 561 attempts per system; Proto + DeepSeek V4.1 Flash 507 accepted, Codex + GPT-5.6-sol 473 | Development-exposed fixtures, different models and non-contemporaneous cohorts, retrospective common scorer |
+| Build | 20 task packs, each with three changes | No completed acceptance-validated campaign | Packs and probes are available; application correctness has not been established by a published build evaluation |
+| Process | Six clerical pilot tasks plus analyst task `ap-invoice-backlog` | `pilot-process-2026-09-27`: the six pilot tasks at seed 0, five repetitions per system; both systems 30/30, zero recorded breaches | Local mode, no practitioner review, no published analyst-task result |
 
-An earlier snapshot (commit 87f624e, campaign `full-1`) recorded four arms under
-the original grader with Codex ahead of three flash-tier Proto cells. It is in
-git history and the site's self-audit names it; the two snapshots are not on one
-leaderboard.
+The desk ledger retains original and frozen verdicts: 447 versus 431 original passes,
+507 versus 473 under `conservative-v7`. The research paper separates complete
+acceptance, partial-check fractions, repeated success, workload composition, evaluator
+sensitivity, and resource use. [Evidence map and verification commands](docs/reproducibility.md).
 
-The site under `site/` is built from the repo itself (task export + ledger +
-frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
+The process pilot names Proto CLI 0.2.119 and Codex CLI 0.158.0-alpha.2.1, both using
+gpt-5.6-sol through a ChatGPT subscription. Its median attempt times are 290 s and
+164 s; these are observations from the released local pilot, not isolated estimates
+of harness efficiency. Its ledger and exact conditions are in
+[`results/process/pilot-process-2026-09-27/`](results/process/pilot-process-2026-09-27/).
 
-## Recently shipped
+An earlier four-arm `full-1` snapshot exists in Git history. Its original-grader
+results are not pooled with the current frozen-scorer comparison.
 
-- 2026-09-27: first analyst-band process task, `ap-invoice-backlog`. The AP
-  supervisor clears three weeks of vendor invoices over three turns: about 200
-  documents from 22 vendors in three layouts, with twelve planted exceptions,
-  four look-alikes, replies and a delivery between turns, and a hold report.
-  Sixteen negative controls; strict validation passes on seeds 0 to 4. bb-erp
-  changes: scheduled receipts in the world file (background receiving between
-  turns), an AP supervisor can void a validated invoice without journal-entry
-  rights, and a new audit rule flags a bank-change request made without a
-  call to the number on file. Committed before any agent attempt.
+## Implemented without a new score claim
 
-- 2026-09-27: process track pilot campaign `pilot-process-2026-09-27`. Proto CLI
-  0.2.119 and Codex CLI 0.158.0-alpha.2.1, both on gpt-5.6-sol through a ChatGPT
-  subscription, each ran the six pilot tasks five times from seed 0. Both passed
-  30/30 with no breaches. Median time per attempt: Proto 290 s, Codex 164 s.
-  Input tokens: Proto 38.8M (47% cached), Codex 22.7M (89% cached). Local mode,
-  before the practitioner review; published as provisional with its ledger in
-  `results/process/`, verified in CI by `export_process_campaign.py --verify`.
+- bb-erp, process runner, state/audit checks, oracle and negative-control validation.
+  The runner starts local processes; process container isolation is still planned.
+- `ap-invoice-backlog`, the first analyst-band process task, with 16 negative controls.
+  Its source and validation are distinct from a completed agent campaign.
+- `plan_feasible`, `forecast_error`, and `not_fooled`, plus planning, event-log and
+  adversarial generator helpers. These are infrastructure for the [v2 design](docs/v2/README.md),
+  not a released 100-task v2 suite or a human baseline.
+- The wiki site, shared paper manuscript, generated Markdown/TeX, and published PDF.
+  CI builds the site and paper; a successful build alone is not a live deployment check.
 
-- 2026-09-26: process track pilot. bb-erp (the benchmark's own ERP: purchasing,
-  receiving, payables, ledger, sales, manufacturing, MRP; hard controls; audit
-  log; business clock; counterparty simulator), a runner that drives agents
-  turn by turn through harness adapters, six check types plus audit rules, and
-  six validated pilot tasks with oracles and negative controls. Smoke attempts
-  by Proto and Codex CLI (both gpt-5.6-sol) found three task defects, all fixed;
-  no process scores are published. Site redesigned (serif text, figures with
-  task-bootstrap intervals, process track pages, sitemap with lastmod, new
-  share image).
+## Next evidence to obtain
 
-- 2026-09-18: v1.1.0. Grader gains the three v2 check types (`plan_feasible`,
-  `forecast_error`, `not_fooled`) with strict-validator rules and tests; generator
-  library gains the event-log emitter with planted deviations, the planning
-  constraint scaffold, and the adversarial injector; paper retitled Business Bench
-  with authors Somesh Misra, Somnath Misra, Shashank Dixit; Findings page live.
+1. Independently review accepted and rejected artifacts, including plausible wrong
+   outputs and valid alternatives. Publish sampling rules and adjudications, with
+   false-acceptance and false-rejection estimates under that sampling design.
+2. Review the process handbooks and exceptions with practitioners. Expand beyond the
+   saturated six-task local pilot only with reviewed contracts and documented isolation.
+3. Freeze scorer, fixtures, environments and configurations before a new campaign.
+   Separate fixed-fixture repetition, new seeded instances and held-out templates;
+   control model and environment when claiming a harness comparison.
+4. Execute the proposed human baseline and a complete build acceptance campaign.
+   Protocols and budget estimates exist; participant recruitment, completed attempts,
+   and independent verdict records are not established by this repository.
+5. Record effective runtime/image/dependency and skill configuration per attempt.
+   The adapters accept environment overrides, and current homes differ across tracks.
 
-- 2026-09-18: v2 direction agreed and published: thesis for an AI-research
-  audience, seven capability axes, 100 tasks with planted truth and check type
-  (`docs/v2/`), human-baseline protocol with approved budget, /roadmap page.
-
-- 2026-09-18: v1.0.0 initial commit (full-1 snapshot), then the corrected
-  two-system frozen-scorer comparison and redesigned paper (collaborator).
-- 2026-09-17: businessbench.org site (`site/`), MIT license, `Site` workflow,
-  self-audit page that states the conflict of interest, the scorer's effect on
-  every verdict, and the earlier snapshot up front.
-
-## Next up
-
-0. v2 order of work (docs/v2/README.md section 11): steps 1 and 2 done in v1.1.0;
-   next is authoring axes 4, 6, 7 (42 tasks, three bands each) on the new library.
-1. Independent stratified audit of 50 desk tasks (7 per category) by reviewers
-   outside ERP.AI, verdicts committed under `docs/audits/`.
-2. Independent review of the 7 equivalence graders against adversarial wrong
-   answers; plausible-wrong negative controls per check type.
-3. Human re-read of a sample of remaining failures to estimate the residual
-   false-negative rate.
-4. Contemporaneous rerun: same task version, same scorer, 5 repetitions per
-   system, plus a same-model harness control pair. Proto on the ERP.AI platform
-   cell (`harnesses/proto-erpai.sh`) runs in the same campaign. Needs a Linux
-   Docker host, a Proto runtime bundle, and an ERP.AI test org.
-5. Container digests and runtime revision recorded per attempt by the runner.
-6. Cloudflare deploy secrets in the repo so the `Site` workflow deploys on push.
+The planned sequence and non-goals are in [GOALS.md](GOALS.md). Historical design
+documents describe intended extensions; their status notes distinguish those plans
+from the inventory and campaigns above.

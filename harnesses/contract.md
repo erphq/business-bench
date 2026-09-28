@@ -2,19 +2,54 @@
 
 `harnesses/<name>.sh <workspace_dir> <prompt_file> <out_dir>`
 
-- Runs the harness headless on the ask in `prompt_file` with the workspace as working directory.
-- Writes any harness-specific artifacts (event streams, last message) into `out_dir`, never elsewhere.
-- Exit code is the harness's exit code. The runner enforces the timeout and kills the process group.
-- Environment provided by the runner: `BENCH_TIMEOUT_MS`, `BENCH_RUN_DIR`, and for Proto `PROTO_BENCH_HOME` (a per-run copy of the home template so memory and skills never leak between runs).
-- The model is pinned inside the adapter. One adapter = one cell.
+The adapter runs headlessly on the prompt, using the supplied workspace for requested
+deliverables. Harness event streams and final messages belong in `out_dir`; some
+runtimes also create session files in their home or workspace, which remain private.
+The runner records the adapter's exit code, wall time and timeout separately from
+artifact acceptance. Desk and process runners allow a 60-second shutdown margin
+beyond the declared turn timeout before terminating the process group.
 
-## Isolation per cell
+## Effective configuration defines the cell
 
-| Cell | Data home | Personal skills / plugins | Shell environment |
-|---|---|---|---|
-| proto-glm | per-run copy of `homes/proto-glm` via `PROTO_APP_HOME_OVERRIDE` (BYOK config, model pinned) | none: builtin skills only | operator's real HOME and PATH |
-| codex-sol | `homes/codex-sol` via `CODEX_HOME` (auth.json symlinked, sessions land here; the process runner gives each turn a fresh copy) | none: fake `HOME` hides `~/.agents/skills`; its `.zshenv` restores the real HOME for spawned shells; the home's `config.toml` turns off the ChatGPT account's apps and plugins | operator's real HOME and PATH |
+Adapter names identify defaults, not immutable runtime settings. For example,
+`codex-sol.sh` defaults to `gpt-5.6-sol` and high reasoning but accepts `CODEX_MODEL`
+and `CODEX_BIN`. Proto adapters accept runtime paths and budget overrides; model and
+provider settings also come from the configured home. Record effective model, route,
+reasoning, runtime revision, tools/skills, home template, image digest and resource
+limits before claiming replication. A changed configuration is a new cell.
 
-Known residue: Codex still tries to start a Cloudflare MCP connector attached to the ChatGPT account and logs an auth error; it does not affect runs.
+The runners provide `BENCH_TIMEOUT_MS`, `BENCH_ROOT`, and host-side `BENCH_RUN_DIR`.
+Containerized adapters receive the explicitly forwarded environment, not every host
+variable. Proto receives `PROTO_BENCH_HOME` where a template is copied.
 
-Process track: the runner copies `homes/<cell>` into each turn (symlinks kept, so a login is linked, never copied), deletes `auth.json` and `codex-oauth.json` from the copy after the turn, and points Proto's request traces (`PROTO_PROVIDER_TRACE_DIR`) at the turn's output folder, outside the agent's workspace.
+## Actual state and isolation boundaries
+
+| Track/cell | Home handling | Execution boundary |
+|---|---|---|
+| Desk/build Proto | Copies `homes/<cell>` per attempt/turn; template contents can include skills and credentials | Optional Docker; local mode remains host-accessible |
+| Desk/build Codex | Uses the configured `CODEX_HOME`; Docker mounts `homes/codex-sol` writable and shared between attempts | Optional Docker; home/session state is not reset per attempt |
+| Process adapters | Copies `homes/<cell>` per turn when present, preserving symlinks; workspace and ERP state persist across turns | Local processes only; no container/filesystem isolation |
+
+A dedicated home is an operator requirement, not proof that personal skills,
+connectors, plugins or prior state cannot load. Codex's optional fake home applies
+only if that directory exists; its behavior depends on the files the operator puts
+there. Set and record account app/plugin configuration and inspect the actual tool
+inventory. Historical connector errors are not guarantees about later environments.
+
+Container desk runs mount the run directory and adapter scripts, excluding the host
+task/reference tree. Network access remains enabled, and public task definitions may
+still be discoverable. Local runners inherit host access and must not be described as
+answer-isolated evaluations.
+
+## Process turns
+
+The runner supplies `ERP_URL`, `ERP_TOKEN`, and an `erp` executable on `PATH`.
+Each turn is a fresh agent invocation with the persistent workspace and ERP state.
+For Proto it points provider traces at the turn output directory. If a home template
+is missing, adapter defaults can still apply; verify the intended template exists.
+
+After a turn, `process_run._scrub` removes credential files and file symlinks from
+the copied home and redacts recognized secret-valued JSON fields. This is targeted
+cleanup, not a guarantee that logs or arbitrary files contain no secrets. Desk/build
+raw attempt directories retain homes without that scrub. Keep raw results private;
+review any artifact or trace before sharing, and use the public exporters' allowlist.

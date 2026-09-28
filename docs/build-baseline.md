@@ -1,6 +1,8 @@
 # Enterprise baseline for build-track apps
 
-Every build task's `checklist.md` opens with these items, numbered 1 to 14, with the placeholders in
+This is the authoring baseline for new and explicitly versioned build tasks. Published task checklists
+remain the scoring authority; changes here do not retroactively revise them. This baseline specifies
+items 1 to 14, with the placeholders in
 angle brackets filled from the task's `reference/counts.json`. App-specific items follow from 15. Items
 marked (CORE) define "first usable" together with the task's own core items. A tester works the list
 with the app URL, `RESULT.json`, and this text; nothing else. "Reject" means a visible message and no
@@ -51,7 +53,7 @@ checklist introduction states the window of test dates for which the quoted valu
    How to check: As restricted, read the <MAIN_ENTITY_PLURAL> total and open five records to confirm scope. As admin, copy the URL of <OUT_OF_SCOPE_EXAMPLE>; paste it in the restricted session. Pass only on the exact count and an error, not-found, or redirect without rendering that record's details.
 
 7. [API] Authorization is enforced by the server, not the page: replaying a data request from the restricted session with another scope's record id, or with any scope or role filter removed, returns 401, 403, or 404 or contains no foreign record; replaying a create or edit request from the viewer session is rejected the same way.
-   How to check: In the restricted session open devtools > Network, load the list and one record, copy the data requests as cURL, substitute <OUT_OF_SCOPE_EXAMPLE>'s id and remove filter parameters, re-issue. In the viewer session copy any write request the UI would send (or craft one against the same endpoint) and re-issue. Fail if any response carries foreign data or any write succeeds. Server-rendered apps with no separate data requests pass this item when items 5 and 6 pass.
+   How to check: In the restricted session open devtools > Network, load the list and one record, copy the data requests as cURL, substitute <OUT_OF_SCOPE_EXAMPLE>'s id and remove filter parameters, re-issue. In the viewer session copy any write request the UI would send (or craft one against the same endpoint) and re-issue. Fail if any response carries foreign data or any write succeeds. For server-rendered apps, test the corresponding page and form requests directly; hidden controls alone do not establish server authorization. If a required request was not tested, record it as untested.
 
 8. (CORE) [Dashboard] A dashboard page shows at least four figures computed live from the data: <KPI_1> = <KPI_1_VALUE>, <KPI_2> = <KPI_2_VALUE>, <KPI_3> = <KPI_3_VALUE>, <KPI_4> = <KPI_4_VALUE>; after the tester creates one <MAIN_ENTITY>, the affected figure changes accordingly on reload.
    How to check: As admin, open the dashboard and read the four figures (exact values, tolerance 0.01 on money). Create one <MAIN_ENTITY> in scope of <KPI_1>, reload, confirm <KPI_1> moved by one (or by the amount). Fail if a figure is missing, wrong, or static.
@@ -72,7 +74,7 @@ checklist introduction states the window of test dates for which the quoted valu
     How to check: Perform both. Fail if either creates a record (check the list after reload).
 
 14. (CORE) [Persistence] Data survives a restart of the app and lives on the server, not in the tester's browser.
-    How to check: After the items above, ask the operator to restart the app (or wait 10 minutes), then log in as admin in a different browser. Pass only if the counts and the tester's remaining changes are present. Fail if anything reverted to import values.
+    How to check: After the items above, have the operator actually restart the application process and record that action, then log in as admin in a different browser. Pass only if the counts and the tester's remaining changes are present. Waiting alone does not test restart persistence. Record the item as untested if a restart was not observed; fail if the persisted state reverted or disappeared.
 
 ---
 

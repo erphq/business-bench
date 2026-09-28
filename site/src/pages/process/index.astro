@@ -5,6 +5,7 @@ import { processTasks, processCampaign, FAMILY_LABEL, PROCESS_PILOT, REPO } from
 const tasks = processTasks();
 const p2p = tasks.find((t) => t.id === "procure-to-pay-week")!;
 const day = (d: string) => new Date(d + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+const extraTasks = tasks.filter(t => !processCampaign(PROCESS_PILOT).tasks.includes(t.id));
 const checks = tasks.reduce((n, t) => n + t.checks.length, 0);
 const steps = [
   { title: "Order", what: "Turn the week's approved requisitions into purchase orders and send them." },
@@ -36,11 +37,14 @@ const desc = "Agents take a role inside an ERP for several business days and are
 <Base title="Process track" description={desc} path="/process" crumbs={[{ name: "Process track", path: "/process" }]}>
   <p class="meta">Track<span class="sep">·</span>pilot<span class="sep">·</span>{tasks.length} tasks, {checks} checks, {negs} negative controls<span class="sep">·</span>pilot campaign published, provisional</p>
   <h1>Process track</h1>
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>
+    <a href="#campaign">Pilot evidence</a><a href="#why">Measurement target</a><a href="#episode">An episode</a><a href="#environment">Environment</a><a href="#grading">Grading</a><a href="#tasks">Task inventory</a><a href="#validation">Validation</a><a href="#next">Next experiments</a>
+  </nav>
   <p class="lede">Business processes run inside an ERP. The agent holds a role at a manufacturer, works through requests from colleagues over several business days, and is graded on the state it leaves in the system and on the audit log of every request it made.</p>
 
   <div class="callout">
     <span class="t">Status</span>
-    <p>Seven tasks pass validation: the six pilot tasks at the clerical band and the first task at the analyst band. The <a href="#campaign">pilot campaign</a> below covers the six pilot tasks and is the track's first published result. It ran in local mode and before the practitioner review of the tasks, so it is provisional. The full design is in the <a href="/process/spec">specification</a>.</p>
+    <p>{tasks.length} task packs are implemented: {camp.tasks.length} clerical pilot tasks and {extraTasks.length} additional analyst task. Available tasks and evaluated tasks are different inventories. The <a href="#campaign">pilot campaign</a> below covers the six pilot tasks and is the track's first published result. It ran in local mode and before the practitioner review of the tasks, so it is provisional. The full design is in the <a href="/process/spec">specification</a>.</p>
   </div>
 
 
@@ -58,7 +62,7 @@ const desc = "Agents take a role inside an ERP for several business days and are
           {cells.map((c) => <td class="n">{mins(r.s[c].wall)}</td>)}
           {cells.map((c) => <td class="n">{mtok(r.s[c].perAttempt)}<div class="dim" style="font-size:12px">{pctf(r.s[c].cachedShare)} cached</div></td>)}
         </tr>))}
-      <tr><td><b>All six tasks</b></td>
+      <tr><td><b>All {camp.tasks.length} pilot tasks</b></td>
         {cells.map((c) => <td class="n"><b>{all[c].passed}/{all[c].n}</b></td>)}
         {cells.map((c) => <td class="n"><b>{mins(all[c].wall)}</b></td>)}
         {cells.map((c) => <td class="n"><b>{mtok(all[c].perAttempt)}</b><div class="dim" style="font-size:12px">{pctf(all[c].cachedShare)} cached</div></td>)}
@@ -66,11 +70,12 @@ const desc = "Agents take a role inside an ERP for several business days and are
     </tbody>
   </table></div>
   <div class="prose">
-    <p>Both systems ran {camp.cells[pa].model} at {camp.cells[pa].effort} reasoning effort through a ChatGPT subscription: {short(pa)} as {camp.cells[pa].harness}; {short(pb)} as {camp.cells[pb].harness}. Both passed all {all[pa].n} attempts, with {all[pa].breaches + all[pb].breaches === 0 ? "no breach of a soft control" : `${all[pa].breaches + all[pb].breaches} breaches`} and {all[pa].errors + all[pb].errors === 0 ? "no harness errors" : `${all[pa].errors + all[pb].errors} harness errors`}. At the clerical band these tasks do not separate the two harnesses on correctness.</p>
-    <p>They differ in time and tokens. {short(pb)} took a median of {Math.round(all[pb].wall)} seconds per attempt and {short(pa)} {Math.round(all[pa].wall)}. {short(pa)} sent {(all[pa].input / 1e6).toFixed(1)} million input tokens across its attempts and {short(pb)} {(all[pb].input / 1e6).toFixed(1)} million; the provider served {pctf(all[pb].cachedShare)} of {short(pb)}'s input from its prompt cache and {pctf(all[pa].cachedShare)} of {short(pa)}'s. {short(pa)} places a status message after the conversation on every model call, which changes the end of the prompt and stops the provider reusing the cached prefix. In one run of procure-to-pay-week with the status carried inside tool results instead, its cached share rose to 92% and its wall time did not change. That change is in review as <a href="https://github.com/erphq/proto/pull/601" rel="noopener">erphq/proto#601</a> and is not in the build measured here.</p>
-    <p>ERP.AI develops Proto and publishes this benchmark. The conditions of this run:</p>
+    <p>Both systems ran {camp.cells[pa].model} at {camp.cells[pa].effort} reasoning effort through a ChatGPT subscription: {short(pa)} as {camp.cells[pa].harness}; {short(pb)} as {camp.cells[pb].harness}. Both passed all {all[pa].n} attempts, with {all[pa].breaches + all[pb].breaches === 0 ? "zero recorded audit-rule breaches" : `${all[pa].breaches + all[pb].breaches} recorded audit-rule breaches`} and {all[pa].errors + all[pb].errors === 0 ? "no harness errors" : `${all[pa].errors + all[pb].errors} harness errors`}. On these fixed clerical fixtures the declared acceptance checks do not separate the two configured systems. Zero observed failures does not establish zero risk, valid coverage of all business requirements, or equality on harder work.</p>
+    <p>They differ in time and tokens. {short(pb)} took a median of {Math.round(all[pb].wall)} seconds per attempt and {short(pa)} {Math.round(all[pa].wall)}. {short(pa)} sent {(all[pa].input / 1e6).toFixed(1)} million input tokens across its attempts and {short(pb)} {(all[pb].input / 1e6).toFixed(1)} million; the provider served {pctf(all[pb].cachedShare)} of {short(pb)}'s input from its prompt cache and {pctf(all[pa].cachedShare)} of {short(pa)}'s. These are observed resource differences within this pilot. The ledger does not isolate their cause: prompt construction, tools, runtime behavior and provider caching may all matter. A change to caching or runtime behavior needs a separately labeled comparison under matched conditions. Subscription access supplies no per-attempt invoice, so token counts are not reported as spending.</p>
+    <p>All repetitions use the same declared seed. They test repeated execution of these scenarios, not new business cases. Sharing a model name and reasoning setting removes some differences but does not randomize runtime, tools, prompts or run order.</p>
+    <p>ERP.AI develops Proto and publishes this benchmark. The list below quotes the original provenance conditions. Its phrase “the comparison is between harnesses” describes the intended comparison; matched model naming and route alone do not identify a harness-only causal effect.</p>
     <ul>{camp.conditions.map((c) => <li>{c}</li>)}</ul>
-    <p>The <a href={`${ledger}/attempts.jsonl`} rel="noopener">attempt ledger</a> has every attempt's verdict, each check's verdict, time and token counts, and SHA-256 hashes of the raw result, the final ERP database and the files the agent left. <code>python bench/export_process_campaign.py --verify</code>, which runs in CI, checks the ledger against the hash in its <a href={`${ledger}/provenance.json`} rel="noopener">provenance</a> and recomputes the <a href={`${ledger}/summary.json`} rel="noopener">summary</a> from it.</p>
+    <p>The <a href={`${ledger}/attempts.jsonl`} rel="noopener">attempt ledger</a> has every attempt's verdict, each check's verdict, time and token counts, and SHA-256 hashes of the raw result, the final ERP database and the files the agent left. <code>python bench/export_process_campaign.py --verify</code>, which runs in CI, checks the ledger against the hash in its <a href={`${ledger}/provenance.json`} rel="noopener">provenance</a> and recomputes the <a href={`${ledger}/summary.json`} rel="noopener">summary</a> from it. This verifies the released accounting. Re-adjudicating the historical ERP state requires the underlying retained databases and artifacts; their hashes alone do not supply them.</p>
   </div>
 
   <div class="prose">
@@ -94,7 +99,7 @@ const desc = "Agents take a role inside an ERP for several business days and are
 
   <div class="prose">
     <h2 id="environment">The environment</h2>
-    <p>The ERP, bb-erp, belongs to the benchmark. That choice gives byte-level determinism, resets by copying one SQLite file, exact planted truth, and an audit log designed for grading; the price is less interface realism than a commercial system. The agent reaches it through an <code>erp</code> command and an HTTP API with an OpenAPI description. There is no browser interface yet.</p>
+    <p>The ERP, bb-erp, belongs to the benchmark. That choice supports deterministic scenario generation, resets from a SQLite database, explicit reference state, and an audit log designed for grading; the price is less interface realism than a commercial system. The agent reaches it through an <code>erp</code> command and an HTTP API with an OpenAPI description. There is no browser interface yet.</p>
   </div>
   <div class="tbl-wrap"><table class="tbl">
     <thead><tr><th>Area</th><th>Documents and reports</th><th>Controls the ERP enforces</th></tr></thead>
@@ -108,10 +113,10 @@ const desc = "Agents take a role inside an ERP for several business days and are
     </tbody>
   </table></div>
   <div class="prose">
-    <p>Controls come in two kinds. <b>Hard controls</b> are enforced by the ERP: the request is refused and the refusal is logged. <b>Soft controls</b> are company policy, stated in the handbook the agent is given and not enforced by the system, such as "order from the preferred vendor when the requested one is on quality hold". Refusals are reported as probes. A soft-control violation is a breach, and a breach fails the attempt whatever else it achieved.</p>
+    <p>Controls come in two kinds. <b>Hard controls</b> are enforced by the ERP: the request is refused and the refusal is logged. <b>Soft controls</b> are company policy, stated in the handbook the agent is given and not enforced by the system, such as "order from the preferred vendor when the requested one is on quality hold". Refusals are reported as probes. Declared audit rules test selected policy requirements. A failed audit-forbidden check is recorded as a breach and fails the attempt; a zero breach count does not mean every possible policy violation was checked.</p>
 
     <h2 id="grading">Grading</h2>
-    <p>After the last turn the runner advances the clock to the grading date and materialises named SQL projections of the final database, such as the purchase-order lines ordered this week or the invoices entered with their hold reasons. The reference is the same projection after the task's reference policy, the oracle, has run the episode. An attempt passes when every check passes.</p>
+    <p>After the last turn the runner advances the clock to the grading date and materialises named SQL projections of the final database, such as the purchase-order lines ordered this week or the invoices entered with their hold reasons. The reference is the same projection after the task's reference policy, the oracle, has run the episode. An attempt passes when every declared check passes. Agreement with a reference projection does not prove the reference policy is the only valid way to do the work; alternate valid outcomes and omitted controls need separate review.</p>
   </div>
   <div class="tbl-wrap"><table class="tbl">
     <thead><tr><th style="width:22%">Check</th><th>Passes when</th></tr></thead>
@@ -128,13 +133,13 @@ const desc = "Agents take a role inside an ERP for several business days and are
 
   <h2 id="tasks">Tasks</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th style="width:38%">Task</th><th>Role</th><th>Family</th><th>Band</th><th class="n">Turns</th><th class="n">Checks</th><th class="n">Negative controls</th></tr></thead>
+    <thead><tr><th style="width:38%">Task</th><th>Role</th><th>Family</th><th>Band / evidence</th><th class="n">Turns</th><th class="n">Checks</th><th class="n">Negative controls</th></tr></thead>
     <tbody>{tasks.map((t) => (
       <tr><td><a href={`/process/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
-        <td>{t.agent.title}</td><td class="muted">{FAMILY_LABEL[t.family] ?? t.family}</td><td class="muted">{t.band}</td>
+        <td>{t.agent.title}</td><td class="muted">{FAMILY_LABEL[t.family] ?? t.family}</td><td class="muted">{t.band}<br />{camp.tasks.includes(t.id) ? <a href="#campaign">In published pilot</a> : "No published attempts"}</td>
         <td class="n">{t.turns.length}</td><td class="n">{t.checks.length}</td><td class="n">{t.negative_controls.length}</td></tr>))}</tbody>
   </table></div>
-  <p class="muted" style="font-size:16px">The six pilot tasks are at the clerical band. <a href="/process/ap-invoice-backlog">ap-invoice-backlog</a> is the first at the analyst band: about 200 vendor documents over three turns, twelve planted exceptions, and replies and a delivery between turns. It has no agent results yet. The specification lists 24 tasks across six process families; the analyst and controller bands reuse the same company generator with more volume and harder planted cases.</p>
+  <p class="muted" style="font-size:16px">The six pilot tasks are at the clerical band. <a href="/process/ap-invoice-backlog">ap-invoice-backlog</a> is the first at the analyst band: about 200 vendor documents over three turns, twelve planted exceptions, and replies and a delivery between turns. It has no attempts in the published pilot ledger. The specification lists 24 tasks across six process families; the proposed analyst and controller bands extend the same company setting with higher volume and additional decision requirements.</p>
 
   <div class="prose">
     <h2 id="validation">Validation</h2>
@@ -146,16 +151,17 @@ const desc = "Agents take a role inside an ERP for several business days and are
       <li>two oracle runs from the same seed end in the same database, compared by a canonical dump;</li>
       <li>every handbook clause a check cites exists in the handbook the agent sees.</li>
     </ul>
+    <p>These controls establish specific properties of the generator and checker. They do not estimate false acceptance or false rejection on the range of outputs real agents produce, and more generated volume does not by itself demonstrate greater reasoning difficulty.</p>
     <p>The six pilot tasks pass on seeds 0 and 1 in strict mode, and ap-invoice-backlog on seeds 0 to 4. Strict mode also rejects a negative control that fails only checks it does not declare.</p>
 
     <h2 id="smoke">Smoke tests</h2>
-    <p>On 26 September 2026 two agent harnesses, Proto and Codex CLI, both on gpt-5.6-sol, each ran <a href="/process/procure-to-pay-week">procure-to-pay-week</a> once to test the runner. The runs found three defects in the task rather than in the agents: a case the handbook did not cover, an entry path in the ERP that let invoice lines skip the three-way match, and a note rule that rejected a correct phrasing. All three are fixed, and the fixes are in the repository history. On the corrected task, both harnesses passed all 18 checks. One attempt per harness is a test of the machinery, not a result.</p>
+    <p>On 26 September 2026 two agent harnesses, Proto and Codex CLI, both on gpt-5.6-sol, each ran <a href="/process/procure-to-pay-week">procure-to-pay-week</a> once to test the runner. The runs found three defects in the task rather than in the agents: a case the handbook did not cover, an entry path in the ERP that let invoice lines skip the three-way match, and a note rule that rejected a correct phrasing. All three are fixed, and the fixes are in the repository history. On the corrected task, both harnesses passed all 18 checks. Those smoke runs test the machinery. They are separate from the published pilot matrix above and provide no comparative estimate.</p>
 
     <h2 id="next">Next</h2>
     <ol>
       <li>A practitioner review of the pilot by an accounts payable lead, a production planner and a controller.</li>
-      <li>The pilot campaign repeated in containers, the isolation the specification requires for official results.</li>
-      <li>A campaign on ap-invoice-backlog, more tasks at the analyst band, then the remaining catalogue tasks and the controller band.</li>
+      <li>Container execution and reference isolation implemented and tested, followed by a separately labeled repeat of the pilot under that protocol. The current process runner supports local execution only.</li>
+      <li>A prospectively reviewed campaign on ap-invoice-backlog and additional analyst tasks, with declared seeds and an evaluator fixed before outputs are inspected.</li>
       <li>Background operations between turns, so an episode can span several weeks of sales, production and receiving.</li>
       <li>A browser interface and a human baseline on the pilot tasks.</li>
     </ol>

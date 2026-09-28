@@ -1,7 +1,9 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { readRepoFile, REPO } from "@/lib/data";
+import { readRepoFile, REPO, processTasks, processCampaign, PROCESS_PILOT } from "@/lib/data";
 import { renderMarkdown } from "@/lib/markdown";
+const inventory = processTasks();
+const pilot = processCampaign(PROCESS_PILOT);
 const base = `${REPO}/blob/main/docs/process/`;
 // The three documents render on one page, so links between them become anchors. The worked example in tasks.md
 // spells out a task's planted cases; like the desk traps it stays in the repository.
@@ -19,17 +21,31 @@ const spec = renderMarkdown(rewire(readRepoFile("docs/process/README.md")), { st
 const env = renderMarkdown(rewire(readRepoFile("docs/process/environment.md")), { stripFirstH1: true, linkBase: `${REPO}/blob/main/docs/process/` });
 const tasks = renderMarkdown(rewire(tasksPart), { stripFirstH1: true, linkBase: `${REPO}/blob/main/docs/process/` });
 const toc = [
+  { depth: 2, id: "implementation-status", text: "Implementation and evidence" },
   { depth: 2, id: "specification", text: "Specification" }, ...spec.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
   { depth: 2, id: "the-environment", text: "The environment" }, ...env.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
   { depth: 2, id: "the-tasks", text: "The tasks" }, ...tasks.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
 ];
-const desc = "Specification of the Business Bench process track: episode model, roles and controls, grading, metrics, isolation, difficulty bands, validation, threats to validity; the bb-erp environment; and the 24 planned tasks.";
+const desc = "Working specification of the Business Bench process track, with implemented components, the published fixed-seed pilot, and planned capabilities distinguished.";
 ---
 <Base title="Process track specification" description={desc} path="/process/spec" crumbs={[{ name: "Process track", path: "/process" }, { name: "Specification", path: "/process/spec" }]}>
   <p class="meta"><a href="/process">Process track</a><span class="sep">·</span>specification<span class="sep">·</span>rendered from <a href={`${REPO}/tree/main/docs/process`} rel="noopener">docs/process</a></p>
   <h1>Process track specification</h1>
-  <p class="lede">The design of the track, the ERP the agent operates, and the planned tasks. This is the working specification; where it and the code differ, the code in the repository is what runs.</p>
+  <p class="lede">The track design, the ERP the agent operates, and the planned task catalogue. Read the design requirements alongside the implemented inventory and recorded campaign conditions below.</p>
   <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{toc.map((t) => <a href={`#${t.id}`} class={`d${t.depth}`}>{t.text}</a>)}</nav>
+  <section aria-labelledby="implementation-status">
+    <h2 id="implementation-status">Implementation and evidence</h2>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Layer</th><th>Current status</th><th>What to consult</th></tr></thead>
+      <tbody>
+        <tr><td>Implemented environment and tasks</td><td>bb-erp, a multi-turn runner, validators, and {inventory.length} task packs. The runner currently uses local processes.</td><td><a href="/process#tasks">Task inventory</a>; <a href={`${REPO}/blob/main/bench/process_run.py`} rel="noopener">runner</a>; <a href={`${REPO}/blob/main/bench/validate_process.py`} rel="noopener">validator</a>.</td></tr>
+        <tr><td>Published empirical evidence</td><td>{pilot.tasks.length} tasks, seed {pilot.seed}, {pilot.repetitions} repeated attempts per system. Fixed-seed repeatability under pilot conditions.</td><td><a href="/process#campaign">Campaign results and conditions</a>; <a href={`${REPO}/blob/main/results/process/${PROCESS_PILOT}/provenance.json`} rel="noopener">provenance</a>.</td></tr>
+        <tr><td>Design and planned coverage</td><td>The documents below describe the broader task catalogue, desired execution boundaries, and evaluation procedures. A requirement in this specification is not evidence of implementation or validation.</td><td><a href="/roadmap">Roadmap</a>; <a href={`${REPO}/blob/main/STATUS.md`} rel="noopener">repository status</a>.</td></tr>
+      </tbody>
+    </table></div>
+    <p>An oracle pass establishes that a supplied policy can satisfy the declared tests; a targeted negative control demonstrates a specific rejection. Neither estimates agreement with practitioner acceptance, unseen-template performance, or production safety. Repeating seed {pilot.seed} is not the same experiment as testing additional seeds.</p>
+    <p>For commands that separate task validation, new paid runs, and published-accounting checks, use <a href="/reproduce#process-experiment">the reproduction guide</a>. When the design and implementation differ, report the code version and actual conditions used, rather than treating the design as an execution record.</p>
+  </section>
   <article class="prose"><h2 id="specification" style="margin-top:0">Specification</h2><div set:html={spec.html} /></article>
   <article class="prose"><h2 id="the-environment">The environment</h2><div set:html={env.html} /></article>
   <article class="prose" style="max-width:none"><h2 id="the-tasks">The tasks</h2><div set:html={tasks.html} /></article>

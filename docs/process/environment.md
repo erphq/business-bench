@@ -1,6 +1,10 @@
 # bb-erp: the system the agent operates
 
-Status: draft for review, 2026-09-26. Companion to [README.md](README.md).
+Status: runtime guide and design vocabulary, reconciled 2026-09-28. Companion to
+[README.md](README.md). The implemented interfaces are defined by
+[`api.py`](../../erp/bberp/api.py), [`schema.sql`](../../erp/bberp/schema.sql) and
+[`cli.py`](../../erp/bberp/cli.py). The domain tables below retain the broader design
+vocabulary; they are not a claim that every proposed lifecycle or resource exists.
 
 bb-erp is a small ERP written for this benchmark. It covers purchasing, receiving,
 payables, sales, receivables, inventory, manufacturing, and the general ledger for one
@@ -10,19 +14,19 @@ and a reset is a file copy.
 
 ## 1. Topology
 
-One attempt:
+Current local attempt:
 
 ```
-runner (host)
- ├─ control API: reset, advance clock, export      (host-only port, runner token)
- ├─ erp container:   bb-erp HTTP API on :8080, SQLite on a volume only this container mounts
- │        ▲
- │        │  private network "attempt-<id>"
- │        │
- └─ agent container: harness, `erp` command, /run/ws workspace; egress to the model provider
+process_run.py (host)
+ ├─ copied start/final SQLite databases and scenario reference
+ ├─ local bb-erp server: agent HTTP port plus authenticated control port
+ └─ local harness process: ERP_URL, ERP_TOKEN, erp command, persistent workspace
 ```
 
-The grader reads the exported database and audit log after the final clock advance.
+The runner chooses free localhost ports and copies a fresh database per attempt.
+After the final clock advance it flushes/stops the server and grades retained state.
+This is not filesystem or network isolation from host-side references. Separate
+ERP/agent containers on a private attempt network are proposed, not implemented.
 
 ## 2. Company archetype for the pilot
 
@@ -100,13 +104,13 @@ the number on file.
 ## 6. API
 
 - JSON over HTTP with a bearer token per user. Every response carries the business date.
-- Resources: `/requisitions`, `/purchase-orders`, `/receipts`, `/ap-invoices`,
-  `/payment-runs`, `/payments`, `/vendors`, `/items`, `/boms`, `/sales-orders`,
-  `/shipments`, `/ar-invoices`, `/cash-receipts`, `/work-orders`, `/inventory`,
-  `/journal-entries`, `/periods`, `/budgets`, `/reports/{name}`, `/mrp`, `/inbox`,
-  `/outbox`, `/escalations`, `/calls`, `/audit` (the caller's own events; all events for
-  the auditor role).
-- Listing supports filters and cursor pagination. `GET /{resource}/{id}` returns the
+- The route inventory is generated from registered handlers at `/openapi.json`.
+  Use `erp docs` or `erp docs <word>` for the actual paths and fields; conceptual
+  domain names in §3 do not necessarily name list endpoints. For example, stock is
+  `/inventory/on-hand`, MRP runs are `/mrp/runs`, and reports are `/reports/{id}`.
+  `/audit` exposes the caller's events unless the caller has `audit.read` permission.
+- Implemented list endpoints use supported filters and `offset`/`limit` pagination
+  (default limit 200, maximum 1,000), not cursors. `GET /{resource}/{id}` returns the
   document with its lines, status history, holds, and links to related documents.
 - State changes are POSTs to named actions (`/purchase-orders/{id}/send`,
   `/ap-invoices/{id}/holds`, `/requisitions/{id}/route`). There is no generic status
@@ -118,28 +122,30 @@ the number on file.
   `period_closed`, `requester_cannot_approve`, and so on) and one sentence.
 - The OpenAPI 3.1 document is at `/openapi.json`.
 
-Reports: trial balance, GL detail, AP aging, AR aging, GRNI, inventory valuation, open
-purchase orders, open sales orders, budget against actual with commitments, cash
-position, sales and margin by item and customer, work-order status, MRP exceptions.
+`erp get /reports` lists the implemented report identifiers: `trial-balance`,
+`control-ties`, `ap-aging`, `ar-aging`, `grni`, `open-purchase-orders`, `on-hand`,
+`item-usage`, `budget-vs-actual`, `cash-position`, and `sales-margin`. Report parameters
+come from the implementation; a catalog use case does not imply an additional report.
 
 ## 7. The `erp` command
 
 ```
 erp whoami                                   # user, role, limits, business date
 erp docs [topic]                             # API reference and the handbook's contents
-erp get /purchase-orders --query status=sent vendor=V-0142
+erp get /purchase-orders status=sent vendor=V-0142
 erp post /purchase-orders --data @po.json --key po-2026-10-05-1
-erp inbox list --box ap --unread
-erp inbox read MSG-2231
-erp inbox attachment MSG-2231 1 -o invoice.pdf
-erp inbox mark MSG-2238 --disposition duplicate --ref APINV-5512
-erp escalate APINV-5519 --to maya.chen --reason price_variance --note "..."
-erp call vendor V-0142 --number on-file
-erp report grni --as-of 2026-10-09
-erp mrp run --horizon 8w
+erp inbox --box ap --unread
+erp read MSG-2231
+erp attachment MSG-2231 1 -o invoice.pdf
+erp post /inbox/MSG-2238/disposition disposition=duplicate ref=APINV-5512
+erp post /escalations record_type=ap_invoice record_id=APINV-5519 to=maya.chen reason=price_variance note="..."
+erp post /calls party_type=vendor party_id=V-0142
+erp report grni as_of=2026-10-09
+erp post /mrp/runs horizon_weeks=8
 ```
 
-Output is JSON by default and a table with `--table`. The command reads `ERP_URL` and
+Output is JSON; there is no `--table` mode in the current CLI. Example identifiers
+above are illustrative and must be replaced with records in the running scenario. The command reads `ERP_URL` and
 `ERP_TOKEN` from the environment. It is a thin client over the HTTP API; curl can do
 everything it does.
 
@@ -188,10 +194,14 @@ A task's `gen.py --seed N` writes a scenario directory:
 | `handbook/` | the policy manual, one Markdown file per policy, clauses numbered | yes, copied to the workspace |
 | `truth.json` | the planted exceptions and the clauses each one exercises | no |
 
-For a later cell on another system, `gen.py` also writes the scenario as neutral
-records (JSON Lines per document type) that an importer for that system can load.
+A neutral JSON Lines export for a future backend is a design proposal; current
+scenario generation writes the files above for bb-erp. A new backend would require
+an implemented importer and equivalence validation before results are comparable.
 
 ## 11. Runner control API
 
-`reset(snapshot)`, `advance(to_date)`, `export()` (a copy of the database and the audit
-log), and `health`. It listens on a host-only port and accepts only the runner token.
+The implemented server supplies authenticated `/control/health`, `/control/advance`,
+`/control/flush` and `/control/shutdown` endpoints on a separate localhost port.
+The runner performs reset by copying the database before startup and retains the
+flushed database for grading. A distinct control token restricts API access but
+cannot provide host isolation when the agent runs as a local process.

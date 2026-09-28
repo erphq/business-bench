@@ -1,6 +1,6 @@
 # Business Bench
 
-A benchmark of AI agents on business work. Every task is generated with a planted ground truth and graded by executable checks. Grading uses no rubric or model judge, and an attempt passes only if every required check passes.
+A benchmark of configured AI systems delivering business work. Desk and process tasks use generated inputs, planted truth, and executable acceptance checks; a passing attempt satisfies every required check. Build tasks require explicit application acceptance testing. These verdicts establish the declared contract, not every property a business user might need.
 
 [businessbench.org](https://businessbench.org) · [paper](https://businessbench.org/paper) · [desk results](https://businessbench.org/results) · [findings](https://businessbench.org/analysis) · [process track](https://businessbench.org/process) · [self-audit](https://businessbench.org/audit)
 
@@ -8,7 +8,7 @@ A benchmark of AI agents on business work. Every task is generated with a plante
 
 - **Desk**, 187 tasks. The agent turns a folder of business files and a short request into deliverables, graded on identifier sets, keyed values, recalculated workbooks and sentence-level text rules. *Complete two-system comparison, 1,122 attempts.*
 - **Build**, 20 applications. The agent builds an internal application from a requirement and seed data, then makes three changes; a tester works a 14-item enterprise baseline and an application checklist. *Tasks released, no scores published.*
-- **Process**, 6 pilot tasks. The agent holds a role in bb-erp, the benchmark's ERP, and works through requests over several business days; graded on the final ERP state, the audit log, control-account ties and requested notes. *Pilot campaign published, provisional.*
+- **Process**, 7 implemented tasks: 6 clerical pilot tasks and the analyst task `ap-invoice-backlog`. The agent holds a role in bb-erp and works over several business dates; checks inspect ERP state, the audit log, control-account ties and requested notes. *A provisional campaign covers the six pilot tasks only; no published result covers the analyst task.*
 
 **Desk comparison**, release `complete-desk-comparison-2026-09-16`, frozen `conservative-v7` scorer:
 
@@ -17,18 +17,18 @@ A benchmark of AI agents on business work. Every task is generated with a plante
 | Proto + DeepSeek V4.1 Flash | 507 / 561 | 90.4% |
 | Codex + GPT-5.6-sol | 473 / 561 | 84.3% |
 
-The paired task-bootstrap difference is +6.1 points (95% interval +1.2 to +11.1). The two systems differ in model, harness and run dates. ERP.AI publishes the benchmark and develops Proto; the [self-audit](https://businessbench.org/audit) assesses that conflict and the scorer's effect on every verdict.
+The paired task-bootstrap difference is +6.06 points (descriptive 95% interval +1.25 to +11.05). It resamples task identifiers with their three repetitions, and does not account for related families, scorer selection, or development exposure. The two systems differ in model, harness and run dates. ERP.AI publishes the benchmark and develops Proto; the [self-audit](https://businessbench.org/audit) discloses that conflict and retrospective scoring changes.
 
-**Process pilot campaign**, label `pilot-process-2026-09-27`: both harnesses on gpt-5.6-sol through a ChatGPT subscription, each pilot task run five times.
+**Process pilot campaign**, label `pilot-process-2026-09-27`: both harnesses on gpt-5.6-sol through a ChatGPT subscription, each of six fixed seed-0 scenarios run five times (60 attempts total).
 
 | System | Passed | Median time per attempt | Input tokens (cached) |
 |---|---:|---:|---:|
 | Proto CLI 0.2.119 | 30 / 30 | 290 s | 38.8M (47%) |
 | Codex CLI 0.158.0-alpha.2.1 | 30 / 30 | 164 s | 22.7M (89%) |
 
-It ran in local mode, before the practitioner review of the tasks. [Conditions and data](https://businessbench.org/process#campaign).
+It ran in local mode, before practitioner review. Identical 30/30 acceptance does not establish equivalence, held-out generalization, or operational readiness; timing and token totals describe this pilot's conditions. [Conditions and data](https://businessbench.org/process#campaign).
 
-This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials or tuning experiments. The repository is public, so its task set is exposed; each generator takes a `--seed` for re-rolled private variants.
+This is the benchmark repository. It does not contain the Proto application, private runtime binaries, credentials or tuning experiments. Public templates are exposed. Re-rolling a generator seed tests a new instance of a known template; it does not by itself establish resistance to contamination or performance on unseen work.
 
 ## Repository layout
 
@@ -42,6 +42,8 @@ This is the benchmark repository. It does not contain the Proto application, pri
 | `results/latest`, `results/process` | Published desk and process result ledgers |
 | `site/` | businessbench.org, built from this repository |
 | `docs/`, `paper/` | Paper sources, the v2 specification and the process-track specification |
+
+For the shortest path from a claim to its evidence, see [reproducibility and evidence](docs/reproducibility.md). [STATUS.md](STATUS.md) separates published results, implemented components, and planned studies; [GOALS.md](GOALS.md) records the research priorities.
 
 ## Read the paper and specification
 
@@ -61,7 +63,7 @@ Paid model runs require your own authorized model access. Codex requires a bench
 ## Install and verify without calling a model
 
 ```bash
-git clone git@github.com:erphq/business-bench.git
+git clone https://github.com/erphq/business-bench.git
 cd business-bench
 python3.12 -m venv .venv
 source .venv/bin/activate
@@ -95,7 +97,7 @@ python bench/run.py --docker business-bench:release \
 python bench/report.py results/codex-full
 ```
 
-Every invocation needs a fresh label. Existing desk labels and attempt directories are refused instead of overwritten. A task failure is a valid recorded outcome; missing attempt records cause the runner to return an error. The adapter selects the recorded model identifier `gpt-5.6-sol` with high reasoning effort. Adjust an adapter only in an explicitly documented new configuration. Plugin/skill manifests are operator-supplied: this release does not assert that a bare login reproduces the historical campaign's full skill environment.
+Every invocation needs a fresh label. Existing desk labels and attempt directories are refused instead of overwritten. A task failure is a valid recorded outcome; missing attempt records cause the runner to return an error. The adapter defaults to `gpt-5.6-sol` with high reasoning effort, but `CODEX_MODEL` can override it; record the effective configuration. Plugin/skill manifests are operator-supplied: this release does not assert that a bare login reproduces the historical campaign's full skill environment. Desk and build Codex adapters reuse the configured home; unlike process turns, the runner does not create a fresh Codex home per attempt. See the [adapter contract](harnesses/contract.md) before interpreting repetition isolation.
 
 ## Optional Proto adapters
 
@@ -138,13 +140,15 @@ Grade each turn, complete its tester sheet, and recheck previous requirements af
 Process tasks run an agent inside bb-erp over several turns on a business clock. `process_run.py` starts one bb-erp server per attempt, calls the harness adapter once per turn with `ERP_URL`, `ERP_TOKEN` and the `erp` command on `PATH`, lets the counterparty simulator act between turns, and grades the final database and audit log. It runs bb-erp and the agent as local processes, which is not an isolation boundary; container mode is on the roadmap.
 
 ```bash
-python bench/validate_process.py --seeds 0,1 --strict
+python bench/validate_process.py --seeds 0,1,2,3,4 --strict
 python bench/process_run.py --task procure-to-pay-week --harness oracle --label dev-oracle
+# Paid run over all 7 currently implemented tasks; this is not the six-task historical pilot.
 python bench/process_run.py --task all --harness codex-sol --runs 5 --parallel 2 --label my-campaign
-python bench/export_process_campaign.py --label my-campaign
 ```
 
-`validate_process.py` checks, for each task and seed, that the oracle passes, an agent that does nothing fails, each negative control fails the checks it targets, two runs end in the same database, and every cited handbook clause exists. Real agents use the same adapters as the desk track (`harnesses/<cell>.sh`); set `CODEX_BIN` or `BENCH_PROTO_CLI` as the adapter describes. Before export, describe the campaign's cells in `results/<label>/campaign.json`; the export writes a public ledger under `results/process/<label>/`.
+`validate_process.py` checks, for each requested task and seed, that the oracle passes, an agent that does nothing fails, each negative control fails the checks it targets, two runs end in the same database, and every cited handbook clause exists. Its default is seed 0; the five seeds above are explicit. Real agents use the desk adapters (`harnesses/<cell>.sh`); set `CODEX_BIN` or `BENCH_PROTO_CLI` as the adapter describes. Use a separate checkout for validation or scenario regeneration while a campaign is active, because scenarios are cached in `.cache/process/`.
+
+Before a paid campaign, declare its exact task list, seed, repetitions and cells. Before publication, create `results/<label>/campaign.json` with that declaration and the actual conditions, then run `python bench/export_process_campaign.py --label <label>`. The [export checklist and description schema](docs/reproducibility.md#publishing-a-new-process-campaign) explain the required record. Export is a publication step, not part of running an agent.
 
 ## Results and reproducibility
 
@@ -154,7 +158,7 @@ The release includes the exact [frozen scorer](scoring/frozen-v7/scorer.py) and 
 
 For a new official campaign, freeze the repository commit, task manifest, agent image digest, model/provider route, authorized skill inventory, budgets, dependency versions, and scorer before launch. Retain raw artifacts securely so a later scorer can produce a separately named scoring snapshot. Do not mix rescored subsets into the published aggregate. This completed comparison uses different model/harness configurations and non-contemporaneous cohorts; see provenance for the exact scope.
 
-The optional `bench/audit.py` can prepare a reviewer bundle with `--dry-run`; without that option it sends task and run content to the configured model provider. Use only synthetic/authorized data. The reviewer supplements deterministic checks and cannot turn an incomplete evaluation into a certified result. `regrade.py` and `recost.py` are operator utilities that can change local run records; use them only on a copy, never on the released snapshot.
+The optional `bench/audit.py` can prepare a reviewer bundle with `--dry-run`; without that option it sends task and run content to the configured model provider. Use only synthetic/authorized data. This model-assisted review is not independent practitioner adjudication and never changes the primary acceptance definition. `regrade.py` and `recost.py` can change local run records; use them only on a copy, never on a released snapshot. Desk/build raw attempt directories can retain authenticated homes, and all raw workspaces and traces require review before sharing; public exporters publish allowlisted records rather than those directories.
 
 ## Rebuild the PDF
 

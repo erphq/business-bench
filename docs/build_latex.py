@@ -119,6 +119,9 @@ def build(output):
         raise SystemExit('LaTeX overflow detected; inspect tmp/latex/main.log before publication')
     output.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(out / 'main.pdf', output)
+    if output.resolve() == (ROOT / 'docs/business-harness-bench-spec.pdf').resolve():
+        from paper_artifact import record
+        record()
     print('Compiled with XeLaTeX:', output)
 
 

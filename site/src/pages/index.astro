@@ -2,116 +2,101 @@
 import Base from "@/layouts/Base.astro";
 import Figure from "@/components/Figure.astro";
 import DotChart from "@/components/DotChart.astro";
-import { ARMS, SUMMARY_BY_ID, deskTasks, buildTasks, processTasks, provenance, findings, crossArm, intervals, scorerDelta, REPO, SITE, ORG, AUTHORS, RELEASE, REPS } from "@/lib/data";
-const desk = deskTasks(), build = buildTasks(), proc = processTasks(), prov = provenance();
+import { ARMS, SUMMARY_BY_ID, deskTasks, buildTasks, processTasks, processCampaign, PROCESS_PILOT, provenance, findings, intervals, deskComparison, REPO, SITE, ORG, AUTHORS, RELEASE, REPS, fmt } from "@/lib/data";
+const desk = deskTasks(), build = buildTasks(), proc = processTasks(), pilot = processCampaign(PROCESS_PILOT);
 const F = Object.fromEntries(ARMS.map((a) => [a.id, findings(a.id)]));
 const I = Object.fromEntries(ARMS.map((a) => [a.id, intervals(a.id)]));
-const D = Object.fromEntries(ARMS.map((a) => [a.id, scorerDelta(a.id)]));
-const X = crossArm();
-const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
-const bs = prov.paired_task_bootstrap;
-const pp = (x: number, d = 1) => (x * 100).toFixed(d);
-const pct = (x: number, d = 1) => `${pp(x, d)}%`;
-const range = (xs: number[], d = 1) => { const [a, b] = [Math.min(...xs), Math.max(...xs)]; return a.toFixed(d) === b.toFixed(d) ? a.toFixed(d) : `${a.toFixed(d)}–${b.toFixed(d)}`; };
+const comparison = deskComparison(), bs = provenance().paired_task_bootstrap;
 const attemptsTotal = ARMS.reduce((n, a) => n + SUMMARY_BY_ID[a.id].attempts, 0);
-const desc = `A benchmark of AI agents on business work: ${desk.length} desk tasks with ${attemptsTotal.toLocaleString("en-US")} graded attempts, ${build.length} app builds, and a process track inside an ERP. Executable checks, no model judge.`;
+const desc = `Evaluate AI agents on complete business deliverables. Inspect ${desk.length} desk tasks and ${fmt.int(attemptsTotal)} recorded attempts, unscored application tasks, and a separate ERP process pilot.`;
 const cite = `@misc{businessbench2026,
   title        = {Business Bench: Evaluating Agents on Business Deliverables},
   author       = {${AUTHORS.map((a) => { const p = a.split(" "); return `${p.slice(1).join(" ")}, ${p[0]}`; }).join(" and ")}},
   year         = {2026},
   howpublished = {\\url{${SITE}}},
-  note         = {Release ${RELEASE.id}}
+  note         = {Desk release ${RELEASE.id}}
 }`;
 const jsonld = [
   { "@context": "https://schema.org", "@type": "WebSite", name: "Business Bench", url: SITE + "/", publisher: { "@type": "Organization", name: ORG.name, url: ORG.url } },
-  {
-    "@context": "https://schema.org", "@type": "Dataset", name: "Business Bench", url: SITE + "/", description: desc,
-    version: RELEASE.version, datePublished: RELEASE.date, isAccessibleForFree: true,
-    license: `${REPO}/blob/main/LICENSE`, keywords: ["AI agents", "benchmark", "business work", "ERP", "evaluation", "executable checks", "pass^k"],
-    creator: [{ "@type": "Organization", name: ORG.name, url: ORG.url }, ...AUTHORS.map((a) => ({ "@type": "Person", name: a }))],
-    citation: `${AUTHORS.join(", ")}. Business Bench: Evaluating Agents on Business Deliverables. ${ORG.name}, 2026.`,
-    variableMeasured: ["attempt pass rate (pass@1)", "pass^3", "required-check pass rate", "wall time", "estimated cost"],
-    distribution: [{ "@type": "DataDownload", encodingFormat: "application/jsonl", contentUrl: `${REPO}/blob/main/results/latest/attempts.jsonl` }],
+  { "@context": "https://schema.org", "@type": "Dataset", name: "Business Bench desk comparison", url: SITE + "/results", description: desc,
+    version: RELEASE.version, datePublished: RELEASE.date, isAccessibleForFree: true, license: `${REPO}/blob/main/LICENSE`,
+    creator: [{ "@type": "Organization", name: ORG.name, url: ORG.url }],
+    variableMeasured: ["attempt acceptance", "all-three acceptance", "required-check completion", "wall time", "captured model cost"],
+    distribution: [{ "@type": "DataDownload", encodingFormat: "application/x-ndjson", contentUrl: `https://raw.githubusercontent.com/erphq/business-bench/main/results/latest/attempts.jsonl` }],
   },
 ];
 ---
 <Base title="Business Bench" description={desc} path="/" jsonld={jsonld}>
   <nav slot="contents" class="toc" aria-label="On this page">
     <span class="toc-h">On this page</span>
-    <a href="#abstract">Abstract</a>
-    <a href="#figure-1">Desk comparison</a>
-    <a href="#tracks">Three tracks</a>
-    <a href="#findings">Findings</a>
-    <a href="#grading">Grading</a>
-    <a href="#cite">Cite</a>
+    <a href="#abstract">The measurement problem</a><a href="#tracks">What is available</a><a href="#figure-1">Desk comparison</a>
+    <a href="#findings">What changes the conclusion</a><a href="#grading">Inspect the evidence</a><a href="#cite">Cite</a>
   </nav>
   <h1>Business Bench</h1>
-  <p class="meta">Benchmark<span class="sep">·</span>version {RELEASE.version}<span class="sep">·</span>desk results of {new Date(RELEASE.date + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}<span class="sep">·</span>MIT licence</p>
-  <p class="lede"><strong>Business Bench</strong> is a benchmark of AI agents on business work. Every task is generated with a planted ground truth and graded by executable checks. Grading uses no rubric or model judge, and an attempt passes only if every required check passes.</p>
-  <p class="byline">{AUTHORS.join(", ")}<span class="dim"> · {ORG.name} Research</span></p>
-  <nav class="links" aria-label="Main documents">
-    <a href="/paper">Paper</a><a href="/results">Desk results</a><a href="/analysis">Findings</a><a href="/process">Process track</a>
-    <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">Attempt ledger</a><a href={REPO} rel="noopener">Code</a><a href="#cite">Cite</a>
-  </nav>
+  <p class="meta">Public tasks, executable evaluation and recorded attempts<span class="sep">·</span>MIT licence</p>
+  <p class="lede">Can an AI agent complete the whole business handoff? Business Bench tests the files and system state an agent leaves behind: reconciled workbooks, usable imports, supported reports, and transactions that respect the company’s rules.</p>
+  <p class="byline">{AUTHORS.join(", ")} · {ORG.name} Research</p>
+  <div class="actions"><a class="btn primary" href="/results">Inspect the results</a><a class="btn" href="/tasks">Explore the tasks</a><a class="btn" href="/paper">Read the paper</a></div>
 
   <section class="abstract" aria-labelledby="abstract">
-    <h2 id="abstract">Abstract</h2>
-    <p>Business work gives an agent long inputs spread across many documents and asks for a deliverable whose correctness can be checked: a workbook whose figures reconcile, an import file the destination system accepts, a memo whose amounts and exceptions match the sources. Business Bench turns such work into seeded task generators with planted truth, and grades each attempt with checks that run against the files, applications or system state the agent leaves behind. The release has three tracks. The desk track has {desk.length} tasks and a complete comparison of two configured systems over {attemptsTotal.toLocaleString("en-US")} attempts, scored by a frozen, hashed scorer with the original verdicts kept beside it. The build track releases {build.length} application specifications without scores. The process track, in pilot, places an agent in a role inside an ERP for several business days and grades the final state of the system and its audit log.</p>
-    <p>The measurements are chosen for what an owner of the work would experience: whether the whole deliverable is right, whether it is right every time, and what a correct result costs.</p>
+    <h2 id="abstract">The measurement problem</h2>
+    <p>A deliverable can satisfy most checks and still fail its purpose. A balanced workbook may omit a customer; a correct payment may violate an approval rule. Each task therefore declares an <strong>acceptance contract</strong>: the required artifact or state, the properties that matter, and the checks used to accept it.</p>
+    <p>Three questions must stay separate. <strong>Acceptance</strong> asks whether the declared checks pass. <strong>Repeatability</strong> asks whether another execution passes on the same inputs. <strong>Validity</strong> asks whether the checks capture the recipient’s actual requirements. The benchmark measures the first two; its public tasks and scoring rules make the third open to inspection and dispute.</p>
   </section>
 
-  <Figure n={1} id="figure-1">
-    <DotChart
-      label={`Desk track pass rates with 95% intervals: ${ARMS.map((a) => `${a.system} pass@1 ${pct(I[a.id].pass1.value)}, pass^3 ${pct(I[a.id].passAll.value)}`).join("; ")}.`}
-      domain={[0.6, 1]} ticks={[0.6, 0.7, 0.8, 0.9, 1]}
-      keys={[{ label: "pass@1, attempts passed", shape: "" }, { label: `pass^${REPS}, tasks passed in all ${REPS} repetitions`, shape: "ring" }]}
-      rows={[...ARMS].sort((a, b) => I[b.id].pass1.value - I[a.id].pass1.value).map((a) => ({
-        label: a.system, sub: a.harness, slot: a.slot, link: true,
-        points: [
-          { value: I[a.id].pass1.value, lo: I[a.id].pass1.ci[0], hi: I[a.id].pass1.ci[1], title: `pass@1 ${pct(I[a.id].pass1.value)}` },
-          { value: I[a.id].passAll.value, lo: I[a.id].passAll.ci[0], hi: I[a.id].passAll.ci[1], shape: "ring", title: `pass^3 ${pct(I[a.id].passAll.value)}` },
-        ],
-        valueText: pct(I[a.id].pass1.value), valueSub: `pass^${REPS} ${pct(I[a.id].passAll.value)}`,
-      }))}
-    />
-    <Fragment slot="caption">Desk track, complete comparison ({desk.length} tasks, {REPS} repetitions per system, frozen scorer). Filled points are attempt pass rates; open points are the share of tasks passed in all {REPS} repetitions. Whiskers are 95% percentile intervals from 20,000 bootstrap resamples of tasks, each task's repetitions kept together. The paired difference in attempt pass rate is +{bs.difference_percentage_points.toFixed(1)} points (95% interval +{bs.bootstrap_95_percent_interval_pp[0].toFixed(1)} to +{bs.bootstrap_95_percent_interval_pp[1].toFixed(1)}). The systems differ in model, harness, sampling and run dates, so the figure compares configured systems; it does not isolate a model or a harness. <a href="/results">Full results</a>.</Fragment>
-  </Figure>
-
-  <h2 id="tracks">Three tracks</h2>
+  <h2 id="tracks">What is available</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th style="width:12%">Track</th><th style="width:26%">The agent receives</th><th style="width:30%">What is graded</th><th class="n">Tasks</th><th>Status</th></tr></thead>
+    <thead><tr><th>Track</th><th>Unit of work</th><th>Evaluation</th><th>Published evidence</th></tr></thead>
     <tbody>
-      <tr><td><a href="/tasks#desk"><b>Desk</b></a></td><td>A folder of business files, some deliberately messy, and a short request from the owner.</td><td>The files it leaves: identifier sets, keyed values, workbooks after native recalculation, sentence-level text rules.</td><td class="n">{desk.length}</td><td><span class="status ok">Results published</span><div class="dim" style="font-size:12.5px">{ARMS.length} systems, {attemptsTotal.toLocaleString("en-US")} attempts</div></td></tr>
-      <tr><td><a href="/tasks#build"><b>Build</b></a></td><td>A requirement and seed data for an internal application, then three change requests.</td><td>A 14-item enterprise baseline and an application checklist, worked by a tester on the live application.</td><td class="n">{build.length}</td><td><span class="status warn">Tasks released</span><div class="dim" style="font-size:12.5px">no scores published</div></td></tr>
-      <tr><td><a href="/process"><b>Process</b></a></td><td>A role in an ERP, the company handbook, and requests from colleagues over several business days.</td><td>The final ERP state, the audit log of every request, control-account ties, and any notes asked for.</td><td class="n">{proc.length}</td><td><span class="status warn">Pilot results</span><div class="dim" style="font-size:12.5px">2 systems, 60 attempts, provisional</div></td></tr>
+      <tr><td><a href="/tasks#desk"><b>Desk</b></a><br />{desk.length} tasks</td><td>A file workspace becomes a set of deliverables.</td><td>Executable checks on keys, values, recalculated workbooks and declared text rules.</td><td><a href="/results">{fmt.int(attemptsTotal)} attempts</a><br />{ARMS.length} configured systems, {REPS} repetitions per task.</td></tr>
+      <tr><td><a href="/tasks#build"><b>Build</b></a><br />{build.length} task packs</td><td>A running application, followed by three changes.</td><td>A tester checks the application against its acceptance checklist and a shared enterprise baseline.</td><td><strong>No published scores.</strong><br />Specifications and validation of task packs.</td></tr>
+      <tr><td><a href="/process"><b>Process</b></a><br />{proc.length} tasks</td><td>A role in an ERP over several business dates.</td><td>Checks on final state, declared audit rules, account ties and handoff notes.</td><td><a href="/process#campaign">{pilot.tasks.length}-task pilot, {pilot.attempts.length} attempts</a><br />Local execution; practitioner review pending.</td></tr>
     </tbody>
   </table></div>
-  <p class="muted" style="font-size:16px">There is no combined score across tracks. Each track reports its own measures.</p>
+  <p>These tracks test different objects under different protocols. Their scores are not pooled. The current process inventory includes tasks absent from the published pilot.</p>
 
-  <h2 id="findings">What the desk comparison shows</h2>
-  <ol class="prose">
-    <li><b>Checks are nearly saturated; tasks are not.</b> Both systems pass {range(ARMS.map((a) => F[a.id].checkRate * 100))}% of required checks and {range(ARMS.map((a) => F[a.id].pass1 * 100))}% of attempts. A grader that awarded partial credit would give {range(ARMS.map((a) => F[a.id].gap * 100))} points for deliverables an owner would have to redo. <a href="/analysis#conjunctive-gap">Finding 1</a>.</li>
-    <li><b>Most failures are one check away.</b> {range(ARMS.map((a) => (F[a.id].singleFail / F[a.id].failed) * 100), 0)}% of failed attempts failed exactly one required check, most often the task's own grader, which encodes a business rule stated somewhere in the inputs. <a href="/analysis#near-miss">Finding 2</a>.</li>
-    <li><b>Capability overstates reliability.</b> The leading system passed {pct(F[lead.id].passAny, 0)} of tasks at least once and {pct(F[lead.id].passAll, 0)} in all three repetitions; {F[lead.id].mixedTasks} of {desk.length} tasks changed outcome between runs. <a href="/analysis#reliability">Finding 3</a>.</li>
-    <li><b>The difference sits in written deliverables.</b> The systems are close on spreadsheets, bookkeeping, extraction and reformatting; the gap is in reports and drafting, where grading prose is hardest. <a href="/analysis#divergence">Finding 4</a>.</li>
-    <li><b>The scorer mattered as much as the systems.</b> The frozen scorer raised {lead.short} by {D[lead.id].up} attempts and {other.short} by {D[other.id].up}, turning a raw lead of {SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed} attempts into {SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed}. Both verdicts are published. <a href="/analysis#scorer">Finding 6</a>.</li>
-    <li><b>The current task set separates systems on a minority of tasks.</b> {X.bothAll} of {X.total} tasks were passed by both systems every time, which is why the next version adds harder bands and the process track. <a href="/analysis#saturation">Finding 7</a>.</li>
-  </ol>
+  <h2 id="desk-comparison">A complete desk comparison</h2>
+  <p>On the released {desk.length} tasks, Proto with DeepSeek V4.1 Flash passes {SUMMARY_BY_ID["proto-deepseek"].passed}/{SUMMARY_BY_ID["proto-deepseek"].attempts} attempts; Codex with GPT-5.6-sol passes {SUMMARY_BY_ID["codex-sol"].passed}/{SUMMARY_BY_ID["codex-sol"].attempts}. The model, harness, provider configuration and cohort dates vary together. This comparison describes two configured systems on an exposed workload.</p>
+  <Figure n={1} id="figure-1">
+    <DotChart
+      label={`Desk acceptance and all-three acceptance: ${ARMS.map((a) => `${a.system}: ${fmt.pct(I[a.id].pass1.value)} of attempts, ${fmt.pct(I[a.id].passAll.value)} of tasks in all three repetitions`).join("; ")}.`}
+      domain={[0.6, 1]} ticks={[0.6, 0.7, 0.8, 0.9, 1]}
+      keys={[{ label: "Accepted attempts", shape: "" }, { label: `Tasks accepted in all ${REPS} repetitions`, shape: "ring" }]}
+      rows={ARMS.map((a) => ({
+        label: a.system, sub: a.harness, slot: a.slot, link: true,
+        points: [
+          { value: I[a.id].pass1.value, lo: I[a.id].pass1.ci[0], hi: I[a.id].pass1.ci[1], title: `Accepted attempts ${fmt.pct(I[a.id].pass1.value)}` },
+          { value: I[a.id].passAll.value, lo: I[a.id].passAll.ci[0], hi: I[a.id].passAll.ci[1], shape: "ring", title: `All-three acceptance ${fmt.pct(I[a.id].passAll.value)}` },
+        ], valueText: fmt.pct(I[a.id].pass1.value), valueSub: `all three ${fmt.pct(I[a.id].passAll.value)}`,
+      }))}
+    />
+    <Fragment slot="caption">Desk release <code>{RELEASE.id}</code>. All {fmt.int(attemptsTotal)} attempts use the shared retrospective scorer. Whiskers are descriptive 95% task-bootstrap intervals, retaining each task’s repetitions. The paired attempt-rate gap is {bs.difference_percentage_points.toFixed(2)} percentage points (interval {bs.bootstrap_95_percent_interval_pp.map((n: number) => n.toFixed(2)).join(" to ")}). These intervals exclude evaluator selection, related task families and deployment shift. <a href="/results">Inspect counts and conditions</a>.</Fragment>
+  </Figure>
 
-  <div class="callout warn">
-    <span class="t">Conflict of interest</span>
-    <p>{ORG.name} publishes this benchmark and develops Proto, the harness of the leading desk system. The frozen scorer was written by the same team after the runs; it raised both systems and raised Proto more. Raw verdicts sit beside frozen ones in the ledger, the earlier four-system snapshot remains in the repository history, and the <a href="/audit">self-audit</a> rates the release against the criteria an independent reviewer would apply.</p>
-  </div>
+  <h2 id="findings">What changes the conclusion</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Observation</th><th>Interpretation</th><th>Inspect</th></tr></thead>
+    <tbody>
+      <tr><td>Mean check completion is {fmt.pct(F["proto-deepseek"].meanCheckFraction, 2)} and {fmt.pct(F["codex-sol"].meanCheckFraction, 2)}.</td><td>Completing most requirements is more common than completing the whole declared contract. Check granularity also changes partial-credit scores.</td><td><a href="/analysis#conjunctive-gap">Acceptance boundary</a></td></tr>
+      <tr><td>All-three acceptance is {fmt.pct(F["proto-deepseek"].passAll)} and {fmt.pct(F["codex-sol"].passAll)}.</td><td>Repeated execution exposes instability on fixed fixtures; it does not test new cases or establish a deployment failure rate.</td><td><a href="/analysis#reliability">Repeatability</a></td></tr>
+      <tr><td>Equal category weights change the gap from {(comparison.frozenDifference * 100).toFixed(2)} to {(comparison.equalCategories.difference * 100).toFixed(2)} points.</td><td>The overall ordering depends on which work is represented. Reports and drafting account for more than the net advantage.</td><td><a href="/analysis#divergence">Workload sensitivity</a></td></tr>
+      <tr><td>Scorer changes shift the between-system gap by {(comparison.scorerSensitivity * 100).toFixed(2)} points on the same outputs.</td><td>A reproducible scorer can still make contestable measurement choices. Evaluator changes are distinct from agent improvements.</td><td><a href="/audit#grading-validity">Evaluator sensitivity</a></td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout warn"><span class="t">Who produced the evidence</span><p>{ORG.name} publishes Business Bench and develops Proto. The primary desk scorer was frozen after outputs existed and increased Proto’s measured lead. The public ledger preserves original and revised verdicts; historical raw artifacts are not all public. The <a href="/audit">evidence audit</a> distinguishes what can be verified from what still needs independent review.</p></div>
 
-  <h2 id="grading">How an attempt is judged</h2>
-  <div class="grid c3">
-    <div class="card"><h3>Conjunctive checks</h3><p>Each task declares required checks over its outputs. Workbooks are recalculated natively before grading, so cached values cannot pass; text rules match within a sentence, so a figure and its caveat must appear together.</p></div>
-    <div class="card"><h3>A frozen, hashed scorer</h3><p>Every released verdict comes from one immutable scorer package. A receipt binds each verdict to the attempt's result hash, its output-file hashes and the scorer manifest, so a rescore cannot be mistaken for a rerun.</p></div>
-    <div class="card"><h3>Repetitions and resources</h3><p>Each task runs {REPS} times in a fresh workspace. Results report pass@1 and pass^{REPS} with task-level intervals, alongside wall time, token use and estimated cost per passing attempt.</p></div>
-  </div>
-  <p style="margin-top:24px">Definitions and the protocol are under <a href="/methods">methods</a>; the argument and its limits are in the <a href="/paper">paper</a>; the commands to rerun everything are under <a href="/reproduce">reproduce</a>.</p>
+  <h2 id="grading">Inspect the evidence</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Your question</th><th>Start here</th><th>What it can establish</th></tr></thead>
+    <tbody>
+      <tr><td>What was the agent asked to do?</td><td><a href="/tasks/payments-match-v2">A worked desk task</a>; <a href="/process/procure-to-pay-week">a process episode</a></td><td>Inputs, rules, expected handoff, and declared checks.</td></tr>
+      <tr><td>Do the published numbers reconcile?</td><td><a href="/reproduce">Verify the release</a>; <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">desk ledger</a></td><td>Complete recorded matrices, totals and recorded evidence fingerprints.</td></tr>
+      <tr><td>Do the tests measure useful work?</td><td><a href="/methods">Measurement protocol</a>; <a href="/audit">validity and audit limits</a></td><td>The current contract and controls; independent artifact adjudication remains an open requirement.</td></tr>
+      <tr><td>What would strengthen the result?</td><td><a href="/roadmap">Research roadmap</a>; <a href="/paper">paper</a></td><td>Prospective evaluator review, held-out work, matched comparisons and human baselines.</td></tr>
+    </tbody>
+  </table></div>
 
   <h2 id="cite">Cite</h2>
   <pre class="cite" aria-label="BibTeX citation">{cite}</pre>
-  <p class="muted" style="font-size:16px">Every number on this site is recomputed from <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">results/latest/attempts.jsonl</a> when the site is built. Errors and task disputes are <a href={`${REPO}/issues`} rel="noopener">GitHub issues</a>; accepted corrections produce a new version and are never applied silently to a published release.</p>
+  <p class="muted">Name the campaign and scorer when citing a result. The website combines ledger-derived statistics, task-source metadata and explanatory analysis; their provenance is linked where used. <a href={`${REPO}/issues`} rel="noopener">Report a task or measurement dispute</a> with the task ID, declared rule and evidence needed to reproduce it.</p>
 </Base>

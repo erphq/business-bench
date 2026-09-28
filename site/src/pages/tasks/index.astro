@@ -1,48 +1,105 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { ARMS, CATEGORIES, deskTasks, buildTasks, processTasks, FAMILY_LABEL, matrix, REPO } from "@/lib/data";
+import { ARMS, REPS, CATEGORIES, deskTasks, buildTasks, processTasks, processCampaign, PROCESS_PILOT, FAMILY_LABEL, matrix, REPO } from "@/lib/data";
 const desk = deskTasks(), build = buildTasks(), proc = processTasks(), m = matrix();
-const total = ARMS.length * 3;
-const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
-const desc = "Every Business Bench task: 187 desk tasks with recorded pass counts, 20 application-build tasks, and the six process-track pilot tasks run inside an ERP.";
+const pilot = processCampaign(PROCESS_PILOT);
+const count = desk.length + build.length + proc.length;
+const desc = `Explore ${desk.length} desk tasks, ${build.length} application task packs and ${proc.length} ERP process tasks. Inspect requests, declared contracts and the coverage of published attempts.`;
+const searchText = (...parts: string[]) => parts.join(" ").toLocaleLowerCase();
 ---
 <Base title="Tasks" description={desc} path="/tasks">
-  <p class="meta">Task inventory<span class="sep">·</span>{desk.length} desk<span class="sep">·</span>{build.length} build<span class="sep">·</span>{proc.length} process (pilot)</p>
-  <h1>Tasks</h1>
-  <p class="lede">Every task is public in the repository with its generator, inputs, checks and reference solution. Requests are written the way the person asking would write them, and the input files are messy on purpose. These pages leave out author notes and planted traps; the repository has them.</p>
-  <div class="callout"><p>The task set is exposed: anything public can end up in training data. Each generator takes a seed, so a re-rolled variant with different names and amounts can be produced for a private evaluation. See the <a href="/audit#contamination">contamination note</a>.</p></div>
+  <p class="meta">Task inventory<span class="sep">·</span>{desk.length} desk<span class="sep">·</span>{build.length} build<span class="sep">·</span>{proc.length} process</p>
+  <h1>Tasks and acceptance contracts</h1>
+  <p class="lede">Start with the kind of work an agent must hand back. Each task page exposes the request, inputs, declared checks and available results. Task availability, structural validation and measured agent performance are separate facts.</p>
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span><a href="#desk">Desk tasks</a><a href="#build">Application tasks</a><a href="#process">Process tasks</a><a href="#authoring">Authoring and exposure</a></nav>
 
-  <h2 id="desk">Desk track</h2>
-  <p class="muted">"Passes" counts frozen-scorer passes across {ARMS.length} systems × three repetitions in the complete desk comparison.</p>
-  {CATEGORIES.map((c) => { const rows = desk.filter((t) => t.category === c.id); return (
-    <section>
-      <h3 id={c.id}>{c.label} <span class="dim" style="font-weight:400">· {rows.length} tasks · {c.deliverable.toLowerCase()}</span></h3>
-      <div class="tbl-wrap"><table class="tbl">
-        <thead><tr><th style="width:44%">Task</th><th>Deliverables</th><th class="n">Checks</th><th class="n">Passes / {total}</th></tr></thead>
-        <tbody>{rows.map((t) => (
-          <tr><td><a href={`/tasks/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
-            <td class="mono" style="font-size:13px">{t.deliverables.join(", ")}</td>
-            <td class="n">{t.checks.length}</td><td class="n">{passN(t.id)}</td></tr>))}</tbody>
-      </table></div>
-    </section>); })}
+  <div class="task-filter" hidden>
+    <div><label for="task-query">Find a task</label><input id="task-query" type="search" placeholder="Search names, outputs, categories or roles" autocomplete="off" /></div>
+    <div><label for="task-track">Track</label><select id="task-track"><option value="all">All tracks</option><option value="desk">Desk</option><option value="build">Build</option><option value="process">Process</option></select></div>
+    <button class="btn" type="button" id="task-reset">Clear filters</button>
+    <p id="task-count" role="status" aria-live="polite">{count} tasks</p>
+  </div>
+  <p id="task-empty" hidden>No matching tasks. Try a broader term or clear the filters.</p>
 
-  <h2 id="build">Build track</h2>
-  <p class="muted">Each pack: an owner's requirement, seed CSV exports to import, a binary acceptance checklist that opens with the 14-item <a href="/methods#build-baseline">enterprise baseline</a>, and three change requests. No build scores are published; the packs are released and validated.</p>
-  <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th style="width:44%">Application</th><th>Seed files</th><th class="n">Checklist items</th><th class="n">Change items</th></tr></thead>
-    <tbody>{build.map((b) => (
-      <tr><td><a href={`/build/${b.id}`}>{b.title}</a><div class="dim mono" style="font-size:12px">{b.id}</div></td>
-        <td class="mono" style="font-size:13px">{b.seed.join(", ")}</td>
-        <td class="n">{b.checklistItems}</td><td class="n">{b.changes.reduce((n, c) => n + c.items, 0)}</td></tr>))}</tbody>
-  </table></div>
-  <h2 id="process">Process track</h2>
-  <p class="muted">Pilot tasks in which the agent works inside an ERP over several business days and is graded on the final system state and the audit log. A provisional pilot campaign is published on the <a href="/process#campaign">process track</a> page.</p>
-  <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th style="width:44%">Task</th><th>Role</th><th>Family</th><th class="n">Turns</th><th class="n">Checks</th></tr></thead>
-    <tbody>{proc.map((t) => (
-      <tr><td><a href={`/process/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
-        <td>{t.agent.title}</td><td class="muted">{FAMILY_LABEL[t.family] ?? t.family}</td><td class="n">{t.turns.length}</td><td class="n">{t.checks.length}</td></tr>))}</tbody>
-  </table></div>
+  <section data-track-section="desk">
+    <h2 id="desk">Desk track</h2>
+    <p>Recorded acceptance counts are shown <strong>separately for each configured system</strong>, over {REPS} executions on the same fixture. They are neither difficulty estimates from a representative population nor results on unseen cases. Check counts below describe the current task declaration; detail pages distinguish it from the frozen campaign scorer.</p>
+    {CATEGORIES.map((c) => { const rows = desk.filter((t) => t.category === c.id); return (
+      <section data-task-group>
+        <h3 id={c.id}>{c.label} <span class="dim" style="font-weight:400">· {rows.length} tasks · {c.deliverable.toLowerCase()}</span></h3>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Task</th><th>Deliverables</th><th class="n">Required checks</th>{ARMS.map(a => <th class="n" title={a.system}>{a.short}<br />accepted / {REPS}</th>)}</tr></thead>
+          <tbody>{rows.map(t => <tr data-task-row data-track="desk" data-search={searchText(t.id, t.title, c.label, c.deliverable, ...t.deliverables)}>
+            <td><a href={`/tasks/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
+            <td class="mono" style="font-size:13px">{t.deliverables.join(", ")}</td><td class="n">{t.checks.filter(c => c.required).length}</td>
+            {ARMS.map(a => <td class="n">{m[t.id][a.id].filter(r => r.passed).length}</td>)}
+          </tr>)}</tbody>
+        </table></div>
+      </section>
+    ); })}
+  </section>
 
-  <p>Task format and authoring rules: <a href={`${REPO}/blob/main/docs/task-format.md`} rel="noopener">docs/task-format.md</a>, <a href={`${REPO}/blob/main/docs/authoring-guide.md`} rel="noopener">desk authoring guide</a>, <a href={`${REPO}/blob/main/docs/authoring-guide-build.md`} rel="noopener">build authoring guide</a>.</p>
+  <section data-track-section="build" data-task-group>
+    <h2 id="build">Build track</h2>
+    <p>Each task specifies an application, seed records and three changes. A tester must verify the running application against the <a href="/methods#build-baseline">enterprise baseline</a> and task checklist. <strong>No completed acceptance scores are published.</strong> Checklist counts measure specification size.</p>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Application</th><th>Seed files</th><th class="n">Checklist items</th><th class="n">Change items</th></tr></thead>
+      <tbody>{build.map(b => <tr data-task-row data-track="build" data-search={searchText(b.id, b.title, b.category, ...b.seed)}>
+        <td><a href={`/build/${b.id}`}>{b.title}</a><div class="dim mono" style="font-size:12px">{b.id}</div></td>
+        <td class="mono" style="font-size:13px">{b.seed.join(", ")}</td><td class="n">{b.checklistItems}</td><td class="n">{b.changes.reduce((n, c) => n + c.items, 0)}</td>
+      </tr>)}</tbody>
+    </table></div>
+  </section>
+
+  <section data-track-section="process" data-task-group>
+    <h2 id="process">Process track</h2>
+    <p>A role in an ERP over several business dates, evaluated on final state, audit rules and requested notes. The <a href="/process#campaign">published pilot</a> covers {pilot.tasks.length} of these {proc.length} tasks, at one seed with {pilot.repetitions} executions per system.</p>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Task</th><th>Role and family</th><th>Band</th><th class="n">Turns / checks</th><th>Published evidence</th></tr></thead>
+      <tbody>{proc.map(t => <tr data-task-row data-track="process" data-search={searchText(t.id, t.title, t.agent.title, t.band, FAMILY_LABEL[t.family] ?? t.family)}>
+        <td><a href={`/process/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
+        <td>{t.agent.title}<br /><span class="muted">{FAMILY_LABEL[t.family] ?? t.family}</span></td><td>{t.band}</td><td class="n">{t.turns.length} / {t.checks.length}</td><td>{pilot.tasks.includes(t.id) ? <a href="/process#campaign">Provisional pilot</a> : "No published attempts"}</td>
+      </tr>)}</tbody>
+    </table></div>
+  </section>
+
+  <h2 id="authoring">Authoring and exposure</h2>
+  <p>The repository includes generators, fixtures, checks and reference policies. Rerolling names and amounts tests new instances of known templates; it does not make exposed task structure unseen or eliminate development contamination. Generalization needs separately held-out templates and a stated sampling frame. See the <a href="/audit#contamination">exposure analysis</a>.</p>
+  <p>To contribute or dispute a contract, start with the <a href={`${REPO}/blob/main/docs/task-format.md`} rel="noopener">task format</a>, <a href={`${REPO}/blob/main/docs/authoring-guide.md`} rel="noopener">desk authoring guide</a>, <a href={`${REPO}/blob/main/docs/authoring-guide-build.md`} rel="noopener">build authoring guide</a>, or <a href="/process/spec">process specification</a>. Explain which recipient requirement a check represents and include a valid output and a plausible invalid counterexample.</p>
 </Base>
+
+<script>
+  const panel = document.querySelector<HTMLElement>(".task-filter");
+  const query = document.querySelector<HTMLInputElement>("#task-query")!;
+  const track = document.querySelector<HTMLSelectElement>("#task-track")!;
+  const rows = Array.from(document.querySelectorAll<HTMLTableRowElement>("[data-task-row]"));
+  const groups = Array.from(document.querySelectorAll<HTMLElement>("[data-task-group], [data-track-section]"));
+  const count = document.querySelector<HTMLElement>("#task-count")!;
+  const empty = document.querySelector<HTMLElement>("#task-empty")!;
+  const filter = () => {
+    const terms = query.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    let visible = 0;
+    for (const row of rows) {
+      row.hidden = (track.value !== "all" && row.dataset.track !== track.value) || !terms.every(term => row.dataset.search!.includes(term));
+      if (!row.hidden) visible++;
+    }
+    for (const group of groups) group.hidden = !Array.from(group.querySelectorAll<HTMLTableRowElement>("[data-task-row]")).some(row => !row.hidden);
+    count.textContent = `${visible} of ${rows.length} tasks`;
+    empty.hidden = visible > 0;
+  };
+  if (panel) panel.hidden = false;
+  query.addEventListener("input", filter);
+  track.addEventListener("change", filter);
+  const reset = () => { query.value = ""; track.value = "all"; filter(); };
+  document.querySelector("#task-reset")!.addEventListener("click", () => { reset(); query.focus(); });
+  document.querySelectorAll<HTMLAnchorElement>('.toc a[href^="#"]').forEach(a => a.addEventListener("click", reset));
+  filter();
+</script>
+<style>
+  .task-filter { display: grid; grid-template-columns: minmax(0, 1fr) 150px auto; align-items: end; gap: 12px; border-block: 1px solid var(--line); padding: 18px 0; margin: 24px 0; }
+  .task-filter[hidden] { display: none; }
+  label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  input, select { font: inherit; font-size: 14px; width: 100%; min-height: 40px; border: 1px solid var(--line-2); border-radius: 4px; background: var(--bg); color: var(--ink); padding: 8px; }
+  #task-count { grid-column: 1 / -1; margin: 0; font-size: 13px; color: var(--ink-2); }
+  @media (max-width: 600px) { .task-filter { grid-template-columns: 1fr 1fr; } .task-filter > div:first-child { grid-column: 1 / -1; } }
+</style>

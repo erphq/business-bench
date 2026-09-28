@@ -30,6 +30,13 @@ On macOS, MacTeX supplies the TeX toolchain; install Pandoc separately. A normal
 
 The canonical output is `docs/business-harness-bench-spec.pdf`. Compilation logs, bibliography intermediates and the working PDF stay under ignored `tmp/latex/`.
 
+A successful canonical build also writes `paper/build-receipt.json`, binding the
+published PDF to its manuscript, TeX, bundled fonts, result data and generation
+scripts. Run `python docs/paper_artifact.py --verify` to detect stale or changed
+inputs/artifacts. CI verifies this receipt before regenerating or compiling anything;
+an alternate `--output` build does not replace it. This avoids assuming identical PDF
+bytes across TeX versions and does not replace visual or substantive review.
+
 To regenerate TeX/data only:
 
 ```bash

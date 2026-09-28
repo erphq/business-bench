@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro build",
+    "verify": "python3 scripts/verify_site.py",
     "preview": "astro preview --host 127.0.0.1",
     "check": "astro check",
     "test": "bun test",
-    "deploy:dry-run": "bun run check && bun run build && wrangler deploy --dry-run",
-    "deploy": "bun run check && bun run build && wrangler deploy"
+    "deploy:dry-run": "bun run check && bun run build && bun run verify && wrangler deploy --dry-run",
+    "deploy": "bun run check && bun run build && bun run verify && wrangler deploy"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",

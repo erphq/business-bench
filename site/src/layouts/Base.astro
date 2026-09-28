@@ -20,7 +20,7 @@ const breadcrumbLd = crumbs.length ? [{
   itemListElement: [{ name: "Business Bench", path: "/" }, ...crumbs].map((c, i) => ({ "@type": "ListItem", position: i + 1, name: c.name, item: SITE + (c.path === "/" ? "/" : c.path) })),
 }] : [];
 const ld = [...jsonld, ...breadcrumbLd];
-const fullTitle = title === "Business Bench" ? "Business Bench: a verifiable benchmark for AI agents doing business work" : `${title} · Business Bench`;
+const fullTitle = title === "Business Bench" ? "Business Bench: evaluating AI agents on business deliverables" : `${title} · Business Bench`;
 ---
 <!doctype html>
 <html lang="en">
@@ -48,7 +48,7 @@ const fullTitle = title === "Business Bench" ? "Business Bench: a verifiable ben
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link rel="alternate" type="application/jsonl" href={`${REPO}/blob/main/results/latest/attempts.jsonl`} title="Attempt ledger" />
+<link rel="alternate" type="application/x-ndjson" href="https://raw.githubusercontent.com/erphq/business-bench/main/results/latest/attempts.jsonl" title="Attempt ledger" />
 {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
 </head>
 <body>
@@ -94,8 +94,8 @@ const fullTitle = title === "Business Bench" ? "Business Bench: a verifiable ben
   <div class="wrap">
     <div>
       <h4>Business Bench</h4>
-      <p>A benchmark of AI agents on business work, graded by executable checks against planted ground truth. Release <code>{RELEASE.id}</code>, version {RELEASE.version}.</p>
-      <p>Published by <a href={ORG.url} rel="noopener">{ORG.name}</a>, which also develops Proto, one of the evaluated harnesses. The conflict is stated on every results page and assessed in the <a href="/audit">self-audit</a>.</p>
+      <p>Public tasks and recorded evaluations of AI agents on business deliverables. Desk release <code>{RELEASE.id}</code>, version {RELEASE.version}.</p>
+      <p>Published by <a href={ORG.url} rel="noopener">{ORG.name}</a>, which also develops Proto, one of the evaluated harnesses. The conflict is stated on every results page and assessed in the <a href="/audit">evidence audit</a>.</p>
     </div>
     <div>
       <h4>Read</h4>
@@ -104,7 +104,7 @@ const fullTitle = title === "Business Bench" ? "Business Bench: a verifiable ben
         <li><a href="/results">Desk results</a> · <a href="/analysis">Findings</a></li>
         <li><a href="/process">Process track (pilot)</a></li>
         <li><a href="/tasks">Task inventory</a></li>
-        <li><a href="/audit">Self-audit</a> · <a href="/roadmap">Roadmap</a></li>
+        <li><a href="/audit">Evidence audit</a> · <a href="/roadmap">Roadmap</a></li>
       </ul>
     </div>
     <div>

@@ -84,7 +84,9 @@ describe("findings", () => {
       const f = findings(a.id), s = SUMMARY_BY_ID[a.id];
       expect(Math.abs(f.pass1 - s.pass_rate)).toBeLessThan(1e-9);
       expect(Math.round(f.passAll * s.tasks)).toBe(s.all_three_pass);
-      expect(f.checkRate).toBeGreaterThanOrEqual(f.taskRate);
+      expect(f.meanCheckFraction).toBeGreaterThanOrEqual(f.taskRate);
+      expect(f.gap).toBeCloseTo(f.meanCheckFraction - f.taskRate, 12);
+      expect(f.checkRate).toBe(f.pooledCheckRate);
       expect(f.passAny).toBeGreaterThanOrEqual(f.pass1);
       expect(f.pass1).toBeGreaterThanOrEqual(f.passAll);
       expect(Object.values(f.failedDist).reduce((x, y) => x + y, 0)).toBe(f.failed);

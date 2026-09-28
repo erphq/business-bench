@@ -1,9 +1,15 @@
 # Business Bench process track: specification for review
 
-Status: draft for review, 2026-09-26. Nothing in this directory is implemented yet.
-Companion files: [environment.md](environment.md) describes the system the agent
-operates; [tasks.md](tasks.md) lists the 24 tasks, the six-task pilot, and one task
-worked through in full.
+Status: implementation and research plan, reconciled 2026-09-28. bb-erp, the local
+runner, process grader and seven task packs are implemented: six clerical pilot tasks
+plus the analyst task `ap-invoice-backlog`. The published pilot covers only the six
+clerical tasks at seed 0, five repetitions per cell; both systems pass 30/30.
+It ran locally before practitioner review. No analyst-task result, isolated process
+campaign or human baseline is published.
+
+Companion files: [environment.md](environment.md) distinguishes the current system
+from proposed isolation; [tasks.md](tasks.md) labels the 24-task design catalog and
+implemented subset. [Reproducibility](../reproducibility.md) maps claims to records.
 
 ## 1. Why a third track
 
@@ -54,8 +60,9 @@ A **process task** is a scenario generator plus a script of turns.
   agent uses, with the agent's token. Its final state is the reference. It proves each
   task is solvable through that interface.
 
-An attempt passes when every required check passes. Each task runs five times from a
-fresh copy of the scenario, the repetition count planned for v2.
+An attempt passes when every required check passes. The published pilot used five repetitions of each fixed seed-0 scenario. New
+campaigns must declare repetitions and seeds explicitly; the runner defaults to one
+repetition. Fresh copies do not imply novel task instances.
 
 ## 3. How it relates to the other tracks
 
@@ -74,33 +81,34 @@ conformance (#95). In v2 the agent analyses an export of a process that already
 happened. In the process track the agent takes part in the process, and its own
 postings are part of what gets audited.
 
-Results are published as a separate leaderboard. There is no combined desk, build, and
+Process results are published as separately named campaigns. There is no combined desk, build, and
 process score.
 
 ## 4. Related work
 
-Two recent benchmarks grade agents on enterprise system state. ERPBench (arXiv
-2609.17885) runs screenshot-only agents against a live ERP and scores the values they
+Two recent benchmarks grade agents on enterprise system state. [ERPBench](https://arxiv.org/abs/2609.17885)
+runs screenshot-only agents against a live ERP and scores the values they
 write to its database; its abstract reports agents that save a record in up to 85% of
-runs but write the correct value in as few as 3%. Agent-Diff (arXiv 2602.11224) runs
+runs but write the correct value in as few as 3%. [Agent-Diff](https://arxiv.org/abs/2602.11224) runs
 code-executing agents against containerised replicas of enterprise APIs and grades the
-resulting state change. As their abstracts describe them, both grade whether a requested
-change lands correctly. The process track grades the decision behind the change: which
-requisition to route upward, which invoice to hold, which bank-detail change to refuse,
-what to accrue. It adds multi-day
-processes with counterparties, graded controls, and seeded generators for sealed
-variants.
+resulting state change. These are related state-based evaluations, not controls for the current pilot.
+The process track's design emphasis is policy-conditioned action across business
+dates: which requisition to route, invoice to hold, bank change to refuse, or amount
+to accrue. Its checks observe resulting state and audit events, not an agent's
+internal reasoning. These differences do not establish unique coverage or superior
+validity; comparative claims require inspection of the actual tasks and protocols.
 
 ## 5. Episode model
 
-1. **Reset.** The runner starts a fresh ERP container from the scenario's database
-   snapshot and copies the handbook into the workspace.
+1. **Reset.** The implemented runner copies the scenario database, starts a local
+   bb-erp server process, and copies the handbook into the workspace. The proposed
+   container boundary in §9 is not implemented.
 2. **Each turn.** The runner advances the clock to the turn's date, and counterparties
    act in scheduled order. It then starts the agent with the turn's request. The agent
    works through the `erp` command or the HTTP API until it ends its session or the
    turn budget runs out.
-3. **Grading.** After the last turn the runner advances to the grading date, stops the
-   container, exports the database and audit log, and grades.
+3. **Grading.** After the last turn the runner advances to the grading date, flushes
+   and stops the server, retains the database and audit log, and grades.
 
 **Handoff mode.** Each turn is a new agent session with a fresh harness home. The
 workspace folder and the system persist. The next person on a queue in a real office
@@ -120,8 +128,10 @@ to a phone number. Each structured action has a deterministic response defined b
 scenario ([environment.md §8](environment.md#8-counterparties-and-the-clock)). Runs
 stay reproducible and no LLM-simulated user is needed.
 
-**Budgets.** Per-turn wall time by band (20, 40, and 60 minutes, as in v2 §5), with the
-iteration and token caps each adapter records.
+**Budgets.** Actual turn budgets are in each task's `turns.yaml`; the runner's
+`--timeout` can override them and must be declared. The 20/40/60-minute band budgets
+are design targets, not a uniform guarantee. Record effective adapter token/iteration
+limits separately from observed usage.
 
 ## 6. Roles, controls, and breaches
 
@@ -163,15 +173,16 @@ The same projections run on the oracle's final state at generation time and are 
 under `reference/` as CSV. The grader writes the agent's projection output beside them
 in the attempt record, so a verdict can be inspected the way a desk CSV can.
 
-New check types, added to `bench/grade.py` beside the existing ones:
+Implemented process check types in `bench/process_grade.py`, using shared file-check
+helpers where applicable:
 
 | type | fields | passes when |
 |---|---|---|
 | `state_set` | projection, key, normalize? | the set of keys in the agent's projection equals the reference set |
 | `state_values` | projection, key, columns, numeric?, tolerance?, normalize?, min_accuracy?, must_match_keys? | per-key values match, with the semantics of `csv_values_match` |
-| `state_unchanged` | tables, scope | rows outside the task's declared scope equal the start state: no collateral edits to master data or unrelated documents |
+| `state_unchanged` | tables, where? | rows outside the task's declared scope equal the start state: no collateral edits to master data or unrelated documents |
 | `audit_forbidden` | rule, params | no audit event matches the rule; a match is a breach |
-| `audit_required` | rule, params | at least one audit event matches, for instance a call to the number on file before a bank account is marked verified |
+| `audit_required` | rule, params | the rule finds no missing required evidence, for instance a call to the number on file before verification |
 | `ledger_ties` | accounts | the trial balance balances and each named control account equals its subledger at the grading date |
 
 Existing types keep working on files the agent leaves in the workspace:
@@ -179,18 +190,24 @@ Existing types keep working on files the agent leaves in the workspace:
 finance questions, `not_fooled` for planted instructions, `plan_feasible` for plans
 read back from the final state.
 
-Audit rules are named functions in one shared module, for example `pay_held_invoice`,
-`approve_own_request`, `split_to_fit_limit`, `bank_change_without_callback`,
-`foreign_token`, `post_to_closed_period`, `plug_to_control_account`, and
-`edit_billed_amounts`. Each has unit tests against a violating and a clean audit log.
+Audit rules are implemented in `bench/process_rules.py`; task declarations select
+which rules apply. Inspect each task's checks and negative controls rather than
+assuming the full catalog is enforced in every scenario. Existing tests and controls
+probe particular failure modes, not exhaustive business correctness.
 
-The conjunctive pass rule, the frozen scorer, and the ledger work as on the desk track:
-a scorer version is frozen and hashed before a campaign, and raw and frozen verdicts
-are both kept.
+Process acceptance is conjunctive, but its publication format differs from the desk
+release: the pilot records one process verdict per attempt, source/evidence hashes,
+and campaign commits. It does not contain the desk's original-versus-frozen verdict
+pair or use `conservative-v7`. Future rescoring must create a separately named result
+snapshot and preserve the original verdicts; retrospective revision must not be
+presented as prospective scorer freezing.
 
 ## 8. Metrics
 
-Reported per cell, per task family, and per band:
+The pilot publishes acceptance, all-five/at-least-one counts, breaches, errors,
+attempt times and aggregate usage per cell and task. The complete proposed reporting
+set is below; probe counts, write/reversal volume and intermediate-state progress
+are not fields in the public pilot ledger:
 
 | Metric | Definition |
 |---|---|
@@ -200,15 +217,26 @@ Reported per cell, per task family, and per band:
 | breach rate | attempts with at least one breach / attempts |
 | probe rate | refused requests per attempt |
 | write volume | API writes per attempt, and how many the agent later reversed itself |
-| cost per pass | captured-usage cost at list price / passing attempts |
+| model cost per accepted attempt | captured estimated model cost / accepted attempts; excludes review and repair |
 | turn time | median and p90 wall time per turn |
 
-Turn-level progress (how many of the oracle's projections held at the end of each turn)
-is recorded as a diagnostic and never changes a verdict.
+The public ledger retains per-turn exit status, timeout and duration, but grades final
+state. A future progress diagnostic would need explicit intermediate snapshots.
+The pilot's published p90 uses sorted index `floor(0.9*n)` (zero-based), capped at
+`n-1`; the desk release uses nearest rank. Preserve that historical convention when
+verifying its summary, and declare a common convention for any new comparison.
 
 ## 9. Isolation and fairness
 
-- Each attempt gets its own ERP container, started from the scenario snapshot, on a
+**Current boundary.** The runner and agents are local processes on the same host.
+Fresh databases/workspaces and copied homes reduce accidental carryover but do not
+prevent an agent from reading host-side answers or other attempts. The published
+pilot explicitly discloses this limitation. Process container mode, MCP, and the
+browser interface below remain proposed work.
+
+**Proposed isolated protocol:**
+
+- Each attempt would get its own ERP container, started from the scenario snapshot, on a
   private network shared only with that attempt's agent container. The agent container
   holds the harness, the `erp` command, and the workspace, and can reach the model
   provider. It does not hold the database file, the scenario specification, the oracle,
@@ -224,16 +252,18 @@ is recorded as a diagnostic and never changes a verdict.
   license. No task needs the ERP.AI platform, and Proto's native ERP•AI actions do not
   apply to bb-erp. A cell that replays the scenarios on another system is a separate
   declared condition.
-- Every scenario generator takes `--seed`. Maintainers hold sealed seeds, and public
-  and sealed scores are published side by side when both exist (v2 §6).
+- Every scenario generator takes `--seed`. A sealed study would need recorded seed
+  custody and prospective task/scorer versions. No released process result establishes
+  held-out instance or template performance.
 - ERP.AI builds Proto and publishes this benchmark. The self-audit page says so, and the
-  independent scorer review planned for v2 covers the process check types and audit
-  rules before the first process campaign is reported.
+  independent scorer review planned for v2 also needs to cover process checks and
+  audit rules. The provisional pilot was published before that review.
 
 ## 10. Difficulty bands
 
-Each scenario generator exposes document volume, rule count, exception count, and turn
-count. The bands follow v2's personas:
+The proposed difficulty design varies document volume, rule and exception counts,
+and turn count. Not every implemented generator exposes these as independent
+parameters. The bands are authoring targets, not calibrated difficulty estimates:
 
 | Band | Persona | Documents per turn | Planted exceptions | Turns |
 |---|---|---|---|---|
@@ -245,7 +275,9 @@ The pilot is authored at the clerical band.
 
 ## 11. Task validation
 
-Before a task enters a release, `bench/validate_process.py --strict` must show:
+The task-validation target is the following set of controls. Request five seeds
+explicitly with `python bench/validate_process.py --seeds 0,1,2,3,4 --strict`;
+`--strict` alone uses only the default seed 0:
 
 1. The oracle passes every check on five seeds.
 2. A null agent that does nothing fails.
@@ -253,21 +285,27 @@ Before a task enters a release, `bench/validate_process.py --strict` must show:
    Negative controls are scripted plausible mistakes: approve everything within my
    limit, pay everything that is due, one PO per requisition, edit the invoice until it
    matches the PO. They show each check detects the mistake it is named for.
-4. Two oracle runs from the same seed give byte-identical exports.
+4. Two oracle runs from the same seed have identical canonical database contents:
+   table rows are sorted and audit wall-clock timestamps are excluded from the hash.
+   This does not require byte-identical SQLite files.
 5. Every check cites the handbook clauses and data it depends on, and a lint confirms
    each cited clause exists in the handbook the agent sees.
-6. The oracle uses only the agent's API with the agent's token.
+6. The oracle is invoked with the agent's API/token. Separately review its source for
+   access to privileged state; same-token execution is not itself a filesystem boundary.
 
-Before more than the pilot is authored, a practitioner review (an AP lead, a production
-planner, a controller) reads each family's handbook, scenario, and planted exceptions
-for realism.
+Practitioner review by an AP lead, production planner and controller remains pending.
+The analyst task was authored before that review; its implementation must not be
+represented as evidence that the original review milestone was completed. Oracle and
+negative-control tests establish selected mechanical properties, not practitioner
+agreement or exhaustive false-acceptance coverage.
 
 ## 12. Human baseline
 
-Practitioners attempt the pilot tasks through a browser interface over the same API,
-with the same handbook and turn budgets. Raw times and verdicts are published, following
-the v2 [human-baseline protocol](../v2/human-baseline.md). Computer-use agents use the
-same browser interface.
+Proposed: practitioners attempt reviewed pilot tasks through a browser interface over
+the same API, with the same handbook and declared budgets, following the v2
+[human-baseline protocol](../v2/human-baseline.md). A browser client, recruited cohort
+and completed baseline are not established by this release. Human-assisted and
+unaided work would need separate labels.
 
 ## 13. Threats to validity
 
@@ -298,30 +336,26 @@ same browser interface.
    against a schema this project does not control. The scenario format stays
    backend-neutral ([environment.md §10](environment.md#10-scenario-format)) so another
    system can replay the same scenarios later.
-2. **Interface for the pilot.** Recommendation: `erp` command, HTTP, and MCP; the
-   browser interface next, for the human baseline.
-3. **Continuous-session mode.** Recommendation: handoff mode only for the first
-   campaign.
-4. **Breaches.** Recommendation: a breach fails the attempt, and breach rate is
-   published beside pass rate.
+2. **Interface.** The implementation supplies the `erp` command and HTTP API.
+   MCP and browser interfaces remain proposed.
+3. **Session mode.** The implementation uses fresh sessions/homes each turn with
+   persistent workspace and ERP state. Continuous-session mode remains proposed.
+4. **Breaches.** Implemented: a recorded breach fails the attempt, and the pilot
+   reports breach counts beside acceptance.
 5. **Archetypes after the pilot.** The pilot uses one company, a manufacturer and
    distributor. Candidates next: a services firm (projects, time and expense, billing),
    public-sector purchasing, and a two-entity group with intercompany and FX.
 
 ## 15. Order of work
 
-1. bb-erp kernel: schema, document lifecycles, hard controls, audit log, clock, reports,
-   HTTP API, OpenAPI document, `erp` command, with unit tests per lifecycle.
-2. Counterparty simulator and scenario format. History generation: twelve months
-   simulated with the oracle policies so every subledger ties on day one.
-3. Runner and grader: `bench/process_run.py` (containers, turns, clock, export), the six
-   check types and the audit rules in `bench/grade.py`, and
-   `bench/validate_process.py`.
-4. Pilot: six tasks ([tasks.md §3](tasks.md#3-the-pilot)) with oracles, negative
-   controls, and validation passing.
-5. Adapters: the existing Proto and Codex adapters run unchanged once `ERP_URL`,
-   `ERP_TOKEN`, and the `erp` command are in the agent image. One smoke attempt per
-   cell.
-6. Practitioner review of the pilot, then a pilot campaign: five repetitions per cell,
-   published under its own label.
-7. The remaining 18 tasks, then the analyst and controller bands.
+1. Implemented: bb-erp kernel, simulator, seeded history, HTTP/OpenAPI and CLI.
+2. Implemented: local runner, process grader, validator, six pilot task packs, and
+   analyst task `ap-invoice-backlog`.
+3. Published: six-task, five-repetition local pilot under its own label, before review.
+4. Next evidence: practitioner and scorer review, including plausible invalid outputs
+   and valid alternatives; record accepted corrections under new task versions.
+5. Implement and verify isolated execution, with explicit environment and per-attempt
+   configuration records, before a prospective confirmatory campaign.
+6. Expand the task catalog and calibrated difficulty bands; publish analyst results
+   separately. The 24-task design catalog is not the implemented inventory.
+7. Develop the browser client and execute the proposed human baseline.

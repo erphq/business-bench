@@ -1,9 +1,11 @@
 # Human baseline protocol
 
-Budget approved 2026-09-18. Purpose: establish that the tasks are completable by the
-people who do this work, how long they take, and how often they get them right under
-the same checks the agents face. Without it, no reviewer can say whether a 60% agent
-score is impressive or embarrassing.
+Proposed protocol and planning budget, recorded 2026-09-18. The repository does not
+establish that contractors have been commissioned, participants recruited, or attempts
+completed. Purpose: measure completion time and acceptance under the same declared
+checks, then investigate disagreements between those checks and practitioner judgment.
+A baseline provides context for the tested sample, not a universal human performance
+standard.
 
 ## Sample
 
@@ -20,7 +22,9 @@ score is impressive or embarrassing.
   work. Controllers take the axis 5 and axis 7 tasks.
 - Participants use their own machines and any software they normally use, including
   spreadsheets and, if they choose, AI tools. Whether they used AI is recorded per task
-  and published; the baseline is "a competent human with their usual tools".
+  and published; the baseline is "a practitioner with their usual tools". Report
+  AI-assisted and unassisted attempts separately, including tools/models used. Do not
+  interpret their pooled score as unaided human ability.
 
 ## Procedure
 
@@ -28,13 +32,15 @@ score is impressive or embarrassing.
    No checks, no reference, no traps.
 2. Time starts at download and stops at upload of the deliverables. Self-reported
    interruptions are subtracted only if logged at the time.
-3. Deliverables are graded by the same checks as agents, with the frozen scorer, and
-   by nothing else.
+3. Primary acceptance uses the same declared scorer as the compared agents, fixed
+   before attempts. Separately record practitioner adjudication of sampled accepted
+   and rejected artifacts; do not silently substitute that judgment into the primary
+   score. v2 tasks need their own frozen scorer, not the historical desk package.
 4. After grading, the participant sees the failed checks and answers two questions:
    was the ask clear, and do they dispute the check. Disputes are logged as task
    issues and count toward the task-correctness audit.
 
-## Published outputs
+## Planned published outputs
 
 - Per task: participant id (anonymised), time, pass or fail, failed checks, AI-use flag,
   clarity rating, dispute flag.
@@ -43,7 +49,7 @@ score is impressive or embarrassing.
 - Raw sheets under `results/human-baseline/<label>/`, same allowlisting rules as agent
   ledgers.
 
-## Budget
+## Planning budget
 
 | Item | Estimate |
 |---|---|
@@ -53,7 +59,7 @@ score is impressive or embarrassing.
 | Total contractor time | ~107 hours |
 | At $40 to $70 per hour blended | $4,300 to $7,500 |
 
-## Contractor brief (copy for the posting)
+## Draft contractor brief (not a published recruitment notice)
 
 We are measuring how long real business tasks take and how accurately they are done.
 You will receive a folder of business files (spreadsheets, PDFs, emails) and a short
