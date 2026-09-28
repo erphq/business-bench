@@ -1,9 +1,4 @@
 ---
-import "@fontsource-variable/source-serif-4/opsz.css";
-import "@fontsource-variable/source-serif-4/opsz-italic.css";
-import "@fontsource-variable/inter/index.css";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
 import "@/styles/global.css";
 import { REPO, SITE, ORG, RELEASE } from "@/lib/data";
 interface Crumb { name: string; path: string }
@@ -56,7 +51,6 @@ const fullTitle = title === "Business Bench" ? "Business Bench: evaluating AI ag
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="/" aria-label="Business Bench home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="currentColor"/><rect x="7" y="17" width="4" height="8" fill="var(--bg)"/><rect x="14" y="11" width="4" height="14" fill="var(--s1)"/><rect x="21" y="7" width="4" height="18" fill="var(--bg)"/></svg>
       Business Bench
     </a>
     <span class="site-description">A benchmark for AI agents on business work</span>
@@ -92,30 +86,12 @@ const fullTitle = title === "Business Bench" ? "Business Bench: evaluating AI ag
 </script>
 <footer class="site-foot">
   <div class="wrap">
-    <div>
-      <h4>Business Bench</h4>
-      <p>Public tasks and recorded evaluations of AI agents on business deliverables. Desk release <code>{RELEASE.id}</code>, version {RELEASE.version}.</p>
-      <p>Published by <a href={ORG.url} rel="noopener">{ORG.name}</a>, which also develops Proto, one of the evaluated harnesses. The conflict is stated on every results page and assessed in the <a href="/audit">evidence audit</a>.</p>
-    </div>
-    <div>
-      <h4>Read</h4>
-      <ul>
-        <li><a href="/paper">Paper</a> · <a href="/methods">Methods</a></li>
-        <li><a href="/results">Desk results</a> · <a href="/analysis">Findings</a></li>
-        <li><a href="/process">Process track (pilot)</a></li>
-        <li><a href="/tasks">Task inventory</a></li>
-        <li><a href="/audit">Evidence audit</a> · <a href="/roadmap">Roadmap</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Data and code</h4>
-      <ul>
-        <li><a href={REPO} rel="noopener">erphq/business-bench</a> (MIT)</li>
-        <li><a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">Attempt ledger</a>, every verdict</li>
-        <li><a href="/reproduce">Reproduce a run</a></li>
-        <li><a href={`${REPO}/issues`} rel="noopener">Report an error or dispute a task</a></li>
-      </ul>
-    </div>
+    <p>Business Bench · Desk release <code>{RELEASE.id}</code>, version {RELEASE.version}. Published by <a href={ORG.url} rel="noopener">{ORG.name}</a>, which also develops Proto. <a href="/audit">Evidence and disclosures</a>.</p>
+    <nav aria-label="Reference links">
+      <a href="/paper">Paper</a><a href="/methods">Methods</a><a href="/reproduce">Reproduction</a>
+      <a href={REPO} rel="noopener">Source code</a><a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">Attempt ledger</a>
+      <a href={`${REPO}/blob/main/LICENSE`} rel="noopener">MIT licence</a><a href={`${REPO}/issues`} rel="noopener">Report an error</a>
+    </nav>
   </div>
 </footer>
 </body>

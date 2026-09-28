@@ -99,7 +99,7 @@ const searchText = (...parts: string[]) => parts.join(" ").toLocaleLowerCase();
   .task-filter { display: grid; grid-template-columns: minmax(0, 1fr) 150px auto; align-items: end; gap: 12px; border-block: 1px solid var(--line); padding: 18px 0; margin: 24px 0; }
   .task-filter[hidden] { display: none; }
   label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
-  input, select { font: inherit; font-size: 14px; width: 100%; min-height: 40px; border: 1px solid var(--line-2); border-radius: 4px; background: var(--bg); color: var(--ink); padding: 8px; }
+  input, select { font: inherit; font-size: 14px; width: 100%; min-height: 40px; border: 1px solid var(--line-2); border-radius: 2px; background: var(--bg); color: var(--ink); padding: 8px; }
   #task-count { grid-column: 1 / -1; margin: 0; font-size: 13px; color: var(--ink-2); }
   @media (max-width: 600px) { .task-filter { grid-template-columns: 1fr 1fr; } .task-filter > div:first-child { grid-column: 1 / -1; } }
 </style>
