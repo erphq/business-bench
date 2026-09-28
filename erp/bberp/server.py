@@ -1,6 +1,9 @@
 """Run bb-erp: the agent API on one port and the runner's control API on another.
 
     python -m bberp.server --db company.db --world world.json --port 8080 --control-port 8081 --control-token T
+        [--faults SPEC --fault-log faults.jsonl]
+
+--faults declares transport faults on the agent API (see bberp/faults.py); without it the agent API is untouched.
 
 The control API (reset is a fresh process on a copied database; this API only moves the clock and flushes):
     GET  /control/health
@@ -17,6 +20,7 @@ import os
 import signal
 import sys
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from . import api
@@ -37,7 +41,9 @@ def _reply(h: BaseHTTPRequestHandler, status: int, headers: dict, body: bytes) -
     h.wfile.write(body)
 
 
-def agent_handler(erp: Erp):
+def agent_handler(erp: Erp, plan=None, fault_log=None):
+    """The agent API. With a fault plan, each request first passes the plan (bberp.faults); without one the handler
+    is the plain path, chosen once here, so the default condition pays nothing per request."""
     class H(BaseHTTPRequestHandler):
         protocol_version = 'HTTP/1.1'
         server_version = 'bb-erp/1'
@@ -50,7 +56,18 @@ def agent_handler(erp: Erp):
                                                _read_body(self))
             _reply(self, status, headers, body)
 
-        do_GET = do_POST = do_PATCH = do_PUT = do_DELETE = _do
+        def _do_faulted(self):
+            from .faults import serve_faulted
+            status, headers, body, delay = serve_faulted(plan, fault_log, erp, api.handle, self.command, self.path,
+                                                         dict(self.headers.items()), _read_body(self))
+            if delay:
+                time.sleep(delay)
+            try:
+                _reply(self, status, headers, body)
+            except OSError:          # a slow response whose client already gave up
+                self.close_connection = True
+
+        do_GET = do_POST = do_PATCH = do_PUT = do_DELETE = _do if plan is None else _do_faulted
     return H
 
 
@@ -100,10 +117,12 @@ def control_handler(erp: Erp, token: str, stop):
 
 
 def serve(db: str, world_path: str | None, host: str, port: int, control_host: str, control_port: int,
-          control_token: str) -> None:
+          control_token: str, faults: str | None = None, fault_log: str | None = None) -> None:
+    from .faults import FaultLog, FaultPlan
+    plan = FaultPlan.parse(faults)          # None unless faults are declared
     world = json.load(open(world_path, encoding='utf-8')) if world_path else {}
     erp = Erp(db, world=world)
-    agent = ThreadingHTTPServer((host, port), agent_handler(erp))
+    agent = ThreadingHTTPServer((host, port), agent_handler(erp, plan, FaultLog(fault_log) if plan else None))
     servers = [agent]
 
     def stop():
@@ -133,10 +152,13 @@ def main(argv=None) -> None:
     ap.add_argument('--control-host', default='127.0.0.1')
     ap.add_argument('--control-port', type=int, default=8081)
     ap.add_argument('--control-token', default=os.environ.get('BBERP_CONTROL_TOKEN', ''))
+    ap.add_argument('--faults', help='declared transport faults on the agent API (bberp/faults.py)')
+    ap.add_argument('--fault-log', help='where to record each injected fault (JSON lines); keep it out of the '
+                                        "agent's reach")
     a = ap.parse_args(argv)
     if not a.control_token:
         sys.exit('set --control-token or BBERP_CONTROL_TOKEN')
-    serve(a.db, a.world, a.host, a.port, a.control_host, a.control_port, a.control_token)
+    serve(a.db, a.world, a.host, a.port, a.control_host, a.control_port, a.control_token, a.faults, a.fault_log)
 
 
 if __name__ == '__main__':

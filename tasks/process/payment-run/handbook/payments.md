@@ -14,3 +14,6 @@ request in the ERP), until the hold is released or the dispute is settled.
 
 **PAY-2.4** Pay each invoice's full open amount, less any discount taken. Partial payments need the controller's
 approval.
+
+**PAY-2.5** A duplicate payment is the costliest mistake in accounts payable. Each invoice is paid once and each
+week's run is prepared once. If the ERP does not confirm an entry, check what it recorded before entering it again.

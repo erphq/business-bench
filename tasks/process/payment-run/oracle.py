@@ -1,12 +1,81 @@
 """Reference policy and negative controls for payment-run. Every policy acts only through the agent's API with the
-agent's token."""
+agent's token.
+
+Writes go through a client that survives transient failures (the fault-injection condition, process README §7.1).
+The oracle and every mistake-specific control send each write with its own Idempotency-Key and re-send it with the
+same key after a 503 or a dropped connection, so a write whose confirmation was lost is answered from the ERP's
+idempotency record instead of applied again. `neg:blind-retry` re-sends the same request without a key, and moves on
+when the retry is refused: the costly habit the condition exists to catch."""
 from __future__ import annotations
 
 import re
+import socket
+import time
+import urllib.error
 from dataclasses import dataclass, replace
 from datetime import date, timedelta
 
-from procgen.episode import Api
+from procgen.episode import Api, ApiError
+
+TRANSIENT = (503, 502, 504)
+ATTEMPTS = 6
+
+
+def _transient(e: Exception) -> bool:
+    if isinstance(e, ApiError):
+        return e.status in TRANSIENT
+    return isinstance(e, (urllib.error.URLError, ConnectionError, socket.timeout, TimeoutError))
+
+
+class RetryingApi:
+    """The policy's view of the API. `mode` is 'keyed' (safe) or 'blind'. Reads are retried in both modes."""
+
+    def __init__(self, api: Api, turn: int, mode: str):
+        self.api, self.turn, self.mode, self.n = api, turn, mode, 0
+
+    def _send(self, method: str, path: str, body: dict | None = None, query: dict | None = None, write: bool = False):
+        headers_key = None
+        if write and self.mode == 'keyed':
+            self.n += 1
+            headers_key = f'payment-run-t{self.turn}-w{self.n}'   # deterministic: runs stay byte-identical
+        for attempt in range(ATTEMPTS):
+            try:
+                return self._request(method, path, body, query, headers_key)
+            except Exception as e:
+                if not _transient(e) or attempt == ATTEMPTS - 1:
+                    if write and attempt and self.mode == 'blind' and isinstance(e, ApiError) and e.status < 500:
+                        return None        # the retry was refused ("already ..."): a blind agent carries on
+                    raise
+                time.sleep(0.05 * (attempt + 1))
+
+    def _request(self, method, path, body, query, key):
+        if key is None:
+            return self.api.request(method, path, body, query)
+        import json
+        import urllib.parse
+        import urllib.request
+        a = self.api
+        target = a.url + path + ('?' + urllib.parse.urlencode(query) if query else '')
+        req = urllib.request.Request(target, method=method, data=json.dumps(body).encode() if body is not None else None)
+        req.add_header('Authorization', f'Bearer {a.token}')
+        req.add_header('Idempotency-Key', key)
+        if body is not None:
+            req.add_header('Content-Type', 'application/json')
+        a.calls += 1
+        try:
+            with urllib.request.urlopen(req, timeout=300) as r:
+                return json.loads(r.read())['data']
+        except urllib.error.HTTPError as e:
+            raise ApiError(e.code, json.loads(e.read() or b'{}'))
+
+    def get(self, path: str, **query):
+        return self._send('GET', path, query=query or None)
+
+    def post(self, path: str, body: dict | None = None):
+        return self._send('POST', path, body or {}, write=True)
+
+    def items(self, path: str, **query) -> list[dict]:
+        return self.get(path, limit=1000, **query)['items']
 
 
 @dataclass(frozen=True)
@@ -16,9 +85,10 @@ class Policy:
     disputes: bool = True
     early_discounts: bool = True
     skip_misfits: bool = True
+    retry: str = 'keyed'              # keyed | blind
 
     def __call__(self, turn: int, api: Api, ws: str, meta: dict) -> None:
-        (self.bank_changes if turn == 1 else self.payment_run)(api)
+        (self.bank_changes if turn == 1 else self.payment_run)(RetryingApi(api, turn, self.retry))
 
     # ------------------------------------------------------------------------------------------- turn 1
     def bank_changes(self, api: Api) -> None:
@@ -98,4 +168,5 @@ POLICIES = {
     'neg:ignore_disputes': replace(ORACLE, disputes=False),
     'neg:no_early_discounts': replace(ORACLE, early_discounts=False),
     'neg:stop_at_first_misfit': replace(ORACLE, skip_misfits=False),
+    'neg:blind-retry': replace(ORACLE, retry='blind'),
 }

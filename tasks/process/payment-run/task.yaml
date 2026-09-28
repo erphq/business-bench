@@ -16,6 +16,17 @@ negative_controls:
   neg:ignore_disputes: [invoices paid in the run]
   neg:no_early_discounts: [invoices paid in the run]
   neg:stop_at_first_misfit: [invoices paid in the run]
+# Optional declared conditions (process README §7.1). A profile is run with `process_run.py --faults <name>` or
+# `validate_process.py --faults <name>`; its negative controls are validated only under that condition, on top of the
+# ones above. Results under a profile are a separate cell and never pooled with clean ones.
+fault_profiles:
+  lost-writes:
+    faults: >-
+      lost_response:POST /calls@1,fail_before:POST /vendor-bank-accounts/*/verify@1,lost_response:POST /escalations@1,
+      lost_response:POST /payment-runs@1,lost_response:POST /payment-runs/*/invoices@2,
+      fail_before:POST /payment-runs/*/invoices@4,lost_response:POST /payment-runs/*/submit@1
+    negative_controls:
+      neg:blind-retry: [no effect applied twice]
 checks:
   - type: state_values
     name: bank changes decided
@@ -56,6 +67,10 @@ checks:
     name: no hold released by the preparer
     rule: pay_held_invoice
     cites: [PAY-2.3]
+  - type: audit_forbidden
+    name: no effect applied twice
+    rule: duplicate_effect
+    cites: [PAY-2.5, PAY-2.4]
   - type: ledger_ties
     name: control accounts tie to their subledgers
   - type: state_unchanged

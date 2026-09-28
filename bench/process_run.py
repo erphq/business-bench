@@ -3,6 +3,13 @@
 
   process_run.py --task procure-to-pay-week --harness oracle --label dev-oracle
   process_run.py --task procure-to-pay-week --harness proto-deepseek --runs 5 --parallel 2 --label pilot-proto
+  process_run.py --task payment-run --harness oracle --faults lost-writes --label dev-faults
+  process_run.py --task payment-run --harness oracle --faults 'lost_response:POST /payment-runs@1' --label dev-f1
+
+--faults declares transport faults on the agent API (erp/bberp/faults.py): a spec, or the name of a profile in the
+task's `fault_profiles`. The condition is part of the attempt's identity (run id suffix, `condition` and `cell` in
+result.json, condition.json in the label): a label holds one condition, and faulted attempts are never pooled with
+clean ones. The reference is always built without faults.
 
 Harnesses are the desk track's shell adapters (harnesses/<name>.sh WS PROMPT OUT), called once per turn with
 ERP_URL, ERP_TOKEN and the `erp` command on PATH, or the task's own policies: `oracle`, `null`, `neg:<name>`, which
@@ -38,7 +45,9 @@ sys.path.insert(0, os.path.join(ROOT, 'erp'))
 sys.path.insert(0, os.path.join(ROOT, 'tasks', 'lib'))
 
 from process_grade import grade_process, materialize  # noqa: E402
-from procgen.episode import Api, Server, load_meta, preamble  # noqa: E402
+from bberp.faults import FaultPlan  # noqa: E402
+from procgen.episode import ERP_DIR, Api, Server, free_port, load_meta, preamble  # noqa: E402
+from process_rules import fault_metrics  # noqa: E402
 from usage import EXTRACTORS, cost_usd, merge  # noqa: E402
 
 TASKS = os.path.join(ROOT, 'tasks', 'process')
@@ -125,6 +134,48 @@ def check_truth(task: str, scenario: str) -> None:
         raise RuntimeError('reference does not contain the planted truth:\n  ' + '\n  '.join(problems))
 
 
+# ------------------------------------------------------------------------------------------- the fault condition
+
+def resolve_faults(task: str, spec: str | None) -> dict | None:
+    """The fault condition for an attempt: None (the default, clean condition) or {name, spec} with the spec in
+    canonical form. `spec` is a fault spec or the name of a profile in the task's `fault_profiles`."""
+    if spec is None or not spec.strip() or spec.strip().lower() == 'none':
+        return None
+    spec = spec.strip()
+    profiles = (yaml.safe_load(open(os.path.join(task_dir(task), 'task.yaml'), encoding='utf-8'))
+                .get('fault_profiles') or {})
+    name = None
+    if spec in profiles:
+        name, spec = spec, profiles[spec]['faults']
+    plan = FaultPlan.parse(spec)
+    if plan is None:
+        return None
+    canonical = plan.canonical()
+    import hashlib
+    return {'name': name or 'faults-' + hashlib.sha256(canonical.encode()).hexdigest()[:8], 'spec': canonical}
+
+
+class FaultServer(Server):
+    """procgen.episode.Server with a declared fault plan on the agent API. The fault log is written beside the
+    attempt's other runner files, outside the agent's folder and the ERP database."""
+
+    def __init__(self, db: str, world: str, control_token: str, log: str, faults: str, fault_log: str):
+        self.port, self.cport, self.token = free_port(), free_port(), control_token
+        env = dict(os.environ, PYTHONPATH=ERP_DIR)
+        self.proc = subprocess.Popen(
+            [sys.executable, '-m', 'bberp.server', '--db', db, '--world', world, '--port', str(self.port),
+             '--control-port', str(self.cport), '--control-token', control_token, '--faults', faults,
+             '--fault-log', fault_log],
+            stdout=open(log, 'ab'), stderr=subprocess.STDOUT, env=env, cwd=ERP_DIR, start_new_session=True)
+        for _ in range(200):
+            try:
+                self.control('GET', '/control/health')
+                return
+            except OSError:
+                time.sleep(0.05)
+        raise RuntimeError('bb-erp did not start; see ' + log)
+
+
 # ------------------------------------------------------------------------------------------- one attempt
 
 def _erp_bin(dirpath: str) -> str:
@@ -170,11 +221,15 @@ def _run_shell(harness: str, ws: str, prompt_file: str, out: str, env: dict, tim
 
 
 def run_attempt(task: str, harness: str, seed: int, run_idx: int, results_root: str, scenario: str | None = None,
-                reference_pass: bool = False, timeout_override: int | None = None) -> dict:
+                reference_pass: bool = False, timeout_override: int | None = None, faults: str | None = None) -> dict:
     tdir = task_dir(task)
+    condition = resolve_faults(task, faults)
+    if condition and reference_pass:
+        raise ValueError('the reference is built without faults')
     scenario = scenario or ensure_scenario(task, seed)
     meta = load_meta(scenario)
-    run_id = f'{task}__{harness.replace(":", "-")}__s{seed}__r{run_idx}'
+    run_id = f'{task}__{harness.replace(":", "-")}__s{seed}__r{run_idx}' + \
+        (f'__{condition["name"]}' if condition else '')
     run_dir = os.path.join(results_root, run_id)
     if os.path.exists(run_dir):
         raise FileExistsError(f'attempt already exists: {run_dir}; choose a fresh label')
@@ -188,7 +243,9 @@ def run_attempt(task: str, harness: str, seed: int, run_idx: int, results_root: 
     world = os.path.join(erp_dir, 'world.json')
     shutil.copyfile(os.path.join(scenario, 'world.json'), world)
     ctl = os.urandom(16).hex()
-    server = Server(db, world, ctl, os.path.join(run_dir, 'erp.log'))
+    fault_log = os.path.join(run_dir, 'faults.jsonl') if condition else None
+    server = FaultServer(db, world, ctl, os.path.join(run_dir, 'erp.log'), condition['spec'], fault_log) \
+        if condition else Server(db, world, ctl, os.path.join(run_dir, 'erp.log'))
     bin_dir = _erp_bin(os.path.join(erp_dir, 'bin'))
     policies = load_policies(task) if not os.path.isfile(os.path.join(ROOT, 'harnesses', f'{harness}.sh')) else None
     if policies is not None and harness not in policies:
@@ -261,9 +318,12 @@ def run_attempt(task: str, harness: str, seed: int, run_idx: int, results_root: 
                           os.path.join(scenario, 'reference'), run_dir, params)
     prices = json.load(open(os.path.join(HERE, 'prices.json')))
     res = {'run_id': run_id, 'task': task, 'track': 'process', 'harness': harness, 'seed': seed, 'run': run_idx,
+           'condition': {'faults': condition}, 'cell': harness + (f'+{condition["name"]}' if condition else ''),
            'passed': g['passed'], 'breach': g['breach'], 'checks': g['checks'], 'grader_errors': g['grader_errors'],
            'turns': turns, 'wall_s': round(time.time() - t_start, 1), 'usage': usage,
            'cost_usd': cost_usd(usage, prices) if usage.get('by_model') else None, 'work_dir': run_dir, 'error': error}
+    if condition:
+        res['fault_metrics'] = fault_metrics(final_db, fault_log, params)
     json.dump(res, open(os.path.join(run_dir, 'result.json'), 'w'), indent=2)
     return res
 
@@ -278,6 +338,7 @@ def main():
     ap.add_argument('--label', required=True)
     ap.add_argument('--timeout', type=int, default=None, help='override every turn budget (seconds)')
     ap.add_argument('--rebuild', action='store_true', help='regenerate the scenario and reference')
+    ap.add_argument('--faults', help="declared transport faults: a spec or a task's fault profile name (see above)")
     a = ap.parse_args()
     if os.path.basename(a.label) != a.label or a.label in ('', '.', '..', 'latest'):
         ap.error('label must be a directory name other than latest')
@@ -285,13 +346,20 @@ def main():
         if a.task == 'all' else [t.strip() for t in a.task.split(',')]
     for t in tasks:
         ensure_scenario(t, a.seed, a.rebuild)
+    try:
+        conditions = {t: resolve_faults(t, a.faults) for t in tasks}
+    except ValueError as e:
+        ap.error(str(e))
     root = os.path.join(ROOT, 'results', a.label)
     os.makedirs(root, exist_ok=False)
+    # One condition per label: results are never pooled across conditions.
+    json.dump({'faults': conditions if a.faults else None}, open(os.path.join(root, 'condition.json'), 'w'), indent=2)
     jobs = [(t, h.strip(), r) for t in tasks for h in a.harness.split(',') for r in range(1, a.runs + 1)]
     print(f'{len(jobs)} process attempts -> results/{a.label}', flush=True)
     results = []
     with cf.ThreadPoolExecutor(max_workers=a.parallel) as ex:
-        futs = {ex.submit(run_attempt, t, h, a.seed, r, root, None, False, a.timeout): (t, h, r) for t, h, r in jobs}
+        futs = {ex.submit(run_attempt, t, h, a.seed, r, root, None, False, a.timeout, a.faults): (t, h, r)
+                for t, h, r in jobs}
         for f in cf.as_completed(futs):
             try:
                 res = f.result()
@@ -301,7 +369,11 @@ def main():
             results.append(res)
             flag = 'ERROR' if res['error'] else 'PASS' if res['passed'] else ('BREACH' if res['breach'] else 'FAIL')
             failed = [c['name'] for c in res['checks'] if not c['passed']]
-            print(f'[{flag}] {res["run_id"]}  {res["wall_s"]}s' + (f'  failed={failed}' if failed else ''), flush=True)
+            fm = res.get('fault_metrics')
+            extra = f'  faults={fm["faults_injected"]} retried={fm["faulted_requests_retried"]} ' \
+                    f'duplicates={fm["duplicates"]}' if fm else ''
+            print(f'[{flag}] {res["run_id"]}  {res["wall_s"]}s' + (f'  failed={failed}' if failed else '') + extra,
+                  flush=True)
     json.dump(results, open(os.path.join(root, 'summary.json'), 'w'), indent=2)
     if len(results) != len(jobs):
         sys.exit('incomplete matrix: one or more attempts could not produce a result')

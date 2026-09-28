@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate process-track tasks before they enter a release.
 
-  validate_process.py [--task ID[,ID]] [--seeds 0,1,2] [--strict]
+  validate_process.py [--task ID[,ID]] [--seeds 0,1,2] [--strict] [--faults PROFILE|SPEC]
 
 For each task and seed:
   1. the oracle passes every check;
@@ -11,6 +11,8 @@ For each task and seed:
   5. every clause a check cites exists in the handbook the agent sees.
 Exit status 1 when anything fails. --strict also requires every negative control to fail at least one check it
 does not target to be listed (so targets stay precise).
+--faults runs every attempt under that declared fault condition (process_run.py --faults); a task profile's own
+negative controls (task.yaml fault_profiles.<name>.negative_controls) are validated only under it.
 """
 from __future__ import annotations
 
@@ -57,30 +59,35 @@ def handbook_clauses(scenario: str) -> set[str]:
     return set(re.findall(r'\*\*([A-Z]{2,5}-\d+(?:\.\d+)*)\*\*', text))
 
 
-def validate(task: str, seed: int, strict: bool) -> list[str]:
+def validate(task: str, seed: int, strict: bool, faults: str | None = None) -> list[str]:
     problems = []
     tdir = pr.task_dir(task)
     spec = yaml.safe_load(open(os.path.join(tdir, 'task.yaml'), encoding='utf-8'))
+    negatives = dict(spec.get('negative_controls') or {})
+    if faults:
+        negatives.update(((spec.get('fault_profiles') or {}).get(faults) or {}).get('negative_controls') or {})
     scenario = pr.ensure_scenario(task, seed)
     missing = cited_clauses(spec) - handbook_clauses(scenario)
     if missing:
         problems.append(f'checks cite clauses the handbook lacks: {sorted(missing)}')
     names = {c['name'] for c in spec['checks']}
     with tempfile.TemporaryDirectory(prefix='validate-') as tmp:
-        o1 = pr.run_attempt(task, 'oracle', seed, 1, tmp, scenario)
-        o2 = pr.run_attempt(task, 'oracle', seed, 2, tmp, scenario)
+        o1 = pr.run_attempt(task, 'oracle', seed, 1, tmp, scenario, faults=faults)
+        o2 = pr.run_attempt(task, 'oracle', seed, 2, tmp, scenario, faults=faults)
+        if faults and not (o1.get('fault_metrics') or {}).get('faults_injected'):
+            problems.append('the fault condition injected nothing into the oracle run')
         if not o1['passed']:
             problems.append('oracle fails: ' + ', '.join(c['name'] for c in o1['checks'] if not c['passed']))
         if canonical_hash(os.path.join(o1['work_dir'], 'final.db')) != canonical_hash(os.path.join(o2['work_dir'], 'final.db')):
             problems.append('two oracle runs from the same seed end in different states')
-        null = pr.run_attempt(task, 'null', seed, 1, tmp, scenario)
+        null = pr.run_attempt(task, 'null', seed, 1, tmp, scenario, faults=faults)
         if null['passed']:
             problems.append('a null agent passes')
-        for neg, targets in (spec.get('negative_controls') or {}).items():
+        for neg, targets in negatives.items():
             unknown = set(targets) - names
             if unknown:
                 problems.append(f'{neg} targets unknown checks {sorted(unknown)}')
-            r = pr.run_attempt(task, neg, seed, 1, tmp, scenario)
+            r = pr.run_attempt(task, neg, seed, 1, tmp, scenario, faults=faults)
             failed = {c['name'] for c in r['checks'] if not c['passed']}
             if r['passed']:
                 problems.append(f'{neg} passes')
@@ -97,14 +104,15 @@ def main():
     ap.add_argument('--task', default='all')
     ap.add_argument('--seeds', default='0')
     ap.add_argument('--strict', action='store_true')
+    ap.add_argument('--faults', help='a fault profile name from task.yaml, or a fault spec')
     a = ap.parse_args()
     tasks = sorted(d for d in os.listdir(pr.TASKS) if os.path.isfile(os.path.join(pr.TASKS, d, 'task.yaml'))) \
         if a.task == 'all' else a.task.split(',')
     bad = 0
     for t in tasks:
         for seed in (int(s) for s in a.seeds.split(',')):
-            problems = validate(t, seed, a.strict)
-            print(f'{"ok  " if not problems else "FAIL"} {t} seed {seed}')
+            problems = validate(t, seed, a.strict, a.faults)
+            print(f'{"ok  " if not problems else "FAIL"} {t} seed {seed}' + (f' faults={a.faults}' if a.faults else ''))
             for p in problems:
                 print(f'     - {p}')
             bad += bool(problems)
