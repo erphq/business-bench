@@ -9,6 +9,8 @@ For each task and seed:
   3. each negative control fails every check task.yaml says it targets (and the run completes);
   4. two oracle runs from the same seed end in the same state (canonical dump without wall-clock columns);
   5. every clause a check cites exists in the handbook the agent sees.
+With --strict, a task with a policy registry (policies.yaml) must also regenerate its handbook byte for byte and pass
+bench/handbook.py lint.
 Exit status 1 when anything fails. --strict also requires every negative control to fail at least one check it
 does not target to be listed (so targets stay precise).
 --faults runs every attempt under that declared fault condition (process_run.py --faults); a task profile's own
@@ -29,6 +31,7 @@ import yaml
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
+import handbook  # noqa: E402
 import process_run as pr  # noqa: E402
 
 VOLATILE = {'audit_events': ('wall_time',)}
@@ -70,6 +73,8 @@ def validate(task: str, seed: int, strict: bool, faults: str | None = None) -> l
     missing = cited_clauses(spec) - handbook_clauses(scenario)
     if missing:
         problems.append(f'checks cite clauses the handbook lacks: {sorted(missing)}')
+    if strict:
+        problems += [f'policy registry: {p}' for p in handbook.problems(task)]
     names = {c['name'] for c in spec['checks']}
     with tempfile.TemporaryDirectory(prefix='validate-') as tmp:
         o1 = pr.run_attempt(task, 'oracle', seed, 1, tmp, scenario, faults=faults)

@@ -290,6 +290,13 @@ Before a task enters a release, `bench/validate_process.py --strict` must show:
    each cited clause exists in the handbook the agent sees.
 6. The oracle uses only the agent's API with the agent's token.
 
+Each task's policies are written once, in `policies.yaml` beside `task.yaml`: clause id, clause text with its
+parameters, and the audit rules that enforce it. `bench/handbook.py render` generates `handbook/` from it, `check`
+confirms the committed handbook is byte-identical to the generated one, and `lint` confirms every check cites a
+clause the registry has and every audit check runs a rule one of its cited clauses binds, and lists the clauses no
+check or rule enforces. `validate_process.py --strict` runs `check` and `lint` for every task with a registry. The
+rule bindings are grader-side: a guard compiled for an agent comes from the clause text, never from them.
+
 Before more than the pilot is authored, a practitioner review (an AP lead, a production
 planner, a controller) reads each family's handbook, scenario, and planted exceptions
 for realism.
