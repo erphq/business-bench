@@ -19,6 +19,7 @@ import concurrent.futures as cf
 import importlib.util
 import json
 import os
+import re
 import shutil
 import signal
 import stat
@@ -139,16 +140,36 @@ def _erp_bin(dirpath: str) -> str:
 
 
 CREDENTIAL_FILES = ('auth.json', 'codex-oauth.json')
+SECRET_FIELD = re.compile(r'(api[_-]?key|token|secret|password)$', re.I)
+
+
+def _redact(obj):
+    if isinstance(obj, dict):
+        return {k: '[redacted]' if isinstance(v, str) and v and SECRET_FIELD.search(k) else _redact(v)
+                for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_redact(v) for v in obj]
+    return obj
 
 
 def _scrub(home: str) -> None:
-    """Delete login files from a per-turn harness home before it is kept with the results. The template's login is a
-    symlink to the operator's, so this removes the link and never its target; a harness's own imported copy is removed
-    outright."""
+    """Remove credentials from a per-turn harness home before it is kept with the results. Symlinks go (a template's
+    login is a symlink to the operator's, so this removes the link and never its target), a harness's own imported
+    login is deleted, and provider keys in JSON settings, such as an OpenRouter key in .proto/config.json, are
+    redacted in place."""
     for dirpath, _dirs, files in os.walk(home):
         for f in files:
-            if f in CREDENTIAL_FILES:
-                os.unlink(os.path.join(dirpath, f))
+            path = os.path.join(dirpath, f)
+            if os.path.islink(path) or f in CREDENTIAL_FILES:
+                os.unlink(path)
+            elif f.endswith('.json'):
+                try:
+                    data = json.load(open(path, encoding='utf-8'))
+                except (OSError, ValueError, UnicodeDecodeError):
+                    continue
+                clean = _redact(data)
+                if clean != data:
+                    json.dump(clean, open(path, 'w', encoding='utf-8'), indent=2)
 
 
 def _run_shell(harness: str, ws: str, prompt_file: str, out: str, env: dict, timeout: int) -> tuple:

@@ -3,6 +3,7 @@ control fail what they should), and vendor documents parse back into the data th
 import json
 import os
 import sqlite3
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -95,6 +96,30 @@ echo "turn $BENCH_TURN" >> "$WS/notes.md"
                 self.assertEqual(open(os.path.join(turn_dir, 'out', 'home-at-start.txt')).read(), 'auth.json\n')
                 self.assertEqual(os.listdir(os.path.join(turn_dir, 'home')), ['session.txt'])
             self.assertEqual(open(login).read(), '{"tokens": "operator"}')
+
+    def test_provider_keys_are_redacted_from_kept_homes(self):
+        with tempfile.TemporaryDirectory() as root, tempfile.TemporaryDirectory() as results:
+            os.makedirs(os.path.join(root, 'harnesses'))
+            os.symlink(os.path.join(ROOT, 'erp'), os.path.join(root, 'erp'))
+            cfg_dir = os.path.join(root, 'homes', 'proto-selftest', '.proto')
+            os.makedirs(cfg_dir)
+            cfg = {'llmProviders': {'custom': {'enabled': True, 'apiKey': 'sk-or-test-secret',
+                                               'baseUrl': 'https://openrouter.ai/api/v1'}},
+                   'selectedModel': 'custom::deepseek/deepseek-v4.1-flash', 'llm': {'maxTokens': 65536}}
+            json.dump(cfg, open(os.path.join(cfg_dir, 'config.json'), 'w'))
+            adapter = os.path.join(root, 'harnesses', 'proto-selftest.sh')
+            open(adapter, 'w').write('#!/usr/bin/env bash\nset -eu\n'
+                                     'grep -q sk-or-test-secret "$PROTO_BENCH_HOME/.proto/config.json"\n')
+            os.chmod(adapter, 0o755)
+            with mock.patch.object(process_run, 'ROOT', root):
+                res = process_run.run_attempt('margin-bridge', 'proto-selftest', 0, 1, results)
+            self.assertEqual([t['exit_code'] for t in res['turns']], [0])        # the harness saw the key
+            kept = json.load(open(os.path.join(res['work_dir'], 'turns', '1', 'home', '.proto', 'config.json')))
+            self.assertEqual(kept['llmProviders']['custom']['apiKey'], '[redacted]')
+            self.assertEqual(kept['llm']['maxTokens'], 65536)
+            self.assertEqual(json.load(open(os.path.join(cfg_dir, 'config.json'))), cfg)
+            found = subprocess.run(['grep', '-r', 'sk-or-test-secret', res['work_dir']], capture_output=True)
+            self.assertEqual(found.returncode, 1)                                 # nowhere in the kept attempt
 
     def test_a_harness_that_does_not_start_is_an_error_not_a_failure(self):
         task = 'month-end-close'
