@@ -1,17 +1,15 @@
 \begin{table}[!htbp]
 \centering\small
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}>{\hsize=1.1\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
+\begin{tabularx}{\linewidth}{@{}>{\hsize=0.62\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=1.12\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=1.26\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
 \toprule
-\textbf{Original verdict → Frozen verdict} & \textbf{Proto + DeepSeek} & \textbf{Codex + Sol} \\
+\textbf{Deliverable} & \textbf{Required fields} & \textbf{Business purpose} \\
 \midrule
-Pass to pass & 447 & 430 \\
-Fail to pass & 56 & 40 \\
-Ungraded to pass & 4 & 3 \\
-Pass to fail & 0 & 1 \\
-Fail to fail & 54 & 87 \\
+unpaid.csv & invoice\_id, customer, amount\_outstanding & Preserve remaining open balances \\
+matches.csv & invoice\_id, line\_id, amount\_applied & Identify the bank lines settling invoices \\
+unapplied.csv & line\_id, amount, reason & Retain credits that cannot be applied \\
 \bottomrule
 \end{tabularx}
-\caption{Original-to-frozen verdict transitions across all 561 attempts per system. Original grader errors are labeled ungraded rather than recast as ordinary agent failures. Frozen scoring produced no grader errors.}
+\caption{A three-part contract. An accurate total cannot substitute for the required relationships between invoices, bank lines, and remaining balances.}
 \label{tab:6}
 \end{table}

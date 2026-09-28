@@ -3,18 +3,15 @@
 \setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}>{\hsize=1.1\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
 \toprule
-\textbf{Measure} & \textbf{Proto + DeepSeek} & \textbf{Codex + Sol} \\
+\textbf{Original verdict → Frozen verdict} & \textbf{Proto + DeepSeek} & \textbf{Codex + Sol} \\
 \midrule
-Input tokens & 823,587,929 & 165,959,457 \\
-Cached input & 775,672,448 & 150,329,088 \\
-Uncached input & 47,915,481 & 15,630,369 \\
-Output tokens & 20,910,907 & 4,823,643 \\
-Estimated model cost (USD) & 22.06 & 219.13 \\
-Median task duration (s) & 124.9 & 135.2 \\
-p90 task duration (s) & 455.6 & 403.3 \\
-Summed task duration (s) & 113,460.1 & 111,218.8 \\
+Pass to pass & 447 & 430 \\
+Fail to pass & 56 & 40 \\
+Ungraded to pass & 4 & 3 \\
+Pass to fail & 0 & 1 \\
+Fail to fail & 54 & 87 \\
 \bottomrule
 \end{tabularx}
-\caption{Resources across all 561 attempts per system. Costs are captured-usage API-equivalent estimates under the recorded price table, not subscription invoices or reconciled provider bills. Summed task duration is not elapsed campaign time when attempts run concurrently.}
+\caption{Original-to-frozen transitions over all 561 attempts per system. Ungraded means an original grader error. Rescoring evaluates retained outputs; it is not an agent rerun or artifact repair.}
 \label{tab:7}
 \end{table}

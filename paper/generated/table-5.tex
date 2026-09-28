@@ -1,15 +1,16 @@
 \begin{table}[!htbp]
 \centering\small
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}>{\hsize=0.62\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=1.12\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=1.26\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
+\begin{tabularx}{\linewidth}{@{}>{\hsize=1.1\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
 \toprule
-\textbf{Deliverable} & \textbf{Required fields} & \textbf{Business purpose} \\
+\textbf{Measure} & \textbf{Proto + DeepSeek} & \textbf{Codex + Sol} \\
 \midrule
-unpaid.csv & invoice\_id, customer, amount\_outstanding & Show invoices still open and their remaining balances \\
-matches.csv & invoice\_id, line\_id, amount\_applied & Record which bank lines settle which invoices \\
-unapplied.csv & line\_id, amount, reason & Keep unrelated or closed-invoice credits visible \\
+Complete attempts accepted & 507/561 (90.37\%) & 473/561 (84.31\%) \\
+Mean within-attempt check fraction & 97.34\% & 94.42\% \\
+Pooled required checks passed & 3,698/3,801 (97.29\%) & 3,558/3,801 (93.61\%) \\
+Failed attempts with one failed required check & 34/54 (63.0\%) & 39/88 (44.3\%) \\
 \bottomrule
 \end{tabularx}
-\caption{The task's three-part delivery contract. A plausible total or explanatory message cannot replace these files or their required row-level relationships.}
+\caption{Acceptance and partial-contract diagnostics computed from the frozen ledger. The mean check fraction weights attempts equally; the pooled fraction weights check instances equally. The last row conditions on failed attempts and therefore uses a different denominator.}
 \label{tab:5}
 \end{table}

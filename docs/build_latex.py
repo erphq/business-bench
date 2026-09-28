@@ -13,7 +13,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 PAPER = ROOT / 'paper'
 GENERATED = PAPER / 'generated'
-BIB_KEYS = {1: 'workarena', 2: 'spreadsheetbench', 3: 'agentcompany', 4: 'enterpriseclawbench'}
+BIB_KEYS = {1: 'workarena', 2: 'spreadsheetbench', 3: 'agentcompany', 4: 'enterpriseclawbench', 5: 'taubench', 6: 'swebench'}
 
 
 def tex_escape(text):
@@ -67,7 +67,7 @@ def native_table(match):
 
 @lru_cache(maxsize=8)
 def pandoc(text):
-    return subprocess.check_output(['pandoc', '--from=markdown+raw_tex', '--to=latex',
+    return subprocess.check_output(['pandoc', '--from=markdown+raw_tex+tex_math_single_backslash', '--to=latex',
         '--wrap=none', '--no-highlight'], input=text, text=True)
 
 
@@ -82,7 +82,7 @@ def generate():
     (GENERATED / 'abstract.tex').write_text(pandoc(abstract.group(1).strip()))
     body = source[abstract.end():]
     body = re.sub(r'## References\n.*?(?=## Appendix A\.)',
-        lambda _: '\n```{=latex}\n\\FloatBarrier\n\\bibliographystyle{unsrtnat}\n\\bibliography{references}\n\\clearpage\n\\appendix\n```\n\n', body, flags=re.S)
+        lambda _: '\n```{=latex}\n\\clearpage\n\\bibliographystyle{unsrtnat}\n\\bibliography{references}\n\\clearpage\n\\appendix\n```\n\n', body, flags=re.S)
     body = body.replace('<!-- pagebreak -->', '')
     body = re.sub(r'(?m)(^\|[^\n]+\n(?:^\|[^\n]+\n)+)\n\*\*Table (\d+)\.\*\* ([^\n]+)', native_table, body)
     body = re.sub(r'(?m)^## (\d+)\. (.+)$', lambda m: '# ' + m[2] + ' {#sec:' + m[1] + '}', body)
@@ -94,7 +94,6 @@ def generate():
     body = re.sub(r'Section (\d+)', lambda m: r'Section \ref{sec:' + m[1] + '}', body)
     body = re.sub(r'Figure (\d+)', lambda m: r'Figure \ref{fig:headline}' if m[1] == '1' else m[0], body)
     body = body.replace('# Conclusion {#sec:9}', '```{=latex}\n\\Needspace{7\\baselineskip}\n```\n\n# Conclusion {#sec:9}')
-    body += '\n```{=latex}\n\\subsection{Formal definitions}\n\\input{equations.tex}\n```\n'
     (GENERATED / 'body.tex').write_text('% Generated from paper/benchmark.md and the verified ledger.\n' + pandoc(body))
     summary = json.loads((ROOT / 'results/latest/summary.json').read_text())
     proto, codex = summary

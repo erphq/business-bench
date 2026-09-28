@@ -1,0 +1,84 @@
+---
+import { SUMMARY_BY_ID, fmt } from "@/lib/data";
+import Figure from "./Figure.astro";
+
+// The same released summary drives paper/figures/headline.tex at PDF build time.
+const proto = SUMMARY_BY_ID["proto-deepseek"];
+const codex = SUMMARY_BY_ID["codex-sol"];
+const arms = [
+  { data: proto, label: "Proto + DeepSeek", color: "#087e8b" },
+  { data: codex, label: "Codex + Sol", color: "#8493a5" },
+];
+const reps = Object.keys(proto.by_repetition).sort((a, b) => Number(a) - Number(b));
+const plotX = (index: number) => 64 + index * 137;
+const plotY = (rate: number) => 178 - (rate - 0.7) / 0.3 * 142;
+const repetitionRate = (data: typeof proto, rep: string) => data.by_repetition[rep] / data.tasks;
+const points = (data: typeof proto) => reps.map((rep, index) => `${plotX(index)},${plotY(repetitionRate(data, rep))}`).join(" ");
+---
+<Figure n={1} id="headline-figure">
+  <div class="paper-charts">
+    <div class="panel">
+      <p class="panel-title"><b>A</b> Overall task success</p>
+      <svg viewBox="0 0 460 224" role="img" aria-labelledby="paper-overall-title paper-overall-desc">
+        <title id="paper-overall-title">Overall frozen pass rate</title>
+        <desc id="paper-overall-desc">{arms.map(({ data, label }) => `${label}: ${data.passed} of ${data.attempts} attempts, ${fmt.pct(data.pass_rate)}.`).join(" ")}</desc>
+        {[0, 25, 50, 75, 100].map((tick) => <>
+          <line class="gridline" x1={137 + tick * 2.65} x2={137 + tick * 2.65} y1="29" y2="158" />
+          <text class="tick" x={137 + tick * 2.65} y="180" text-anchor="middle">{tick}</text>
+        </>)}
+        {arms.map(({ data, label, color }, index) => <>
+          <text class="arm-label" x="128" y={65 + index * 66} text-anchor="end">{label}</text>
+          <rect x="137" y={47 + index * 66} width={data.pass_rate * 265} height="28" fill={color} />
+          <text class="value" x={145 + data.pass_rate * 265} y={66 + index * 66}>{fmt.pct(data.pass_rate)}</text>
+        </>)}
+        <line class="axis" x1="137" x2="402" y1="158" y2="158" />
+        <text class="axis-label" x="269" y="211" text-anchor="middle">Frozen pass rate (%)</text>
+      </svg>
+      <p class="chart-note">Captured-usage estimates: {fmt.usd(proto.estimated_cost_sum_usd)} / {fmt.usd(codex.estimated_cost_sum_usd)}.</p>
+    </div>
+    <div class="panel">
+      <p class="panel-title"><b>B</b> Success by repetition</p>
+      <svg viewBox="0 0 390 224" role="img" aria-labelledby="paper-reps-title paper-reps-desc">
+        <title id="paper-reps-title">Frozen pass rate in each complete repetition</title>
+        <desc id="paper-reps-desc">{arms.map(({ data, label }) => `${label}: ${reps.map((rep) => `repetition ${rep}, ${data.by_repetition[rep]} of ${data.tasks} tasks, ${fmt.pct(repetitionRate(data, rep))}`).join("; ")}.`).join(" ")}</desc>
+        {[70, 80, 90, 100].map((tick) => <>
+          <line class="gridline" x1="47" x2="355" y1={plotY(tick / 100)} y2={plotY(tick / 100)} />
+          <text class="tick" x="38" y={plotY(tick / 100) + 5} text-anchor="end">{tick}</text>
+        </>)}
+        <text class="axis-label" x="47" y="16">Pass rate (%)</text>
+        <line class="axis" x1="47" x2="355" y1="178" y2="178" />
+        {reps.map((rep, index) => <text class="tick" x={plotX(index)} y="207" text-anchor="middle">R{rep}</text>)}
+        {arms.map(({ data, color }, armIndex) => <>
+          <polyline points={points(data)} fill="none" stroke={color} stroke-width="2.5" />
+          {reps.map((rep, index) => <>
+            {armIndex === 0
+              ? <circle cx={plotX(index)} cy={plotY(repetitionRate(data, rep))} r="4" fill={color} />
+              : <rect x={plotX(index) - 4} y={plotY(repetitionRate(data, rep)) - 4} width="8" height="8" fill={color} />}
+            <text class="value" x={plotX(index)} y={plotY(repetitionRate(data, rep)) + (armIndex === 0 ? -12 : 24)} text-anchor="middle">{fmt.pct(repetitionRate(data, rep))}</text>
+          </>)}
+        </>)}
+      </svg>
+      <p class="chart-note legend"><span><i class="proto" aria-hidden="true"></i> Proto + DeepSeek</span><span><i class="codex" aria-hidden="true"></i> Codex + Sol</span></p>
+    </div>
+  </div>
+  <Fragment slot="caption"><strong>Complete desk comparison under the shared frozen scorer.</strong> Panel A summarizes all {proto.attempts} attempts per system; panel B shows the three complete {proto.tasks}-task repetitions. All {fmt.int(proto.attempts + codex.attempts)} attempts are retained. Costs are API-equivalent estimates, not invoices.</Fragment>
+</Figure>
+<style>
+  .paper-charts { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; margin: 4px 0 12px; }
+  .panel { min-width: 0; }
+  .panel-title { font-size: 14px; margin: 0 0 4px; }
+  .panel-title b { margin-right: 8px; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--sans); }
+  .gridline { stroke: var(--line); stroke-width: 1; }
+  .axis { stroke: var(--line-2); stroke-width: 1; }
+  .tick, .axis-label { fill: var(--ink-2); font-size: 14px; }
+  .arm-label { fill: var(--ink); font-size: 14px; }
+  .value { fill: var(--ink); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .panel .chart-note { font-size: 12px; line-height: 1.5; margin: 0; color: var(--ink-2); }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .legend i { display: inline-block; width: 8px; height: 8px; flex: none; }
+  .proto { background: #087e8b; border-radius: 50%; }
+  .codex { background: #8493a5; }
+  @media (max-width: 700px) { .paper-charts { grid-template-columns: 1fr; gap: 24px; } }
+</style>

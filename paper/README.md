@@ -6,7 +6,7 @@ The distributed PDF is compiled by **XeLaTeX**, with `latexmk` managing BibTeX a
 
 - `main.tex`: document class, typography, geometry, front matter and native LaTeX document assembly.
 - `figures/headline.tex`: vector PGFPlots figure, reading the generated score macros and repetition data.
-- `equations.tex`: numbered mathematical definitions of the reported metrics.
+- Mathematical definitions live in `benchmark.md`, using explicit TeX delimiters, and render in both the PDF and website.
 - `references.bib`: bibliographic records verified against the papers' arXiv pages.
 - `benchmark.md`: shared narrative source, retained so the repository specification and website use the same prose.
 - `generated/`: complete, tracked TeX body, abstract, booktabs tables, score macros and chart data. These are generated, not manually maintained.
@@ -44,4 +44,4 @@ latexmk -xelatex -interaction=nonstopmode -halt-on-error \
   -outdir=../tmp/latex main.tex
 ```
 
-Create the output directory first when using the direct command. All body fonts are supplied under their SIL Open Font License in `docs/assets/fonts/`; mathematical and monospaced fonts come from TeX Live. Headline values and tables are generated from the verified frozen-score snapshot, not manually typed into the figure.
+Create the output directory first when using the direct command. All body fonts are supplied under their SIL Open Font License in `docs/assets/fonts/`; mathematical and monospaced fonts come from TeX Live. Headline values and tables are generated from the verified frozen-score snapshot, not manually typed into the figure. The website renders the corresponding figure from the same released summary. Mathematical definitions are shared with the website rather than appended only to the PDF.

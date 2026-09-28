@@ -2,27 +2,37 @@
 
 ## Abstract
 
-Business agents are useful when the work they deliver is correct, usable, and repeatable. We introduce Business Bench, a runnable benchmark comprising 187 file-based desk tasks across seven categories and 20 application-building tasks with three successive change requests. Desk tasks combine heterogeneous inputs, explicit business rules, reference solutions, and executable checks; build tasks evaluate delivery, permissions, data integrity, and behavior under change. We report a complete desk comparison of Proto with DeepSeek V4.1 Flash and Codex with GPT-5.6-sol, with three attempts per task and a shared frozen scorer. Proto passes 507 of 561 attempts (90.4%), compared with 473 of 561 (84.3%) for Codex, a difference of 6.06 percentage points. Captured-usage cost estimates are $22.06 and $219.13, respectively. These are results for two configured agent systems on a development task set, not isolated model or harness effects. The release includes task packs, runners, the frozen scorer, and an attempt-level evidence ledger; application tasks are released without a completed build leaderboard.
+Business delegation requires more than a high average score: a delivered artifact must satisfy its acceptance conditions, and success must survive repeated execution. We introduce Business Bench, an evaluation package built around explicit delivery contracts, and analyze a complete comparison on 187 desk tasks with three attempts per configured system. Proto with DeepSeek V4.1 Flash passes 507/561 attempts (90.4%); Codex with GPT-5.6-sol passes 473/561 (84.3%). Mean within-attempt check completion is higher, at 97.3% and 94.4%, while all-three acceptance falls to 78.6% and 75.4% of tasks. These quantities answer different operational questions. The aggregate difference is concentrated in reports and drafting; changing from the original evaluator to a shared retrospective scorer changes the between-system gap by 3.21 percentage points on the same outputs. We distinguish acceptance under a declared contract from the validity of that contract, execution repeatability from generalization, and reproducible accounting from independent artifact audit. The release supplies public tasks, executable scoring, an attempt ledger, and 20 unscored application-building tasks. Its results characterize two configured systems on a development-exposed workload, rather than identify separate model or harness effects.
 
 <!-- headline-figure -->
 
 ## 1. Introduction
 
-A business owner delegates a reconciliation because a payment decision depends on it, not because a description of reconciliation is needed. The same distinction applies to an import file, a monthly report, or an internal application: the agent's response is not the deliverable. The relevant question is whether the owner can use what the agent hands back without repairing the work.
+Delegation transfers responsibility for an outcome. A reconciliation must support a payment decision; an import must preserve the records its destination needs; a changed application must retain its earlier permissions. A fluent explanation, a correct aggregate, or successful execution of most steps can coexist with an unusable handoff. The measurement problem is to specify the boundary at which the recipient can accept the work.
 
-Business correctness is often conjunctive. A workbook may show the right total while its formulas fail. An import may be syntactically valid while dropping customers. A payment may match an amount but refer to the wrong invoice. In an application, hiding a button does not enforce authorization. These failures motivate evaluation against explicit delivery contracts rather than fluency, self-reported completion, or activity counts.
+Business Bench makes this boundary explicit through a **delivery contract**: the requested artifact or state, its required properties, and the tests used to decide acceptance. The contract is conjunctive when all its requirements are necessary. This changes the interpretation of partial credit. If an import has the right schema but omits a required customer, averaging those two properties does not measure how often a recipient obtains an acceptable import.
 
-Figure 1 summarizes the complete desk comparison and its repetition-level behavior. The remaining sections define the workload, scoring protocol, category-level findings, and evidence needed to interpret that result.
+An executable contract is nevertheless a measurement instrument, not business correctness itself. Tests may reject valid representations, accept invalid ones, or omit requirements. Repeating an execution can expose instability without testing new inputs. Hashing an evaluator can preserve its identity without establishing its validity. A useful evaluation must make these distinctions observable rather than compress them into a single score.
 
-<!-- pagebreak -->
+This report contributes a public workload of heterogeneous business artifacts; an accounting protocol separating acceptance, repetition, execution status, evaluator version, and resources; and a complete observational comparison that exposes the consequences of those choices. The empirical questions are: how large is the gap between required-check completion and complete acceptance, where does the measured difference between systems arise, and how sensitive is that difference to evaluation design? Figure 1 gives the aggregate comparison. The rest of the paper explains what it measures and why the aggregate alone is insufficient.
 
 ## 2. Benchmark design
 
-Business Bench tests two forms of delegation. In the **desk track**, an agent receives a folder and a short request, then produces files. In the **build track**, an agent receives a business requirement and seed data, delivers an application, and applies three changes. Both tracks evaluate the handoff; their scores remain separate because file checks and application acceptance are not interchangeable units.
+### 2.1 Acceptance as a declared contract
 
-### 2.1 Desk tasks
+For task \(t\), let \(x_t\) be the supplied fixture and instructions, and let \(a_{htr}\) be the artifact produced by configured system \(h\) on repetition \(r\). A scorer \(G\) contains \(m_t\) required Boolean predicates \(g_{tj}\). Its acceptance verdict is
 
-The desk track contains 187 tasks. Inputs include CSV and XLSX exports, text and scanned documents, contextual messages, and occasional databases. Tasks require agents to reconcile inconsistent records, apply supplied policies, preserve required fields, and distinguish supported conclusions from missing evidence. Fixtures are generated business-shaped data, not private customer engagements or a statistically representative sample of business demand.
+\[
+Y_{htr}(G)=\prod_{j=1}^{m_t}g_{tj}(x_t,a_{htr}).
+\]
+
+The product expresses logical conjunction; it makes no statistical independence assumption about the predicates. A predicate can encode a tolerance, a coverage threshold, or several related rules. Accordingly, \(Y=1\) means **accepted by the declared tests**, not that every property of the deliverable has been proved. Section 5 illustrates this distinction with an actual contract.
+
+Conjunction also makes the acceptance boundary less sensitive to how checks are counted. Duplicating a predicate, or splitting one into logically equivalent conjuncts, preserves acceptance but can change the fraction of checks passed. Partial-check scores remain useful diagnostics; their units depend on evaluator decomposition. An acceptance verdict has a clearer handoff interpretation when every required property is genuinely necessary.
+
+### 2.2 Desk workload and its population
+
+The desk track contains 187 tasks. Inputs include CSV and XLSX exports, text and scanned documents, contextual messages, and occasional databases. Tasks require reconciliation of inconsistent records, application of supplied policies, preservation of identifiers and fields, and separation of supported conclusions from missing evidence.
 
 | Category | Tasks | Representative output |
 |---|---|---|
@@ -35,153 +45,197 @@ The desk track contains 187 tasks. Inputs include CSV and XLSX exports, text and
 | Tooling | 9 | Small file-based tool or static page |
 | Total | 187 | Three attempts per reported system |
 
-**Table 1.** Composition of the desk track. Each task supplies an ask, workspace, generator, checks, and reference solution. Checks and references remain outside the evaluated agent's container.
+**Table 1.** Desk workload. Each task supplies an ask, workspace, generator, checks, and reference solution. Checks and references remain outside the evaluated agent's container.
 
-### 2.2 Application tasks
+A task template, a fixture instance, and an execution repetition are different experimental units. Templates define a business problem and its rules; generators instantiate input data; repetitions execute a system again on the supplied fixture. This comparison repeats the same released task inputs. It measures execution repeatability on those inputs, not robustness across newly generated instances or unseen templates.
 
-The 20 build tasks cover CRM, inventory, orders, field service, leave, purchase approvals, time tracking, memberships, events, assets, helpdesk, vendors, expenses, quotes, donors, appointments, property maintenance, recruiting, work orders, and point of sale. A shared enterprise baseline addresses delivery, invitations, roles, server-side scope, live dashboards, exact lists and exports, audit metadata, validation, and persistence. Domain-specific checks add the business rules.
+The fixtures are authored business-shaped data, not private customer engagements or a probability sample of business demand. The suite therefore defines an explicit empirical workload. Its category weights are design choices, and development exposure limits its use as an estimate of generalization.
 
-Each application receives three successive change requests. The runner carries the prior workspace forward, but invokes a new one-shot turn rather than claiming conversational continuity. Testers recheck existing requirements after each change. Automated probes support delivery checks and produce a tester sheet; they do not establish working permissions or complete acceptance. No completed build leaderboard is reported here.
+### 2.3 Application and process extensions
 
-### 2.3 Contribution and scope
+The 20 build tasks extend the handoff to a running application: initial delivery followed by three changes to the same workspace. Their shared baseline covers roles, server-side scope, data integrity, validation, audit metadata, and persistence. The runner starts a new one-shot turn for each change; the retained workspace provides continuity. No completed build leaderboard is reported.
 
-The contribution is an inspectable evaluation package joining portable artifact contracts with application handoff under change. It complements enterprise interaction settings such as WorkArena [1], spreadsheet manipulation in SpreadsheetBench [2], and simulated professional work in TheAgentCompany [3]. EnterpriseClawBench [4] evaluates workspace tasks recovered from real workplace sessions. Our inputs are authored fixtures; we do not claim the same source provenance. The benchmark measures configured systems, including models, tools, skills, and execution substrate.
+The repository also develops a process track in which agents act within an ERP over multiple business dates. Its pilot is reported separately. The empirical claims in this paper concern the complete desk comparison dated 16 September 2026; neither released build specifications nor later process experiments are pooled into that score. These extensions broaden the objects a contract can address, but do not establish transfer of desk performance.
 
-<!-- pagebreak -->
+### 2.4 Position relative to prior work
+
+WorkArena [1] evaluates enterprise software interaction in ServiceNow; SpreadsheetBench [2] evaluates spreadsheet manipulation and variation across test cases; TheAgentCompany [3] models work in a simulated company. EnterpriseClawBench [4] recovers tasks from workplace sessions, a provenance advantage that our authored fixtures do not claim. These settings differ in artifact type, environment, task origin, and evaluation coverage; they are not interchangeable measures of one ability.
+
+The distinction between occasional success and repeated success also precedes this work: tau-bench [5] uses a pass-to-the-power-k reliability measure and evaluates resulting state. Executable evaluation of produced work is established practice, including software changes in SWE-bench [6]. Our contribution is the workload and its inspectable delivery contracts, together with analysis of how contract granularity, task composition, repetition, and retrospective scoring affect the conclusions.
 
 ## 3. Evaluation protocol
 
-### 3.1 Workload and configurations
+### 3.1 Configured systems and experimental boundary
 
-The reported comparison covers all 187 desk tasks three times for each system: **561 attempts per system and 1,122 attempts in total**. Every repetition is retained. The Proto cohort uses runtime revision c8f62dd60 with DeepSeek V4.1 Flash, high reasoning, temperature 0, and DeepSeek-only routing without fallback. Codex uses CLI 0.154.0, GPT-5.6-sol, and high reasoning. Codex sampling is CLI-managed and is not asserted to match Proto's temperature.
+The comparison covers all 187 desk tasks three times per system: **561 attempts per system and 1,122 attempts in total**. Every repetition is retained. Proto uses runtime revision c8f62dd60, DeepSeek V4.1 Flash, high reasoning, temperature 0, and DeepSeek-only routing without fallback. Codex uses CLI 0.154.0, GPT-5.6-sol, and high reasoning; its CLI-managed sampling is not asserted to match Proto's temperature.
 
-The Proto cohort comprises one full repetition and two additional full repetitions of the same runtime. Logical repetition identifiers are preserved in the released ledger. Codex's three full repetitions are reused from its completed benchmark cohort. These are matched task sets under a shared scorer, not simultaneous randomized trials or a same-model harness ablation. Later Proto-versus-Proto development comparisons are outside this release.
+A configured system includes its model, harness, tools, skills, runtime, provider route, and resource limits. These factors vary together here. The Proto cohort combines one full repetition and two additional full repetitions of the same runtime; Codex's three repetitions are reused from its completed cohort. The task sets and scorer are shared, but timing is not randomized or contemporaneous. The comparison identifies an observed system-level difference under these conditions, not the causal effect of a particular model, harness, or skill.
 
-### 3.2 Frozen artifact scoring
+### 3.2 Estimands and evaluator chronology
 
-All attempts are scored with the same **conservative-v7** package. Each receipt binds the verdict to an original result hash, output-artifact hashes, and the scorer manifest. The release includes the immutable scorer source and task definitions. Export verifies each original result hash and receipt identity; local verification checks every file named by the frozen manifest.
+For \(T=187\) tasks and \(K=3\) repetitions, attempt acceptance and all-three acceptance are
 
-Required checks are conjunctive: a task passes only when every required check passes. Workbook scoring uses native recalculation after cached values are stripped. The frozen scorer includes conservative equivalence checks for alternative valid representations. Original raw verdicts remain separately available; they are not mixed with frozen verdicts in the primary score. There are four original grader-error attempts for Proto and three for Codex, and zero errors under the frozen scorer.
+\[
+\widehat P_h=\frac{1}{TK}\sum_{t=1}^{T}\sum_{r=1}^{K}Y_{htr},
+\qquad
+\widehat R_h^{(K)}=\frac{1}{T}\sum_{t=1}^{T}\prod_{r=1}^{K}Y_{htr}.
+\]
 
-### 3.3 Results
+The first measures accepted attempts in the complete matrix. The second gives a task credit only if every observed repetition passes. Equal repetitions make the first equivalent to the mean task-level acceptance rate. Neither quantity weights tasks by business value or estimates the distribution of work in a particular organization.
+
+All primary verdicts use **conservative-v7**, a shared scorer applied to retained outputs. It strips workbook caches before native recalculation and includes equivalence checks for alternative representations. A receipt binds each verdict to its original result hash, output hashes, and scorer manifest. Original verdicts remain separate.
+
+The chronology matters: the frozen scorer was constructed by the organization developing Proto after outputs existed. Freezing supplies a stable retrospective evaluation rule; it does not retroactively preregister that rule or make its selection independent of observed outputs. Section 6 quantifies the resulting sensitivity. There are four original grader-error attempts for Proto and three for Codex; the frozen scorer reports none.
+
+### 3.3 Complete comparison and uncertainty
 
 <!-- result-table -->
 
-**Table 2.** Complete desk comparison. The primary score is the frozen artifact verdict. Every passing artifact also completed normally; no passing timeout inflates the normal-completion count. Proto has three timeouts overall; Codex has none.
+**Table 2.** All attempts under the frozen and original evaluators. Every frozen passing artifact also completed normally. Proto has three timeouts overall; Codex has none. Execution status and artifact acceptance are recorded separately.
 
-Proto leads by 34 passing attempts, or **6.06 percentage points**. The recorded task-clustered bootstrap, which keeps each task's three repetitions together, gives a descriptive 95% interval of +1.25 to +11.05 points (20,000 resamples; seed 20260916). Related task families and development exposure limit interpretation beyond this workload.
+The frozen difference is **34 accepted attempts, or 6.06 percentage points**. The recorded paired bootstrap resamples task identifiers jointly across systems, retaining each task's three repetitions: 20,000 resamples, seed 20260916, descriptive 95% interval +1.25 to +11.05 points. Resampling individual attempts instead would discard the task grouping that motivates this analysis.
 
-The aggregate exceeds 90%, but that is not the same as 90% in every repetition. Proto scores 171, 167, and 169 of 187; its second repetition is 89.3%. The results support an observed lead on this full desk comparison, not a claim of universal superiority or a passed per-repetition reliability threshold.
-
-<!-- pagebreak -->
+The interval describes variation under this empirical task-resampling scheme. It does not incorporate scorer selection, related task families, development exposure, or a different deployment workload. Nor does a 90.4% aggregate imply 90% in every repetition: Proto's second repetition is 167/187, or 89.3%.
 
 ## 4. Category results and repeatability
 
-### 4.1 Where the aggregate lead comes from
+### 4.1 The aggregate difference is concentrated
 
 <!-- category-table -->
 
-**Table 3.** Frozen-scorer results by category. Denominators include all three repetitions. The gap is Proto minus Codex in percentage points; category sizes differ, so category percentages must not be averaged to reconstruct the overall score.
+**Table 3.** Frozen results by category, including all three repetitions. Gaps are Proto minus Codex. The published aggregate weights categories by their task counts.
 
-The largest contribution to the 34-pass aggregate lead comes from **reports: 81 versus 56 passes**, a gain of 25. Drafting adds 12 passes, spreadsheet work adds six, and bookkeeping and extraction each add one. Codex leads in reformatting by four passes and tooling by seven. The arithmetic is 25 + 12 + 6 + 1 + 1 - 4 - 7 = 34. The overall lead therefore does not imply that Proto wins every category.
+Reports contribute 25 additional accepted attempts and drafting contributes 12, together exceeding the net advantage of 34. Across the other 138 tasks, Proto accepts **377/414 (91.06%)** and Codex **380/414 (91.79%)**. This is a post hoc concentration diagnostic, not a replacement leaderboard: it shows that the aggregate difference is not a uniform advantage across the suite. Codex leads on reformatting and tooling; the largest positive gaps are in reports and drafting, which combine numerical and textual requirements. Their coverage needs independent validation.
 
-Reformatting and tooling are especially useful counterexamples to a universal ranking: Codex passes 78/78 reformatting attempts and 26/27 tooling attempts, compared with Proto's 74/78 and 19/27. These small category samples describe the tested tasks, not independent estimates for every possible import workflow or business tool.
+For category acceptance rates \(\widehat P_{hc}\) and nonnegative weights summing to one, the workload-specific difference is
 
-### 4.2 Repeatability is a separate measure
+\[
+\widehat\Delta(w)=\sum_c w_c
+\bigl(\widehat P_{\mathrm{Proto},c}-\widehat P_{\mathrm{Codex},c}\bigr).
+\]
+
+The published weighting uses task shares; giving each of the seven categories equal weight changes the gap from 6.06 to 3.55 points. Neither weighting is an estimate of business demand. Because category differences have opposite signs, a ranking is conditional on the workload mixture. Deployment decisions additionally require the relevant severity, review cost, and service constraints, none of which this aggregate supplies.
+
+### 4.2 Repeated success is a separate property
 
 <!-- repeatability-table -->
 
-**Table 4.** Number of tasks with zero, one, two, or three passing attempts. Each column sums to 187 tasks; weighting rows by the number of passes recovers 507 and 473 passing attempts.
+**Table 4.** Tasks with zero, one, two, or three accepted attempts. Each column sums to 187; weighting the rows by accepted attempts recovers 507 and 473.
 
-Proto passes all three attempts on **147/187 tasks (78.6%)**, versus **141/187 (75.4%)** for Codex. It fails all three attempts on three tasks, versus thirteen for Codex. The all-three measure is more demanding than attempt-level accuracy: a task with two successes contributes two passes to the headline rate but is not counted as consistently completed.
+Proto passes all three attempts on **147/187 tasks (78.6%)**, versus **141/187 (75.4%)** for Codex. At least one attempt passes on 184 and 174 tasks, respectively; 37 Proto tasks and 33 Codex tasks have mixed outcomes. At-least-one success describes observed availability with hindsight. It is not the performance of a user who must identify the successful artifact without access to the grader.
 
-At the task-and-repetition pairing level, both systems pass 431 pairs; only Proto passes 76; only Codex passes 42; both fail 12. These counts retain every pair and recover the 34-pass difference. Repetition numbers are bookkeeping identifiers, not matched random seeds or simultaneous trials. Three observations per task do not establish production reliability, and the task-clustered interval in Section 3 should not be read as a guarantee outside this suite.
+Under conditionally independent repetitions with a common task-specific success probability \(p_{ht}\), expected all-three acceptance is \(E_t[p_{ht}^{3}]\). By convexity, this is at least \((E_t[p_{ht}])^3\), with equality for constant task probabilities. Cubing a pooled rate therefore generally misses task heterogeneity. The reported statistic counts observed all-three outcomes directly and assumes no independence of the actual executions. Three observations per fixed fixture do not establish a deployment failure probability.
 
-<!-- pagebreak -->
+The task-and-repetition cross-tabulation contains 431 pairs where both pass, 76 where only Proto passes, 42 where only Codex passes, and 12 where neither passes. Repetition identifiers permit bookkeeping, not matched randomness: they are neither common seeds nor simultaneous trials. Consequently these pairs should not be treated as 561 independent experimental blocks.
+
+### 4.3 Partial credit and the acceptance boundary
+
+Let \(C_{htrj}\) denote required predicate \(j\)'s pass indicator. An attempt-weighted partial-contract score is
+
+\[
+\widehat Q_h=\frac{1}{TK}\sum_{t,r}
+\frac{1}{m_t}\sum_{j=1}^{m_t}C_{htrj},
+\qquad \widehat P_h\leq\widehat Q_h.
+\]
+
+The inequality follows per attempt: the product of Boolean predicates cannot exceed their mean. It requires no assumption about why failures occur. It also identifies a precise comparison: pooling all predicates would additionally weight tasks by their number of checks, which ranges from three to twelve in this suite.
+
+<!-- contract-table -->
+
+**Table 5.** Acceptance and partial-contract diagnostics computed from the frozen ledger. The mean check fraction weights attempts equally; the pooled fraction weights check instances equally. The last row conditions on failed attempts and therefore uses a different denominator.
+
+Mean within-attempt check completion exceeds full acceptance by 6.96 points for Proto and 10.10 for Codex. Many rejected artifacts satisfy most declared checks. That can be useful for diagnosis, yet it does not make a required omission acceptable to the recipient.
+
+Exactly one required predicate fails in 34 of Proto's 54 failures and 39 of Codex's 88. This is a statement about predicate outcomes, not causal attribution or repair effort. A custom predicate can bundle several business rules; one failed predicate need not mean one underlying mistake. Its importance is that high component scores can conceal a recurring failure to complete the whole contract.
 
 ## 5. Worked example: payment reconciliation
 
-### 5.1 What the agent receives
+### 5.1 Inputs and required handoff
 
-The `payments-match-v2` task provides three files: `bank_export.csv`, `open_invoices.csv`, and `note.txt`. The owner asks the agent to match the morning's bank credits to open invoices and return three CSV deliverables. The request names the required columns; the note states the business rules. Reference outputs, planted traps, and grader code are not supplied inside the agent container.
+The `payments-match-v2` task supplies `bank_export.csv`, `open_invoices.csv`, and `note.txt`. The owner requests three CSV files; the note states the policy. Reference outputs and grader code are withheld from the agent container.
 
 | Deliverable | Required fields | Business purpose |
 |---|---|---|
-| unpaid.csv | invoice_id, customer, amount_outstanding | Show invoices still open and their remaining balances |
-| matches.csv | invoice_id, line_id, amount_applied | Record which bank lines settle which invoices |
-| unapplied.csv | line_id, amount, reason | Keep unrelated or closed-invoice credits visible |
+| unpaid.csv | invoice_id, customer, amount_outstanding | Preserve remaining open balances |
+| matches.csv | invoice_id, line_id, amount_applied | Identify the bank lines settling invoices |
+| unapplied.csv | line_id, amount, reason | Retain credits that cannot be applied |
 
-**Table 5.** The task's three-part delivery contract. A plausible total or explanatory message cannot replace these files or their required row-level relationships.
+**Table 6.** A three-part contract. An accurate total cannot substitute for the required relationships between invoices, bank lines, and remaining balances.
 
-### 5.2 Rules that change the correct answer
+### 5.2 Context determines correctness
 
-**Fees are not always unpaid balances.** Stripe remittances arrive net of 2.9% plus 30 cents; the note directs the agent to treat the invoice as paid in full. International wires short by up to about 2% are also treated as paid because intermediary bank charges explain the difference. A generic partial-payment rule would leave an incorrect remainder.
+Stripe remittances arrive net of 2.9% plus 30 cents, and the note directs the agent to mark their invoices paid in full. International wires short by up to about 2% receive the same treatment for intermediary charges. A genuine 60% partial payment instead leaves a 40% balance. Identical arithmetic differences can therefore require different accounting decisions.
 
-**A reference is not always authoritative.** One credit names another customer's invoice. The note explicitly gives precedence to the payer and amount. By contrast, a payment identifying an already-closed invoice must remain unapplied; it must not be reassigned merely because another open invoice has a convenient amount.
+One credit names another customer's invoice; the note gives payer and amount precedence over that reference. A payment identifying an already-closed invoice, however, must remain unapplied. A named multi-invoice ACH and a customer-only wire must be distributed across the invoices they cover, while an exported duplicate must not be counted twice. Supplier refunds and interest remain unapplied; debits are excluded.
 
-**One line can settle several invoices.** A named multi-invoice ACH and a customer-only wire must be distributed across the invoices they actually cover. An exported duplicate must not be applied twice. A genuine 60% partial payment remains open for its 40% remainder. Supplier refunds and interest credits belong in the unapplied output, while debits do not.
+These cases test policy-conditioned relationships, not merely extraction or arithmetic. They also illustrate why a general preference such as "trust the reference" cannot replace reading the task's declared rule.
 
-### 5.3 What the checks establish
+### 5.3 What acceptance does and does not establish
 
-Structural checks enforce output columns and exact sets of open and unapplied identifiers. Numeric comparisons use a one-cent tolerance for outstanding balances. The custom matching check compares both applied totals and contributing bank-line identities; the named duplicate, multi-invoice, fee, wrong-reference, refund, and closed-invoice cases have additional checks.
+Structural checks enforce columns and exact sets of open and unapplied identifiers; outstanding balances have a one-cent tolerance. The matching check examines applied amounts and contributing bank-line identities. Named duplicate, multi-invoice, fee, wrong-reference, refund, and closed-invoice cases have additional requirements.
 
-The contract is not an assertion of perfect row-level accuracy everywhere: the general paid-invoice matching check accepts at least 90% agreement, while named edge cases impose their own requirements. A task pass means all required checks pass under those declared thresholds. It is not a claim that every conceivable business property has been proved. In the reported full comparison, both systems pass this task in all three repetitions; it illustrates the evaluation contract rather than explaining the aggregate performance gap.
+The general paid-invoice matching predicate nevertheless accepts at least **90% agreement**. All required predicates passing therefore does not imply every row is correct. A threshold inside a predicate remains part of the contract even when aggregation across predicates is strict. Both systems pass this task in all three repetitions. The example explains the evaluation boundary; it does not explain their aggregate difference.
 
-<!-- pagebreak -->
+## 6. Scoring integrity and evaluator sensitivity
 
-## 6. Scoring integrity and application acceptance
-
-### 6.1 Original and frozen verdicts
-
-The original runner grades outputs immediately after execution. The frozen package is applied separately to retained outputs so both systems use the same scoring definitions. The released ledger preserves both verdicts; passing artifacts are not repaired before the frozen score is recorded.
+### 6.1 Same outputs, different verdicts
 
 <!-- transition-table -->
 
-**Table 6.** Original-to-frozen verdict transitions across all 561 attempts per system. Original grader errors are labeled ungraded rather than recast as ordinary agent failures. Frozen scoring produced no grader errors.
+**Table 7.** Original-to-frozen transitions over all 561 attempts per system. Ungraded means an original grader error. Rescoring evaluates retained outputs; it is not an agent rerun or artifact repair.
 
-Proto's 447 original passes remain passes; 56 original failures and four ungraded attempts pass the frozen scorer, yielding 507. Codex retains 430 of 431 original passes, gains 40 passes from original failures and three from ungraded attempts, yielding 473. The one Codex pass-to-fail transition remains included. These transitions describe evaluator differences on the same artifacts, not improvement from rerunning an agent.
+Proto gains 60 passes: 56 original failures and four ungraded attempts. Codex gains a net 42: 40 failures and three ungraded attempts become passes, while one original pass becomes a failure. Its original 431 passes thus include one that the frozen evaluator rejects.
 
-### 6.2 The evidence chain
+The original gap is \(100(447-431)/561\approx2.85\) points; the frozen gap is \(100(507-473)/561\approx6.06\) points. The change in the between-system difference is
 
-Each exported attempt carries a hash of its original result, the frozen receipt, the scorer manifest, and retained output artifacts. The exporter checks the original-result hash against the stored file and checks the receipt's scorer identity and verdict. The local verifier checks all files named by the immutable scorer manifest. Hash agreement binds a claim to specific evidence; it does not itself prove that the grader implements the right business rule.
+\[
+100\,\frac{(507-447)-(473-431)}{561}\approx3.21
+\quad\text{percentage points}.
+\]
 
-The scorer strips workbook caches before native recalculation, checks readable deliverables, and applies declared structural, numeric, text, and custom checks. It includes conservative equivalences for valid alternative representations. The preserved scorer source makes these decisions inspectable. The original grader and frozen scorer remain separate entry points, so future campaigns must declare which verdict is primary.
+The additional 18-pass difference comes entirely from evaluator changes applied to the same outputs. This is material measurement sensitivity. It is neither evidence of agent improvement nor, by itself, proof that the revisions are biased: valid alternative representations can deserve acceptance. Determining which verdict better reflects the business requirement needs independent adjudication.
 
-### 6.3 Build-track acceptance protocol
+### 6.2 Reproducibility and validity are separate
 
-A build sequence has four stages: initial application delivery, then three requested changes to the same workspace. At every stage, the tester verifies the handed-over URL and credentials, evaluates applicable checklist items, and rechecks previously passing requirements. `RESULT.json` carries the URL, administrator and restricted-user logins, notes, start command, and port. Logins must work; their mere presence in JSON is insufficient.
+A common scorer removes evaluator-version differences between the primary system scores. Frozen source and receipts make that comparison traceable and make later changes detectable against the recorded scorer fingerprint. They do not establish that the rule was selected without knowledge of the systems' outputs. This distinction is especially consequential because the benchmark publisher also develops Proto and the retrospective revisions increase its measured lead.
 
-Acceptance covers record counts and values, invitations, role boundaries, direct-request authorization, live scoped dashboards, validation, audit records, persistence, and domain-specific rules. A hidden UI control is not proof of server-side authorization. A restarted local app can support inspection but does not establish that the originally supplied public URL remained available.
+There are three levels of evidence. **Arithmetic verification** recomputes the released matrix and aggregates from the public ledger. **Evaluator inspection** examines the released source and its declared predicates. **Independent artifact audit** requires access to actual retained outputs and an external acceptance judgment. Public hashes support identity checks if those artifacts become available, but cannot reconstruct them. The current public release supports the first two levels; private raw outputs limit the third.
 
-Report initial checklist success, new change-item success, and regressions separately, with time and cost across the sequence. A completed tester sheet must distinguish observed pass, observed failure, and untested requirements. The release provides all 20 task packs and the runner/probe infrastructure, but does not promote automated URL probes into a completed build leaderboard.
+### 6.3 Validating the measurement instrument
 
-<!-- pagebreak -->
+Reference solutions passing and untouched workspaces failing are useful positive and negative controls. They do not estimate false acceptance or false rejection on plausible agent outputs. Untouched inputs are often an easy negative case; a realistic invalid artifact may satisfy every checked property while violating an omitted rule.
 
-## 7. Resource use
+A stronger validation design would use blinded practitioner judgments over a stratified sample of accepted and rejected artifacts, adjudicate disagreements, and report error rates with sampling uncertainty. Targeted invalid mutations would probe specific boundaries such as identifier substitution, duplicated settlements, or absent authorization. These are proposed tests, not completed evidence. Future confirmatory campaigns should freeze and review the evaluator before running held-out fixtures, while retaining original verdicts whenever scoring is revised.
+
+## 7. Resource use and the cost of accepted work
 
 <!-- efficiency-table -->
 
-**Table 7.** Resources across all 561 attempts per system. Costs are captured-usage API-equivalent estimates under the recorded price table, not subscription invoices or reconciled provider bills. Summed task duration is not elapsed campaign time when attempts run concurrently.
+**Table 8.** Resources for all 561 attempts per system. Costs are captured-usage API-equivalent estimates at the recorded price table, not subscription invoices or reconciled provider bills. Summed durations are occupied task time, not elapsed campaign time under concurrency.
 
-Proto has lower estimated model cost and median duration, but uses more tokens, slightly more summed task time, and a worse p90. Lower cost therefore does not imply uniformly lower resource use. Cache fractions are token-weighted; uncached totals are reported explicitly.
+Dividing total captured estimated model cost by accepted artifacts gives **$0.0435 for Proto and $0.4633 for Codex**. This ratio allocates the observed model spending on failures to the accepted outputs. It excludes verification labor, repairs, infrastructure, and missing usage. It is an ex-post campaign accounting ratio, not an expected cost for retrying until success: such a policy would require a way to recognize acceptance and a model of dependence across retries.
 
-Proto records 16,954 completed model responses; Codex records 561 task-level usage aggregates, not API requests. These counts are not directly comparable, and separate Codex reasoning-token counts are unavailable. Nine Proto request starts lack completed responses; their additional usage is unknown. First-token latency and turn-start versus intra-turn cache splits are not available.
+Proto has lower estimated model cost and median duration but uses more tokens, slightly more summed task time, and a worse p90. Its price advantage is therefore not uniform dominance in resource use. Cache fractions are token-weighted, and uncached totals are reported separately.
 
-## 8. Validity and limitations
+Proto records 16,954 completed model responses; Codex records 561 task-level usage aggregates, not comparable request counts. Nine Proto request starts lack completed responses, so their additional usage is unknown. Separate Codex reasoning-token counts, first-token latency, and turn-start versus intra-turn cache splits are unavailable. These omissions bound the accounting claims.
 
-**Task validity.** Model-assisted authoring and mechanical controls do not replace independent practitioner review or human baselines. The organization developing the suite also develops Proto. Exposure during benchmark-driven development limits claims about unseen generalization.
+## 8. Validity, generalization, and decisive next experiments
 
-**Scoring coverage.** A shared scorer controls grading drift, not all measurement error. Its checks are not exhaustive manual acceptance. Supplemental visual and semantic findings remain separate from the primary score; desk results establish no build-track performance.
+**Construct validity.** The target is useful delegated work; the observation is acceptance by authored tests. Model-assisted authoring, planted truth, and deterministic checks do not close that gap. Practitioner review should assess specification quality, human baselines should calibrate difficulty, and deployment-level claims require a defined workload sampling frame.
 
-**Configuration and timing.** Models and sampling controls differ, and cohorts were not contemporaneous. Provider behavior, tools, skills, and runtime choices may contribute. This comparison identifies an end-to-end result, not a causal harness-only effect.
+**Identification.** Model, harness, provider, tools, skills, sampling, and cohort dates vary together. A same-model harness comparison would need those factors controlled; a model comparison would need a fixed harness and matched conditions. This release identifies neither effect separately.
 
-**Reproduction.** Source, tasks, hashes, and score records are released; credentials, traces, historical agent binaries, and raw generated artifacts are not. Hashes identify evidence but cannot reconstruct it. The scorer accepts supplied workspaces, and the runners support new, explicitly configured experiments.
+**Generalization.** The suite was used during development, includes related task families, and repeats fixed fixtures. New instances of known templates, held-out templates, and deployment workloads are successively different targets. The reported bootstrap does not supply evidence across these boundaries. A decisive next evaluation would use sealed fixtures and templates with a reviewed scorer fixed before runs, and report results separately for each form of novelty.
+
+**Operational validity.** Binary acceptance does not price failure severity, reversibility, detection, or downstream damage. A small residual balance error and an authorization failure need not have comparable loss. Build-track acceptance requires direct tests of permissions, persistence, and regressions after changes; a reachable URL or a filled tester sheet is insufficient. No such completed build comparison is claimed.
+
+**Reproduction boundary.** The public package releases source, task inputs, hashes, and verdict records. Historical agent environments, credentials, traces, and raw generated artifacts are not fully released. A new configured run is possible with the required access; exact reconstruction or independent re-adjudication of every historical output is not. The appendices state the evidence retained and the prospective record needed for a new campaign.
 
 ## 9. Conclusion
 
-Business Bench evaluates usable business deliverables. On the complete desk comparison, Proto with DeepSeek V4.1 Flash scores **90.4%**, versus **84.3%** for Codex with GPT-5.6-sol under the same frozen scorer. The release separates correctness, repeatability, execution status, and cost. Application tasks extend the delivery contract to behavior under change; their acceptance results remain unclaimed.
+Business Bench makes acceptance at the handoff an explicit measurement object. The complete desk comparison reports 90.4% versus 84.3% accepted attempts, yet the more consequential result is the structure behind those rates: required-check completion exceeds full acceptance, all-three acceptance is lower still, the aggregate advantage is concentrated in two categories, and retrospective evaluator changes materially alter its magnitude.
 
-<!-- pagebreak -->
+These findings support separate reporting of acceptance, repeatability, workload composition, evaluator sensitivity, and cost. They do not identify a generally superior model or harness, or establish autonomous readiness for business operations. The next evidential step is an independently reviewed contract tested prospectively on sealed work, with sufficient artifact access to audit disagreement between measured acceptance and business judgment.
 
 ## References
 
@@ -192,6 +246,11 @@ Business Bench evaluates usable business deliverables. On the complete desk comp
 3. TheAgentCompany: Benchmarking LLM Agents on Consequential Real World Tasks. arXiv:2412.14161, 2024. https://arxiv.org/abs/2412.14161
 
 4. EnterpriseClawBench: Benchmarking Agents from Real Workplace Sessions. arXiv:2606.23654, 2026. https://arxiv.org/abs/2606.23654
+
+5. tau-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains. arXiv:2406.12045, 2024. https://arxiv.org/abs/2406.12045
+
+6. SWE-bench: Can Language Models Resolve Real-World GitHub Issues? arXiv:2310.06770, 2023. https://arxiv.org/abs/2310.06770
+
 
 ## Appendix A. Running and auditing the benchmark
 
@@ -224,7 +283,7 @@ The package preserves its original assembly-status text to keep its fingerprint 
 
 ### A.3 Release validation
 
-All 187 desk reference-solution/untouched-workspace checks passed with native recalculation; all 20 build-task packs passed structural and seed validation. The strict desk validator reported 28 supplied-fixture byte differences from regenerated outputs despite deterministic repeated regeneration. The supplied inputs remain authoritative and unchanged. Affected tasks are listed in docs/validation.md; byte differences are not assumed semantically harmless.
+All 187 desk reference-solution/untouched-workspace checks passed with native recalculation; all 20 build-task packs passed structural and seed validation. The strict desk validator reported 28 tasks whose supplied fixture bytes differed from regeneration despite deterministic repeated regeneration. The supplied inputs remain authoritative and unchanged. Affected tasks are listed in docs/validation.md; byte differences are not assumed semantically harmless.
 
 <!-- pagebreak -->
 
@@ -258,12 +317,30 @@ Start with a single-task smoke run under a different label before the full matri
 | Evidence | Original result hash, output hashes, private artifact retention location |
 | Accounting | Captured usage, price assumptions, durations, missing observations |
 
-**Table 8.** Minimum record for a new campaign. Missing fields must be disclosed rather than inferred from a successful result. These are prospective requirements, not a claim that every historical environment detail is reconstructible.
+**Table 9.** Minimum record for a new campaign. Missing fields must be disclosed rather than inferred from a successful result. These are prospective requirements, not a claim that every historical environment detail is reconstructible.
 
-### B.3 Metric definitions
 
-**Attempt pass rate** is the number of frozen passing attempts divided by all attempts in the complete matrix. **All-three success** is the fraction of task identifiers with three passing attempts. The latter gives one task one vote; the former includes each scheduled attempt.
+### B.3 Formal definitions
 
-**Estimated model cost** sums uncached input, cached input, and output tokens multiplied by their respective per-token prices. Uncached input equals total input minus cached input. The aggregate cache fraction is total cached input divided by total input, not the mean of per-request percentages. Missing usage remains unknown.
+Let \(Y_{htr}\) denote frozen acceptance, with \(T=187\) and \(K=3\). Sections 3 and 4 define attempt acceptance \(\widehat P_h\), all-three acceptance \(\widehat R_h^{(K)}\), and mean within-attempt check completion \(\widehat Q_h\). Observed at-least-one acceptance and the pooled check fraction are
 
-**Duration** is reported at the attempt level. The median describes the center of the observed durations; p90 uses the nearest-rank observation. Summing attempt durations measures aggregate occupied task time and can exceed campaign wall time under concurrency. A positive accuracy gap is stated in percentage points, not as a relative percentage reduction in error.
+\[
+\widehat A_h^{(K)}=\frac{1}{T}\sum_t
+\mathbf{1}\!\left\{\sum_rY_{htr}>0\right\},
+\qquad
+\widehat Q_h^{\mathrm{pool}}=
+\frac{\sum_{t,r,j}C_{htrj}}{K\sum_t m_t}.
+\]
+
+The first uses hindsight over repeated attempts; the second weights tasks by their predicate counts. Neither is substituted for attempt acceptance. The repeated-success measure follows the pass-to-the-power-k interpretation used in tau-bench [5].
+
+For captured input \(I\), cached input \(C\), output \(O\), and prices per million tokens \(\pi_u,\pi_c,\pi_o\), estimated model cost is
+
+\[
+\widehat K_{\mathrm{model}}=
+\frac{(I-C)\pi_u+C\pi_c+O\pi_o}{10^6}.
+\]
+
+This expression applies to usage within a price cell; aggregate cost sums the corresponding estimates. Uncached input is total input minus cached input. Aggregate cache fraction is total cached input divided by total input, not the mean of request percentages. Missing usage is unknown, not zero.
+
+Durations are attempt-level observations. The p90 uses nearest rank; summed durations can exceed elapsed campaign time under concurrency. Gaps between acceptance rates are percentage points, not relative error reductions.
