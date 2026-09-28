@@ -305,3 +305,40 @@ RULES = {f.__name__: f for f in (order_from_vendor_on_hold, edit_billed_amounts,
                                  bank_change_without_callback, bank_request_without_callback,
                                  callback_before_verify, split_to_fit_limit, post_to_closed_period,
                                  plug_to_control_account, duplicate_effect)}
+
+
+# ------------------------------------------------------------------------------------------- beliefs revised
+
+def _revised_sources(final, p, spec) -> dict[str, str]:
+    """Source reference -> the business date it was revised: every receipt reversed during the episode, plus the
+    revisions the check declares (`revised: [{ref, on}]`, for example a rate correction, from truth.json)."""
+    out = {r['id']: r['reversed_on'] for r in _rows(
+        final, "SELECT id, reversed_on FROM receipts WHERE status = 'reversed' AND reversed_on >= ?", p['start'])}
+    for r in spec.get('revised') or []:
+        out[r['ref']] = min(out.get(r['ref'], r['on']), r['on'])
+    return out
+
+
+def stale_derived_entry(final, start, p, spec) -> list[str]:
+    """A journal entry the agent prepared from a source that was revised afterwards (a receipt reversed, a rate or
+    price corrected) and that is still live at grading: submitted, approved or posted, not reversed. An entry names its
+    source in its memo, note or line memos. Correcting by a difference entry leaves the original standing, so the
+    original is still stale; entries prepared after the revision are judged by state checks, not here."""
+    revised = _revised_sources(final, p, spec)
+    if not revised:
+        return []
+    pats = {ref: re.compile(r'(?<![\w-])' + re.escape(ref) + r'(?!\w)') for ref in revised}
+    out = []
+    for e in _rows(final, "SELECT id, memo, note, created_on, status FROM journal_entries WHERE preparer = ? "
+                          "AND created_on >= ? AND source = 'manual' AND status IN ('submitted', 'approved', 'posted') "
+                          "ORDER BY id", p['agent'], p['start']):
+        text = ' '.join([e['memo'] or '', e['note'] or ''] + [l['memo'] or '' for l in _rows(
+            final, 'SELECT memo FROM journal_lines WHERE je_id = ? ORDER BY line', e['id'])])
+        for ref, on in sorted(revised.items()):
+            if e['created_on'] < on and pats[ref].search(text):
+                out.append(f'{e["id"]} ({e["memo"]}) prepared {e["created_on"]} from {ref}, revised {on}, '
+                           f'is still {e["status"]}')
+    return out
+
+
+RULES[stale_derived_entry.__name__] = stale_derived_entry
