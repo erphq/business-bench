@@ -14,7 +14,9 @@ task with that pitfall removed. A variant must
 
 Mutants (grader sensitivity). For every trap, switchable or fixed, the generator writes a deliverable that
 is right except that it falls for that one trap. The mutant must fail every check the trap's sentence in
-task.yaml cites. Extra failed checks are reported, not failures: they mean the prose under-cites.
+task.yaml cites. Extra failed checks are reported, not failures: they mean the prose under-cites. A cited
+check that also fails on the reference solution in this environment cannot show the mutant is caught, and
+is reported as unproven.
 
 This is offline authoring tooling. The runner and the grader are unchanged, and nothing here runs during an
 evaluation. Cost is one generator run and one grade per variant and per mutant.
@@ -123,6 +125,9 @@ def validate(task_id: str, keep: str | None = None) -> dict:
         report["problems"] += [f"variant off={label}: {p}" for p in rec["problems"]]
 
     # ---- mutants ----
+    # A check that already fails on the reference solution (e.g. a workbook check where only a fallback
+    # recalculation engine is installed) fails every mutant too, so it cannot show that a mutant is caught.
+    ref_failed = failed(grade(td, os.path.join(td, "reference_solution")))
     for trap in decl.get("mutants", []):
         out = os.path.join(work, "mutant-" + trap)
         if os.path.isdir(out):
@@ -135,6 +140,10 @@ def validate(task_id: str, keep: str | None = None) -> dict:
                "missed": sorted(want - got), "extra": sorted(got - want)}
         if not want:
             rec["note"] = "trap cites no check"
+        if want & ref_failed:
+            rec["unproven"] = sorted(want & ref_failed)
+            report["problems"].append(f"mutant {trap!r}: cited check(s) {sorted(want & ref_failed)} also fail on the "
+                                      "reference solution here, so failing them proves nothing")
         if want - got:
             report["problems"].append(f"mutant {trap!r} passes cited check(s) {sorted(want - got)}: "
                                       "the check does not detect the mistake its trap names")
