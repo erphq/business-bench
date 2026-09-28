@@ -2,6 +2,9 @@
 """bank-reconciliation: August bank statement against the checking account ledger, with last month's reconciliation.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off batched,export_format --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant bank_only --out DIR                  # a deliverable that falls for one trap
 
 Business: Westbrook Plumbing, a twelve-van plumbing contractor. The office manager keys checks and deposits into
 the books; the bank export and the general-ledger detail for account 1010 are in the folder with July's
@@ -26,6 +29,25 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "batched": "two receipts the books record separately reached the bank as one combined deposit",
+        "export_format": "bank export in debit/credit columns under a preamble with an ending-balance line; ledger "
+                         "with a beginning-balance row and a total row",
+    },
+    fixed={
+        "carried": "one of July's outstanding checks has still not cleared and is not in August's ledger",
+        "july_cleared": "July's other outstanding checks and its deposit in transit clear on the August statement",
+        "swap": "a check keyed in the books with two digits swapped; the bank's amount is right",
+        "bank_only": "fee, bounced check, returned-item fee and interest are only on the statement (book side)",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["carried", "july_cleared", "batched", "swap", "bank_only", "export_format"]
 
 SUPPLIERS = ["Ferguson Supply", "Winnelson Co", "Pacific Pipe & Valve", "Home Depot Pro", "Coastal Water Heaters", "Metro Rooter Parts",
              "Northside Fleet Fuel", "Valley Van Upfitters", "Cascade Tool Rental", "Sierra Backflow Testing", "City Permit Office",
@@ -183,17 +205,18 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverable
 
-def rec_workbook(d: dict, path: str, naive: bool = False) -> None:
+def rec_workbook(d: dict, path: str, naive: bool = False, mutant: str | None = None) -> None:
+    """The reconciliation workbook. `mutant` names the one trap a mutant deliverable falls for (None: the reference)."""
     from openpyxl import Workbook
     from openpyxl.styles import Font
     wb = Workbook()
     s = wb.active
     s.title = "Reconciliation"
     oc_items = [(x["num"], x["date"], x["name"], -x["amount"]) for x in d["oc_aug"]]
-    if not naive:
+    if not naive and mutant != "carried":
         oc_items = [(d["carried"]["num"], d["carried"]["date"], d["carried"]["payee"], d["carried"]["amount"])] + oc_items
     dit_items = [(d["dit"]["date"], d["dit"]["name"], d["dit"]["amount"])]
-    if naive:
+    if naive or mutant == "batched":
         dit_items += [(x["date"], x["name"], x["amount"]) for x in d["pair"]]
     o = wb.create_sheet("Outstanding items")
     o.append(["Outstanding checks"]); o["A1"].font = Font(bold=True)
@@ -219,12 +242,21 @@ def rec_workbook(d: dict, path: str, naive: bool = False) -> None:
         ["Balance per bank statement, 31 Aug 2026", d["b1"]],
         ["Add: deposits in transit", f"='Outstanding items'!D{dit_total_row}"],
         ["Less: outstanding checks", f"='Outstanding items'!D{oc_total_row}"],
-        ["Adjusted bank balance", "=B3+B4-B5"],
-        [],
-        ["Balance per books, 31 Aug 2026", d["g1"]],
     ]
+    # bank-side reconciling items beyond DIT and OC: only a mutant has any
+    bank_extra = mutant_bank_items(d, mutant) if mutant else []
+    rows += bank_extra
+    rows.append(["Adjusted bank balance", "=B3+B4-B5" + "".join(
+        f"-B{i}" if a[0].startswith("Less") else f"+B{i}" for i, a in enumerate(bank_extra, start=6))])
+    adj_bank_row = len(rows)
+    rows += [[], ["Balance per books, 31 Aug 2026", mutant_book_ending(d, mutant) if mutant else d["g1"]]]
+    book_row = len(rows)
     adj = [] if naive else [[f"Less: {x['label']}", -x["amount"]] if x["amount"] < 0 else [f"Add: {x['label']}", x["amount"]] for x in d["bank_only"]]
-    if not naive:
+    if mutant == "bank_only":      # the statement-only items put on the bank side instead
+        adj = []
+    if mutant:
+        adj += mutant_book_items(d, mutant)
+    if not naive and mutant != "swap":
         sw = d["swap"]
         adj.append([f"Check {sw['num']} keyed as {-sw['amount']:,.2f}, cleared at {-sw['bank_amount']:,.2f}: correction", d["swap_diff"]])
     start = len(rows) + 1
@@ -238,12 +270,12 @@ def rec_workbook(d: dict, path: str, naive: bool = False) -> None:
                 signs.append(f"-B{i}")
             else:
                 signs.append(f"+B{i}")
-        rows.append(["Adjusted book balance", "=B8" + "".join(signs)])
+        rows.append(["Adjusted book balance", f"=B{book_row}" + "".join(signs)])
     else:
-        rows.append(["Adjusted book balance", "=B8"])
+        rows.append(["Adjusted book balance", f"=B{book_row}"])
     adj_book_row = len(rows)
     rows.append([])
-    rows.append(["Difference (should be zero)", f"=ROUND(B6-B{adj_book_row},2)"])
+    rows.append(["Difference (should be zero)", f"=ROUND(B{adj_bank_row}-B{adj_book_row},2)"])
     for rr in rows:
         s.append(rr)
     s["A1"].font = Font(bold=True)
@@ -256,6 +288,8 @@ def rec_workbook(d: dict, path: str, naive: bool = False) -> None:
     for x in d["led"]:
         if x["tag"] in ("oc", "dit", "batched") and not (x["tag"] == "batched"):
             continue
+        if x["tag"] == "batched" and mutant == "batched":   # left in transit, not matched to the combined deposit
+            continue
         if x["tag"] == "batched":
             b = next(b for b in bank_left if b["src"] == "batched")
         elif x["tag"] in ("check", "swap"):
@@ -266,7 +300,7 @@ def rec_workbook(d: dict, path: str, naive: bool = False) -> None:
             bank_left.remove(b)
         m.append([x["date"], x["type"], x["num"], x["name"], x["amount"], b["date"], b["desc"], b.get("amount") if x["tag"] != "batched" else b["amount"]])
     for b in bank_left:
-        if b["src"] in ("july_oc", "july_dit"):
+        if b["src"] in ("july_oc", "july_dit") and mutant != "july_cleared":
             m.append(["July reconciliation", "Check" if b["src"] == "july_oc" else "Deposit", b["num"], "cleared from July's outstanding list",
                       b["amount"], b["date"], b["desc"], b["amount"]])
     for sh in (m, o):
@@ -285,35 +319,69 @@ def rec_workbook(d: dict, path: str, naive: bool = False) -> None:
     freeze_zip(path)
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def bank_lines(d: dict, traps: TrapSet) -> list[dict]:
+    """Statement lines as the bank export shows them. With `batched` off, the combined 19 August deposit is shown
+    as the two deposits the books record, with the running balance after each; the ending balance is unchanged."""
+    if traps.on("batched"):
+        return d["bank"]
+    out = []
+    for x in d["bank"]:
+        if x["src"] != "batched":
+            out.append(x)
+            continue
+        p0, p1 = d["pair"]
+        out.append(dict(x, amount=p0["amount"], balance=c(x["balance"] - p1["amount"])))
+        out.append(dict(x, amount=p1["amount"]))
+    return out
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         rec_workbook(d, os.path.join(naive_dir, "reconciliation.xlsx"), naive=True)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom checks travel with the copy
+        import shutil
+        for mod in ("check.py", "check_totals.py"):
+            shutil.copyfile(os.path.join(HERE, mod), os.path.join(out, mod))
     r = rng(seed + 31)
+    raw = traps.on("export_format")
 
     # ---- workspace: bank export ----
     brows = []
-    for x in d["bank"]:
+    for x in bank_lines(d, traps):
+        if not raw:  # one signed amount column, plain numbers
+            brows.append([date_variant(x["date"], 1), x["desc"], x["num"], f"{x['amount']:.2f}", f"{x['balance']:.2f}"])
+            continue
         debit = money_str(-x["amount"], 0) if x["amount"] < 0 else ""
         credit = money_str(x["amount"], 0) if x["amount"] > 0 else ""
         brows.append([date_variant(x["date"], 1), x["desc"], x["num"], debit, credit, money_str(x["balance"], 0)])
-    write_csv(os.path.join(ws, "harbor_trust_checking_2026-08.csv"), ["Posted Date", "Description", "Check Number", "Debit", "Credit", "Balance"],
-              brows + [["", "Ending balance", "", "", "", money_str(d["b1"], 0)]],
-              preamble=["Harbor Trust - Business Checking ****4471", "Westbrook Plumbing LLC",
-                        f"Statement period 08/01/2026 - 08/31/2026", f'Beginning balance,"{money_str(d["b0"], 1)}"', ""],
-              bom=True, crlf=True)
+    if raw:
+        write_csv(os.path.join(ws, "harbor_trust_checking_2026-08.csv"), ["Posted Date", "Description", "Check Number", "Debit", "Credit", "Balance"],
+                  brows + [["", "Ending balance", "", "", "", money_str(d["b1"], 0)]],
+                  preamble=["Harbor Trust - Business Checking ****4471", "Westbrook Plumbing LLC",
+                            f"Statement period 08/01/2026 - 08/31/2026", f'Beginning balance,"{money_str(d["b0"], 1)}"', ""],
+                  bom=True, crlf=True)
+    else:
+        write_csv(os.path.join(ws, "harbor_trust_checking_2026-08.csv"),
+                  ["Posted Date", "Description", "Check Number", "Amount", "Balance"], brows)
 
     # ---- workspace: general ledger detail ----
-    grows = [["", "", "", "", "Beginning balance", None, None, d["g0"]]]
+    grows = [["", "", "", "", "Beginning balance", None, None, d["g0"]]] if raw else []
     bal = d["g0"]
     for x in d["led"]:
         bal = c(bal + x["amount"])
         grows.append([x["date"], x["type"], x["num"] if x["num"] != "" else None, x["name"], x["memo"],
                       x["amount"] if x["amount"] > 0 else None, -x["amount"] if x["amount"] < 0 else None, bal])
-    grows.append(["", "", "", "", "Total for 1010 Checking", c(sum(x["amount"] for x in d["led"] if x["amount"] > 0)),
-                  c(-sum(x["amount"] for x in d["led"] if x["amount"] < 0)), d["g1"]])
+    if raw:
+        grows.append(["", "", "", "", "Total for 1010 Checking", c(sum(x["amount"] for x in d["led"] if x["amount"] > 0)),
+                      c(-sum(x["amount"] for x in d["led"] if x["amount"] < 0)), d["g1"]])
     write_xlsx(os.path.join(ws, "gl_1010_checking_2026-08.xlsx"), {"GL Detail": {
         "merged_title": "Westbrook Plumbing - General Ledger Detail - 1010 Checking - August 2026",
         "header": ["Date", "Transaction type", "Num", "Name", "Memo", "Debit", "Credit", "Balance"],
@@ -364,13 +432,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
 
     tol = lambda x: round(0.01 / max(abs(x), 1), 9)
     sw = d["swap"]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "bank-reconciliation", "track": "desk", "category": "bookkeeping",
         "title": "August bank reconciliation for the checking account",
         "ask": ("Can you do the August bank reconciliation for our checking account? The bank export, the ledger and Alma's July "
                 "rec are in the folder, and Dean's email says what he wants. Save it as reconciliation.xlsx.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"check {d['carried']['num']} was outstanding on July's reconciliation and still has not cleared; it is not in August's "
             "ledger, so comparing only August's ledger with August's statement drops it from the outstanding list "
             "(checks: outstanding checks and deposits in transit totals; adjusted balance; both sides tie and items listed)",
@@ -387,7 +455,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "the bank export has separate debit and credit columns, a running balance and an ending-balance line under a preamble; "
             "the ledger has a beginning-balance row and a total row that a plain column sum double counts "
             "(checks: adjusted balance; both sides tie and items listed)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "reconciliation.xlsx exists", "path": "reconciliation.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "reconciliation.xlsx", "min_count": 4},
@@ -397,21 +465,76 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "expected": d["adjusted"], "rel_tol": tol(d["adjusted"]), "near_text": "adjusted"},
             {"type": "custom", "name": "both sides tie and items listed", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "bank-reconciliation", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed}: bank {d['b0']} -> {d['b1']}, books {d['g0']} -> {d['g1']}")
     print(f"  OC {d['oc_total']} DIT {d['dit_total']} book adj {d['book_adj']} adjusted {d['adjusted']} swap {d['swap_diff']}")
     print("  naive:", naive_figures(d))
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_bank_items(d: dict, mutant: str) -> list[list]:
+    """Bank-side reconciling rows a mutant adds (label starting "Less" is subtracted, anything else added)."""
+    if mutant == "swap":        # the books' figure believed: the bank "error" corrected on the bank side
+        sw = d["swap"]
+        return [[f"Bank error on check {sw['num']}: cleared at {-sw['bank_amount']:,.2f}, books show {-sw['amount']:,.2f}",
+                 c(-d["swap_diff"])]]
+    if mutant == "bank_only":   # statement-only items taken out of the bank balance instead of booked
+        return [[f"Less: {x['label']} (not in books)", x["amount"]] if x["amount"] > 0 else
+                [f"Add back: {x['label']} (not in books)", c(-x["amount"])] for x in d["bank_only"]]
+    return []
+
+
+def mutant_book_items(d: dict, mutant: str) -> list[list]:
+    """Book-side adjustment rows a mutant adds."""
+    if mutant == "batched":      # the combined deposit, unmatched, booked as a receipt the books do not have
+        amt = c(sum(x["amount"] for x in d["pair"]))
+        return [["Add: deposit on statement not in books (20 Aug)", amt]]
+    if mutant == "july_cleared":  # July's cleared items booked again as if they were new bank items
+        items = [[f"Less: check {x['num']} cleared, not in August books", x["amount"]]
+                 for x in d["jul_oc"] if x is not d["carried"]]
+        return items + [["Add: deposit 3 Aug not in August books", d["jul_dit"]["amount"]]]
+    return []
+
+
+def mutant_book_ending(d: dict, mutant: str) -> float:
+    """Balance per books as a mutant reads it."""
+    if mutant == "export_format":  # the ledger's beginning-balance and total rows summed with the detail
+        return c(d["g0"] + 2 * (d["g1"] - d["g0"]))
+    return d["g1"]
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    rec_workbook(d, os.path.join(out, "reconciliation.xlsx"), mutant=trap)
+
+
+# Grader-blind mutants, kept out of MUTANTS (see docs/authoring-traps.md). The cited "adjusted balance" check is
+# xlsx_value_present near "adjusted": it passes when either side's adjusted balance is right. These mistakes move
+# only one side, so the untouched side still carries the expected figure; "both sides tie" catches all three.
+#   carried       - outstanding list without check still out from July: adjusted bank balance wrong, book side right
+#   july_cleared  - July's cleared items booked again on the book side: adjusted book balance wrong, bank side right
+#   export_format - ledger total row summed into the book balance: adjusted book balance wrong, bank side right
+MUTANTS = {k: write_mutant for k in ("batched", "swap", "bank_only")}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         s = a.seed * 1000 + attempt
         if acceptable(build(s)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(s, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(s, a.naive, traps, a.out, a.mutant)
