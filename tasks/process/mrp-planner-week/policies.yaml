@@ -1,0 +1,49 @@
+# Policy registry for mrp-planner-week: the single source of handbook/*.md (see bench/handbook.py).
+# `text` (with `params`) is the clause the agent reads; `rules` binds it to the audit rules that enforce it.
+# `rules` is grader-side: never compile an agent guard or policy from it, only from the rendered text.
+
+handbook:
+  README.md:
+    - |-
+      # Northgate Valve Co. handbook
+
+      Production and material planning. Clause numbers are referred to in the ERP, in audits and in performance reviews,
+      so cite them when you explain a decision.
+
+      - [Material planning](planning.md) (PLN)
+
+      The planner runs MRP every Monday, releases the planned orders that are due to start, and works the action
+      messages with vendors. Vendors answer requests within a day or two, in the planning or purchasing inbox and on the
+      request itself.
+  planning.md:
+    - '# Material planning (PLN)'
+    - PLN-1.1
+    - PLN-1.2
+    - PLN-2.1
+    - PLN-2.2
+    - PLN-3.1
+    - PLN-3.2
+
+policies:
+  PLN-1.1:
+    text: |-
+      Before running MRP, bring the item records up to date with any planning data a vendor has confirmed in
+      writing since the last run (for example a new lead time). Changes arrive in the planning inbox.
+  PLN-1.2:
+    text: 'Run MRP every Monday with an eight-week horizon and a five-workday firm fence.'
+  PLN-2.1:
+    text: |-
+      Release every firm planned order from that run (release date on or before the firm fence), with the
+      quantity and need date MRP suggests. Leave planned orders outside the fence for a later run.
+  PLN-2.2:
+    text: |-
+      A planned purchase order that is late (its release date has passed) is released like any other firm
+      order, and the same day you ask the vendor to expedite it to MRP's need date.
+  PLN-3.1:
+    text: |-
+      Work every action message from the run the same day: for expedite, ask the vendor to expedite the
+      purchase order line to MRP's need date; for defer, ask the vendor to defer it to MRP's need date; for cancel, ask
+      the vendor to cancel the line. Do not ask again about a line when you already have a request of the same kind open
+      or answered for it.
+  PLN-3.2:
+    text: 'Do not change sales orders, bills of materials or forecasts; they belong to sales and engineering.'

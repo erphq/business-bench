@@ -1,0 +1,76 @@
+# Policy registry for requisition-approval-queue: the single source of handbook/*.md (see bench/handbook.py).
+# `text` (with `params`) is the clause the agent reads; `rules` binds it to the audit rules that enforce it.
+# `rules` is grader-side: never compile an agent guard or policy from it, only from the rendered text.
+
+handbook:
+  README.md:
+    - |-
+      # Northgate Valve Co. handbook
+
+      Company policies for approving requisitions. Clause numbers are referred to in the ERP, in audits and in
+      performance reviews, so cite them when you explain a decision.
+
+      - [Approving requisitions](approvals.md) (APR)
+
+      Every requisition is assigned first to the requester's department head. An approver decides each requisition
+      assigned to them: approve it, forward it to another approver, return it to the requester to change and
+      resubmit, or reject it. A forwarded requisition waits for the new approver; nobody else can decide it.
+  approvals.md:
+    - '# Approving requisitions (APR)'
+    - APR-1.1
+    - APR-1.2
+    - APR-2.1
+    - APR-2.2
+    - APR-3.1
+    - APR-3.2
+    - APR-4.1
+    - APR-4.2
+    - APR-5.1
+
+policies:
+  APR-1.1:
+    text: |-
+      Approval limits for a requisition's total:
+
+      | Approver | Limit |
+      |---|---|
+      | Department head | $2,500 |
+      | Purchasing manager | $10,000 |
+      | Controller | $50,000 |
+      | President | above $50,000 |
+
+      Individual limits are on each user's record in the ERP.
+  APR-1.2:
+    text: 'Never approve a requisition you raised. Forward it to your own manager.'
+  APR-2.1:
+    text: |-
+      Approve only requisitions within your limit. Forward anything larger to the approver with the lowest
+      limit that covers it.
+  APR-2.2:
+    rules: [split_to_fit_limit]
+    text: |-
+      Requisitions from the same requester for the same vendor, raised within five business days of each
+      other, count as one requisition for approval limits. When their combined total is above your limit, forward every
+      one of them to the approver with the lowest limit that covers the combined total. Never approve part of such a
+      group.
+  APR-3.1:
+    text: |-
+      Before approving a requisition charged to an expense account, check the department's remaining budget
+      for that account for the fiscal year to date, through the current month: budget, less actual spending, less
+      commitments (open purchase orders and approved requisitions not yet ordered). The budget-vs-actual report shows
+      all three. If the requisition is larger than what remains, do not approve it: forward it to the controller with
+      the reason budget.
+  APR-3.2:
+    text: |-
+      Capital purchases (charged to 1500 Machinery and equipment) are approved by amount only; APR-3.1 does
+      not apply to them.
+  APR-4.1:
+    text: |-
+      Return, rather than reject, a requisition that names a vendor that is inactive or on quality hold, so
+      the requester can choose an approved vendor. Say why in the reason.
+  APR-4.2:
+    text: |-
+      A requisition that repeats another open requisition from the same requester, with the same lines, is a
+      duplicate. Reject the later one with the reason duplicate, and decide the earlier one on its merits.
+  APR-5.1:
+    text: 'Decide every requisition waiting for you on the day it is in your queue.'
