@@ -250,6 +250,8 @@ def build(seed: int, knobs=KNOBS.defaults()) -> dict:
                 dups.append({"pid": p["pid"], "orig": ps[0]["pid"], "vendor": p["vendor"]["name"], "invoice": p["invoice"], "over": over, "role": p["role"]})
     dups.sort(key=lambda x: x["pid"])
     roles = {p["role"]: p for p in pays if p["role"]}
+    if extra_alias or knobs.trap_count("dup_leading_zero") > 1:   # the published instance names the trap, not an extra one
+        roles["dup_vendor_record"], roles["dup_leading_zero"] = p2b, p4b
     return {"vendors": vendors, "alias": alias, "extra_alias": extra_alias, "pays": pays, "dups": dups, "refund": refund, "roles": roles,
             "lookalikes": [roles[k]["pid"] for k in ("void_reissue", "stop_replaced", "rent", "instalment", "refunded_dup", "same_amount_new_invoice",
                                                      "other_vendor_same_invoice")]}
@@ -353,9 +355,9 @@ def emit(seed: int, naive_dir: str | None, knobs=KNOBS.defaults(), out: str | No
     ex_lz = [x for x in d["dups"] if x["role"] == "dup_leading_zero" and x["pid"] != ro["dup_leading_zero"]["pid"]]
     # With more than one planted instance, the trap sentence names them all (the first sentence is unchanged at the defaults).
     by_alias = {x["vendor"]: x for x in ex_vr}
-    more_vr = ("; so are " + ", ".join(f"{a['name']} ({a['id']}, paid by {by_alias[a['name']]['pid']})"
+    more_vr = ("; also set up twice and paid again: " + ", ".join(f"{a['name']} ({a['id']}, paid by {by_alias[a['name']]['pid']})"
                                       for a in d["extra_alias"]) if ex_vr else "")
-    more_lz = ("; so are " + ", ".join(f"{x['pid']} (invoice {x['invoice']})" for x in ex_lz) if ex_lz else "")
+    more_lz = ("; also paid again without the zeros: " + ", ".join(f"{x['pid']} (invoice {x['invoice']})" for x in ex_lz) if ex_lz else "")
     spec = {
         "id": "duplicate-payments", "track": "desk", "category": "bookkeeping",
         "title": "Find supplier payments we made twice",
