@@ -22,6 +22,28 @@ frozen scorer + SPEC.md) and deployed to Cloudflare Workers.
 
 ## Recently shipped
 
+- 2026-09-28 (branch `feat/measurement-science`, not yet released): measurement
+  science and grader integrity, `docs/measurement-science.md`.
+  - **Trap switches and mutants:** on all 71 target generators, plus
+    difficulty settings (size, rules, noise, trap count) piloted on saturated
+    tasks.
+  - **Measurement and forecasting:** measurement graph, first difficulty
+    model, delegation envelope (`run.py` now records `started_utc`),
+    renewable-benchmark tooling with sealed variants, and failure triage
+    (check-level AUC 0.84 under task-grouped CV).
+  - **Grader self-tests:** mutation and metamorphic tests of the grader, and a
+    scorer-change gate.
+  - **bb-erp:** property, crash and replay testing found 7 bugs. Fault
+    injection added.
+  - **New process tasks:** `freight-accrual-revision` (belief revision) and
+    `payment-run-need-to-know` (information-flow controls).
+  - **Executable handbook:** policy registries regenerate every process
+    handbook byte for byte.
+  - **Unchanged by default:** generator output, the runner, the grader and
+    published campaigns.
+  - **Open:** findings and open decisions are listed in the doc; workbook
+    checks still need a LibreOffice run.
+
 - 2026-09-27: first analyst-band process task, `ap-invoice-backlog`. The AP
   supervisor clears three weeks of vendor invoices over three turns: about 200
   documents from 22 vendors in three layouts, with twelve planted exceptions,
