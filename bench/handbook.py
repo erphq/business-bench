@@ -22,6 +22,12 @@ A registry has two parts:
           Freight of up to ${freight_limit:,.2f} per invoice is accepted ...
         rules: [edit_billed_amounts]           # optional; audit rules (bench/process_rules.RULES) that enforce it
 
+A declared variant of a task (a sibling folder, like payment-run-need-to-know) adds `extends: <task>`: its registry
+then holds only what it adds or replaces. The effective registry is the parent's with the variant's handbook files
+laid over it (a file of the same name replaces the parent's) and the variant's clauses added (redefining a parent
+clause is an error). The variant's handbook/ folder commits only its own files, and `check` and `render --write`
+touch only those; the parent's files stay the parent's, byte for byte. `lint` works on the effective registry.
+
 `text` and `params` are what the agent reads. `rules` is grader-side: a guard or policy compiled for an agent (the
 AgentWarden idea) must come from the rendered text only, never from `rules`, or it would be compiled from the grader.
 
@@ -89,15 +95,33 @@ def has_registry(task: str) -> bool:
     return os.path.isfile(registry_path(task))
 
 
-def load(task: str) -> dict:
-    """The task's registry, shape-checked. Raises RegistryError on a malformed one."""
+def load(task: str, _seen: tuple = ()) -> dict:
+    """The task's effective registry, shape-checked. Raises RegistryError on a malformed one. For a registry that
+    `extends` a parent, the result also carries `own_files`: the handbook files the variant itself commits."""
+    reg = _load_one(task)
+    parent = reg.pop('extends', None)
+    if parent is None:
+        return reg
+    if not isinstance(parent, str) or not has_registry(parent):
+        raise RegistryError(f'extends names {parent!r}, which has no {REGISTRY}')
+    if parent in _seen:
+        raise RegistryError(f'extends loops through {parent}')
+    base = load(parent, _seen + (task,))
+    redefined = sorted(set(base['policies']) & set(reg['policies']))
+    if redefined:
+        raise RegistryError(f'redefines clauses of {parent}: {redefined}')
+    return {'handbook': {**base['handbook'], **reg['handbook']}, 'policies': {**base['policies'], **reg['policies']},
+            'own_files': list(reg['handbook'])}
+
+
+def _load_one(task: str) -> dict:
     with open(registry_path(task), encoding='utf-8') as f:
         try:
             reg = yaml.load(f, Loader=_UniqueKeyLoader)  # noqa: S506 (a SafeLoader subclass)
         except yaml.YAMLError as e:
             raise RegistryError(f'not valid YAML: {e}') from None
-    if not isinstance(reg, dict) or set(reg) != {'handbook', 'policies'}:
-        raise RegistryError('a registry has exactly two top-level keys: handbook and policies')
+    if not isinstance(reg, dict) or set(reg) - {'extends'} != {'handbook', 'policies'}:
+        raise RegistryError('a registry has exactly two top-level keys: handbook and policies (and optionally extends)')
     if not isinstance(reg['handbook'], dict) or not isinstance(reg['policies'], dict):
         raise RegistryError('handbook and policies are mappings')
     for name, blocks in reg['handbook'].items():
@@ -163,9 +187,12 @@ def render(reg: dict) -> dict[str, str]:
 def check(task: str) -> list[str]:
     """Differences between the generated handbook and the committed handbook/ folder (empty when byte-identical)."""
     try:
-        files = render(load(task))
+        reg = load(task)
+        files = render(reg)
     except RegistryError as e:
         return [f'registry: {e}']
+    if 'own_files' in reg:
+        files = {name: files[name] for name in reg['own_files']}
     hb = os.path.join(task_dir(task), 'handbook')
     on_disk = set(os.listdir(hb)) if os.path.isdir(hb) else set()
     problems = [f'handbook/{f} is committed but the registry does not generate it' for f in sorted(on_disk - set(files))]
@@ -287,7 +314,10 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
 
     if a.cmd == 'render':
-        files = render(load(a.task))
+        reg = load(a.task)
+        files = render(reg)
+        if a.write and 'own_files' in reg:
+            files = {name: files[name] for name in reg['own_files']}
         out = os.path.join(task_dir(a.task), 'handbook') if a.write else a.out
         if not out:
             for name, text in files.items():
