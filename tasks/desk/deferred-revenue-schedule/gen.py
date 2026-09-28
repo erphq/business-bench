@@ -2,6 +2,9 @@
 """deferred-revenue-schedule: annual dispatch-software plans to a 2026 deferred revenue roll-forward.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off excluded,format_noise --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant cancel --out DIR                      # a deliverable that falls for one trap
 
 Business: Tallgrass Dispatch sells dispatch and invoicing software to towing companies. Most customers prepay a
 year; a few pay month to month. The outside CPA wants the 2026 deferred revenue schedule for the year-end file and
@@ -30,6 +33,27 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
 from openpyxl.utils import get_column_letter  # noqa: E402
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. The contract-level traps are the answer itself and are fixed; the two export
+# pitfalls are removed at render time only, after every random draw, so build() and the reference never move.
+TRAPS = TrapSet(
+    switchable={
+        "excluded": "an unsigned quote and two monthly-billed customers in the contract export; off: not in the export",
+        "format_noise": "text contract values under a merged title and preamble, a change log with a two-line preamble, "
+                        "CRLF endings, a no-charge seat change and a card update; off: numeric annual values, plain "
+                        "headers, LF endings, only the upgrade and the cancellation in the log",
+    },
+    fixed={
+        "late": "a plan starting after the 15th earns from the next month",
+        "carry": "a plan started in late 2025 is mid-term on 1 January; only its 2026 months count",
+        "upgrade": "a mid-term upgrade's add-on is earned over the months left in the term",
+        "cancel": "a cancellation stops recognition, the refund leaves deferred revenue, the kept $250 fee is revenue",
+        "renewal": "a renewal invoiced in December for a January start earns nothing but is deferred at year end",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["late", "carry", "upgrade", "cancel", "renewal", "excluded", "format_noise"]
 
 FY = 2026
 CANCEL_FEE = 25000  # cents
@@ -247,13 +271,21 @@ def naive_workbook(d: dict) -> dict:
 
 # --------------------------------------------------------------------------- emit
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         os.makedirs(naive_dir, exist_ok=True)
         write_xlsx(os.path.join(naive_dir, "deferred_revenue.xlsx"), naive_workbook(d), creator="naive")
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        return write_mutant(d, seed, mutant, out)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
+    noisy = traps.on("format_noise")
     r = rng(seed + 11)
     roles = d["roles"]
 
@@ -263,15 +295,21 @@ def emit(seed: int, naive_dir: str | None) -> None:
         if c["billing"] == "Monthly":
             value = f"${c['monthly'] / 100:,.2f} / mo"
         else:
-            value = money_str(c["fee"] / 100, 1)
+            value = money_str(c["fee"] / 100, 1) if noisy else c["fee"] / 100
         export.append([c["id"], c["customer"], c["plan"], c["billing"], c["start"], "12 months", value, c["invoice"],
                        c["invoice_date"], c["status"]])
     r.shuffle(export)
-    write_xlsx(os.path.join(ws, "billing_contracts_export.xlsx"), {"Contracts": {
-        "merged_title": "Tallgrass Dispatch - subscription contracts",
-        "preamble": [["Exported 01/06/2027 by nadia@tallgrassdispatch.com", "", "", "", "", "", "", "", "", ""]],
-        "header": ["Contract", "Customer", "Plan", "Billing", "Start date", "Term", "Contract value", "Invoice #", "Invoice date", "Status"],
-        "rows": export, "widths": {"B": 28, "E": 12, "G": 16, "I": 12, "J": 22}, "freeze": "A4"}}, creator="Billing")
+    if not traps.on("excluded"):  # shuffled as before, so the draw is unchanged; the quote and monthly rows dropped after
+        gone = {c["id"] for c in d["contracts"] if c["role"] in ("quote", "monthly")}
+        export = [x for x in export if x[0] not in gone]
+    sheet = {"header": ["Contract", "Customer", "Plan", "Billing", "Start date", "Term", "Contract value", "Invoice #", "Invoice date", "Status"],
+             "rows": export, "widths": {"B": 28, "E": 12, "G": 16, "I": 12, "J": 22}, "freeze": "A4"}
+    if noisy:
+        sheet = {"merged_title": "Tallgrass Dispatch - subscription contracts",
+                 "preamble": [["Exported 01/06/2027 by nadia@tallgrassdispatch.com", "", "", "", "", "", "", "", "", ""]], **sheet}
+    else:
+        sheet["freeze"] = "A2"
+    write_xlsx(os.path.join(ws, "billing_contracts_export.xlsx"), {"Contracts": sheet}, creator="Billing")
 
     # ---- workspace: change log
     log = []
@@ -288,8 +326,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
     other = r.choice([c for c in d["contracts"] if c["role"] == "plain" and not c["changes"]])
     log.append([date(2026, 3, r.randint(2, 27)), other["id"], other["customer"], "Payment method", "Card on file updated", ""])
     log.sort(key=lambda x: x[0])
+    if not noisy:  # only the changes that move money: the upgrade and the cancellation
+        log = [x for x in log if x[3] in ("Plan upgrade", "Cancellation")]
     write_csv(os.path.join(ws, "billing_change_log_2026.csv"), ["Date", "Contract", "Customer", "Change", "Details", "Amount billed / (refunded)"],
-              [[x[0].strftime("%m/%d/%Y")] + x[1:] for x in log], preamble=["Billing change log", "01/01/2026 - 12/31/2026"], crlf=True)
+              [[x[0].strftime("%m/%d/%Y")] + x[1:] for x in log],
+              preamble=["Billing change log", "01/01/2026 - 12/31/2026"] if noisy else None, crlf=noisy)
 
     # ---- workspace: the CPA's email
     write_email_thread(os.path.join(ws, "email_from_graham_cpa.txt"), [
@@ -344,13 +385,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
 
     upc, canc, late, carry, ren = roles["upgrade"], roles["cancel"], roles["late"], roles["carry"], roles["renewal"]
     uch, cch = upc["changes"][0], canc["changes"][0]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "deferred-revenue-schedule", "track": "desk", "category": "bookkeeping",
         "title": "2026 deferred revenue schedule for the annual plans",
         "ask": ("Graham needs the 2026 deferred revenue schedule for the year-end file, and his email in the folder says how he wants it "
                 "done. Save it as deferred_revenue.xlsx.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"{late['id']} starts {late['start'].isoformat()}, after the 15th, so it earns from the following month; counting the start "
             "month moves a twelfth of its fee into 2026 (check: late-start contract)",
             f"{carry['id']} started {carry['start'].isoformat()} and is mid-term on 1 January; under the 15th rule its first month is "
@@ -367,7 +408,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "them belong on the schedule (checks: total recognized in 2026; deferred balance at year end)",
             "contract values are text ('$5,988.00', '$249.00 / mo') under a merged title and a preamble row, the change log has a "
             "two-line preamble, CRLF endings, a no-charge seat change and a card update (checks: total recognized in 2026; revenue recognized, one line per month)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "deferred_revenue.xlsx", "min_count": 12},
             {"type": "xlsx_no_errors", "name": "no formula errors", "path": "deferred_revenue.xlsx"},
@@ -381,21 +422,93 @@ def emit(seed: int, naive_dir: str | None) -> None:
             pin("upgraded contract", "upgrade"),
             pin("cancelled contract", "cancel"),
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "deferred-revenue-schedule", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} contracts={len(d['rows'])} grand={d['grand'] / 100:.2f} deferred={d['deferred_total'] / 100:.2f} "
           f"opening={d['opening'] / 100:.2f}")
     for k in ("late", "carry", "upgrade", "cancel"):
         print(k, roles[k]["id"], by[roles[k]["id"]]["total"] / 100)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_schedule(d: dict, trap: str, seed: int) -> tuple[list, int, list, list]:
+    """(rows, opening, invoiced, refunded) as build() computes them, with the one mistake `trap` names applied."""
+    roles = d["roles"]
+    y0, y1 = midx(FY, 1), midx(FY, 12)
+    skip = {"quote", "monthly"} if trap != "excluded" else set()
+    drop = set()
+    if trap == "renewal":          # the December-invoiced renewal left off: it earns nothing in 2026
+        drop.add(roles["renewal"]["id"])
+    if trap == "format_noise":     # merged title + preamble misread as the header: the first data row of the export is lost
+        r = rng(seed + 11)
+        order = [c for c in d["contracts"]]
+        r.shuffle(order)           # the export's row order (same draw as emit)
+        # the first row that carries 2026 revenue (a lost quote or renewal row would not show)
+        drop.add(next(c["id"] for c in order if c["role"] not in ("quote", "monthly", "renewal")))
+    rows, opening, invoiced, refunded = [], 0, [0] * 12, [0] * 12
+    for c in d["contracts"]:
+        if c["role"] in skip or c["id"] in drop:
+            continue
+        f0 = first_earning_month(c["start"])
+        if (trap == "late" and c["role"] == "late") or (trap == "carry" and c["role"] == "carry"):
+            f0 = midx(c["start"].year, c["start"].month)   # the 15th rule not applied: the start month counts
+        sched = {f0 + k: c["monthly"] for k in range(12)}
+        addon = refund_amt = 0
+        for ch in c["changes"]:
+            if ch["type"] == "Upgrade":
+                if trap == "upgrade":  # the whole add-on recognized in the upgrade month
+                    k0 = first_earning_month(ch["date"])
+                    sched[k0] = sched.get(k0, 0) + ch["amount"]
+                else:
+                    for k in range(first_earning_month(ch["date"]), f0 + 12):
+                        sched[k] += ch["diff"]
+                addon = ch["amount"]
+                invoiced[ch["date"].month - 1] += addon
+            elif ch["type"] == "Cancel":
+                for k in list(sched):
+                    if k > ch["last"]:
+                        sched[k] = 0
+                if trap != "cancel":   # cancel: the schedule just stops; the kept $250 fee is never recognized
+                    cm = midx(ch["date"].year, ch["date"].month)
+                    sched[cm] = sched.get(cm, 0) + CANCEL_FEE
+                refund_amt = ch["amount"]
+                refunded[ch["date"].month - 1] += refund_amt
+        before = sum(v for k, v in sched.items() if k < y0)
+        fy = [sched.get(k, 0) for k in range(y0, y1 + 1)]
+        inv = c["invoice_date"] or c["start"]   # excluded: the quote and monthly rows booked as if invoiced at the start
+        if inv.year < FY:
+            opening += c["fee"] - before
+        elif inv.year == FY:
+            invoiced[inv.month - 1] += c["fee"]
+        deferred = c["fee"] + addon - refund_amt - before - sum(fy)
+        rows.append({"c": c, "before": before, "fy": fy, "total": sum(fy), "addon": addon, "refund": refund_amt, "deferred": deferred})
+    rows.sort(key=lambda rw: rw["c"]["id"])
+    return rows, opening, invoiced, refunded
+
+
+def write_mutant(d: dict, seed: int, trap: str, out: str) -> None:
+    rows, opening, invoiced, refunded = mutant_schedule(d, trap, seed)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "deferred_revenue.xlsx"), workbook(rows, opening, invoiced, refunded), creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

@@ -12,12 +12,42 @@ names, amounts, codes, dates and row order but keep the trap structure:
   * 1 Notion charge                          -> Software  (thread override)
   * 3 opaque merchant strings                -> REVIEW
 Trap rows keep fixed txn_ids across seeds so task.yaml must_match_keys stay valid.
+
+    python gen.py --list-traps
+    python gen.py --traps-off thread_order,notion --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant review --out DIR                   # a deliverable that falls for one trap
+
+task.yaml is hand-written for this task; --out copies it (variants drop the removed traps' sentences).
 """
 from __future__ import annotations
-import argparse, csv, os, random
+import argparse, csv, os, random, sys
 from datetime import date, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switches only change the workspace text (thread and policy), never the
+# random draw or the categories, so the reference is identical in every variant.
+TRAPS = TrapSet(
+    switchable={
+        "thread_order": "the thread's earlier 'policy stands' reply and the bookkeeper's policy-based draft, both "
+                        "overridden by the owner's last message; off: the thread goes straight from the question to "
+                        "the owner's three changes",
+        "blue_bottle": "the policy files the Blue Bottle bean subscription under Office while the owner says Meals; "
+                       "off: the policy no longer mentions Blue Bottle",
+        "notion": "the policy files Notion under Marketing while the owner says Software; off: the policy lists "
+                  "Notion under Software",
+    },
+    fixed={
+        "uber_hours": "Ubers before 9am or after 7pm are Commuting, midday Ubers and Lyfts Travel, Uber Eats Meals",
+        "review": "three unplaceable charges must be REVIEW, not guessed",
+        "refunds": "refunds keep the category of the original charge",
+        "note_ids": "note: trap txn_ids are fixed across seeds (documentation, not a pitfall)",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["thread_order", "uber_hours", "blue_bottle", "notion", "review", "refunds", "note_ids"]
 
 # Fixed ids for the rows task.yaml pins with must_match_keys (seed-invariant).
 TRAP_IDS = {
@@ -223,8 +253,8 @@ def assign_ids(rng: random.Random, rows):
                 break
 
 
-def policy_md(company: str) -> str:
-    return f"""# {company} — card expense policy (v3, effective January 2026)
+def policy_md(company: str, traps: TrapSet = TRAPS) -> str:
+    text = f"""# {company} — card expense policy (v3, effective January 2026)
 
 Every card charge gets exactly one category. Use only the categories below.
 
@@ -244,12 +274,18 @@ Notes
 - Refunds take the same category as the original charge.
 - If the description does not let you place a charge, mark it REVIEW rather than guessing. The owner clears REVIEW items at month end.
 """
+    if not traps.on("blue_bottle"):
+        text = text.replace(", and the office coffee-bean subscription (Blue Bottle).", ".")
+    if not traps.on("notion"):
+        text = text.replace(", Notion (content calendar),", ",").replace(", Twilio, Atlassian and similar.",
+                                                                           ", Twilio, Atlassian, Notion and similar.")
+    return text
 
 
-def thread_txt(owner, bk, company, domain) -> str:
+def thread_txt(owner, bk, company, domain, traps: TrapSet = TRAPS) -> str:
     oname, ofirst = owner
     bname, bfirst = bk
-    return f"""From: {bname} <{bfirst}@{domain}>
+    text = f"""From: {bname} <{bfirst}@{domain}>
 To: {oname} <{ofirst}@{domain}>
 Date: Sat, 29 Aug 2026 09:12
 Subject: August card coding — a few questions
@@ -324,12 +360,85 @@ Got it — applying those three to the August file now. Final version tonight.
 
 {bname}
 """
+    if not traps.on("thread_order"):  # drop the 'policy stands' reply and the policy-based draft
+        msgs = text.split("\n\n\nFrom: ")
+        text = "\n\n\nFrom: ".join([msgs[0]] + msgs[3:])
+    return text
+
+
+def write_task_copy(out: str, traps: TrapSet, seed: int) -> None:
+    """task.yaml is hand-written: copied as is, or for a variant with the removed traps' sentences dropped."""
+    src = os.path.join(HERE, "task.yaml")
+    if traps.canonical:
+        with open(src, "rb") as f, open(os.path.join(out, "task.yaml"), "wb") as g:
+            g.write(f.read())
+        return
+    import yaml
+    spec = yaml.safe_load(open(src))
+    spec["traps"] = active_trap_text(spec["traps"], TRAP_KEYS, traps)
+    spec["variant"] = {"of": "expense-categorize", "draw": seed, "traps_off": sorted(traps.off)}
+    with open(os.path.join(out, "task.yaml"), "w") as f:
+        yaml.safe_dump(spec, f, sort_keys=False, allow_unicode=True, width=110)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+OUT_COLS = ["txn_id", "date", "time", "description", "amount", "card_last4", "category"]
+
+
+def mutant_category(r: dict, trap: str) -> str:
+    """The category an agent that fell for `trap` (and nothing else) would give row r."""
+    tag, cat = r["tag"], r["category"]
+    if trap == "thread_order":   # the bookkeeper's policy-based draft kept: the owner's three changes never applied
+        if tag.startswith("uber_"):
+            return "Travel"
+        if tag in ("bb_sub", "bb_beans"):
+            return "Office"
+        if tag == "notion":
+            return "Marketing"
+    elif trap == "uber_hours":   # every Uber ride left under Travel
+        if tag.startswith("uber_"):
+            return "Travel"
+    elif trap == "blue_bottle":  # the policy's Office line for the bean subscription and bean order
+        if tag in ("bb_sub", "bb_beans"):
+            return "Office"
+    elif trap == "notion":       # Notion left under Marketing as the policy says
+        if tag == "notion":
+            return "Marketing"
+    elif trap == "review":       # the unplaceable charges guessed instead of flagged
+        guess = {"review_1": "Professional Fees", "review_2": "Meals", "review_3": "Office"}
+        if tag in guess:
+            return guess[tag]
+    elif trap == "refunds":      # refunds put under a category of their own
+        if r["amount"] < 0:
+            return "Refunds"
+    else:
+        raise KeyError(trap)
+    return cat
+
+
+def write_mutant(rows: list, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    with open(os.path.join(out, "categorized.csv"), "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(OUT_COLS)
+        for r in rows:
+            w.writerow([r["txn_id"], r["date"].isoformat(), r["time"], r["description"],
+                        f"{r['amount']:.2f}", r["card_last4"], mutant_category(r, trap)])
+
+
+# Grader-blind mutant, kept out of MUTANTS: "refunds" (the two refund rows under a category of their own) changes 2
+# of ~120 rows, which the category check's min_accuracy 0.95 absorbs, and neither refund is in must_match_keys, so
+# every check passes. write_mutant(rows, "refunds", out) still writes it. note_ids is documentation and has no mutant.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k not in ("refunds", "note_ids")}
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
     args = ap.parse_args()
+    traps = parse_trap_args(args, TRAPS, MUTANTS, TRAP_KEYS)
     rng = random.Random(args.seed)
 
     owner = OWNERS[args.seed % len(OWNERS)]
@@ -340,14 +449,20 @@ def main():
     rows = build_rows(rng, cards)
     assign_ids(rng, rows)
     rows.sort(key=lambda r: (r["date"], r["time"], r["txn_id"]))
+    if args.mutant:
+        return write_mutant(rows, args.mutant, args.out)
 
-    ws = os.path.join(HERE, "workspace")
-    ref = os.path.join(HERE, "reference")
-    sol = os.path.join(HERE, "reference_solution")
-    for d in (ws, ref, sol):
-        os.makedirs(d, exist_ok=True)
-        for f in os.listdir(d):
-            os.remove(os.path.join(d, f))
+    if args.out is None:
+        ws = os.path.join(HERE, "workspace")
+        ref = os.path.join(HERE, "reference")
+        sol = os.path.join(HERE, "reference_solution")
+        for d in (ws, ref, sol):
+            os.makedirs(d, exist_ok=True)
+            for f in os.listdir(d):
+                os.remove(os.path.join(d, f))
+    else:
+        ws, ref, sol = variant_dirs(args.out)
+        write_task_copy(args.out, traps, args.seed)
 
     in_cols = ["txn_id", "date", "time", "description", "amount", "card_last4"]
     with open(os.path.join(ws, "transactions.csv"), "w", newline="") as f:
@@ -357,9 +472,9 @@ def main():
             w.writerow([r["txn_id"], r["date"].isoformat(), r["time"], r["description"],
                         f"{r['amount']:.2f}", r["card_last4"]])
     with open(os.path.join(ws, "expense_policy.md"), "w") as f:
-        f.write(policy_md(company))
+        f.write(policy_md(company, traps))
     with open(os.path.join(ws, "thread.txt"), "w") as f:
-        f.write(thread_txt(owner, bk, company, domain))
+        f.write(thread_txt(owner, bk, company, domain, traps))
 
     out_cols = in_cols + ["category"]
     for d in (ref, sol):

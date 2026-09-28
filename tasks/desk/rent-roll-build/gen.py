@@ -2,6 +2,9 @@
 """rent-roll-build: an October 1 rent roll for a two-building apartment owner from three system exports.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off released,rent_text --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant window --out DIR                  # a deliverable that falls for one trap
 
 Business: a family that owns two small walk-up apartment buildings (Alder Court, 14 units, and Birch House,
 10 units) and runs them on a cheap property-management app. The lender wants a rent roll; the app can only
@@ -29,6 +32,26 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switches act when the lease export is written, after every random draw, so
+# build() and the reference never move.
+TRAPS = TrapSet(
+    switchable={
+        "released": "three units carry both an ended lease and its replacement; off: the ended leases are not in the "
+                    "lease export (their tenants stay in the tenant table)",
+        "rent_text": "rent written as text in five shapes; off: a plain number (the deposit column stays)",
+        "unit_keys": "both buildings number units 101-205, the lease export spells the property three ways and the unit "
+                     "three ways; off: the property as on the unit list and the unit as its Unit ID (A-101)",
+    },
+    fixed={
+        "mtm": "month-to-month tenants are occupied, not renewals, and pay the lease rent plus the $75 fee",
+        "vacant": "three units with no lease in force on October 1 must be on the roll as vacant",
+        "window": "the renewal window is October 1 to December 31 inclusive",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["released", "mtm", "rent_text", "vacant", "unit_keys", "window"]
 
 AS_OF = date(2026, 10, 1)
 WINDOW_END = date(2026, 12, 31)
@@ -194,9 +217,12 @@ def roll_sheets(rows: list[list]) -> dict:
                           "rows": rows + tail, "widths": {"A": 9, "B": 13, "F": 30, "G": 12, "H": 12, "L": 15, "N": 36}, "freeze": "A2"}}
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     by_id = {u["id"]: u for u in d["units"]}
+    if mutant:
+        return write_mutant(d, mutant, out)
     if naive_dir:
         # one row per lease from the lease table, joined to tenants; ended leases read as expiring; no vacant units
         os.makedirs(naive_dir, exist_ok=True)
@@ -207,8 +233,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
                          lz["start"], lz["end"], lz["rent"], 0, f"=I{i}+J{i}", "Occupied", "Yes" if lz["end"] <= WINDOW_END else "", ""])
         write_xlsx(os.path.join(naive_dir, "rent_roll.xlsx"), roll_sheets(rows), creator="naive")
         return
-    ws, ref, sol = task_dirs(HERE)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     r = rng(seed + 5)
+    ended = {id(u["former"]) for u in d["units"] if u["role"] == "released"}
 
     write_xlsx(os.path.join(ws, "unit_list.xlsx"), {"Units": {
         "merged_title": "Unit directory - Alder Court & Birch House",
@@ -217,11 +248,17 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "widths": {"B": 14}}}, creator="RentEasy")
     lrows = []
     for lz in sorted(d["leases"], key=lambda x: x["k"]):
+        if not traps.on("released") and id(lz) in ended:
+            continue
         u = by_id[lz["unit"]]
-        unit_txt = [str(u["num"]), f"#{u['num']}", f"Apt {u['num']}"][int(lz["k"] * 3)]
-        lrows.append([lz["id"], PROPERTY_SPELL[u["building"]][lz["prop_style"]], unit_txt, "; ".join(t["id"] for t in lz["tenants"]),
+        if traps.on("unit_keys"):
+            prop, unit_txt = PROPERTY_SPELL[u["building"]][lz["prop_style"]], [str(u["num"]), f"#{u['num']}", f"Apt {u['num']}"][int(lz["k"] * 3)]
+        else:
+            prop, unit_txt = u["building"], u["id"]
+        lrows.append([lz["id"], prop, unit_txt, "; ".join(t["id"] for t in lz["tenants"]),
                       date_variant(lz["start"], lz["date_style"]), date_variant(lz["end"], lz["date_style"]),
-                      rent_text(lz["rent"], lz["style"]), money_str(float(lz["rent"]), 1), lz["notes"]])
+                      rent_text(lz["rent"], lz["style"]) if traps.on("rent_text") else lz["rent"],
+                      money_str(float(lz["rent"]), 1), lz["notes"]])
     write_csv(os.path.join(ws, "lease_export_2026-10-01.csv"),
               ["Lease #", "Property", "Unit", "Tenant IDs", "Start", "End", "Rent", "Deposit", "Notes"], lrows,
               preamble=["RentEasy lease table export", "Exported 10/01/2026 07:02"], bom=True, crlf=True)
@@ -263,13 +300,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_xlsx(os.path.join(sol, "rent_roll.xlsx"), roll_sheets(roll_rows(d)), creator="reference")
 
     mtm = mtm_units[0]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "rent-roll-build", "track": "desk", "category": "spreadsheet",
         "title": "October rent roll for the bank",
         "ask": ("Carol needs a rent roll for the bank from the RentEasy exports in this folder. Save it as rent_roll.xlsx with the "
                 "total as a formula; her email says what goes on it.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "three units carry both an ended lease and the new lease that replaced it; one row per lease keeps the old tenant on "
             "the roll and adds the old rent to the total (checks: total monthly rent; every unit with tenant, rent and renewal flag)",
             "three tenants are month to month on leases that ended between March and August: they are occupied, they are not "
@@ -284,7 +321,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "(check: every unit with tenant, rent and renewal flag)",
             "the renewal window is October 1 to December 31 inclusive: one lease ends on December 31 and one on January 31, and "
             "ended leases and month-to-month tenants are not renewals (check: every unit with tenant, rent and renewal flag)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "rent_roll.xlsx", "min_count": 1},
             {"type": "xlsx_no_errors", "name": "no error cells", "path": "rent_roll.xlsx"},
@@ -294,18 +331,79 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "expected": float(mtm["rent"]), "rel_tol": 0.0005, "near_text": mtm["current"]["tenants"][0]["last"].lower()},
             {"type": "custom", "name": "every unit with tenant, rent and renewal flag", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "rent-roll-build", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} total={d['total']} leases={len(d['leases'])} expiring={sum(u['expiring'] for u in d['units'])}")
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    """The reference roll with the one mistake `trap` names."""
+    units = d["units"]
+    lease_of = {u["id"]: u["current"] for u in units}
+    if trap == "unit_keys":        # current leases looked up by unit number alone: the later export row wins for both buildings
+        by_num = {}
+        for lz in sorted(d["leases"], key=lambda x: x["k"]):
+            if any(u["current"] is lz for u in units):
+                by_num[int(lz["unit"].split("-")[1])] = lz
+        lease_of = {u["id"]: by_num.get(u["num"]) for u in units}
+    rows = []
+    for u in units:
+        if trap == "vacant" and not u["current"]:   # the roll built from the lease table: vacant units never appear
+            continue
+        cur = lease_of[u["id"]]
+        mtm = u["mtm"] and cur is u["current"]
+        bb = f"{'Studio' if u['beds'] == 0 else str(u['beds']) + ' bd'}/{u['baths']} ba"
+        if cur:
+            names = " & ".join(f"{t['first']} {t['last']}" for t in cur["tenants"])
+            fee = MTM_FEE if mtm and trap != "mtm" else 0   # mtm: the $75 fee RentEasy does not show left off
+            status = "Month-to-month" if mtm else "Occupied"
+            if trap == "window":   # the window taken as ending before December 31
+                exp = (not mtm) and AS_OF <= cur["end"] < WINDOW_END
+            else:
+                exp = (not mtm) and AS_OF <= cur["end"] <= WINDOW_END
+            rent = rent_text(cur["rent"], cur["style"]) if trap == "rent_text" and cur["style"] in (1, 2) else cur["rent"]
+            rows.append([u["id"], u["building"], bb, u["sqft"], u["market"], names, cur["start"], cur["end"], rent,
+                         fee, None, status, "Yes" if exp else "", ""])
+        else:
+            rows.append([u["id"], u["building"], bb, u["sqft"], u["market"], "VACANT", None, None, 0, 0, None, "Vacant", "", u["note"]])
+        if trap == "released" and u["role"] == "released":   # one row per lease: the ended lease stays on the roll too
+            old = u["former"]
+            rows.append([u["id"], u["building"], bb, u["sqft"], u["market"], " & ".join(f"{t['first']} {t['last']}" for t in old["tenants"]),
+                         old["start"], old["end"], old["rent"], 0, None, "Occupied", "", ""])
+    for i, row in enumerate(rows, start=2):
+        row[10] = f"=I{i}+J{i}"
+    return rows
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    if trap == "rent_text" and not any(u["current"] and u["current"]["style"] in (1, 2) for u in d["units"]):
+        raise SystemExit("no lease in this draw uses a rent shape the mutant misreads")
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "rent_roll.xlsx"), roll_sheets(mutant_rows(d, trap)), creator="mutant")
+
+
+# Grader-blind mutant, kept out of MUTANTS: "released" (one row per lease, so each re-leased unit also has a row for
+# its ended lease and old tenant) passes "every unit with tenant, rent and renewal flag": check.py only asks that some
+# row for the unit carries the current tenant and rent, so an extra row for the former tenant of an occupied unit goes
+# unseen. Only "total monthly rent" catches it. write_mutant(d, "released", out) still writes it.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "released"}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(500):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw in 500 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

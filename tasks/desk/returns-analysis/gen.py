@@ -2,6 +2,9 @@
 """returns-analysis: a Q2 order export plus a returns export -> return rate per product and a reason breakdown.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off q1,format_noise --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant rename --out DIR               # a deliverable that falls for one trap
 
 Traps (each caught by a check, see task.yaml):
   * exchanges and store credits are returns for the rate, but only refunds and store credits are refunded dollars;
@@ -13,11 +16,29 @@ Traps (each caught by a check, see task.yaml):
   * a Q1 returns export sits in the folder as a distractor; the ask is Q2 only         (check: total units returned)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, sys
 from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switches act when the exports and the note are written, after every random draw,
+# so build() and the reference never move.
+TRAPS = TrapSet(
+    switchable={
+        "exchanges": "exchanges and store credits are returns but only refunds and store credits are refunded dollars; "
+                     "off: exchange rows print no amount (that exchanges count as returns is the answer and stays)",
+        "type_spellings": "eleven spellings of three return types; off: the three canonical spellings",
+        "reasons": "free-text reasons bucketed by the note's keywords; off: the export prints the bucket name",
+        "rename": "the renamed product appears under both names in both exports; off: the new name throughout",
+        "format_noise": "two-line preamble, BOM, CRLF, US dates and '$12.00' text amounts in the returns exports; off: "
+                        "plain CSV with ISO dates and numeric amounts",
+        "q1": "a Q1 returns export sits in the folder; off: not in the folder",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["exchanges", "type_spellings", "reasons", "rename", "format_noise", "q1"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -140,52 +161,8 @@ def acceptable(d: dict) -> bool:
     return True
 
 
-def emit(seed: int) -> None:
-    for attempt in range(300):
-        d = build(seed * 1000 + attempt)
-        if acceptable(d): break
-    else:
-        raise SystemExit("no acceptable draw")
-    ws, ref, sol = task_dirs(HERE)
-    r = rng(seed + 77)
-    # orders export: clean-ish csv, ISO dates
-    write_csv(os.path.join(ws, "orders_export_2026-Q2.csv"), ["order_id", "order_date", "sku", "product_name", "qty", "unit_price"],
-              [[o["order_id"], o["date"].isoformat(), o["sku"], o["product"], o["qty"], f"{o['price']:.2f}"] for o in d["orders"]])
-    # returns export: preamble + BOM + CRLF, US dates, $ amounts
-    def ret_rows(items):
-        return [[x["rma_id"], date_variant(x["date"], 1), x["order_id"], x["sku"], name_noise(r, x["product"]), x["qty"], x["type_shown"],
-                 x["reason"], money_str(x["amount"], 1)] for x in items]
-    hdr = ["RMA", "Return Date", "Order", "SKU", "Product", "Qty", "Type", "Reason", "Amount"]
-    write_csv(os.path.join(ws, "returns_export_2026-Q2.csv"), hdr, ret_rows(d["returns"]),
-              preamble=["Returns report - Granite Peak Outfitters", "Exported 07/02/2026 by RMA module"], bom=True, crlf=True)
-    write_csv(os.path.join(ws, "returns_export_2026-Q1.csv"), hdr, ret_rows(d["q1"]),
-              preamble=["Returns report - Granite Peak Outfitters", "Exported 04/01/2026 by RMA module"], bom=True, crlf=True)
-    kw = "\n".join(f"  {b}: {KEYWORDS[b]}" for b in REASONS)
-    write_text(os.path.join(ws, "note_from_mateo.txt"),
-               "Return reasons - how we bucket them\n\n"
-               "The RMA screen is free text so the reasons are all over the place. Put each one in the bucket whose keyword it contains:\n\n"
-               f"{kw}\n\n"
-               "Every reason in the export contains one of those words. Count units (the Qty column), not RMAs.\n\n"
-               "Two other things. Exchanges and store credits are still returns - the item came back - so they count toward the return rate "
-               "along with refunds. But exchanges do not cost us a refund, so when you total refunded dollars use refunds and store credits only, "
-               "even though the export prints an amount on every row.\n\n"
-               f"Also we renamed {OLD_NAME} to {NEW_NAME} on May 1 (same SKU {RENAMED_SKU}); both names show up in both exports. Report it once, as {NEW_NAME}.\n"
-               "Return rate = units returned / units sold in the quarter.\n\n- Mateo\n")
-    # ---- reference
-    per = [d["per"][s] for _, s, _ in d["products"]]
-    write_csv(os.path.join(ref, "per_product.csv"), ["sku", "product", "units_sold", "units_returned", "refund_units", "exchange_units", "return_rate", "refunded_dollars"],
-              [[a["sku"], a["product"], a["sold"], a["returned"], a["refund_units"], a["exchange_units"], f"{a['returned'] / a['sold']:.4f}", f"{a['refunded']:.2f}"] for a in per])
-    write_csv(os.path.join(ref, "reasons.csv"), ["reason", "units"], [[b, n] for b, n in d["buckets"].items()])
-    total_ret = sum(a["returned"] for a in per)
-    total_sold = sum(a["sold"] for a in per)
-    ex_ = d["per"][d["exchange_heavy_sku"]]
-    write_json(os.path.join(ref, "notes.json"), {"refunded_total": d["refunded_total"], "total_units_returned": total_ret,
-                                                  "rates": {"total": round(total_ret / total_sold, 4), ex_["product"].lower(): round(ex_["returned"] / ex_["sold"], 4)},
-                                                  "total_units_sold": sum(a["sold"] for a in per), "naive": d["naive"]})
-    # ---- reference solution workbook (live formulas)
-    sales_rows = [[a["sku"], a["product"], a["sold"]] for a in per]
-    ret_rows_clean = [[x["rma_id"], x["date"], x["order_id"], x["sku"], d["per"][x["sku"]]["product"], x["qty"], x["type"], x["bucket"],
-                       x["amount"] if x["type"] != "Exchange" else 0.0] for x in d["returns"]]
+def solution_sheets(per: list, sales_rows: list, ret_rows_clean: list) -> dict:
+    """The report workbook: live formulas over a Sales and a Returns data sheet."""
     nR = len(ret_rows_clean) + 1
     F = 3                                  # Summary data starts on row 3 (row 1 merged title, row 2 header)
     summ = []
@@ -202,29 +179,112 @@ def emit(seed: int) -> None:
     reasons = [[b, f"=SUMIF(Returns!$H$2:$H${nR},A{i},Returns!$F$2:$F${nR})", f"=IF(Summary!$D${T}=0,0,ROUND(B{i}/Summary!$D${T},4))"]
                for i, b in enumerate(REASONS, start=2)]
     reasons.append(["Total", f"=SUM(B2:B{len(REASONS) + 1})", ""])
-    write_xlsx(os.path.join(sol, "returns.xlsx"), {
+    return {
         "Summary": {"merged_title": "Q2 2026 returns by product (Apr-Jun)", "header": ["SKU", "Product", "Units sold", "Units returned", "Refund units", "Exchange units", "Return rate", "Refunded dollars"],
                     "rows": summ, "number_formats": {"G": "0.0%", "H": "#,##0.00"}, "widths": {"B": 22, "C": 12, "D": 14, "E": 13, "F": 15, "G": 12, "H": 16}},
         "Reasons": {"header": ["Reason", "Units returned", "Share"], "rows": reasons, "number_formats": {"C": "0.0%"}, "widths": {"A": 18, "B": 15}},
         "Sales": {"header": ["sku", "product", "units_sold"], "rows": sales_rows, "widths": {"B": 22}},
         "Returns": {"header": ["rma_id", "return_date", "order_id", "sku", "product", "qty", "type", "reason_bucket", "refund_amount"],
                     "rows": ret_rows_clean, "widths": {"B": 12, "E": 22, "H": 18}},
-    }, creator="reference")
+    }
+
+
+BUCKET_OF = {ph: b for b, phs in REASONS.items() for ph in phs}
+TYPE_OF = {sp: t for t, sps in TYPE_SPELLINGS.items() for sp in sps}
+
+
+def pick(seed: int) -> tuple[int, dict]:
+    for attempt in range(300):
+        d = build(seed * 1000 + attempt)
+        if acceptable(d): return attempt, d
+    raise SystemExit("no acceptable draw")
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
+    attempt, d = pick(seed)
+    if mutant:
+        return write_mutant(d, mutant, out)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
+    noisy = traps.on("format_noise")
+    shown_name = (lambda x: x["product"]) if traps.on("rename") else (
+        lambda x: NEW_NAME if x["sku"] == RENAMED_SKU else x["product"])
+    r = rng(seed + 77)
+    # orders export: clean-ish csv, ISO dates
+    write_csv(os.path.join(ws, "orders_export_2026-Q2.csv"), ["order_id", "order_date", "sku", "product_name", "qty", "unit_price"],
+              [[o["order_id"], o["date"].isoformat(), o["sku"], shown_name(o), o["qty"], f"{o['price']:.2f}"] for o in d["orders"]])
+    # returns export: preamble + BOM + CRLF, US dates, $ amounts
+    def ret_rows(items):
+        out_rows = []
+        for x in items:
+            typ = x["type_shown"] if traps.on("type_spellings") else TYPE_OF[x["type_shown"]]
+            row = [x["rma_id"], date_variant(x["date"], 1) if noisy else x["date"].isoformat(), x["order_id"], x["sku"],
+                   name_noise(r, shown_name(x)), x["qty"], typ,
+                   x["reason"] if traps.on("reasons") else BUCKET_OF[x["reason"]],
+                   money_str(x["amount"], 1) if noisy else f"{x['amount']:.2f}"]
+            if not traps.on("exchanges") and TYPE_OF[x["type_shown"]] == "Exchange":
+                row[-1] = ""
+            out_rows.append(row)
+        return out_rows
+    hdr = ["RMA", "Return Date", "Order", "SKU", "Product", "Qty", "Type", "Reason", "Amount"]
+    write_csv(os.path.join(ws, "returns_export_2026-Q2.csv"), hdr, ret_rows(d["returns"]),
+              preamble=["Returns report - Granite Peak Outfitters", "Exported 07/02/2026 by RMA module"] if noisy else None,
+              bom=noisy, crlf=noisy)
+    q1_rows = ret_rows(d["q1"])   # rendered either way, so the name-noise draws of any later file are unchanged
+    if traps.on("q1"):
+        write_csv(os.path.join(ws, "returns_export_2026-Q1.csv"), hdr, q1_rows,
+                  preamble=["Returns report - Granite Peak Outfitters", "Exported 04/01/2026 by RMA module"] if noisy else None,
+                  bom=noisy, crlf=noisy)
+    kw = "\n".join(f"  {b}: {KEYWORDS[b]}" for b in REASONS)
+    write_text(os.path.join(ws, "note_from_mateo.txt"),
+               "Return reasons - how we bucket them\n\n"
+               "The RMA screen is free text so the reasons are all over the place. Put each one in the bucket whose keyword it contains:\n\n"
+               f"{kw}\n\n"
+               + ("Every reason in the export contains one of those words. " if traps.on("reasons") else
+                  "The export now prints the bucket name itself in the Reason column. ") +
+               "Count units (the Qty column), not RMAs.\n\n"
+               "Two other things. Exchanges and store credits are still returns - the item came back - so they count toward the return rate "
+               "along with refunds. But exchanges do not cost us a refund, so when you total refunded dollars use refunds and store credits only"
+               + (", even though the export prints an amount on every row.\n\n" if traps.on("exchanges") else
+                  " (exchange rows carry no amount).\n\n")
+               + (f"Also we renamed {OLD_NAME} to {NEW_NAME} on May 1 (same SKU {RENAMED_SKU}); both names show up in both exports. Report it once, as {NEW_NAME}.\n"
+                  if traps.on("rename") else
+                  f"Also we renamed {OLD_NAME} to {NEW_NAME} on May 1 (same SKU {RENAMED_SKU}); both exports already use the new name. Report it as {NEW_NAME}.\n") +
+               "Return rate = units returned / units sold in the quarter.\n\n- Mateo\n")
+    # ---- reference
+    per = [d["per"][s] for _, s, _ in d["products"]]
+    write_csv(os.path.join(ref, "per_product.csv"), ["sku", "product", "units_sold", "units_returned", "refund_units", "exchange_units", "return_rate", "refunded_dollars"],
+              [[a["sku"], a["product"], a["sold"], a["returned"], a["refund_units"], a["exchange_units"], f"{a['returned'] / a['sold']:.4f}", f"{a['refunded']:.2f}"] for a in per])
+    write_csv(os.path.join(ref, "reasons.csv"), ["reason", "units"], [[b, n] for b, n in d["buckets"].items()])
+    total_ret = sum(a["returned"] for a in per)
+    total_sold = sum(a["sold"] for a in per)
+    ex_ = d["per"][d["exchange_heavy_sku"]]
+    write_json(os.path.join(ref, "notes.json"), {"refunded_total": d["refunded_total"], "total_units_returned": total_ret,
+                                                  "rates": {"total": round(total_ret / total_sold, 4), ex_["product"].lower(): round(ex_["returned"] / ex_["sold"], 4)},
+                                                  "total_units_sold": sum(a["sold"] for a in per), "naive": d["naive"]})
+    # ---- reference solution workbook (live formulas)
+    sales_rows = [[a["sku"], a["product"], a["sold"]] for a in per]
+    ret_rows_clean = [[x["rma_id"], x["date"], x["order_id"], x["sku"], d["per"][x["sku"]]["product"], x["qty"], x["type"], x["bucket"],
+                       x["amount"] if x["type"] != "Exchange" else 0.0] for x in d["returns"]]
+    write_xlsx(os.path.join(sol, "returns.xlsx"), solution_sheets(per, sales_rows, ret_rows_clean), creator="reference")
     ren, ex = d["per"][RENAMED_SKU], d["per"][d["exchange_heavy_sku"]]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "returns-analysis", "track": "desk", "category": "reports",
         "title": "Q2 return rate by product and reason",
         "ask": ("Put together a Q2 returns report for me from the order and returns exports in this folder: return rate by product and a breakdown "
                 "of why things come back. Mateo's note explains how we bucket the reasons. Save it as returns.xlsx with live formulas.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "exchanges and store credits are returns for the rate, but only refunds and store credits are refunded dollars; the export prints an amount on exchange rows too (checks: units returned for the jacket; return rates, quarter total and the jacket; refunded dollars)",
             'the Type column carries eleven spellings of three types ("Refund", "REFUND", "Exch", "Store credit", ...) (check: refunded dollars)',
             "reasons are free text; the note maps keywords to five buckets (checks: sizing units; damaged units)",
             f"{OLD_NAME} became {NEW_NAME} on May 1 with the same SKU {RENAMED_SKU}; both names appear in both exports (checks: renamed product units sold; renamed product units returned)",
             'the returns export has a two-line preamble, a BOM, CRLF line endings, US dates and "$12.00" text amounts (check: refunded dollars)',
             "a Q1 returns export sits in the folder as a distractor; only Q2 counts (checks: total units returned; return rates, quarter total and the jacket)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "returns.xlsx", "min_count": 12},
             {"type": "xlsx_no_errors", "name": "no formula errors", "path": "returns.xlsx"},
@@ -237,11 +297,66 @@ def emit(seed: int) -> None:
             {"type": "xlsx_value_present", "name": "sizing units", "path": "returns.xlsx", "expected": d["buckets"]["Sizing"], "rel_tol": cent_tol(d["buckets"]["Sizing"], 0.001), "near_text": "sizing"},
             {"type": "xlsx_value_present", "name": "damaged units", "path": "returns.xlsx", "expected": d["buckets"]["Damaged"], "rel_tol": cent_tol(d["buckets"]["Damaged"], 0.001), "near_text": "damaged"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "returns-analysis", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} attempt={attempt} orders={len(d['orders'])} returns={len(d['returns'])} refunded={d['refunded_total']} "
           f"renamed sold/ret={ren['sold']}/{ren['returned']} (naive {d['naive']['name_sold']}/{d['naive']['name_ret']}) "
           f"jacket ret={ex['returned']} (refund-only {d['naive']['refund_only']}) buckets={d['buckets']}")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """The reference workbook, same formulas, with the Sales and Returns data an agent that fell for `trap` would enter."""
+    per = [dict(d["per"][s]) for _, s, _ in d["products"]]
+    items = [dict(x, product=d["per"][x["sku"]]["product"]) for x in d["returns"]]
+    if trap == "exchanges":        # a return means a refund: exchanges and store credits dropped from returns and dollars
+        items = [x for x in items if x["type"] == "Refund"]
+    elif trap == "q1":             # the Q1 export appended to the Q2 returns
+        items += [dict(x, product=d["per"][x["sku"]]["product"], type=TYPE_OF[x["type_shown"]], bucket=BUCKET_OF[x["reason"]])
+                  for x in d["q1"]]
+    elif trap == "reasons":        # keywords matched case-sensitively: "TOO SMALL", "Damaged in shipping" ... left unbucketed
+        def bucket(reason):
+            for b in REASONS:
+                if any(k.strip() in reason for k in KEYWORDS[b].split(",")):
+                    return b
+            return "Other"
+        items = [dict(x, bucket=bucket(x["reason"])) for x in items]
+    elif trap == "rename":         # grouped by product name: the old name is a product of its own
+        old = {"sku": RENAMED_SKU + " (old name)", "product": OLD_NAME,
+               "sold": sum(o["qty"] for o in d["orders"] if o["sku"] == RENAMED_SKU and o["product"] == OLD_NAME)}
+        for a in per:
+            if a["sku"] == RENAMED_SKU:
+                a["sold"] -= old["sold"]
+        per.append(old)
+        items = [dict(x, sku=old["sku"], product=OLD_NAME) if x["sku"] == RENAMED_SKU and src["product"] == OLD_NAME else x
+                 for x, src in zip(items, d["returns"])]
+    elif trap not in ("type_spellings", "format_noise"):
+        raise KeyError(trap)
+    rows = []
+    for x in items:
+        amount = x["amount"] if x["type"] != "Exchange" else 0.0
+        typ = x["type"]
+        if trap == "type_spellings":   # only the exact spellings "Refund" and "Store credit" read as refunded dollars
+            typ = x["type_shown"]
+            amount = x["amount"] if typ in ("Refund", "Store credit") else 0.0
+        if trap == "format_noise":     # "$12.00" text amounts pasted as text: SUMIF skips them
+            amount = money_str(amount, 1)
+        rows.append([x["rma_id"], x["date"], x["order_id"], x["sku"], x["product"], x["qty"], typ, x["bucket"], amount])
+    sales_rows = [[a["sku"], a["product"], a["sold"]] for a in per]
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "returns.xlsx"), solution_sheets(per, sales_rows, rows), creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

@@ -2,6 +2,9 @@
 """supplier-invoices-to-csv: eight August supplier documents in eight layouts -> one AP import lines file.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off statement,scan --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant credit_signs --out DIR        # a deliverable that falls for one trap
 
 Business: Nightjar Coffee Roasters' bookkeeper keys supplier bills into accounting from an import file. August's
 documents: seven invoices (one in EUR, one scanned) and a credit note, plus a statement of account that is not a bill.
@@ -19,6 +22,7 @@ Traps (each caught by a check, see task.yaml):
 """
 from __future__ import annotations
 import argparse
+import html
 import os
 import sys
 from datetime import date
@@ -26,11 +30,33 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
 from reportlab.pdfbase import pdfmetrics  # noqa: E402
 try:  # write_pdf_document builds "<font>-Bold"; alias "Times" so Times-Roman / Times-Bold resolve
     pdfmetrics.registerFont(pdfmetrics.Font("Times", "Times-Roman", "WinAnsiEncoding"))
 except Exception:
     pass
+
+# Every trap in task.yaml, keyed. All switches act in render() (and the vendor list) only, so build() and the
+# reference never move.
+TRAPS = TrapSet(
+    switchable={
+        "totals": "document total placed differently per layout (Hollowell account balance with an older invoice at the "
+                  "foot; Cascade total only in a box at the top); off: no account summary on Hollowell, and Cascade "
+                  "repeats its total at the foot",
+        "eur_format": "Kaffa's German number format and day-first date; off: the same EUR figures in 1,237.50 format "
+                      "with an ISO date (the freight stays under the item table)",
+        "below_lines": "Summit's loyalty discount and delivery printed under the item table; off: they are the last rows "
+                       "of the table (Bluestem's per-line discounts are part of the answer and stay)",
+        "credit_signs": "the credit memo prints positive figures; off: it prints negative quantity, credit and total",
+        "statement": "a statement of account that is not a bill sits in the folder; off: no statement",
+        "scan": "the Greenline invoice is an image-only scan; off: a text PDF",
+        "vendor_names": "vendor list spells Pacific Packaging differently from its documents; off: the list uses the "
+                        "printed name",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["totals", "eur_format", "below_lines", "credit_signs", "statement", "scan", "vendor_names"]
 
 HEADER = ["line_ref", "vendor_id", "document_type", "document_number", "document_date", "currency", "description", "quantity",
           "unit_price", "discount_pct", "line_amount", "document_total"]
@@ -125,7 +151,7 @@ def build(seed: int) -> dict:
     return {"docs": docs, "rows": rows}
 
 
-def render(ws: str, d: dict, seed: int) -> None:
+def render(ws: str, d: dict, seed: int, traps: TrapSet = TRAPS) -> None:
     docs = d["docs"]
     P = os.path.join(ws, "supplier_documents_2026-08")
     os.makedirs(P, exist_ok=True)
@@ -147,25 +173,26 @@ def render(ws: str, d: dict, seed: int) -> None:
         ("p", f"Invoice #: {B['no']}<br/>Date of service: {B['date'].strftime('%m/%d/%Y')}<br/>Customer: Nightjar Coffee Roasters (acct 4471)"), ("spacer", 8),
         ("table", [["Service / material", "Hours or qty", "Rate", "Amount"]] +
          [[x["desc"], f"{x['qty']:g}", plain(x["unit"]), plain(x["amount"])] for x in B["lines"]], {"col_widths": [230, 80, 70, 80], "grid": True}),
-        ("spacer", 18), ("h", "Account summary"),
+        ("spacer", 18)] + ([("h", "Account summary"),
         ("kv", [("This invoice", plain(B["total"])), ("Previous balance (invoice HE-2026-0702, unpaid)", plain(B["prev"])),
-                ("Total account balance", plain(round(B["total"] + B["prev"], 2)))], {"col_widths": [260, 120]}),
+                ("Total account balance", plain(round(B["total"] + B["prev"], 2)))], {"col_widths": [260, 120]})] if traps.on("totals") else []) + [
         ("small", "Past-due balances accrue 1.5% per month.")], pagesize="letter", font="Times", base_size=11)
     # C: A4, Times, German/English, German number format, freight under the table
     C = docs["C"]
+    de_ = de if traps.on("eur_format") else plain
     items = [x for x in C["lines"] if not x.get("below")]
     fr = [x for x in C["lines"] if x.get("below")][0]
     write_pdf_document(os.path.join(P, f"Kaffa_Rechnung_{C['no']}.pdf"), [
         ("right", "Kaffa Import GmbH<br/>Am Sandtorkai 41, 20457 Hamburg<br/>USt-IdNr. DE 298 441 507"), ("spacer", 10),
         ("p", "An / To: Nightjar Coffee Roasters, 2210 SE Division St, Portland OR 97202, USA"), ("spacer", 8),
         ("title", "Rechnung / Invoice"),
-        ("kv", [("Rechnung Nr. / Invoice no.", C["no"]), ("Datum / Date", C["date"].strftime("%d.%m.%Y")), ("Waehrung / Currency", "EUR")],
+        ("kv", [("Rechnung Nr. / Invoice no.", C["no"]), ("Datum / Date", C["date"].strftime("%d.%m.%Y") if traps.on("eur_format") else C["date"].isoformat()), ("Waehrung / Currency", "EUR")],
          {"col_widths": [150, 200]}), ("spacer", 8),
         ("table", [["Pos.", "Beschreibung / Description", "Menge / Qty", "Einzelpreis / Unit price", "Gesamt / Total"]] +
-         [[f"{i}", x["desc"], x["qty"], de(x["unit"]), de(x["amount"])] for i, x in enumerate(items, 1)],
+         [[f"{i}", x["desc"], x["qty"], de_(x["unit"]), de_(x["amount"])] for i, x in enumerate(items, 1)],
          {"col_widths": [30, 200, 60, 90, 80], "grid": True}), ("spacer", 6),
-        ("kv", [("Zwischensumme / Subtotal", de(C["subtotal"])), ("Freight", de(fr["amount"])),
-                ("USt. 0% (Ausfuhrlieferung / export)", de(0.0)), ("Gesamtbetrag / Total EUR", de(C["total"]))], {"col_widths": [200, 100]}),
+        ("kv", [("Zwischensumme / Subtotal", de_(C["subtotal"])), ("Freight", de_(fr["amount"])),
+                ("USt. 0% (Ausfuhrlieferung / export)", de_(0.0)), ("Gesamtbetrag / Total EUR", de_(C["total"]))], {"col_widths": [200, 100]}),
         ("spacer", 10), ("small", "Zahlbar innerhalb 30 Tagen / Payable within 30 days. IBAN DE44 2005 0550 1234 5678 90")],
         pagesize="a4", font="Times", base_size=10)
     # D: Courier, grid, per-line discount, total at the foot
@@ -182,6 +209,8 @@ def render(ws: str, d: dict, seed: int) -> None:
     E = docs["E"]
     items = [x for x in E["lines"] if not x.get("below")]
     below = [x for x in E["lines"] if x.get("below")]
+    if not traps.on("below_lines"):  # the discount and delivery become the last rows of the item table
+        items = list(E["lines"])
     write_pdf_document(os.path.join(P, f"SummitOffice-{E['no']}.pdf"), [
         ("h", "Summit Office Supply"), ("small", "Order online at summitoffice.example | 503-555-0190"),
         ("table", [["Bill number", "Order date", "Account"], [E["no"], E["date"].strftime("%b %d %Y"), "NIGHT-0093"]], {"col_widths": [150, 150, 150]}),
@@ -189,26 +218,32 @@ def render(ws: str, d: dict, seed: int) -> None:
         ("table", [["Qty", "Description", "Price/Unit", "Ext."]] + [[x["qty"], x["desc"], f"$ {x['unit']:,.2f}", f"$ {x['amount']:,.2f}"] for x in items],
          {"col_widths": [40, 250, 80, 80]}), ("spacer", 6),
         ("kv", [("Merchandise", f"$ {E['subtotal']:,.2f}"), (below[0]["desc"], f"-$ {abs(below[0]['amount']):,.2f}"),
-                (below[1]["desc"], f"$ {below[1]['amount']:,.2f}"), ("Please pay", f"$ {E['total']:,.2f}")], {"col_widths": [120, 100]})],
+                (below[1]["desc"], f"$ {below[1]['amount']:,.2f}"), ("Please pay", f"$ {E['total']:,.2f}")] if traps.on("below_lines") else
+                [("Please pay", f"$ {E['total']:,.2f}")], {"col_widths": [120, 100]})],
         pagesize="a4", font="Helvetica", base_size=9)
     # F: credit memo, positive figures, letter, Helvetica
     F = docs["F"]
+    cs = 1 if traps.on("credit_signs") else -1   # off: the memo prints its figures negative
     write_pdf_document(os.path.join(P, f"PacificPackaging_{F['no']}.pdf"), [
         ("title", "CREDIT MEMO"), ("p", "PACIFIC PACKAGING SUPPLY CO. - 1450 NW 15th Ave, Portland, OR 97209"), ("hr", None),
         ("kv", [("Credit Memo No.", F["no"]), ("Date", F["date"].strftime("%m/%d/%y")), ("Applies to invoice", F["ref"]),
                 ("Reason", "Returned unopened cases (damaged in transit)")]), ("spacer", 10),
         ("table", [["Item", "Description", "Qty returned", "Unit Price", "Credit"]] +
-         [[f"{i}", x["desc"], x["qty"], usd(x["unit"]), usd(x["amount"])] for i, x in enumerate(F["lines"], 1)],
+         [[f"{i}", x["desc"], cs * x["qty"], usd(x["unit"]), usd(cs * x["amount"]).replace("$-", "-$")] for i, x in enumerate(F["lines"], 1)],
          {"col_widths": [30, 230, 70, 70, 70], "shade_header": True}), ("spacer", 8),
-        ("right", f"<b>TOTAL CREDIT {usd(F['total'])}</b>"), ("small", "This credit will be applied to your next statement.")],
+        ("right", f"<b>TOTAL CREDIT {usd(cs * F['total']).replace('$-', '-$')}</b>"), ("small", "This credit will be applied to your next statement.")],
         pagesize="letter", font="Helvetica", base_size=10)
     # G: scanned
     G = docs["G"]
-    write_scan_pdf(os.path.join(P, f"scan_greenline_{G['date'].strftime('%Y%m%d')}.pdf"), [
-        "GREENLINE WASTE SERVICES", "PO Box 8812  Portland OR 97208", "", "INVOICE", f"Number:  {G['no']}", f"Date:    {G['date'].strftime('%d-%b-%Y')}",
+    g_lines = ["GREENLINE WASTE SERVICES", "PO Box 8812  Portland OR 97208", "", "INVOICE", f"Number:  {G['no']}", f"Date:    {G['date'].strftime('%d-%b-%Y')}",
         "Customer: NIGHTJAR COFFEE ROASTERS", "", "DESCRIPTION              QTY    AMOUNT", "-" * 40]
-        + [f"{x['desc']:<25}{x['qty']:>3}  {x['amount']:>8.2f}" for x in G["lines"]]
-        + ["-" * 40, f"{'TOTAL DUE':<28}  {G['total']:>8.2f}", "", "Pay online or mail check to PO Box above."], font_size=30, seed=seed + 7, skew_deg=0.7, noise=600)
+    g_lines += [f"{x['desc']:<25}{x['qty']:>3}  {x['amount']:>8.2f}" for x in G["lines"]]
+    g_lines += ["-" * 40, f"{'TOTAL DUE':<28}  {G['total']:>8.2f}", "", "Pay online or mail check to PO Box above."]
+    if traps.on("scan"):
+        write_scan_pdf(os.path.join(P, f"scan_greenline_{G['date'].strftime('%Y%m%d')}.pdf"), g_lines, font_size=30, seed=seed + 7, skew_deg=0.7, noise=600)
+    else:  # the same page as a text PDF
+        write_pdf_document(os.path.join(P, f"greenline_{G['date'].strftime('%Y%m%d')}.pdf"),
+                           [("p", html.escape(ln).replace(" ", "&nbsp;") if ln else "&nbsp;") for ln in g_lines], pagesize="letter", font="Courier", base_size=10)
     # H: A4, balance due in a box at the top, no totals at the foot, extended before unit
     H = docs["H"]
     write_pdf_document(os.path.join(P, f"cascade_cup_lid_{H['no']}.pdf"), [
@@ -217,17 +252,19 @@ def render(ws: str, d: dict, seed: int) -> None:
         ("spacer", 10), ("p", "Sold to: Nightjar Coffee Roasters, Portland OR"), ("spacer", 6),
         ("table", [["Line", "Amount (USD)", "Qty", "Unit (USD)", "Item"]] +
          [[f"{i}", f"{x['amount']:,.2f}", x["qty"], f"{x['unit']:,.2f}", x["desc"]] for i, x in enumerate(H["lines"], 1)],
-         {"col_widths": [30, 80, 35, 70, 250]}), ("spacer", 6),
+         {"col_widths": [30, 80, 35, 70, 250]}), ("spacer", 6)] + (
+        [] if traps.on("totals") else [("right", f"Invoice total USD {H['total']:,.2f}")]) + [
         ("small", f"Includes Tacoma B&amp;O pass-through of USD {H['tax']:,.2f} in the balance due. Net 15.")], pagesize="a4", font="Helvetica", base_size=9)
     # distractor: statement of account
-    write_pdf_document(os.path.join(P, "PacificPackaging_statement_2026-08-31.pdf"), [
-        ("title", "Statement of Account"), ("p", "PACIFIC PACKAGING SUPPLY CO."),
-        ("kv", [("Customer", "Nightjar Coffee Roasters"), ("Statement date", "08/31/2026")]), ("spacer", 8),
-        ("table", [["Date", "Document", "Charges", "Credits", "Balance"],
-                   [A["date"].strftime("%m/%d/%Y"), f"Invoice {A['no']}", usd(A["total"]), "", usd(A["total"])],
-                   [F["date"].strftime("%m/%d/%Y"), f"Credit memo {F['no']}", "", usd(F["total"]), usd(round(A["total"] - F["total"], 2))]], {"grid": True}),
-        ("right", f"Amount due {usd(round(A['total'] - F['total'], 2))}"), ("small", "This is a statement, not an invoice. Please pay from invoices.")],
-        pagesize="letter", font="Helvetica", base_size=10)
+    if traps.on("statement"):
+        write_pdf_document(os.path.join(P, "PacificPackaging_statement_2026-08-31.pdf"), [
+          ("title", "Statement of Account"), ("p", "PACIFIC PACKAGING SUPPLY CO."),
+          ("kv", [("Customer", "Nightjar Coffee Roasters"), ("Statement date", "08/31/2026")]), ("spacer", 8),
+          ("table", [["Date", "Document", "Charges", "Credits", "Balance"],
+                     [A["date"].strftime("%m/%d/%Y"), f"Invoice {A['no']}", usd(A["total"]), "", usd(A["total"])],
+                     [F["date"].strftime("%m/%d/%Y"), f"Credit memo {F['no']}", "", usd(F["total"]), usd(round(A["total"] - F["total"], 2))]], {"grid": True}),
+          ("right", f"Amount due {usd(round(A['total'] - F['total'], 2))}"), ("small", "This is a statement, not an invoice. Please pay from invoices.")],
+          pagesize="letter", font="Helvetica", base_size=10)
 
 
 def acceptable(d: dict) -> bool:
@@ -235,15 +272,20 @@ def acceptable(d: dict) -> bool:
     return all(abs(x["amount"]) >= 1000 for x in C["lines"] if not x.get("below")) and B["prev"] > 0
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     rows = [[x[h] if not isinstance(x[h], float) else f"{x[h]:.2f}" for h in HEADER] for x in d["rows"]]
     if naive_dir:
         return write_naive(d, naive_dir)
-    ws, ref, sol = task_dirs(HERE)
-    render(ws, d, seed)
+    if mutant:
+        return write_mutant(d, mutant, out)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    render(ws, d, seed, traps)
+    printed = {} if traps.on("vendor_names") else {"Pacific Packaging Supply": "Pacific Packaging Supply Co."}
     write_csv(os.path.join(ws, "vendor_list.csv"), ["vendor_id", "vendor_name", "payment_terms"],
-              [[i, nm, "Net 30"] for i, nm in sorted(VENDORS)])
+              [[i, printed.get(nm, nm), "Net 30"] for i, nm in sorted(VENDORS)])
     write_csv(os.path.join(ws, "ap_import_template.csv"), HEADER, [])
     write_text(os.path.join(ws, "note_from_ines.txt"),
                "August bills for the import\n\n"
@@ -270,13 +312,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_json(os.path.join(ref, "notes.json"), {k: {"no": v["no"], "total": v["total"], "vendor": v["vendor"]} for k, v in docs.items()})
     num = {"numeric": True, "tolerance": 0.01, "min_accuracy": 1.0}
     P = "invoice_lines.csv"
-    write_task_yaml(HERE, {
+    spec = {
         "id": "supplier-invoices-to-csv", "track": "desk", "category": "extraction",
         "title": "Key August supplier bills into the AP import file",
         "ask": ("Can you get all of August's supplier bills into the accounting import file for me? The documents are in the folder and "
                 "Ines's note says how the template is filled in. Save it as invoice_lines.csv.\n"),
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             f"the document total sits in a different place on each layout: at the foot, in a box at the top with no totals at the foot "
             f"(Cascade, which also folds a city tax into it), or at the top with an account balance that adds an older unpaid invoice at "
             f"the foot (Hollowell) (check: document totals)",
@@ -291,7 +333,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "(checks: one row per line; row count)",
             f"the Greenline Waste invoice {docs['G']['no']} is an image-only scan (checks: one row per line; descriptions)",
             "vendor_id comes from the vendor list, where printed names like PACIFIC PACKAGING SUPPLY CO. are spelled differently (check: document identity)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "template columns", "path": P, "columns": HEADER},
             {"type": "csv_set_equal", "name": "one row per line", "path": P, "column": "line_ref", "ref": P, "normalize": ["strip", "lower"]},
@@ -309,7 +351,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "csv_values_match", "name": "document totals", "path": P, "ref": P, "key": "line_ref", "columns": ["document_total"],
              "must_match_keys": refs("B") + refs("F") + refs("H"), **num},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "supplier-invoices-to-csv", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} rows={len(rows)} totals=" + ", ".join(f"{k}:{v['no']}={v['total']}" for k, v in docs.items()))
 
 
@@ -331,15 +376,63 @@ def write_naive(d: dict, out: str) -> None:
     write_csv(os.path.join(out, "invoice_lines.csv"), HEADER, rows)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """The reference import file with exactly one trap fallen for."""
+    docs = d["docs"]
+    rows = [dict(x) for x in d["rows"]]
+    by_doc = lambda k: [x for x in rows if x["document_number"] == docs[k]["no"]]
+    if trap == "totals":            # Hollowell's total read from the account balance at the foot
+        for x in by_doc("B"):
+            x["document_total"] = round(docs["B"]["total"] + docs["B"]["prev"], 2)
+    elif trap == "eur_format":      # "1.237,50" read as US format, and 12.08. read month-first when that is a valid date
+        us = lambda v: float(de(abs(v)).replace(",", "")) * (1 if v >= 0 else -1)
+        dt = docs["C"]["date"]
+        for x in by_doc("C"):
+            x["unit_price"], x["line_amount"], x["document_total"] = us(x["unit_price"]), us(x["line_amount"]), us(x["document_total"])
+            if dt.day <= 12:
+                x["document_date"] = date(dt.year, dt.day, dt.month).isoformat()
+    elif trap == "below_lines":     # Summit's discount and delivery under the table not entered
+        rows = [x for x in rows if not (x["document_number"] == docs["E"]["no"] and x["description"] in ("Loyalty discount", "Delivery"))]
+    elif trap == "credit_signs":    # the credit memo keyed with its printed positive figures
+        for x in by_doc("F"):
+            x["quantity"], x["line_amount"], x["document_total"] = -x["quantity"], -x["line_amount"], -x["document_total"]
+    elif trap == "statement":       # the statement of account keyed as a document of its own
+        A, F = docs["A"], docs["F"]
+        base = {"vendor_id": VID[A["vendor"]], "document_type": "invoice", "document_number": "STMT-2026-08-31",
+                "document_date": "2026-08-31", "currency": "USD", "discount_pct": 0,
+                "document_total": round(A["total"] - F["total"], 2)}
+        rows += [dict(base, line_ref="STMT-2026-08-31-1", description=f"Invoice {A['no']}", quantity=1, unit_price=A["total"], line_amount=A["total"]),
+                 dict(base, line_ref="STMT-2026-08-31-2", description=f"Credit memo {F['no']}", quantity=1, unit_price=-F["total"], line_amount=-F["total"])]
+    elif trap == "scan":            # the image-only Greenline invoice could not be read and was left out
+        rows = [x for x in rows if x["document_number"] != docs["G"]["no"]]
+    elif trap == "vendor_names":    # PACIFIC PACKAGING SUPPLY CO. not found on the vendor list, vendor_id left blank
+        for x in rows:
+            if x["vendor_id"] == VID["Pacific Packaging Supply"]:
+                x["vendor_id"] = ""
+    else:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "invoice_lines.csv"), HEADER,
+              [[x[h] if not isinstance(x[h], float) else f"{x[h]:.2f}" for h in HEADER] for x in rows])
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(200):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

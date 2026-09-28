@@ -2,6 +2,9 @@
 """tenant-statements: five landlord statements for two rented spaces -> one third-quarter tenant ledger.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off overlap,scan --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant prepaid --out DIR           # a deliverable that falls for one trap
 
 Business: Fernhill Dance Academy rents Suite 210 at Cannery Row Commons (statements from Wexford Property Services) and
 storage unit B-4 at Tidewater Self Storage. The bookkeeper wants every charge and payment for July to September once.
@@ -26,6 +29,27 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. All switches act in render() only: build() and the reference never move.
+# File names are kept in every variant because reference/notes.json records them.
+TRAPS = TrapSet(
+    switchable={
+        "overlap": "overlapping statement periods (Tidewater's two statements share August; Wexford's August "
+                   "statement re-cut to start 20 July); off: Tidewater's second statement covers September only "
+                   "and Wexford's August statement starts 26 July",
+        "prepaid": "'Prepaid rent applied' credit lines beside each storage rent charge; off: the prepayment is "
+                   "shown as a credit opening balance instead",
+        "late_fees": "Tidewater's late charge printed only in a separate 'Fees assessed' box; off: it sits in the "
+                     "activity table. Wexford's late fee and its waiver are part of the answer and stay",
+        "signs": "Wexford prints negatives in parentheses and Tidewater prints positive Charges/Credits columns; "
+                 "off: both print one signed amount column",
+        "out_of_quarter": "the July statement lists a 29 June payment; off: its period starts on 1 July",
+        "scan": "Wexford's September statement is an image-only scan; off: a text PDF under the same file name",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["overlap", "prepaid", "late_fees", "signs", "out_of_quarter", "scan"]
 
 HEADER = ["entry_ref", "unit", "entry_date", "entry_type", "description", "amount"]
 Q_START, Q_END = date(2026, 7, 1), date(2026, 9, 30)
@@ -104,32 +128,38 @@ def running(entries, opening):
     return out, bal
 
 
-def render(ws: str, d: dict, seed: int) -> dict:
+def render(ws: str, d: dict, seed: int, traps: TrapSet = TRAPS) -> dict:
     P = os.path.join(ws, "statements")
     os.makedirs(P, exist_ok=True)
     W, T = d["W"], d["T"]
     files = {}
+    sign = paren if traps.on("signs") else (lambda x: f"{x:,.2f}")
     # Wexford statements: periods 26 Jun-25 Jul, 20 Jul-25 Aug (re-cut cycle), 26 Aug-25 Sep (scanned)
-    periods = [("jul", date(2026, 6, 26), date(2026, 7, 25)), ("aug", date(2026, 7, 20), date(2026, 8, 25)), ("sep", date(2026, 8, 26), date(2026, 9, 25))]
+    periods = [("jul", date(2026, 6, 26) if traps.on("out_of_quarter") else date(2026, 7, 1), date(2026, 7, 25)),
+               ("aug", date(2026, 7, 20) if traps.on("overlap") else date(2026, 7, 26), date(2026, 8, 25)),
+               ("sep", date(2026, 8, 26), date(2026, 9, 25))]
     for key, a, b in periods:
         before = [e for e in W if e["date"] < a]
         opening = round(d["bf_w"] + sum(e["amount"] for e in before), 2)
         inper = [e for e in W if a <= e["date"] <= b]
         lines, closing = running(inper, opening)
-        if key != "sep":
-            rows = [["Date", "Doc #", "Description", "Amount", "Balance"], [a.strftime("%m/%d/%Y"), "", "Balance forward", "", paren(opening)]]
-            rows += [[e["date"].strftime("%m/%d/%Y"), e["ref"], e["desc"], paren(e["amount"]), paren(bal)] for e, bal in lines]
-            files[key] = f"Wexford_Suite210_statement_{b.strftime('%Y-%m')}.pdf"
+        if key != "sep" or not traps.on("scan"):
+            rows = [["Date", "Doc #", "Description", "Amount", "Balance"], [a.strftime("%m/%d/%Y"), "", "Balance forward", "", sign(opening)]]
+            rows += [[e["date"].strftime("%m/%d/%Y"), e["ref"], e["desc"], sign(e["amount"]), sign(bal)] for e, bal in lines]
+            files[key] = (f"Wexford_Suite210_statement_{b.strftime('%Y-%m')}.pdf" if key != "sep"
+                          else "scan_wexford_sept_statement.pdf")
             write_pdf_document(os.path.join(P, files[key]), [
                 ("title", "Tenant Statement"), ("p", "WEXFORD PROPERTY SERVICES<br/>Cannery Row Commons - 400 Cannery Row, Suite 100, Monterey CA 93940"),
                 ("hr", None),
                 ("kv", [("Tenant", "Fernhill Dance Academy LLC"), ("Premises", "Suite 210"), ("Statement period", f"{a.strftime('%m/%d/%Y')} - {b.strftime('%m/%d/%Y')}"),
                         ("Statement date", b.strftime("%B %-d, %Y"))]), ("spacer", 8),
                 ("table", rows, {"col_widths": [62, 70, 220, 75, 75], "shade_header": True}), ("spacer", 6),
-                ("right", f"<b>Balance due {paren(closing)}</b>"),
+                ("right", f"<b>Balance due {sign(closing)}</b>"),
                 ("small", "Rent and CAM are due on the 1st; a late fee of 5% of base rent applies to rent received after the 5th. "
-                          "Amounts in parentheses are payments and credits." + (" This statement's cycle was moved to start 07/20 after the "
-                                                                                 "accounting system change." if key == "aug" else ""))],
+                          + ("Amounts in parentheses are payments and credits." if traps.on("signs") else
+                             "Negative amounts are payments and credits.")
+                          + (" This statement's cycle was moved to start 07/20 after the "
+                             "accounting system change." if key == "aug" and traps.on("overlap") else ""))],
                 pagesize="letter", font="Helvetica", base_size=9.5)
         else:
             L = ["WEXFORD PROPERTY SERVICES", "TENANT STATEMENT", "", "TENANT FERNHILL DANCE ACADEMY LLC", "PREMISES SUITE 210",
@@ -142,40 +172,61 @@ def render(ws: str, d: dict, seed: int) -> dict:
             files[key] = "scan_wexford_sept_statement.pdf"
             write_scan_pdf(os.path.join(P, files[key]), L, font_size=30, skew_deg=0.4, noise=450, seed=seed * 11 + 4)
     # Tidewater Self Storage: two overlapping two-month statements
-    for key, a, b in (("st1", date(2026, 7, 1), date(2026, 8, 31)), ("st2", date(2026, 8, 1), date(2026, 9, 30))):
-        before = [e for e in T if e["date"] < a]
+    # prepaid off: no 'Prepaid rent applied' lines; the unapplied prepayment shows as a credit opening balance
+    TV = T if traps.on("prepaid") else [e for e in T if e["include"]]
+    st2_start = date(2026, 8, 1) if traps.on("overlap") else date(2026, 9, 1)
+    for key, a, b in (("st1", date(2026, 7, 1), date(2026, 8, 31)), ("st2", st2_start, date(2026, 9, 30))):
+        before = [e for e in TV if e["date"] < a]
         opening = round(sum(e["amount"] for e in before), 2)
-        inper = [e for e in T if a <= e["date"] <= b]
-        table_entries = [e for e in inper if not e["box"]]
-        box = [e for e in inper if e["box"]]
+        if not traps.on("prepaid"):
+            opening = round(opening - d["prepaid"], 2)
+        inper = [e for e in TV if a <= e["date"] <= b]
+        table_entries = [e for e in inper if not e["box"]] if traps.on("late_fees") else inper
+        box = [e for e in inper if e["box"]] if traps.on("late_fees") else []
         lines, closing = running(inper, opening)
         bal_of = {id(e): bal for e, bal in lines}
-        rows = [["Date", "Trans ID", "Description", "Charges", "Credits", "Balance"]]
-        rows.append([a.strftime("%d %b %Y"), "", "Opening balance", "", "", f"{opening:,.2f}"])
-        for e in table_entries:
-            ch = f"{e['amount']:,.2f}" if e["amount"] > 0 else ""
-            cr = f"{-e['amount']:,.2f}" if e["amount"] < 0 else ""
-            rows.append([e["date"].strftime("%d %b %Y"), e["ref"], e["desc"], ch, cr, f"{bal_of[id(e)]:,.2f}"])
+        if traps.on("signs"):
+            rows = [["Date", "Trans ID", "Description", "Charges", "Credits", "Balance"]]
+            rows.append([a.strftime("%d %b %Y"), "", "Opening balance", "", "", f"{opening:,.2f}"])
+            for e in table_entries:
+                ch = f"{e['amount']:,.2f}" if e["amount"] > 0 else ""
+                cr = f"{-e['amount']:,.2f}" if e["amount"] < 0 else ""
+                rows.append([e["date"].strftime("%d %b %Y"), e["ref"], e["desc"], ch, cr, f"{bal_of[id(e)]:,.2f}"])
+            widths = [72, 60, 175, 58, 58, 58]
+        else:
+            rows = [["Date", "Trans ID", "Description", "Amount", "Balance"]]
+            rows.append([a.strftime("%d %b %Y"), "", "Opening balance", "", f"{opening:,.2f}"])
+            rows += [[e["date"].strftime("%d %b %Y"), e["ref"], e["desc"], f"{e['amount']:,.2f}", f"{bal_of[id(e)]:,.2f}"]
+                     for e in table_entries]
+            widths = [72, 60, 175, 87, 87]
         blocks = [
             ("right", "TIDEWATER SELF STORAGE<br/>1880 Del Monte Blvd, Seaside CA 93955"), ("spacer", 4), ("h", "Account Activity Statement"),
             ("p", f"Account holder: Fernhill Dance Academy<br/>Unit: B-4 (10x15 climate)<br/>Activity from {a.strftime('%d %b %Y')} through {b.strftime('%d %b %Y')}"),
-            ("spacer", 6), ("table", rows, {"col_widths": [72, 60, 175, 58, 58, 58], "grid": True}), ("spacer", 6)]
+            ("spacer", 6), ("table", rows, {"col_widths": widths, "grid": True}), ("spacer", 6)]
         if box:
             blocks += [("h", "Fees assessed this period"),
                        ("table", [["Date", "Trans ID", "Fee", "Amount"]] + [[e["date"].strftime("%d %b %Y"), e["ref"], e["desc"], f"{e['amount']:,.2f}"] for e in box],
                         {"col_widths": [70, 70, 200, 60]})]
         blocks += [("spacer", 6), ("right", f"Ending balance {closing:,.2f}"),
-                   ("small", "Prepaid rent on file is applied on the 1st of each month. Late charges post on the 5th for any unpaid balance.")]
-        files[key] = f"TidewaterStorage_B4_{a.strftime('%b')}-{b.strftime('%b')}_2026.pdf"
+                   ("small", ("Prepaid rent on file is applied on the 1st of each month." if traps.on("prepaid") else
+                              "Prepaid rent on file is held as a credit balance on the account.")
+                             + (" Negative amounts are payments and credits." if not traps.on("signs") else "")
+                             + " Late charges post on the 5th for any unpaid balance.")]
+        # file names are recorded in reference/notes.json, so they stay the same in every variant
+        files[key] = f"TidewaterStorage_B4_{date(2026, 7 if key == 'st1' else 8, 1).strftime('%b')}-{b.strftime('%b')}_2026.pdf"
         write_pdf_document(os.path.join(P, files[key]), blocks, pagesize="a4", font="Times-Roman", base_size=10)
     return files
 
 
-def emit(seed: int, d: dict, naive_dir: str | None) -> None:
+def emit(seed: int, d: dict, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     if naive_dir:
         return write_naive(d, naive_dir)
-    ws, ref, sol = task_dirs(HERE)
-    files = render(ws, d, seed)
+    if mutant:
+        return write_mutant(d, mutant, out)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    files = render(ws, d, seed, traps)
     write_text(os.path.join(ws, "note_from_camille.txt"),
                "Q3 rent ledger\n\n"
                "For the quarter close I need a ledger of everything on our two rented spaces for July 1 to September 30 - the studio "
@@ -203,13 +254,13 @@ def emit(seed: int, d: dict, naive_dir: str | None) -> None:
     num = {"numeric": True, "tolerance": 0.01, "min_accuracy": 1.0}
     P = "tenant_ledger.csv"
     lf = [e for e in W if e["type"] == "late_fee"][0]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "tenant-statements", "track": "desk", "category": "extraction",
         "title": "Third-quarter ledger from the landlord statements",
         "ask": ("Can you turn the landlord statements for the studio and the storage unit into a ledger for Q3? Save it as tenant_ledger.csv - "
                 "Camille's note says how she wants it.\n"),
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "statement periods overlap: Tidewater's July-August and August-September statements both list every August line, and Wexford's "
             "August statement was re-cut to start on 20 July so it repeats the 22 July check payment; each entry once "
             "(checks: one row per entry; row count)",
@@ -221,7 +272,7 @@ def emit(seed: int, d: dict, naive_dir: str | None) -> None:
             "columns with both positive (check: amounts)",
             "the July statement opens with a balance forward and a 29 June payment that falls before the quarter (checks: one row per entry; row count)",
             "Wexford's September statement is an image-only scan (checks: descriptions; amounts)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": P, "columns": HEADER},
             {"type": "csv_set_equal", "name": "one row per entry", "path": P, "column": "entry_ref", "ref": P, "normalize": ["strip", "lower"]},
@@ -235,7 +286,10 @@ def emit(seed: int, d: dict, naive_dir: str | None) -> None:
             {"type": "csv_values_match", "name": "amounts", "path": P, "ref": P, "key": "entry_ref", "columns": ["amount"],
              "must_match_keys": signed, **num},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "tenant-statements", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} rows={len(d['rows'])} files={len(files)}")
 
 
@@ -257,9 +311,55 @@ def write_naive(d: dict, out: str) -> None:
     write_csv(os.path.join(out, "tenant_ledger.csv"), HEADER, rows)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def row_of(e: dict, kind: str | None = None, amount: float | None = None) -> list:
+    amt = e["amount"] if amount is None else amount
+    return [e["ref"], e["unit"], e["date"].isoformat(), kind or e["type"], e["desc"], f"{amt:.2f}"]
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """The reference ledger with exactly one trap fallen for."""
+    W, T = d["W"], d["T"]
+    inq = lambda e: Q_START <= e["date"] <= Q_END
+    ents = [e for e in W + T if e.get("include", True) and inq(e)]
+    rows = None
+    if trap == "overlap":           # the 22 July payment and the August storage lines taken from both statements
+        rows = []
+        for e in ents:
+            rows.append(row_of(e))
+            if e["date"] == date(2026, 7, 22) or (e["unit"] == "Storage B-4" and e["date"].month == 8):
+                rows.append(row_of(e))
+    elif trap == "prepaid":         # 'Prepaid rent applied' lines booked as credits in the quarter
+        ents = [e for e in W + T if inq(e)]
+        rows = [row_of(e, "credit" if not e.get("include", True) else None) for e in ents]
+    elif trap == "late_fees":       # the 'Fees assessed' box under the activity table never read
+        ents = [e for e in ents if not e.get("box")]
+    elif trap == "signs":           # amounts copied as printed: payments and credits positive
+        rows = [row_of(e, amount=abs(e["amount"])) for e in ents]
+    elif trap == "out_of_quarter":  # the 29 June payment on the July statement kept
+        ents = [e for e in W + T if e.get("include", True) and (inq(e) or e["unit"] == "Suite 210")]
+    elif trap == "scan":            # the image-only September statement could not be read and was skipped
+        ents = [e for e in ents if not (e["unit"] == "Suite 210" and date(2026, 8, 26) <= e["date"] <= date(2026, 9, 25))]
+    else:
+        raise KeyError(trap)
+    if rows is None:
+        rows = [row_of(e) for e in ents]
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "tenant_ledger.csv"), HEADER, rows)
+
+
+# Grader-blind mutant, kept out of MUTANTS: "overlap" (the 22 July payment and the August storage lines taken from
+# both statements) repeats refs that are already present, and csv_set_equal ("one row per entry") compares the set
+# of refs, so it cannot see a repeated row. "row count" catches it. write_mutant(d, "overlap", out) still writes it.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "overlap"}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
-    emit(a.seed, build(a.seed), a.naive)
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, build(a.seed), a.naive, traps, a.out, a.mutant)
