@@ -183,6 +183,8 @@ Audit rules are named functions in one shared module, for example `pay_held_invo
 `approve_own_request`, `split_to_fit_limit`, `bank_change_without_callback`,
 `foreign_token`, `post_to_closed_period`, `plug_to_control_account`, and
 `edit_billed_amounts`, and `duplicate_effect` (§7.1). Each has unit tests against a violating and a clean audit log.
+`stale_derived_entry` finds work derived from a fact that changed between turns and was left standing (a belief-revision
+task, [tasks.md §5](tasks.md#5-belief-revision-freight-accrual-revision)).
 
 The conjunctive pass rule, the frozen scorer, and the ledger work as on the desk track:
 a scorer version is frozen and hashed before a campaign, and raw and frozen verdicts

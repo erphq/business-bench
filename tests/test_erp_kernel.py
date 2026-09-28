@@ -423,5 +423,27 @@ class Simulator(unittest.TestCase):
             self.assertEqual(erp.val("SELECT COUNT(*) FROM po_acknowledgements WHERE po_id = ?", po), 0)
             erp.close()
 
+    def test_scheduled_reversal_undoes_a_receipt_on_its_day(self):
+        with tempfile.TemporaryDirectory() as t:
+            erp = company(t, {'agent_users': ['riley'], 'vendor_default': {'ack_delay': 250}})
+            with erp.tx():
+                setup.add_user(erp, 'luis', 'Luis Ortega', ['staff', 'receiver'], 'PROD')
+                erp.insert('approval_limits', {'user_id': 'riley', 'doc_type': 'purchase_order', 'limit_cents': 10 ** 8})
+                c = load_ctx(erp, 'riley')
+                po = purchasing.create_po(erp, c, 'V-MS', [{'sku': 'BR-0750', 'qty': 100, 'need_date': '2026-10-05'}])
+                purchasing.send_po(erp, c, po)
+                rid = receiving.post_receipt(erp, c, po, [{'po_line': 1, 'qty_received': 100}])
+            erp.world['receipt_reversals'] = [{'day': '2026-10-07', 'user': 'luis', 'receipt': rid,
+                                               'reason': 'receiving error: pallet addressed to another company'}]
+            sim.advance(erp, '2026-10-06')
+            self.assertEqual(erp.val('SELECT status FROM receipts WHERE id = ?', rid), 'posted')
+            events = sim.advance(erp, '2026-10-08')
+            r = erp.one('SELECT * FROM receipts WHERE id = ?', rid)
+            self.assertEqual((r['status'], r['reversed_by'], r['reversed_on']), ('reversed', 'luis', '2026-10-07'))
+            self.assertIn({'day': '2026-10-07', 'actor': 'luis', 'action': 'rcv.reverse', 'object': rid}, events)
+            self.assertEqual(erp.val("SELECT qty_received FROM po_lines WHERE po_id = ?", po), 0)
+            assert_ties(self, erp)
+            erp.close()
+
 if __name__ == '__main__':
     unittest.main()
