@@ -2,6 +2,9 @@
 """ar-aging-report: a seafood distributor's invoice, payment and credit memo exports to an aging as of month end.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off export_date,format_noise --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant due_date --out DIR                      # a deliverable that falls for one trap
 
 Business: Yellowtail Seafood supplies restaurants and cafes on Net 15/30/45 terms. The lender wants an accounts
 receivable aging as of 31 August for the borrowing-base certificate; the bookkeeper pulled the exports on
@@ -21,13 +24,40 @@ Traps (each caught by a check, see task.yaml):
 """
 from __future__ import annotations
 
+import argparse
 import os
+import shutil
 import sys
 from datetime import date, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the exports are written, so build() and
+# its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "export_date": "the exports were pulled on 8 September and carry a week of September invoices, payments and credits "
+                       "(off: every export cut at 31 August, the register's Balance and Status as of 31 August, the note says so; "
+                       "this also removes the 4 September credit memo)",
+        "sept_payer": "Pier 9 Fish House's 3 September payments of its oldest invoices are in the exports (off: not exported; "
+                      "the register still shows those invoices open)",
+        "format_noise": "register amounts as '1,234.00' text, a two-line preamble and CRLF endings, US-style dates and "
+                        "'$1,234.00' credit memo amounts (off: plain header, LF endings, plain amounts, ISO dates)",
+    },
+    fixed={
+        "partials": "partially paid invoices stay open for the unpaid part and age from their original due date",
+        "due_date": "buckets count days past the due date, and terms differ by customer",
+        "credits": "credit memos come off the invoice they name; the goodwill credit names none and comes off the oldest "
+                   "open invoice",
+        "big_current": "the largest balance is nearly all current; the memo ranks by past due",
+    },
+    requires={"sept_payer": "export_date"},
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["export_date", "sept_payer", "partials", "due_date", "credits", "big_current", "format_noise"]
 
 AS_OF = date(2026, 8, 31)
 EXPORT = date(2026, 9, 8)
@@ -257,9 +287,11 @@ def aging_sheets(d: dict) -> dict:
                            "rows": items, "widths": {"A": 28}}}
 
 
-def memo_text(d: dict) -> str:
+def memo_text(d: dict, story: bool = True) -> str:
+    """`story` keeps the closing paragraph about Pier 9 and the Saltwater Grill (a mutant's memo drops it when its own
+    numbers do not bear it out)."""
     pd_, top = d["past_due"], d["rank"][:3]
-    return f"""# Receivables aging as of 31 August 2026
+    text = f"""# Receivables aging as of 31 August 2026
 
 Total receivables were ${d['total']:,.2f}, of which ${d['total_past_due']:,.2f} was past due.
 
@@ -268,7 +300,10 @@ The three customers with the most past due:
 1. {top[0]}: ${pd_[top[0]]:,.2f} past due.
 2. {top[1]}: ${pd_[top[1]]:,.2f} past due.
 3. {top[2]}: ${pd_[top[2]]:,.2f} past due.
-
+"""
+    if not story:
+        return text
+    return text + f"""
 {SEPT_PAYER} paid its two oldest invoices on 3 September, so it looks clean in the September export, but on 31 August
 it was still in the top three. {BIG_CURRENT} carries the largest balance but almost all of it is current.
 """
@@ -284,30 +319,81 @@ def cent_tolerant(spec: dict) -> dict:
     return spec
 
 
-def emit(seed: int) -> None:
+def ledger(d: dict, when: date = AS_OF, pay_until: dict | None = None, unapplied: bool = True) -> dict:
+    """Every invoice's balance as of `when`, as build() computes it. `pay_until` maps a customer to a later cut-off for
+    its payments; `unapplied=False` ignores the credit that names no invoice (mutants and variants only)."""
+    pay_until = pay_until or {}
+    bal = {}
+    for inv in d["invoices"]:
+        if inv["date"] > when:
+            continue
+        paid = sum(p["amount"] for p in d["payments"] if p["inv"] == inv["no"] and p["date"] <= pay_until.get(p["cust"], when))
+        cred = sum(c["amount"] for c in d["credits"] if c["inv"] == inv["no"] and c["date"] <= when)
+        bal[inv["no"]] = round(inv["amount"] - paid - cred, 2)
+    for c in d["credits"]:
+        if c["inv"] or c["date"] > when or not unapplied:
+            continue
+        opens = sorted([inv for inv in d["invoices"] if inv["cust"] == c["cust"] and bal.get(inv["no"], 0) > 0.005],
+                       key=lambda i: (i["date"], i["no"]))
+        left = c["amount"]
+        for inv in opens:
+            take = min(left, bal[inv["no"]])
+            bal[inv["no"]] = round(bal[inv["no"]] - take, 2)
+            left = round(left - take, 2)
+            if left <= 0:
+                break
+    return bal
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     by_no = {inv["no"]: inv for inv in d["invoices"]}
+    noisy, sept = traps.on("format_noise"), traps.on("export_date")
+    invoices, payments, credits, reg_bal = d["invoices"], d["payments"], d["credits"], d["exp_bal"]
+    if not sept:        # every export cut at month end
+        invoices = [inv for inv in invoices if inv["date"] <= AS_OF]
+        payments = [p for p in payments if p["date"] <= AS_OF]
+        credits = [c for c in credits if c["date"] <= AS_OF]
+        reg_bal = ledger(d)
+    elif not traps.on("sept_payer"):   # Pier 9's 3 September payments not exported; the register shows them open
+        gone = [p for p in payments if p["cust"] == SEPT_PAYER and p["date"] == date(2026, 9, 3)]
+        payments = [p for p in payments if p not in gone]
+        reg_bal = dict(reg_bal)
+        for p in gone:
+            reg_bal[p["inv"]] = round(reg_bal[p["inv"]] + p["amount"], 2)
+    us = "%m/%d/%Y" if noisy else "%Y-%m-%d"
 
     # ---- workspace ----
     exp_rows = []
-    for inv in d["invoices"]:
-        bal = d["exp_bal"][inv["no"]]
+    for inv in invoices:
+        bal = reg_bal[inv["no"]]
         paid = round(inv["amount"] - bal, 2)
         status = "Paid" if bal <= 0.005 else ("Partially Paid" if paid > 0.005 else "Open")
-        exp_rows.append([inv["no"], inv["cust"], inv["date"].strftime("%m/%d/%Y"), f"Net {inv['terms']}", inv["due"].strftime("%m/%d/%Y"),
-                         money_str(inv["amount"], 0), money_str(paid, 0), money_str(max(bal, 0), 0), status])
-    write_csv(os.path.join(ws, "invoice_register_export_2026-09-08.csv"),
+        exp_rows.append([inv["no"], inv["cust"], inv["date"].strftime(us), f"Net {inv['terms']}", inv["due"].strftime(us),
+                         money_str(inv["amount"], 0 if noisy else 2), money_str(paid, 0 if noisy else 2),
+                         money_str(max(bal, 0), 0 if noisy else 2), status])
+    run = "Run 09/08/2026 07:12" if sept else "Run 08/31/2026 17:48"
+    write_csv(os.path.join(ws, f"invoice_register_export_{'2026-09-08' if sept else '2026-08-31'}.csv"),
               ["Invoice No", "Customer", "Invoice Date", "Terms", "Due Date", "Amount", "Paid/Credited", "Balance", "Status"], exp_rows,
-              preamble=["Yellowtail Seafood - Invoice Register", "Run 09/08/2026 07:12 - all invoices since 03/01/2026"], crlf=True)
+              preamble=["Yellowtail Seafood - Invoice Register", f"{run} - all invoices since 03/01/2026"] if noisy else None,
+              crlf=noisy)
     write_csv(os.path.join(ws, "customer_payments.csv"), ["Deposit Date", "Customer", "Applied To", "Amount", "Method"],
               [[p["date"].isoformat(), p["cust"], p["inv"], f"{p['amount']:.2f}", "ACH" if int(p["inv"][-1]) % 3 else "Check"]
-               for p in d["payments"]])
+               for p in payments])
     write_csv(os.path.join(ws, "credit_memos.csv"), ["Credit Memo", "Date", "Customer", "Against Invoice", "Amount", "Reason"],
-              [[c["no"], c["date"].strftime("%m/%d/%Y"), c["cust"], c["inv"], money_str(c["amount"], 1), c["reason"]] for c in d["credits"]])
+              [[c["no"], c["date"].strftime(us), c["cust"], c["inv"], money_str(c["amount"], 1 if noisy else 2), c["reason"]]
+               for c in credits])
     write_text(os.path.join(ws, "note_from_ingrid.txt"),
                "The bank wants our receivables aging as of 31 August for the borrowing base certificate. Tomas pulled\n"
-               "the exports this morning, so they run a week past month end.\n\n"
+               + ("the exports this morning, so they run a week past month end.\n\n" if sept else
+                  "the exports at close of business on 31 August.\n\n") +
                "What I need:\n"
                "- every customer's balance as it stood on 31 August, split Current / 1-30 / 31-60 / 61-90 / Over 90 days\n"
                "  past the due date, with totals\n"
@@ -332,13 +418,13 @@ def emit(seed: int) -> None:
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
     g, bt = d["grid"], d["bucket_tot"]
-    write_task_yaml(HERE, cent_tolerant({
+    spec = cent_tolerant({
         "id": "ar-aging-report", "track": "desk", "category": "reports",
         "title": "Receivables aging at month end for the bank",
         "ask": ("Ingrid needs the receivables aging as of 31 August for the bank. Build aging.xlsx with live formulas from the exports "
                 "and write memo.md she can forward - her note says what goes in both.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the invoice register was run on 8 September: its Balance and Status columns already reflect September payments and "
             "credits, and it lists invoices dated in September; balances must be rebuilt as of 31 August from the payment and "
             "credit memo dates (checks: total receivables; Pier 9 Fish House balance)",
@@ -354,7 +440,7 @@ def emit(seed: int) -> None:
             "top three (check: memo names the top three past-due customers)",
             "amounts in the register are '1,234.00' text, the register has a two-line preamble and CRLF endings, and credit memo "
             "dates are US-style (check: total receivables)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "aging.xlsx exists", "path": "aging.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "aging.xlsx", "min_count": 20},
@@ -371,7 +457,10 @@ def emit(seed: int) -> None:
              "numbers": [d["total"], d["total_past_due"]], "rel_tol": 0.005},
             {"type": "custom", "name": "memo names the top three past-due customers", "module": "check.py"},
         ],
-    }))
+    })
+    if not traps.canonical:
+        spec["variant"] = {"of": "ar-aging-report", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} invoices={len(d['invoices'])} open={len(d['open_items'])} payments={len(d['payments'])} credits={len(d['credits'])}")
     print("  bucket totals", bt, "total", d["total"], "past due", d["total_past_due"])
     print("  rank", [(n, d["past_due"][n]) for n in d["rank"]])
@@ -379,11 +468,75 @@ def emit(seed: int) -> None:
     print("  pier 9", d["cust_tot"][SEPT_PAYER], "riverbend over 90", g[(CREDIT_CUST, "Over 90 days")], "unapplied", d["unapplied"])
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_view(d: dict, trap: str) -> dict:
+    """The aging an agent builds when it is right except that it falls for `trap`: open items, grid and ranking."""
+    if trap == "export_date":      # the register's 8 September Balance column, September invoices and all
+        bal = d["exp_bal"]
+    elif trap == "sept_payer":     # Pier 9's 3 September payments taken as received by 31 August
+        bal = ledger(d, pay_until={SEPT_PAYER: date(2026, 9, 3)})
+    elif trap == "credits":        # the credit that names no invoice is left off
+        bal = ledger(d, unapplied=False)
+    else:
+        bal = ledger(d)
+    by_no = {inv["no"]: inv for inv in d["invoices"]}
+    paid = {}
+    for p in d["payments"]:
+        if p["date"] <= AS_OF:
+            paid[p["inv"]] = paid.get(p["inv"], 0.0) + p["amount"]
+    items = []
+    for no, b in bal.items():
+        if b <= 0.005:
+            continue
+        inv = by_no[no]
+        if trap == "partials" and paid.get(no, 0) > 0.005:   # a part-paid invoice read as settled
+            continue
+        dpd = (AS_OF - (inv["date"] if trap == "due_date" else inv["due"])).days   # due_date: aged from the invoice date
+        items.append({**inv, "balance": b, "dpd": dpd, "bucket": bucket(dpd)})
+    items.sort(key=lambda x: (x["cust"], x["date"]))
+    names = d["names"]
+    grid = {(n, bk): 0.0 for n in names for bk in BUCKETS}
+    for it in items:
+        grid[(it["cust"], it["bucket"])] += it["balance"]
+    grid = {k: round(v, 2) for k, v in grid.items()}
+    cust_tot = {n: round(sum(grid[(n, bk)] for bk in BUCKETS), 2) for n in names}
+    past_due = {n: round(cust_tot[n] - grid[(n, "Current")], 2) for n in names}
+    total = round(sum(cust_tot.values()), 2)
+    rank = sorted(names, key=lambda n: -(cust_tot[n] if trap == "big_current" else past_due[n]))[:4]  # big_current: by balance
+    return {"names": names, "open_items": items, "grid": grid, "cust_tot": cust_tot, "past_due": past_due, "total": total,
+            "total_past_due": round(total - sum(grid[(n, "Current")] for n in names), 2), "rank": rank}
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """aging.xlsx and memo.md right in every respect except that they fall for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    v = mutant_view(d, "" if trap == "format_noise" else trap)
+    sheets = aging_sheets(v)
+    if trap == "format_noise":     # the register's '1,234.00' amounts carried over as text: SUMIFS skips them
+        for row in sheets["Items"]["rows"]:
+            row[6] = f"{row[6]:,.2f}"
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "aging.xlsx"), sheets, creator="mutant")
+    story = SEPT_PAYER in v["rank"][:3] and BIG_CURRENT not in v["rank"][:3]
+    write_text(os.path.join(out, "memo.md"), memo_text(v, story))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
-    s = argparse_seed()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    s = a.seed
     for attempt in range(1500):
         if acceptable(build(s * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw in 1500 attempts")
-    emit(s * 1000 + attempt)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(s * 1000 + attempt, traps, a.out, a.mutant)
