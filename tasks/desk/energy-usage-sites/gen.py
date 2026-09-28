@@ -2,6 +2,9 @@
 """energy-usage-sites: monthly kWh per property from cumulative meter reads, with the gap flagged.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off two_meters,export_format --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant midmonth --out DIR                      # a deliverable that falls for one trap
 
 Business: a property manager with five commercial buildings. The meter reader walks the sites every
 four weeks or so, writes down what the register says, and nobody has ever turned that into monthly usage.
@@ -23,6 +26,26 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "cumulative": "the export gives cumulative register totals, not usage since the previous read",
+        "meter_swap": "Mill Street's meter replaced mid-March, the new one starting at zero (off: one meter, "
+                      "register continuous, the swap-day read kept so every interval is unchanged)",
+        "two_meters": "Riverside is two meters that must be added (off: one combined register on the same days)",
+        "export_format": "registers with and without thousands separators, three date formats, Estimated read "
+                         "types, site-name case/spacing noise, a preamble, BOM and CRLF",
+    },
+    fixed={
+        "midmonth": "reads land mid-month, so usage is split across month boundaries by days",
+        "gap": "Depot Lane has no read after 31 May; June is left blank, not invented",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["cumulative", "midmonth", "meter_swap", "two_meters", "gap", "export_format"]
 
 
 # bizgen.write_xlsx leaves openpyxl's save-time wall clock in docProps/core.xml, so two runs a
@@ -203,51 +226,118 @@ def clean_rows(d: dict) -> list[list]:
             for s in SITES for m in MONTHS]
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
-    if naive_dir:
-        write_naive(d, naive_dir)
-        return
-    ws, ref, sol = task_dirs(HERE)
-    kwh, tot = d["kwh"], d["site_tot"]
+def shown_reads(d: dict, traps: TrapSet) -> list[dict]:
+    """The reads as the export lists them. With every trap on this is d["reads"] unchanged. Every variant keeps the
+    same read dates per meter, so every interval, and therefore every monthly figure, is the canonical one."""
+    reads = d["reads"]
+    if not traps.on("meter_swap"):
+        # one meter throughout: the swap-day read stays as an ordinary read and the register runs on from it
+        final = next(x for x in reads if x["site"] == SWAP_SITE and x["kind"].startswith("Final"))
+        out = []
+        for x in reads:
+            if x["site"] == SWAP_SITE and x["kind"].startswith("Install"):
+                continue
+            if x is final:
+                x = dict(x, kind="Actual")
+            elif x["meter"] == NEW_METER:
+                x = dict(x, meter=METERS[SWAP_SITE][0], reg=final["reg"] + x["reg"])
+            out.append(x)
+        reads = out
+    if not traps.on("two_meters"):
+        # Riverside as one meter: the two registers added on each (shared) read date
+        a_meter, b_meter = METERS[TWO_METER_SITE]
+        b_reg = {x["date"]: x["reg"] for x in reads if x["meter"] == b_meter}
+        reads = [dict(x, reg=x["reg"] + b_reg[x["date"]]) if x["meter"] == a_meter else x
+                 for x in reads if x["meter"] != b_meter]
+    if not traps.on("cumulative"):
+        # usage since the previous read of the same meter; blank on a meter's first read and on an install
+        prev, out = {}, []
+        for x in reads:
+            p = prev.get(x["meter"])
+            out.append(dict(x, use=None if p is None else x["reg"] - p))
+            prev[x["meter"]] = x["reg"]
+        reads = out
+    return reads
 
-    # ---- workspace ----
-    write_csv(os.path.join(ws, "meter_readings_export.csv"),
-              ["Reading ID", "Site", "Meter", "Read date", "Register (kWh)", "Read type", "Read by"],
-              [[x["id"], name_noise(rng(sum(ord(c) for c in x["id"])), x["site"]), x["meter"],
-                date_variant(x["date"], sum(ord(c) for c in x["id"]) % 3),
-                f"{int(x['reg']):,}" if sum(ord(c) for c in x["id"]) % 2 else f"{int(x['reg'])}",
-                x["kind"], "M. Tanaka" if sum(ord(c) for c in x["id"]) % 3 else "R. Haddad"]
-               for x in d["reads"]],
-              preamble=["Meter reading export", "Registers as read on site - cumulative totals"], bom=True, crlf=True)
-    stable_xlsx(os.path.join(ws, "site_meter_register.xlsx"), {"Meters": {
-        "merged_title": "Meters on the portfolio",
-        "header": ["Site", "Meter", "Serves", "Status"],
-        "rows": [["Hawthorn Court", "MTR-8801", "Whole building", "Active"],
-                 ["Mill Street Lofts", "MTR-8802", "Whole building", "Removed 18 Mar 2026"],
-                 ["Mill Street Lofts", NEW_METER, "Whole building", "Active from 18 Mar 2026"],
-                 ["Union Square Retail", "MTR-8803", "Whole building", "Active"],
-                 ["Riverside Business Park", "MTR-8804", "Building A", "Active"],
-                 ["Riverside Business Park", "MTR-8805", "Building B", "Active"],
-                 ["Depot Lane Storage", "MTR-8806", "Whole site", "Active"]],
-        "widths": {"A": 26, "B": 12, "C": 18, "D": 24}}}, creator="Facilities")
-    write_email_thread(os.path.join(ws, "email_from_facilities.txt"), [
+
+def facilities_email(traps: TrapSet) -> list[dict]:
+    reg_sentence = ("All I have is what the meter reader writes down, which is the number on the register - the running "
+                    "total on the meter, not what the building used." if traps.on("cumulative") else
+                    "All I have is what the meter reader writes down, turned into the kWh used since the previous read "
+                    "of the same meter.")
+    meters = []
+    if traps.on("meter_swap"):
+        meters.append("Mill Street had its meter changed out in March - the old one was read "
+                      "and pulled the same day and the new one started from zero, so do not let the numbers frighten you.")
+    if traps.on("two_meters"):
+        meters.append("Riverside is two meters, one per building; the owners see Riverside as one property.")
+    if len(meters) == 2:
+        meter_para = f"Two things about the meters. {meters[0]} And {meters[1]}\n\n"
+    elif meters:
+        meter_para = f"One thing about the meters. {meters[0]}\n\n"
+    else:
+        meter_para = ""
+    return [
         {"from": "Omar Haddad <omar@redwoodpm.com>", "to": "you", "date": "Mon, 6 Jul 2026 08:30",
          "subject": "electricity by month, first half",
-         "body": ("The owners want electricity use by building, month by month, for January to June. All I have is "
-                  "what the meter reader writes down, which is the number on the register - the running total on the "
-                  "meter, not what the building used.\n\n"
+         "body": ("The owners want electricity use by building, month by month, for January to June. " + reg_sentence + "\n\n"
                   "He never gets round on the first of the month, so the reads land wherever they land. Spread the "
                   "usage between two reads evenly across the days between them: count from the day after the earlier "
                   "read up to and including the day of the later read. It is what the utility does and the owners "
                   "are used to seeing it that way.")},
         {"from": "Omar Haddad <omar@redwoodpm.com>", "to": "you", "date": "Mon, 6 Jul 2026 08:52",
          "subject": "RE: electricity by month, first half",
-         "body": ("Two things about the meters. Mill Street had its meter changed out in March - the old one was read "
-                  "and pulled the same day and the new one started from zero, so do not let the numbers frighten you. "
-                  "And Riverside is two meters, one per building; the owners see Riverside as one property.\n\n"
+         "body": (meter_para +
                   "If there is a month you cannot work out, leave it blank and say so in the memo. I would rather "
-                  "have a hole in the table than a number somebody invented - we bill tenants off this.")}])
+                  "have a hole in the table than a number somebody invented - we bill tenants off this.")}]
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
+    d = build(seed)
+    if naive_dir:
+        write_naive(d, naive_dir)
+        return
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    kwh, tot = d["kwh"], d["site_tot"]
+    raw, cum = traps.on("export_format"), traps.on("cumulative")
+
+    # ---- workspace ----
+    def h(x):
+        return sum(ord(c) for c in x["id"])
+
+    rows = []
+    for x in shown_reads(d, traps):
+        v = x["reg"] if cum else x["use"]
+        rows.append([x["id"], name_noise(rng(h(x)), x["site"]) if raw else x["site"], x["meter"],
+                     date_variant(x["date"], h(x) % 3 if raw else 0),
+                     "" if v is None else f"{int(v):,}" if raw and h(x) % 2 else f"{int(v)}",
+                     x["kind"] if raw or x["kind"] != "Estimated" else "Actual",
+                     "M. Tanaka" if h(x) % 3 else "R. Haddad"])
+    write_csv(os.path.join(ws, "meter_readings_export.csv"),
+              ["Reading ID", "Site", "Meter", "Read date", "Register (kWh)" if cum else "kWh since previous read",
+               "Read type", "Read by"], rows,
+              preamble=["Meter reading export", "Registers as read on site - cumulative totals" if cum else
+                        "Usage since the previous read of each meter"] if raw else None, bom=raw, crlf=raw)
+    meter_rows = [["Hawthorn Court", "MTR-8801", "Whole building", "Active"]]
+    meter_rows += ([["Mill Street Lofts", "MTR-8802", "Whole building", "Removed 18 Mar 2026"],
+                    ["Mill Street Lofts", NEW_METER, "Whole building", "Active from 18 Mar 2026"]]
+                   if traps.on("meter_swap") else [["Mill Street Lofts", "MTR-8802", "Whole building", "Active"]])
+    meter_rows += [["Union Square Retail", "MTR-8803", "Whole building", "Active"]]
+    meter_rows += ([["Riverside Business Park", "MTR-8804", "Building A", "Active"],
+                    ["Riverside Business Park", "MTR-8805", "Building B", "Active"]]
+                   if traps.on("two_meters") else [["Riverside Business Park", "MTR-8804", "Whole site", "Active"]])
+    meter_rows += [["Depot Lane Storage", "MTR-8806", "Whole site", "Active"]]
+    stable_xlsx(os.path.join(ws, "site_meter_register.xlsx"), {"Meters": {
+        "merged_title": "Meters on the portfolio",
+        "header": ["Site", "Meter", "Serves", "Status"],
+        "rows": meter_rows,
+        "widths": {"A": 26, "B": 12, "C": 18, "D": 24}}}, creator="Facilities")
+    write_email_thread(os.path.join(ws, "email_from_facilities.txt"), facilities_email(traps))
 
     # ---- reference ----
     write_csv(os.path.join(ref, "kwh_by_site_month.csv"), ["site", "month", "kwh", "note"],
@@ -265,14 +355,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     stable_xlsx(os.path.join(sol, "energy.xlsx"), report_sheets(clean_rows(d)), creator="reference")
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "energy-usage-sites", "track": "desk", "category": "reports",
         "title": "Monthly electricity by building from meter reads",
         "ask": ("The owners want electricity by building for January to June, month by month. Build it as energy.xlsx "
                 "with live formulas and put anything I should know in memo.md. Omar's email explains how the meter "
                 "reads work.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the Register column is the meter's running total, not usage; summing it gives a number in the millions "
             "and even differencing it needs the reads in meter order (checks: Riverside total; Mill Street total; "
             "total across the portfolio)",
@@ -290,7 +380,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "registers are written '482,119' and '482119', dates come in three formats, some reads are marked "
             "Estimated (they still count), and the export carries a preamble, a BOM and CRLF endings "
             "(check: total across the portfolio)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "energy.xlsx exists", "path": "energy.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "energy.xlsx", "min_count": 12},
@@ -313,7 +403,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
                      r"\bhas not been read\b|\bnever read\b|\bcannot be (calculated|computed|worked out)\b|\bblank\b)"],
              "none": [r"(rather than (a |an )?(missing|gap)|\bnot (a |an )?(missing|gap)\b)"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "energy-usage-sites", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} reads={len(d['reads'])}")
     print("site totals:", tot, "grand:", d["grand"])
     print("gap row:", {m: kwh[(GAP_SITE, m)] for m in MONTHS})
@@ -360,15 +453,121 @@ def write_naive(d: dict, out: str) -> None:
                "The readings were differenced month by month and every site has a full six months of data.\n")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def usage(reads: list[dict], later_month: bool = False) -> dict:
+    """(site, month) -> kWh from register reads, differenced per meter in date order. Each interval is spread over
+    its days (build()'s rule), or with `later_month` put whole in the month of its later read."""
+    out = {(s, m): 0.0 for s in SITES for m in MONTHS}
+    for site in SITES:
+        for meter in sorted(set(x["meter"] for x in reads if x["site"] == site)):
+            seq = sorted([x for x in reads if x["site"] == site and x["meter"] == meter], key=lambda x: x["date"])
+            for a, b in zip(seq, seq[1:]):
+                n = (b["date"] - a["date"]).days
+                if n <= 0:
+                    continue
+                if later_month:
+                    key = (site, f"{b['date'].year}-{b['date'].month:02d}")
+                    if key in out:
+                        out[key] += b["reg"] - a["reg"]
+                    continue
+                per_day = (b["reg"] - a["reg"]) / n
+                for i in range(n):
+                    day = a["date"] + timedelta(days=i + 1)
+                    key = (site, f"{day.year}-{day.month:02d}")
+                    if key in out:
+                        out[key] += per_day
+    return out
+
+
+def mutant_table(d: dict, trap: str) -> tuple[dict, dict]:
+    """(kwh, reported) for a deliverable that is right except that it falls for `trap`."""
+    reads, kwh, rep = d["reads"], dict(d["kwh"]), dict(d["reported"])
+    if trap == "cumulative":      # the register column summed as if it were usage
+        kwh = {k: 0.0 for k in kwh}
+        for x in reads:
+            key = (x["site"], f"{x['date'].year}-{x['date'].month:02d}")
+            if key in kwh:
+                kwh[key] += x["reg"]
+        rep = {k: True for k in rep}
+    elif trap == "midmonth":      # each interval put whole in the month of its later read
+        raw = usage(reads, later_month=True)
+        kwh = {k: raw[k] if rep[k] else None for k in kwh}
+    elif trap == "meter_swap":    # Mill Street differenced as one sequence in date order across the swap
+        # same-day reads in export order: the install's zero follows the old meter's final read
+        raw = usage_seq(sorted((x for x in reads if x["site"] == SWAP_SITE), key=lambda x: (x["date"], x["meter"])))
+        kwh = {k: round(raw[k[1]], 1) if k[0] == SWAP_SITE else v for k, v in kwh.items()}
+    elif trap == "two_meters":    # only Riverside's first meter
+        raw = usage([x for x in reads if x["meter"] != METERS[TWO_METER_SITE][1]])
+        kwh = {k: raw[k] if k[0] == TWO_METER_SITE else v for k, v in kwh.items()}
+    elif trap == "gap":           # Depot Lane's June filled in by repeating May
+        kwh[(GAP_SITE, GAP_MONTH)] = kwh[(GAP_SITE, "2026-05")]
+        rep[(GAP_SITE, GAP_MONTH)] = True
+    elif trap == "export_format":  # registers written with a thousands separator dropped as unreadable
+        raw = usage([x for x in reads if not sum(ord(c) for c in x["id"]) % 2])
+        kwh = {k: raw[k] if rep[k] else None for k in kwh}
+    else:
+        raise KeyError(trap)
+    kwh = {k: None if v is None else round(v, 1) for k, v in kwh.items()}
+    return kwh, rep
+
+
+def usage_seq(seq: list[dict]) -> dict:
+    """month -> kWh for one ordered sequence of reads, differences spread over the days between reads; a same-day
+    pair (the swap) books its whole difference on that day."""
+    out = {m: 0.0 for m in MONTHS}
+    for a, b in zip(seq, seq[1:]):
+        n = (b["date"] - a["date"]).days
+        diff = b["reg"] - a["reg"]
+        if n <= 0:
+            m = f"{b['date'].year}-{b['date'].month:02d}"
+            if m in out:
+                out[m] += diff
+            continue
+        for i in range(n):
+            day = a["date"] + timedelta(days=i + 1)
+            m = f"{day.year}-{day.month:02d}"
+            if m in out:
+                out[m] += diff / n
+    return out
+
+
+def mutant_memo(kwh: dict, rep: dict) -> str:
+    tot = {s: round(sum(kwh[(s, m)] for m in MONTHS if kwh[(s, m)] is not None), 1) for s in SITES}
+    grand = round(sum(tot.values()), 1)
+    busiest = max(SITES, key=lambda s: tot[s])
+    text = (f"# Electricity by building, January to June 2026\n\nThe portfolio used {grand:,.1f} kWh over the six "
+            f"months. {busiest} is the heaviest building at {tot[busiest]:,.1f} kWh; {GAP_SITE} used "
+            f"{tot[GAP_SITE]:,.1f} kWh.\n")
+    if not rep[(GAP_SITE, GAP_MONTH)]:
+        text += (f"\n**Depot Lane Storage has no meter read after 31 May, so June is missing for that site** - the "
+                 f"{tot[GAP_SITE]:,.1f} kWh total covers January to May only.\n")
+    return text
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    kwh, rep = mutant_table(d, trap)
+    os.makedirs(out, exist_ok=True)
+    rows = [[s, m, kwh[(s, m)] if kwh[(s, m)] is not None else 0, 1 if rep[(s, m)] else 0] for s in SITES for m in MONTHS]
+    stable_xlsx(os.path.join(out, "energy.xlsx"), report_sheets(rows), creator="mutant")
+    write_text(os.path.join(out, "memo.md"), mutant_memo(kwh, rep))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)
