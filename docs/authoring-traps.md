@@ -71,6 +71,24 @@ Library: `tasks/lib/bizgen/traps.py`. Checks: `bench/validate_traps.py`, `bench/
    Byte identity and speed use the interpreter given (the published files were generated without
    lxml); trap validation grades every variant and mutant with LibreOffice.
 
+## Cases met in the first 24 retrofits
+
+* **Task-local check modules.** If `task.yaml` uses a `custom` check or `plan_feasible` with a module in
+  the task folder (`check.py`), copy it into `--out` so a variant or copy can be graded on its own.
+* **Hand-written `task.yaml`.** Some generators never write `task.yaml`. With `--out`, copy it byte for
+  byte; for a variant, load it, filter `traps` with `active_trap_text`, add the `variant` record, and
+  dump it.
+* **Random draws at render time.** Some generators also draw in `emit()`. Draw for every row exactly as
+  before and drop the removed rows afterwards, so the rest of the file does not change.
+* **Composite sentences.** When one sentence describes a removable part and a part the answer depends
+  on, the switch removes only the removable part; say so in the trap description. If nothing can be
+  removed without moving the answer, the trap is fixed.
+* **Notes that are not traps.** A sentence such as "expected values pinned to seed 0" is declared fixed
+  and has no mutant.
+* **Grader-blind mutants.** A faithful mutant that passes a check its trap cites is a grader finding:
+  keep the function, leave it out of `MUTANTS`, and record the check and reason in a comment next to
+  `MUTANTS`.
+
 ## Reading validation output
 
 * `variant ... workspace identical`: the switch does nothing. Fix the switch, or the trap is not real.
