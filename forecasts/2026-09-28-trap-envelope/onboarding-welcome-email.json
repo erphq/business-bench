@@ -1,0 +1,232 @@
+{
+ "kind": "envelope-predictions",
+ "task": "onboarding-welcome-email",
+ "manifest_sha256": "a02c43232fcbefa9c1151bbd72962ae70fd348e5080ece646ec12f8a57e0cbd2",
+ "created_utc": "2026-09-28T23:49:54Z",
+ "systems": [
+  "proto-deepseek"
+ ],
+ "k": 3,
+ "method": "canonical-rate + prior",
+ "method_note": "No attempts on any non-canonical variant were available, so nothing about the individual traps has been measured yet. Each system's pass rate on the canonical task (every trap on) is taken from its observed attempts with a Jeffreys Beta(passes+0.5, fails+0.5) posterior; removing trap j adds w_j to the logit, with w_j drawn from a weakly-informative Normal(mean 0.5, sd 1.0) prior, independently per trap. These are prior forecasts: their calibration is what `score` will test.",
+ "effect_prior": {
+  "mean": 0.5,
+  "sd": 1.0
+ },
+ "notes": [],
+ "evidence": {
+  "records": 3,
+  "canonical_counts": {
+   "proto-deepseek": {
+    "pass": 2,
+    "fail": 1
+   }
+  },
+  "sources": [
+   "results/latest/attempts.jsonl"
+  ],
+  "synthetic": false
+ },
+ "fitted_params": null,
+ "baseline_p": {
+  "proto-deepseek": 0.625
+ },
+ "cell_fields": {
+  "p_mean": "predicted probability a single attempt passes",
+  "p_q": "20 equal-mass points of the predictive distribution of that probability",
+  "passk": "predicted probability that 3 independent repetitions all pass"
+ },
+ "cells": [
+  {
+   "system": "proto-deepseek",
+   "variant": "v00",
+   "dir": "onboarding-welcome-email__v00",
+   "effective_off": [],
+   "p_mean": 0.624717,
+   "p_q": [
+    0.180731,
+    0.282248,
+    0.35094,
+    0.404354,
+    0.447533,
+    0.489078,
+    0.527405,
+    0.565386,
+    0.593973,
+    0.631107,
+    0.664453,
+    0.693428,
+    0.724853,
+    0.755616,
+    0.785355,
+    0.814143,
+    0.844672,
+    0.877936,
+    0.915495,
+    0.963277
+   ],
+   "passk": 0.327002
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v01",
+   "dir": "onboarding-welcome-email__v01",
+   "effective_off": [
+    "arrival"
+   ],
+   "p_mean": 0.688125,
+   "p_q": [
+    0.131845,
+    0.259614,
+    0.358726,
+    0.435386,
+    0.492395,
+    0.552812,
+    0.603962,
+    0.64694,
+    0.686269,
+    0.729552,
+    0.764284,
+    0.797851,
+    0.831186,
+    0.857737,
+    0.883441,
+    0.904903,
+    0.926344,
+    0.947222,
+    0.967682,
+    0.987399
+   ],
+   "passk": 0.437713
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v02",
+   "dir": "onboarding-welcome-email__v02",
+   "effective_off": [
+    "desk_phone"
+   ],
+   "p_mean": 0.696094,
+   "p_q": [
+    0.147898,
+    0.270175,
+    0.366171,
+    0.440952,
+    0.502214,
+    0.564962,
+    0.614774,
+    0.658955,
+    0.700843,
+    0.741459,
+    0.776273,
+    0.809736,
+    0.837026,
+    0.866069,
+    0.888981,
+    0.911503,
+    0.929731,
+    0.950465,
+    0.968576,
+    0.987947
+   ],
+   "passk": 0.448163
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v03",
+   "dir": "onboarding-welcome-email__v03",
+   "effective_off": [
+    "kit"
+   ],
+   "p_mean": 0.693548,
+   "p_q": [
+    0.14574,
+    0.261186,
+    0.345002,
+    0.428271,
+    0.498665,
+    0.563148,
+    0.616678,
+    0.661967,
+    0.702642,
+    0.74183,
+    0.77797,
+    0.809815,
+    0.837761,
+    0.861885,
+    0.886604,
+    0.911092,
+    0.930497,
+    0.951185,
+    0.970236,
+    0.987526
+   ],
+   "passk": 0.447151
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v04",
+   "dir": "onboarding-welcome-email__v04",
+   "effective_off": [
+    "manager"
+   ],
+   "p_mean": 0.691557,
+   "p_q": [
+    0.138102,
+    0.261984,
+    0.353413,
+    0.427669,
+    0.491739,
+    0.55644,
+    0.609585,
+    0.654093,
+    0.699404,
+    0.735018,
+    0.772132,
+    0.807689,
+    0.8365,
+    0.861052,
+    0.886174,
+    0.908933,
+    0.92947,
+    0.950198,
+    0.968754,
+    0.987007
+   ],
+   "passk": 0.444047
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v05",
+   "dir": "onboarding-welcome-email__v05",
+   "effective_off": [
+    "start_date"
+   ],
+   "p_mean": 0.693938,
+   "p_q": [
+    0.150817,
+    0.263234,
+    0.352788,
+    0.438861,
+    0.501324,
+    0.566169,
+    0.616342,
+    0.663969,
+    0.702253,
+    0.737921,
+    0.775974,
+    0.805889,
+    0.836781,
+    0.863821,
+    0.884708,
+    0.905004,
+    0.928178,
+    0.949026,
+    0.968764,
+    0.987635
+   ],
+   "passk": 0.445432
+  }
+ ],
+ "sha256": "36d67aaf7939261a456f08aaa3a0c1e35a8f611241cb2efd7a24c58ff2448877"
+}

@@ -1,0 +1,264 @@
+{
+ "kind": "envelope-predictions",
+ "task": "proposal-from-notes",
+ "manifest_sha256": "63796b324678114a7b066738c2a4f49e04cc79774f984d24a5c9fa6f5fb19fb7",
+ "created_utc": "2026-09-28T23:49:54Z",
+ "systems": [
+  "proto-deepseek"
+ ],
+ "k": 3,
+ "method": "canonical-rate + prior",
+ "method_note": "No attempts on any non-canonical variant were available, so nothing about the individual traps has been measured yet. Each system's pass rate on the canonical task (every trap on) is taken from its observed attempts with a Jeffreys Beta(passes+0.5, fails+0.5) posterior; removing trap j adds w_j to the logit, with w_j drawn from a weakly-informative Normal(mean 0.5, sd 1.0) prior, independently per trap. These are prior forecasts: their calibration is what `score` will test.",
+ "effect_prior": {
+  "mean": 0.5,
+  "sd": 1.0
+ },
+ "notes": [],
+ "evidence": {
+  "records": 3,
+  "canonical_counts": {
+   "proto-deepseek": {
+    "pass": 2,
+    "fail": 1
+   }
+  },
+  "sources": [
+   "results/latest/attempts.jsonl"
+  ],
+  "synthetic": false
+ },
+ "fitted_params": null,
+ "baseline_p": {
+  "proto-deepseek": 0.625
+ },
+ "cell_fields": {
+  "p_mean": "predicted probability a single attempt passes",
+  "p_q": "20 equal-mass points of the predictive distribution of that probability",
+  "passk": "predicted probability that 3 independent repetitions all pass"
+ },
+ "cells": [
+  {
+   "system": "proto-deepseek",
+   "variant": "v00",
+   "dir": "proposal-from-notes__v00",
+   "effective_off": [],
+   "p_mean": 0.624717,
+   "p_q": [
+    0.180731,
+    0.282248,
+    0.35094,
+    0.404354,
+    0.447533,
+    0.489078,
+    0.527405,
+    0.565386,
+    0.593973,
+    0.631107,
+    0.664453,
+    0.693428,
+    0.724853,
+    0.755616,
+    0.785355,
+    0.814143,
+    0.844672,
+    0.877936,
+    0.915495,
+    0.963277
+   ],
+   "passk": 0.327002
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v01",
+   "dir": "proposal-from-notes__v01",
+   "effective_off": [
+    "disposal"
+   ],
+   "p_mean": 0.69341,
+   "p_q": [
+    0.135385,
+    0.262654,
+    0.360797,
+    0.440297,
+    0.501617,
+    0.561439,
+    0.610986,
+    0.659019,
+    0.70069,
+    0.74044,
+    0.774256,
+    0.807934,
+    0.833413,
+    0.861969,
+    0.885685,
+    0.909785,
+    0.929145,
+    0.950271,
+    0.969845,
+    0.987942
+   ],
+   "passk": 0.445646
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v02",
+   "dir": "proposal-from-notes__v02",
+   "effective_off": [
+    "highbay_count"
+   ],
+   "p_mean": 0.691793,
+   "p_q": [
+    0.140135,
+    0.265724,
+    0.35869,
+    0.432097,
+    0.498862,
+    0.55516,
+    0.604484,
+    0.655693,
+    0.694364,
+    0.733492,
+    0.769279,
+    0.805301,
+    0.837166,
+    0.86484,
+    0.888499,
+    0.910689,
+    0.928576,
+    0.949929,
+    0.968423,
+    0.987444
+   ],
+   "passk": 0.443592
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v03",
+   "dir": "proposal-from-notes__v03",
+   "effective_off": [
+    "lift"
+   ],
+   "p_mean": 0.695438,
+   "p_q": [
+    0.145274,
+    0.267317,
+    0.36285,
+    0.438879,
+    0.502262,
+    0.560605,
+    0.619183,
+    0.661935,
+    0.703537,
+    0.73697,
+    0.773185,
+    0.80536,
+    0.834421,
+    0.863777,
+    0.887399,
+    0.91118,
+    0.932417,
+    0.950848,
+    0.968114,
+    0.986653
+   ],
+   "passk": 0.44733
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v04",
+   "dir": "proposal-from-notes__v04",
+   "effective_off": [
+    "old_proposal"
+   ],
+   "p_mean": 0.69083,
+   "p_q": [
+    0.137917,
+    0.252227,
+    0.344511,
+    0.421336,
+    0.48861,
+    0.552577,
+    0.613189,
+    0.660395,
+    0.703535,
+    0.742151,
+    0.776543,
+    0.80874,
+    0.835238,
+    0.860043,
+    0.886508,
+    0.91118,
+    0.931133,
+    0.950246,
+    0.968997,
+    0.986969
+   ],
+   "passk": 0.445171
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v05",
+   "dir": "proposal-from-notes__v05",
+   "effective_off": [
+    "old_rates"
+   ],
+   "p_mean": 0.689906,
+   "p_q": [
+    0.141434,
+    0.256259,
+    0.357022,
+    0.438677,
+    0.496515,
+    0.562703,
+    0.608561,
+    0.653427,
+    0.699554,
+    0.736303,
+    0.768639,
+    0.796491,
+    0.824454,
+    0.854483,
+    0.880248,
+    0.90689,
+    0.927618,
+    0.947851,
+    0.969467,
+    0.987876
+   ],
+   "passk": 0.439592
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v06",
+   "dir": "proposal-from-notes__v06",
+   "effective_off": [
+    "poles"
+   ],
+   "p_mean": 0.69175,
+   "p_q": [
+    0.128437,
+    0.271838,
+    0.3601,
+    0.433882,
+    0.498233,
+    0.56022,
+    0.613476,
+    0.654,
+    0.696601,
+    0.732957,
+    0.768199,
+    0.805487,
+    0.833465,
+    0.8576,
+    0.88395,
+    0.908824,
+    0.931666,
+    0.950745,
+    0.970253,
+    0.987599
+   ],
+   "passk": 0.44313
+  }
+ ],
+ "sha256": "8f32e4708de9db0e7c1964d86fc2f3c8e8dae8e370fbf1e009e1fdbc2edb5f65"
+}
