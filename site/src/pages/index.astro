@@ -2,12 +2,15 @@
 import Base from "@/layouts/Base.astro";
 import Figure from "@/components/Figure.astro";
 import DotChart from "@/components/DotChart.astro";
-import { ARMS, SUMMARY_BY_ID, deskTasks, buildTasks, processTasks, processCampaign, PROCESS_PILOT, provenance, findings, intervals, deskComparison, REPO, SITE, ORG, AUTHORS, RELEASE, REPS, fmt } from "@/lib/data";
+import { ARMS, SUMMARY_BY_ID, deskTasks, buildTasks, processTasks, processCampaign, PROCESS_PILOT, provenance, findings, intervals, deskComparison, deskCampaign, DESK_CAMPAIGN, REPO, SITE, ORG, AUTHORS, RELEASE, REPS, fmt } from "@/lib/data";
 const desk = deskTasks(), build = buildTasks(), proc = processTasks(), pilot = processCampaign(PROCESS_PILOT);
 const F = Object.fromEntries(ARMS.map((a) => [a.id, findings(a.id)]));
 const I = Object.fromEntries(ARMS.map((a) => [a.id, intervals(a.id)]));
 const comparison = deskComparison(), bs = provenance().paired_task_bootstrap;
 const attemptsTotal = ARMS.reduce((n, a) => n + SUMMARY_BY_ID[a.id].attempts, 0);
+const dc = deskCampaign(DESK_CAMPAIGN), dcRank = [...dc.arms].sort((a, b) => dc.summary[b.id].passed - dc.summary[a.id].passed);
+const count = (k: number) => ["no", "one", "two", "three", "four", "five", "six"][k] ?? String(k);
+const dcPair = dc.pair ? dc.pair.arms.map((id) => dc.arms.find((a) => a.id === id)!) : [];
 const desc = `Evaluate AI agents on complete business deliverables. Inspect ${desk.length} desk tasks and ${fmt.int(attemptsTotal)} recorded attempts, unscored application tasks, and a separate ERP process pilot.`;
 const cite = `@misc{businessbench2026,
   title        = {Business Bench: Evaluating Agents on Business Deliverables},
@@ -48,7 +51,7 @@ const jsonld = [
   <div class="tbl-wrap"><table class="tbl">
     <thead><tr><th>Track</th><th>Unit of work</th><th>Evaluation</th><th>Published evidence</th></tr></thead>
     <tbody>
-      <tr><td><a href="/tasks#desk"><b>Desk</b></a><br />{desk.length} tasks</td><td>A file workspace becomes a set of deliverables.</td><td>Executable checks on keys, values, recalculated workbooks and declared text rules.</td><td><a href="/results">{fmt.int(attemptsTotal)} attempts</a><br />{ARMS.length} configured systems, {REPS} repetitions per task.</td></tr>
+      <tr><td><a href="/tasks#desk"><b>Desk</b></a><br />{desk.length} tasks</td><td>A file workspace becomes a set of deliverables.</td><td>Executable checks on keys, values, recalculated workbooks and declared text rules.</td><td><a href="/results">{fmt.int(attemptsTotal)} attempts</a><br />{ARMS.length} configured systems, {REPS} repetitions per task.<br /><a href={`/results/${dc.label}`}>{fmt.int(dc.attempts.length)} more attempts</a> in a separate {count(dc.arms.length)}-system campaign, {dc.repetitions === 1 ? "one repetition" : `${dc.repetitions} repetitions`}.</td></tr>
       <tr><td><a href="/tasks#build"><b>Build</b></a><br />{build.length} task packs</td><td>A running application, followed by three changes.</td><td>A tester checks the application against its acceptance checklist and a shared enterprise baseline.</td><td><strong>No published scores.</strong><br />Specifications and validation of task packs.</td></tr>
       <tr><td><a href="/process"><b>Process</b></a><br />{proc.length} tasks</td><td>A role in an ERP over several business dates.</td><td>Checks on final state, declared audit rules, account ties and handoff notes.</td><td><a href="/process#campaign">{pilot.tasks.length}-task pilot, {pilot.attempts.length} attempts</a><br />Local execution; practitioner review pending.</td></tr>
     </tbody>
@@ -72,6 +75,8 @@ const jsonld = [
     />
     <Fragment slot="caption">Desk release <code>{RELEASE.id}</code>. All {fmt.int(attemptsTotal)} attempts use the shared retrospective scorer. Whiskers are descriptive 95% task-bootstrap intervals, retaining each task’s repetitions. The paired attempt-rate gap is {bs.difference_percentage_points.toFixed(2)} percentage points (interval {bs.bootstrap_95_percent_interval_pp.map((n: number) => n.toFixed(2)).join(" to ")}). These intervals exclude evaluator selection, related task families and deployment shift. <a href="/results">Inspect counts and conditions</a>.</Fragment>
   </Figure>
+
+  <p>A separate campaign on {dc.date} ran every desk task {dc.repetitions === 1 ? "once" : `${dc.repetitions} times`} with {count(dc.arms.length)} systems under the same frozen scorer: {dcRank.map((a) => `${a.system} ${dc.summary[a.id].passed}/${dc.summary[a.id].attempts}`).join(", ")}. {dc.pair && `${dcPair[0].system} and ${dcPair[1].system} ran in the same window on the same model and reasoning level; their paired difference is ${dc.pair.difference_percentage_points >= 0 ? "+" : "−"}${Math.abs(dc.pair.difference_percentage_points).toFixed(2)} points (descriptive 95% interval ${dc.pair.bootstrap_95_percent_interval_pp.map((x) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(2)}`).join(" to ")}). `}Its attempts are not pooled with the release. <a href={`/results/${dc.label}`}>Inspect that campaign</a>.</p>
 
   <h2 id="findings">What changes the conclusion</h2>
   <div class="tbl-wrap"><table class="tbl">

@@ -2,7 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import Reps from "@/components/Reps.astro";
 import { recordedChecks, sameCheckSchema } from "@/lib/task-evidence";
-import { ARMS, CATEGORY_LABEL, deskTasks, matrix, scorer, REPO, REPS, type DeskTask } from "@/lib/data";
+import { ARMS, CATEGORY_LABEL, deskTasks, matrix, scorer, deskCampaign, deskCampaignLabels, REPO, REPS, type DeskTask } from "@/lib/data";
 export async function getStaticPaths() { return deskTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
 const { task } = Astro.props as { task: DeskTask };
 const runs = matrix()[task.id];
@@ -11,6 +11,7 @@ const frozenChecks = recordedChecks(ARMS.flatMap(a => runs[a.id]));
 const schemaChanged = !sameCheckSchema(task.checks, frozenChecks);
 const med = (xs: number[]) => { const s = xs.filter((x) => x != null).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
 const mean = (xs: (number | null)[]) => { const s = xs.filter((x): x is number => x != null); return s.length ? s.reduce((a, b) => a + b, 0) / s.length : null; };
+const later = deskCampaignLabels().map(deskCampaign).filter((c) => c.matrix[task.id]);
 const desc = `${task.title}. A ${CATEGORY_LABEL[task.category].toLowerCase()} task from Business Bench: ${task.ask.slice(0, 140)}`;
 // Two tasks can share a title (a task and its variant); the page title then carries the id so each is distinct.
 const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ? `${task.title} (${task.id})` : task.title;
@@ -48,7 +49,7 @@ const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ?
     <ul>{task.checks.map(c => <li>{c.name} — <code>{c.type}</code>, {c.required ? "required" : "diagnostic"}</li>)}</ul>
   </details>
 
-  <h2>Recorded results, complete desk comparison</h2>
+  <h2 id="release-results">Recorded results, desk release</h2>
   {isEq && <div class="callout"><p>This is one of the {scorer().equivalenceTasks.length} tasks with a task-specific equivalence grader in the frozen scorer, intended to accept equivalent representations. Whether an equivalence rule matches the business requirement remains open to review. Original and frozen verdicts can differ; see <a href="/results#scorer">what the frozen scorer changed</a>.</p></div>}
   <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep p eq"></i> pass, frozen scorer only</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> timed out</span></div>
   <div class="tbl-wrap"><table class="tbl">
@@ -58,4 +59,16 @@ const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ?
         <td class="n">{rs.filter((r) => r.passed).length}</td><td class="n">{rs.filter((r) => r.raw_passed).length}</td><td class="n">{w != null ? (w / 60).toFixed(1) : "n/a"}</td><td class="n">{c != null ? c.toFixed(4) : "n/a"}</td></tr>); })}</tbody>
   </table></div>
   <p class="muted">These are repeated executions on the released fixture, not independent new business cases. Cost is captured model usage priced under the recorded assumptions, excluding infrastructure and human review. Per-attempt check verdicts, raw and frozen verdicts, usage, receipt and artifact hashes for this task are in <code>results/latest/attempts.jsonl</code> under <code>"task": "{task.id}"</code>.</p>
+
+  {later.map((c) => { const rs = c.matrix[task.id]; return (
+    <>
+      <h2 id={`campaign-${c.label}`}>Recorded results, {c.title.charAt(0).toLowerCase() + c.title.slice(1)}</h2>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>System</th><th>{c.repetitions === 1 ? "Attempt" : "Repetitions"}</th><th class="n">Frozen / {c.repetitions}</th><th class="n">Original / {c.repetitions}</th><th class="n">Median minutes</th></tr></thead>
+        <tbody>{c.arms.map((a) => { const runs2 = rs[a.id]; const w = med(runs2.map((r) => r.wall_s as number)); return (
+          <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td><Reps runs={runs2} /></td>
+            <td class="n">{runs2.filter((r) => r.passed).length}</td><td class="n">{runs2.filter((r) => r.raw_passed).length}</td><td class="n">{w != null ? (w / 60).toFixed(1) : "n/a"}</td></tr>); })}</tbody>
+      </table></div>
+      <p class="muted">A separate campaign under the same frozen scorer, not pooled with the release. <a href={`/results/${c.label}`}>Conditions and data</a>.</p>
+    </>); })}
 </Base>

@@ -1,6 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { ARMS, REPS, SUMMARY_BY_ID, deskTasks, buildTasks, attempts, provenance, scorer, scorerDelta, REPO } from "@/lib/data";
+import { ARMS, REPS, SUMMARY_BY_ID, deskTasks, buildTasks, attempts, provenance, scorer, scorerDelta, deskCampaign, DESK_CAMPAIGN, REPO } from "@/lib/data";
 const desk = deskTasks(), build = buildTasks(), led = attempts(), prov = provenance(), sc = scorer();
 const term = ARMS.map((a) => {
   const rows = led.filter((r) => r.harness === a.id);
@@ -10,6 +10,7 @@ const term = ARMS.map((a) => {
   return { a, attempts: rows.length, abnormal, unknown, acceptedAbnormal };
 });
 const delta = Object.fromEntries(ARMS.map((a) => [a.id, scorerDelta(a.id)]));
+const dc = deskCampaign(DESK_CAMPAIGN);
 const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
 const frozenGap = SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed;
 const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed;
@@ -31,12 +32,13 @@ const desc = "Author self-audit of Business Bench: public evidence, retrospectiv
     <thead><tr><th>Evidence</th><th>What a reader can check</th><th>What remains outside it</th></tr></thead>
     <tbody>
       <tr><td><a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">Attempt ledger</a>, <a href={`${REPO}/blob/main/results/latest/summary.json`} rel="noopener">summary</a>, <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">provenance</a></td><td>Matrix completeness, verdict totals, per-check records, resource accounting, and the recorded cohort definitions.</td><td>Whether a historical output deserved its recorded verdict; hashes cannot reconstruct the output.</td></tr>
+      <tr><td><a href={`/results/${dc.label}`}>{dc.title}</a>: <a href={`${REPO}/blob/main/results/desk/${dc.label}/attempts.jsonl`} rel="noopener">ledger</a>, <a href={`${REPO}/blob/main/results/desk/${dc.label}/provenance.json`} rel="noopener">provenance</a></td><td>The same checks for a separate {dc.arms.length}-system campaign, including its declared paired bootstrap.</td><td>The same limits: one repetition, private artifacts, and a development-exposed task set.</td></tr>
       <tr><td><a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">Frozen scorer</a> and <a href={`${REPO}/blob/main/${sc.dir}/manifest.json`} rel="noopener">manifest</a></td><td>The exact {sc.fileCount}-file package, copied task definitions, and equivalence rules for {sc.equivalenceTasks.length} tasks.</td><td>Whether the declared tests cover the right business properties or were selected independently of observed outputs.</td></tr>
       <tr><td><a href={`${REPO}/tree/main/tasks`} rel="noopener">Task packs</a></td><td>{desk.length} desk tasks and {build.length} build tasks: supplied inputs, requests, checks/checklists, generators, and references.</td><td>Representative business demand, independent practitioner agreement, or human completion times.</td></tr>
       <tr><td><a href={`${REPO}/tree/main/harnesses`} rel="noopener">Adapters</a> and <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">recorded configurations</a></td><td>Disclosed model routes, runtime identifiers, sampling settings where available, and current integration behavior.</td><td>A complete historical environment: private runtime binaries, image digests, authenticated skills, raw traces, and output workspaces are not fully distributed.</td></tr>
     </tbody>
   </table></div>
-  <p><a href="/reproduce#public-accounting">Run the public accounting checks</a> without calling a model. The <a href={`${REPO}/blob/main/bench/frozen_release.py`} rel="noopener">desk verifier</a> checks the ledger hash, recomputed summary, scorer fingerprint, and scorer identities. Original-result and receipt identities were checked against private source files during export, according to provenance; a fresh public clone cannot repeat that private-file comparison.</p>
+  <p><a href="/reproduce#public-accounting">Run the public accounting checks</a> without calling a model. The <a href={`${REPO}/blob/main/bench/frozen_release.py`} rel="noopener">desk verifier</a> and the <a href={`${REPO}/blob/main/bench/export_desk_campaign.py`} rel="noopener">verifier for later desk campaigns</a> check the ledger hash, recomputed summary, scorer fingerprint, and scorer identities. Original-result and receipt identities were checked against private source files during export, according to provenance; a fresh public clone cannot repeat that private-file comparison.</p>
 
   <h2 id="task-correctness">2. Task validity</h2>
   <div class="tbl-wrap"><table class="tbl">
@@ -61,7 +63,7 @@ const desc = "Author self-audit of Business Bench: public evidence, retrospectiv
   </details>
 
   <h2 id="consistency">4. Version and cohort limits</h2>
-  <p>The two current cells share the reported task set and primary frozen scorer. Their models, harnesses, sampling controls, and cohort dates differ. Earlier snapshots and later development experiments are excluded in <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">provenance</a>; they should not be pooled into a single ranking or treated as controlled before-and-after changes.</p>
+  <p>The two current cells share the reported task set and primary frozen scorer. Their models, harnesses, sampling controls, and cohort dates differ. Earlier snapshots and later development experiments are excluded in <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">provenance</a>; they should not be pooled into a single ranking or treated as controlled before-and-after changes. The separate <a href={`/results/${dc.label}`}>{dc.date} desk comparison</a> ran Proto and Codex on the same model, account and time window. That narrows the differences for that pair; it remains one repetition on the same exposed tasks.</p>
   <details><summary>Recorded source cohorts</summary>
     <ul>{ARMS.map((a) => <li><strong>{a.short}:</strong> {(prov.source_cohorts[a.id] as string[]).join("; ")}</li>)}</ul>
     <p>See <a href="/methods#cells">the configuration table</a>. Repetition labels are not common random seeds; the comparison did not randomize concurrent executions of otherwise identical systems.</p>

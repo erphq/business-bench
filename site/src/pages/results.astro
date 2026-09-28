@@ -5,7 +5,7 @@ import Reps from "@/components/Reps.astro";
 import Figure from "@/components/Figure.astro";
 import DotChart from "@/components/DotChart.astro";
 import WorkloadComparison from "@/components/WorkloadComparison.astro";
-import { ARMS, SUMMARY_BY_ID, CATEGORIES, CATEGORY_LABEL, deskTasks, attempts, matrix, provenance, prices, scorer, scorerDelta, intervals, deskComparison, fmt, REPO } from "@/lib/data";
+import { ARMS, SUMMARY_BY_ID, CATEGORIES, CATEGORY_LABEL, deskTasks, attempts, matrix, provenance, prices, scorer, scorerDelta, intervals, deskComparison, deskCampaign, deskCampaignLabels, fmt, REPO } from "@/lib/data";
 const desk = deskTasks(), led = attempts(), m = matrix(), prov = provenance(), price = prices(), sc = scorer();
 const reps = prov.repetitions as number, total = ARMS.length * reps;
 const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
@@ -29,6 +29,7 @@ const [lead, other] = byRate;
 const catRate = (arm: string, c: string) => { const b = SUMMARY_BY_ID[arm].by_category[c]; return b.passed / b.attempts; };
 const pctx = (x: number, d = 1) => `${(x * 100).toFixed(d)}%`;
 const catSizes = CATEGORIES.map((c) => desk.filter((t) => t.category === c.id).length).sort((a, b) => a - b);
+const later = deskCampaignLabels().map(deskCampaign);
 const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two systems, one frozen scorer with raw verdicts retained, per-task matrix, resource use, and provenance.";
 ---
 <Base title="Results" description={desc} path="/results">
@@ -41,6 +42,11 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
     <span class="t">What is being compared</span>
     <p>Two configured systems on a development-exposed task set. Models, harnesses, tools, sampling controls, and cohort dates vary together, so the comparison does not identify their separate effects. The scorer was constructed after outputs existed by the organization developing Proto. Start with categories relevant to your work, then inspect the task contracts and <a href="#scorer">scorer transitions</a>.</p>
   </div>
+
+  {later.length > 0 && <div class="callout">
+    <span class="t">Separate desk campaigns</span>
+    <p>Later campaigns on the same {desk.length} tasks and frozen scorer have their own pages and are not pooled with this release: {later.map((c, i) => <><a href={`/results/${c.label}`}>{c.title}</a> ({c.repetitions === 1 ? "one repetition" : `${c.repetitions} repetitions`}; {[...c.arms].sort((a, b) => c.summary[b.id].passed - c.summary[a.id].passed).map((a) => `${a.system} ${c.summary[a.id].passed}/${c.summary[a.id].attempts}`).join(", ")}){i < later.length - 1 ? "; " : "."}</>)}</p>
+  </div>}
 
   <h2 id="headline">Frozen and raw scores</h2>
   <div class="tbl-wrap"><table class="tbl">

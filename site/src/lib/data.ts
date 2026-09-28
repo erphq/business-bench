@@ -29,7 +29,11 @@ const ARM_META: Record<string, Omit<Arm, "id">> = {
   "proto-deepseek": { system: "Proto / DeepSeek V4.1 Flash", short: "Proto", harness: "Proto CLI, runtime c8f62dd60", model: "deepseek/deepseek-v4.1-flash", route: "DeepSeek only, no fallback, high reasoning, temperature 0", slot: 2 },
   "proto-glm": { system: "Proto / GLM-5.3 Flash", short: "Proto GLM", harness: "Proto CLI", model: "z-ai/glm-5.3-flash", route: "OpenRouter pinned to Z.ai", slot: 3 },
   "proto-qwen": { system: "Proto / Qwen 3.8 Flash", short: "Proto Qwen", harness: "Proto CLI", model: "qwen/qwen3.8-flash", route: "OpenRouter pinned to Alibaba", slot: 4 },
+  "codex-sol6": { system: "Codex / GPT-6 sol", short: "Codex", harness: "Codex CLI 0.158.0-alpha.2.1", model: "gpt-6-sol", route: "ChatGPT subscription, high reasoning, CLI-managed sampling", slot: 1 },
+  "proto-deepseek-direct": { system: "Proto / DeepSeek V4.1 Flash", short: "Proto DeepSeek", harness: "Proto CLI, unreleased build", model: "deepseek-flash", route: "DeepSeek API direct, high reasoning, temperature 0.7", slot: 2 },
+  "proto-sol6-sub": { system: "Proto / GPT-6 sol", short: "Proto GPT-6", harness: "Proto CLI, unreleased build", model: "gpt-6-sol", route: "ChatGPT subscription through the Codex sign-in, high reasoning", slot: 3 },
 };
+export function armMeta(id: ArmId): Arm { return { id, ...(ARM_META[id] ?? { system: id, short: id, harness: "", model: "", route: "", slot: 5 }) }; }
 
 export const CATEGORIES: { id: string; label: string; deliverable: string }[] = [
   { id: "spreadsheet", label: "Spreadsheet", deliverable: "Reconciled, calculated, or reshaped workbook" },
@@ -120,11 +124,51 @@ export function provenance(): any { return JSON.parse(read("results/latest/prove
 export function prices(): Record<string, any> { return JSON.parse(read("bench/prices.json")); }
 
 /** Arms in the release, in the order summary.json lists them. */
-export const ARMS: Arm[] = summary().map((s) => ({ id: s.harness, ...(ARM_META[s.harness] ?? { system: s.harness, short: s.harness, harness: "", model: "", route: "", slot: 5 }) }));
+export const ARMS: Arm[] = summary().map((s) => armMeta(s.harness));
 export const ARM_BY_ID: Record<ArmId, Arm> = Object.fromEntries(ARMS.map((a) => [a.id, a]));
 export const SUMMARY_BY_ID: Record<ArmId, ArmSummary> = Object.fromEntries(summary().map((s) => [s.harness, s]));
 export const REPS = provenance().repetitions as number;
 export const RELEASE = { id: provenance().campaign as string, version: SITE_VERSION, date: (provenance().scorecard_snapshot_utc as string).slice(0, 10) };
+
+/** A named desk campaign: results/desk/<label>/ holds its declaration, provenance, summary and attempt ledger.
+ *  Each is a separate campaign on the released tasks and frozen scorer; none is pooled with results/latest. */
+export interface DeskCampaignSummary extends Omit<ArmSummary, "all_three_pass" | "estimated_cost_sum_usd" | "estimated_cost_mean_usd"> {
+  all_repetitions_pass: number; estimated_cost_sum_usd: number | null; estimated_cost_mean_usd: number | null;
+}
+export interface DeskCampaign {
+  label: string; title: string; date: string; repetitions: number; window: [string, string]; arms: Arm[];
+  configurations: Record<ArmId, Record<string, string | number>>; provenance: any;
+  summary: Record<ArmId, DeskCampaignSummary>; attempts: Attempt[]; matrix: Matrix;
+  pair?: { arms: [ArmId, ArmId]; difference_percentage_points: number; bootstrap_95_percent_interval_pp: [number, number]; seed: number; samples: number };
+}
+export function deskCampaignLabels(): string[] {
+  const dir = path.join(ROOT, "results", "desk");
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter((d) => fs.existsSync(path.join(dir, d, "campaign.json"))).sort();
+}
+const _desk: Record<string, DeskCampaign> = {};
+export function deskCampaign(label: string): DeskCampaign {
+  if (_desk[label]) return _desk[label];
+  const dir = `results/desk/${label}`;
+  const prov = JSON.parse(read(`${dir}/provenance.json`));
+  const rows: DeskCampaignSummary[] = JSON.parse(read(`${dir}/summary.json`));
+  const led: Attempt[] = read(`${dir}/attempts.jsonl`).split("\n").filter(Boolean).map((l) => JSON.parse(l));
+  const arms = (prov.included_arms as ArmId[]).map(armMeta);
+  const m: Matrix = {};
+  for (const a of led) {
+    m[a.task] ??= Object.fromEntries(arms.map((x) => [x.id, [] as Attempt[]]));
+    m[a.task][a.harness].push(a);
+  }
+  for (const t of Object.values(m)) for (const arr of Object.values(t)) arr.sort((x, y) => x.run - y.run);
+  const date = new Date(prov.execution_window_utc[0]).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  return (_desk[label] = {
+    label, title: `Desk comparison, ${date}`, date, repetitions: prov.repetitions, window: prov.execution_window_utc, arms,
+    configurations: prov.configurations, provenance: prov, summary: Object.fromEntries(rows.map((s) => [s.harness, s])),
+    attempts: led, matrix: m, pair: prov.paired_task_bootstrap,
+  });
+}
+/** The desk campaign the overview and results pages point to, beside the release. */
+export const DESK_CAMPAIGN = "complete-desk-comparison-2026-09-28";
 
 /** mulberry32: a small deterministic generator, so every build draws the same bootstrap resamples. */
 function prng(seed: number) {

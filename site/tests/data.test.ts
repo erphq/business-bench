@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { ARMS, CATEGORIES, deskTasks, buildTasks, attempts, summary, matrix, scorer, readRepoFile } from "../src/lib/data";
+import { ARMS, CATEGORIES, deskTasks, buildTasks, attempts, summary, matrix, scorer, readRepoFile, deskCampaign, deskCampaignLabels, DESK_CAMPAIGN } from "../src/lib/data";
 import { slugify, renderMarkdown } from "../src/lib/markdown";
 
 const known = new Set(CATEGORIES.map((c) => c.id));
@@ -46,6 +46,32 @@ describe("ledger", () => {
       for (const r of arm) if (r.passed) byCat[r.category] = (byCat[r.category] ?? 0) + 1;
       for (const [c, v] of Object.entries(s.by_category)) expect(byCat[c] ?? 0).toBe(v.passed);
     }
+  });
+});
+
+describe("desk campaigns", () => {
+  test("every published campaign has a complete matrix and a summary that agrees with its ledger", () => {
+    const labels = deskCampaignLabels();
+    expect(labels).toContain(DESK_CAMPAIGN);
+    for (const label of labels) {
+      const c = deskCampaign(label);
+      const runs = Array.from({ length: c.repetitions }, (_, i) => i + 1);
+      expect(c.attempts.length).toBe(deskTasks().length * c.arms.length * c.repetitions);
+      for (const t of deskTasks()) for (const a of c.arms) expect(c.matrix[t.id][a.id].map((r) => r.run)).toEqual(runs);
+      for (const a of c.arms) {
+        const rows = c.attempts.filter((r) => r.harness === a.id);
+        expect(rows.filter((r) => r.passed).length).toBe(c.summary[a.id].passed);
+        expect(rows.filter((r) => r.raw_passed).length).toBe(c.summary[a.id].raw_passed);
+        expect(new Set(rows.map((r) => r.scorer_manifest_sha256))).toEqual(new Set([scorer().manifestSha]));
+      }
+    }
+  });
+  test("the 2026-09-28 campaign names its systems and its declared pair", () => {
+    const c = deskCampaign(DESK_CAMPAIGN);
+    expect(c.title).toBe("Desk comparison, 28 September 2026");
+    expect(c.arms.map((a) => a.id)).toEqual(["proto-sol6-sub", "codex-sol6", "proto-deepseek-direct"]);
+    for (const a of c.arms) expect(a.system).not.toBe(a.id);
+    expect(c.pair?.arms).toEqual(["proto-sol6-sub", "codex-sol6"]);
   });
 });
 

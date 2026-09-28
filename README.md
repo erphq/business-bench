@@ -6,7 +6,7 @@ A benchmark of configured AI systems delivering business work. Desk and process 
 
 **Three tracks**
 
-- **Desk**, 187 tasks. The agent turns a folder of business files and a short request into deliverables, graded on identifier sets, keyed values, recalculated workbooks and sentence-level text rules. *Complete two-system comparison, 1,122 attempts.*
+- **Desk**, 187 tasks. The agent turns a folder of business files and a short request into deliverables, graded on identifier sets, keyed values, recalculated workbooks and sentence-level text rules. *Complete two-system comparison, 1,122 attempts, and a separate one-repetition three-system comparison, 561 attempts.*
 - **Build**, 20 applications. The agent builds an internal application from a requirement and seed data, then makes three changes; a tester works a 14-item enterprise baseline and an application checklist. *Tasks released, no scores published.*
 - **Process**, 7 implemented tasks: 6 clerical pilot tasks and the analyst task `ap-invoice-backlog`. The agent holds a role in bb-erp and works over several business dates; checks inspect ERP state, the audit log, control-account ties and requested notes. *A provisional campaign covers the six pilot tasks only; no published result covers the analyst task.*
 
@@ -18,6 +18,16 @@ A benchmark of configured AI systems delivering business work. Desk and process 
 | Codex + GPT-5.6-sol | 473 / 561 | 84.3% |
 
 The paired task-bootstrap difference is +6.06 points (descriptive 95% interval +1.25 to +11.05). It resamples task identifiers with their three repetitions, and does not account for related families, scorer selection, or development exposure. The two systems differ in model, harness and run dates. ERP.AI publishes the benchmark and develops Proto; the [self-audit](https://businessbench.org/audit) discloses that conflict and retrospective scoring changes.
+
+**Desk comparison, 28 September 2026**, label `complete-desk-comparison-2026-09-28`: every desk task once per system under the same frozen scorer. It is a separate campaign, not pooled with the release above.
+
+| System | Passed | Rate |
+|---|---:|---:|
+| Proto + DeepSeek V4.1 Flash (DeepSeek API) | 171 / 187 | 91.4% |
+| Proto + gpt-6-sol | 165 / 187 | 88.2% |
+| Codex + gpt-6-sol | 162 / 187 | 86.6% |
+
+Proto and Codex on gpt-6-sol shared the model, reasoning level (high), subscription account, host and time window. Their paired difference is +1.60 points (descriptive 95% interval −3.21 to +6.42), so this workload shows no clear difference in acceptance between them. It is one repetition on the same development-exposed tasks. [Conditions and data](results/desk/complete-desk-comparison-2026-09-28/).
 
 **Process pilot campaign**, label `pilot-process-2026-09-27`: both harnesses on gpt-5.6-sol through a ChatGPT subscription, each of six fixed seed-0 scenarios run five times (60 attempts total).
 
@@ -39,7 +49,7 @@ This is the benchmark repository. It does not contain the Proto application, pri
 | `bench/` | Runners, graders, validators and result exporters |
 | `harnesses/` | One adapter script per evaluated cell, and the [adapter contract](harnesses/contract.md) |
 | `scoring/frozen-v7` | The frozen desk scorer |
-| `results/latest`, `results/process` | Published desk and process result ledgers |
+| `results/latest`, `results/desk`, `results/process` | Published result ledgers: the desk release, later desk campaigns and process campaigns |
 | `site/` | businessbench.org, built from this repository |
 | `docs/`, `paper/` | Paper sources, the v2 specification and the process-track specification |
 
@@ -49,6 +59,7 @@ For the shortest path from a claim to its evidence, see [reproducibility and evi
 
 - [Paper](https://businessbench.org/paper) ([Markdown](SPEC.md), [PDF](docs/business-harness-bench-spec.pdf))
 - [Desk results and limitations](results/latest/README.md): [summary](results/latest/summary.json), [attempt ledger](results/latest/attempts.jsonl), [provenance](results/latest/provenance.json)
+- [Desk comparison, 28 September 2026](results/desk/complete-desk-comparison-2026-09-28/README.md): [summary](results/desk/complete-desk-comparison-2026-09-28/summary.json), [attempt ledger](results/desk/complete-desk-comparison-2026-09-28/attempts.jsonl), [provenance](results/desk/complete-desk-comparison-2026-09-28/provenance.json)
 - [Process track specification](docs/process/README.md), [the ERP](docs/process/environment.md) and [the tasks](docs/process/tasks.md)
 - [v2 specification](docs/v2/README.md)
 - [Release verification and fixture notices](docs/validation.md)
@@ -70,6 +81,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python bench/export_campaign.py --verify
+python bench/export_desk_campaign.py --verify
 python bench/export_process_campaign.py --verify
 python bench/validate_build.py
 bash docker/build.sh
@@ -152,7 +164,7 @@ Before a paid campaign, declare its exact task list, seed, repetitions and cells
 
 ## Results and reproducibility
 
-`results/latest/` holds the desk release and `results/process/` the published process campaigns; other runs stay ignored. Recompute them with `python bench/export_campaign.py --verify` and `python bench/export_process_campaign.py --verify`; these check the complete matrix and the arithmetic, **not the original artifacts' correctness**. The release ledger keeps per-check verdicts, original result hashes, resource records, and execution status, without private paths or logs.
+`results/latest/` holds the desk release, `results/desk/` later desk campaigns and `results/process/` the published process campaigns; other runs stay ignored. Recompute them with `python bench/export_campaign.py --verify`, `python bench/export_desk_campaign.py --verify` and `python bench/export_process_campaign.py --verify`; these check the complete matrix and the arithmetic, **not the original artifacts' correctness**. The release ledger keeps per-check verdicts, original result hashes, resource records, and execution status, without private paths or logs.
 
 The release includes the exact [frozen scorer](scoring/frozen-v7/scorer.py) and its fingerprinted task definitions. Run `python scoring/frozen-v7/scorer.py TASK_ID WORKSPACE` with native recalculation configured to score an output workspace. The standard runner's original-grade field and this frozen verdict are distinct; retain both. The verifier checks the full frozen package fingerprint as well as result arithmetic. The original result and receipt hashes were checked against the server records for every exported attempt.
 
@@ -170,4 +182,4 @@ The paper is compiled with **XeLaTeX**, using native booktabs tables, PGFPlots f
 
 ## Site
 
-The public site under `site/` is generated from this repository: task metadata via `python3 site/scripts/export_tasks.py`, results from `results/latest/` and `results/process/`, the process-track pages from `tasks/process/` and `docs/process/`, and the paper from `SPEC.md`. Build with `cd site && bun install && bun run build`; deploy with `bunx wrangler deploy` (Cloudflare account access required). The `Site` workflow checks the export is fresh, runs the site tests, and builds on every push.
+The public site under `site/` is generated from this repository: task metadata via `python3 site/scripts/export_tasks.py`, results from `results/latest/`, `results/desk/` and `results/process/`, the process-track pages from `tasks/process/` and `docs/process/`, and the paper from `SPEC.md`. Build with `cd site && bun install && bun run build`; deploy with `bunx wrangler deploy` (Cloudflare account access required). The `Site` workflow checks the export is fresh, runs the site tests, and builds on every push.

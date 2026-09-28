@@ -34,8 +34,9 @@ python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python bench/export_campaign.py --verify
+python bench/export_desk_campaign.py --verify
 python bench/export_process_campaign.py --verify`}</code></pre>
-  <p>The desk verifier recomputes the summary from the complete ledger and checks the recorded ledger and frozen-scorer fingerprints. The process verifier checks each published campaign's declared matrix, ledger hash, and recomputed summary. Neither command regrades the private original artifacts or establishes that the tests measure every business requirement.</p>
+  <p>The desk verifier recomputes the summary from the complete ledger and checks the recorded ledger and frozen-scorer fingerprints. The later desk campaigns under <code>results/desk</code> are checked the same way, including each declared paired bootstrap. The process verifier checks each published campaign's declared matrix, ledger hash, and recomputed summary. Neither command regrades the private original artifacts or establishes that the tests measure every business requirement.</p>
   <details><summary>Validate the task packages and runner behavior</summary>
     <p>The <a href="#repository-instructions">full instructions</a> include unit tests, build-task validation, and strict desk validation with native workbook recalculation. These use reference solutions and deterministic test adapters, without spending model credits. Their positive and negative controls check specified behavior; they are not a human acceptance study. Consult the <a href={`${REPO}/blob/main/docs/validation.md`} rel="noopener">release validation notice</a> for fixture differences and exceptions.</p>
     <p>Keep the supplied release inputs intact. A deterministic generator rerun can differ from the published bytes; version regenerated inputs as a new experimental condition.</p>

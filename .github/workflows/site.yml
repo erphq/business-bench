@@ -2,9 +2,9 @@ name: Site
 on:
   push:
     branches: [main]
-    paths: ["site/**", "tasks/**", "results/latest/**", "results/process/**", "SPEC.md", "README.md", "docs/**", ".github/workflows/site.yml"]
+    paths: ["site/**", "tasks/**", "results/latest/**", "results/desk/**", "results/process/**", "SPEC.md", "README.md", "docs/**", ".github/workflows/site.yml"]
   pull_request:
-    paths: ["site/**", "tasks/**", "results/latest/**", "results/process/**", "SPEC.md", "README.md", "docs/**", ".github/workflows/site.yml"]
+    paths: ["site/**", "tasks/**", "results/latest/**", "results/desk/**", "results/process/**", "SPEC.md", "README.md", "docs/**", ".github/workflows/site.yml"]
   workflow_dispatch:
 permissions:
   contents: read

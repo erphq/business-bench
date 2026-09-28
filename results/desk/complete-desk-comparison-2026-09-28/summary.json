@@ -1,0 +1,191 @@
+[
+  {
+    "harness": "proto-sol6-sub",
+    "tasks": 187,
+    "attempts": 187,
+    "passed": 165,
+    "raw_passed": 148,
+    "pass_rate": 0.8823529411764706,
+    "all_repetitions_pass": 165,
+    "by_repetition": {
+      "1": 165
+    },
+    "raw_by_repetition": {
+      "1": 148
+    },
+    "timed_out": 1,
+    "nonzero_exit": 1,
+    "passing_abnormal_exit": 0,
+    "grader_error_attempts": 0,
+    "raw_grader_error_attempts": 1,
+    "usage_missing": 0,
+    "cost_observations": 0,
+    "estimated_cost_sum_usd": null,
+    "estimated_cost_mean_usd": null,
+    "median_wall_s": 129.5,
+    "p90_wall_s": 249.1,
+    "sum_wall_s": 28982.6,
+    "usage": {
+      "input": 66266058,
+      "cached_input": 59328768,
+      "output": 942855,
+      "uncached_input": 6937290
+    },
+    "by_category": {
+      "bookkeeping": {
+        "attempts": 36,
+        "passed": 32
+      },
+      "drafting": {
+        "attempts": 19,
+        "passed": 14
+      },
+      "extraction": {
+        "attempts": 26,
+        "passed": 23
+      },
+      "reformatting": {
+        "attempts": 26,
+        "passed": 25
+      },
+      "reports": {
+        "attempts": 30,
+        "passed": 23
+      },
+      "spreadsheet": {
+        "attempts": 41,
+        "passed": 40
+      },
+      "tooling": {
+        "attempts": 9,
+        "passed": 8
+      }
+    }
+  },
+  {
+    "harness": "codex-sol6",
+    "tasks": 187,
+    "attempts": 187,
+    "passed": 162,
+    "raw_passed": 146,
+    "pass_rate": 0.8663101604278075,
+    "all_repetitions_pass": 162,
+    "by_repetition": {
+      "1": 162
+    },
+    "raw_by_repetition": {
+      "1": 146
+    },
+    "timed_out": 0,
+    "nonzero_exit": 0,
+    "passing_abnormal_exit": 0,
+    "grader_error_attempts": 0,
+    "raw_grader_error_attempts": 1,
+    "usage_missing": 0,
+    "cost_observations": 0,
+    "estimated_cost_sum_usd": null,
+    "estimated_cost_mean_usd": null,
+    "median_wall_s": 97.1,
+    "p90_wall_s": 276.8,
+    "sum_wall_s": 26795.5,
+    "usage": {
+      "input": 31569817,
+      "cached_input": 27541120,
+      "output": 1015735,
+      "uncached_input": 4028697
+    },
+    "by_category": {
+      "bookkeeping": {
+        "attempts": 36,
+        "passed": 30
+      },
+      "drafting": {
+        "attempts": 19,
+        "passed": 14
+      },
+      "extraction": {
+        "attempts": 26,
+        "passed": 24
+      },
+      "reformatting": {
+        "attempts": 26,
+        "passed": 26
+      },
+      "reports": {
+        "attempts": 30,
+        "passed": 22
+      },
+      "spreadsheet": {
+        "attempts": 41,
+        "passed": 38
+      },
+      "tooling": {
+        "attempts": 9,
+        "passed": 8
+      }
+    }
+  },
+  {
+    "harness": "proto-deepseek-direct",
+    "tasks": 187,
+    "attempts": 187,
+    "passed": 171,
+    "raw_passed": 154,
+    "pass_rate": 0.9144385026737968,
+    "all_repetitions_pass": 171,
+    "by_repetition": {
+      "1": 171
+    },
+    "raw_by_repetition": {
+      "1": 154
+    },
+    "timed_out": 0,
+    "nonzero_exit": 0,
+    "passing_abnormal_exit": 0,
+    "grader_error_attempts": 0,
+    "raw_grader_error_attempts": 2,
+    "usage_missing": 0,
+    "cost_observations": 0,
+    "estimated_cost_sum_usd": null,
+    "estimated_cost_mean_usd": null,
+    "median_wall_s": 78.3,
+    "p90_wall_s": 182.2,
+    "sum_wall_s": 19572.1,
+    "usage": {
+      "input": 100329787,
+      "cached_input": 92237696,
+      "output": 3503419,
+      "uncached_input": 8092091
+    },
+    "by_category": {
+      "bookkeeping": {
+        "attempts": 36,
+        "passed": 33
+      },
+      "drafting": {
+        "attempts": 19,
+        "passed": 17
+      },
+      "extraction": {
+        "attempts": 26,
+        "passed": 26
+      },
+      "reformatting": {
+        "attempts": 26,
+        "passed": 24
+      },
+      "reports": {
+        "attempts": 30,
+        "passed": 24
+      },
+      "spreadsheet": {
+        "attempts": 41,
+        "passed": 40
+      },
+      "tooling": {
+        "attempts": 9,
+        "passed": 7
+      }
+    }
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "campaign": "complete-desk-comparison-2026-09-28",
+  "track": "desk",
+  "repetitions": 1,
+  "execution_window_utc": ["2026-09-28T05:29:42Z", "2026-09-28T07:33:31Z"],
+  "arms": {
+    "proto-sol6-sub": {
+      "label": "desk-head-20260927-s6-sol-proto",
+      "configuration": {
+        "system": "Proto CLI, headless one-shot run (-y), Uninterrupted mode",
+        "build": "Proto runtime bundle built from Proto commit 3bbb33f8e plus unreleased changes: the open prompt-cache change erphq/proto#601 and working-tree changes later committed as 9cdfcb545..1103377dc. Proto's source is private; bundle_sha256 identifies the build",
+        "bundle_sha256": "046142d9363378c3384a4980a07dca71246a903ffe12ae2468c59ac34b4294af",
+        "model": "gpt-6-sol",
+        "provider": "ChatGPT subscription through Codex OAuth, the same account as codex-sol6",
+        "reasoning": "high",
+        "sampling": "provider default",
+        "adapter": "harnesses/proto-sol6-sub.sh (calls harnesses/proto-sub.sh)",
+        "home": "llmProvider codex, selectedModel openai-codex/gpt-6-sol; no ERP.AI sign-in",
+        "concurrency": 4
+      }
+    },
+    "codex-sol6": {
+      "label": "desk-head-20260927-s6-sol-codex",
+      "usage_model_rename": {"gpt-5.6-sol": "gpt-6-sol"},
+      "omit_cost": true,
+      "configuration": {
+        "system": "Codex CLI exec",
+        "cli_version": "0.158.0-alpha.2.1",
+        "model": "gpt-6-sol",
+        "provider": "ChatGPT subscription, the same account as proto-sol6-sub",
+        "reasoning": "high",
+        "sampling": "CLI-managed",
+        "adapter": "harnesses/codex-sol6.sh",
+        "home": "minimal CODEX_HOME: sign-in plus a config with apps and plugins off",
+        "concurrency": 4
+      }
+    },
+    "proto-deepseek-direct": {
+      "label": "desk-head-20260927-s6-ds-proto",
+      "configuration": {
+        "system": "Proto CLI, headless one-shot run (-y)",
+        "build": "the same Proto bundle as proto-sol6-sub",
+        "bundle_sha256": "046142d9363378c3384a4980a07dca71246a903ffe12ae2468c59ac34b4294af",
+        "model": "DeepSeek V4.1 Flash (API model deepseek-flash)",
+        "provider": "DeepSeek API, direct",
+        "reasoning": "high",
+        "temperature": 0.7,
+        "max_tokens": 65536,
+        "adapter": "harnesses/proto-deepseek-direct.sh (its header comment predates this campaign; the build is identified by bundle_sha256)",
+        "home": "custom provider at api.deepseek.com; the home holds an ERP.AI sign-in bootstrap, but no ERP.AI actions were offered in its requests",
+        "concurrency": 8
+      }
+    }
+  },
+  "paired_comparison": {"arms": ["proto-sol6-sub", "codex-sol6"], "seed": 20260928, "samples": 20000},
+  "cost_note": "No cost estimates are published for this campaign. The frozen pricing table has no gpt-6-sol or direct DeepSeek V4.1 Flash rate. Codex CLI results had been priced at gpt-5.6-sol rates because of a default model label, so those figures are omitted rather than published mispriced. Both gpt-6-sol cells used a ChatGPT subscription, which is not billed per token.",
+  "usage_note": "Token usage for the Proto cells comes from Proto's provider traces and for Codex from the CLI's reported turn usage. Codex CLI results carried the usage extractor's default model label gpt-5.6-sol; the CLI's own session context records gpt-6-sol at high effort, so that key is renamed in usage.by_model.",
+  "limitations": "One repetition per task. Development-exposed task set: Proto's configuration was developed using traces from runs on these tasks, so this is not evidence of unseen generalization. Proto and Codex on gpt-6-sol share the model, reasoning level, subscription account, host and time window, so their difference reflects the harness and adapter under these conditions rather than any single component; the DeepSeek cell differs in model, provider and sampling. Raw artifacts remain private; hashes identify but do not reconstruct them.",
+  "exclusions": "Later Proto development runs on task subsets from the same day (efficiency and accuracy experiments), pilots, raw traces and credentials."
+}
