@@ -3,6 +3,9 @@
 owner's email become a staff memo listing what changed.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off draft,effective_date --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant moved_clause --out DIR              # a deliverable that falls for one trap
 
 Business: a local and long-distance moving company with a dozen crews. The office rewrote the crew policies; the
 owner wants one memo to all crews that says what is different.
@@ -19,11 +22,31 @@ Traps (each caught by a check, see task.yaml):
   * every section after the first is renumbered, so matching by section number pairs unrelated rules  (check: moved clause and effective date)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, sys
 from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "moved_clause": "the phone-use clause moved from the end of the handbook to section 2 with identical wording "
+                        "(off: it stays last, as in 2025)",
+        "draft": "an unapproved 2026 draft v1 with different numbers is in the folder",
+        "effective_date": "the final PDF says October 1; the owner's email moves it to November 1 (off: the PDF and "
+                          "the office email say November 1 and the owner's email has no change of plan)",
+        "renumbered": "every 2026 section after the first is renumbered (off: each rule keeps its 2025 number)",
+    },
+    fixed={
+        "five_changes": "five rules really changed and each must be stated with its new rule",
+    },
+    requires={"renumbered": "moved_clause"},
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["five_changes", "moved_clause", "draft", "effective_date", "renumbered"]
 
 COMPANY = "Keel & Crate Movers"
 DOMAIN = "keelandcrate.com"
@@ -45,7 +68,7 @@ def build(seed: int) -> dict:
     return dict(P=P, old_pd=old_pd, new_pd=new_pd, draft_pd=draft_pd, old_mi=old_mi, new_mi=new_mi, draft_mi=draft_mi, boots=boots)
 
 
-def sections(d: dict, version: str) -> list[tuple[str, str]]:
+def sections(d: dict, version: str, traps: TrapSet = TRAPS) -> list[tuple[str, str]]:
     """version: old | new | draft. Returns ordered (heading, text)."""
     ot = {"old": "2 hours", "new": "1 hour", "draft": "90 minutes"}[version]
     pd = {"old": d["old_pd"], "new": d["new_pd"], "draft": d["draft_pd"]}[version]
@@ -71,50 +94,23 @@ def sections(d: dict, version: str) -> list[tuple[str, str]]:
     base = [("Clocking in and out", clock), ("Overtime", ovt), ("Long-distance per diem", perdiem), ("Tips", tips),
             ("Using your own vehicle", mileage), ("Damage to customer property", dmg), ("Uniforms", uniform), ("Safety boots", boots)]
     phone_sec = ("Phone use while driving", phone)
-    if version == "old":
+    if version == "old" or not traps.on("moved_clause"):
         return base + [phone_sec]
     return [base[0], phone_sec] + base[1:]
 
 
-def emit(seed: int) -> None:
-    d = build(seed)
-    P = d["P"]
-    ws, ref, sol = task_dirs(HERE)
-    # ---- old handbook (markdown)
-    old = sections(d, "old")
-    md = [f"# {COMPANY} - Crew Policies", "", "_Revised March 2025. Effective March 1, 2025._", ""]
-    for i, (h, t) in enumerate(old, 1):
-        md += [f"## {i}. {h}", "", t, ""]
-    write_text(os.path.join(ws, "crew_policies_2025.md"), "\n".join(md))
-    # ---- final 2026 PDF
-    new = sections(d, "new")
-    blocks = [("title", f"{COMPANY}"), ("h", "Crew Policies 2026"), ("small", f"Final, approved by {P['owner']['full']}, August 28, 2026"),
-              ("right", f"Effective: {PDF_EFFECTIVE.strftime('%B %-d, %Y')}"), ("hr", None)]
-    for i, (h, t) in enumerate(new, 1):
-        blocks += [("h", f"{i}. {h}"), ("p", t)]
-    write_pdf_document(os.path.join(ws, "crew_policies_2026_FINAL.pdf"), blocks, font="Times-Roman", base_size=11)
-    # ---- draft v1 PDF
-    draft = sections(d, "draft")
-    blocks = [("title", "DRAFT v1 - for review"), ("small", f"{COMPANY} crew policies 2026 - circulated July 14, 2026 - not approved"), ("hr", None)]
-    for i, (h, t) in enumerate(draft, 1):
-        blocks += [("h", f"{i}. {h}"), ("p", t)]
-    write_pdf_document(os.path.join(ws, "crew_policies_2026_draft_v1.pdf"), blocks, font="Helvetica", base_size=10, pagesize="a4")
-    # ---- owner's email
-    write_email_thread(os.path.join(ws, "email_from_owner.txt"), [
-        {"from": f"{P['office']['full']} <{P['office']['first'].lower()}@{DOMAIN}>", "to": f"{P['owner']['full']} <{P['owner']['first'].lower()}@{DOMAIN}>",
-         "date": "Fri, 28 Aug 2026 15:10", "subject": "Crew policies 2026 - final",
-         "body": "Final version attached with your edits from this morning, effective October 1 as we discussed.\n\n" + P['office']['first']},
-        {"from": f"{P['owner']['full']} <{P['owner']['first'].lower()}@{DOMAIN}>", "to": f"{P['office']['first'].lower()}@{DOMAIN}",
-         "date": "Thu, 10 Sep 2026 18:02", "subject": "RE: Crew policies 2026 - final",
-         "body": ("Change of plan on the start date. Payroll can't load the new per diem and mileage rates before the October 1 run, so the new policies "
-                  "take effect November 1, 2026 instead. I'm not reprinting the PDF for one date, so the memo to the crews has to give November 1.\n\n"
-                  "The memo should go to every crew and tell them what's actually different from last year's policies, in plain words, "
-                  "so nobody has to read both documents side by side.\n\n" + P['owner']['first'])},
-    ])
+def numbered(secs: list[tuple[str, str]], traps: TrapSet) -> list[tuple[int, str, str]]:
+    """(number, heading, text): numbered in order, or with `renumbered` off by each rule's 2025 number."""
+    if traps.on("renumbered"):
+        return [(i, h, t) for i, (h, t) in enumerate(secs, 1)]
+    old = [h for h, _ in sections({"old_pd": 0, "new_pd": 0, "draft_pd": 0, "old_mi": "", "new_mi": "", "draft_mi": "",
+                                   "boots": 0}, "old")]
+    return [(old.index(h) + 1, h, t) for h, t in secs]
 
-    facts = {"effective": EFFECTIVE.isoformat(), "pdf_effective": PDF_EFFECTIVE.isoformat(), "new_pd": d["new_pd"], "draft_pd": d["draft_pd"],
-             "new_mi": d["new_mi"], "draft_mi": d["draft_mi"]}
-    write_json(os.path.join(ref, "facts.json"), facts)
+
+def memo_text(d: dict) -> str:
+    """The reference memo."""
+    P = d["P"]
     memo = (f"# Memo: changes to crew policies\n\n"
             f"To: All crews\nFrom: {P['owner']['full']}\nDate: September 14, 2026\n\n"
             f"Our updated crew policies take effect on November 1, 2026. Most of the handbook is the same as last year. These are the five things that changed:\n\n"
@@ -127,22 +123,75 @@ def emit(seed: int) -> None:
             "The rule on phone use while driving has moved to section 2 of the handbook, but its wording has not changed. "
             "Clocking in and out, uniforms and safety boots are unchanged.\n\n"
             "Questions go to the office.\n")
-    write_text(os.path.join(sol, "memo.md"), memo)
+    return memo
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
+    d = build(seed)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    P = d["P"]
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom moved-clause / effective-date check travels with the copy
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
+    pdf_effective = PDF_EFFECTIVE if traps.on("effective_date") else EFFECTIVE
+    # ---- old handbook (markdown)
+    old = sections(d, "old")
+    md = [f"# {COMPANY} - Crew Policies", "", "_Revised March 2025. Effective March 1, 2025._", ""]
+    for i, (h, t) in enumerate(old, 1):
+        md += [f"## {i}. {h}", "", t, ""]
+    write_text(os.path.join(ws, "crew_policies_2025.md"), "\n".join(md))
+    # ---- final 2026 PDF
+    new = sections(d, "new", traps)
+    blocks = [("title", f"{COMPANY}"), ("h", "Crew Policies 2026"), ("small", f"Final, approved by {P['owner']['full']}, August 28, 2026"),
+              ("right", f"Effective: {pdf_effective.strftime('%B %-d, %Y')}"), ("hr", None)]
+    for i, h, t in numbered(new, traps):
+        blocks += [("h", f"{i}. {h}"), ("p", t)]
+    write_pdf_document(os.path.join(ws, "crew_policies_2026_FINAL.pdf"), blocks, font="Times-Roman", base_size=11)
+    # ---- draft v1 PDF
+    if traps.on("draft"):
+        draft = sections(d, "draft", traps)
+        blocks = [("title", "DRAFT v1 - for review"), ("small", f"{COMPANY} crew policies 2026 - circulated July 14, 2026 - not approved"), ("hr", None)]
+        for i, h, t in numbered(draft, traps):
+            blocks += [("h", f"{i}. {h}"), ("p", t)]
+        write_pdf_document(os.path.join(ws, "crew_policies_2026_draft_v1.pdf"), blocks, font="Helvetica", base_size=10, pagesize="a4")
+    change_of_plan = ("Change of plan on the start date. Payroll can't load the new per diem and mileage rates before the October 1 run, so the new policies "
+                      "take effect November 1, 2026 instead. I'm not reprinting the PDF for one date, so the memo to the crews has to give November 1.\n\n"
+                      if traps.on("effective_date") else "")
+    # ---- owner's email
+    write_email_thread(os.path.join(ws, "email_from_owner.txt"), [
+        {"from": f"{P['office']['full']} <{P['office']['first'].lower()}@{DOMAIN}>", "to": f"{P['owner']['full']} <{P['owner']['first'].lower()}@{DOMAIN}>",
+         "date": "Fri, 28 Aug 2026 15:10", "subject": "Crew policies 2026 - final",
+         "body": f"Final version attached with your edits from this morning, effective {pdf_effective.strftime('%B %-d')} as we discussed.\n\n" + P['office']['first']},
+        {"from": f"{P['owner']['full']} <{P['owner']['first'].lower()}@{DOMAIN}>", "to": f"{P['office']['first'].lower()}@{DOMAIN}",
+         "date": "Thu, 10 Sep 2026 18:02", "subject": "RE: Crew policies 2026 - final",
+         "body": (change_of_plan +
+                  "The memo should go to every crew and tell them what's actually different from last year's policies, in plain words, "
+                  "so nobody has to read both documents side by side.\n\n" + P['owner']['first'])},
+    ])
+
+    facts = {"effective": EFFECTIVE.isoformat(), "pdf_effective": PDF_EFFECTIVE.isoformat(), "new_pd": d["new_pd"], "draft_pd": d["draft_pd"],
+             "new_mi": d["new_mi"], "draft_mi": d["draft_mi"]}
+    write_json(os.path.join(ref, "facts.json"), facts)
+    write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
     nm = lambda x: x.replace(".", r"\.")
-    write_task_yaml(HERE, {
+    spec = {
         "id": "policy-update-memo", "track": "desk", "category": "drafting",
         "title": "Memo to the crews on the 2026 policy changes",
         "ask": (f"We've rewritten the crew policies for 2026. Please write the memo that goes to all the crews telling them what changed - "
                 f"both versions are in the folder and {P['owner']['first']}'s email has the notes. Save it as memo.md.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "five rules really changed (overtime approval 2 hours to 1 hour, per diem, tips split by hours, mileage rate, damage reported before leaving the home); each must be stated with its new rule (checks: overtime approval; per diem; tip split; mileage; damage reporting)",
             "the phone-use-while-driving clause moved from section 9 to section 2 with identical wording, so a section-by-section comparison reports it as removed and added (check: moved clause and effective date)",
             f"the 2026 draft v1 in the folder carries unapproved numbers (90 minutes, ${d['draft_pd']} per diem, ${d['draft_mi']} a mile, two hours for damage reports) (checks: overtime approval; per diem; mileage; damage reporting)",
             "the final PDF says effective October 1, 2026; the owner's later email moves it to November 1 and says the memo must give November 1 (check: moved clause and effective date)",
             "every section after the first is renumbered in the 2026 version, so matching by section number pairs unrelated rules (check: moved clause and effective date)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "memo.md exists", "path": "memo.md"},
             {"type": "text_sentence_matches", "name": "overtime approval", "path": "memo.md",
@@ -160,8 +209,53 @@ def emit(seed: int) -> None:
              "none": [r"\b(2|two)\s*hours"]},
             {"type": "custom", "name": "moved clause and effective date", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "policy-update-memo", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_memo(d: dict, trap: str) -> str:
+    """The reference memo with the one mistake an agent that fell for `trap` would make."""
+    text = memo_text(d)
+    phone = ("The rule on phone use while driving has moved to section 2 of the handbook, but its wording has not changed. ")
+
+    def sub(old, new):
+        assert old in text, old
+        return text.replace(old, new)
+    if trap == "five_changes":      # the changed rules named, but not what they now say
+        start, end = text.index("1. **Overtime approval.**"), text.index("The rule on phone use")
+        return text[:start] + ("1. Overtime approval\n2. Per diem\n3. Tips\n4. Mileage\n5. Damage reporting\n\n"
+                               "Please read the new handbook for the details of each.\n\n") + text[end:]
+    if trap == "moved_clause":      # a section-by-section diff: the phone clause reported as a new rule
+        return sub(phone, "There is also a new rule on phone use while driving in section 2: drivers may not hold or use a "
+                          "phone while the truck is moving. ")
+    if trap == "renumbered":        # sections paired by number: section 2 reads as overtime replaced by a phone rule
+        return sub(phone, "Section 2 of the handbook, which used to cover overtime, has been replaced by a rule on phone use "
+                          "while driving. ")
+    if trap == "draft":             # the unapproved draft's numbers
+        text = sub("more than 1 hour past a job's scheduled end", "more than 90 minutes past a job's scheduled end")
+        text = sub(f"to ${d['new_pd']} per night", f"to ${d['draft_pd']} per night")
+        text = sub(f"to ${d['new_mi']} per mile", f"to ${d['draft_mi']} per mile")
+        return sub("with photos, before the crew leaves the customer's home", "with photos, within two hours of finishing the job")
+    if trap == "effective_date":    # the date printed on the final PDF
+        return sub("take effect on November 1, 2026", "take effect on October 1, 2026")
+    raise KeyError(trap)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "memo.md"), mutant_memo(d, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    emit(a.seed, parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS), a.out, a.mutant)
