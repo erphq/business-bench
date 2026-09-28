@@ -19,6 +19,12 @@ SHORT = re.compile(r"(short|over|discrepanc|unexplained|variance|difference)", r
 def _grade_module():
     import importlib.util
     root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    if not os.path.isfile(os.path.join(root, "bench", "grade.py")):
+        # a copy of the task outside the repository (a variant or sealed seed): use the grader that loaded us
+        import sys
+        loaded = sys.modules.get("grade") or sys.modules.get("__main__")
+        if loaded is not None and hasattr(loaded, "recalculated_workbook"):
+            return loaded
     spec = importlib.util.spec_from_file_location("bench_grade_for_check", os.path.join(root, "bench", "grade.py"))
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
