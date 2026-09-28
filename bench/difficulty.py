@@ -65,12 +65,23 @@ def task_features(task_dir: str) -> dict[str, float]:
     }
 
 
-def design(tasks: list[str], feats: dict[str, dict], cats: list[str]) -> tuple[np.ndarray, list[str]]:
+def raw_row(f: dict, num: list[str], cats: list[str]) -> list[float]:
+    """One task's unstandardized design row: numeric features, then one-hot category (first category dropped)."""
+    return [f[k] for k in num] + [float(f["category"] == c) for c in cats[1:]]
+
+
+def design_raw(tasks: list[str], feats: dict[str, dict], cats: list[str]) -> tuple[np.ndarray, list[str], np.ndarray, np.ndarray]:
+    """(standardized X, names, column means, column sds) so rows for new tasks can be put on the same scale."""
     num = [k for k in next(iter(feats.values())) if k != "category"]
-    X = np.array([[feats[t][k] for k in num] + [float(feats[t]["category"] == c) for c in cats[1:]] for t in tasks])
+    X = np.array([raw_row(feats[t], num, cats) for t in tasks])
     mu, sd = X.mean(0), X.std(0)
     sd[sd == 0] = 1.0
-    return (X - mu) / sd, num + [f"category={c}" for c in cats[1:]]
+    return (X - mu) / sd, num + [f"category={c}" for c in cats[1:]], mu, sd
+
+
+def design(tasks: list[str], feats: dict[str, dict], cats: list[str]) -> tuple[np.ndarray, list[str]]:
+    X, names, _, _ = design_raw(tasks, feats, cats)
+    return X, names
 
 
 def fit(S: np.ndarray, X: np.ndarray, y: np.ndarray, l2: float = 1.0, iters: int = 50) -> np.ndarray:
@@ -87,6 +98,49 @@ def fit(S: np.ndarray, X: np.ndarray, y: np.ndarray, l2: float = 1.0, iters: int
         if np.abs(step).max() < 1e-8:
             break
     return beta
+
+
+class LedgerModel:
+    """The fitted model as a reusable object, for tools that score tasks no system has attempted (bench/renew.py).
+
+    `difficulty(task_dir)` is sum_k w_k * x_k on the ledger's standardized scale (positive = harder); `boot` holds
+    task-clustered bootstrap draws of the full parameter vector [theta | w] for predictive uncertainty."""
+
+    def __init__(self, ledger: str, tasks_dir: str, boot: int = 200, seed: int = 0):
+        att = [json.loads(l) for l in open(ledger)]
+        self.systems = sorted({x["harness"] for x in att})
+        self.tasks = sorted({x["task"] for x in att if os.path.isdir(os.path.join(tasks_dir, x["task"]))})
+        self.feats = {t: task_features(os.path.join(tasks_dir, t)) for t in self.tasks}
+        self.cats = sorted({f["category"] for f in self.feats.values()})
+        Xt, self.names, self.mu, self.sd = design_raw(self.tasks, self.feats, self.cats)
+        self.num = [k for k in next(iter(self.feats.values())) if k != "category"]
+        ti = {t: i for i, t in enumerate(self.tasks)}
+        rows = [x for x in att if x["task"] in ti]
+        S = np.array([[float(x["harness"] == s) for s in self.systems] for x in rows])
+        tix = np.array([ti[x["task"]] for x in rows])
+        X, y = Xt[tix], np.array([float(x["passed"]) for x in rows])
+        self.beta = fit(S, X, y)
+        rng = np.random.default_rng(seed)
+        by_task = collections.defaultdict(list)
+        for r, t in enumerate(tix):
+            by_task[t].append(r)
+        draws = []
+        for _ in range(boot):
+            pick = rng.integers(0, len(self.tasks), len(self.tasks))
+            idx = np.concatenate([by_task[t] for t in pick])
+            draws.append(fit(S[idx], X[idx], y[idx]))
+        self.boot = np.array(draws) if draws else self.beta[None, :]
+
+    @property
+    def weights(self) -> np.ndarray:
+        return self.beta[len(self.systems):]
+
+    def row(self, feats: dict) -> np.ndarray:
+        """Standardized design row for any task's features (a category unseen in the ledger is all zeros)."""
+        return (np.array(raw_row(feats, self.num, self.cats)) - self.mu) / self.sd
+
+    def row_for(self, task_dir: str) -> np.ndarray:
+        return self.row(task_features(task_dir))
 
 
 def logloss(p: np.ndarray, y: np.ndarray) -> float:
