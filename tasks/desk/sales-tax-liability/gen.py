@@ -2,6 +2,9 @@
 """sales-tax-liability: a garden centre's second-quarter sales into tax due per local jurisdiction for the return.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-knobs
+    python gen.py --rules 3 --trap-count expired_cert=3 --out DIR    # a harder task; the answer moves
+    python gen.py --describe [--scale N ...]                          # content counts of this draw
 
 Business: Quarry Road Nursery sells plants, stone and soil from two yards (Cedar Falls and Millbrook) and delivers to
 homeowners and landscapers around the county. Landscapers buying for resale give exemption certificates. The state
@@ -27,6 +30,24 @@ from decimal import ROUND_HALF_UP, Decimal
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("scale", "scale", default=1, levels=(1, 2, 4),
+         changes="ordinary POS sales per trading day are multiplied by N (about 250 invoices at 1)", measure="rows"),
+    Knob("rules", "rules", default=1, levels=(1, 2, 3),
+         changes="jurisdictions whose rate changes mid-quarter while the POS lags a week behind (1 = Millbrook only; "
+                 "2 adds Pine Ridge on 1 June; 3 adds Lake Haven on 15 May)", measure="rules"),
+    Knob("trap_count.expired_cert", "trap-count", default=1, levels=(1, 2, 3),
+         changes="landscapers whose resale certificate expires mid-quarter while the POS keeps exempting them",
+         measure="trap_instances.expired_cert"),
+)
+# Extra mid-quarter rate changes (rules > 1): (code, town, old rate, new rate, effective, POS updated).
+EXTRA_CHANGES = [("3205", "Pine Ridge", "0.0685", "0.0710", date(2026, 6, 1), date(2026, 6, 9)),
+                 ("3210", "Lake Haven", "0.0710", "0.0735", date(2026, 5, 15), date(2026, 5, 22))]
+# Extra certificates that expire mid-quarter (trap_count.expired_cert > 1): (customer id, expiry).
+EXTRA_EXPIRED = [("L-2214", date(2026, 6, 5)), ("L-2201", date(2026, 4, 24))]
 
 Q0, Q1 = date(2026, 4, 1), date(2026, 6, 30)
 CHANGE = date(2026, 5, 1)
@@ -56,8 +77,8 @@ def r2(x: Decimal) -> Decimal:
     return x.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
-def rate_for(code, day):
-    for c_, _, _, rates in JURIS:
+def rate_for(code, day, juris=JURIS):
+    for c_, _, _, rates in juris:
         if c_ == code:
             for f, t, rt in rates:
                 if (f is None or day >= f) and (t is None or day <= t):
@@ -72,8 +93,20 @@ def zip_juris(z):
     raise KeyError(z)
 
 
-def build(seed: int) -> dict:
+def knob_juris(n: int) -> tuple[list, list]:
+    """The rate table and the POS lags with n jurisdictions changing rate mid-quarter (n > 1 only)."""
+    juris = [list(j) for j in JURIS]
+    lags = [("3102", CHANGE, POS_UPDATED)]
+    for code_, _, old, new, eff, upd in EXTRA_CHANGES[:n - 1]:
+        j = next(j for j in juris if j[0] == code_)
+        j[3] = [(None, eff - timedelta(days=1), old), (eff, None, new)]
+        lags.append((code_, eff, upd))
+    return [tuple(j) for j in juris], lags
+
+
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
+    scale = knobs["scale"]
     homeowners = [f"{f} {l}" for f, l in people(r, 40)]
     landscapers = [("L-2201", "Cedar & Pine Landscaping"), ("L-2207", "Greenway Grounds LLC"), ("L-2214", "Ridgeback Hardscapes"),
                    ("L-2219", "Blue Heron Garden Design"), ("L-2226", "Oak County Parks Dept")]
@@ -88,7 +121,7 @@ def build(seed: int) -> dict:
     n = 0
     day = Q0
     while day <= Q1:
-        for _ in range(r.randint(1, 4) if day.weekday() < 6 else 0):
+        for _ in range(r.randint(1, 4) * scale if day.weekday() < 6 else 0):
             n += 1
             kind = r.random()
             if kind < 0.45:
@@ -132,6 +165,27 @@ def build(seed: int) -> dict:
     add(date(2026, 6, 11), "L-2207", "Greenway Grounds LLC", "Pickup - Cedar Falls yard", "98011", r.choice([1540, 1265, 1820]), "Arborvitae 6ft")
     add(date(2026, 5, 4), "", "Walk-in", "Pickup - Millbrook yard", "98031", r.choice([915, 1245, 780]), "Flagstone (ton)")
     add(date(2026, 5, 6), f"H-{3001}", homeowners[1], "Delivery", "98031", r.choice([652, 548, 1033]), "Topsoil blend (yd); Bark mulch (yd)")
+
+    # knob-only content, drawn from its own stream after every default draw (none of this runs at the defaults)
+    juris, lags = JURIS, None
+    if knobs["rules"] > 1 or knobs.trap_count("expired_cert") > 1:
+        rk = rng(seed + 7_000_003)
+        names_ = dict(landscapers)
+        if knobs["rules"] > 1:
+            juris, lags = knob_juris(knobs["rules"])
+            for code_, eff, upd in lags[1:]:
+                z = next(j for j in juris if j[0] == code_)[2]
+                for _ in range(2):
+                    k = rk.randrange(40)
+                    add(eff + timedelta(days=rk.randint(0, (upd - eff).days - 1)), f"H-{3000 + k}", homeowners[k], "Delivery",
+                        rk.choice(z), rk.choice([486, 735, 1120, 1395]), "; ".join(x for x, _ in rk.sample(ITEMS, 2)))
+        for cid, exp in EXTRA_EXPIRED[:knobs.trap_count("expired_cert") - 1]:
+            certs[cid]["expires"] = exp
+            for when, fulfil, z in ((exp - timedelta(days=rk.randint(3, 12)), "Delivery", rk.choice(["98011", "98052"])),
+                                    (exp + timedelta(days=rk.randint(4, 14)), "Delivery", rk.choice(["98045", "98052", "98011"])),
+                                    (exp + timedelta(days=rk.randint(15, 30)), "Pickup - Millbrook yard", "98031")):
+                add(min(when, Q1), cid, names_[cid], fulfil, z, rk.choice([1180, 1465, 1930, 2215]),
+                    "; ".join(x for x, _ in rk.sample(ITEMS, 2)))
     invoices.sort(key=lambda i: (i["date"], i["no"]))
     for k, inv in enumerate(invoices):
         inv["no"] = f"QR-{24001 + k}"
@@ -146,6 +200,10 @@ def build(seed: int) -> dict:
         pos_exempt = bool(cert)                       # POS never noticed the expiry
         rate = rate_for(code_, inv["date"])
         pos_rate = rate_for(code_, min(inv["date"], date(2026, 4, 30))) if code_ == "3102" and inv["date"] < POS_UPDATED else rate
+        if lags:
+            rate = rate_for(code_, inv["date"], juris)
+            pos_rate = next((rate_for(code_, eff - timedelta(days=1), juris) for c2_, eff, upd in lags
+                             if c2_ == code_ and eff <= inv["date"] < upd), rate)
         inv["tax_collected"] = D(0) if pos_exempt else r2(inv["amount"] * pos_rate)
         inv["pos_exempt"] = pos_exempt
         inv["exempt"] = exempt
@@ -162,7 +220,7 @@ def build(seed: int) -> dict:
     for a in agg.values():
         a["taxable"] = a["gross"] - a["exempt"]
         a["tax_due"] = r2(a["tax_raw"])
-    return {"invoices": invoices, "agg": agg, "certs": certs, "landscapers": landscapers}
+    return {"invoices": invoices, "agg": agg, "certs": certs, "landscapers": landscapers, "juris": juris, "lags": lags}
 
 
 def acceptable(d):
@@ -180,12 +238,21 @@ def acceptable(d):
     return True
 
 
-def emit(seed, naive_dir):
-    d = build(seed)
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains."""
+    changes = sum(len(j[3]) > 1 for j in d["juris"])
+    expired = sum(1 for c in d["certs"].values() if c["expires"] and Q0 <= c["expires"] < Q1)
+    return {"rows": len(d["invoices"]), "entities": len(d["juris"]), "rules": 4 + changes, "documents": 5,
+            "rate_changes": changes,
+            "trap_instances": {"expired_cert": expired, "voided": sum(i["void"] for i in d["invoices"]), "rate_change": changes}}
+
+
+def emit(seed, naive_dir, knobs=KNOBS.defaults(), out=None):
+    d = build(seed, knobs)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
     r = rng(seed + 1)
     inv = d["invoices"]
     write_csv(os.path.join(ws, "pos_sales_detail_2026-Q2.csv"),
@@ -195,7 +262,7 @@ def emit(seed, naive_dir):
                 f"{i['tax_collected']:.2f}", "VOID" if i["void"] else "Posted"] for i in inv],
               preamble=["Quarry Road Nursery - Sales detail with tax", "04/01/2026 - 06/30/2026", ""], bom=True, crlf=True)
     rate_rows = []
-    for c_, name, zips, rates in JURIS:
+    for c_, name, zips, rates in d["juris"]:
         for f, t, rt in rates:
             rate_rows.append([c_, name, " ".join(zips), f"{float(rt) * 100:.2f}%", f.isoformat() if f else "2025-01-01", t.isoformat() if t else ""])
     write_csv(os.path.join(ws, "dor_local_rates_2026.csv"), ["Jurisdiction code", "Jurisdiction", "ZIP codes", "Combined rate", "Effective from", "Effective to"], rate_rows)
@@ -206,6 +273,21 @@ def emit(seed, naive_dir):
         "header": ["Customer ID", "Customer", "Type", "Certificate no.", "Expires"], "rows": cert_rows,
         "widths": {"A": 12, "B": 28, "C": 12, "D": 28, "E": 12}}}, creator="Quarry Road")
     write_csv(os.path.join(ws, "return_upload_template.csv"), TEMPLATE, [["9999", "Example City", "10000.00", "2500.00", "7500.00", "543.75"]])
+    went_up = "Millbrook went up on 1 May."
+    more_rate = more_cert = ""
+    if d["lags"]:
+        # with more rate changes the email and the trap name them all (the default text is unchanged)
+        ex = [c for c in EXTRA_CHANGES if c[0] in {l[0] for l in d["lags"]}]
+        went_up = ("Millbrook went up on 1 May, " + ", ".join(f"{t} on {e.day} {e.strftime('%B')}" for _, t, _, _, e, _ in ex[:-1])
+                   + (", and " if len(ex) > 1 else "and ") + f"{ex[-1][1]} on {ex[-1][4].day} {ex[-1][4].strftime('%B')}. "
+                   "The POS picked up each change about a week late.")
+        more_rate = "".join(f"; {t}'s rose from {float(o) * 100:.2f}% to {float(n) * 100:.2f}% on {e.day} {e.strftime('%B')} and the "
+                            f"POS kept the old rate until {u.day} {u.strftime('%B')}" for _, t, o, n, e, u in ex)
+    ex_cert = [(cid, exp) for cid, exp in EXTRA_EXPIRED if d["certs"][cid]["expires"] == exp]
+    if ex_cert:
+        nm = dict(d["landscapers"])
+        more_cert = "; so did " + " and ".join(f"{nm[cid]}{chr(39) if nm[cid].endswith('s') else chr(39) + 's'} on {exp.day} "
+                                                f"{exp.strftime('%B')}" for cid, exp in ex_cert)
     write_email_thread(os.path.join(ws, "email_from_hannah.txt"), [
         {"from": "Hannah Osei <hannah@mossbank.cpa>", "to": "you", "date": "Tue, 7 Jul 2026 09:40",
          "subject": "Q2 sales tax return",
@@ -217,20 +299,20 @@ def emit(seed, naive_dir):
                   "a lot of the county outside the city limits still has a Cedar Falls or Millbrook address.\n"
                   "- A sale is exempt only if the customer's certificate was valid on the sale date. The POS doesn't check "
                   "expiry dates, so don't trust its exempt flag.\n"
-                  "- Use the rate in force on the sale date. Millbrook went up on 1 May.\n"
+                  f"- Use the rate in force on the sale date. {went_up}\n"
                   "- Work out the tax on each jurisdiction's taxable sales (at each rate if its rate changed), add it up and round "
                   "once to the cent for the jurisdiction. The POS rounds every receipt, so its tax collected column will not "
                   "match what we owe, and that's expected.\n"
                   "- Voided invoices are not sales.")}])
     agg = d["agg"]
-    names = {c_: n_ for c_, n_, *_ in JURIS}
+    names = {c_: n_ for c_, n_, *_ in d["juris"]}
     rows = [[c_, names[c_], f"{a['gross']:.2f}", f"{a['exempt']:.2f}", f"{a['taxable']:.2f}", f"{a['tax_due']:.2f}"]
             for c_, a in agg.items() if a["gross"] > 0]
     write_csv(os.path.join(ref, "tax_liability.csv"), TEMPLATE, rows)
     write_csv(os.path.join(sol, "tax_liability.csv"), TEMPLATE, rows)
     write_json(os.path.join(ref, "notes.json"), {c_: {k: str(v) for k, v in a.items()} for c_, a in agg.items()})
     codes = [row[0] for row in rows]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "sales-tax-liability", "track": "desk", "category": "bookkeeping",
         "title": "Second-quarter sales tax due by local jurisdiction",
         "ask": ("Hannah needs our Q2 sales tax figures for the return, by jurisdiction, on the upload template. The POS export, the "
@@ -241,10 +323,10 @@ def emit(seed, naive_dir):
             "Cedar Falls, Millbrook and Pine Ridge post-office names but are unincorporated Oak County, and pickups are taxed at "
             "the yard (checks: gross sales; taxable sales; tax due)",
             "exemption goes by the certificate on the sale date: Greenway Grounds' certificate expired 15 May and the POS kept "
-            "flagging its later purchases exempt, Blue Heron never delivered one, and the county parks department is exempt "
+            f"flagging its later purchases exempt{more_cert}, Blue Heron never delivered one, and the county parks department is exempt "
             "(checks: exempt sales; taxable sales; tax due)",
-            "Millbrook's rate rose from 7.75% to 8.00% on 1 May but the POS kept charging the old rate until 8 May, so the tax "
-            "collected column is short for that week (check: tax due)",
+            "Millbrook's rate rose from 7.75% to 8.00% on 1 May but the POS kept charging the old rate until 8 May" + more_rate +
+            ", so the tax collected column is short for that week (check: tax due)",
             "tax is computed on each jurisdiction's taxable sales and rounded once; adding up the POS's penny-rounded receipts "
             "is off by a few cents in several jurisdictions (check: tax due)",
             "six voided invoices stay in the export with their amounts, and the export has a preamble, a BOM and amounts "
@@ -265,7 +347,8 @@ def emit(seed, naive_dir):
             {"type": "csv_values_match", "name": "tax due", "path": "tax_liability.csv", "ref": "tax_liability.csv", "key": "jurisdiction_code",
              "columns": ["tax_due"], "numeric": True, "tolerance": 0.005, "min_accuracy": 1.0, "must_match_keys": codes},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "sales-tax-liability", seed, knobs))
     print(f"seed={seed}: {len(inv)} invoices")
     for c_, a in agg.items():
         print(f"  {c_} gross {a['gross']:>10} exempt {a['exempt']:>9} taxable {a['taxable']:>10} due {a['tax_due']:>8} receipts {a['receipt_tax']:>8} pos {a['pos_tax']:>8}")
@@ -292,11 +375,17 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_knob_args(ap, KNOBS)
     a = ap.parse_args()
+    knobs = parse_knob_args(a, KNOBS)
     for attempt in range(300):
         s = a.seed * 1000 + attempt
-        if acceptable(build(s)):
+        d = build(s, knobs)
+        if acceptable(d):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(s, a.naive)
+    if a.describe:
+        print(describe_json("sales-tax-liability", s, knobs, counts(d, knobs)))
+        raise SystemExit(0)
+    emit(s, a.naive, knobs, a.out)

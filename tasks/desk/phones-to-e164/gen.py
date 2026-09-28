@@ -3,6 +3,9 @@
 new phone system's import template (E.164 numbers, extensions in their own column, unusable numbers flagged).
 
     python gen.py [--seed N]
+    python gen.py --list-knobs
+    python gen.py --scale 3 --noise 0.9 --trap-count invalid_number=14 --out DIR   # a harder task; the answer moves
+    python gen.py --describe [--scale N ...]                                         # content counts of this draw
 
 Traps (each caught by a check, see task.yaml):
   * the Country column is blank on about half the rows; the city, state/province and postcode decide it,
@@ -20,6 +23,24 @@ import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("scale", "scale", default=1, levels=(1, 2, 3, 4),
+         changes="contacts per country in the export are multiplied by N (68 dialable contacts at 1)", measure="rows"),
+    Knob("noise", "noise", default=0.5, levels=(0.5, 0.7, 0.9),
+         changes="share of rows whose Country column is left blank, so the address has to decide the country",
+         measure="blank_country"),
+    Knob("trap_count.invalid_number", "trap-count", default=7, levels=(7, 10, 14),
+         changes="contacts whose number is unusable (too few or too many digits for the country, or not a number); "
+                 "above 7 the extra ones are short UK / Australian / German / North American numbers and text notes",
+         measure="trap_instances.invalid_number"),
+)
+# Extra unusable numbers (trap_count.invalid_number > 7): (country of the address, what the export says).
+EXTRA_INVALID = [("GB", "020 7946 095"), ("AU", "(02) 5550 123"), ("DE", "030 12345"), ("US", "(971) 555-01"),
+                 ("US", "n/a"), ("CA", "(416) 555 01"), ("CA", "no phone - email only")]
+NUM_WORDS = {7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen"}
 
 COUNTRY_LABELS = {
     "US": ["United States", "USA", "US", "U.S."],
@@ -81,9 +102,22 @@ def render_de_mobile(r, rest: str) -> str:  # rest = 7 digits after 0171
     return styles[r.randrange(len(styles))]
 
 
-def build(seed: int) -> dict:
+def city_for(r, country: str) -> tuple[str, str, str]:
+    if country == "US":
+        return r.choice(CITIES)
+    if country == "CA":
+        return r.choice(CA_CITIES)[:3]
+    if country == "GB":
+        return r.choice(GB_CITIES)[:3]
+    if country == "AU":
+        return r.choice(AU_CITIES)[:3]
+    return r.choice(DE_CITIES)[:3]
+
+
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
-    plan = ["US"] * 30 + ["CA"] * 9 + ["GB"] * 11 + ["AU"] * 9 + ["DE"] * 9
+    n = knobs["scale"]
+    plan = ["US"] * (30 * n) + ["CA"] * (9 * n) + ["GB"] * (11 * n) + ["AU"] * (9 * n) + ["DE"] * (9 * n)
     r.shuffle(plan)
     ppl = people(r, len(plan) + 8)
     contacts = []
@@ -156,16 +190,45 @@ def build(seed: int) -> dict:
         c.update(city="Perth", region="WA", postcode="6000", e164=f"+618{rest}", phone=render_au(r, "8", rest))
         perth = [c]
     perth[0]["country_label"] = ""; perth[0]["tag"] = perth[0]["tag"] if perth[0]["tag"] != "plain" else "perth"
+    # knob-only content, drawn from its own stream after every default draw (none of this runs at the defaults)
+    if knobs["noise"] != 0.5 or knobs.trap_count("invalid_number") != 7:
+        rk = rng(seed + 7_000_003)
+        seen = {(c["first"], c["last"]) for c in contacts}
+        for country, bad in EXTRA_INVALID[:knobs.trap_count("invalid_number") - 7]:
+            while (p := person(rk)) in seen:
+                pass
+            seen.add(p)
+            city, st, z = city_for(rk, country)
+            contacts.append({"first": p[0], "last": p[1], "country": country, "company": rk.choice(COMPANIES)[0], "ext": "",
+                             "tag": "invalid", "city": city, "region": st, "postcode": z,
+                             "street": f"{rk.randint(12, 999)} {rk.choice(STREETS)}", "e164": "", "phone": bad,
+                             "country_label": "" if rk.random() < 0.5 else rk.choice(COUNTRY_LABELS[country])})
+        # a higher blank-Country rate blanks more labels; one uniform per contact, so the blank rows nest as the rate grows
+        thr = (knobs["noise"] - 0.5) / 0.5
+        for c in contacts:
+            if rk.random() < thr:
+                c["country_label"] = ""
     r.shuffle(contacts)
     for k, c in enumerate(contacts):
         c["id"] = f"C-{1001 + k}"
     return {"contacts": contacts}
 
 
-def emit(seed: int) -> None:
-    d = build(seed)
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains."""
+    cs = d["contacts"]
+    blank = sum(c["country_label"] == "" for c in cs)
+    return {"rows": len(cs), "entities": len(cs), "rules": 6, "documents": 3,
+            "blank_country": blank, "noise_rate": round(blank / len(cs), 4),
+            "trap_instances": {"invalid_number": sum(c["tag"] == "invalid" for c in cs),
+                               "extension": sum(c["tag"] == "ext" for c in cs),
+                               "perth": sum(c["city"] == "Perth" and c["country_label"] == "" for c in cs)}}
+
+
+def emit(seed: int, knobs=KNOBS.defaults(), out: str | None = None) -> None:
+    d = build(seed, knobs)
     contacts = d["contacts"]
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
     r = rng(seed + 991)
     xrows = []
     for c in contacts:
@@ -206,17 +269,26 @@ def emit(seed: int) -> None:
                                                   "extension_ids": sorted(c["id"] for c in out if c["tag"] == "ext"),
                                                   "perth_id": next(c["id"] for c in out if c["city"] == "Perth" and c["country_label"] == ""),
                                                   "blank_country_ids": sorted(c["id"] for c in out if c["country_label"] == "")})
-    write_task_yaml(HERE, {
+    n_blank = sum(c["country_label"] == "" for c in out)
+    n_bad = sum(c["tag"] == "invalid" for c in out)
+    # the trap sentences that count things follow the knobs (unchanged at the defaults)
+    blank_txt = "about half the rows" if knobs["noise"] == 0.5 else f"{n_blank} of the {len(out)} rows"
+    bad_txt = ("seven contacts have unusable numbers (7 digits, 9 digits, 11 digits not starting with 1, an email address, "
+               "\"TBD\", blank, \"call the office\")") if n_bad == 7 else (
+        f"{NUM_WORDS.get(n_bad, n_bad)} contacts have unusable numbers (7 digits, 9 digits, 11 digits not starting with 1, "
+        "an email address, \"TBD\", blank, \"call the office\", and more: " +
+        ", ".join(f'\"{b}\" ({k})' for k, b in EXTRA_INVALID[:n_bad - 7]) + ")")
+    spec = {
         "id": "phones-to-e164", "track": "desk", "category": "reformatting",
         "title": "Convert the CRM contact phones to the new phone system's import file",
         "ask": ("We are moving our phones to Ringline and they need every contact's number in their import format; their template "
                 "and notes are in the folder. Convert contacts_export.xlsx and save the result as contacts_e164.csv.\n"),
         "followup": None, "timeout_s": 1200,
         "traps": [
-            "the Country column is blank on about half the rows; city, state/province and postcode decide it, and Perth \"WA\" with a four-digit postcode is Australia, not Washington (check: country codes)",
+            f"the Country column is blank on {blank_txt}; city, state/province and postcode decide it, and Perth \"WA\" with a four-digit postcode is Australia, not Washington (check: country codes)",
             "GB, AU and DE numbers carry a trunk 0 that E.164 drops; some are written \"+44 (0)20 ...\", \"0044 ...\" or \"030/1234567\" (check: e164 numbers)",
             "twelve numbers carry extensions in six spellings (x204, ext. 12, #3, \", extension 45\"); the extension goes to its own column and never into the number (check: e164 numbers; extensions)",
-            "seven contacts have unusable numbers (7 digits, 9 digits, 11 digits not starting with 1, an email address, \"TBD\", blank, \"call the office\"); they stay in the file with a blank number and status invalid (check: import status; one row per contact)",
+            f"{bad_txt}; they stay in the file with a blank number and status invalid (check: import status; one row per contact)",
             "the xlsx has a merged title row and an export-date line above the header (check: one row per contact)",
             "US and Canadian numbers both map to +1, but the country column must say US or CA from the address (check: country codes)",
             "the template's six columns in exact order and the template's status spellings ok / invalid (check: template columns; import status)",
@@ -234,10 +306,20 @@ def emit(seed: int) -> None:
             {"type": "csv_values_match", "name": "import status", "path": "contacts_e164.csv", "ref": "contacts_e164.csv", "key": "contact_id",
              "columns": ["import_status"], "min_accuracy": 1.0},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "phones-to-e164", seed, knobs))
     print(f"seed={seed}: {len(contacts)} contacts, {sum(1 for c in contacts if c['tag'] == 'invalid')} invalid, "
           f"{sum(1 for c in contacts if c['tag'] == 'ext')} with extensions, {sum(1 for c in contacts if c['country_label'] == '')} blank countries")
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_knob_args(ap, KNOBS)
+    a = ap.parse_args()
+    knobs = parse_knob_args(a, KNOBS)
+    if a.describe:
+        print(describe_json("phones-to-e164", a.seed, knobs, counts(build(a.seed, knobs), knobs)))
+        raise SystemExit(0)
+    emit(a.seed, knobs, a.out)

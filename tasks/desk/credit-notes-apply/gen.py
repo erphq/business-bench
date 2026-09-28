@@ -2,6 +2,9 @@
 """credit-notes-apply: September returns at a pet-supply wholesaler turned into credit notes and applied to open invoices.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-knobs
+    python gen.py --cross-doc 2 --trap-count spill_over=3 --out DIR    # a harder task; the answer moves
+    python gen.py --describe [--scale N ...]                            # content counts of this draw
 
 Business: Kibble Crate Distributors sells food, treats and grooming supplies to independent pet shops and groomers
 at a per-customer discount. The warehouse logs returns against RMAs; the AR clerk turns them into credit notes and
@@ -28,6 +31,20 @@ from decimal import ROUND_HALF_UP, Decimal
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("scale", "scale", default=1, levels=(1, 2, 4),
+         changes="paid invoices per customer in the June-September invoice history are multiplied by N", measure="rows"),
+    Knob("cross_doc", "cross-doc", default=0, levels=(0, 1, 2),
+         changes="1: the invoice lines show list prices only and each customer's discount lives in a separate customer "
+                 "price agreement; 2: three customers' agreed discounts also changed during the summer, so the invoice date "
+                 "picks the agreement row", measure="cross_doc"),
+    Knob("trap_count.spill_over", "trap-count", default=1, levels=(1, 2, 3),
+         changes="credit notes larger than their partly paid invoice's open balance, spilling to the customer's oldest "
+                 "other open invoice", measure="trap_instances.spill_over"),
+)
 
 SHOPS = ["Paws & Claws Pet Supply", "Barkside Grooming", "Whisker Lane Pets", "The Feed Bin", "Fin & Feather Aquatics",
          "Happy Tails Boutique", "Mudroom Dog Wash", "Tailwind Pet Market", "Scratch & Sniff Pets", "Four Paws Farm Store",
@@ -49,16 +66,18 @@ def c2(x) -> Decimal:
     return D(str(x)).quantize(D("0.01"), rounding=ROUND_HALF_UP)
 
 
-def build(seed: int) -> dict:
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
+    scale = knobs["scale"]
     shops = r.sample(SHOPS, 12)
     disc = {s: D(r.choice(["0.05", "0.08", "0.10", "0.12", "0.15"])) for s in shops}
     invoices = []
 
-    def make_invoice(cust, when, status):
+    def make_invoice(cust, when, status, rr=None):
+        rr = rr or r
         lines = []
-        for sku, desc, lp in r.sample(ITEMS, r.randint(3, 5)):
-            q = r.randint(3, 14)
+        for sku, desc, lp in rr.sample(ITEMS, rr.randint(3, 5)):
+            q = rr.randint(3, 14)
             net = c2(D(lp) * (1 - disc[cust]))
             lines.append({"sku": sku, "desc": desc, "list": D(lp), "net": net, "qty": q, "total": net * q})
         amount = sum(l["total"] for l in lines)
@@ -67,12 +86,12 @@ def build(seed: int) -> dict:
         if status == "paid":
             inv["paid"] = amount
         elif status == "partial":
-            inv["paid"] = c2(amount * D(str(r.uniform(0.45, 0.8))))
+            inv["paid"] = c2(amount * D(str(rr.uniform(0.45, 0.8))))
         invoices.append(inv)
         return inv
 
     for cust in shops:
-        for _ in range(r.randint(2, 4)):
+        for _ in range(r.randint(2, 4) * scale):
             make_invoice(cust, day_in(r, date(2026, 6, 2), date(2026, 8, 20), weekday_only=True), "paid")
         for _ in range(r.randint(1, 3)):
             make_invoice(cust, day_in(r, date(2026, 7, 20), date(2026, 9, 25), weekday_only=True), r.choice(["open", "open", "partial"]))
@@ -94,26 +113,57 @@ def build(seed: int) -> dict:
         while len(opens(cust)) < n:
             make_invoice(cust, day_in(r, date(2026, 7, 20), date(2026, 9, 18), weekday_only=True), "open")
 
+    # knob-only content, drawn from its own stream after the default draws (none of this runs at the defaults)
+    nspill, xdoc = knobs.trap_count("spill_over"), knobs["cross_doc"]
+    spill_c, disc_changes, rk = shops[10:10 + nspill - 1], [], None
+    if nspill > 1 or xdoc > 1:
+        rk = rng(seed + 7_000_003)
+        for cust in spill_c:
+            while len(opens(cust)) < 3:
+                make_invoice(cust, day_in(rk, date(2026, 7, 20), date(2026, 9, 18), weekday_only=True), "open", rk)
+        if xdoc > 1:
+            # three customers' agreed discounts changed during the summer; lines on invoices from that date use the new one
+            # windows: shops[2]'s paid invoices mostly predate its change; shops[4]'s change falls between its open invoices
+            o4 = opens(shops[4])
+            mid = o4[0]["date"] + (o4[-1]["date"] - o4[0]["date"]) / 2 + timedelta(days=1)
+            for cust, lo, hi in ((shops[0], date(2026, 7, 6), date(2026, 8, 7)), (shops[2], date(2026, 8, 21), date(2026, 9, 10)),
+                                 (shops[4], mid, mid)):
+                when = day_in(rk, lo, hi)
+                new = D(rk.choice([x for x in ("0.05", "0.08", "0.10", "0.12", "0.15") if D(x) != disc[cust]]))
+                disc_changes.append((cust, when, disc[cust], new))
+                for inv in invoices:
+                    if inv["cust"] == cust and inv["date"] >= when:
+                        for l in inv["lines"]:
+                            l["net"] = c2(l["list"] * (1 - new))
+                            l["total"] = l["net"] * l["qty"]
+                        old_amount, inv["amount"] = inv["amount"], sum(l["total"] for l in inv["lines"])
+                        if inv["status"] == "paid" or inv["paid"] == old_amount:
+                            inv["paid"] = inv["amount"]
+                        elif inv["paid"] > 0:
+                            inv["paid"] = c2(inv["amount"] * inv["paid"] / old_amount)
+
     # invoice numbers run with the invoice date, as the billing system issues them
     start = r.randint(30100, 30400)
     for inv in sorted(invoices, key=lambda i: (i["date"], i["seq"])):
         start += r.choice([1, 1, 1, 2, 3])
         inv["no"] = f"INV-{start}"
     rmas = []
-    rma_seq = iter(sorted(r.sample(range(101, 199), 12)))
+    rma_nums = sorted(r.sample(range(101, 199), 12))
+    rma_seq = iter(rma_nums)
 
-    def rma(cust, inv, spec, role, when=None):
+    def rma(cust, inv, spec, role, when=None, rr=None, seq=None):
+        rr = rr or r
         lines = []
         pool = list(inv["lines"])
-        r.shuffle(pool)
+        rr.shuffle(pool)
         for (reason, frac, insp), line in zip(spec, pool):
             q = max(1, min(line["qty"], round(line["qty"] * frac)))
             lines.append({"sku": line["sku"], "desc": line["desc"], "qty": q, "net": line["net"], "list": line["list"], "reason": reason,
                           "insp": insp})
         earliest = max(date(2026, 9, 1), inv["date"] + timedelta(days=3))
         if when is None or when < earliest:
-            when = day_in(r, earliest, max(earliest, date(2026, 9, 29)), weekday_only=False)
-        x = {"no": f"RMA-2609-{next(rma_seq)}", "cust": cust, "inv": inv, "lines": lines, "role": role, "date": when}
+            when = day_in(rr, earliest, max(earliest, date(2026, 9, 29)), weekday_only=False)
+        x = {"no": f"RMA-2609-{seq or next(rma_seq)}", "cust": cust, "inv": inv, "lines": lines, "role": role, "date": when}
         rmas.append(x)
         return x
 
@@ -136,6 +186,15 @@ def build(seed: int) -> dict:
     for k in (7, 8, 9):
         cust = shops[k]
         rma(cust, opens(cust)[0], [(r.choice(FEE_REASONS + NOFEE_REASONS), r.uniform(0.2, 0.5), A)], "plain")
+    if spill_c:
+        # more credits that outrun a partly paid invoice (trap_count.spill_over > 1)
+        spare = iter(rk.sample([n for n in range(101, 199) if n not in rma_nums], len(spill_c)))
+        for k, cust in enumerate(spill_c):
+            big = min(opens(cust)[1:], key=lambda i: open_bal(i))
+            if big["status"] != "partial":
+                big["status"], big["paid"] = "partial", c2(big["amount"] * D(str(rk.uniform(0.5, 0.75))))
+            rma(cust, big, [(rk.choice(NOFEE_REASONS), 1.0, A), (rk.choice(FEE_REASONS), 1.0, A), (rk.choice(NOFEE_REASONS), 1.0, A)],
+                f"exceeds_{k + 2}", rr=rk, seq=next(spare))
     rmas.sort(key=lambda x: x["no"])
 
     # ---- truth
@@ -167,13 +226,24 @@ def build(seed: int) -> dict:
                       "unapplied": left, "to": applied_to, "role": x["role"]})
     open_list = sorted([i for i in invoices if open_bal(i) > 0], key=lambda i: (i["cust"], i["date"], i["seq"]))
     return {"shops": shops, "disc": disc, "invoices": invoices, "open_list": open_list, "rmas": rmas, "notes": notes, "bal": bal,
-            "open_bal": {i["no"]: open_bal(i) for i in open_list}}
+            "open_bal": {i["no"]: open_bal(i) for i in open_list}, "disc_changes": disc_changes}
 
 
-def acceptable(d: dict) -> bool:
+def acceptable(d: dict, knobs=KNOBS.defaults()) -> bool:
     by = {n["role"]: n for n in d["notes"]}
-    if "pending" in by or len(d["notes"]) != 10:
+    extra = knobs.trap_count("spill_over") - 1
+    if "pending" in by or len(d["notes"]) != 10 + extra:
         return False
+    if d["disc_changes"]:
+        # the agreement's effective dates must matter: some credited RMA names an invoice from before its customer's change
+        ch = {c: w for c, w, _, _ in d["disc_changes"]}
+        credited = {n["rma"] for n in d["notes"]}
+        if not any(x["cust"] in ch and x["inv"]["date"] < ch[x["cust"]] for x in d["rmas"] if x["no"] in credited):
+            return False
+    for k in range(extra):
+        n = by.get(f"exceeds_{k + 2}")
+        if not n or len(n["to"]) < 2 or n["unapplied"] != 0:
+            return False
     ex, pi, no, p1, p2 = by["exceeds"], by["paid_invoice"], by["no_open"], by["pair_first"], by["pair_second"]
     if not (len(ex["to"]) >= 2 and ex["unapplied"] == 0):
         return False
@@ -199,8 +269,19 @@ def acceptable(d: dict) -> bool:
     return all(n["credit"] > 0 for n in d["notes"])
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains."""
+    xdoc = knobs["cross_doc"]
+    return {"rows": sum(len(i["lines"]) for i in d["invoices"]), "entities": len(d["shops"]), "rules": 7,
+            "documents": 4 + (xdoc > 0), "cross_doc": xdoc,
+            "rmas": len(d["rmas"]), "credit_notes": len(d["notes"]), "open_invoices": len(d["open_list"]),
+            "trap_instances": {"spill_over": sum(n["role"].startswith("exceeds") for n in d["notes"]),
+                               "discount_changes": len(d["disc_changes"])}}
+
+
+def emit(seed: int, naive_dir: str | None, knobs=KNOBS.defaults(), out: str | None = None) -> None:
+    d = build(seed, knobs)
+    xdoc = knobs["cross_doc"]
     cn_header = ["rma", "customer", "restocking_fee", "credit_amount", "applied", "unapplied"]
     ib_header = ["invoice", "customer", "balance"]
     if naive_dir:
@@ -215,7 +296,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
         write_csv(os.path.join(naive_dir, "invoice_balances.csv"), ib_header,
                   [[i["no"], i["cust"], f"{bal[i['no']]:.2f}"] for i in d["open_list"]])
         return
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
     r = rng(seed + 5)
 
     # ---- workspace: RMA log
@@ -236,8 +317,22 @@ def emit(seed: int, naive_dir: str | None) -> None:
         for l in inv["lines"]:
             lines.append([inv["no"], inv["date"].strftime("%m/%d/%Y"), inv["cust"], l["sku"], l["desc"], l["qty"], f"{l['list']:.2f}",
                           f"{int(d['disc'][inv['cust']] * 100)}%", f"{l['net']:.2f}", f"{l['total']:,.2f}"])
+    if xdoc:
+        # the discount lives in the customer price agreements, not on the invoice lines (cross_doc >= 1)
+        lines = [row[:7] for row in lines]
+        agree = []
+        for cust in sorted(d["shops"]):
+            ch = [c for c in d["disc_changes"] if c[0] == cust]
+            if ch:
+                _, when, old, new = ch[0]
+                agree.append([cust, f"{int(old * 100)}%", "2026-01-01", (when - timedelta(days=1)).isoformat()])
+                agree.append([cust, f"{int(new * 100)}%", when.isoformat(), ""])
+            else:
+                agree.append([cust, f"{int(d['disc'][cust] * 100)}%", "2026-01-01", ""])
+        write_csv(os.path.join(ws, "customer_price_agreements.csv"),
+                  ["Customer", "Account discount off list", "Effective from", "Effective to"], agree)
     write_csv(os.path.join(ws, "invoice_lines_2026-06-01_to_2026-09-30.csv"),
-              ["Invoice", "Invoice Date", "Customer", "SKU", "Description", "Qty", "List Price", "Cust Discount", "Unit Price", "Line Total"],
+              ["Invoice", "Invoice Date", "Customer", "SKU", "Description", "Qty", "List Price", "Cust Discount", "Unit Price", "Line Total"][:7 if xdoc else 10],
               lines, crlf=True)
 
     # ---- workspace: open AR before credits
@@ -255,7 +350,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
                "- Only lines the warehouse marks **Accepted** at inspection are credited. Rejected lines get nothing. Lines still pending "
                "inspection wait for next month's run.\n"
                "- The credit for a line is the quantity returned times the unit price the customer actually paid on the original invoice "
-               "(after their account discount), not the list price.\n\n"
+               "(after their account discount), not the list price.\n\n" + ("" if not xdoc else
+               "- Invoice lines show list prices. The unit price charged is the list price less the customer's account discount from "
+               "`customer_price_agreements.csv`" + (", using the agreement in force on the invoice date," if xdoc > 1 else "") +
+               " rounded to the cent per unit.\n\n") +
                "## Restocking fee\n\n"
                "- Returns for **Ordered in error** or **Overstock** carry a 15% restocking fee: 15% of that line's credit, rounded to the cent, "
                "line by line.\n"
@@ -283,20 +381,32 @@ def emit(seed: int, naive_dir: str | None) -> None:
                                                   "no_credit_note": [x["no"] for x in d["rmas"] if x["role"] == "pending"]})
     by = {n["role"]: n for n in d["notes"]}
     rma_role = {x["role"]: x for x in d["rmas"]}
-    touched = sorted({t for role in ("exceeds", "paid_invoice", "pair_first", "pair_second") for t, _ in by[role]["to"]})
-    write_task_yaml(HERE, {
+    touched = sorted({t for role in ("exceeds", "paid_invoice", "pair_first", "pair_second") for t, _ in by[role]["to"]}
+                     | {t for n in d["notes"] if n["role"].startswith("exceeds_") for t, _ in n["to"]})
+    # knobbed output only: prose naming the extra spill-over notes and the price agreement
+    spills = [by[f"exceeds_{k + 2}"] for k in range(knobs.trap_count("spill_over") - 1)]
+    more_spill = "".join(f"; so does {n['rma']} for {n['cust']}" for n in spills)
+    price_trap = ("the returns log has no prices; each line is credited at the discounted unit price on the original invoice, and every customer "
+                  "has a 5-15% account discount, so quantity times list price over-credits every note (check: credit and fee per RMA)")
+    if xdoc:
+        price_trap = ("the returns log has no prices and the invoice lines show list prices only; each line is credited at list less the "
+                      "customer's discount from the price agreements, rounded to the cent per unit, so quantity times list price "
+                      "over-credits every note" + ("" if xdoc < 2 else "; " + ", ".join(
+                          f"{c}{chr(39) if c.endswith('s') else chr(39) + 's'} discount went from {int(o * 100)}% to {int(n * 100)}% on {w.day} {w.strftime('%B')}"
+                          for c, w, o, n in d["disc_changes"]) + ", so the invoice date picks the rate") +
+                      " (check: credit and fee per RMA)")
+    spec = {
         "id": "credit-notes-apply", "track": "desk", "category": "bookkeeping",
         "title": "Turn September returns into credit notes and apply them",
         "ask": ("Can you turn September's returns into credit notes and apply them to what customers owe? Our returns policy in "
                 "the folder has the rules. I need credit_notes.csv and invoice_balances.csv back.\n"),
         "followup": None, "timeout_s": 1200,
         "traps": [
-            "the returns log has no prices; each line is credited at the discounted unit price on the original invoice, and every customer "
-            "has a 5-15% account discount, so quantity times list price over-credits every note (check: credit and fee per RMA)",
+            price_trap,
             f"{by['fee_mix']['rma']} mixes an ordered-in-error or overstock line with a no-fault line; the 15% fee comes off the first line "
             "only, and plain restocking-fee lines appear on other notes (check: credit and fee per RMA)",
             f"{by['exceeds']['rma']} credits more than its invoice's open balance (the invoice is partly paid); the rest goes to "
-            f"{by['exceeds']['cust']}'s oldest other open invoice, not the newest and not left as a negative balance "
+            f"{by['exceeds']['cust']}'s oldest other open invoice, not the newest and not left as a negative balance{more_spill} "
             "(checks: applied and unapplied per RMA; invoice balances after credits)",
             f"{by['paid_invoice']['rma']} names an invoice that was paid in full in August, so the whole credit goes to "
             f"{by['paid_invoice']['cust']}'s open invoices oldest first, reaching more than one (checks: applied and unapplied per RMA; "
@@ -319,13 +429,15 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "must_match_keys": [by["fee_mix"]["rma"], by["rejected_line"]["rma"]]},
             {"type": "csv_values_match", "name": "applied and unapplied per RMA", "path": "credit_notes.csv", "ref": "credit_notes.csv",
              "key": "rma", "columns": ["applied", "unapplied"], "numeric": True, "tolerance": 0.01, "min_accuracy": 1.0,
-             "must_match_keys": [by[k]["rma"] for k in ("exceeds", "paid_invoice", "no_open", "pair_first", "pair_second")]},
+             "must_match_keys": [by[k]["rma"] for k in ("exceeds", "paid_invoice", "no_open", "pair_first", "pair_second")]
+             + [n["rma"] for n in spills]},
             {"type": "csv_set_equal", "name": "every open invoice listed", "path": "invoice_balances.csv", "column": "invoice",
              "ref": "invoice_balances.csv"},
             {"type": "csv_values_match", "name": "invoice balances after credits", "path": "invoice_balances.csv", "ref": "invoice_balances.csv",
              "key": "invoice", "columns": ["balance"], "numeric": True, "tolerance": 0.01, "min_accuracy": 1.0, "must_match_keys": touched},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "credit-notes-apply", seed, knobs))
     print(f"seed={seed} notes={len(d['notes'])} open={len(d['open_list'])} " + " ".join(f"{n['role']}:{n['credit']}/{n['unapplied']}" for n in d["notes"]))
 
 
@@ -333,10 +445,16 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_knob_args(ap, KNOBS)
     a = ap.parse_args()
+    knobs = parse_knob_args(a, KNOBS)
     for attempt in range(2000):
-        if acceptable(build(a.seed * 1000 + attempt)):
+        d = build(a.seed * 1000 + attempt, knobs)
+        if acceptable(d, knobs):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    if a.describe:
+        print(describe_json("credit-notes-apply", a.seed * 1000 + attempt, knobs, counts(d, knobs)))
+        raise SystemExit(0)
+    emit(a.seed * 1000 + attempt, a.naive, knobs, a.out)

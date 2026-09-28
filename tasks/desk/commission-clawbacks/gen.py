@@ -2,6 +2,9 @@
 """commission-clawbacks: audit paid commissions against later customer refunds at a hearth and stove retailer.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-knobs
+    python gen.py --rules 7 --trap-count two_partials=3 --out DIR    # a harder task; the answer moves
+    python gen.py --describe [--scale N ...]                          # content counts of this draw
 
 Business: a fireplace, stove and chimney-liner retailer with commissioned showroom reps. Commissions are paid on
 the 15th for the prior month's deals; refunds within 120 days take the commission back. One rep left in July.
@@ -25,6 +28,26 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("scale", "scale", default=1, levels=(1, 2, 3),
+         changes="deals per active rep per month on the statements, and ordinary refunds, are multiplied by N", measure="rows"),
+    Knob("rules", "rules", default=5, levels=(5, 6, 7),
+         changes="numbered refund rules in the commission plan: 6 adds 'a manufacturer's recall takes nothing back' "
+                 "(with recall refunds planted); 7 also adds 'a clawback under $10.00 is waived' (with small refunds planted)",
+         measure="rules"),
+    Knob("trap_count.two_partials", "trap-count", default=1, levels=(1, 2, 3),
+         changes="deals refunded twice in part, each partial refund taking back its own share of the commission",
+         measure="trap_instances.two_partials"),
+)
+PLANTED = {"partial_crossed", "full_top", "plan_b_partial", "outside_window", "day_120", "two_partials_1", "two_partials_2",
+           "house", "derek_0", "derek_1", "derek_2", "logged", "missed"}
+WAIVE_UNDER = 10.0   # rules >= 7
+EXTRA_RULES = {6: "6. Refunds made because of a manufacturer's recall take nothing back: the maker reimburses us, and the rep keeps\n"
+                  "   the commission.\n",
+               7: f"7. A clawback under ${WAIVE_UNDER:.2f} is waived: nothing is taken back from the rep and nothing is written off.\n"}
 
 MONTHS = [(2026, 3), (2026, 4), (2026, 5), (2026, 6), (2026, 7)]
 PLAN_A = (30000.0, 0.04, 0.07)   # through June
@@ -37,13 +60,18 @@ def r2(x: float) -> float:
     return float(f"{x + (1e-9 if x >= 0 else -1e-9):.2f}")
 
 
-def build(seed: int) -> dict:
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
+    scale = knobs["scale"]
     names = [f"{f} {l}" for f, l in people(r, 5)]
     reps = [{"name": n, "status": "Active", "term": None} for n in names[:4]]
     derek = {"name": names[4], "status": "Terminated", "term": date(2026, 7, 17)}
     reps.append(derek)
     customers = [f"{f} {l}" for f, l in people(r, 260)]
+    if scale > 1:
+        # more deals need more customers: drawn from the knob stream, ahead of the default ones (pop() takes from the end)
+        seen = set(customers)
+        customers = [c for c in (f"{f} {l}" for f, l in people(rng(seed + 7_000_003), 330 * scale)) if c not in seen] + customers
     deals = []
     seq = 10400
     for (y, m) in MONTHS:
@@ -55,7 +83,7 @@ def build(seed: int) -> dict:
             elif rep.get("status") == "House":
                 n = 2
             else:
-                n = r.randint(4, 7)
+                n = r.randint(4, 7) * (scale if rep is not derek else 1)   # the leaver's history is not scaled
             for k in range(n):
                 day = r.randint(1, 16 if (rep is derek and m == 7) else dim)
                 amt = float(r.randrange(1800, 14500, 25)) + r.choice([0.0, 0.5, 0.95])
@@ -82,10 +110,10 @@ def build(seed: int) -> dict:
         if d["rep"] == "House":
             d["commission"], d["rate_label"], d["crossed"] = 0.0, "-", False
     final_check = r2(sum(d["commission"] for d in deals if d["rep"] == derek["name"] and d["sold"].month == 7))
-    return {"reps": reps, "derek": derek, "deals": deals, "final_check": final_check, "r": r}
+    return {"reps": reps, "derek": derek, "deals": deals, "final_check": final_check, "r": r, "seed": seed}
 
 
-def add_refunds(d: dict, r) -> bool:
+def add_refunds(d: dict, r, knobs=KNOBS.defaults()) -> bool:
     deals, derek = d["deals"], d["derek"]
     refunds = []
     active = [x for x in deals if x["rep"] not in ("House", derek["name"])]
@@ -131,16 +159,50 @@ def add_refunds(d: dict, r) -> bool:
     picks = r.sample(early, 5)
     for k, x in enumerate(picks):
         mk(x, x["sold"] + timedelta(days=r.randint(10, 45)), x["amount"] * r.choice([0.2, 0.5, 1.0]), "Refund", "logged" if k < 4 else "missed")
-    for x in r.sample([x for x in active if x not in picks and x not in (c, t, jb, out, edge, two) and x["sold"].month >= 5], 6):
+    for x in r.sample([x for x in active if x not in picks and x not in (c, t, jb, out, edge, two) and x["sold"].month >= 5], 6 * knobs["scale"]):
         w = max(x["sold"] + timedelta(days=r.randint(12, 90)), date(2026, 6, 16) + timedelta(days=r.randint(0, 30)))
         if w <= date(2026, 8, 31):
             mk(x, w, x["amount"] * r.choice([0.1, 0.25, 0.4, 1.0]), r.choice(["Refund", "Returned accessory", "Service credit"]), "plain")
+    nrules, ntwo = knobs["rules"], knobs.trap_count("two_partials")
+    if nrules > 5 or ntwo > 1:
+        # knob-only refunds, drawn from their own stream after every default draw (none of this runs at the defaults)
+        rk = rng(d["seed"] + 9_000_011)
+        used = {id(rf["deal"]) for rf in refunds}
+        free = [x for x in active if id(x) not in used and x["sold"].month in (5, 6) and x["sold"].day <= 25]
+
+        def take():
+            x = free.pop(rk.randrange(len(free)))
+            return x
+
+        def plant(deal, when, amount, reason, tag):
+            refunds.append({"deal": deal, "date": when, "amount": r2(amount), "reason": reason, "tag": tag})
+
+        for k in range(ntwo - 1):
+            x = take()
+            w1 = max(x["sold"] + timedelta(days=rk.randint(10, 30)), date(2026, 6, 16) + timedelta(days=rk.randint(0, 10)))
+            plant(x, w1, x["amount"] * rk.choice([0.1, 0.15, 0.2]), rk.choice(["Missing trim pieces", "Returned accessory"]), f"two_more_{k}_1")
+            plant(x, min(w1 + timedelta(days=rk.randint(12, 40)), x["sold"] + timedelta(days=115), date(2026, 8, 28)),
+                  x["amount"] * rk.choice([0.25, 0.3, 0.35]),
+                  rk.choice(["Damaged glass door", "Price adjustment"]), f"two_more_{k}_2")
+        if nrules >= 6:
+            for k in range(2):
+                x = take()
+                plant(x, max(x["sold"] + timedelta(days=rk.randint(20, 60)), date(2026, 6, 16) + timedelta(days=rk.randint(0, 20))),
+                      x["amount"] * rk.choice([0.5, 1.0]), rk.choice(["Manufacturer recall - refund", "Manufacturer recall - unit replaced"]),
+                      f"recall_{k}")
+        if nrules >= 7:
+            for k in range(2):
+                x = take()
+                plant(x, max(x["sold"] + timedelta(days=rk.randint(15, 60)), date(2026, 6, 16) + timedelta(days=rk.randint(0, 20))),
+                      float(rk.randrange(60, 115)), rk.choice(["Returned accessory", "Service credit"]), f"small_{k}")
     for rf in refunds:
         if rf["tag"] == "logged" and rf["date"] > date(2026, 6, 10):
             rf["date"] = date(2026, 6, 10) - timedelta(days=r.randint(0, 20))
         if rf["tag"] == "missed":
             rf["date"] = min(rf["date"], date(2026, 5, 28))
     refunds = [rf for rf in refunds if rf["date"] <= date(2026, 8, 31) and rf["date"] > rf["deal"]["sold"]]
+    if not knobs.canonical and len({rf["tag"] for rf in refunds} & PLANTED) != len(PLANTED):
+        return False   # a knobbed draw keeps every planted refund (the published draw already does)
     for rf in refunds:
         if rf["tag"] not in ("outside_window",) and (rf["date"] - rf["deal"]["sold"]).days > 120:
             return False
@@ -157,6 +219,9 @@ def add_refunds(d: dict, r) -> bool:
         rf["days"] = days
         rf["in_scope"] = rf["tag"] != "logged"
         rf["clawback"] = r2(deal["commission"] * rf["amount"] / deal["amount"]) if days <= 120 else 0.0
+        if nrules > 5:
+            if rf["reason"].startswith("Manufacturer recall") or (nrules >= 7 and rf["clawback"] < WAIVE_UNDER):
+                rf["clawback"] = 0.0
         rf["recovered"], rf["written_off"] = rf["clawback"], 0.0
     for rf in [x for x in refunds if x["deal"]["rep"] == derek["name"] and x["in_scope"]]:
         take = min(held, rf["clawback"])
@@ -168,13 +233,27 @@ def add_refunds(d: dict, r) -> bool:
     return True
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
-    add_refunds(d, d["r"])
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains (after add_refunds)."""
+    per_deal = {}
+    for rf in d["refunds"]:
+        if rf["in_scope"]:
+            per_deal[id(rf["deal"])] = per_deal.get(id(rf["deal"]), 0) + 1
+    return {"rows": len(d["deals"]), "entities": len(d["reps"]), "rules": knobs["rules"], "documents": 6,
+            "refunds": len(d["refunds"]), "in_scope": sum(rf["in_scope"] for rf in d["refunds"]),
+            "trap_instances": {"two_partials": sum(n >= 2 for n in per_deal.values()),
+                               "recall": sum(rf["tag"].startswith("recall") for rf in d["refunds"]),
+                               "waived": sum(rf["tag"].startswith("small") for rf in d["refunds"]),
+                               "terminated_rep_refunds": sum(rf["tag"].startswith("derek") for rf in d["refunds"])}}
+
+
+def emit(seed: int, naive_dir: str | None, knobs=KNOBS.defaults(), out: str | None = None) -> None:
+    d = build(seed, knobs)
+    add_refunds(d, d["r"], knobs)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
     deals, refunds, derek = d["deals"], d["refunds"], d["derek"]
 
     sheets = {}
@@ -225,7 +304,7 @@ band it falls in.
 4. When a rep has left, clawbacks can only come out of commission we still owe them. Apply their refunds oldest first
    until that money runs out; the rest is written off.
 5. House deals carry no commission.
-""")
+""" + "".join(EXTRA_RULES[k] for k in range(6, knobs["rules"] + 1)))
     write_text(os.path.join(ws, "note_from_colleen.txt"), """We have not run clawbacks since the June 15 statement. Can you go through every refund that is not already
 on that statement's clawback list and tell me what we take back? One line per refund in clawbacks.csv:
 refund_id, rep, clawback, recovered, written_off. Put a line in even when the clawback comes to zero.
@@ -247,7 +326,19 @@ refund_id, rep, clawback, recovered, written_off. Put a line in even when the cl
         tg.setdefault(rf["tag"], rf)
     rid = lambda t: tg[t]["id"]
     dk = [rf["id"] for rf in scope if rf["tag"].startswith("derek")]
-    write_task_yaml(HERE, {
+    # knobbed output only: the extra planted refunds are named in the traps and pinned in the checks
+    more_two = [(tg[f"two_more_{k}_1"]["id"], tg[f"two_more_{k}_2"]["id"]) for k in range(knobs.trap_count("two_partials") - 1)]
+    more_two_txt = "".join(f"; so are {a} and {b}" for a, b in more_two)
+    recall = [rf["id"] for rf in refunds if rf["tag"].startswith("recall")]
+    small = [rf["id"] for rf in refunds if rf["tag"].startswith("small")]
+    extra_traps = []
+    if recall:
+        extra_traps.append(f"{' and '.join(recall)} refund a manufacturer's recall, which plan rule 6 says takes nothing back "
+                           "(check: clawback amounts)")
+    if small:
+        extra_traps.append(f"plan rule 7 waives clawbacks under ${WAIVE_UNDER:.2f}: {' and '.join(small)} (and any other refund that "
+                           "small) take nothing back and write nothing off (check: clawback amounts)")
+    spec = {
         "id": "commission-clawbacks", "track": "desk", "category": "bookkeeping",
         "title": "Commission clawbacks on refunded deals since June",
         "ask": ("We haven't taken back any commissions for refunds since the June 15 statement. Colleen's note says what she needs, "
@@ -258,7 +349,7 @@ refund_id, rep, clawback, recovered, written_off. Put a line in even when the cl
             f"plan, {rid('partial_crossed')}'s deal crossed the monthly band and carries a blended 4%/7% commission, and "
             f"{rid('plan_b_partial')} is a July deal under the new bands (check: clawback amounts)",
             f"partial refunds take back the same share of that deal's commission; {rid('two_partials_1')} and {rid('two_partials_2')} "
-            "are two partial refunds on one deal (check: clawback amounts)",
+            f"are two partial refunds on one deal{more_two_txt} (check: clawback amounts)",
             f"{rid('outside_window')} came more than 120 days after the sale and takes nothing back, while {rid('day_120')} lands on "
             "day 120 and still counts (check: clawback amounts)",
             f"four refunds are already on the June 15 clawback list and must not be taken twice, but {rid('missed')} from "
@@ -268,7 +359,7 @@ refund_id, rep, clawback, recovered, written_off. Put a line in even when the cl
             f"{rid('house')} refunds a house deal that never paid commission (check: clawback amounts)",
             "the refund export writes sales orders as ES-10452 where the statements say ES10452, under a two-line preamble "
             "(check: clawback amounts)",
-        ],
+        ] + extra_traps,
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "clawbacks.csv", "columns": header},
             {"type": "csv_set_equal", "name": "which refunds", "path": "clawbacks.csv", "column": "refund_id", "ref": "clawbacks.csv", "normalize": ["alnum"]},
@@ -276,13 +367,15 @@ refund_id, rep, clawback, recovered, written_off. Put a line in even when the cl
             {"type": "csv_values_match", "name": "clawback amounts", "path": "clawbacks.csv", "ref": "clawbacks.csv", "key": "refund_id",
              "columns": ["clawback"], "numeric": True, "tolerance": 0.011, "min_accuracy": 1.0,
              "must_match_keys": [rid(t) for t in ("full_top", "partial_crossed", "plan_b_partial", "two_partials_1", "two_partials_2",
-                                                  "outside_window", "day_120", "house", "missed")]},
+                                                  "outside_window", "day_120", "house", "missed")]
+             + [i for ab in more_two for i in ab] + recall + small},
             {"type": "csv_values_match", "name": "recovered from the rep", "path": "clawbacks.csv", "ref": "clawbacks.csv", "key": "refund_id",
              "columns": ["recovered"], "numeric": True, "tolerance": 0.011, "min_accuracy": 1.0, "must_match_keys": dk},
             {"type": "csv_values_match", "name": "written off", "path": "clawbacks.csv", "ref": "clawbacks.csv", "key": "refund_id",
              "columns": ["written_off"], "numeric": True, "tolerance": 0.011, "min_accuracy": 1.0, "must_match_keys": dk},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "commission-clawbacks", seed, knobs))
     print(f"seed={seed} deals={len(deals)} refunds={len(refunds)} in scope={len(scope)} final check={d['final_check']}")
     for rf in refunds:
         x = rf["deal"]
@@ -301,11 +394,17 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_knob_args(ap, KNOBS)
     a = ap.parse_args()
-    for attempt in range(400):
-        d_ = build(a.seed * 1000 + attempt)
-        if add_refunds(d_, d_["r"]):
+    knobs = parse_knob_args(a, KNOBS)
+    # a knobbed draw may need more attempts (the terminated rep's refunds rarely fit); the default budget is unchanged
+    for attempt in range(400 if knobs.canonical else 20000):
+        d_ = build(a.seed * 1000 + attempt, knobs)
+        if add_refunds(d_, d_["r"], knobs):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    if a.describe:
+        print(describe_json("commission-clawbacks", a.seed * 1000 + attempt, knobs, counts(d_, knobs)))
+        raise SystemExit(0)
+    emit(a.seed * 1000 + attempt, a.naive, knobs, a.out)

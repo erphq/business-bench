@@ -2,6 +2,9 @@
 """mileage-reimbursement: a home health agency's August driving logs to what each clinician is owed.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-knobs
+    python gen.py --scale 3 --trap-count odometer=3+personal=2 --out DIR    # a harder task; the answer moves
+    python gen.py --describe [--scale N ...]                                  # content counts of this draw
 
 Business: Brightside Home Health sends nurses, aides and therapists to patients' homes. Most log trips in a mileage
 app; one therapist keeps an odometer sheet. The controller's emails carry the policy: the 2026 rate, personal trips
@@ -28,6 +31,19 @@ from decimal import ROUND_HALF_UP, Decimal
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("scale", "scale", default=1, levels=(1, 2, 3, 4),
+         changes="clinicians on the field staff are multiplied by N (9 at 1), each with a month of app trips", measure="entities"),
+    Knob("trap_count.odometer", "trap-count", default=1, levels=(1, 2, 3),
+         changes="clinicians who log on a paper odometer workbook instead of the app (one workbook each)",
+         measure="trap_instances.odometer"),
+    Knob("trap_count.personal", "trap-count", default=1, levels=(1, 2, 3),
+         changes="clinicians who log weekend and evening personal errands in the app", measure="trap_instances.personal"),
+)
+VEHICLES = ["2019 Subaru Outback", "2021 Toyota RAV4", "2018 Honda CR-V"]
 
 RATE = Decimal("0.725")
 OLD_RATE = Decimal("0.70")
@@ -40,7 +56,70 @@ def cents(miles_tenths: int, rate: Decimal) -> int:
     return int((Decimal(miles_tenths) / 10 * rate * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
 
 
-def build(seed: int) -> dict:
+def trips_for(r, s: dict, days, patients) -> None:
+    """A clinician's logged trips over the export window, drawn from r; the clinician's kind picks the pattern."""
+    kind = s["kind"]
+
+    def leg(lo, hi):
+        return r.randint(lo, hi)
+
+    def stamp(trips, start_min):
+        t = start_min
+        for tr in trips:
+            tr["time"] = t
+            drive = max(4, tr["miles"] * 2 // 10)
+            t += drive * (2 if tr["rt"] else 1) + (10 if tr["rt"] else 0) + r.randint(35, 70)
+
+    c = s["commute"]
+    pool = r.sample(patients, 14)
+    for d in days:
+        if d.weekday() >= 5:
+            wk = []
+            if kind == "roundtrip" and d.weekday() == 5 and 8 <= d.day <= 29 and d.month == 8 and r.random() < 0.6:
+                wk.append({"date": d, "from": "Home", "to": r.choice(pool), "purpose": "Patient visit",
+                           "miles": leg(c + 20, c + 90), "rt": True})
+            if kind in ("personal", "odometer") and r.random() < 0.5:
+                e = r.choice(ERRANDS); m = leg(20, 140)
+                wk += [{"date": d, "from": "Home", "to": e, "purpose": "Personal", "miles": m, "rt": False},
+                       {"date": d, "from": e, "to": "Home", "purpose": "Personal", "miles": m + r.randint(-5, 5), "rt": False}]
+            stamp(wk, 9 * 60 + r.randint(0, 90))
+            s["trips"] += wk
+            continue
+        if r.random() < 0.12:
+            continue  # day off
+        k = r.randint(2, 5)
+        visits = r.sample(pool, k)
+        pattern = r.random()
+        seq = []
+        if pattern < 0.2:
+            seq.append(("Home", "Office", "Team meeting", c))
+            seq.append(("Office", visits[0], "Patient visit", leg(25, 140)))
+        else:
+            near = kind == "commuter" and r.random() < 0.6
+            seq.append(("Home", visits[0], "Patient visit", leg(20, c - 20) if near else leg(30, 220)))
+        for a, b in zip(visits, visits[1:]):
+            seq.append((a, b, "Patient visit", leg(18, 160)))
+        if pattern > 0.85:
+            seq.append((visits[-1], "Office", "Charting / drop paperwork", leg(25, 140)))
+            seq.append(("Office", "Home", "Drive home", c))
+        else:
+            near = kind == "commuter" and r.random() < 0.6
+            seq.append((visits[-1], "Home", "Drive home", leg(20, c - 20) if near else leg(30, 220)))
+        trips = [{"date": d, "from": a, "to": b, "purpose": p, "miles": m, "rt": False} for a, b, p, m in seq]
+        if kind != "odometer" and (kind == "roundtrip" or r.random() < 0.15):
+            j = r.randint(1, len(trips) - 1)
+            stop = r.choice(STOPS)
+            trips.insert(j, {"date": d, "from": trips[j]["from"], "to": stop, "purpose": "Supply pickup",
+                             "miles": leg(25, 110), "rt": True})
+        if kind == "personal" and r.random() < 0.3:
+            e = r.choice(ERRANDS); m = leg(15, 90)
+            trips += [{"date": d, "from": "Home", "to": e, "purpose": "Personal", "miles": m, "rt": False},
+                      {"date": d, "from": e, "to": "Home", "purpose": "Personal", "miles": m, "rt": False}]
+        stamp(trips, 7 * 60 + 20 + r.randint(0, 70))
+        s["trips"] += trips
+
+
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
     names = people(r, len(ROLES))
     staff = []
@@ -59,64 +138,35 @@ def build(seed: int) -> dict:
     days = [date(2026, 7, 27) + timedelta(days=k) for k in range(40)]  # 27 Jul .. 4 Sep
     patients = [f"Pt {r.randint(1000, 9999)}" for _ in range(60)]
 
-    def leg(lo, hi):
-        return r.randint(lo, hi)
-
-    def stamp(trips, start_min):
-        t = start_min
-        for tr in trips:
-            tr["time"] = t
-            drive = max(4, tr["miles"] * 2 // 10)
-            t += drive * (2 if tr["rt"] else 1) + (10 if tr["rt"] else 0) + r.randint(35, 70)
-
     for s in staff:
-        c = s["commute"]
-        pool = r.sample(patients, 14)
-        for d in days:
-            if d.weekday() >= 5:
-                wk = []
-                if s is roundtrip and d.weekday() == 5 and 8 <= d.day <= 29 and d.month == 8 and r.random() < 0.6:
-                    wk.append({"date": d, "from": "Home", "to": r.choice(pool), "purpose": "Patient visit",
-                               "miles": leg(c + 20, c + 90), "rt": True})
-                if s["kind"] in ("personal", "odometer") and r.random() < 0.5:
-                    e = r.choice(ERRANDS); m = leg(20, 140)
-                    wk += [{"date": d, "from": "Home", "to": e, "purpose": "Personal", "miles": m, "rt": False},
-                           {"date": d, "from": e, "to": "Home", "purpose": "Personal", "miles": m + r.randint(-5, 5), "rt": False}]
-                stamp(wk, 9 * 60 + r.randint(0, 90))
-                s["trips"] += wk
-                continue
-            if r.random() < 0.12:
-                continue  # day off
-            k = r.randint(2, 5)
-            visits = r.sample(pool, k)
-            pattern = r.random()
-            seq = []
-            if pattern < 0.2:
-                seq.append(("Home", "Office", "Team meeting", c))
-                seq.append(("Office", visits[0], "Patient visit", leg(25, 140)))
-            else:
-                near = s is commuter and r.random() < 0.6
-                seq.append(("Home", visits[0], "Patient visit", leg(20, c - 20) if near else leg(30, 220)))
-            for a, b in zip(visits, visits[1:]):
-                seq.append((a, b, "Patient visit", leg(18, 160)))
-            if pattern > 0.85:
-                seq.append((visits[-1], "Office", "Charting / drop paperwork", leg(25, 140)))
-                seq.append(("Office", "Home", "Drive home", c))
-            else:
-                near = s is commuter and r.random() < 0.6
-                seq.append((visits[-1], "Home", "Drive home", leg(20, c - 20) if near else leg(30, 220)))
-            trips = [{"date": d, "from": a, "to": b, "purpose": p, "miles": m, "rt": False} for a, b, p, m in seq]
-            if s is not odometer and (s is roundtrip or r.random() < 0.15):
-                j = r.randint(1, len(trips) - 1)
-                stop = r.choice(STOPS)
-                trips.insert(j, {"date": d, "from": trips[j]["from"], "to": stop, "purpose": "Supply pickup",
-                                 "miles": leg(25, 110), "rt": True})
-            if s is personal and r.random() < 0.3:
-                e = r.choice(ERRANDS); m = leg(15, 90)
-                trips += [{"date": d, "from": "Home", "to": e, "purpose": "Personal", "miles": m, "rt": False},
-                          {"date": d, "from": e, "to": "Home", "purpose": "Personal", "miles": m, "rt": False}]
-            stamp(trips, 7 * 60 + 20 + r.randint(0, 70))
-            s["trips"] += trips
+        trips_for(r, s, days, patients)
+
+    # knob-only clinicians, drawn from their own stream after every default draw (none of this runs at the defaults)
+    extra = []
+    if not knobs.canonical:
+        rk = rng(seed + 9_000_011)
+        plan = [("odometer", "PT" if i % 2 == 0 else "OT") for i in range(knobs.trap_count("odometer") - 1)]
+        plan += [("personal", "HHA" if i % 2 == 0 else "LPN") for i in range(knobs.trap_count("personal") - 1)]
+        plan += [("plain", ROLES[i % len(ROLES)]) for i in range(len(ROLES) * (knobs["scale"] - 1))]
+        seen = {(x["first"], x["last"]) for x in staff}
+        odo_last = {staff[5]["last"].lower()}
+        for kind, role in plan:
+            while True:
+                f, l = person(rk)
+                if (f, l) not in seen and not (kind == "odometer" and l.lower() in odo_last):
+                    break
+            seen.add((f, l))
+            if kind == "odometer":
+                odo_last.add(l.lower())
+            sid = f"BH-{rk.randint(100, 999)}"
+            while sid in ids:
+                sid = f"BH-{rk.randint(100, 999)}"
+            ids.add(sid)
+            x = {"id": sid, "first": f, "last": l, "name": f"{f} {l}", "role": role, "commute": rk.randint(45, 150),
+                 "trips": [], "kind": kind}
+            trips_for(rk, x, days, patients)
+            extra.append(x)
+        staff.extend(extra)
 
     # ---- truth: reimbursable tenths of a mile per clinician, August only
     for s in staff:
@@ -144,7 +194,7 @@ def build(seed: int) -> dict:
                 total += m
         s["miles"] = total
         s["pay"] = cents(total, RATE)
-    return {"staff": staff, "by_kind": {s["kind"]: s for s in staff if s["kind"] != "plain"}}
+    return {"staff": staff, "by_kind": {s["kind"]: s for s in staff[:len(ROLES)] if s["kind"] != "plain"}, "extra": extra}
 
 
 def naive(d: dict) -> dict:
@@ -194,6 +244,9 @@ def acceptable(d: dict) -> bool:
     per = d["by_kind"]["personal"]
     if sum(t["miles"] for t in per["trips"] if t["purpose"] == "Personal" and t["date"].month == 8) < 200:
         return False
+    for per in d["extra"]:  # knobbed clinicians who log personal errands (empty at the defaults)
+        if per["kind"] == "personal" and sum(t["miles"] for t in per["trips"] if t["purpose"] == "Personal" and t["date"].month == 8) < 200:
+            return False
     if len({s["pay"] for s in d["staff"]}) != len(d["staff"]):
         return False
     return True
@@ -201,8 +254,16 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- emit
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains."""
+    n_odo = sum(s["kind"] == "odometer" for s in d["staff"])
+    return {"rows": sum(len(s["trips"]) for s in d["staff"]), "entities": len(d["staff"]), "rules": 5, "documents": 3 + n_odo,
+            "trap_instances": {"odometer": n_odo, "personal": sum(s["kind"] == "personal" for s in d["staff"]),
+                               "commuter": 1, "roundtrip": 1}}
+
+
+def emit(seed: int, naive_dir: str | None, knobs=KNOBS.defaults(), out: str | None = None) -> None:
+    d = build(seed, knobs)
     header = ["employee_id", "employee", "reimbursable_miles", "reimbursement"]
     if naive_dir:
         nv = naive(d)
@@ -210,7 +271,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
         write_csv(os.path.join(naive_dir, "reimbursement.csv"), header,
                   [[s["id"], s["name"], f"{nv[s['id']][0] / 10:.1f}", f"{nv[s['id']][1] / 100:.2f}"] for s in d["staff"] if s["kind"] != "odometer"])
         return
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
     r = rng(seed + 3)
     k = d["by_kind"]
     odo = k["odometer"]
@@ -218,14 +279,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     # ---- workspace: staff sheet
     write_xlsx(os.path.join(ws, "field_staff.xlsx"), {"Staff": {
         "header": ["Employee ID", "Name", "Role", "Home to office (miles, one way)", "Logs mileage in"],
-        "rows": [[s["id"], f"{s['last']}, {s['first']}", s["role"], s["commute"] / 10, "Paper odometer sheet" if s is odo else "MileTrack app"]
+        "rows": [[s["id"], f"{s['last']}, {s['first']}", s["role"], s["commute"] / 10, "Paper odometer sheet" if s["kind"] == "odometer" else "MileTrack app"]
                  for s in sorted(d["staff"], key=lambda s: s["last"])],
         "widths": {"B": 22, "D": 30, "E": 22}}}, creator="HR")
 
     # ---- workspace: app export (everyone but the odometer logger)
     rows = []
     for s in d["staff"]:
-        if s is odo:
+        if s["kind"] == "odometer":
             continue
         for t in s["trips"]:
             hh, mm = divmod(t["time"], 60)
@@ -237,22 +298,28 @@ def emit(seed: int, naive_dir: str | None) -> None:
               [[x[0].strftime("%m/%d/%Y")] + x[1:8] for x in rows],
               preamble=["MileTrack - Trips export", "Account: Brightside Home Health | Range: 07/27/2026 - 09/04/2026"], bom=True)
 
-    # ---- workspace: odometer sheet for one therapist
-    odo_rows = []
-    reading = r.randint(41200, 68800) * 10
-    for t in sorted(odo["trips"], key=lambda t: t["date"]):
-        if t["rt"]:
-            raise AssertionError("odometer logger has no round-trip lines")
-        start = reading
-        end = start + t["miles"]
-        odo_rows.append([t["date"], t["from"], t["to"], t["purpose"], start / 10, end / 10])
-        reading = end + (r.randint(0, 60) if r.random() < 0.3 else 0)
-    write_xlsx(os.path.join(ws, f"odometer_log_{odo['last'].lower()}_jul-sep.xlsx"), {"Log": {
-        "merged_title": f"{odo['name']} - vehicle log (2019 Subaru Outback)",
-        "header": ["Date", "From", "To", "Purpose", "Odometer start", "Odometer end"], "rows": odo_rows,
-        "number_formats": {"E": "0.0", "F": "0.0"}, "widths": {"B": 24, "C": 24, "D": 26}}}, creator=odo["name"])
+    # ---- workspace: odometer sheet for one therapist (and one per knobbed paper logger, after the published draws)
+    for oi, o in enumerate([odo] + [x for x in d["extra"] if x["kind"] == "odometer"]):
+        odo_rows = []
+        reading = r.randint(41200, 68800) * 10
+        for t in sorted(o["trips"], key=lambda t: t["date"]):
+            if t["rt"]:
+                raise AssertionError("odometer logger has no round-trip lines")
+            start = reading
+            end = start + t["miles"]
+            odo_rows.append([t["date"], t["from"], t["to"], t["purpose"], start / 10, end / 10])
+            reading = end + (r.randint(0, 60) if r.random() < 0.3 else 0)
+        write_xlsx(os.path.join(ws, f"odometer_log_{o['last'].lower()}_jul-sep.xlsx"), {"Log": {
+            "merged_title": f"{o['name']} - vehicle log ({VEHICLES[oi]})",
+            "header": ["Date", "From", "To", "Purpose", "Odometer start", "Odometer end"], "rows": odo_rows,
+            "number_formats": {"E": "0.0", "F": "0.0"}, "widths": {"B": 24, "C": 24, "D": 26}}}, creator=o["name"])
 
     # ---- workspace: the controller's emails
+    ex_odo = [x for x in d["extra"] if x["kind"] == "odometer"]
+    ex_per = [x for x in d["extra"] if x["kind"] == "personal"]
+    odo_line = (f"{odo['first']} still logs on an odometer sheet instead of the app; that workbook is in the folder too." if not ex_odo else
+                f"{', '.join(x['name'] for x in [odo] + ex_odo[:-1])} and {ex_odo[-1]['name']} still log on odometer sheets instead of "
+                "the app; those workbooks are in the folder too.")
     write_email_thread(os.path.join(ws, "mileage_policy_emails.txt"), [
         {"from": "Denise Park <dpark@brightsidehomehealth.org>", "to": "Field staff <field@brightsidehomehealth.org>",
          "date": "Mon, 6 Jan 2025 08:05", "subject": "Mileage rate for 2025",
@@ -272,8 +339,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
                   "Denise")},
         {"from": "Denise Park <dpark@brightsidehomehealth.org>", "to": "you", "date": "Fri, 4 Sep 2026 17:10",
          "subject": "August mileage",
-         "body": (f"Can you run August mileage for payroll? MileTrack exported a bit wide, I only want August trips. {odo['first']} still "
-                  "logs on an odometer sheet instead of the app; that workbook is in the folder too.\n\n"
+         "body": (f"Can you run August mileage for payroll? MileTrack exported a bit wide, I only want August trips. {odo_line}\n\n"
                   "I need a file with one line per clinician: employee ID, name, reimbursable miles, and the reimbursement in dollars "
                   "(their August miles times the rate, rounded to the cent).\n\nDenise")}])
 
@@ -281,17 +347,26 @@ def emit(seed: int, naive_dir: str | None) -> None:
     body = [[s["id"], s["name"], f"{s['miles'] / 10:.1f}", f"{s['pay'] / 100:.2f}"] for s in sorted(d["staff"], key=lambda s: s["id"])]
     write_csv(os.path.join(ref, "reimbursement.csv"), header, body)
     write_csv(os.path.join(sol, "reimbursement.csv"), header, body)
-    write_json(os.path.join(ref, "notes.json"), {"rate": str(RATE), "kinds": {kk: s["id"] for kk, s in k.items()},
-                                                  "total_reimbursement": f"{sum(s['pay'] for s in d['staff']) / 100:.2f}"})
-    pins = [k["personal"]["id"], k["commuter"]["id"], k["roundtrip"]["id"], odo["id"]]
+    notes = {"rate": str(RATE), "kinds": {kk: s["id"] for kk, s in k.items()},
+             "total_reimbursement": f"{sum(s['pay'] for s in d['staff']) / 100:.2f}"}
+    if d["extra"]:
+        notes["extra"] = {x["id"]: x["kind"] for x in d["extra"]}
+    write_json(os.path.join(ref, "notes.json"), notes)
+    pins = [k["personal"]["id"], k["commuter"]["id"], k["roundtrip"]["id"], odo["id"]] + [x["id"] for x in ex_per + ex_odo]
     per, com, rt = k["personal"], k["commuter"], k["roundtrip"]
-    write_task_yaml(HERE, {
+    # With more planted instances the trap sentences name them all (the sentences are unchanged at the defaults).
+    more_per = "; so do " + " and ".join(f"{x['name']} ({x['id']})" for x in ex_per) if ex_per else ""
+    odo_who = (f"{odo['name']} ({odo['id']}) is not in the app export at all; those miles are odometer end less start in a separate workbook, "
+               "which also holds" if not ex_odo else
+               ", ".join(f"{x['name']} ({x['id']})" for x in [odo] + ex_odo[:-1]) + f" and {ex_odo[-1]['name']} ({ex_odo[-1]['id']}) are "
+               "not in the app export at all; their miles are odometer end less start in a separate workbook each, which also holds")
+    spec = {
         "id": "mileage-reimbursement", "track": "desk", "category": "bookkeeping",
         "title": "August mileage reimbursement for the field staff",
         "ask": "Denise needs August mileage worked out for payroll. Everything is in the folder, including her emails about the policy. Save it as reimbursement.csv.\n",
         "followup": None, "timeout_s": 1200,
         "traps": [
-            f"{per['name']} ({per['id']}) logs weekend and evening personal errands in the app; they come out entirely "
+            f"{per['name']} ({per['id']}) logs weekend and evening personal errands in the app{more_per}; they come out entirely "
             "(check: reimbursement per clinician)",
             "home-to-office and office-to-home legs are commuting and pay nothing, and the first business leg out of home and the last "
             f"one back each lose the clinician's one-way commute, never below zero; {com['name']} ({com['id']}) has a "
@@ -299,8 +374,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "(checks: reimbursable miles; reimbursement per clinician)",
             f"round-trip lines carry the one-way distance and count twice; {rt['name']} ({rt['id']}) has daily supply runs and Saturday "
             "home-to-patient round trips where both legs lose the commute (check: reimbursement per clinician)",
-            f"{odo['name']} ({odo['id']}) is not in the app export at all; those miles are odometer end less start in a separate workbook, "
-            "which also holds personal trips and July and September lines (checks: one row per clinician; reimbursement per clinician)",
+            f"{odo_who} personal trips and July and September lines (checks: one row per clinician; reimbursement per clinician)",
             "the 2025 email says 70 cents; the December 2025 email sets 72.5 cents for 2026 (check: reimbursement per clinician)",
             "the app export runs 27 July to 4 September, carries a two-line preamble and a BOM, and upper-cases some driver names "
             "(checks: reimbursable miles; row count)",
@@ -317,7 +391,8 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "key": "employee_id", "columns": ["reimbursement"], "numeric": True, "tolerance": 0.01, "min_accuracy": 1.0,
              "must_match_keys": pins},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "mileage-reimbursement", seed, knobs))
     print(f"seed={seed}", [(s["id"], s["kind"], s["commute"], s["miles"] / 10, s["pay"] / 100) for s in d["staff"]])
 
 
@@ -325,10 +400,16 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_knob_args(ap, KNOBS)
     a_ = ap.parse_args()
+    knobs = parse_knob_args(a_, KNOBS)
     for attempt in range(400):
-        if acceptable(build(a_.seed * 1000 + attempt)):
+        d_ = build(a_.seed * 1000 + attempt, knobs)
+        if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a_.seed * 1000 + attempt, a_.naive)
+    if a_.describe:
+        print(describe_json("mileage-reimbursement", a_.seed * 1000 + attempt, knobs, counts(d_, knobs)))
+        raise SystemExit(0)
+    emit(a_.seed * 1000 + attempt, a_.naive, knobs, a_.out)

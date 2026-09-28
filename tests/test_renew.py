@@ -58,7 +58,7 @@ class Saturation(unittest.TestCase):
     def test_published_ledger(self):
         rows = renew.saturation_table(renew.LEDGER, str(DESK), 1)
         self.assertEqual(sum(r['class'] == 'saturated' for r in rows), 116)   # CONTEXT section 4
-        self.assertEqual({r['route'] for r in rows} - {'switches+seed', 'seed (shadow copy)'}, set())
+        self.assertEqual({r['route'] for r in rows} - {'switches+seed', 'knobs+seed', 'seed (shadow copy)'}, set())
 
     def test_routes(self):
         self.assertEqual(renew.renewal_route(str(DESK / 'project-margin')), 'switches+seed')

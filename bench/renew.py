@@ -4,7 +4,7 @@ variants at matched predicted difficulty.
 
     renew.py saturation [--ledger L] [--near-max-fails 1] [--json OUT]
     renew.py search  --task project-margin --root DIR [--seeds default,1,2,3,4] [--design single]
-                     [--knob NAME=V1,V2 ...] [--tol 0.10]
+                     [--knob NAME=V1,V2 ...] [--knob-design single+max] [--tol 0.10]
     renew.py seal    --task project-margin [--task T2 ...] --root DIR --n 3 [--tol 0.10] [--seeds S1,S2,...]
     renew.py check   --manifest DIR/manifest.json
     (then)   bench/envelope.py register DIR/predictions/<task>.json --registry <committed path>
@@ -18,18 +18,23 @@ required check failed in any attempt of any system. It is NEAR-SATURATED when it
 Settings. A setting is (seed, switchable traps off, knob values). Seeds work on every generator: retrofitted ones
 write to --out; the others are run from a private copy of the task folder (a "shadow" copy, with tasks/lib linked)
 so the published folder is never written. Trap switches come from `gen.py --list-traps`. Knobs are any other
-flag a generator's --help lists; `--knob` refuses a flag the generator does not have. No generator exposes a
-size / rule / noise knob today (docs/renewable.md lists the ones that would help).
+flag a generator's --help lists; `--knob` refuses a flag the generator does not have. Generators with declared
+difficulty knobs (tasks/lib/bizgen/knobs.py: size, rules, noise, trap count, cross-document) also answer
+`--list-knobs` and `--describe`; without --knob, search enumerates their declared levels (--knob-design).
 
 Predicted difficulty of a setting, relative to the canonical setting (published seed, every trap on), in logits,
 positive = harder:
 
-    delta = sum_k w_k (x_k(setting) - x_k(canonical))  -  sum_{j switched off} e_j
+    delta = sum_k w_k (x_k(setting) - x_k(canonical))  -  sum_{j switched off} e_j  +  sum_m s_m * u_m
 
 w_k are bench/difficulty.py's task-feature weights (LLTM fit on the ledger; task-clustered bootstrap draws) over
 every feature except the between-task trap count; e_j ~ Normal(0.5, 1.0) is the per-trap effect prior
-bench/envelope.py uses before any variant has been run. Removing a pitfall never adds one (authoring rule 6), so a
-setting with a trap off is never proposed as harder, whatever the model says. Per system s,
+bench/envelope.py uses before any variant has been run. s_m is how many declared levels knob m sits above its default
+(the published task) and u_m ~ HalfNormal with mean 0.5 is the per-level prior: the same size as a trap's prior, with
+the sign fixed by the declaration that each level is harder than the last (bizgen.knobs; the content count it names is
+checked to grow by bench/validate_knobs.py). It is a design assumption until variants at that level have been run.
+Removing a pitfall never adds one (authoring rule 6), so a setting with a trap off, or a knob below its default, is
+never proposed as harder, whatever the model says. Per system s,
 
     P(pass) = sigmoid(logit p_s - delta),   p_s ~ Beta(passes + 0.5, fails + 0.5) on the published task
 
@@ -71,12 +76,14 @@ from difficulty import LedgerModel, task_features  # noqa: E402
 ROOT = env.ROOT
 TASKS = env.TASKS
 LEDGER = os.path.join(ROOT, "results", "latest", "attempts.jsonl")
-RESERVED = {"help", "seed", "out", "traps-off", "mutant", "list-traps", "naive"}
+RESERVED = {"help", "seed", "out", "traps-off", "mutant", "list-traps", "naive", "list-knobs", "describe"}
 EXCLUDED_FEATURES = {"traps"}  # between-task correlate, not a within-task effect: trap switches use the prior
 XLSX_TYPES = {"xlsx_value_present", "xlsx_no_errors", "xlsx_has_formulas", "custom", "plan_feasible"}
 ENV_UNVERIFIED = "UNVERIFIED-XLSX (env)"
 SEED_RANGE = (10_000, 4_000_000)  # generators draw build(seed * 1000 + attempt); keep that under 2**32
 DRAWS = 4000
+KNOB_STEP_MEAN = 0.5  # logit per declared knob level: HalfNormal(scale = 0.5 * sqrt(pi / 2)), mean 0.5
+ROUTES = ("switches+knobs+seed", "switches+seed", "knobs+seed", "seed (shadow copy)", "none")
 
 
 def gen_python() -> str:
@@ -118,8 +125,12 @@ def renewal_route(task_dir: str) -> str:
         return "none"
     with open(g) as f:
         src = f.read()
+    if "add_trap_args" in src and "add_knob_args" in src:
+        return "switches+knobs+seed"
     if "add_trap_args" in src:
         return "switches+seed"
+    if "add_knob_args" in src:
+        return "knobs+seed"
     if re.search(r"""add_argument\(\s*['"]--seed|argparse_seed\(""", src):
         return "seed (shadow copy)"
     return "none"
@@ -146,13 +157,14 @@ def cmd_saturation(a) -> int:
          f"(attempts per task: {', '.join(f'{k} x{v}' for k, v in sorted(n_att.items()))})\n",
          "saturated = every attempt passed (no required check failed in any attempt); "
          f"near-saturated = not saturated, at most {a.near_max_fails} failed attempt(s).\n",
-         "| class | tasks | switches+seed | seed (shadow copy) | none |", "|---|---|---|---|---|"]
+         "| class | tasks | " + " | ".join(ROUTES) + " |", "|---|---|" + "---|" * len(ROUTES)]
     for c in ("saturated", "near-saturated", "informative", "never-passed"):
-        L.append(f"| {c} | {by[c]} | {routes[(c, 'switches+seed')]} | {routes[(c, 'seed (shadow copy)')]} | "
-                 f"{routes[(c, 'none')]} |")
+        L.append(f"| {c} | {by[c]} | " + " | ".join(str(routes[(c, x)]) for x in ROUTES) + " |")
     for c in ("saturated", "near-saturated"):
-        sw = [r["task"] for r in rows if r["class"] == c and r["route"] == "switches+seed"]
+        sw = [r["task"] for r in rows if r["class"] == c and r["route"].startswith("switches")]
         L.append(f"\n{c} with trap switches ({len(sw)}): {', '.join(sw) or '-'}")
+        kn = [r["task"] for r in rows if r["class"] == c and "knobs" in r["route"]]
+        L.append(f"{c} with difficulty knobs ({len(kn)}): {', '.join(kn) or '-'}")
     print("\n".join(L))
     if a.json:
         env.write_json(a.json, {"kind": "renewal-saturation", "ledger": os.path.relpath(a.ledger, ROOT),
@@ -173,7 +185,9 @@ class Generator:
         if self.route == "none":
             raise SystemExit(f"{self.task}: generator takes no --seed; it cannot be renewed without a new flag")
         self._scratch = scratch or tempfile.mkdtemp(prefix=f"renew-{self.task}-")
-        self.decl = env.list_traps(self.gen) if self.route == "switches+seed" else None
+        self.writes_out = self.route != "seed (shadow copy)"
+        self.decl = env.list_traps(self.gen) if self.route.startswith("switches") else None
+        self.knob_decl = self._list_knobs() if "knobs" in self.route else None
         self.flags = self._flags()
 
     def _shadow(self) -> str:
@@ -193,10 +207,24 @@ class Generator:
         if r.returncode != 0:
             raise RuntimeError(f"{self.task}: gen.py {' '.join(args)} failed:\n{r.stderr[-1500:]}")
 
+    def _list_knobs(self) -> dict:
+        r = subprocess.run([gen_python(), self.gen, "--list-knobs"], capture_output=True, text=True, cwd=self.dir)
+        if r.returncode != 0:
+            raise SystemExit(f"{self.task}: gen.py --list-knobs failed\n{r.stderr[-800:]}")
+        return json.loads(r.stdout)
+
+    def describe(self, seed: int | None = None, knobs: dict | None = None) -> dict | None:
+        """The generator's --describe content counts for a setting (knob generators only; nothing is written)."""
+        if not self.knob_decl:
+            return None
+        r = subprocess.run([gen_python(), self.gen, *self._args(seed, knobs), "--describe"], capture_output=True,
+                           text=True, cwd=self.dir)
+        return json.loads(r.stdout)["counts"] if r.returncode == 0 else None
+
     def _flags(self) -> set[str]:
         """Long flags from --help. Run in the shadow copy for a generator that is not known to parse arguments
         before writing (argparse exits on --help first, but the published folder is never the place to find out)."""
-        if self.route == "switches+seed":
+        if self.writes_out:
             gen, cwd = self.gen, self.dir
         else:
             cwd = self._shadow(); gen = os.path.join(cwd, "gen.py")
@@ -206,16 +234,81 @@ class Generator:
     def knobs(self) -> list[str]:
         return sorted(self.flags - RESERVED)
 
-    def generate(self, out: str, seed: int | None = None, off=(), knobs: dict | None = None) -> None:
+    def _args(self, seed: int | None, knobs: dict | None) -> list[str]:
         args = [] if seed is None else ["--seed", str(seed)]
         for k, v in (knobs or {}).items():
             if k not in self.flags or k in RESERVED:
                 raise SystemExit(f"{self.task}: generator has no --{k} knob (knobs: {self.knobs() or 'none'})")
             args += [f"--{k}", str(v)]
+        return args
+
+    def knob_grid(self, design: str) -> list[dict]:
+        """Settings of the declared knobs, as {flag: value}: `single` moves one knob to each of its levels; `max` adds
+        every knob at its top level; `full` is the product of all levels; `none` keeps the defaults only."""
+        if not self.knob_decl or design == "none":
+            return [{}]
+        ks = self.knob_decl["knobs"]
+
+        def flags(vals: dict) -> dict:
+            out, tc = {}, []
+            for k in ks:
+                if k["name"] in vals:
+                    if k["kind"] == "trap-count":
+                        tc.append(f"{k['trap']}={vals[k['name']]}")
+                    else:
+                        out[k["flag"].lstrip("-")] = vals[k["name"]]
+            if tc:
+                out["trap-count"] = "+".join(tc)
+            return out
+        parts = set(design.split("+"))
+        if not parts <= {"single", "max", "full"}:
+            raise SystemExit(f"--knob-design {design!r}: use none, single, max, single+max or full")
+        grid = [{}]
+        if "full" in parts:
+            for combo in itertools.product(*[k["levels"] for k in ks]):
+                vals = {k["name"]: v for k, v in zip(ks, combo) if v != k["default"]}
+                if vals:
+                    grid.append(flags(vals))
+        if "single" in parts:
+            grid += [flags({k["name"]: v}) for k in ks for v in k["levels"][1:]]
+        if "max" in parts and len(ks) > 1:
+            grid.append(flags({k["name"]: k["levels"][-1] for k in ks}))
+        seen, out = set(), []
+        for g in grid:
+            key = tuple(sorted((a, str(b)) for a, b in g.items()))
+            if key not in seen:
+                seen.add(key); out.append(g)
+        return out
+
+    def knob_steps(self, knobs: dict | None) -> dict[str, float]:
+        """{declared knob: declared levels above its default} for a {flag: value} setting."""
+        if not self.knob_decl or not knobs:
+            return {}
+        by_flag = {k["flag"].lstrip("-"): k for k in self.knob_decl["knobs"] if k["kind"] != "trap-count"}
+        by_trap = {k["trap"]: k for k in self.knob_decl["knobs"] if k["kind"] == "trap-count"}
+        vals = []
+        for f, v in knobs.items():
+            if f == "trap-count":
+                for part in str(v).replace(",", "+").split("+"):
+                    t, _, n = part.partition("=")
+                    if t.strip() in by_trap:
+                        vals.append((by_trap[t.strip()], n))
+            elif f in by_flag:
+                vals.append((by_flag[f], v))
+        out = {}
+        for k, v in vals:
+            x = float(v)
+            out[k["name"]] = round(_steps(k["levels"], x), 6)
+        return {n: s for n, s in out.items() if s}
+
+    def generate(self, out: str, seed: int | None = None, off=(), knobs: dict | None = None) -> None:
+        args = self._args(seed, knobs)
         if os.path.isdir(out):
             shutil.rmtree(out)
-        if self.route == "switches+seed":
+        if self.writes_out:
             if off:
+                if not self.decl:
+                    raise SystemExit(f"{self.task}: no trap switches; only seeds and knobs can vary")
                 args += ["--traps-off", ",".join(sorted(off))]
             self._run(self.gen, args + ["--out", out], self.dir)
             return
@@ -224,6 +317,19 @@ class Generator:
         d = self._shadow()
         self._run(os.path.join(d, "gen.py"), args, d)
         shutil.copytree(d, out, ignore=shutil.ignore_patterns("__pycache__", "gen.py"))
+
+
+def _steps(levels: list, v: float) -> float:
+    """Declared levels above the default (levels[0]); linear between levels, negative below the default."""
+    L = [float(x) for x in levels]
+    if len(L) == 1:
+        return v - L[0]
+    if v <= L[0]:
+        return (v - L[0]) / (L[1] - L[0])
+    for i, (a, b) in enumerate(zip(L, L[1:])):
+        if v <= b:
+            return i + (v - a) / (b - a)
+    return len(L) - 1 + (v - L[-1]) / (L[-1] - L[-2])
 
 
 def check_root(root: str, tasks_dir: str) -> str:
@@ -280,18 +386,30 @@ class Predictor:
     def features(self, task_dir: str) -> dict:
         return task_features(task_dir)
 
-    def delta(self, feats: dict, canon_feats: dict, n_off: int) -> dict:
+    def delta(self, feats: dict, canon_feats: dict, n_off: int, knob_steps: dict | None = None) -> dict:
         dx = self.model.row(feats) - self.model.row(canon_feats)
         B = self.W @ dx
         draws = B[np.arange(DRAWS) % len(B)]
+        model_est = float(self.w @ dx)
         if n_off:
             mu, sd = self.effect_prior
             draws = draws - self.rng.normal(mu, sd, size=(DRAWS, n_off)).sum(1)
-        est = float(self.w @ dx) - n_off * self.effect_prior[0]
+        est = model_est - n_off * self.effect_prior[0]
+        knob_est = 0.0
+        for name, s in sorted((knob_steps or {}).items()):
+            # one draw per knob, scaled by its level count: levels of one knob are assumed to add alike
+            u = np.abs(self.rng.normal(0.0, KNOB_STEP_MEAN * np.sqrt(np.pi / 2), size=DRAWS))
+            draws = draws + s * u
+            knob_est += s * KNOB_STEP_MEAN
+        est += knob_est
         lo, hi = np.percentile(draws, [5, 95])
         changed = [n for n, v in zip(self.model.names, dx) if abs(v) > 1e-12 and n not in EXCLUDED_FEATURES]
-        return {"estimate": round(est, 4), "lo90": round(float(lo), 4), "hi90": round(float(hi), 4),
-                "features_changed": changed, "_draws": draws}
+        out = {"estimate": round(est, 4), "lo90": round(float(lo), 4), "hi90": round(float(hi), 4),
+               "features_changed": changed, "_draws": draws}
+        if knob_steps:
+            out.update({"model_part": round(model_est, 4), "knob_prior_part": round(knob_est, 4),
+                        "knob_steps": dict(sorted(knob_steps.items()))})
+        return out
 
     def anchor(self, task: str, system: str) -> tuple[int, int]:
         return self.counts[(task, system, True)], self.counts[(task, system, False)]
@@ -318,15 +436,20 @@ class Predictor:
         mu, sd = self.effect_prior
         doc = {"kind": "envelope-predictions", "task": task, "manifest_sha256": env.sha_file(manifest_path),
                "created_utc": env.utcnow(), "systems": systems, "k": k,
-               "method": "renew: ledger anchor + task-feature delta + trap prior",
+               "method": "renew: ledger anchor + task-feature delta + trap prior + knob prior",
                "method_note": (
                    "Per system, the pass rate on the published task (every trap on, published seed) is a Jeffreys "
                    "Beta(passes+0.5, fails+0.5) posterior from the ledger. A setting moves the logit by -delta: delta is "
                    "bench/difficulty.py's task-feature weights (two-system LLTM, task-clustered bootstrap draws; the "
                    "between-task trap-count feature left out) applied to the change in task features from the "
                    f"regenerated canonical, plus a Normal({mu}, {sd}) logit cost for each switchable trap switched off "
-                   "(envelope.py's prior). Weak by construction: every feature weight's interval crosses zero."),
-               "effect_prior": {"mean": mu, "sd": sd}, "notes": [],
+                   "(envelope.py's prior), plus, for each declared difficulty knob, its levels above the default times a "
+                   f"HalfNormal logit effect with mean {KNOB_STEP_MEAN} (sign fixed by the knob's declared monotonicity; a "
+                   "design assumption until variants at that level are run). Weak by construction: every feature "
+                   "weight's interval crosses zero."),
+               "effect_prior": {"mean": mu, "sd": sd},
+               "knob_prior": {"per_level": "HalfNormal", "mean": KNOB_STEP_MEAN,
+                              "scale": round(KNOB_STEP_MEAN * float(np.sqrt(np.pi / 2)), 6)}, "notes": [],
                "evidence": {"records": sum(sum(self.anchor(task, s)) for s in systems),
                             "canonical_counts": {s: dict(zip(("pass", "fail"), self.anchor(task, s))) for s in systems},
                             "sources": [os.path.relpath(LEDGER, ROOT)], "synthetic": False},
@@ -426,7 +549,8 @@ def cmd_search(a) -> int:
     offs = env.choose_variants(gen.decl, a.design)[0] if gen.decl and gen.decl.get("switchable") else \
         [{"requested": [], "effective": frozenset()}]
     seeds = parse_seeds(a.seeds)
-    knob_grid = [dict(zip(knobs, vals)) for vals in itertools.product(*knobs.values())] if knobs else [{}]
+    knob_grid = [dict(zip(knobs, vals)) for vals in itertools.product(*knobs.values())] if knobs else \
+        gen.knob_grid(a.knob_design)
     pred = Predictor(a.ledger, a.tasks_dir, boot=a.boot, seed=a.random_seed)
     systems = [s.strip() for s in a.systems.split(",")] if a.systems else pred.systems
     canon_dir, reproduces = reference_canonical(gen, os.path.join(root, ".scratch"))
@@ -445,14 +569,18 @@ def cmd_search(a) -> int:
             for part in ("checks", "reference"):
                 if h[part] != same_seed_ref[key][part]:
                     problems.append(f"{vid}: {part} differs from the same draw with every trap on (answer moved)")
-        d = pred.delta(task_features(out), canon_feats, len(off))
-        eligible = not off
+        steps = gen.knob_steps(kn)
+        d = pred.delta(task_features(out), canon_feats, len(off), steps)
+        below = sorted(n for n, x in steps.items() if x < 0)
+        eligible = not off and not below
         rows.append({"id": vid, "dir": vdir, "seed": seed, "effective_off": off, "knobs": kn,
+                     "knob_steps": steps, "content": gen.describe(seed, kn),
                      "canonical_setting": seed is None and not off and not kn,
                      "predicted_delta": public_delta(d),
                      "harder_eligible": eligible,
                      "harder_ineligible_reason": None if eligible else
-                     "switches a pitfall off (authoring rule 6: removing a pitfall never adds one)",
+                     "switches a pitfall off (authoring rule 6: removing a pitfall never adds one)" if off else
+                     f"knob(s) below the published default: {below}",
                      "credibly_harder": eligible and d["lo90"] > 0,
                      "matched": abs(d["estimate"]) <= a.tol, "sha256": h})
         diff.append({"variant": vid, "dir": vdir, **public_delta(d)})
@@ -464,7 +592,8 @@ def cmd_search(a) -> int:
     man = {"kind": "renewal-search", "task": gen.task, "generator": os.path.relpath(gen.gen, ROOT),
            "generator_sha256": env.sha_file(gen.gen), "route": gen.route, "created_utc": env.utcnow(),
            **env.git_state(), "python": gen_python(), "design": a.design, "seeds": seeds, "knobs": knobs,
-           "available_knobs": gen.knobs(), "tolerance_logit": a.tol,
+           "available_knobs": gen.knobs(), "knob_declaration": gen.knob_decl,
+           "knob_design": None if knobs else (a.knob_design if gen.knob_decl else None), "tolerance_logit": a.tol,
            "traps": gen.decl and {k: gen.decl.get(k, {}) for k in ("switchable", "fixed", "requires")},
            "canonical_reproduces_published": reproduces, "ledger_sha256": env.sha_file(a.ledger),
            "proposal": proposal, "variants": rows, "problems": problems,
@@ -491,8 +620,22 @@ def cmd_search(a) -> int:
                  f"{d['lo90']:+.2f} to {d['hi90']:+.2f} | {', '.join(d['features_changed']) or '-'} | "
                  + " | ".join(f"{pm[(r['id'], s)]:.3f}" for s in systems) + " |")
     if proposal:
-        L.append(f"\nProposed harder setting: {proposal} (delta {harder[0]['predicted_delta']['estimate']:+.3f}, "
-                 f"90% lower bound {harder[0]['predicted_delta']['lo90']:+.3f} > 0).")
+        h0 = harder[0]
+        L.append(f"\nCredibly harder settings (90% lower bound > 0): {len(harder)} of {len(rows)}: "
+                 + ", ".join(r["id"] for r in harder))
+        L.append(f"Proposed harder setting: {proposal} "
+                 f"({','.join(f'{k}={v}' for k, v in h0['knobs'].items()) or 'seed ' + str(h0['seed'])}; "
+                 f"delta {h0['predicted_delta']['estimate']:+.3f}, "
+                 f"90% lower bound {h0['predicted_delta']['lo90']:+.3f} > 0"
+                 + (f"; model part {h0['predicted_delta']['model_part']:+.3f}, knob prior part "
+                    f"{h0['predicted_delta']['knob_prior_part']:+.3f}" if 'model_part' in h0['predicted_delta'] else "")
+                 + ").")
+        L.append("The knob part of delta is the stated per-level prior, not a measurement: register this forecast and "
+                 "run the setting before quoting it (docs/renewable.md).")
+    elif gen.knob_decl:
+        L.append("\nNo credibly harder setting among the settings searched (no 90% interval above zero)" +
+                 (f"; the largest predicted delta is {best['id']} at {best['predicted_delta']['estimate']:+.3f}"
+                  if best else "") + ".")
     else:
         top = (f"; the largest predicted delta among non-canonical settings with every trap on is "
                f"{best['id']} at {best['predicted_delta']['estimate']:+.3f} "
@@ -561,7 +704,7 @@ def cmd_seal(a) -> int:
             reason = None
             if h["workspace"] in seen_ws:
                 reason = "duplicate draw (workspace identical to the published task or an earlier variant)"
-            d = pred.delta(task_features(out), canon_feats, len(off))
+            d = pred.delta(task_features(out), canon_feats, len(off), gen.knob_steps(knobs))
             if reason is None and abs(d["estimate"]) > a.tol:
                 reason = f"difficulty not matched: delta {d['estimate']:+.3f} outside +/-{a.tol}"
             ver = verify(out, cg) if a.verify and reason is None else None
@@ -680,6 +823,8 @@ def main(argv=None) -> int:
     p.add_argument("--task", required=True); p.add_argument("--root", required=True)
     p.add_argument("--seeds", default="default,1,2,3,4", help="comma list; 'default' is the generator's own seed")
     p.add_argument("--design", default="single", help="trap off-sets: single | pairs | full | random:N")
+    p.add_argument("--knob-design", default="single+max",
+                   help="declared knob levels searched when no --knob is given: none | single | max | single+max | full")
     p.set_defaults(fn=cmd_search)
 
     p = sub.add_parser("seal", help="generate sealed variants at matched predicted difficulty"); common(p); model_args(p)

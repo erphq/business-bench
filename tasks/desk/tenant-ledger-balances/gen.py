@@ -2,6 +2,9 @@
 """tenant-ledger-balances: a manufactured-home community's August resident balances and the late fees the software skipped.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-knobs
+    python gen.py --scale 3 --trap-count moveout=5+mailed=4 --out DIR    # a harder task; the answer moves
+    python gen.py --describe [--scale N ...]                               # content counts of this draw
 
 Business: Pine Hollow is a 30-lot manufactured home community. Residents own their homes and rent the lot, and are
 billed lot rent plus water/sewer and trash on the 1st. The property software's late-fee job did not run in August
@@ -31,6 +34,21 @@ from decimal import ROUND_HALF_UP, Decimal
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("scale", "scale", default=1, levels=(1, 2, 3),
+         changes="rows of ten lots in the community (three rows, 30 lots, at 1); new rows have their own vacancies and "
+                 "ordinary residents", measure="entities"),
+    Knob("trap_count.moveout", "trap-count", default=2, levels=(2, 3, 4, 5),
+         changes="residents who moved out in August but were billed a full month (alternately prepaid and paid only on "
+                 "moving out)", measure="trap_instances.moveout"),
+    Knob("trap_count.mailed", "trap-count", default=1, levels=(1, 2, 3, 4),
+         changes="mailed checks received by the 4th but posted in the ledger after the grace period",
+         measure="trap_instances.mailed"),
+)
+NUM = {2: "two", 3: "three", 4: "four", 5: "five"}
 
 D = Decimal
 TRASH = D("24.00")
@@ -49,7 +67,7 @@ ROLES = ["on_5th", "on_6th", "mailed_posted_late", "partial", "prior_balance", "
          "credit_forward", "received_sept", "received_aug31"]
 
 
-def build(seed: int) -> dict:
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
     lots = [f"{row}-{n:02d}" for row in "ABC" for n in range(1, 11)]
     vacant = set(r.sample(lots, 4))
@@ -100,6 +118,50 @@ def build(seed: int) -> dict:
             p(full, date(2026, 8, 31), posted=date(2026, 9, 2), method="Drop box")
         residents.append(res)
 
+    # knob-only content, drawn from its own stream after every default draw (none of this runs at the defaults)
+    if not knobs.canonical:
+        rk = rng(seed + 5_000_017)
+        # more trap instances: ordinary residents re-planned as move-outs or mailed checks
+        plain = [x for x in residents if x["role"] == "plain"]
+        conv = rk.sample(plain, knobs.trap_count("moveout") - 2 + knobs.trap_count("mailed") - 1)
+        for i, res in enumerate(conv):
+            full = res["rent"] + res["water"] + TRASH
+            res["extra"], res["pays"] = True, []
+            if i < knobs.trap_count("moveout") - 2:
+                res["role"] = "moveout_paid" if i % 2 == 0 else "moveout_unpaid"
+                if res["role"] == "moveout_paid":
+                    res["move_out"] = date(2026, 8, rk.randint(9, 17))
+                    res["pays"].append({"amount": c2(full), "received": date(2026, 8, rk.randint(1, 3)), "method": "ACH"})
+                else:
+                    res["move_out"] = date(2026, 8, rk.randint(18, 26))
+            else:
+                res["role"] = "mailed_posted_late"
+                res["pays"].append({"amount": c2(full), "received": date(2026, 8, rk.randint(2, 4)), "method": "Mailed check"})
+                res["pays"][-1]["posted"] = date(2026, 8, rk.randint(6, 11))
+            for x in res["pays"]:
+                x.setdefault("posted", x["received"])
+        # more lots: new rows of ten with their own vacancies and ordinary residents
+        new_lots = [f"{row}-{n:02d}" for row in "DEFGHI"[:3 * (knobs["scale"] - 1)] for n in range(1, 11)]
+        if new_lots:
+            new_vac = set(rk.sample(new_lots, 4 * (knobs["scale"] - 1)))
+            vacant |= new_vac
+            seen = {x["name"] for x in residents}
+            for lot in new_lots:
+                if lot in new_vac:
+                    continue
+                while True:
+                    f, l = person(rk)
+                    if f"{f} {l}" not in seen:
+                        break
+                seen.add(f"{f} {l}")
+                rent, water = D(rk.choice([545, 565, 585, 610, 635, 660])), cents(rk, 38, 92)
+                full = rent + water + TRASH
+                received = date(2026, 8, rk.randint(1, 4))
+                residents.append({"lot": lot, "name": f"{f} {l}", "rent": rent, "water": water, "role": "plain", "bf": D("0.00"),
+                                  "move_out": None, "move_in": date(rk.randint(2012, 2025), rk.randint(1, 12), rk.randint(1, 28)),
+                                  "pays": [{"amount": c2(full), "received": received, "posted": received,
+                                            "method": rk.choice(["ACH", "Check", "Money order"])}]})
+
     # truth
     for res in residents:
         days = 31 if res["move_out"] is None else res["move_out"].day
@@ -120,7 +182,7 @@ def build(seed: int) -> dict:
 
 
 def acceptable(d: dict) -> bool:
-    by = {x["role"]: x for x in d["residents"]}
+    by = {x["role"]: x for x in d["residents"] if "extra" not in x}
     if by["prior_balance"]["fee"] != D("15.00") or by["prior_balance"]["unpaid_rent"] * D("0.10") >= 15:
         return False
     if by["partial"]["fee"] <= D("15.00"):
@@ -137,8 +199,17 @@ def acceptable(d: dict) -> bool:
     return True
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains."""
+    res = d["residents"]
+    return {"rows": sum(3 + (x["bf"] != 0) + len(x["pays"]) for x in res), "entities": len(res), "rules": 5, "documents": 4,
+            "vacant": len(d["vacant"]),
+            "trap_instances": {"moveout": sum(x["move_out"] is not None for x in res),
+                               "mailed": sum(x["role"] == "mailed_posted_late" for x in res)}}
+
+
+def emit(seed: int, naive_dir: str | None, knobs=KNOBS.defaults(), out: str | None = None) -> None:
+    d = build(seed, knobs)
     header = ["lot", "resident", "late_fee", "balance"]
     if naive_dir:
         # posted dates, 10% of the full rent for anyone posted after the 5th, no proration, every payment in the export
@@ -151,8 +222,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
             rows.append([x["lot"], x["name"], f"{fee:.2f}", f"{bal:.2f}"])
         write_csv(os.path.join(naive_dir, "tenant_balances.csv"), header, rows)
         return
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
     r = rng(seed + 17)
+    ex = [x for x in d["residents"] if "extra" in x]  # knobbed trap instances (none at the defaults)
+    n_out = NUM[2 + sum(x["move_out"] is not None for x in ex)]
 
     led = []
     for x in d["residents"]:
@@ -200,10 +273,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_email_thread(os.path.join(ws, "email_from_denise.txt"), [
         {"from": "Denise Moreau <office@pinehollowcommunity.com>", "to": "bookkeeper@pinehollowcommunity.com", "date": "Thu, 3 Sep 2026 17:20",
          "subject": "August balances - late fees did not run",
-         "body": ("The ledger upgrade switched off automatic late fees for all of August, and the two move-outs were billed a full month "
+         "body": (f"The ledger upgrade switched off automatic late fees for all of August, and the {n_out} move-outs were billed a full month "
                   "anyway. The owners want every resident's balance as of August 31 with the correct late fee included, following section 4 "
                   "of the rules.\n\n"
-                  "Please send tenant_balances.csv with one row per resident who lived here in August (including the two who moved out): "
+                  f"Please send tenant_balances.csv with one row per resident who lived here in August (including the {n_out} who moved out): "
                   "lot, resident, late_fee and balance at August 31. Show a credit as a negative number.\n\nDenise")}])
 
     rows = [[x["lot"], x["name"], f"{x['fee']:.2f}", f"{x['balance']:.2f}"] for x in d["residents"]]
@@ -211,9 +284,25 @@ def emit(seed: int, naive_dir: str | None) -> None:
         write_csv(os.path.join(base, "tenant_balances.csv"), header, rows)
     write_json(os.path.join(ref, "notes.json"), {x["lot"]: {"role": x["role"], "rent_due": f"{x['rent_due']:.2f}", "unpaid_rent_after_5th":
                                                            f"{x['unpaid_rent']:.2f}"} for x in d["residents"]})
-    by = {x["role"]: x for x in d["residents"]}
+    by = {x["role"]: x for x in d["residents"] if "extra" not in x}
     L = lambda k: by[k]["lot"]
-    write_task_yaml(HERE, {
+    # With more planted instances the trap sentences name them all (the sentences are unchanged at the defaults).
+    ex_mail = [x for x in ex if x["role"] == "mailed_posted_late"]
+    ex_out = [x for x in ex if x["move_out"] is not None]
+    more_mail = ("; so were " + " and ".join(f"lot {x['lot']}'s (received {x['pays'][0]['received'].isoformat()})" for x in ex_mail)
+                 if ex_mail else "")
+    more_out = ("(so did " + "; ".join(
+        f"lot {x['lot']}, moved out on {x['move_out'].isoformat()}, which " + ("had prepaid" if x["role"] == "moveout_paid" else
+                                                                              "paid its prorated rent only on moving out")
+        for x in ex_out) + ") " if ex_out else "")
+    vac_n = "four" if len(d["vacant"]) == 4 else str(len(d["vacant"]))
+    fee_keys = [L(k) for k in ("on_5th", "on_6th", "mailed_posted_late", "prior_balance", "partial", "utilities_unpaid",
+                               "moveout_unpaid", "received_aug31")]
+    bal_keys = [L(k) for k in ("moveout_paid", "moveout_unpaid", "credit_forward", "received_sept", "received_aug31",
+                               "utilities_unpaid", "prior_balance")]
+    fee_keys += [x["lot"] for x in ex if x["role"] in ("mailed_posted_late", "moveout_unpaid")]
+    bal_keys += [x["lot"] for x in ex_out]
+    spec = {
         "id": "tenant-ledger-balances", "track": "desk", "category": "bookkeeping",
         "title": "August resident balances with late fees",
         "ask": "The late fees did not run in August and the owners want everyone's balance. Denise's email and the community rules explain it. Save it as tenant_balances.csv.\n",
@@ -222,7 +311,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             f"lot {L('on_5th')} paid in the drop box on 5 August, which is on time; lot {L('on_6th')} paid in full on the 6th and owes "
             "10% of its lot rent (check: late fee per lot)",
             f"lot {L('mailed_posted_late')}'s mailed check was received on {by['mailed_posted_late']['pays'][0]['received'].isoformat()} but "
-            "posted days later; judging by the posted date charges a fee the rules do not allow (check: late fee per lot)",
+            f"posted days later{more_mail}; judging by the posted date charges a fee the rules do not allow (check: late fee per lot)",
             f"lot {L('prior_balance')} carried {by['prior_balance']['bf']:,.2f} from July and paid exactly the lot rent on time; the payment "
             f"clears July first, so {by['prior_balance']['unpaid_rent']:,.2f} of August rent is unpaid after the 5th and the $15.00 "
             "minimum applies (check: late fee per lot)",
@@ -233,12 +322,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
             f"lots {L('moveout_paid')} and {L('moveout_unpaid')} moved out on {by['moveout_paid']['move_out'].isoformat()} and "
             f"{by['moveout_unpaid']['move_out'].isoformat()} but were billed a full month: {L('moveout_paid')} had prepaid and is owed a "
             f"credit, and {L('moveout_unpaid')} paid its prorated rent only on moving out, so its late fee is 10% of the prorated rent "
-            "(checks: balance per lot; late fee per lot)",
+            f"{more_out}(checks: balance per lot; late fee per lot)",
             f"lot {L('received_aug31')}'s payment was received on 31 August and posted in September, so it counts for August, while lot "
             f"{L('received_sept')}'s was received on 1 September and does not; lot {L('credit_forward')} carries a July credit "
             "(check: balance per lot)",
             "the ledger export runs to 3 September under a three-line preamble with a BOM and CRLF endings, credits sit in the Payment "
-            "column, and the roster writes rent as '$585.00/mo' and lists four vacant lots (check: balance per lot)",
+            f"column, and the roster writes rent as '$585.00/mo' and lists {vac_n} vacant lots (check: balance per lot)",
         ],
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "tenant_balances.csv", "columns": header},
@@ -246,14 +335,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "csv_row_count", "name": "row count", "path": "tenant_balances.csv", "equals_ref": "tenant_balances.csv"},
             {"type": "csv_values_match", "name": "late fee per lot", "path": "tenant_balances.csv", "ref": "tenant_balances.csv", "key": "lot",
              "columns": ["late_fee"], "numeric": True, "tolerance": 0.01, "min_accuracy": 1.0,
-             "must_match_keys": [L(k) for k in ("on_5th", "on_6th", "mailed_posted_late", "prior_balance", "partial", "utilities_unpaid",
-                                                 "moveout_unpaid", "received_aug31")]},
+             "must_match_keys": fee_keys},
             {"type": "csv_values_match", "name": "balance per lot", "path": "tenant_balances.csv", "ref": "tenant_balances.csv", "key": "lot",
              "columns": ["balance"], "numeric": True, "tolerance": 0.01, "min_accuracy": 1.0,
-             "must_match_keys": [L(k) for k in ("moveout_paid", "moveout_unpaid", "credit_forward", "received_sept", "received_aug31",
-                                                 "utilities_unpaid", "prior_balance")]},
+             "must_match_keys": bal_keys},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "tenant-ledger-balances", seed, knobs))
     print(f"seed={seed} residents={len(d['residents'])} " + " ".join(f"{x['lot']}:{x['role']}:{x['fee']}/{x['balance']}" for x in d["residents"] if x["role"] != "plain"))
 
 
@@ -261,10 +349,16 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_knob_args(ap, KNOBS)
     a = ap.parse_args()
+    knobs = parse_knob_args(a, KNOBS)
     for attempt in range(400):
-        if acceptable(build(a.seed * 1000 + attempt)):
+        d = build(a.seed * 1000 + attempt, knobs)
+        if acceptable(d):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    if a.describe:
+        print(describe_json("tenant-ledger-balances", a.seed * 1000 + attempt, knobs, counts(d, knobs)))
+        raise SystemExit(0)
+    emit(a.seed * 1000 + attempt, a.naive, knobs, a.out)

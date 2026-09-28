@@ -2,6 +2,9 @@
 """duplicate-payments: money a commercial furniture workshop has already paid twice, from its AP payment register.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-knobs
+    python gen.py --scale 4 --trap-count dup_vendor_record=3 --out DIR     # a harder task; the answer moves
+    python gen.py --describe [--scale N ...]                                 # content counts of this draw
 
 Business: Oakline Furniture Works builds booths, bars and reception desks for restaurants and offices. AP runs
 checks twice a month plus ACH and the odd wire. The vendor master has grown duplicate records, so the same supplier
@@ -32,6 +35,24 @@ from decimal import Decimal
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("scale", "scale", default=1, levels=(1, 2, 4, 8),
+         changes="ordinary supplier payments in the register are multiplied by N (about 110 lines at 1)", measure="rows"),
+    Knob("trap_count.dup_vendor_record", "trap-count", default=1, levels=(1, 2, 3, 4),
+         changes="suppliers set up twice in the vendor master (tax ID keyed without its dash) with an invoice paid "
+                 "again under the second vendor ID and without the INV- prefix",
+         measure="trap_instances.dup_vendor_record"),
+    Knob("trap_count.dup_leading_zero", "trap-count", default=1, levels=(1, 2, 3),
+         changes="invoices paid by wire as 000NNN and again by check as NNN", measure="trap_instances.dup_leading_zero"),
+)
+# Extra suppliers that can be set up twice (trap_count.dup_vendor_record > 1): (name in the master, alias record).
+EXTRA_ALIASES = [("Harmon Edgebanding", "Harmon Edgebanding LLC"), ("Valley Welding Supply", "Valley Welding & Gas Supply"),
+                 ("Crestline Leather", "Crestline Leather Co.")]
+# Extra suppliers whose invoices get paid twice with and without leading zeros (trap_count.dup_leading_zero > 1).
+EXTRA_ZERO = ["Summit Abrasives", "Greenleaf Waste Hauling"]
 
 D = Decimal
 SUPPLIERS = [("Cascade Hardwoods", "Hardwood lumber"), ("Northline Plywood & Panel", "Sheet goods"), ("Keller Hinge & Slide", "Hardware"),
@@ -53,8 +74,9 @@ def inv_key(s: str) -> str:
     return s.lstrip("0").upper()
 
 
-def build(seed: int) -> dict:
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
+    scale = knobs["scale"]
     vendors = []
     vid = r.randint(1010, 1040)
     for name, cat in SUPPLIERS + [LANDLORD]:
@@ -84,7 +106,7 @@ def build(seed: int) -> dict:
     for v in vendors[:-2]:
         if v["name"] in (LANDLORD[0],):
             continue
-        for _ in range(r.randint(3, 7)):
+        for _ in range(r.randint(3, 7) * scale):
             amt = cents(r, 180, 9800)
             pay(day_in(r, date(2026, 1, 5), date(2026, 8, 28), weekday_only=True), r.choice(["Check", "Check", "ACH"]), v,
                 r.choice([inv_no(), inv_no(""), inv_no("#")]), amt, amt)
@@ -164,6 +186,26 @@ def build(seed: int) -> dict:
     pay(d10, "Check", twin, shared_inv, a10, a10)
     l7 = pay(d10 + timedelta(days=r.randint(1, 5)), "Check", other, shared_inv, a10, a10, role="other_vendor_same_invoice")
 
+    # knob-only content, drawn from its own stream after every default draw (none of this runs at the defaults)
+    extra_alias = []
+    if knobs.trap_count("dup_vendor_record") > 1 or knobs.trap_count("dup_leading_zero") > 1:
+        rk = rng(seed + 7_000_003)
+        for name, alias_name in EXTRA_ALIASES[:knobs.trap_count("dup_vendor_record") - 1]:
+            v = by_name[name]
+            al = {"id": f"V{vid + 100 + rk.randint(1, 90) + 100 * len(extra_alias)}", "name": alias_name, "cat": v["cat"],
+                  "tin": v["tin"].replace("-", ""), "addr": v["addr"]}
+            extra_alias.append(al)
+            inv, amt = f"INV-{rk.randint(10000, 99999)}", cents(rk, 1500, 9800)
+            dd = day_in(rk, date(2026, 2, 2), date(2026, 5, 29), weekday_only=True)
+            pay(dd, "Check", v, inv, amt, amt)
+            pay(dd + timedelta(days=rk.randint(18, 40)), "ACH", al, inv.replace("INV-", ""), amt, amt, role="dup_vendor_record")
+        for name in EXTRA_ZERO[:knobs.trap_count("dup_leading_zero") - 1]:
+            v, n, amt = by_name[name], rk.randint(100, 999), cents(rk, 2400, 7600)
+            dd = day_in(rk, date(2026, 5, 4), date(2026, 7, 24), weekday_only=True)
+            pay(dd, "Wire", v, f"000{n}", amt, amt)
+            pay(dd + timedelta(days=rk.randint(9, 20)), "Check", v, f"{n}", amt, amt, role="dup_leading_zero")
+        vendors.extend(extra_alias)
+
     # ids and check numbers in date order
     pays.sort(key=lambda p: (p["date"], p["role"] != "multi", p["k"]))
     pid = r.randint(300, 360)
@@ -208,7 +250,9 @@ def build(seed: int) -> dict:
                 dups.append({"pid": p["pid"], "orig": ps[0]["pid"], "vendor": p["vendor"]["name"], "invoice": p["invoice"], "over": over, "role": p["role"]})
     dups.sort(key=lambda x: x["pid"])
     roles = {p["role"]: p for p in pays if p["role"]}
-    return {"vendors": vendors, "alias": alias, "pays": pays, "dups": dups, "refund": refund, "roles": roles,
+    if extra_alias or knobs.trap_count("dup_leading_zero") > 1:   # the published instance names the trap, not an extra one
+        roles["dup_vendor_record"], roles["dup_leading_zero"] = p2b, p4b
+    return {"vendors": vendors, "alias": alias, "extra_alias": extra_alias, "pays": pays, "dups": dups, "refund": refund, "roles": roles,
             "lookalikes": [roles[k]["pid"] for k in ("void_reissue", "stop_replaced", "rent", "instalment", "refunded_dup", "same_amount_new_invoice",
                                                      "other_vendor_same_invoice")]}
 
@@ -222,8 +266,17 @@ def acceptable(d: dict) -> bool:
     return len(multi) == 1 and len({p["pid"] for p in d["pays"]}) == len(d["pays"]) - 2
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains."""
+    return {"rows": len(d["pays"]), "entities": len(d["vendors"]), "rules": 5, "documents": 4,
+            "duplicates": len(d["dups"]),
+            "trap_instances": {"dup_vendor_record": sum(x["role"] == "dup_vendor_record" for x in d["dups"]),
+                               "dup_leading_zero": sum(x["role"] == "dup_leading_zero" for x in d["dups"]),
+                               "lookalikes": len(d["lookalikes"])}}
+
+
+def emit(seed: int, naive_dir: str | None, knobs=KNOBS.defaults(), out: str | None = None) -> None:
+    d = build(seed, knobs)
     header = ["payment_id", "original_payment_id", "vendor", "invoice", "amount_overpaid", "reason"]
     if naive_dir:
         # same vendor id and same invoice text, any status, full amount of the later payment
@@ -240,7 +293,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
                     rows.append([p["pid"], q["pid"], p["vendor"]["name"], p["invoice"], f"{p['paid']:.2f}", "same amount"])
         write_csv(os.path.join(naive_dir, "duplicate_payments.csv"), header, rows)
         return
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
     r = rng(seed + 21)
 
     rows = []
@@ -298,7 +351,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
                                                                                                   "other_vendor_same_invoice")}})
     ro = d["roles"]
     byrole = {x["role"]: x for x in d["dups"]}
-    write_task_yaml(HERE, {
+    ex_vr = [x for x in d["dups"] if x["role"] == "dup_vendor_record" and x["pid"] != ro["dup_vendor_record"]["pid"]]
+    ex_lz = [x for x in d["dups"] if x["role"] == "dup_leading_zero" and x["pid"] != ro["dup_leading_zero"]["pid"]]
+    # With more than one planted instance, the trap sentence names them all (the first sentence is unchanged at the defaults).
+    by_alias = {x["vendor"]: x for x in ex_vr}
+    more_vr = ("; also set up twice and paid again: " + ", ".join(f"{a['name']} ({a['id']}, paid by {by_alias[a['name']]['pid']})"
+                                      for a in d["extra_alias"]) if ex_vr else "")
+    more_lz = ("; also paid again without the zeros: " + ", ".join(f"{x['pid']} (invoice {x['invoice']})" for x in ex_lz) if ex_lz else "")
+    spec = {
         "id": "duplicate-payments", "track": "desk", "category": "bookkeeping",
         "title": "Find supplier payments we made twice",
         "ask": "A supplier says we paid them twice this year - can you find every payment we have made twice? Hannah's note says how to judge it. Save the list as duplicate_payments.csv.\n",
@@ -306,11 +366,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "traps": [
             f"Cascade Hardwoods is in the vendor master twice ({d['alias']['id']} as '{d['alias']['name']}', its tax ID written without the "
             f"dash); {ro['dup_vendor_record']['pid']} pays the same invoice by ACH under the second ID and without the INV- prefix, so "
-            "matching on vendor ID or invoice text misses it (checks: duplicate payments; original payment)",
+            f"matching on vendor ID or invoice text misses it{more_vr} (checks: duplicate payments; original payment)",
             f"{ro['dup_over_half']['pid']} pays a stone-top invoice in full after a 50% deposit; only the deposit's worth "
             f"({byrole['dup_over_half']['over']:,.2f}) was paid too much, not the whole payment (check: amount overpaid)",
             f"{ro['dup_leading_zero']['pid']} pays steel invoice {ro['dup_leading_zero']['invoice']} that an earlier wire paid as "
-            f"000{ro['dup_leading_zero']['invoice']} (check: duplicate payments)",
+            f"000{ro['dup_leading_zero']['invoice']}{more_lz} (check: duplicate payments)",
             f"a check voided for a wrong address and reissued ({ro['void_reissue']['pid']}) and a check stopped in the mail and replaced by "
             f"ACH ({ro['stop_replaced']['pid']}) paid their invoices once (check: look-alikes not listed)",
             "the landlord is paid the same rent by ACH every month and Keller Hinge & Slide sent two genuine orders for the same amount a "
@@ -334,7 +394,8 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "must_match_keys": [ro["dup_over_half"]["pid"], ro["dup_vendor_record"]["pid"]]},
             {"type": "text_not_contains", "name": "look-alikes not listed", "path": "duplicate_payments.csv", "phrases": d["lookalikes"]},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "duplicate-payments", seed, knobs))
     print(f"seed={seed} payments={len(d['pays'])} dups={[(x['pid'], x['role'], str(x['over'])) for x in d['dups']]}")
 
 
@@ -342,10 +403,16 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_knob_args(ap, KNOBS)
     a = ap.parse_args()
+    knobs = parse_knob_args(a, KNOBS)
     for attempt in range(400):
-        if acceptable(build(a.seed * 1000 + attempt)):
+        d = build(a.seed * 1000 + attempt, knobs)
+        if acceptable(d):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    if a.describe:
+        print(describe_json("duplicate-payments", a.seed * 1000 + attempt, knobs, counts(d, knobs)))
+        raise SystemExit(0)
+    emit(a.seed * 1000 + attempt, a.naive, knobs, a.out)
