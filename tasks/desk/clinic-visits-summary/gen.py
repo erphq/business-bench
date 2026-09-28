@@ -2,6 +2,9 @@
 """clinic-visits-summary: visits per provider per month and the no-show rate for a physio clinic.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off spellings,fee_export --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant walkins --out DIR                   # a deliverable that falls for one trap
 
 Business: a three-room physical therapy clinic whose scheduler was replaced in February, so the Q1
 export carries both systems' wording for the same statuses and the providers' names in four spellings.
@@ -16,12 +19,33 @@ Traps (each caught by a check, see task.yaml):
 from __future__ import annotations
 import argparse
 import os
+import shutil
 import sys
 from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the exports are written, so build() and
+# its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "spellings": "one provider typed four ways and another two ways (off: every row under the roster name)",
+        "status_words": "kept visits are 'Completed' in the old scheduler and 'Arrived' in the new (off: 'Completed' "
+                        "throughout, the front desk note says so)",
+        "cancellations": "cancellations in four spellings and Rescheduled rows in the export (off: neither exported; "
+                         "the front desk note no longer mentions them)",
+        "fee_export": "the cancellation-fee billing export sits beside the visits (off: not in the folder)",
+        "format_noise": "three date formats, a two-line preamble and a BOM (off: ISO dates, plain header, no BOM)",
+    },
+    fixed={
+        "walkins": "walk-ins are visits but stay out of the no-show denominator",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["spellings", "status_words", "walkins", "cancellations", "fee_export", "format_noise"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -250,51 +274,70 @@ def clean_rows(d: dict) -> list[list]:
     return out
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     provs = d["provs"]
     names = [p["name"] for p in provs]
+    noisy, spelled, words = traps.on("format_noise"), traps.on("spellings"), traps.on("status_words")
+    cancels = traps.on("cancellations")
 
     # ---- workspace ----
     vrows = []
     for x in d["rows"]:
+        if not cancels and x["kind"] in ("cancel", "resched"):
+            continue
         style = (sum(ord(c) for c in (x["appt"] or x["pat"])) % 3)
-        vrows.append([x["appt"], date_variant(x["date"], [0, 1, 6][style]), x["shown"], x["pat"],
-                      x["vtype"], x["status"], x["mins"]])
+        status = x["status"] if words or x["status"] != "Arrived" else "Completed"
+        vrows.append([x["appt"], date_variant(x["date"], [0, 1, 6][style] if noisy else 0),
+                      x["shown"] if spelled else x["prov"]["name"], x["pat"], x["vtype"], status, x["mins"]])
     write_csv(os.path.join(ws, "visits_export_q1_2026.csv"),
               ["Appt ID", "Date", "Provider", "Patient ID", "Visit Type", "Status", "Duration (min)"], vrows,
-              preamble=["Riverbend Physio - appointment export", "01/01/2026 to 03/31/2026 (both schedulers)"],
-              bom=True)
+              preamble=["Riverbend Physio - appointment export", "01/01/2026 to 03/31/2026 (both schedulers)"] if noisy else None,
+              bom=noisy)
     stable_xlsx(os.path.join(ws, "provider_roster.xlsx"), {"Roster": {
         "merged_title": "Treating providers - Q1 2026",
         "header": ["Provider", "Credential", "Room", "Started", "Notes"],
         "rows": [[p["name"], p["cred"], p["room"], date(2019 + i, 3 + i, 4 + i),
                   "Covers walk-ins on Fridays" if i == 0 else ""] for i, p in enumerate(provs)],
         "widths": {"A": 24, "E": 30}}}, creator="Practice manager")
-    write_csv(os.path.join(ws, "cancellation_fees_billing.csv"),
-              ["Fee ID", "Service Date", "Provider", "Patient", "Fee", "Reason"],
-              [[f["fee"], date_variant(f["date"], 1), f["prov"], f["pat"], money_str(f["amt"], 1), f["why"]]
-               for f in d["fees"]],
-              preamble=["Billing export - patient fees", "Not a visit list"])
+    if traps.on("fee_export"):
+        write_csv(os.path.join(ws, "cancellation_fees_billing.csv"),
+                  ["Fee ID", "Service Date", "Provider", "Patient", "Fee", "Reason"],
+                  [[f["fee"], date_variant(f["date"], 1), f["prov"], f["pat"], money_str(f["amt"], 1), f["why"]]
+                   for f in d["fees"]],
+                  preamble=["Billing export - patient fees", "Not a visit list"])
     write_text(os.path.join(ws, "front_desk_notes.txt"),
                "How we count visits (from the front desk)\n"
                "\n"
-               "A visit is a patient we actually treated. The old scheduler wrote Completed and the new one writes\n"
-               "Arrived; they mean the same thing. Walk-ins are treated patients too, so they are visits, even\n"
-               "though they never had an appointment number.\n"
+               + ("A visit is a patient we actually treated. The old scheduler wrote Completed and the new one writes\n"
+                  "Arrived; they mean the same thing. Walk-ins are treated patients too, so they are visits, even\n"
+                  "though they never had an appointment number.\n"
+                  if words else
+                  "A visit is a patient we actually treated; the export marks them Completed. Walk-ins are treated\n"
+                  "patients too, so they are visits, even though they never had an appointment number.\n") +
                "\n"
                "The no-show rate is no-shows out of the appointments that were on the book that day - the ones we\n"
-               "kept plus the ones nobody turned up for. Cancellations came off the book with notice, so they do\n"
-               "not count against a provider, and walk-ins were never on the book to begin with.\n"
+               + ("kept plus the ones nobody turned up for. Cancellations came off the book with notice, so they do\n"
+                  "not count against a provider, and walk-ins were never on the book to begin with.\n"
+                  "\n"
+                  "A Rescheduled row is the old slot for an appointment that moved; the new slot has its own row.\n"
+                  if cancels else
+                  "kept plus the ones nobody turned up for. Walk-ins were never on the book to begin with.\n") +
                "\n"
-               "A Rescheduled row is the old slot for an appointment that moved; the new slot has its own row.\n"
-               "\n"
-               "Everyone on the roster should be on the report, under the name on the roster - the schedulers\n"
-               "never agreed on how to write us down.\n")
+               + ("Everyone on the roster should be on the report, under the name on the roster - the schedulers\n"
+                  "never agreed on how to write us down.\n" if spelled else
+                  "Everyone on the roster should be on the report, under the name on the roster.\n"))
 
     # ---- reference ----
     write_csv(os.path.join(ref, "visits_by_provider_month.csv"), ["provider", "month", "visits", "no_shows", "on_the_book"],
@@ -315,14 +358,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     stable_xlsx(os.path.join(sol, "visits.xlsx"), report_sheets(clean_rows(d), names), creator="reference")
 
     p0, p1 = names[0], names[1]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "clinic-visits-summary", "track": "desk", "category": "reports",
         "title": "Visits per provider and the no-show rate for Q1",
         "ask": ("Can you pull our Q1 numbers out of the scheduler export - how many visits each provider did in each "
                 "month, and how bad our no-show problem is? Save it as visits.xlsx with live formulas. The front desk "
                 "notes say how we count them.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"{provs[0]['last']} appears under four spellings in the export ('{provs[0]['aliases'][0]}', "
             f"'{provs[0]['aliases'][1]}', '{provs[0]['aliases'][2]}', '{provs[0]['aliases'][3]}') and "
             f"{provs[1]['last']} under two; a group-by on the raw provider column splits them into separate rows "
@@ -338,7 +381,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "a second visit list; merging it inflates every count (check: clinic total visits)",
             "dates come in three formats and the export carries a two-line preamble and a BOM "
             "(check: clinic total visits)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "visits.xlsx exists", "path": "visits.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "visits.xlsx", "min_count": 12},
@@ -353,7 +396,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "expected": d["clinic_visits"], "rel_tol": cent_tol(d["clinic_visits"], 0.002), "near_text": "total"},
             {"type": "custom", "name": "no-show rates per provider", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "clinic-visits-summary", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} rows={len(d['rows'])} fee_rows={len(d['fees'])} providers={names}")
     print("aliases:", {p['name']: p['aliases'] for p in provs})
     print("visits:", d["tot_visits"], "noshows:", d["tot_noshow"], "onbook:", d["tot_onbook"])
@@ -376,15 +422,62 @@ def write_naive(d: dict, out: str) -> None:
     stable_xlsx(os.path.join(out, "visits.xlsx"), report_sheets(rows, sorted(names)), creator="naive")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> tuple[list[list], list[str]]:
+    """clean_rows() and the provider list from an agent that is right except that it falls for `trap`."""
+    names = [p["name"] for p in d["provs"]]
+    out = []
+    for x in sorted(d["rows"], key=lambda y: (y["date"], y["appt"] or y["pat"])):
+        kind = x["kind"]
+        if trap == "cancellations" and kind == "cancel":      # a cancellation read as a no-show
+            kind = "noshow"
+        if kind not in ("kept", "walkin", "noshow"):
+            continue
+        if trap == "format_noise" and (sum(ord(c) for c in (x["appt"] or x["pat"])) % 3):   # a strict ISO date parse drops the rest
+            continue
+        visit = kind in ("kept", "walkin")
+        book = kind in ("kept", "noshow")
+        if trap == "status_words" and visit and x["status"] != "Completed":   # only 'Completed' read as a kept visit
+            visit, book = False, False
+        if trap == "walkins" and kind == "walkin":   # walk-ins handled the wrong way round: not visits, but on the book
+            visit, book = False, True
+        out.append([x["appt"] or "(walk-in)", x["date"].isoformat(), f"{x['date'].year}-{x['date'].month:02d}",
+                    x["shown"] if trap == "spellings" else x["prov"]["name"], 1 if visit else 0,
+                    1 if kind == "noshow" else 0, 1 if book else 0])
+    if trap == "fee_export":      # the billing export merged in as more visits on the book
+        full = {f"{p['last']} {p['first'][0]}": p["name"] for p in d["provs"]}
+        for f in d["fees"]:
+            out.append([f["fee"], f["date"].isoformat(), f"{f['date'].year}-{f['date'].month:02d}", full[f["prov"]], 1, 0, 1])
+    if trap == "spellings":       # one report row per spelling, as a group-by on the raw column gives
+        names = [a for p in d["provs"] for a in p["aliases"]]
+    return out, names
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """visits.xlsx right in every respect except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    rows, names = mutant_rows(d, trap)
+    os.makedirs(out, exist_ok=True)
+    stable_xlsx(os.path.join(out, "visits.xlsx"), report_sheets(rows, names), creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

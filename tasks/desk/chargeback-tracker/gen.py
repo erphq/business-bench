@@ -2,6 +2,9 @@
 """chargeback-tracker: chargeback cases to status, disputed amount, evidence deadline and net loss for a candle shop.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off reminders,retrievals --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant holidays --out DIR                  # a deliverable that falls for one trap
 
 Business: an online candle and home-fragrance shop. The card processor exports every dispute notice it sends,
 including reminders, amendments and retrieval requests, and a separate file of decisions.
@@ -18,12 +21,31 @@ Traps (each caught by a check, see task.yaml):
 from __future__ import annotations
 import argparse
 import os
+import shutil
 import sys
 from datetime import date, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the notice export is written, so build()
+# and its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "reminders": "reminder notices repeat three cases with later notice dates (off: reminders not exported)",
+        "retrievals": "two retrieval requests sit in the notice export (off: not exported)",
+    },
+    fixed={
+        "holidays": "evidence is due 7 business days after the first notice, skipping weekends and the listed holidays",
+        "amendment": "an amendment halves one case's disputed amount; its deadline is unchanged",
+        "decisions": "decisions come from a second file; Accepted by merchant is a loss and a win returns the fee",
+        "partials": "two cases dispute only part of the order",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["holidays", "reminders", "amendment", "retrievals", "decisions", "partials"]
 
 HOLIDAYS = [(date(2026, 5, 25), "Memorial Day"), (date(2026, 6, 19), "Juneteenth"), (date(2026, 7, 3), "Independence Day (observed)"),
             (date(2026, 9, 7), "Labor Day"), (date(2026, 10, 12), "Columbus Day"), (date(2026, 11, 11), "Veterans Day"),
@@ -129,14 +151,28 @@ def acceptable(d: dict) -> bool:
     return all(c["id"] for c in d["cases"])
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     r = rng(seed + 5)
     cases, notices, outcomes, by = d["cases"], d["notices"], d["outcomes"], d["by"]
+    if not (traps.on("reminders") and traps.on("retrievals")):
+        drop = set()
+        if not traps.on("reminders"):
+            drop.add("Reminder")
+        if not traps.on("retrievals"):
+            drop.add("Retrieval Request")
+        notices = [n for n in notices if n["type"] not in drop]
 
     rows = []
     for n in notices:
@@ -193,13 +229,13 @@ Thanks - June
                                                   "net_loss": c["net_loss"]} for c in cases])
     cid = lambda t: by[t]["id"]
     due_keys = [cid(t) for t in ("holiday_labor", "holiday_july", "holiday_june", "reminder", "amended", "friday_notice")]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "chargeback-tracker", "track": "desk", "category": "bookkeeping",
         "title": "Chargeback tracker with evidence deadlines",
         "ask": ("Please bring our chargeback tracker up to date from the Ridgepay exports in the folder - June's note says what "
                 "she wants and the dispute guide explains the rules. Save it as chargebacks.csv.\n"),
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             f"evidence is due 7 business days after the first notice, skipping weekends and the listed holidays: {cid('holiday_labor')} "
             f"(1 Sep) runs past Labor Day to {by['holiday_labor']['due'].isoformat()}, {cid('holiday_july')} past 3 July and "
             f"{cid('holiday_june')} past Juneteenth; the export's Respond By column is a 10-calendar-day estimate the guide says "
@@ -214,7 +250,7 @@ Thanks - June
             "because the $20 fee comes back too; undecided cases stay open with the amount and fee out (checks: status; net loss)",
             f"{cid('partial_won')} and {cid('partial_open')} dispute only part of the order, so the transaction amount overstates "
             "them (checks: disputed amounts; net loss)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "tracker columns", "path": "chargebacks.csv", "columns": header},
             {"type": "csv_set_equal", "name": "one row per case", "path": "chargebacks.csv", "column": "case_id", "ref": "chargebacks.csv",
@@ -230,7 +266,10 @@ Thanks - June
              "columns": ["net_loss"], "numeric": True, "tolerance": 0.005, "min_accuracy": 1.0,
              "must_match_keys": [cid(t) for t in ("amended", "partial_won", "partial_open", "accepted", "lost")]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "chargeback-tracker", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     write_json(os.path.join(ref, "deadline_keys.json"), due_keys)
     print(f"seed={seed} cases={len(cases)} notices={len(notices)}")
     for c in cases:
@@ -249,15 +288,77 @@ def write_naive(d: dict, out: str) -> None:
     write_csv(os.path.join(out, "chargebacks.csv"), ["case_id", "disputed_amount", "status", "evidence_due", "net_loss"], rows)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def weekdays_after(d: date, n: int) -> date:
+    """7 business days counting weekends only: the listed holidays missed (holidays mutant)."""
+    k = 0
+    while k < n:
+        d += timedelta(days=1)
+        if d.weekday() < 5:
+            k += 1
+    return d
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """chargebacks.csv right in every respect except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    by_case = {}
+    for n in d["notices"]:
+        by_case.setdefault(n["case"]["id"], []).append(n)
+    rows = []
+    for c in d["cases"]:
+        disputed, status, due = c["disputed"], c["status"], c["due"]
+        if trap == "holidays":        # weekends skipped, the bank holidays counted as business days
+            due = weekdays_after(c["first"], 7)
+        elif trap == "amendment" and c["tag"] == "amended":
+            # the amendment read as the case's latest chargeback notice: the deadline restarts from it, and the amount
+            # is still the one on the first notice
+            last = max(n["date"] for n in by_case[c["id"]])
+            due, disputed = business_days_after(last, 7), c["disputed_initial"]
+        elif trap == "partials" and c["tag"].startswith("partial"):   # the transaction amount taken as disputed
+            disputed = c["order_amt"]
+        elif trap == "decisions":
+            oc = d["outcomes"].get(c["id"], {}).get("outcome")
+            if oc == "Accepted by merchant":   # not a Won or a Lost, so left open
+                status = "open"
+        if status == "won":
+            net = FEE if trap == "decisions" else 0.0   # decisions: a win still costs the fee
+        else:
+            net = round(disputed + FEE, 2)
+        if trap == "reminders":       # every Chargeback or Reminder notice read as a case, due 7 business days after it
+            for n in by_case[c["id"]]:
+                if n["type"] in ("Chargeback", "Reminder"):
+                    rows.append([c["id"], f"{disputed:.2f}", status, business_days_after(n["date"], 7).isoformat(), f"{net:.2f}"])
+            continue
+        rows.append([c["id"], f"{disputed:.2f}", status, due.isoformat(), f"{net:.2f}"])
+    if trap == "retrievals":          # the retrieval requests tracked as open chargebacks
+        for x in d["rr"]:
+            rows.append([x["id"], f"{x['order_amt']:.2f}", "open", business_days_after(x["first"], 7).isoformat(),
+                         f"{x['order_amt'] + FEE:.2f}"])
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "chargebacks.csv"), ["case_id", "disputed_amount", "status", "evidence_due", "net_loss"], rows)
+
+
+# Grader-blind: the 'reminders' mutant (one row per Chargeback or Reminder notice, three cases repeated) passes its cited
+# check "one row per case": csv_set_equal compares the set of case ids, so a repeated id is invisible to it. It fails
+# "evidence deadlines" and "row count" (not cited for this trap). Kept in code, out of MUTANTS.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "reminders"}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(200):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

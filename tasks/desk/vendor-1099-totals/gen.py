@@ -2,6 +2,9 @@
 """vendor-1099-totals: 2025 reportable payment totals per non-corporate vendor for an event rental company.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off resubmitted,two_names --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant refunds --out DIR                    # a deliverable that falls for one trap
 
 Business: a tent and party rental company that pays freelance crew, DJs, photographers and repair shops from one
 operating account by check, ACH, Zelle, wire, company cards, PayPal and Venmo. Vendors fill in an online W-9 form.
@@ -18,12 +21,34 @@ Traps (each caught by a check, see task.yaml):
 from __future__ import annotations
 import argparse
 import os
+import shutil
 import sys
 from datetime import date, datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the bank and W-9 exports are written, so
+# build() and its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "processor_methods": "card, PayPal and Venmo payments (and their refunds) are in the bank export (off: only check, "
+                             "ACH, Zelle and wire rows exported)",
+        "resubmitted": "two vendors filled in the W-9 form twice (off: only each vendor's latest submission exported)",
+        "two_names": "Marisol Vega is paid under her trade name and her legal name (off: every payment under 'Marisol "
+                     "Vega'; Tamsin's email drops the point about two names)",
+        "card_only": "a sole proprietor paid only by card and PayPal is in the exports (off: neither her W-9 nor her "
+                     "payments exported)",
+    },
+    fixed={
+        "refunds": "a refund comes off only when it came back a reportable way (check, Zelle)",
+        "corporations": "corporations are read from line 3a and the LLC tax letter on the form",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["processor_methods", "refunds", "corporations", "resubmitted", "two_names", "card_only"]
 
 IND = "Individual/sole proprietor or single-member LLC"
 REPORTABLE = {"check", "ach", "zelle", "wire"}
@@ -126,18 +151,30 @@ def build(seed: int) -> dict:
     return {"vendors": vendors, "payments": payments}
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     r = rng(seed + 11)
+    methods, two_names = traps.on("processor_methods"), traps.on("two_names")
+    card_only = traps.on("card_only")
 
     rows = []
     for p in d["payments"]:
+        if not methods and p["method"] not in REPORTABLE:
+            continue
+        if not card_only and p["vendor"] is not None and p["vendor"]["tag"] == "card_only":
+            continue
+        payee = p["payee"] if two_names or p["vendor"] is None or p["vendor"]["tag"] != "two_names" else p["vendor"]["legal"]
         amt = money_str(p["amount"], 1)
-        rows.append([p["date"].strftime("%m/%d/%Y"), p["payee"], p["memo"], p["text"],
+        rows.append([p["date"].strftime("%m/%d/%Y"), payee, p["memo"], p["text"],
                      "Vendor refund" if p["amount"] < 0 else "Payment", amt])
     write_csv(os.path.join(ws, "operating_account_payments_2025.csv"),
               ["Date", "Payee", "Memo", "Method", "Type", "Amount"], rows,
@@ -148,6 +185,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
     subs.sort(key=lambda x: x[0]["at"])
     for i, (f, v) in enumerate(subs):
         city, st, _ = r.choice(CITIES)
+        if not traps.on("resubmitted") and f is not v["latest"]:
+            continue
+        if not card_only and v["tag"] == "card_only":
+            continue
         frows.append([f"W9-{3170 + i * 4}", f["at"].strftime("%Y-%m-%d %H:%M"), f["legal"], f["dba"], f["cls"], f["llc"],
                       f["tin_type"], f"***-**-{f['tin4']}" if f["tin_type"] == "SSN" else f"**-***{f['tin4']}", f"{city}, {st}"])
     write_csv(os.path.join(ws, "w9_form_responses_export.csv"),
@@ -168,8 +209,8 @@ def emit(seed: int, naive_dir: str | None) -> None:
                   "5. Refunds from a vendor come off the total only if the money came back the same reportable way (a refund check "
                   "you deposited, a Zelle back to you). A refund credited back to the card or to PayPal or Venmo just reverses a card or app "
                   "payment that was never in the total.\n"
-                  "6. Some people show up in the bank under their business name and sometimes under their own name - it is the "
-                  "same TIN, one line.\n\n"
+                  + ("6. Some people show up in the bank under their business name and sometimes under their own name - it is the "
+                     "same TIN, one line.\n\n" if two_names else "\n") +
                   "Send me vendor_totals.csv with vendor (the line 1 name from their latest form), tin_last4 (just the four digits) "
                   "and reportable_total. Skip anyone whose reportable total comes to zero. I will apply the threshold myself.\n\n"
                   "Thanks,\nTamsin")}])
@@ -183,13 +224,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
                                                             "reportable": v["reportable"], "all_methods": v["all_in"]} for v in d["vendors"]})
     by = {v["tag"]: v for v in d["vendors"]}
     t4 = lambda tag: by[tag]["latest"]["tin4"]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "vendor-1099-totals", "track": "desk", "category": "bookkeeping",
         "title": "2025 reportable totals per vendor, cards and corporations out",
         "ask": ("Tamsin needs our 2025 vendor totals so she can prepare the 1099s. The bank payments and the W-9 form responses "
                 "are in the folder and her email says how to count. Save it as vendor_totals.csv.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "card, PayPal and Venmo payments are reported by the processor and leave the total, while Zelle and wires stay; "
             f"Dana Whitfield ({t4('venmo_mix')}) is paid by Venmo and ACH and only the ACH counts (check: reportable totals)",
             f"refunds come off only when they came back a reportable way: Hollis Tent Repair ({t4('refund_check')}) deposited a "
@@ -205,7 +246,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             f"line 1 name, and splitting her by payee halves her total (checks: reportable totals; line 1 names)",
             f"Petal & Stem Florals ({t4('card_only')}) is a sole proprietor paid only by Amex and PayPal, so nothing is reportable "
             "and she stays off the list (checks: which vendors; row count)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "vendor_totals.csv", "columns": header},
             {"type": "csv_set_equal", "name": "which vendors", "path": "vendor_totals.csv", "column": "tin_last4",
@@ -218,7 +259,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "key": "tin_last4", "columns": ["vendor"], "normalize": ["alnum"], "min_accuracy": 1.0,
              "must_match_keys": [t4(x) for x in ("two_names", "refund_card", "fixed_form")]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "vendor-1099-totals", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} payments={len(d['payments'])} on list={len(listed)}")
     for v in d["vendors"]:
         print(f"  {v['tag']:14} {v['latest']['legal'][:30]:30} corp={v['corp']!s:5} reportable={v['reportable']:>10.2f} all={v['all_in']:>10.2f} list={v['on_list']}")
@@ -239,9 +283,50 @@ def write_naive(d: dict, out: str) -> None:
     write_csv(os.path.join(out, "vendor_totals.csv"), ["vendor", "tin_last4", "reportable_total"], rows)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """vendor_totals.csv right in every respect except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    rows = []
+    for v in d["vendors"]:
+        pays = [p for p in d["payments"] if p["vendor"] is v]
+        if trap == "processor_methods":     # every method counted, card and app refunds included
+            total = sum(p["amount"] for p in pays)
+        elif trap == "refunds":             # every refund taken off, whichever way it came back
+            total = sum(p["amount"] for p in pays if p["method"] in REPORTABLE or p["amount"] < 0)
+        else:
+            total = sum(p["amount"] for p in pays if p["method"] in REPORTABLE)
+        total = round(total, 2)
+        forms = [v["latest"]]
+        if trap == "resubmitted" and len(v["forms"]) > 1:   # each submission read as a vendor of its own
+            forms = v["forms"]
+        for f in forms:
+            cls_corp = f["cls"] in ("C corporation", "S corporation")   # corporations: line 3a only, LLC letter unread
+            if (cls_corp if trap == "corporations" else corp(f["cls"], f["llc"])):
+                continue
+            if total <= 0 and not (trap == "card_only" and v["tag"] == "card_only"):   # card_only: listed at 0.00
+                continue
+            if trap == "two_names" and v["tag"] == "two_names":   # one line per bank payee, named as the bank has it
+                for payee in v["payees"]:
+                    part = round(sum(p["amount"] for p in pays if p["payee"] == payee and p["method"] in REPORTABLE), 2)
+                    rows.append([payee, f["tin4"], f"{part:.2f}"])
+                continue
+            rows.append([f["legal"], f["tin4"], f"{total:.2f}"])
+    rows.sort(key=lambda x: x[0].lower())
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "vendor_totals.csv"), ["vendor", "tin_last4", "reportable_total"], rows)
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
-    emit(a.seed, a.naive)
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, a.naive, traps, a.out, a.mutant)

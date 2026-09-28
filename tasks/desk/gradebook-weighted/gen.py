@@ -2,6 +2,9 @@
 """gradebook-weighted: final percentages and letter grades from an LMS gradebook export, weights and a syllabus.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off weights,withdrawn --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant drop_quiz --out DIR              # a deliverable that falls for one trap
 
 Business: an adult-education centre running a bookkeeping certificate course. The LMS exports raw points; the
 instructor's grading rules are spread across the syllabus, the export's Weights tab and her email.
@@ -18,11 +21,34 @@ Traps (each caught by a check, see task.yaml):
 from __future__ import annotations
 import argparse
 import os
+import shutil
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the workspace is written, so build() and
+# its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "email_excuse": "one student's excused Quiz 4 is blank, excused only in the instructor's email (off: the export "
+                        "shows EX and the email does not mention it)",
+        "points_row": "a Points Possible row sits under the export's header (off: no such row; the item maxima, which "
+                      "the syllabus lists, still differ)",
+        "weights": "the syllabus still has the old weights (off: the syllabus shows the current split and the email "
+                   "does not mention a change)",
+        "withdrawn": "a withdrawn student's row is still in the export (off: not exported, the email does not mention it)",
+    },
+    fixed={
+        "drop_quiz": "each student's lowest quiz is dropped",
+        "ex_blank": "EX is excused and leaves its category; a blank is missing work and scores zero",
+        "formulas": "the grades must be live formulas",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["drop_quiz", "ex_blank", "email_excuse", "points_row", "weights", "withdrawn", "formulas"]
 
 QUIZ = [f"Quiz {i}" for i in range(1, 7)]
 HW = [f"HW {i}" for i in range(1, 6)]
@@ -127,16 +153,19 @@ def acceptable(d: dict) -> bool:
     return all(checks)
 
 
-def solution_sheets(d: dict, *, naive: bool = False) -> dict:
+def solution_sheets(d: dict, *, naive: bool = False, mutant: str | None = None) -> dict:
+    """The reference workbook. `mutant` applies one trap's mistake (per-trap mutants only)."""
     rows = []
     e = d["s_email"]
-    studs = d["students"] if naive else d["enrolled"]
+    studs = d["students"] if naive or mutant == "withdrawn" else d["enrolled"]
     for s in studs:
         line = [s["id"], f"{s['last']}, {s['first']}"]
         for it in ITEMS:
             v = s["scores"][it]
-            if not naive and s is e and it == "Quiz 4":
+            if not naive and s is e and it == "Quiz 4" and mutant != "email_excuse":
                 v = "EX"
+            if v == "EX" and mutant == "ex_blank" and not (s is e and it == "Quiz 4"):
+                v = 0
             if v is None:
                 v = "" if naive else 0
             line.append(v)
@@ -149,8 +178,17 @@ def solution_sheets(d: dict, *, naive: bool = False) -> dict:
                                f"=VLOOKUP(C{i},Scale!$A$2:$B$11,2,TRUE)"])
             continue
         q = f"Scores!C{i}:H{i}"; h = f"Scores!I{i}:M{i}"
+        if mutant == "points_row":     # raw points averaged as if they were percentages
+            grade_rows.append([
+                s["id"], f"{s['last']}, {s['first']}",
+                f"=(SUM({q})-MIN({q}))/(COUNTIF({q},\">=0\")-1)", f"=SUM({h})/COUNTIF({h},\">=0\")",
+                f"=Scores!N{i}", f"=Scores!O{i}", f"=Scores!P{i}",
+                f"=ROUND(C{i}*Weights!$B$2+D{i}*Weights!$B$3+E{i}*Weights!$B$4+F{i}*Weights!$B$5+G{i}*Weights!$B$6,1)",
+                f"=VLOOKUP(H{i},Scale!$A$2:$B$11,2,TRUE)"])
+            continue
         grade_rows.append([
             s["id"], f"{s['last']}, {s['first']}",
+            f"=100*SUM({q})/COUNTIF({q},\">=0\")/10" if mutant == "drop_quiz" else    # every quiz averaged
             f"=100*(SUM({q})-MIN({q}))/(COUNTIF({q},\">=0\")-1)/10",
             f"=100*SUM({h})/(COUNTIF({h},\">=0\")*20)",
             f"=100*Scores!N{i}/50", f"=100*Scores!O{i}/40", f"=100*Scores!P{i}/100",
@@ -162,21 +200,32 @@ def solution_sheets(d: dict, *, naive: bool = False) -> dict:
     return {
         "Final Grades": {"header": header, "rows": grade_rows, "widths": {"B": 24}},
         "Scores": {"header": ["Student ID", "Student"] + ITEMS, "rows": rows, "widths": {"B": 24}},
-        "Weights": {"header": ["Category", "Weight"], "rows": [[c, w] for c, w in WEIGHTS]},
+        "Weights": {"header": ["Category", "Weight"], "rows": [[c, w] for c, w in (OLD_WEIGHTS if mutant == "weights" else WEIGHTS)]},
         "Scale": {"header": ["Minimum %", "Letter"], "rows": [[c, l] for c, l in SCALE]},
     }
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         os.makedirs(naive_dir, exist_ok=True)
         write_xlsx(os.path.join(naive_dir, "grades.xlsx"), solution_sheets(d, naive=True), creator="naive")
         return
-    ws, ref, sol = task_dirs(HERE)
-    grade_rows = [["Points Possible", ""] + [POSSIBLE[it] for it in ITEMS]]
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
+    excuse, withdrawn = traps.on("email_excuse"), traps.on("withdrawn")
+    grade_rows = [["Points Possible", ""] + [POSSIBLE[it] for it in ITEMS]] if traps.on("points_row") else []
     for s in sorted(d["students"], key=lambda z: z["last"]):
-        grade_rows.append([s["id"], f"{s['last']}, {s['first']}"] + [s["scores"][it] for it in ITEMS])
+        if not withdrawn and s is d["withdrawn"]:
+            continue
+        sc = s["scores"] if excuse or s is not d["s_email"] else {**s["scores"], "Quiz 4": "EX"}
+        grade_rows.append([s["id"], f"{s['last']}, {s['first']}"] + [sc[it] for it in ITEMS])
     write_xlsx(os.path.join(ws, "BKP-110_gradebook_export.xlsx"), {
         "Grades": {"merged_title": "BKP-110 Bookkeeping Fundamentals - Summer 2026 - Gradebook",
                    "header": ["Student ID", "Student"] + ITEMS, "rows": grade_rows, "widths": {"A": 16, "B": 24}},
@@ -188,7 +237,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "## Course work\n\n- Six weekly quizzes (10 points each)\n- Five homework sets (20 points each)\n"
         "- Midterm exam (50 points)\n- Bookkeeping project (40 points)\n- Final exam (100 points)\n\n"
         "## How your grade is calculated\n\n| Category | Weight |\n|---|---|\n" +
-        "".join(f"| {c} | {int(w * 100)}% |\n" for c, w in OLD_WEIGHTS) +
+        "".join(f"| {c} | {int(w * 100)}% |\n" for c, w in (OLD_WEIGHTS if traps.on("weights") else WEIGHTS)) +
         "\nEach category is the percentage of points earned in that category.\n\n"
         "- Your lowest quiz score is dropped.\n"
         "- Work that is not turned in scores zero.\n"
@@ -196,21 +245,39 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "## Letter grades\n\n| Final % | Letter |\n|---|---|\n" +
         "".join(f"| {c} and above | {l} |\n" for c, l in reversed(SCALE[1:])) + "| below 60 | F |\n"))
     e, w = d["s_email"], d["withdrawn"]
+    if traps.canonical:
+        body = ("Hi - I've exported the gradebook. Could you work out the final grades? The registrar wants the "
+                "final percentage (one decimal) and the letter for every student.\n\n"
+                "A few things the export doesn't know:\n\n"
+                "1. Use the weights on the Weights tab of the export. We dropped the second project in week 3 and I "
+                "moved that weight onto the final exam. The syllabus still shows the old split.\n\n"
+                "2. In the gradebook EX means excused, and a blank means they never turned it in.\n\n"
+                f"3. {e['first']} {e['last']} had a documented absence on the day of Quiz 4. I never entered the EX, "
+                "so the cell is blank - please treat it as excused.\n\n"
+                f"4. {w['first']} {w['last']} withdrew in July. The registrar records a W, so leave that student off the "
+                "grade sheet.\n\n"
+                "Please send it as a spreadsheet with the formulas in, so I can check a couple of students by hand.\n\n"
+                "Thanks,\nDana")
+    else:
+        items = ["Use the weights on the Weights tab of the export."
+                 + (" We dropped the second project in week 3 and I moved that weight onto the final exam. The syllabus "
+                    "still shows the old split." if traps.on("weights") else ""),
+                 "In the gradebook EX means excused, and a blank means they never turned it in."]
+        if excuse:
+            items.append(f"{e['first']} {e['last']} had a documented absence on the day of Quiz 4. I never entered the EX, "
+                         "so the cell is blank - please treat it as excused.")
+        if withdrawn:
+            items.append(f"{w['first']} {w['last']} withdrew in July. The registrar records a W, so leave that student off "
+                         "the grade sheet.")
+        body = ("Hi - I've exported the gradebook. Could you work out the final grades? The registrar wants the "
+                "final percentage (one decimal) and the letter for every student.\n\n"
+                "A few things the export doesn't know:\n\n"
+                + "".join(f"{i}. {t}\n\n" for i, t in enumerate(items, start=1)) +
+                "Please send it as a spreadsheet with the formulas in, so I can check a couple of students by hand.\n\n"
+                "Thanks,\nDana")
     write_email_thread(os.path.join(ws, "email_from_dana.txt"), [
         {"from": "Dana Okafor <dokafor@lakeviewlearning.org>", "to": "you", "date": "Mon, 17 Aug 2026 18:22",
-         "subject": "BKP-110 final grades",
-         "body": ("Hi - I've exported the gradebook. Could you work out the final grades? The registrar wants the "
-                  "final percentage (one decimal) and the letter for every student.\n\n"
-                  "A few things the export doesn't know:\n\n"
-                  "1. Use the weights on the Weights tab of the export. We dropped the second project in week 3 and I "
-                  "moved that weight onto the final exam. The syllabus still shows the old split.\n\n"
-                  "2. In the gradebook EX means excused, and a blank means they never turned it in.\n\n"
-                  f"3. {e['first']} {e['last']} had a documented absence on the day of Quiz 4. I never entered the EX, "
-                  "so the cell is blank - please treat it as excused.\n\n"
-                  f"4. {w['first']} {w['last']} withdrew in July. The registrar records a W, so leave that student off the "
-                  "grade sheet.\n\n"
-                  "Please send it as a spreadsheet with the formulas in, so I can check a couple of students by hand.\n\n"
-                  "Thanks,\nDana")}])
+         "subject": "BKP-110 final grades", "body": body}])
 
     header = ["student_id", "student", "final_pct", "letter"]
     rows = [[s["id"], f"{s['last']}, {s['first']}", f"{s['final']:.2f}", s["letter"]] for s in sorted(d["enrolled"], key=lambda z: z["last"])]
@@ -222,13 +289,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "traps": {"excused_in_gradebook": d["s_ex"]["id"], "excused_by_email": e["id"], "missing_work": d["s_missing"]["id"],
                   "weights_change": d["s_proj"]["id"], "dropped_quiz": d["s_drop"]["id"]}})
     write_xlsx(os.path.join(sol, "grades.xlsx"), solution_sheets(d), creator="reference")
-    write_task_yaml(HERE, {
+    spec = {
         "id": "gradebook-weighted", "track": "desk", "category": "spreadsheet",
         "title": "Final weighted grades for the bookkeeping course",
         "ask": ("Final grades for BKP-110 are due to the registrar. Work them out from Dana's gradebook export and save "
                 "grades.xlsx with the formulas in; her email and the syllabus have the rules.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the syllabus drops each student's lowest quiz; one student bombed Quiz 5, and averaging all six quizzes "
             "moves their grade (check: final grade per student)",
             "EX cells are excused and leave the category; blank cells are missing work and score zero - treating EX as "
@@ -243,26 +310,54 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "one student withdrew; the row is still in the export with half the work blank and must not get a letter "
             "(check: final grade per student)",
             "the instructor wants to check students by hand, so the grades must be live formulas (check: live formulas)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "grades.xlsx exists", "path": "grades.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "grades.xlsx", "min_count": 22},
             {"type": "xlsx_no_errors", "name": "no error cells", "path": "grades.xlsx"},
             {"type": "custom", "name": "final grade per student", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "gradebook-weighted", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed}", [(s["last"], round(s["final"], 1), s["letter"]) for s in d["enrolled"]][:8])
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """grades.xlsx right in every respect except that it falls for `trap`:
+    drop_quiz every quiz averaged; ex_blank the gradebook's EX cells scored zero; email_excuse the blank Quiz 4 scored
+    zero; points_row raw points averaged as percentages; weights the syllabus's old split; withdrawn the withdrawn student
+    graded with blanks as zeros; formulas the right grades pasted as values."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    sheets = solution_sheets(d, mutant=trap)
+    if trap == "formulas":
+        by_id = {s["id"]: s for s in d["enrolled"]}
+        for row in sheets["Final Grades"]["rows"]:
+            s = by_id[row[0]]
+            row[2:] = [None] * 5 + [round(s["final"], 1), s["letter"]]
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "grades.xlsx"), sheets, creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(3000):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

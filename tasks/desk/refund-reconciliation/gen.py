@@ -2,6 +2,9 @@
 """refund-reconciliation: an inn's August refund log from its booking system against the card processor's export.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off failed,september_checks --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant fee_net --out DIR                      # a deliverable that falls for one trap
 
 Business: The Larkin House Inn, a twelve-room inn. The front desk logs every refund in the property management system
 (PMS), then keys card refunds into the processor's terminal, sometimes a day or three later. The owner reconciles the
@@ -24,12 +27,36 @@ from __future__ import annotations
 
 import argparse
 import os
+import shutil
 import sys
 from datetime import date, datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the exports are written, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "fee_net": "full refunds return Clearpath's fee so net differs from the refund, and charges and payouts share the "
+                   "export (off: no fee on any refund line, only refund lines exported; the note drops those sentences)",
+        "twocard": "one refund went back to two cards as two processor lines (off: one line for the whole refund; the note "
+                   "drops the sentence about adding pieces up)",
+        "failed": "failed refund attempts are in the export (off: not exported; the note drops 'a failed refund is not a "
+                  "refund')",
+        "september_checks": "September's own refunds are in the export and two check refunds are in the PMS log (off: "
+                            "neither exported; the note drops the lines about them)",
+    },
+    fixed={
+        "partials": "one booking has two partial refunds on different days",
+        "timing": "late-August refunds settle in September; July's timing items settle in August",
+        "diff_nopms": "one refund keyed with transposed digits, one made in the dashboard with no PMS entry",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["fee_net", "twocard", "partials", "failed", "timing", "september_checks", "diff_nopms"]
 
 B62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 STAFF = ["Maya (front desk)", "Jonah (front desk)", "Evelyn (manager)"]
@@ -228,7 +255,8 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- emit
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     header = ["refund_id", "booking_ref", "pms_amount", "processor_amount", "difference", "status"]
 
@@ -240,19 +268,48 @@ def emit(seed: int, naive_dir: str | None) -> None:
         os.makedirs(naive_dir, exist_ok=True)
         write_csv(os.path.join(naive_dir, "refund_recon.csv"), header, body(naive_rows(d)))
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     r = rng(seed + 17)
+    pms_log, proc = d["pms"], d["proc"]
+    fee_net, twocard, failed, sept = (traps.on(k) for k in ("fee_net", "twocard", "failed", "september_checks"))
+    if not traps.canonical:
+        recon_ids = {i for rw in d["recon"] for i in rw["proc_ids"]}
+        two = next(rw for rw in d["recon"] if rw["role"] == "twocard")["proc_ids"]
+        proc = []
+        for x in d["proc"]:
+            if not fee_net and x["type"] != "refund":
+                continue
+            if not failed and x["status"] == "failed":
+                continue
+            if not sept and x["type"] == "refund" and x["status"] == "succeeded" and x["id"] not in recon_ids:
+                continue      # September's own refunds: the only succeeded refund lines no reconciliation row uses
+            if not twocard and x["id"] == two[1]:
+                continue
+            if not twocard and x["id"] == two[0]:
+                both = [y for y in d["proc"] if y["id"] in two]
+                x = {**x, "amount": sum(y["amount"] for y in both), "fee": sum(y["fee"] for y in both)}
+            if not fee_net and x["type"] == "refund":
+                x = {**x, "fee": 0}
+            proc.append(x)
+        if not sept:
+            pms_log = [p for p in pms_log if p["method"] != "Check"]
 
     # ---- workspace: PMS refund log
     write_csv(os.path.join(ws, "pms_refunds_2026-08.csv"), ["Refund #", "Issued", "Booking", "Guest", "Reason", "Method", "Amount", "Issued by"],
               [[p["id"], p["issued"].strftime("%m/%d/%Y"), p["booking"], p["guest"], p["reason"], p["method"], money_str(p["amount"] / 100, 1), p["staff"]]
-               for p in d["pms"]], preamble=["The Larkin House Inn - Refunds issued", "Report period: 08/01/2026 to 08/31/2026"])
+               for p in pms_log], preamble=["The Larkin House Inn - Refunds issued", "Report period: 08/01/2026 to 08/31/2026"])
 
     # ---- workspace: processor export
     write_csv(os.path.join(ws, "clearpath_balance_activity_2026-08-01_to_2026-09-05.csv"),
               ["id", "type", "status", "created", "amount", "fee", "net", "currency", "description", "card_last4"],
               [[x["id"], x["type"], x["status"], x["created"].strftime("%Y-%m-%d %H:%M"), f"{x['amount'] / 100:.2f}", f"{x['fee'] / 100:.2f}",
-                f"{(x['amount'] - x['fee']) / 100:.2f}", "usd", x["desc"], x["last4"]] for x in d["proc"]], bom=True)
+                f"{(x['amount'] - x['fee']) / 100:.2f}", "usd", x["desc"], x["last4"]] for x in proc], bom=True)
 
     # ---- workspace: July's reconciliation (the template, and where last month's timing items are)
     jrows = []
@@ -267,18 +324,31 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_csv(os.path.join(ws, "refund_recon_2026-07.csv"), header, jrows)
 
     # ---- workspace: owner's note
+    if traps.canonical:
+        note_mid = ("- Only card refunds go through Clearpath. Refunds we paid by check are not part of this.\n"
+                    "- Match on the refund amount itself (the amount column), not net. On a full refund Clearpath gives back its fee, so\n"
+                    "  net will not equal the refund. Charges, payouts and fees in the export are not refunds. A failed refund is not a refund.\n"
+                    "- A refund can go back to more than one card. Add the pieces up.\n"
+                    "- The front desk sometimes keys the refund a few days after logging it. The export runs to Sep 5 so late-August\n"
+                    "  refunds can be found: if it went through in September, it is 'timing - settled in September'. The July\n"
+                    "  file's timing items should have come through in early August - give each one a line with its July PMS amount\n"
+                    "  and status 'prior month timing'. Anything else created in September belongs to next month.\n")
+    else:
+        match = "- Match on the refund amount itself (the amount column)" + (
+            ", not net. On a full refund Clearpath gives back its fee, so net will not equal the refund. Charges, payouts and "
+            "fees in the export are not refunds." if fee_net else ".") + (" A failed refund is not a refund." if failed else "")
+        note_mid = (("- Only card refunds go through Clearpath. Refunds we paid by check are not part of this.\n" if sept else "")
+                    + match + "\n"
+                    + ("- A refund can go back to more than one card. Add the pieces up.\n" if twocard else "")
+                    + "- The front desk sometimes keys the refund a few days after logging it. The export runs to Sep 5 so late-August\n"
+                    "  refunds can be found: if it went through in September, it is 'timing - settled in September'. The July\n"
+                    "  file's timing items should have come through in early August - give each one a line with its July PMS amount\n"
+                    "  and status 'prior month timing'." + (" Anything else created in September belongs to next month." if sept else "") + "\n")
     write_text(os.path.join(ws, "note_refund_recon.txt"),
                "August refund reconciliation - notes to self (and whoever does it this month)\n\n"
                "- July's file is the layout. One line per refund in the PMS log, plus a line for anything the processor refunded that\n"
                "  has no PMS refund. refund_id is our RF number; if the PMS never had it, use the processor's refund id.\n"
-               "- Only card refunds go through Clearpath. Refunds we paid by check are not part of this.\n"
-               "- Match on the refund amount itself (the amount column), not net. On a full refund Clearpath gives back its fee, so\n"
-               "  net will not equal the refund. Charges, payouts and fees in the export are not refunds. A failed refund is not a refund.\n"
-               "- A refund can go back to more than one card. Add the pieces up.\n"
-               "- The front desk sometimes keys the refund a few days after logging it. The export runs to Sep 5 so late-August\n"
-               "  refunds can be found: if it went through in September, it is 'timing - settled in September'. The July\n"
-               "  file's timing items should have come through in early August - give each one a line with its July PMS amount\n"
-               "  and status 'prior month timing'. Anything else created in September belongs to next month.\n"
+               + note_mid +
                "- Statuses: matched, timing - settled in September, prior month timing, amount differs, not in processor, not in PMS.\n"
                "- Amounts are positive refund amounts. 0.00 where a side has nothing. processor_amount is what actually went through,\n"
                "  wherever it landed. difference = pms_amount minus processor_amount, so the column adds up to what is still\n"
@@ -294,12 +364,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
     for rw in d["recon"]:
         role.setdefault(rw["role"], rw)
     pins = [role[k]["refund_id"] for k in ("full", "twocard", "retry", "failed", "diff", "nopms", "timing", "prior")]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "refund-reconciliation", "track": "desk", "category": "bookkeeping",
         "title": "Reconcile August refunds to the card processor",
         "ask": "Can you reconcile August's refunds against Clearpath? The PMS refund log, their export, July's reconciliation and my notes are in the folder. Save it as refund_recon.csv.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"on full refunds such as {role['full']['refund_id']} Clearpath returns its fee, so the net column is smaller than the refund; "
             "matching on net calls them amount differs, and the export also holds charges and payouts (checks: status per refund; "
             "amounts per refund)",
@@ -317,7 +387,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "by check and never touch the processor (checks: one row per refund; row count)",
             f"{role['diff']['refund_id']} was keyed into the terminal with transposed digits, and {role['nopms']['refund_id']} is a goodwill "
             "refund the owner made in the dashboard with no PMS entry (checks: status per refund; variance ties to the unexplained items)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "July's columns", "path": "refund_recon.csv", "columns": header},
             {"type": "csv_set_equal", "name": "one row per refund", "path": "refund_recon.csv", "column": "refund_id", "ref": "refund_recon.csv",
@@ -330,18 +400,73 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "must_match_keys": pins},
             {"type": "custom", "name": "variance ties to the unexplained items", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "refund-reconciliation", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} recon rows={len(d['recon'])} pms={len(d['pms'])} proc={len(d['proc'])} variance={d['variance'] / 100:.2f}")
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """refund_recon.csv right in every respect except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    by_id = {x["id"]: x for x in d["proc"]}
+    rows = []
+    for rw in d["recon"]:
+        rw = dict(rw)
+        role = rw["role"]
+        if trap == "fee_net" and rw["proc_ids"]:        # matched on the net column
+            rw["proc"] = -sum(by_id[i]["amount"] - by_id[i]["fee"] for i in rw["proc_ids"])
+            if rw["status"] == S_MATCH and rw["proc"] != rw["pms"]:
+                rw["status"] = S_DIFF
+        elif trap == "twocard" and role == "twocard":   # only the line on the booking's own card found
+            rw["proc"], rw["status"] = -by_id[rw["proc_ids"][0]]["amount"], S_DIFF
+        elif trap == "partials" and role == "partial2":  # keyed by booking: the second partial refund lost
+            continue
+        elif trap == "failed" and role in ("retry", "failed"):   # failed lines counted as refunds
+            failed_amt = -sum(x["amount"] for x in d["proc"] if x["status"] == "failed" and rw["booking"] in x["desc"])
+            rw["proc"] += failed_amt
+            rw["status"] = S_MATCH if rw["proc"] == rw["pms"] else S_DIFF
+        elif trap == "timing" and role == "timing":     # nothing after 31 August looked at: not in processor
+            rw["proc"], rw["status"] = 0, S_NOPROC
+        elif trap == "timing" and role == "prior":      # July's timing items not carried forward
+            continue
+        elif trap == "diff_nopms" and role == "diff":   # matched on booking, the amount difference passed over
+            rw["status"] = S_MATCH
+        elif trap == "diff_nopms" and role == "nopms":  # only PMS refunds reconciled
+            continue
+        rows.append(rw)
+    if trap == "september_checks":
+        for c in d["checks"]:                           # check refunds reconciled against the processor
+            rows.append({"refund_id": c["id"], "booking": c["booking"], "pms": c["amount"], "proc": 0, "status": S_NOPROC})
+        used = {i for rw in d["recon"] for i in rw["proc_ids"]}
+        for x in d["proc"]:                             # September's own refunds read as dashboard refunds
+            if x["type"] == "refund" and x["status"] == "succeeded" and x["id"] not in used:
+                rows.append({"refund_id": x["id"], "booking": x["desc"].split()[1], "pms": 0, "proc": -x["amount"], "status": S_NOPMS})
+    header = ["refund_id", "booking_ref", "pms_amount", "processor_amount", "difference", "status"]
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "refund_recon.csv"), header,
+              [[rw["refund_id"], rw["booking"], f"{rw['pms'] / 100:.2f}", f"{rw['proc'] / 100:.2f}", f"{(rw['pms'] - rw['proc']) / 100:.2f}",
+                rw["status"]] for rw in sorted(rows, key=lambda rw: rw["refund_id"])])
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a_ = ap.parse_args()
+    traps = parse_trap_args(a_, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         if acceptable(build(a_.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a_.seed * 1000 + attempt, a_.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a_.seed * 1000 + attempt, a_.naive, traps, a_.out, a_.mutant)

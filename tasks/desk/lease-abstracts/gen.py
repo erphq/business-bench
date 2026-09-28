@@ -2,6 +2,9 @@
 """lease-abstracts: the leases for a six-suite retail plaza abstracted for the lender before a refinance.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off scan,expired_lease --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant notice_window --out DIR           # a deliverable that falls for one trap
 
 Traps (each caught by a check, see task.yaml):
   * base rent is stated per month (101, 106, 108), per year payable monthly (102) and per rentable square foot per
@@ -21,11 +24,35 @@ Traps (each caught by a check, see task.yaml):
   * the current Suite 106 lease summary is an image-only scan                           (checks: one row per suite; tenant names)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, shutil, sys
 from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the lease documents are written (the same
+# terms, stated plainly), so build() and its random draws are identical in every variant and the answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "rent_basis": "base rent written per year (102) and per rentable square foot per year (104, 110) (off: every "
+                      "lease states its monthly base rent; 104's schedule gives monthly rent per lease year)",
+        "step_basis": "fixed increases written per RSF per year (102) and per year (110) (off: both state the step in "
+                      "monthly rent)",
+        "no_expiry": "101 and 102 print a term but no expiration date (off: both print the expiration date)",
+        "notice_window": "102 and 108 give notice windows with two lead times (off: each gives only the latest notice "
+                         "lead time)",
+        "cam_caps": "CAM caps written as 104% and 105% of the prior year, and 104 prints an 8.9% proportionate share "
+                    "(off: caps written as 4% and 5% increases, no proportionate share printed)",
+        "expired_lease": "the previous Suite 106 tenant's expired 2019 lease is in the folder (off: not in the folder)",
+        "scan": "the current Suite 106 lease summary is an image-only scan (off: a text PDF with the same lines)",
+    },
+    fixed={
+        "roll_forward": "rent is rolled forward through every increase taken by 1 October 2026",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["rent_basis", "roll_forward", "step_basis", "no_expiry", "notice_window", "cam_caps", "expired_lease", "scan"]
 
 CUTOFF = date(2026, 10, 1)
 PLAZA = "Hawthorn Commons"
@@ -115,10 +142,16 @@ def build(seed: int) -> dict:
     old = dict(tenant=names[6], start=date(2019, 11, 1), end=date(2024, 10, 31), base=float(r.choice([2400, 2550, 2700])))
     return dict(L=L, old=old)
 
-def emit(seed: int) -> None:
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed); L = d["L"]; old = d["old"]
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     F = os.path.join(ws, "leases"); os.makedirs(F, exist_ok=True)
+    rent_basis, step_basis, expiry = traps.on("rent_basis"), traps.on("step_basis"), traps.on("no_expiry")
+    window, cam_pct = traps.on("notice_window"), traps.on("cam_caps")
 
     # ---- 101: Helvetica, basic provisions box first, clauses after
     a = L["101"]
@@ -126,6 +159,7 @@ def emit(seed: int) -> None:
         ("title", "Retail Lease - Basic Lease Provisions"), ("small", f"{PLAZA}, {PLAZA_ADDR}"), ("hr", None),
         ("kv", [("Landlord", LANDLORD), ("Tenant", a["tenant"]), ("Premises", f"Suite 101, approximately {a['rsf']:,} rentable square feet"),
                 ("Commencement Date", long(a["start"])), ("Term", "Sixty (60) months from the Commencement Date"),
+                *([] if expiry else [("Expiration Date", long(a["end"]))]),
                 ("Monthly Base Rent", f"{usd(a['base'])} per month"), ("Security Deposit", usd(a["base"] * 2)),
                 ("Permitted Use", "Retail sales and related services")]),
         ("spacer", 8),
@@ -148,34 +182,45 @@ def emit(seed: int) -> None:
         ("title", "SHOPPING CENTER LEASE"), ("p", f"This Lease is made as of June 14, 2021 between {LANDLORD} (\"Landlord\") and {b['tenant'].upper()} (\"Tenant\")."),
         ("h", "ARTICLE 1. PREMISES AND TERM"),
         ("p", f"1.1 Landlord leases to Tenant Suite 102 of {PLAZA} containing approximately {b['rsf']:,} rentable square feet (the \"Premises\")."),
-        ("p", "1.2 The term of this Lease shall be seven (7) years commencing on " + long(b["start"]) + " (the \"Commencement Date\")."),
+        ("p", "1.2 The term of this Lease shall be seven (7) years commencing on " + long(b["start"]) + " (the \"Commencement Date\")"
+              + ("." if expiry else " and expiring on " + long(b["end"]) + " (the \"Expiration Date\").")),
         ("h", "ARTICLE 3. RENT"),
         ("p", f"3.1 Tenant shall pay annual base rent of {words(int(b['annual'])).title()} Dollars ({usd(b['annual'])}), payable in equal monthly "
-              "installments in advance on the first day of each calendar month."),
-        ("p", "3.2 On each anniversary of the Commencement Date, annual base rent shall increase by Fifty Cents ($0.50) per rentable square foot of the Premises."),
+              "installments in advance on the first day of each calendar month." if rent_basis else
+              f"3.1 Tenant shall pay monthly base rent of {usd(b['annual'] / 12)}, in advance on the first day of each calendar month."),
+        ("p", "3.2 On each anniversary of the Commencement Date, annual base rent shall increase by Fifty Cents ($0.50) per rentable square foot of the Premises."
+              if step_basis else
+              f"3.2 On each anniversary of the Commencement Date, monthly base rent shall increase by {usd(b['esc'])}."),
         ("p", "3.3 Rent not received by the fifth day of the month bears a late charge of five percent (5%) of the overdue amount."),
         ("h", "ARTICLE 6. OPERATING EXPENSES"),
         ("p", "6.4 Notwithstanding anything to the contrary, Tenant's share of Controllable CAM Charges for any Lease Year shall not exceed one hundred four "
-              "percent (104%) of Tenant's share of Controllable CAM Charges for the preceding Lease Year."),
+              "percent (104%) of Tenant's share of Controllable CAM Charges for the preceding Lease Year." if cam_pct else
+              "6.4 Notwithstanding anything to the contrary, Tenant's share of Controllable CAM Charges shall not increase by more than four "
+              "percent (4%) in any Lease Year over the preceding Lease Year."),
         ("h", "ARTICLE 22. RENEWAL"),
         ("p", "22.1 Tenant shall have two (2) successive options to renew the term for three (3) years each. Tenant shall exercise each option by written "
-              "notice delivered to Landlord no earlier than twelve (12) months and no later than six (6) months prior to the expiration of the then-current term."),
+              "notice delivered to Landlord no earlier than twelve (12) months and no later than six (6) months prior to the expiration of the then-current term."
+              if window else
+              "22.1 Tenant shall have two (2) successive options to renew the term for three (3) years each. Tenant shall exercise each option by written "
+              "notice delivered to Landlord no later than six (6) months prior to the expiration of the then-current term."),
         ("spacer", 12), ("p", f"LANDLORD: {LANDLORD}          TENANT: {b['tenant']}")],
         font="Times-Roman", base_size=11)
 
     # ---- 104: Courier on A4, rent schedule exhibit with a gridded table of per-RSF rates
     c = L["104"]
-    rows = [["Lease Year", "Period", "Annual Base Rent per RSF"]]
+    rows = [["Lease Year", "Period", "Annual Base Rent per RSF" if rent_basis else "Monthly Base Rent"]]
     for i, rate in enumerate(c["rates"]):
         ps = date(c["start"].year + i, 5, 1); pe = date(c["start"].year + i + 1, 4, 30)
-        rows.append([str(i + 1), f"{date_variant(ps, 1)} - {date_variant(pe, 1)}", f"${rate:,.2f}"])
+        rows.append([str(i + 1), f"{date_variant(ps, 1)} - {date_variant(pe, 1)}",
+                     f"${rate:,.2f}" if rent_basis else usd(round(rate * c["rsf"] / 12, 2))])
     write_pdf_document(os.path.join(F, "104_rent_schedule_exhibit.pdf"), [
         ("title", "EXHIBIT C - RENT SCHEDULE"), ("small", f"Attached to the Lease dated March 18, 2024 - {PLAZA}"), ("hr", None),
         ("kv", [("Tenant", c["tenant"]), ("Premises", f"Suite 104 ({c['rsf']:,} RSF)"), ("Lease Commencement", date_variant(c["start"], 1)),
-                ("Lease Expiration", date_variant(c["end"], 1)), ("Proportionate Share", f"{c['share']}%")]),
+                ("Lease Expiration", date_variant(c["end"], 1)), *([("Proportionate Share", f"{c['share']}%")] if cam_pct else [])]),
         ("spacer", 6),
         ("p", "Base Rent shall increase by three percent (3%) on the first day of each Lease Year after the first, as shown below. "
-              "Monthly installments equal the annual rate multiplied by the rentable area of the Premises, divided by twelve."),
+              + ("Monthly installments equal the annual rate multiplied by the rentable area of the Premises, divided by twelve." if rent_basis else
+                 "Base Rent is payable in the monthly installments shown.")),
         ("spacer", 4),
         ("table", rows, {"grid": True, "shade_header": True, "col_widths": [70, 210, 150]}),
         ("spacer", 8),
@@ -186,29 +231,36 @@ def emit(seed: int) -> None:
 
     # ---- 106: image-only scan of the current lease summary
     dd = L["106"]
-    write_scan_pdf(os.path.join(F, "scan_suite_106_lease_summary.pdf"), [
+    summary = [
         f"{PLAZA.upper()} - LEASE SUMMARY", "", "SUITE: 106", f"TENANT: {dd['tenant']}", f"AREA: {dd['rsf']:,} RSF", "",
         f"LEASE START: {date_variant(dd['start'], 3)}", f"LEASE END:   {date_variant(dd['end'], 3)}", "",
         f"BASE RENT: {usd(dd['base'])} / month", f"INCREASES: +{usd(dd['esc'])} per month", "   on each lease anniversary", "",
         "CAM: pro rata share, increases", "   capped at 4.5% per year", "",
         "OPTIONS: one (1) renewal of 5 years", "NOTICE: at least 120 days before", "   lease end, in writing", "",
-        "Summary prepared from executed lease", f"for {LENDER} file. - M.R."], font_size=31, seed=seed + 7, skew_deg=0.7, noise=650)
+        "Summary prepared from executed lease", f"for {LENDER} file. - M.R."]
+    if traps.on("scan"):
+        write_scan_pdf(os.path.join(F, "scan_suite_106_lease_summary.pdf"), summary, font_size=31, seed=seed + 7, skew_deg=0.7, noise=650)
+    else:
+        write_pdf_document(os.path.join(F, "suite_106_lease_summary.pdf"),
+                           [("p", ln) if ln else ("spacer", 6) for ln in summary], font="Courier", base_size=11)
 
     # ---- 106 (old): the previous tenant's expired 2019 lease, Helvetica
-    write_pdf_document(os.path.join(F, "Suite_106_Lease_2019.pdf"), [
-        ("title", "Retail Lease"), ("small", f"{PLAZA}, {PLAZA_ADDR}"), ("hr", None),
-        ("kv", [("Tenant", old["tenant"]), ("Premises", "Suite 106"), ("Commencement Date", long(old["start"])),
-                ("Expiration Date", long(old["end"])), ("Monthly Base Rent", usd(old["base"])), ("Annual Increase", "Three percent (3%)")]),
-        ("spacer", 6),
-        ("p", "Option to Extend: one (1) option of five (5) years on not less than one hundred eighty (180) days' written notice prior to the Expiration Date."),
-        ("p", "CAM: Tenant's share of controllable expenses shall not increase more than five percent (5%) per year.")], font="Helvetica", base_size=10)
+    if traps.on("expired_lease"):
+        write_pdf_document(os.path.join(F, "Suite_106_Lease_2019.pdf"), [
+            ("title", "Retail Lease"), ("small", f"{PLAZA}, {PLAZA_ADDR}"), ("hr", None),
+            ("kv", [("Tenant", old["tenant"]), ("Premises", "Suite 106"), ("Commencement Date", long(old["start"])),
+                    ("Expiration Date", long(old["end"])), ("Monthly Base Rent", usd(old["base"])), ("Annual Increase", "Three percent (3%)")]),
+            ("spacer", 6),
+            ("p", "Option to Extend: one (1) option of five (5) years on not less than one hundred eighty (180) days' written notice prior to the Expiration Date."),
+            ("p", "CAM: Tenant's share of controllable expenses shall not increase more than five percent (5%) per year.")], font="Helvetica", base_size=10)
 
     # ---- 108: Helvetica A4, riders before the basic terms
     e8 = L["108"]
     write_pdf_document(os.path.join(F, "Suite108_lease_riders.pdf"), [
         ("h", "RIDER 1 - OPTION TO EXTEND"),
         ("p", "Tenant shall have one (1) option to extend the Term for a period of five (5) years. To exercise the option Tenant shall give Landlord written "
-              "notice no more than twelve (12) months and no less than two hundred seventy (270) days before the Expiration Date."),
+              + ("notice no more than twelve (12) months and no less than two hundred seventy (270) days before the Expiration Date." if window else
+                 "notice no less than two hundred seventy (270) days before the Expiration Date.")),
         ("h", "RIDER 2 - COMMON AREA CHARGES"),
         ("p", "Increases in Tenant's share of controllable Common Area Charges are capped at three percent (3%) per calendar year, non-cumulative."),
         ("hr", None),
@@ -227,12 +279,18 @@ def emit(seed: int) -> None:
         ("p", f"<b>Section 2.1 Term.</b> The Term begins {long(f10['start'])} and ends {long(f10['end'])}, unless extended as provided in Article 30."),
         ("spacer", 4),
         ("p", f"<b>Section 4.1 Minimum Rent.</b> Tenant shall pay Minimum Annual Rent at the rate of {usd(f10['rate'])} per rentable square foot per annum "
-              f"on {f10['rsf']:,} rentable square feet, in twelve equal monthly installments."),
+              f"on {f10['rsf']:,} rentable square feet, in twelve equal monthly installments." if rent_basis else
+              f"<b>Section 4.1 Minimum Rent.</b> Tenant shall pay Minimum Monthly Rent of {usd(round(f10['rate'] * f10['rsf'] / 12, 2))} "
+              f"for the {f10['rsf']:,} rentable square feet of the Premises."),
         ("p", f"<b>Section 4.2 Adjustment.</b> On June 1, 2021 and on each June 1 thereafter during the Term, Minimum Annual Rent shall increase by "
-              f"{words(int(f10['annual_step'])).title()} Dollars ({usd(f10['annual_step'])})."),
+              f"{words(int(f10['annual_step'])).title()} Dollars ({usd(f10['annual_step'])})." if step_basis else
+              f"<b>Section 4.2 Adjustment.</b> On June 1, 2021 and on each June 1 thereafter during the Term, Minimum Monthly Rent shall increase by "
+              f"{usd(f10['esc'])}."),
         ("spacer", 4),
         ("p", "<b>Section 7.3 CAM Contribution.</b> Tenant's CAM contribution for any calendar year shall not exceed one hundred five percent (105%) "
-              "of its CAM contribution for the prior calendar year."),
+              "of its CAM contribution for the prior calendar year." if cam_pct else
+              "<b>Section 7.3 CAM Contribution.</b> Tenant's CAM contribution shall not increase by more than five percent (5%) in any calendar year "
+              "over the prior calendar year."),
         ("spacer", 4),
         ("p", "<b>Article 30. Options.</b> Tenant shall have three (3) options to extend the Term for five (5) years each, each exercised by written notice "
               "given at least nine (9) months prior to the expiration of the then current Term.")],
@@ -269,13 +327,13 @@ def emit(seed: int) -> None:
                                 "108": L["108"]["base"], "110": L["110"]["rate"]},
         "naive_notice_first_number": {"102": add_months(L["102"]["end"], -12).isoformat(), "108": (L["108"]["end"] - timedelta(days=365)).isoformat()}})
     old_key = old["tenant"].split(",")[0].replace(" LLC", "").replace(" Inc.", "")
-    write_task_yaml(HERE, {
+    spec = {
         "id": "lease-abstracts", "track": "desk", "category": "extraction",
         "title": "Abstract the plaza leases for the lender",
         "ask": "The bank wants lease abstracts for everyone in the plaza before the refinance closes. Go through the leases folder and put them in "
                "lease_abstracts.csv - Marisol's note says what she needs.\n",
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "base rent is written per month (101, 106, 108), per year payable monthly (102) and per rentable square foot per year (104, 110); the note wants the monthly figure (check: rent in effect on 1 October 2026)",
             "rent must be rolled forward through every increase already taken by 1 October 2026 (five for 102, six for 110, three compounding percent steps for 101); copying the starting rent fails (check: rent in effect on 1 October 2026)",
             "fixed increases are written per rentable square foot per year (102: $0.50 x RSF / 12), per year (110: annual step / 12) and per month (106); the note wants the monthly step (checks: escalation type; escalation amount)",
@@ -284,7 +342,7 @@ def emit(seed: int) -> None:
             "CAM caps read 104% and 105% of the prior year (4 and 5), 104 has no cap and prints an 8.9% proportionate share that is not a cap (check: option count and CAM cap)",
             "the previous Suite 106 tenant's 2019 lease, expired in 2024, sits in the folder beside the current one (checks: tenant names; expired lease left out)",
             "the current Suite 106 lease summary is an image-only scan (checks: one row per suite; tenant names)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "lease_abstracts.csv", "columns": header},
             {"type": "csv_set_equal", "name": "one row per suite", "path": "lease_abstracts.csv", "column": "suite", "ref": "lease_abstracts.csv", "normalize": ["strip", "lower"]},
@@ -304,7 +362,65 @@ def emit(seed: int) -> None:
              "columns": ["notice_deadline"], "min_accuracy": 1.0, "must_match_keys": ["101", "102", "108"]},
             {"type": "text_not_contains", "name": "expired lease left out", "path": "lease_abstracts.csv", "phrases": [old_key]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "lease-abstracts", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """lease_abstracts.csv right in every respect except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    L, old = {k: dict(v) for k, v in d["L"].items()}, d["old"]
+    if trap == "rent_basis":        # the rent in effect copied in the unit the lease states it: per year, per RSF per year
+        L["102"]["rent"] = round(L["102"]["rent"] * 12, 2)
+        L["104"]["rent"] = L["104"]["rates"][increases_by(L["104"]["start"], date(2025, 5, 1), CUTOFF)]
+        L["110"]["rent"] = round(L["110"]["rent"] * 12, 2)
+    elif trap == "roll_forward":    # the starting monthly rent, no increases applied
+        L["101"]["rent"], L["102"]["rent"] = L["101"]["base"], round(L["102"]["annual"] / 12, 2)
+        L["104"]["rent"] = round(L["104"]["rates"][0] * L["104"]["rsf"] / 12, 2)
+        L["106"]["rent"], L["108"]["rent"] = L["106"]["base"], L["108"]["base"]
+        L["110"]["rent"] = round(L["110"]["rate"] * L["110"]["rsf"] / 12, 2)
+    elif trap == "step_basis":      # the step as written: $0.50 per RSF per year, the annual dollar step
+        L["102"]["esc"], L["110"]["esc"] = 0.50, L["110"]["annual_step"]
+    elif trap == "no_expiry":       # commencement plus the term, without the day off; the notice deadline follows it
+        for k in ("101", "102"):
+            L[k]["end"] = add_months(L[k]["start"], 60 if k == "101" else 84)
+        L["101"]["notice"] = L["101"]["end"] - timedelta(days=180)
+        L["102"]["notice"] = add_months(L["102"]["end"], -6)
+    elif trap == "notice_window":   # the first number in the window read as the deadline
+        L["102"]["notice"] = add_months(L["102"]["end"], -12)
+        L["108"]["notice"] = L["108"]["end"] - timedelta(days=365)
+    elif trap == "cam_caps":        # 104% and 105% copied as written, 104's proportionate share read as its cap
+        L["102"]["cam"], L["110"]["cam"], L["104"]["cam"] = 104.0, 105.0, L["104"]["share"]
+    elif trap == "expired_lease":   # Suite 106 abstracted from the readable 2019 lease instead of the scan
+        n = increases_by(old["start"], date(2020, 11, 1), old["end"])
+        L["106"] = dict(tenant=old["tenant"], start=old["start"], end=old["end"], rent=round(old["base"] * 1.03 ** n, 2),
+                        esc_type="percent", esc=3.0, options=1, notice=old["end"] - timedelta(days=180), cam=5.0)
+    elif trap == "scan":            # the image-only scan never read: no Suite 106 row
+        del L["106"]
+    header = ["suite", "tenant", "commencement_date", "expiration_date", "monthly_base_rent", "escalation_type", "escalation_amount",
+              "renewal_options", "notice_deadline", "cam_cap_pct"]
+    rows = [[k, v["tenant"], v["start"].isoformat(), v["end"].isoformat(), f"{v['rent']:.2f}", v["esc_type"], f"{v['esc']:g}",
+             v["options"], v["notice"].isoformat() if v["notice"] else "", f"{v['cam']:g}"]
+            for k, v in L.items()]
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "lease_abstracts.csv"), header, rows)
+
+
+# Not caught as cited: the 'step_basis' mutant (102's step as $0.50 and 110's as the annual dollar step, both still typed
+# 'fixed') fails "escalation amount" but passes "escalation type", which the trap also cites: reading the step in the
+# wrong unit leaves its type right, so that citation cannot be met by this mistake. Kept in code, out of MUTANTS.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "step_basis"}
+
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)
