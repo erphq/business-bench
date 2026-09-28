@@ -2,6 +2,9 @@
 """price-list-page: a letterpress card studio's wholesale price list for shops, as one self-contained HTML page.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off price_text,old_prices --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant order --out DIR                      # a deliverable that falls for one trap
 
 Business: a two-person letterpress studio selling greeting cards, notebooks and prints wholesale to gift shops.
 The shop platform exports the catalog with retail and wholesale prices typed as text, pack sizes typed as text,
@@ -25,6 +28,27 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switches act when the workspace files are written, after every random draw, so
+# build() and the reference never move.
+TRAPS = TrapSet(
+    switchable={
+        "price_text": "wholesale prices typed as text in six styles; off: plain numbers such as 2.25 (the retail "
+                      "column stays)",
+        "pack": "pack sizes typed as text ('6 pk', 'box of 12', 'single'); off: the plain count (the pack discount "
+                "rule is the answer and stays)",
+        "status_spellings": "discontinued typed Discontinued, DISC or disc.; off: always Discontinued",
+        "name_flag": "one line is Active but its name reads 'DISCONTINUED - ...'; off: plain name, status Discontinued",
+        "wedding": "the fully discontinued Wedding category is in the export; off: not in the export",
+        "old_prices": "last fall's wholesale price file sits beside the export; off: not in the folder",
+    },
+    fixed={
+        "order": "the category order comes from the note",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["price_text", "pack", "status_spellings", "name_flag", "wedding", "order", "old_prices"]
 
 ORDER = ["Holiday", "Birthday", "Thank You", "Sympathy", "Everyday", "Notebooks", "Art Prints"]
 CODES = {"Holiday": "HOL", "Birthday": "BDY", "Thank You": "TY", "Sympathy": "SYM", "Everyday": "EVD",
@@ -125,7 +149,7 @@ def usd(c: int) -> str:
     return f"${c / 100:,.2f}"
 
 
-def page_html(active: list) -> str:
+def page_html(active: list, order: list = ORDER) -> str:
     out = ["<!DOCTYPE html>", '<html lang="en">', "<head>", '<meta charset="utf-8">',
            "<title>Paper Heron Press - wholesale price list</title>", "<style>",
            "body{font-family:'Palatino Linotype',Palatino,serif;margin:28px;color:#2b2b2b;max-width:860px}",
@@ -136,7 +160,7 @@ def page_html(active: list) -> str:
            "<h1>Paper Heron Press</h1>",
            "<p>Wholesale price list, fall 2026. Prices in US dollars. Cards ship in boxed packs; the pack price "
            "includes the pack discount.</p>"]
-    for cat in ORDER:
+    for cat in order:
         ps = sorted([p for p in active if p["cat"] == cat], key=lambda p: p["name"].lower())
         if not ps:
             continue
@@ -151,7 +175,8 @@ def page_html(active: list) -> str:
     return "\n".join(out)
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     prods, active = d["prods"], d["active"]
     r = rng(seed + 5)
@@ -162,10 +187,35 @@ def emit(seed: int, naive_dir: str | None) -> None:
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
     rows = [[p["sku"], p["name_raw"], p["cat"], p["pack_raw"], usd(p["retail_cents"]), p["price_raw"], p["status"],
              r.choice(["", "", "", "restock Oct", "low paper stock", ""]) if p["status"] == "Active" else ""]
             for p in sorted(prods, key=lambda x: x["sku"])]
+    old_rows = [[p["sku"], p["name"], f"{max(p['cents'] - r.choice([0, 10, 15, 25]), 100) / 100:.2f}"] for p in sorted(prods, key=lambda x: x["sku"])]
+    if mutant:
+        return write_mutant(d, mutant, out, old_rows)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
+    if not traps.canonical:  # rows were drawn in full above; neutralise the switched-off pitfalls now
+        by_sku = {p["sku"]: p for p in prods}
+        shown = []
+        for row in rows:
+            p = by_sku[row[0]]
+            if not traps.on("wedding") and p["cat"] == "Wedding":
+                continue
+            row = list(row)
+            if not traps.on("price_text"):
+                row[5] = f"{p['cents'] / 100:.2f}"
+            if not traps.on("pack"):
+                row[3] = str(p["pack"])
+            if not traps.on("name_flag") and p.get("name_flag"):
+                row[1], row[6], row[7] = p["name"], "Discontinued", ""
+            if not traps.on("status_spellings") and row[6] != "Active":
+                row[6] = "Discontinued"
+            shown.append(row)
+        rows = shown
     write_csv(os.path.join(ws, "shop_catalog_export_2026-09-10.csv"),
               ["SKU", "Product name", "Category", "Pack qty", "Retail price", "Wholesale price", "Status", "Internal note"],
               rows, bom=True)
@@ -181,11 +231,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
                "For every item show the price each and the pack price. Cards only go out in boxed packs: the pack "
                "price is the price each times the number in the box, less 10% for a box of 6 and 15% for a box of 12. "
                "Notebooks and prints never get a pack discount.\n\n"
-               "Anything discontinued stays off the list - we are out of wedding cards altogether. People have "
-               "marked discontinued lines in different ways over the years, so look carefully.\n\n"
+               "Anything discontinued stays off the list - we are out of wedding cards altogether."
+               + (" People have marked discontinued lines in different ways over the years, so look carefully."
+                  if traps.on("status_spellings") or traps.on("name_flag") else "") + "\n\n"
                "Nadia\n")
-    write_csv(os.path.join(ws, "wholesale_prices_fall_2025.csv"), ["SKU", "Product", "Wholesale"],
-              [[p["sku"], p["name"], f"{max(p['cents'] - r.choice([0, 10, 15, 25]), 100) / 100:.2f}"] for p in sorted(prods, key=lambda x: x["sku"])])
+    if traps.on("old_prices"):
+        write_csv(os.path.join(ws, "wholesale_prices_fall_2025.csv"), ["SKU", "Product", "Wholesale"], old_rows)
     gone = [p for p in prods if p not in active]
     write_json(os.path.join(ref, "expected.json"), {
         "products": [{"name": p["name"], "sku": p["sku"], "category": p["cat"], "pack": p["pack"],
@@ -196,7 +247,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_text(os.path.join(sol, "index.html"), page_html(active))
     key = [p for p in active if p["pack"] == 12][:2] + [p for p in active if p["pack"] == 6][:2]
     nf = d["name_flag"]
-    traps = [
+    trap_text = [
         "wholesale prices are typed as text in six styles ('$2.25', '2.25', 'USD 2.25', '2.25 ea', '$3.5', a leading "
         "space) beside a retail column that is roughly double (check: page structure: unit and pack prices)",
         "the pack price is price each times pack size less 10% on a box of 6 and 15% on a box of 12, with no discount "
@@ -211,13 +262,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "Art Prints first (check: page structure: category order)",
         "last fall's wholesale price file sits beside the export with older prices (check: page structure: unit and pack prices)",
     ]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "price-list-page", "track": "desk", "category": "tooling",
         "title": "Fall wholesale price list page for shop buyers",
         "ask": "Can you make our fall wholesale price list page for the shop buyers from the catalog export? Nadia's "
                "note has the rules. Save it as index.html.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": traps,
+        "traps": active_trap_text(trap_text, TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "index.html exists", "path": "index.html"},
             {"type": "text_contains_all", "name": "every live product listed", "path": "index.html",
@@ -228,7 +279,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "numbers": [p["pack_cents"] / 100 for p in key], "rel_tol": 0.0000001},
             {"type": "custom", "name": "page structure", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "price-list-page", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} active={len(active)} gone={[p['name'] for p in gone]}")
 
 
@@ -251,14 +305,50 @@ def write_naive(d: dict, out: str) -> None:
     write_text(os.path.join(out, "index.html"), "\n".join(parts))
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str, old_rows: list) -> None:
+    """The reference page with the one mistake `trap` names."""
+    prods = d["prods"]
+    active = [dict(p) for p in d["active"]]
+    order = ORDER
+    reprice = lambda p, cents: dict(p, cents=cents, pack_cents=int(round(cents * p["pack"] * (1 - discount(p["cat"], p["pack"])))))
+    if trap == "price_text":        # the retail column read as the wholesale price
+        active = [reprice(p, p["retail_cents"]) for p in active]
+    elif trap == "pack":            # pack price = price each x pack size, no pack discount
+        active = [dict(p, pack_cents=p["cents"] * p["pack"]) for p in active]
+    elif trap == "status_spellings":  # only the exact status 'Discontinued' dropped; DISC and disc. lines stay
+        active = [dict(p) for p in prods if p["status"] != "Discontinued" and not p.get("name_flag") and p["cat"] != "Wedding"]
+    elif trap == "name_flag":       # the status column trusted: the line flagged only in its name stays
+        active = [dict(p) for p in prods if p["status"] == "Active"]
+    elif trap == "wedding":         # the Wedding category kept as a section
+        active += [dict(p) for p in prods if p["cat"] == "Wedding"]
+        order = ORDER + ["Wedding"]
+    elif trap == "order":           # categories in alphabetical order
+        order = sorted(ORDER)
+    elif trap == "old_prices":      # prices taken from last fall's file
+        old = {row[0]: int(round(float(row[2]) * 100)) for row in old_rows}
+        active = [reprice(p, old[p["sku"]]) for p in active]
+    else:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "index.html"), page_html(active, order))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(500):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)
