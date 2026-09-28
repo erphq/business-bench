@@ -1,0 +1,5902 @@
+{
+ "_skipped": {},
+ "_transforms": [
+  "csv_crlf",
+  "csv_quote_all",
+  "csv_no_final_newline",
+  "csv_reverse_rows",
+  "csv_reverse_columns",
+  "csv_header_case",
+  "csv_bom",
+  "md_rewrap_72",
+  "md_rewrap_narrow",
+  "md_unwrap",
+  "md_star_bullets",
+  "md_trailing_ws",
+  "md_crlf",
+  "html_reindent",
+  "html_break_blocks",
+  "html_rewrap_text",
+  "html_escape_quotes",
+  "html_entities_nonascii",
+  "html_upper_tags",
+  "ics_crlf",
+  "ics_fold"
+ ],
+ "_view": "snapshot:87f624e",
+ "address-standardize": {
+  "Keystone template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "city, state and ZIP": {
+   "fn": [],
+   "tried": 4
+  },
+  "delivery address line": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per mailing address": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "amazon-inventory-loader": {
+  "Inventory Loader columns, exact order": {
+   "fn": [],
+   "tried": 3
+  },
+  "add-delete": {
+   "fn": [],
+   "tried": 3
+  },
+  "item condition code": {
+   "fn": [],
+   "tried": 3
+  },
+  "one row per sku": {
+   "fn": [],
+   "tried": 3
+  },
+  "price rules": {
+   "fn": [],
+   "tried": 3
+  },
+  "product id and type": {
+   "fn": [],
+   "tried": 3
+  },
+  "quantity and fulfillment": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "ap-aging": {
+  "1-30 bucket total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 33754.91 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "31-60 bucket total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 20777.42 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "Hopkins Family Pears total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 4637.17 in a row or column mentioning 'hopkins'",
+   "fn": [],
+   "tried": 0
+  },
+  "Northline Freight total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 2370.98 in a row or column mentioning 'northline'",
+   "fn": [],
+   "tried": 0
+  },
+  "Summit Gas total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 1236.91 in a row or column mentioning 'summit gas'",
+   "fn": [],
+   "tried": 0
+  },
+  "ap_aging.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "current bucket total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 26222.35 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries total and past due": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo names the most overdue bill": {
+   "fn": [],
+   "tried": 5
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "67 error cells: Aging!B2=#NAME?, Aging!C2=#NAME?, Aging!D2=#NAME?, Aging!E2=#NAME?, Aging!F2=#NAME?, Aging!G2=#NAME?, Aging!B3=#NAME?, Aging!C3=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "total payables": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 97861.01 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "appointment-no-shows": {
+  "every tutor": {
+   "fn": [],
+   "tried": 6
+  },
+  "no-shows and rate per tutor and month": {
+   "fn": [],
+   "tried": 6
+  },
+  "one row per tutor and month": {
+   "fn": [],
+   "tried": 6
+  },
+  "winter file columns": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "ar-aging-report": {
+  "31-60 bucket total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 49111.54 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "Pier 9 Fish House balance (September payment not yet received)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 65691.53 in a row or column mentioning 'pier 9'",
+   "fn": [],
+   "tried": 0
+  },
+  "Riverbend Bistro over 90 (unapplied credit on the oldest invoice)": {
+   "fn": [],
+   "tried": 0
+  },
+  "aging.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries total receivables and total past due": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo names the top three past-due customers": {
+   "fn": [],
+   "tried": 5
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "105 error cells: Aging!B4=#NAME?, Aging!C4=#NAME?, Aging!D4=#NAME?, Aging!E4=#NAME?, Aging!F4=#NAME?, Aging!G4=#NAME?, Aging!H4=#NAME?, Aging!B5=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "total receivables as of 31 August": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 621369.99 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "bank-reconciliation": {
+  "adjusted balance": {
+   "fn": [],
+   "tried": 0
+  },
+  "both sides tie and items listed": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "outstanding checks and deposits in transit totals": {
+   "fn": [],
+   "tried": 0
+  },
+  "reconciliation.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "bank-statement-pdf": {
+  "June file columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "accounts and dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "amounts": {
+   "fn": [],
+   "tried": 7
+  },
+  "descriptions": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per transaction": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "running balances": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "bom-cost-rollup": {
+  "IW-4830 48in workbench cost": {
+   "fn": [],
+   "tried": 0
+  },
+  "IW-7230 72in workbench cost": {
+   "fn": [],
+   "tried": 0
+  },
+  "IW-MC2 mobile cart cost": {
+   "fn": [],
+   "tried": 0
+  },
+  "IW-SR5 shelving rack cost": {
+   "fn": [],
+   "tried": 0
+  },
+  "IW-TS1 tool station cost": {
+   "fn": [],
+   "tried": 0
+  },
+  "assembly_costs.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "budget-vs-actual": {
+  "dock staff variance (seasonal cost, favourable-positive)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 5983.11 in a row or column mentioning 'dock staff'",
+   "fn": [],
+   "tried": 0
+  },
+  "fuel variance (over budget is negative)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 -2583.71 in a row or column mentioning 'fuel'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "40 error cells: Variance!F2=#NAME?, Variance!G2=#NAME?, Variance!F3=#NAME?, Variance!G3=#NAME?, Variance!F4=#NAME?, Variance!G4=#NAME?, Variance!F5=#NAME?, Vari",
+   "fn": [],
+   "tried": 0
+  },
+  "slip rentals actual (transient sub-account, credits, no July)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 239808.67 in a row or column mentioning 'slip'",
+   "fn": [],
+   "tried": 0
+  },
+  "slip rentals budget Jan-Jun (seasonal, 35%)": {
+   "fn": [],
+   "tried": 0
+  },
+  "total expenses actual": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 552766.16 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "variance.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "winter storage variance (seasonal income)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 -24131.52 in a row or column mentioning 'winter storage'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "business-cards-scanned": {
+  "countries": {
+   "fn": [],
+   "tried": 7
+  },
+  "mobile phones": {
+   "fn": [],
+   "tried": 7
+  },
+  "names": {
+   "fn": [],
+   "tried": 7
+  },
+  "office phones": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per contact": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "titles and companies": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "campaign-cpl-report": {
+  "Direct Mail spend shown": {
+   "fn": [],
+   "tried": 0
+  },
+  "Google Ads cost per lead": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 193.61 in a row or column mentioning 'google'",
+   "fn": [],
+   "tried": 0
+  },
+  "LinkedIn cost per lead (EUR converted)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 356.17 in a row or column mentioning 'linkedin'",
+   "fn": [],
+   "tried": 0
+  },
+  "Meta cost per lead (facebook + instagram merged)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 179.92 in a row or column mentioning 'meta'",
+   "fn": [],
+   "tried": 0
+  },
+  "Q2 spend total (no subtotal double count)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 53939.18 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "cpl.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells (Direct Mail has zero leads)": {
+   "baseline": "fail",
+   "detail": "34 error cells: Summary!B2=#NAME?, Summary!C2=#NAME?, Summary!D2=#NAME?, Summary!E2=#NAME?, Summary!G2=#NAME?, Summary!B3=#NAME?, Summary!C3=#NAME?, Summary!D3=",
+   "fn": [],
+   "tried": 0
+  },
+  "total leads (quarter only, no spam/test)": {
+   "fn": [],
+   "tried": 0
+  },
+  "totals are live formulas": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "card-expense-coding": {
+  "employee owes": {
+   "fn": [],
+   "tried": 3
+  },
+  "every posted charge coded": {
+   "fn": [],
+   "tried": 3
+  },
+  "gl accounts": {
+   "fn": [],
+   "tried": 3
+  },
+  "import columns": {
+   "fn": [],
+   "tried": 3
+  },
+  "one row per charge": {
+   "fn": [],
+   "tried": 3
+  },
+  "review list": {
+   "fn": [],
+   "tried": 3
+  },
+  "review list says why": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "card-statements-pdf": {
+  "amounts": {
+   "fn": [],
+   "tried": 7
+  },
+  "cards and dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "descriptions": {
+   "fn": [],
+   "tried": 7
+  },
+  "foreign fees": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per transaction": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "cash-drawer-variance": {
+  "deposited per day": {
+   "fn": [],
+   "tried": 7
+  },
+  "every open day": {
+   "fn": [],
+   "tried": 7
+  },
+  "expected deposit per day": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "variance per day": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "cash-flow-monthly": {
+  "August money out (owner's draw in, pending out)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 62727.61 in a row or column mentioning 'out'",
+   "fn": [],
+   "tried": 0
+  },
+  "June bank fees": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 370.0 in a row or column mentioning 'fee'",
+   "fn": [],
+   "tried": 0
+  },
+  "June money in (transfer from savings left out)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 69318.73 in a row or column mentioning 'in'",
+   "fn": [],
+   "tried": 0
+  },
+  "June money out (fees and the IRS payment from savings)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 67164.69 in a row or column mentioning 'out'",
+   "fn": [],
+   "tried": 0
+  },
+  "cashflow.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries the June fee total": {
+   "fn": [],
+   "tried": 6
+  },
+  "memo names the June fee spike": {
+   "fn": [],
+   "tried": 6
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "28 error cells: Cash flow!B2=#NAME?, Cash flow!C2=#NAME?, Cash flow!D2=#NAME?, Cash flow!E2=#NAME?, Cash flow!F2=#NAME?, Cash flow!G2=#NAME?, Cash flow!H2=#NAME",
+   "fn": [],
+   "tried": 0
+  },
+  "total money in, March to August": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 358168.96 in a row or column mentioning 'in'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "catalog-normalize-units": {
+  "category": {
+   "fn": [],
+   "tried": 4
+  },
+  "every active item": {
+   "fn": [],
+   "tried": 4
+  },
+  "pack quantity": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns in order": {
+   "fn": [],
+   "tried": 4
+  },
+  "unit": {
+   "fn": [],
+   "tried": 4
+  },
+  "unit size": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "catering-quotes-table": {
+  "caterers": {
+   "fn": [],
+   "tried": 7
+  },
+  "fees and total": {
+   "fn": [],
+   "tried": 7
+  },
+  "food and beverage": {
+   "fn": [],
+   "tried": 7
+  },
+  "gratuity amount": {
+   "fn": [],
+   "tried": 7
+  },
+  "gratuity included": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per quote": {
+   "fn": [],
+   "tried": 7
+  },
+  "pricing basis and guests billed": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "chargeback-tracker": {
+  "disputed amounts": {
+   "fn": [],
+   "tried": 6
+  },
+  "evidence deadlines": {
+   "fn": [],
+   "tried": 6
+  },
+  "net loss": {
+   "fn": [],
+   "tried": 6
+  },
+  "one row per case": {
+   "fn": [],
+   "tried": 6
+  },
+  "row count": {
+   "fn": [],
+   "tried": 6
+  },
+  "status": {
+   "fn": [],
+   "tried": 6
+  },
+  "tracker columns": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "chart-of-accounts-remap": {
+  "amount": {
+   "fn": [],
+   "tried": 4
+  },
+  "new account code and name": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per GL line": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "unmapped lines flagged": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "class-roster-changes": {
+  "added per course": {
+   "fn": [],
+   "tried": 7
+  },
+  "dropped per course": {
+   "fn": [],
+   "tried": 7
+  },
+  "fall enrolled per course": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per course": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "spring enrolled per course": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "client-hours-by-project": {
+  "billable hours": {
+   "fn": [],
+   "tried": 7
+  },
+  "internal time excluded": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per project": {
+   "fn": [],
+   "tried": 7
+  },
+  "project list": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "total hours per project": {
+   "fn": [],
+   "tried": 7
+  },
+  "unbillable hours": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "clinic-visits-summary": {
+  "clinic total visits": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 582.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "merged provider February visits": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 51.0 in a row or column mentioning 'mitchell'",
+   "fn": [],
+   "tried": 0
+  },
+  "merged provider quarter visits": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 148.0 in a row or column mentioning 'mitchell'",
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "35 error cells: Report!B2=#NAME?, Report!C2=#NAME?, Report!D2=#NAME?, Report!E2=#NAME?, Report!F2=#NAME?, Report!G2=#NAME?, Report!H2=#NAME?, Report!B3=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "no-show rates per provider": {
+   "baseline": "fail",
+   "detail": "no-show rates per provider=FAIL Alvarez: expected 0.1143 (or 11.43%); Hernandez: expected 0.1192 (or 11.92%); Mitchell: expected 0.1233 (or 12.33%); Taylor: exp",
+   "fn": [],
+   "tried": 0
+  },
+  "second provider no-show count": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 20.0 in a row or column mentioning 'taylor'",
+   "fn": [],
+   "tried": 0
+  },
+  "visits.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "clock-punch-audit": {
+  "daily hours per person": {
+   "fn": [],
+   "tried": 6
+  },
+  "missing punches flagged": {
+   "fn": [],
+   "tried": 0
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "row count": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "commission-calculation": {
+  "Brooks net payout (July deal recovered at 8%)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 912.67 in a row or column mentioning 'brooks'",
+   "fn": [],
+   "tried": 0
+  },
+  "Haddad net payout (senior plan, July deal at the standard rate)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 2864.29 in a row or column mentioning 'haddad'",
+   "fn": [],
+   "tried": 0
+  },
+  "Kim net payout (August deal recovered at 3%)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 4543.17 in a row or column mentioning 'kim'",
+   "fn": [],
+   "tried": 0
+  },
+  "Osei commission (graduated bands, split deals halved)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 3934.31 in a row or column mentioning 'osei'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "24 error cells: August 2026!C2=#NAME?, August 2026!D2=#NAME?, August 2026!E2=#NAME?, August 2026!F2=#NAME?, August 2026!C3=#NAME?, August 2026!D3=#NAME?, August",
+   "fn": [],
+   "tried": 0
+  },
+  "total net payout": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 14361.77 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "commission-clawbacks": {
+  "clawback amounts": {
+   "fn": [],
+   "tried": 7
+  },
+  "recovered from the rep": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "which refunds": {
+   "fn": [],
+   "tried": 7
+  },
+  "written off": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "complaints-summary": {
+  "Damaged goods total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 31.0 in a row or column mentioning 'damaged'",
+   "fn": [],
+   "tried": 0
+  },
+  "Missed pickup total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 49.0 in a row or column mentioning 'missed pickup'",
+   "fn": [],
+   "tried": 0
+  },
+  "complaints in the half": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 210.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "complaints.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo names the worst month": {
+   "fn": [],
+   "tried": 4
+  },
+  "memo states the half total and the worst month's count": {
+   "fn": [],
+   "tried": 4
+  },
+  "no formula errors": {
+   "baseline": "fail",
+   "detail": "49 error cells: Summary!B3=#NAME?, Summary!C3=#NAME?, Summary!D3=#NAME?, Summary!E3=#NAME?, Summary!F3=#NAME?, Summary!G3=#NAME?, Summary!H3=#NAME?, Summary!B4=",
+   "fn": [],
+   "tried": 0
+  },
+  "worst month total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 45.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "contract-key-terms": {
+  "annual values": {
+   "fn": [],
+   "tried": 7
+  },
+  "notice deadlines": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per contract": {
+   "fn": [],
+   "tried": 7
+  },
+  "renewal terms": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "term dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "vendor names": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "contract-renewal-summary": {
+  "automatic renewal": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 6
+  },
+  "current annual value": {
+   "fn": [],
+   "tried": 6
+  },
+  "renewal price cap": {
+   "fn": [
+    "md_rewrap_72",
+    "md_rewrap_narrow"
+   ],
+   "tried": 6
+  },
+  "renewal_summary.md exists": {
+   "fn": [],
+   "tried": 6
+  },
+  "term, notice and the vendor's figures": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "contractor-1099-list": {
+  "W-9 names and TIN type": {
+   "fn": [],
+   "tried": 4
+  },
+  "box 1 amounts": {
+   "fn": [],
+   "tried": 4
+  },
+  "mailing address": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns": {
+   "fn": [],
+   "tried": 4
+  },
+  "who gets a 1099": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "credit-notes-apply": {
+  "applied and unapplied per RMA": {
+   "fn": [],
+   "tried": 7
+  },
+  "credit and fee per RMA": {
+   "fn": [],
+   "tried": 7
+  },
+  "credit note columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "credit notes issued": {
+   "fn": [],
+   "tried": 7
+  },
+  "every open invoice listed": {
+   "fn": [],
+   "tried": 7
+  },
+  "invoice balances after credits": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "customer-dedupe": {
+  "HubSpot template columns, exact order": {
+   "fn": [],
+   "tried": 3
+  },
+  "lifecycle stage (vip = customer, everyone else = lead)": {
+   "fn": [],
+   "tried": 3
+  },
+  "one row per emailed person": {
+   "fn": [],
+   "tried": 3
+  },
+  "phone numbers carried over": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count equals distinct emailed people": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "customer-value-summary": {
+  "customer list": {
+   "fn": [],
+   "tried": 7
+  },
+  "first and last order": {
+   "fn": [],
+   "tried": 7
+  },
+  "lifetime value": {
+   "fn": [],
+   "tried": 7
+  },
+  "order count": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "cv-batch-extraction": {
+  "current roles": {
+   "fn": [],
+   "tried": 7
+  },
+  "names": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per candidate": {
+   "fn": [],
+   "tried": 7
+  },
+  "phones": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "years of experience": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "deferred-revenue-schedule": {
+  "cancelled contract": {
+   "fn": [],
+   "tried": 0
+  },
+  "carried-over contract": {
+   "fn": [],
+   "tried": 0
+  },
+  "deferred balance at year end": {
+   "fn": [],
+   "tried": 0
+  },
+  "late-start contract": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "fn": [],
+   "tried": 0
+  },
+  "revenue recognized, one line per month": {
+   "fn": [],
+   "tried": 0
+  },
+  "total recognized in 2026": {
+   "fn": [],
+   "tried": 0
+  },
+  "upgraded contract": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "delivery-performance": {
+  "Denver shipments delivered": {
+   "fn": [],
+   "tried": 0
+  },
+  "Portland on time": {
+   "fn": [],
+   "tried": 0
+  },
+  "delivery.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "on-time rates per hub": {
+   "fn": [],
+   "tried": 0
+  },
+  "total shipments delivered": {
+   "fn": [],
+   "tried": 0
+  },
+  "weather delays": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "depreciation-schedule": {
+  "depreciation, one line per month": {
+   "fn": [],
+   "tried": 0
+  },
+  "fully depreciated server": {
+   "fn": [],
+   "tried": 0
+  },
+  "gain on the van sale": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "fn": [],
+   "tried": 0
+  },
+  "partial first year": {
+   "fn": [],
+   "tried": 0
+  },
+  "press with salvage": {
+   "fn": [],
+   "tried": 0
+  },
+  "sold van": {
+   "fn": [],
+   "tried": 0
+  },
+  "total 2026 depreciation": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "dept-expense-report": {
+  "Marketing Q2 total (booth moved out)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 95258.33 in a row or column mentioning 'marketing'",
+   "fn": [],
+   "tried": 0
+  },
+  "Production Q2 total (blank cost centers resolved)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 63042.48 in a row or column mentioning 'production'",
+   "fn": [],
+   "tried": 0
+  },
+  "Sales Q2 total (booth moved in)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 37984.55 in a row or column mentioning 'sales'",
+   "fn": [],
+   "tried": 0
+  },
+  "dept_expenses.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries both overrun amounts": {
+   "fn": [],
+   "tried": 6
+  },
+  "memo says Production is over budget": {
+   "fn": [],
+   "tried": 6
+  },
+  "memo says Sales is over budget": {
+   "fn": [],
+   "tried": 6
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "35 error cells: Summary!B2=#NAME?, Summary!C2=#NAME?, Summary!D2=#NAME?, Summary!E2=#NAME?, Summary!G2=#NAME?, Summary!H2=#NAME?, Summary!B3=#NAME?, Summary!C3=",
+   "fn": [],
+   "tried": 0
+  },
+  "total Q2 spend": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 231525.46 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "donor-annual-figures": {
+  "FY2025 net cash raised": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 187578.0 in a row or column mentioning 'fy'",
+   "fn": [],
+   "tried": 0
+  },
+  "FY2026 net cash raised": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 207635.0 in a row or column mentioning 'fy'",
+   "fn": [],
+   "tried": 0
+  },
+  "annual_figures.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "donor retention rate": {
+   "baseline": "fail",
+   "detail": "donor retention rate=FAIL no cell = 0.6225 (or 62.25%) near a retention label",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries both years' totals": {
+   "fn": [],
+   "tried": 6
+  },
+  "memo says the foundation gift was refunded": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 6
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "442 error cells: Summary!B2=#NAME?, Summary!C2=#NAME?, Summary!B3=#VALUE!, Summary!C3=#VALUE!, Summary!C4=#NAME?, Summary!C5=#NAME?, Top donors FY2026!D2=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "retained donors": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 94.0 in a row or column mentioning 'retain'",
+   "fn": [],
+   "tried": 0
+  },
+  "top donor FY2026 total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 20973.0 in a row or column mentioning 'johnson'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "donor-totals-by-year": {
+  "2024 totals": {
+   "fn": [],
+   "tried": 7
+  },
+  "2025 totals": {
+   "fn": [],
+   "tried": 7
+  },
+  "donors who gave": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per household": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "duplicate-invoice-finder": {
+  "amount of the duplicate": {
+   "fn": [],
+   "tried": 7
+  },
+  "credits and recurring bills not flagged": {
+   "fn": [],
+   "tried": 7
+  },
+  "days apart": {
+   "fn": [],
+   "tried": 7
+  },
+  "flagged bills": {
+   "fn": [],
+   "tried": 7
+  },
+  "paired with the original": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "duplicate-payments": {
+  "amount overpaid": {
+   "fn": [],
+   "tried": 7
+  },
+  "duplicate payments": {
+   "fn": [],
+   "tried": 7
+  },
+  "look-alikes not listed": {
+   "fn": [],
+   "tried": 7
+  },
+  "original payment": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "energy-usage-sites": {
+  "Depot Lane total (five months, June not invented)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 23572.9 in a row or column mentioning 'depot lane'",
+   "fn": [],
+   "tried": 0
+  },
+  "Hawthorn Court total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 79556.5 in a row or column mentioning 'hawthorn'",
+   "fn": [],
+   "tried": 0
+  },
+  "Mill Street total (meter replaced in March)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 58992.2 in a row or column mentioning 'mill street'",
+   "fn": [],
+   "tried": 0
+  },
+  "Riverside total (both meters)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 145867.1 in a row or column mentioning 'riverside'",
+   "fn": [],
+   "tried": 0
+  },
+  "energy.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries the portfolio and Depot Lane totals": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo names the missing June read": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "42 error cells: Report!B2=#NAME?, Report!C2=#NAME?, Report!D2=#NAME?, Report!E2=#NAME?, Report!F2=#NAME?, Report!G2=#NAME?, Report!H2=#NAME?, Report!B3=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "total across the portfolio": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 441625.7 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "event-announcement": {
+  "announcement.md exists": {
+   "fn": [],
+   "tried": 5
+  },
+  "dates and seating": {
+   "fn": [],
+   "tried": 5
+  },
+  "pavilion address": {
+   "fn": [],
+   "tried": 5
+  },
+  "seated capacity": {
+   "fn": [],
+   "tried": 5
+  },
+  "spring party details absent": {
+   "fn": [],
+   "tried": 5
+  },
+  "ticket prices": {
+   "fn": [],
+   "tried": 5
+  }
+ },
+ "event-attendee-merge": {
+  "cancelled tickets left off": {
+   "fn": [],
+   "tried": 7
+  },
+  "guests per booking": {
+   "fn": [],
+   "tried": 7
+  },
+  "one line per booking (emails)": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "unconfirmed waitlist left off": {
+   "fn": [],
+   "tried": 7
+  },
+  "walk-ups kept": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "event-postmortem": {
+  "comp no-shows": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 15.0 in a row or column mentioning 'comp'",
+   "fn": [],
+   "tried": 0
+  },
+  "event_summary.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "full conference attended (unique scanners)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 50.0 in a row or column mentioning 'full conference'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo headline figures": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo names the post-event refunds": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo states the attendance rate": {
+   "fn": [],
+   "tried": 5
+  },
+  "net revenue after post-event refunds": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 119915.0 in a row or column mentioning 'net'",
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "31 error cells: Report!C2=#NAME?, Report!D2=#NAME?, Report!E2=#NAME?, Report!F2=#NAME?, Report!G2=#NAME?, Report!C3=#NAME?, Report!D3=#NAME?, Report!E3=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "student gross revenue (cancellations excluded)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 6240.0 in a row or column mentioning 'student'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "event-schedule-page": {
+  "cancelled session left off": {
+   "fn": [],
+   "tried": 4
+  },
+  "every running session listed": {
+   "fn": [],
+   "tried": 4
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "eventbrite-attendee-import": {
+  "Eventbrite template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "first and last name": {
+   "fn": [],
+   "tried": 4
+  },
+  "one order per email": {
+   "fn": [],
+   "tried": 4
+  },
+  "quantity": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "ticket type": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "expense-categorize": {
+  "category per txn_id (thread-override rows, REVIEW rows, and policy-settled furniture and supplies merchants must be right)": {
+   "fn": [],
+   "tried": 6
+  },
+  "one output row per transaction": {
+   "fn": [],
+   "tried": 6
+  },
+  "source columns kept and category added (txn_id, date, time, description, amount, card_last4, category)": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "expense-report-audit": {
+  "amount disallowed per line": {
+   "fn": [],
+   "tried": 6
+  },
+  "flagged lines": {
+   "fn": [],
+   "tried": 6
+  },
+  "policy section per flagged line": {
+   "fn": [],
+   "tried": 6
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "row count": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "faq-from-tickets": {
+  "cancel answer": {
+   "fn": [],
+   "tried": 4
+  },
+  "change deadline answer": {
+   "fn": [],
+   "tried": 4
+  },
+  "damaged coffee answer uses the current window": {
+   "fn": [
+    "md_rewrap_72",
+    "md_rewrap_narrow"
+   ],
+   "tried": 4
+  },
+  "faq.md exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "free shipping answer uses the current threshold": {
+   "fn": [],
+   "tried": 4
+  },
+  "pause answer uses the current limit": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 4
+  },
+  "top five questions in order": {
+   "fn": [],
+   "tried": 4
+  },
+  "withdrawn minimum absent": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "fifo-cogs": {
+  "cat food COGS": {
+   "fn": [],
+   "tried": 0
+  },
+  "cost of goods sold, one line per month": {
+   "fn": [],
+   "tried": 0
+  },
+  "dog food COGS": {
+   "fn": [],
+   "tried": 0
+  },
+  "dog food on hand at June 30": {
+   "fn": [],
+   "tried": 0
+  },
+  "litter COGS": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "fn": [],
+   "tried": 0
+  },
+  "total COGS": {
+   "fn": [],
+   "tried": 0
+  },
+  "tug toy COGS": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "fleet-cost-per-mile": {
+  "Van 22 total cost (plate-named invoices included)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 2879.13 in a row or column mentioning 'van 22'",
+   "fn": [],
+   "tried": 0
+  },
+  "Van 24 cost per mile": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 0.6424 in a row or column mentioning 'van 24'",
+   "fn": [],
+   "tried": 0
+  },
+  "Van 24 miles (to the bill of sale)": {
+   "fn": [],
+   "tried": 0
+  },
+  "Van 26 gallons (litres converted)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 795.39 in a row or column mentioning 'van 26'",
+   "fn": [],
+   "tried": 0
+  },
+  "fleet miles": {
+   "fn": [],
+   "tried": 0
+  },
+  "fleet total cost (no car washes or snacks)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 31321.72 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "fleet_costs.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "66 error cells: Cost per mile!C2=#NAME?, Cost per mile!D2=#NAME?, Cost per mile!E2=#NAME?, Cost per mile!F2=#NAME?, Cost per mile!G2=#NAME?, Cost per mile!H2=#N",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "fleet-mileage-monthly": {
+  "a row for every van and month": {
+   "fn": [],
+   "tried": 6
+  },
+  "every van": {
+   "fn": [],
+   "tried": 6
+  },
+  "miles per van and month": {
+   "fn": [],
+   "tried": 6
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "fundraiser-progress-page": {
+  "anonymous donors kept off": {
+   "fn": [],
+   "tried": 4
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "named top donors and the anonymous slot": {
+   "fn": [],
+   "tried": 4
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 4
+  },
+  "total raised and progress": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "fundraising-appeal": {
+  "appeal.md exists": {
+   "fn": [],
+   "tried": 5
+  },
+  "campaign figures": {
+   "fn": [],
+   "tried": 5
+  },
+  "match amount and deadline": {
+   "fn": [],
+   "tried": 5
+  },
+  "outdated figures absent": {
+   "fn": [],
+   "tried": 5
+  }
+ },
+ "fx-invoice-gains": {
+  "euros still open": {
+   "fn": [],
+   "tried": 7
+  },
+  "fx gain or loss per invoice": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "which invoices": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "gift-card-liability": {
+  "card status": {
+   "fn": [],
+   "tried": 7
+  },
+  "every card we sold, once": {
+   "fn": [],
+   "tried": 7
+  },
+  "liability per card": {
+   "fn": [],
+   "tried": 7
+  },
+  "promo and voided cards left out": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "schedule columns": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "google-contacts-import": {
+  "Google template columns, exact order": {
+   "fn": [],
+   "tried": 3
+  },
+  "first and middle names": {
+   "fn": [],
+   "tried": 3
+  },
+  "labels": {
+   "fn": [],
+   "tried": 3
+  },
+  "one contact per person": {
+   "fn": [],
+   "tried": 3
+  },
+  "organization": {
+   "fn": [],
+   "tried": 3
+  },
+  "phones typed; notes carried and names clean": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "gradebook-weighted": {
+  "final grade per student": {
+   "fn": [],
+   "tried": 0
+  },
+  "grades.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "grant-award-letters": {
+  "award amounts": {
+   "fn": [],
+   "tried": 7
+  },
+  "declined request absent": {
+   "fn": [],
+   "tried": 7
+  },
+  "funder names": {
+   "fn": [],
+   "tried": 7
+  },
+  "grant period": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per awarded grant": {
+   "fn": [],
+   "tried": 7
+  },
+  "report due dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "grant-budget-tracking": {
+  "coordinator stipend remaining": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 844.02 in a row or column mentioning 'coordinator stipend'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "monitoring equipment remaining": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 3203.05 in a row or column mentioning 'monitoring equipment'",
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "baseline": "fail",
+   "detail": "39 error cells: Summary!E2=#NAME?, Summary!F2=#NAME?, Summary!G2=#NAME?, Summary!E3=#NAME?, Summary!F3=#NAME?, Summary!G3=#NAME?, Summary!E4=#NAME?, Summary!F4=",
+   "fn": [],
+   "tried": 0
+  },
+  "restoration materials remaining": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 11944.62 in a row or column mentioning 'restoration materials'",
+   "fn": [],
+   "tried": 0
+  },
+  "restoration personnel remaining": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 683.68 in a row or column mentioning 'restoration personnel'",
+   "fn": [],
+   "tried": 0
+  },
+  "total disallowed": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 2424.01 in a row or column mentioning 'disallow'",
+   "fn": [],
+   "tried": 0
+  },
+  "volunteer recognition remaining": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 1193.99 in a row or column mentioning 'volunteer recognition'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "gusto-employee-import": {
+  "Gusto template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "SSN left blank": {
+   "fn": [],
+   "tried": 4
+  },
+  "employee type and payment unit": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per employee": {
+   "fn": [],
+   "tried": 4
+  },
+  "rate": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "start date": {
+   "fn": [],
+   "tried": 4
+  },
+  "work address": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "helpdesk-tickets-report": {
+  "Email tickets (no merged, spam or April tickets)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 41.0 in a row or column mentioning 'email'",
+   "fn": [],
+   "tried": 0
+  },
+  "Network SLA breaches (business hours, holiday skipped)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 13.0 in a row or column mentioning 'network'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo states the breach count": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 6
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "29 error cells: Summary!B2=#NAME?, Summary!C2=#NAME?, Summary!D2=#NAME?, Summary!B3=#NAME?, Summary!C3=#NAME?, Summary!D3=#NAME?, Summary!B4=#NAME?, Summary!C4=",
+   "fn": [],
+   "tried": 0
+  },
+  "tickets_report.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "total SLA breaches": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 48.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "total tickets": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 255.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "hubspot-deals-import": {
+  "HubSpot template columns, exact order": {
+   "fn": [],
+   "tried": 3
+  },
+  "amount": {
+   "fn": [],
+   "tried": 3
+  },
+  "close date": {
+   "fn": [],
+   "tried": 3
+  },
+  "company domain": {
+   "fn": [],
+   "tried": 3
+  },
+  "one deal per bid": {
+   "fn": [],
+   "tried": 3
+  },
+  "pipeline and stage": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "incident-report": {
+  "cause under investigation": {
+   "fn": [],
+   "tried": 5
+  },
+  "corrective actions with owners and due dates": {
+   "fn": [],
+   "tried": 5
+  },
+  "incident time from the e-stop log": {
+   "fn": [],
+   "tried": 5
+  },
+  "incident_report.md exists": {
+   "fn": [],
+   "tried": 5
+  },
+  "injured person named": {
+   "fn": [],
+   "tried": 5
+  },
+  "no fault language": {
+   "fn": [],
+   "tried": 5
+  },
+  "urgent care referral": {
+   "fn": [],
+   "tried": 5
+  }
+ },
+ "incident-summary": {
+  "Plant 1 lacerations": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 22.0 in a row or column mentioning 'plant 1'",
+   "fn": [],
+   "tried": 0
+  },
+  "Plant 2 incidents": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 41.0 in a row or column mentioning 'plant 2'",
+   "fn": [],
+   "tried": 0
+  },
+  "incidents.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries the incident and near-miss totals": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo names the site with the most incidents": {
+   "fn": [],
+   "tried": 5
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "35 error cells: Report!B2=#NAME?, Report!C2=#NAME?, Report!D2=#NAME?, Report!E2=#NAME?, Report!F2=#NAME?, Report!G2=#NAME?, Report!H2=#NAME?, Report!B3=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "total incidents, all sites": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 111.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "warehouse near misses (site with no incidents still reported)": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "inspection-findings": {
+  "descriptions": {
+   "fn": [],
+   "tried": 7
+  },
+  "due dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per open finding": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "severity": {
+   "fn": [],
+   "tried": 7
+  },
+  "site, source and date": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "insurance-certificates": {
+  "coverage types": {
+   "fn": [],
+   "tried": 7
+  },
+  "insureds and carriers": {
+   "fn": [],
+   "tried": 7
+  },
+  "limits": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per policy": {
+   "fn": [],
+   "tried": 7
+  },
+  "policy dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "status": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "inventory-count-reconcile": {
+  "counted quantity in each": {
+   "fn": [],
+   "tried": 7
+  },
+  "items that are off": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "system quantity and variance": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "inventory-shrinkage": {
+  "Aquarium value": {
+   "fn": [],
+   "tried": 0
+  },
+  "Cat Food value": {
+   "fn": [],
+   "tried": 0
+  },
+  "Dog Food value": {
+   "fn": [],
+   "tried": 0
+  },
+  "Treats & Chews value": {
+   "fn": [],
+   "tried": 0
+  },
+  "damage set aside": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "shrinkage.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "total net shrinkage": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "inventory-tracker-page": {
+  "archived lines left off": {
+   "fn": [],
+   "tried": 4
+  },
+  "every stocked item named": {
+   "fn": [],
+   "tried": 4
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 4
+  },
+  "total stock value": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "inventory-valuation": {
+  "Pots & Planters value (loosely typed SKUs)": {
+   "fn": [],
+   "tried": 0
+  },
+  "Shrubs value (negative counts at zero)": {
+   "fn": [],
+   "tried": 0
+  },
+  "Trees value (latest receipt cost)": {
+   "fn": [],
+   "tried": 0
+  },
+  "items without a cost are flagged": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "total stock value": {
+   "fn": [],
+   "tried": 0
+  },
+  "valuation.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "investor-update": {
+  "confidential conversation not mentioned": {
+   "fn": [],
+   "tried": 5
+  },
+  "end-of-June ARR, customers and cash": {
+   "fn": [],
+   "tried": 5
+  },
+  "growth over Q1": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "quarter revenue figures": {
+   "fn": [],
+   "tried": 5
+  },
+  "runway": {
+   "fn": [],
+   "tried": 5
+  },
+  "unrestated Q2 total absent": {
+   "fn": [],
+   "tried": 5
+  },
+  "update.md exists": {
+   "fn": [],
+   "tried": 5
+  }
+ },
+ "job-posting-from-notes": {
+  "CPR timing": {
+   "fn": [],
+   "tried": 6
+  },
+  "clinic address": {
+   "fn": [],
+   "tried": 6
+  },
+  "how to apply": {
+   "fn": [],
+   "tried": 6
+  },
+  "language requirement withdrawn": {
+   "fn": [],
+   "tried": 6
+  },
+  "old addresses left out": {
+   "fn": [],
+   "tried": 6
+  },
+  "pay range": {
+   "fn": [
+    "md_rewrap_72"
+   ],
+   "tried": 6
+  },
+  "schedule days": {
+   "fn": [
+    "md_rewrap_72",
+    "md_rewrap_narrow"
+   ],
+   "tried": 6
+  },
+  "schedule hours": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "kpi-scorecard-page": {
+  "every metric listed": {
+   "fn": [],
+   "tried": 3
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 3
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 3
+  },
+  "rates shown as percents": {
+   "fn": [],
+   "tried": 3
+  },
+  "retired carpet metric left off": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "lead-source-rollup": {
+  "every source plus Untracked": {
+   "fn": [],
+   "tried": 7
+  },
+  "leads per source": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "won revenue per source": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "lease-abstracts": {
+  "escalation amount": {
+   "fn": [],
+   "tried": 7
+  },
+  "escalation type": {
+   "fn": [],
+   "tried": 7
+  },
+  "expired lease left out": {
+   "fn": [],
+   "tried": 7
+  },
+  "lease dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per suite": {
+   "fn": [],
+   "tried": 7
+  },
+  "option count and CAM cap": {
+   "fn": [],
+   "tried": 7
+  },
+  "option notice deadline": {
+   "fn": [],
+   "tried": 7
+  },
+  "rent in effect on 1 October 2026": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "tenant names": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "loan-schedule-check": {
+  "interest overcharged by the credit union": {
+   "fn": [],
+   "tried": 0
+  },
+  "interest per payment, one line": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "principal balance after August": {
+   "fn": [],
+   "tried": 0
+  },
+  "total interest Jan-Aug": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "lockbox-apply": {
+  "applied per invoice and write-offs": {
+   "fn": [],
+   "tried": 6
+  },
+  "applied.csv columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "nothing misapplied and cash ties to the file total": {
+   "fn": [],
+   "tried": 6
+  },
+  "unapplied amounts": {
+   "fn": [],
+   "tried": 6
+  },
+  "unapplied checks": {
+   "fn": [],
+   "tried": 6
+  },
+  "unapplied.csv columns": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "long-to-wide-attendance": {
+  "district template columns, exact order": {
+   "fn": [],
+   "tried": 3
+  },
+  "every session cell": {
+   "fn": [],
+   "tried": 3
+  },
+  "one row per enrolled student": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count": {
+   "fn": [],
+   "tried": 3
+  },
+  "rows sorted by student name": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "mailchimp-audience-import": {
+  "Mailchimp template columns in order": {
+   "fn": [],
+   "tried": 3
+  },
+  "birthday merge field": {
+   "fn": [],
+   "tried": 3
+  },
+  "name merge fields": {
+   "fn": [],
+   "tried": 3
+  },
+  "one row per subscriber": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count": {
+   "fn": [],
+   "tried": 3
+  },
+  "tags per subscriber": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "maintenance-notices": {
+  "each notice carries its own facts": {
+   "fn": [],
+   "tried": 6
+  },
+  "notice for Aspen House": {
+   "fn": [],
+   "tried": 6
+  },
+  "notice for Birch House": {
+   "fn": [],
+   "tried": 6
+  },
+  "notice for Cypress House": {
+   "fn": [],
+   "tried": 6
+  },
+  "notice for Dogwood House": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "membership-renewals": {
+  "expiry dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "list per member": {
+   "fn": [],
+   "tried": 7
+  },
+  "members on the list": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "menu-cost-sheet": {
+  "Mushroom Risotto plate cost": {
+   "fn": [],
+   "tried": 0
+  },
+  "Seared Salmon plate cost": {
+   "fn": [],
+   "tried": 0
+  },
+  "Smash Burger plate cost": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "plate cost and margin, every dish": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "menu-item-performance": {
+  "Breakfast Sandwich margin": {
+   "fn": [],
+   "tried": 0
+  },
+  "Cold Brew quantity": {
+   "fn": [],
+   "tried": 0
+  },
+  "Latte margin": {
+   "fn": [],
+   "tried": 0
+  },
+  "Smashed Avocado Toast quantity": {
+   "fn": [],
+   "tried": 0
+  },
+  "menu_performance.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "fn": [],
+   "tried": 0
+  },
+  "total margin": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "menu-page-allergens": {
+  "86'd dishes left off": {
+   "fn": [],
+   "tried": 4
+  },
+  "every dish on the menu": {
+   "fn": [],
+   "tried": 4
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "new prices on the menu": {
+   "fn": [],
+   "tried": 4
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "mileage-reimbursement": {
+  "one row per clinician": {
+   "fn": [],
+   "tried": 7
+  },
+  "reimbursable miles": {
+   "fn": [],
+   "tried": 7
+  },
+  "reimbursement per clinician": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "minutes-from-transcript": {
+  "bulk bins decision": {
+   "fn": [],
+   "tried": 5
+  },
+  "freezer repair decision": {
+   "fn": [
+    "md_rewrap_72",
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "minutes facts": {
+   "fn": [],
+   "tried": 5
+  },
+  "minutes.md exists": {
+   "fn": [],
+   "tried": 5
+  }
+ },
+ "month-end-accruals": {
+  "account per item": {
+   "fn": [],
+   "tried": 7
+  },
+  "accrued items": {
+   "fn": [],
+   "tried": 7
+  },
+  "amount per item": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "monthly-report": {
+  "East half-year total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 580434.78 in a row or column mentioning 'east'",
+   "fn": [],
+   "tried": 0
+  },
+  "North half-year total (five months, no invented March)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 457426.09 in a row or column mentioning 'north'",
+   "fn": [],
+   "tried": 0
+  },
+  "South February (contains a duplicate and a refund)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 86893.82 in a row or column mentioning 'south'",
+   "fn": [],
+   "tried": 0
+  },
+  "South half-year total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 612698.71 in a row or column mentioning 'south'",
+   "fn": [],
+   "tried": 0
+  },
+  "West June (contains a duplicate and a refund)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 108547.63 in a row or column mentioning 'west'",
+   "fn": [],
+   "tried": 0
+  },
+  "West half-year total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 612903.61 in a row or column mentioning 'west'",
+   "fn": [],
+   "tried": 0
+  },
+  "memo mentions duplicates or refunds": {
+   "fn": [],
+   "tried": 5
+  },
+  "no formula evaluates to an error": {
+   "baseline": "fail",
+   "detail": "35 error cells: Report!B2=#NAME?, Report!C2=#NAME?, Report!D2=#NAME?, Report!E2=#NAME?, Report!F2=#NAME?, Report!G2=#NAME?, Report!H2=#NAME?, Report!B3=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "one sentence says North has no March data (a gap, not zero sales)": {
+   "fn": [],
+   "tried": 5
+  },
+  "report uses live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "report.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "monthly-report-v9": {
+  "East half-year total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 583367.78 in a row or column mentioning 'east'",
+   "fn": [],
+   "tried": 0
+  },
+  "North half-year total (five months, no invented March)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 513542.32 in a row or column mentioning 'north'",
+   "fn": [],
+   "tried": 0
+  },
+  "South February (contains a duplicate and a refund)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 102379.0 in a row or column mentioning 'south'",
+   "fn": [],
+   "tried": 0
+  },
+  "South half-year total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 626670.12 in a row or column mentioning 'south'",
+   "fn": [],
+   "tried": 0
+  },
+  "West June (contains a duplicate and a refund)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 93838.38 in a row or column mentioning 'west'",
+   "fn": [],
+   "tried": 0
+  },
+  "West half-year total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 607705.3 in a row or column mentioning 'west'",
+   "fn": [],
+   "tried": 0
+  },
+  "memo mentions duplicates or refunds": {
+   "fn": [],
+   "tried": 5
+  },
+  "no formula evaluates to an error": {
+   "baseline": "fail",
+   "detail": "35 error cells: Report!B2=#NAME?, Report!C2=#NAME?, Report!D2=#NAME?, Report!E2=#NAME?, Report!F2=#NAME?, Report!G2=#NAME?, Report!H2=#NAME?, Report!B3=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "one sentence says North has no March data (a gap, not zero sales)": {
+   "fn": [],
+   "tried": 5
+  },
+  "report uses live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "report.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "mrr-report": {
+  "June ending MRR": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 14074.0 in a row or column mentioning 'mrr'",
+   "fn": [],
+   "tried": 0
+  },
+  "March ending MRR": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 14415.0 in a row or column mentioning 'mrr'",
+   "fn": [],
+   "tried": 0
+  },
+  "churned MRR for the half": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 5301.0 in a row or column mentioning 'churn'",
+   "fn": [],
+   "tried": 0
+  },
+  "churned MRR in May": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 4069.0 in a row or column mentioning 'churn'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries the June MRR and the churn figure": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo names the month the churn landed in": {
+   "fn": [],
+   "tried": 5
+  },
+  "mrr.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "29 error cells: Report!B2=#NAME?, Report!C2=#NAME?, Report!E2=#NAME?, Report!B3=#NAME?, Report!C3=#NAME?, Report!D3=#NAME?, Report!E3=#NAME?, Report!B4=#NAME?",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "multi-currency-sales": {
+  "April flagged, no borrowed rate": {
+   "baseline": "fail",
+   "detail": "April flagged, no borrowed rate=FAIL no row mentioning April carries a flag",
+   "fn": [],
+   "tried": 0
+  },
+  "EU marketplace H1 in dollars": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 31317.9 in a row or column mentioning 'eu'",
+   "fn": [],
+   "tried": 0
+  },
+  "H1 total in dollars": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 122342.51 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "March total in dollars": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 20128.27 in a row or column mentioning '2026-03'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "48 error cells: Summary!B2=#NAME?, Summary!C2=#NAME?, Summary!D2=#NAME?, Summary!E2=#NAME?, Summary!F2=#NAME?, Summary!G2=#NAME?, Summary!H2=#NAME?, Summary!B3=",
+   "fn": [],
+   "tried": 0
+  },
+  "sales_usd.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "notes-to-activities": {
+  "Pipedrive template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "accounts with activities": {
+   "fn": [],
+   "tried": 4
+  },
+  "activity date and type": {
+   "fn": [],
+   "tried": 4
+  },
+  "owner": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "occupancy-report": {
+  "Aspen Hollow Q1 booked nights (stays split at month ends)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 49.0 in a row or column mentioning 'aspen'",
+   "fn": [],
+   "tried": 0
+  },
+  "Bear Creek Lodge Q1 booked nights (no cancellations or owner stays)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 49.0 in a row or column mentioning 'bear creek'",
+   "fn": [],
+   "tried": 0
+  },
+  "Fox Den Cabin Q1 available nights (blocks, DTEND exclusive)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 80.0 in a row or column mentioning 'fox den'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "72 error cells: Occupancy!B2=#NAME?, Occupancy!C2=#NAME?, Occupancy!D2=#NAME?, Occupancy!E2=#NAME?, Occupancy!F2=#NAME?, Occupancy!G2=#NAME?, Occupancy!H2=#NAME",
+   "fn": [],
+   "tried": 0
+  },
+  "occupancy rates for Fox Den February, Aspen Hollow January and the portfolio quarter": {
+   "baseline": "fail",
+   "detail": "occupancy Fox Den Cabin 2026-02=FAIL no cell = 0.6957 (or 69.57%) on a row mentioning 'fox den'; occupancy Aspen Hollow 2026-01=FAIL no cell = 0.5769 (or 57.69%",
+   "fn": [],
+   "tried": 0
+  },
+  "occupancy.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "total Q1 booked nights": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 247.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "onboarding-welcome-email": {
+  "CAD kit items": {
+   "fn": [],
+   "tried": 6
+  },
+  "first-day logistics": {
+   "fn": [],
+   "tried": 6
+  },
+  "standard kit items absent": {
+   "fn": [],
+   "tried": 6
+  },
+  "start date, manager and desk phone": {
+   "fn": [],
+   "tried": 6
+  },
+  "welcome.md exists": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "open-purchase-orders": {
+  "lines still open": {
+   "fn": [],
+   "tried": 7
+  },
+  "open quantity per line": {
+   "fn": [],
+   "tried": 7
+  },
+  "over-receipt flag": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "orders-status-page": {
+  "every order listed": {
+   "fn": [],
+   "tried": 4
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 4
+  },
+  "revenue this week": {
+   "fn": [],
+   "tried": 4
+  },
+  "test orders left off": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "overdue-reminders": {
+  "Dorsey Freight credit hold paragraph": {
+   "fn": [],
+   "tried": 5
+  },
+  "Redwood Property Mgmt reminder figures": {
+   "fn": [],
+   "tried": 5
+  },
+  "Yellowtail Seafood reminder figures": {
+   "fn": [],
+   "tried": 5
+  },
+  "per-customer reminder facts": {
+   "fn": [],
+   "tried": 5
+  },
+  "reminder files": {
+   "fn": [],
+   "tried": 5
+  }
+ },
+ "packing-slips-vs-po": {
+  "SKUs and ordered quantities": {
+   "fn": [],
+   "tried": 7
+  },
+  "line status": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per PO line": {
+   "fn": [],
+   "tried": 7
+  },
+  "received quantities": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "substitutions": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "pay-stubs-extraction": {
+  "after-tax deductions": {
+   "fn": [],
+   "tried": 7
+  },
+  "bonus": {
+   "fn": [],
+   "tried": 7
+  },
+  "employee and pay date": {
+   "fn": [],
+   "tried": 7
+  },
+  "gross and net": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per stub": {
+   "fn": [],
+   "tried": 7
+  },
+  "pre-tax deductions": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "taxes": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "payments-match": {
+  "amount outstanding per open invoice (partial remainder required)": {
+   "fn": [],
+   "tried": 7
+  },
+  "matches.csv applies payments correctly": {
+   "fn": [],
+   "tried": 6
+  },
+  "unpaid invoice ids": {
+   "fn": [],
+   "tried": 7
+  },
+  "unpaid.csv columns": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "payments-match-v2": {
+  "amount outstanding per open invoice (partial remainder required)": {
+   "fn": [],
+   "tried": 7
+  },
+  "matches.csv applies payments correctly": {
+   "fn": [],
+   "tried": 6
+  },
+  "unapplied line ids (refund, interest, closed-invoice payment; nothing else)": {
+   "fn": [],
+   "tried": 7
+  },
+  "unapplied.csv columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "unpaid invoice ids": {
+   "fn": [],
+   "tried": 7
+  },
+  "unpaid.csv columns": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "payroll-journal-entry": {
+  "account amounts": {
+   "fn": [],
+   "tried": 3
+  },
+  "accounts used": {
+   "fn": [],
+   "tried": 3
+  },
+  "debits equal credits": {
+   "fn": [],
+   "tried": 3
+  },
+  "import columns": {
+   "fn": [],
+   "tried": 3
+  },
+  "one line per account": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "payroll-quarterly-summary": {
+  "Q1 gross": {
+   "fn": [],
+   "tried": 0
+  },
+  "Q2 gross": {
+   "fn": [],
+   "tried": 0
+  },
+  "Q2 taxes withheld": {
+   "fn": [],
+   "tried": 0
+  },
+  "Q3 net": {
+   "fn": [],
+   "tried": 0
+  },
+  "Q4 gross": {
+   "fn": [],
+   "tried": 0
+  },
+  "Q4 net": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "fn": [],
+   "tried": 0
+  },
+  "year gross": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "payroll-tax-deposits": {
+  "deposit amounts": {
+   "fn": [],
+   "tried": 0
+  },
+  "deposit list columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "deposits grouped by period and quarter": {
+   "fn": [],
+   "tried": 6
+  },
+  "due dates": {
+   "fn": [],
+   "tried": 0
+  },
+  "one line per deposit": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "permission-forms-scanned": {
+  "date signed": {
+   "fn": [],
+   "tried": 7
+  },
+  "guardian phone": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per roster student": {
+   "fn": [],
+   "tried": 7
+  },
+  "other-class slip left out": {
+   "fn": [],
+   "tried": 7
+  },
+  "permission and signature": {
+   "fn": [],
+   "tried": 7
+  },
+  "photo release": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "student and guardian names": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "petty-cash-reconcile": {
+  "kitchen & refreshments total": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "office supplies total": {
+   "fn": [],
+   "tried": 0
+  },
+  "over/short and missing receipt flagged": {
+   "fn": [],
+   "tried": 0
+  },
+  "petty_cash.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "postage total": {
+   "fn": [],
+   "tried": 0
+  },
+  "replenishment check": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "phones-to-e164": {
+  "country codes": {
+   "fn": [],
+   "tried": 4
+  },
+  "e164 numbers": {
+   "fn": [],
+   "tried": 4
+  },
+  "extensions": {
+   "fn": [],
+   "tried": 4
+  },
+  "import status": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per contact": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "plan-change-proration": {
+  "days prorated": {
+   "fn": [],
+   "tried": 7
+  },
+  "proration amounts": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "which changes": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "policy-update-memo": {
+  "damage reporting": {
+   "fn": [
+    "md_rewrap_72",
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "memo.md exists": {
+   "fn": [],
+   "tried": 5
+  },
+  "mileage": {
+   "fn": [],
+   "tried": 5
+  },
+  "moved clause and effective date": {
+   "fn": [],
+   "tried": 5
+  },
+  "overtime approval": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "per diem": {
+   "fn": [],
+   "tried": 5
+  },
+  "tip split": {
+   "fn": [
+    "md_rewrap_72",
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  }
+ },
+ "pos-menu-import": {
+  "TillTap template columns, exact order": {
+   "fn": [],
+   "tried": 3
+  },
+  "min, max and group codes": {
+   "fn": [],
+   "tried": 3
+  },
+  "one row per item, group and modifier": {
+   "fn": [],
+   "tried": 3
+  },
+  "prices as plain numbers": {
+   "fn": [],
+   "tried": 3
+  },
+  "record type, name, parent and category": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "prepaid-amortization": {
+  "Cascadia workers' comp 2026 expense": {
+   "fn": [],
+   "tried": 0
+  },
+  "Keystone auto 2026 expense": {
+   "fn": [],
+   "tried": 0
+  },
+  "Summit floater 2026 expense": {
+   "fn": [],
+   "tried": 0
+  },
+  "balance at 31 December": {
+   "fn": [],
+   "tried": 0
+  },
+  "expense by month, one line": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "total 2026 expense": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "price-increase-notice": {
+  "bud vase sets discontinued": {
+   "fn": [],
+   "tried": 6
+  },
+  "counter arrangement: new price and rounded percent": {
+   "fn": [],
+   "tried": 6
+  },
+  "current prices stated": {
+   "fn": [],
+   "tried": 6
+  },
+  "delivery fee: new price and rounded percent": {
+   "fn": [],
+   "tried": 6
+  },
+  "effective date": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 6
+  },
+  "lobby arrangement: new price and rounded percent": {
+   "fn": [],
+   "tried": 6
+  },
+  "mailing note names the annual-contract customers": {
+   "fn": [],
+   "tried": 6
+  },
+  "no discount code": {
+   "fn": [],
+   "tried": 6
+  },
+  "statement arrangement: new price and rounded percent": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "price-list-page": {
+  "discontinued lines left off": {
+   "fn": [],
+   "tried": 4
+  },
+  "every live product listed": {
+   "fn": [],
+   "tried": 4
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "key pack prices": {
+   "fn": [],
+   "tried": 4
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "price-list-update": {
+  "descriptions and categories carried over": {
+   "fn": [],
+   "tried": 0
+  },
+  "item set": {
+   "fn": [],
+   "tried": 0
+  },
+  "new prices to the cent": {
+   "fn": [],
+   "tried": 0
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 0
+  },
+  "row count": {
+   "fn": [],
+   "tried": 0
+  },
+  "workbook opens clean": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "procurement-savings": {
+  "Cleaning savings": {
+   "fn": [],
+   "tried": 0
+  },
+  "Hops savings": {
+   "fn": [],
+   "tried": 0
+  },
+  "Malt savings": {
+   "fn": [],
+   "tried": 0
+  },
+  "Packaging savings": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "fn": [],
+   "tried": 0
+  },
+  "savings.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "total savings": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "production-yield": {
+  "Bar line good output kg (cases and pieces converted)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 38122.8 in a row or column mentioning 'bar'",
+   "fn": [],
+   "tried": 0
+  },
+  "Bar line scrap kg (rework netted)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 2024.8 in a row or column mentioning 'bar'",
+   "fn": [],
+   "tried": 0
+  },
+  "Bites line scrap kg (grams converted, rework netted)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 304.4 in a row or column mentioning 'bites'",
+   "fn": [],
+   "tried": 0
+  },
+  "Granola line good output kg (bags converted)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 17777.82 in a row or column mentioning 'granola'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "20 error cells: Yield by line!B2=#NAME?, Yield by line!C2=#NAME?, Yield by line!D2=#NAME?, Yield by line!E2=#NAME?, Yield by line!F2=#NAME?, Yield by line!B3=#N",
+   "fn": [],
+   "tried": 0
+  },
+  "plant input kg (no rework or trial input)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 65601.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "yield per line": {
+   "baseline": "fail",
+   "detail": "yield Bar line=FAIL no cell = 0.9341 (or 93.41%) near 'bar'; yield Granola line=FAIL no cell = 0.9148 (or 91.48%) near 'granola'; yield Bites line=FAIL no cell ",
+   "fn": [],
+   "tried": 0
+  },
+  "yield.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "project-budget-burn": {
+  "HVAC remaining": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 15750.0 in a row or column mentioning 'hvac'",
+   "fn": [],
+   "tried": 0
+  },
+  "design fees spent": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 56758.12 in a row or column mentioning 'design'",
+   "fn": [],
+   "tried": 0
+  },
+  "electrical remaining": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 21520.0 in a row or column mentioning 'electrical'",
+   "fn": [],
+   "tried": 0
+  },
+  "exhibit fabrication committed": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 107950.0 in a row or column mentioning 'fabrication'",
+   "fn": [],
+   "tried": 0
+  },
+  "gallery lighting spent": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 38512.5 in a row or column mentioning 'lighting'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "57 error cells: Burn!D2=#NAME?, Burn!E2=#NAME?, Burn!F2=#NAME?, Burn!D3=#NAME?, Burn!E3=#NAME?, Burn!F3=#NAME?, Burn!D4=#NAME?, Burn!E4=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "total committed": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 235464.63 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "total remaining": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 240686.3 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "project-margin": {
+  "Cedar Point cost (unbilled time in, credits netted)": {
+   "fn": [],
+   "tried": 0
+  },
+  "Harborview revenue (invoiced only)": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "margins.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries the studio totals and the worst margin": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo names both loss-making jobs": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "memo says the worst job is losing money": {
+   "fn": [],
+   "tried": 5
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "total margin across all jobs": {
+   "fn": [],
+   "tried": 0
+  },
+  "worst job margin": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "project-status-board": {
+  "bathroom job left off": {
+   "fn": [],
+   "tried": 4
+  },
+  "column counts present": {
+   "fn": [],
+   "tried": 4
+  },
+  "every kitchen task on the board": {
+   "fn": [],
+   "tried": 4
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "promo-code-analysis": {
+  "codes used": {
+   "fn": [],
+   "tried": 7
+  },
+  "orders per code": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "revenue per code": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "status per code": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "property-tax-bills": {
+  "assessed values and exemptions": {
+   "fn": [],
+   "tried": 7
+  },
+  "county and delinquency flag": {
+   "fn": [],
+   "tried": 7
+  },
+  "due dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "installments": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per parcel": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "total tax": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "proposal-from-notes": {
+  "disposal line": {
+   "fn": [],
+   "tried": 4
+  },
+  "high bay line": {
+   "fn": [],
+   "tried": 4
+  },
+  "lift line": {
+   "fn": [],
+   "tried": 4
+  },
+  "no leftovers from the old proposal": {
+   "fn": [],
+   "tried": 4
+  },
+  "optional sensors priced separately": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 4
+  },
+  "other lines priced from the 2026 rates": {
+   "fn": [],
+   "tried": 4
+  },
+  "pole lights dropped": {
+   "fn": [],
+   "tried": 4
+  },
+  "total": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "purchase-orders-pdf": {
+  "PO header fields": {
+   "fn": [],
+   "tried": 4
+  },
+  "line amounts": {
+   "fn": [],
+   "tried": 4
+  },
+  "need-by dates": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per PO line": {
+   "fn": [],
+   "tried": 4
+  },
+  "part numbers and descriptions": {
+   "fn": [],
+   "tried": 4
+  },
+  "quantities and unit prices": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "quarterly-sales-report": {
+  "Assam Breakfast August (duplicate batch removed)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 15162.0 in a row or column mentioning 'assam'",
+   "fn": [],
+   "tried": 0
+  },
+  "Golden Yunnan quarter (renamed product as one line)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 36134.0 in a row or column mentioning 'yunnan'",
+   "fn": [],
+   "tried": 0
+  },
+  "Masala Chai September (net of refunds)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 8446.0 in a row or column mentioning 'chai'",
+   "fn": [],
+   "tried": 0
+  },
+  "Q3 net revenue total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 196009.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries the Q3 net revenue": {
+   "fn": [],
+   "tried": 6
+  },
+  "memo names the duplicate batch": {
+   "fn": [],
+   "tried": 6
+  },
+  "memo names the renamed product": {
+   "fn": [],
+   "tried": 6
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "35 error cells: Q3 by product!B2=#NAME?, Q3 by product!C2=#NAME?, Q3 by product!D2=#NAME?, Q3 by product!E2=#NAME?, Q3 by product!F2=#NAME?, Q3 by product!B3=#N",
+   "fn": [],
+   "tried": 0
+  },
+  "q_report.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "quickbooks-customer-import": {
+  "city, state and ZIP": {
+   "fn": [],
+   "tried": 4
+  },
+  "company name": {
+   "fn": [],
+   "tried": 4
+  },
+  "display names": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per active customer": {
+   "fn": [],
+   "tried": 4
+  },
+  "phone format": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "street lines": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns in order": {
+   "fn": [],
+   "tried": 4
+  },
+  "terms": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "quote-comparison": {
+  "Bluepine delivered total (incl. mandatory onboarding fee and freight)": {
+   "fn": [],
+   "tried": 0
+  },
+  "Kestrel delivered total in USD (40+ tier x 1.08, shipping included)": {
+   "fn": [],
+   "tried": 0
+  },
+  "Northstar delivered total (incl. freight, no early-pay discount)": {
+   "fn": [],
+   "tried": 0
+  },
+  "comparison.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo prices the vendor it recommends": {
+   "fn": [],
+   "tried": 6
+  },
+  "memo weighs warranty": {
+   "fn": [],
+   "tried": 6
+  },
+  "no formula evaluates to an error": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "receipts-scanned": {
+  "dates": {
+   "fn": [],
+   "tried": 4
+  },
+  "merchants": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per receipt": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "subtotals and tax": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns": {
+   "fn": [],
+   "tried": 4
+  },
+  "tips and totals": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "refund-apology-letter": {
+  "correct order number": {
+   "fn": [],
+   "tried": 5
+  },
+  "no promise the policy forbids and no wrong order number": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "processing time": {
+   "fn": [],
+   "tried": 5
+  },
+  "refund amount per policy": {
+   "fn": [],
+   "tried": 5
+  },
+  "response.md exists": {
+   "fn": [],
+   "tried": 5
+  }
+ },
+ "refund-reconciliation": {
+  "July's columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "amounts per refund": {
+   "fn": [],
+   "tried": 6
+  },
+  "one row per refund": {
+   "fn": [],
+   "tried": 6
+  },
+  "row count": {
+   "fn": [],
+   "tried": 6
+  },
+  "status per refund": {
+   "fn": [],
+   "tried": 6
+  },
+  "variance ties to the unexplained items": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "regional-sales-monthly": {
+  "Atlantic quarter total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 393445.0 in a row or column mentioning 'atlantic'",
+   "fn": [],
+   "tried": 0
+  },
+  "Mountain quarter total (two months, no invented May)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 237215.55 in a row or column mentioning 'mountain'",
+   "fn": [],
+   "tried": 0
+  },
+  "Pacific May (duplicate rows and a credit memo)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 141789.07 in a row or column mentioning 'pacific'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries the quarter and Mountain totals": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo says Mountain is missing from the May export": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "24 error cells: Report!B2=#NAME?, Report!C2=#NAME?, Report!D2=#NAME?, Report!E2=#NAME?, Report!B3=#NAME?, Report!C3=#NAME?, Report!D3=#NAME?, Report!E3=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "quarter total, all territories": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 1747317.16 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "regional.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "rent-roll-build": {
+  "every unit with tenant, rent and renewal flag": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "month-to-month rent with the fee": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "total monthly rent": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "rental-utilization": {
+  "days out per month": {
+   "fn": [],
+   "tried": 7
+  },
+  "every machine under its current name": {
+   "fn": [],
+   "tried": 7
+  },
+  "half-year total": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "reorder-list": {
+  "items to reorder": {
+   "fn": [],
+   "tried": 7
+  },
+  "order quantity": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "retention-cohorts": {
+  "February new customers": {
+   "fn": [],
+   "tried": 0
+  },
+  "January cohort month 1": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 19.0 in a row or column mentioning '2026-01'",
+   "fn": [],
+   "tried": 0
+  },
+  "January new customers": {
+   "fn": [],
+   "tried": 0
+  },
+  "March cohort month 2": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 13.0 in a row or column mentioning '2026-03'",
+   "fn": [],
+   "tried": 0
+  },
+  "cohorts.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "30 error cells: Summary!C2=#NAME?, Summary!D2=#NAME?, Summary!E2=#NAME?, Summary!F2=#NAME?, Summary!G2=#NAME?, Summary!C3=#NAME?, Summary!D3=#NAME?, Summary!E3=",
+   "fn": [],
+   "tried": 0
+  },
+  "total new customers": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "returns-analysis": {
+  "damaged units": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "baseline": "fail",
+   "detail": "20 error cells: Summary!E3=#NAME?, Summary!F3=#NAME?, Summary!E4=#NAME?, Summary!F4=#NAME?, Summary!E5=#NAME?, Summary!F5=#NAME?, Summary!E6=#NAME?, Summary!F6=",
+   "fn": [],
+   "tried": 0
+  },
+  "refunded dollars": {
+   "fn": [],
+   "tried": 0
+  },
+  "renamed product units returned": {
+   "fn": [],
+   "tried": 0
+  },
+  "renamed product units sold": {
+   "fn": [],
+   "tried": 0
+  },
+  "return rates, quarter total and the jacket": {
+   "fn": [],
+   "tried": 0
+  },
+  "sizing units": {
+   "fn": [],
+   "tried": 0
+  },
+  "total units returned": {
+   "fn": [],
+   "tried": 0
+  },
+  "units returned for the jacket (exchanges count)": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "rfq-email": {
+  "delivery address": {
+   "fn": [],
+   "tried": 6
+  },
+  "line quantities, stock kit, dates": {
+   "fn": [],
+   "tried": 6
+  },
+  "rfq.md exists": {
+   "fn": [],
+   "tried": 6
+  },
+  "roller pipe wall": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "sales-pivot-by-rep": {
+  "Cruz H1 total (four spellings merged)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 37849.33 in a row or column mentioning 'cruz'",
+   "fn": [],
+   "tried": 0
+  },
+  "H1 total, all reps": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 245492.01 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "Patel April reads 0": {
+   "baseline": "fail",
+   "detail": "Patel April reads 0=FAIL no cell where the rep's row meets the April column reads 0: BY REP!r4c5='#NAME?'; DATA!r438c4='Joshua Morris'; DATA!r438c4='Joshua Morr",
+   "fn": [],
+   "tried": 0
+  },
+  "Walker H1 total (two spellings merged)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 46374.5 in a row or column mentioning 'walker'",
+   "fn": [],
+   "tried": 0
+  },
+  "Walker January (credits netted, deposits out)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 8513.69 in a row or column mentioning 'walker'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "49 error cells: By Rep!B2=#NAME?, By Rep!C2=#NAME?, By Rep!D2=#NAME?, By Rep!E2=#NAME?, By Rep!F2=#NAME?, By Rep!G2=#NAME?, By Rep!H2=#NAME?, By Rep!B3=#NAME?",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "sales-tax-by-address": {
+  "every order": {
+   "fn": [],
+   "tried": 6
+  },
+  "rate per order": {
+   "fn": [],
+   "tried": 6
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "row count": {
+   "fn": [],
+   "tried": 6
+  },
+  "tax per order": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "sales-tax-liability": {
+  "exempt sales": {
+   "fn": [],
+   "tried": 4
+  },
+  "gross sales": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per jurisdiction": {
+   "fn": [],
+   "tried": 4
+  },
+  "tax due": {
+   "fn": [],
+   "tried": 4
+  },
+  "taxable sales": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "salesforce-lead-import": {
+  "Salesforce template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "company placeholder": {
+   "fn": [],
+   "tried": 4
+  },
+  "country and state codes": {
+   "fn": [],
+   "tried": 4
+  },
+  "lead owner username": {
+   "fn": [],
+   "tried": 4
+  },
+  "lead source picklist": {
+   "fn": [],
+   "tried": 4
+  },
+  "lead status picklist": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per lead": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "schedule-change-notices": {
+  "notice for Edward Ward": {
+   "fn": [],
+   "tried": 4
+  },
+  "notice for Joshua Scott": {
+   "fn": [],
+   "tried": 4
+  },
+  "notice for Karen Allen": {
+   "fn": [],
+   "tried": 4
+  },
+  "notice for Ryan Young": {
+   "fn": [],
+   "tried": 4
+  },
+  "notice for Stephanie Ramos": {
+   "fn": [],
+   "tried": 4
+  },
+  "notices carry their own changes": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "schedule-to-ics": {
+  "all-day events": {
+   "fn": [],
+   "tried": 0
+  },
+  "every fall event and nothing else": {
+   "fn": [],
+   "tried": 1
+  },
+  "schedule.ics exists": {
+   "fn": [],
+   "tried": 1
+  },
+  "times carry the time zone": {
+   "fn": [],
+   "tried": 0
+  },
+  "weekly series, occurrences and cancellation": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "shared-cost-allocation": {
+  "Admin total": {
+   "fn": [],
+   "tried": 0
+  },
+  "Finishing total": {
+   "fn": [],
+   "tried": 0
+  },
+  "Install total": {
+   "fn": [],
+   "tried": 0
+  },
+  "Mill Shop total": {
+   "fn": [],
+   "tried": 0
+  },
+  "Showroom total": {
+   "fn": [],
+   "tried": 0
+  },
+  "every account splits to the cent": {
+   "fn": [],
+   "tried": 0
+  },
+  "grand total allocated": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no formula errors": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "shift-coverage-gaps": {
+  "one row per day": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "uncovered hours per day": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "shipment-manifests": {
+  "carrier, date and order": {
+   "fn": [],
+   "tried": 7
+  },
+  "cost": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per shipment": {
+   "fn": [],
+   "tried": 7
+  },
+  "packages": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "weights": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "shipping-rate-lookup": {
+  "billable weight": {
+   "fn": [],
+   "tried": 7
+  },
+  "every order priced": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "shipping cost": {
+   "fn": [],
+   "tried": 7
+  },
+  "zone": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "shopify-product-import": {
+  "Shopify template columns in order": {
+   "fn": [],
+   "tried": 3
+  },
+  "barcodes": {
+   "fn": [],
+   "tried": 3
+  },
+  "first-row product fields and prices": {
+   "fn": [],
+   "tried": 3
+  },
+  "grams": {
+   "fn": [],
+   "tried": 3
+  },
+  "handles": {
+   "fn": [],
+   "tried": 3
+  },
+  "inventory quantity": {
+   "fn": [],
+   "tried": 3
+  },
+  "one row per SKU": {
+   "fn": [],
+   "tried": 3
+  },
+  "option values": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count": {
+   "fn": [],
+   "tried": 3
+  },
+  "variant price": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "sku-crosswalk-migration": {
+  "catalog SKUs": {
+   "fn": [],
+   "tried": 7
+  },
+  "on hand per SKU": {
+   "fn": [],
+   "tried": 7
+  },
+  "price": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "status": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "sop-from-thread": {
+  "approval threshold": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "cash refunds": {
+   "fn": [
+    "md_rewrap_72",
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "refund window": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "refunds logged in the sheet": {
+   "fn": [],
+   "tried": 5
+  },
+  "steps in the right order": {
+   "fn": [],
+   "tried": 5
+  },
+  "store credit window": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  }
+ },
+ "square-inventory-import": {
+  "Square template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "category": {
+   "fn": [],
+   "tried": 4
+  },
+  "item and variation names": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per variation": {
+   "fn": [],
+   "tried": 4
+  },
+  "price in dollars": {
+   "fn": [],
+   "tried": 4
+  },
+  "quantity on hand": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "staff-directory-merge": {
+  "department per person": {
+   "fn": [],
+   "tried": 7
+  },
+  "name as people go by": {
+   "fn": [],
+   "tried": 7
+  },
+  "people in the directory": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "title and extension": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "staff-utilization": {
+  "Hannah Brooks capacity (started 14 Sep)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 97.5 in a row or column mentioning 'hannah'",
+   "fn": [],
+   "tried": 0
+  },
+  "Kenneth Oduya capacity (leave over the holiday)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 142.5 in a row or column mentioning 'kenneth'",
+   "fn": [],
+   "tried": 0
+  },
+  "Omar Haddad capacity (part-time, half day)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 123.0 in a row or column mentioning 'omar'",
+   "fn": [],
+   "tried": 0
+  },
+  "Priya Raman capacity (leave from August)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 142.5 in a row or column mentioning 'priya'",
+   "fn": [],
+   "tried": 0
+  },
+  "firm capacity total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 1029.0 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "54 error cells: Utilization!F2=#NAME?, Utilization!G2=#NAME?, Utilization!I2=#NAME?, Utilization!J2=#NAME?, Utilization!K2=#NAME?, Utilization!L2=#NAME?, Utiliz",
+   "fn": [],
+   "tried": 0
+  },
+  "utilization per person": {
+   "baseline": "fail",
+   "detail": "utilization per person=FAIL missing or wrong: dana: 0.4571; grace: 0.6250; hannah: 0.5615; kenneth: 0.8825; luis: 0.9313; omar: 0.8415; priya: 0.8877; tomasz: 0",
+   "fn": [],
+   "tried": 0
+  },
+  "utilization.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "stripe-customer-import": {
+  "Stripe template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "address lines": {
+   "fn": [],
+   "tried": 4
+  },
+  "city, state and postal code": {
+   "fn": [],
+   "tried": 4
+  },
+  "currency": {
+   "fn": [],
+   "tried": 4
+  },
+  "one customer per legacy account": {
+   "fn": [],
+   "tried": 4
+  },
+  "plan metadata": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "subscription-status-monthly": {
+  "April cancellations": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 4.0 in a row or column mentioning 'cancel'",
+   "fn": [],
+   "tried": 0
+  },
+  "June active subscribers": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 126.0 in a row or column mentioning 'active'",
+   "fn": [],
+   "tried": 0
+  },
+  "active and cancelled by month": {
+   "baseline": "fail",
+   "detail": "active and cancelled by month=FAIL 2026-01: expected 101 active and 2 cancelled; 2026-02: expected 105 active and 3 cancelled; 2026-03: expected 106 active and ",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "12 error cells: Summary!B2=#NAME?, Summary!C2=#NAME?, Summary!B3=#NAME?, Summary!C3=#NAME?, Summary!B4=#NAME?, Summary!C4=#NAME?, Summary!B5=#NAME?, Summary!C5=",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "superbill-codes": {
+  "charges": {
+   "fn": [],
+   "tried": 4
+  },
+  "encounter, account and date": {
+   "fn": [],
+   "tried": 4
+  },
+  "modifiers": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per billed line": {
+   "fn": [],
+   "tried": 4
+  },
+  "procedure codes": {
+   "fn": [],
+   "tried": 4
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "units": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "supplier-catalog-imperial": {
+  "every current article": {
+   "fn": [],
+   "tried": 7
+  },
+  "length and width": {
+   "fn": [],
+   "tried": 7
+  },
+  "pack quantity": {
+   "fn": [],
+   "tried": 7
+  },
+  "price each": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "weight per piece": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "supplier-dispute-letter": {
+  "dispute.md exists": {
+   "fn": [],
+   "tried": 5
+  },
+  "disputed lines with amounts": {
+   "fn": [],
+   "tried": 5
+  },
+  "freight-inclusive total absent": {
+   "fn": [],
+   "tried": 5
+  },
+  "invoice and PO referenced": {
+   "fn": [],
+   "tried": 5
+  },
+  "price clause cited": {
+   "fn": [
+    "md_rewrap_narrow"
+   ],
+   "tried": 5
+  },
+  "total disputed and amount paid now": {
+   "fn": [],
+   "tried": 5
+  }
+ },
+ "supplier-invoices-to-csv": {
+  "dates and currency": {
+   "fn": [],
+   "tried": 4
+  },
+  "descriptions": {
+   "fn": [],
+   "tried": 4
+  },
+  "document identity": {
+   "fn": [],
+   "tried": 4
+  },
+  "document totals": {
+   "fn": [],
+   "tried": 4
+  },
+  "line amounts and discounts": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per line": {
+   "fn": [],
+   "tried": 4
+  },
+  "quantities and prices": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "survey-tally": {
+  "average per question": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per question": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "responses per question": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "table-double-bookings": {
+  "clashes with": {
+   "fn": [],
+   "tried": 7
+  },
+  "clashing bookings": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "table": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "team-directory-page": {
+  "every current staff member named": {
+   "fn": [],
+   "tried": 4
+  },
+  "former staff left off": {
+   "fn": [],
+   "tried": 4
+  },
+  "index.html exists": {
+   "fn": [],
+   "tried": 4
+  },
+  "page structure": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "tenant-ledger-balances": {
+  "balance per lot": {
+   "fn": [],
+   "tried": 7
+  },
+  "every August resident": {
+   "fn": [],
+   "tried": 7
+  },
+  "late fee per lot": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "tenant-statements": {
+  "amounts": {
+   "fn": [],
+   "tried": 7
+  },
+  "descriptions": {
+   "fn": [],
+   "tried": 7
+  },
+  "entry types": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per entry": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "unit and date": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "timesheet-consolidate": {
+  "overtime per person-week": {
+   "fn": [],
+   "tried": 0
+  },
+  "people on the table": {
+   "fn": [],
+   "tried": 6
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "row count (one line per person per week)": {
+   "fn": [],
+   "tried": 6
+  },
+  "total hours per person-week": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "timesheets-scanned": {
+  "employee and date": {
+   "fn": [],
+   "tried": 4
+  },
+  "hours per day": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per person per day": {
+   "fn": [],
+   "tried": 4
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "signature flag": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "tip-pooling": {
+  "managers take nothing": {
+   "fn": [],
+   "tried": 6
+  },
+  "one line per person per shift": {
+   "fn": [],
+   "tried": 6
+  },
+  "payout sheet columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "tip shares per person per shift": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "tuition-collections": {
+  "Lower Elementary outstanding": {
+   "fn": [],
+   "tried": 0
+  },
+  "Primary collected": {
+   "fn": [],
+   "tried": 0
+  },
+  "Toddler credits (percentage discounts computed)": {
+   "fn": [],
+   "tried": 0
+  },
+  "collections.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "fn": [],
+   "tried": 0
+  },
+  "total collected": {
+   "fn": [],
+   "tried": 0
+  },
+  "total net due after credits": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "utility-bills-extraction": {
+  "account, utility and month": {
+   "fn": [],
+   "tried": 7
+  },
+  "current charges": {
+   "fn": [],
+   "tried": 7
+  },
+  "late fees": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per account per month": {
+   "fn": [],
+   "tried": 7
+  },
+  "read types and units": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "usage": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "variants-flatten": {
+  "availability": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per variant": {
+   "fn": [],
+   "tried": 4
+  },
+  "prices": {
+   "fn": [],
+   "tried": 4
+  },
+  "product and option fields": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  },
+  "stock quantity": {
+   "fn": [],
+   "tried": 4
+  },
+  "template columns": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "vendor-1099-totals": {
+  "line 1 names": {
+   "fn": [],
+   "tried": 7
+  },
+  "reportable totals": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "which vendors": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "vendor-contact-merge": {
+  "dropped vendor absent": {
+   "fn": [],
+   "tried": 6
+  },
+  "one row per vendor": {
+   "fn": [],
+   "tried": 6
+  },
+  "payment terms (purchasing wins)": {
+   "fn": [],
+   "tried": 6
+  },
+  "phone carried over": {
+   "fn": [],
+   "tried": 6
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "row count": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "vendor-price-sheets": {
+  "effective dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "next price break": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per item": {
+   "fn": [],
+   "tried": 7
+  },
+  "order total": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "unit price at our order quantity": {
+   "fn": [],
+   "tried": 7
+  },
+  "vendor names": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "vendor-spend-categories": {
+  "Coastal Linen spend": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 24285.67 in a row or column mentioning 'coastal linen'",
+   "fn": [],
+   "tried": 0
+  },
+  "Housekeeping & Amenities total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 13621.28 in a row or column mentioning 'housekeeping'",
+   "fn": [],
+   "tried": 0
+  },
+  "Repairs & Maintenance total": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 4094.27 in a row or column mentioning 'repairs'",
+   "fn": [],
+   "tried": 0
+  },
+  "Sysco Savannah spend": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 32649.25 in a row or column mentioning 'sysco'",
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "24 error cells: Spend by vendor!C2=#NAME?, Spend by vendor!C3=#NAME?, Spend by vendor!C4=#NAME?, Spend by vendor!C5=#NAME?, Spend by vendor!C6=#NAME?, Spend by ",
+   "fn": [],
+   "tried": 0
+  },
+  "total spend": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 141529.47 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  },
+  "vendor_spend.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "vendor-statement-reconcile": {
+  "difference per document": {
+   "fn": [],
+   "tried": 6
+  },
+  "note's columns": {
+   "fn": [],
+   "tried": 6
+  },
+  "one row per open item": {
+   "fn": [],
+   "tried": 6
+  },
+  "row count": {
+   "fn": [],
+   "tried": 6
+  },
+  "status per document": {
+   "fn": [],
+   "tried": 6
+  },
+  "variance ties to the balances": {
+   "fn": [],
+   "tried": 6
+  }
+ },
+ "vendor-tax-forms": {
+  "TIN types": {
+   "fn": [],
+   "tried": 7
+  },
+  "entity types": {
+   "fn": [],
+   "tried": 7
+  },
+  "form status": {
+   "fn": [],
+   "tried": 7
+  },
+  "legal and DBA names": {
+   "fn": [],
+   "tried": 7
+  },
+  "masked TINs": {
+   "fn": [],
+   "tried": 7
+  },
+  "no full TIN in the file": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per vendor": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "tax addresses": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "venue-invoices": {
+  "amounts": {
+   "fn": [],
+   "tried": 7
+  },
+  "balance due": {
+   "fn": [],
+   "tried": 7
+  },
+  "descriptions": {
+   "fn": [],
+   "tried": 7
+  },
+  "event codes and invoice numbers": {
+   "fn": [],
+   "tried": 7
+  },
+  "invoice dates": {
+   "fn": [],
+   "tried": 7
+  },
+  "line tax": {
+   "fn": [],
+   "tried": 7
+  },
+  "line types": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per invoice line": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "volunteer-hours": {
+  "county template columns": {
+   "fn": [],
+   "tried": 7
+  },
+  "meal delivery hours": {
+   "fn": [],
+   "tried": 7
+  },
+  "overnight shelter hours": {
+   "fn": [],
+   "tried": 7
+  },
+  "pantry and tutoring hours": {
+   "fn": [],
+   "tried": 7
+  },
+  "row count": {
+   "fn": [],
+   "tried": 7
+  },
+  "total hours": {
+   "fn": [],
+   "tried": 7
+  },
+  "volunteers who served": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "warranty-expiry-list": {
+  "days left": {
+   "fn": [],
+   "tried": 7
+  },
+  "expiring assets": {
+   "fn": [],
+   "tried": 7
+  },
+  "one row per asset": {
+   "fn": [],
+   "tried": 7
+  },
+  "requested columns": {
+   "fn": [],
+   "tried": 7
+  }
+ },
+ "web-traffic-summary": {
+  "April sessions, crawler removed": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 16851.0 in a row or column mentioning 'sessions'",
+   "fn": [],
+   "tried": 0
+  },
+  "May users (monthly unique, not summed daily)": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "memo carries the crawler sessions and corrected April sessions": {
+   "fn": [],
+   "tried": 5
+  },
+  "memo names the crawl day": {
+   "fn": [],
+   "tried": 5
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "22 error cells: Summary!B2=#NAME?, Summary!D2=#NAME?, Summary!E2=#NAME?, Summary!F2=#NAME?, Summary!G2=#NAME?, Summary!B3=#NAME?, Summary!D3=#NAME?, Summary!E3=",
+   "fn": [],
+   "tried": 0
+  },
+  "sessions, March to May": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 49947.0 in a row or column mentioning 'sessions'",
+   "fn": [],
+   "tried": 0
+  },
+  "traffic.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "weekly-kpi-dashboard": {
+  "glasses jobs finished week of 7 Sep": {
+   "fn": [],
+   "tried": 0
+  },
+  "kpi.xlsx exists": {
+   "fn": [],
+   "tried": 0
+  },
+  "live formulas": {
+   "fn": [],
+   "tried": 0
+  },
+  "no error cells": {
+   "baseline": "fail",
+   "detail": "42 error cells: KPIs!B3=#NAME?, KPIs!C3=#NAME?, KPIs!D3=#NAME?, KPIs!E3=#NAME?, KPIs!F3=#NAME?, KPIs!G3=#NAME?, KPIs!H3=#NAME?, KPIs!B4=#NAME?",
+   "fn": [],
+   "tried": 0
+  },
+  "online sales week of 24 Aug (paid only)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 4713.92 in a row or column mentioning 'online'",
+   "fn": [],
+   "tried": 0
+  },
+  "sales per staff hour week of 17 Aug": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 74.31 in a row or column mentioning 'hour'",
+   "fn": [],
+   "tried": 0
+  },
+  "staff hours week of 17 Aug (Monday weeks)": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 313.0 in a row or column mentioning 'hour'",
+   "fn": [],
+   "tried": 0
+  },
+  "total sales, six weeks": {
+   "baseline": "fail",
+   "detail": "no cell \u2248 149519.56 in a row or column mentioning 'total'",
+   "fn": [],
+   "tried": 0
+  }
+ },
+ "wide-to-long-sales": {
+  "Stockcast template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "customer code and month": {
+   "fn": [],
+   "tried": 4
+  },
+  "net sales": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per customer-month": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "woocommerce-orders-to-journal": {
+  "account amounts per journal; journal dates": {
+   "fn": [],
+   "tried": 3
+  },
+  "journal numbers": {
+   "fn": [],
+   "tried": 3
+  },
+  "journal template columns, exact order": {
+   "fn": [],
+   "tried": 3
+  },
+  "journals balance": {
+   "fn": [],
+   "tried": 3
+  },
+  "row count (one line per account per journal)": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "xero-sales-invoices-import": {
+  "Xero template columns in order": {
+   "fn": [],
+   "tried": 3
+  },
+  "contact names": {
+   "fn": [],
+   "tried": 3
+  },
+  "invoice and due dates": {
+   "fn": [],
+   "tried": 3
+  },
+  "invoice lines": {
+   "fn": [],
+   "tried": 3
+  },
+  "invoices included": {
+   "fn": [],
+   "tried": 3
+  },
+  "one row per line": {
+   "fn": [],
+   "tried": 3
+  }
+ },
+ "ynab-transactions-import": {
+  "YNAB template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "date": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per transaction": {
+   "fn": [],
+   "tried": 4
+  },
+  "outflow and inflow": {
+   "fn": [],
+   "tried": 4
+  },
+  "payee": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  }
+ },
+ "zendesk-users-import": {
+  "Zendesk template columns, exact order": {
+   "fn": [],
+   "tried": 4
+  },
+  "one row per person": {
+   "fn": [],
+   "tried": 4
+  },
+  "organization and external id": {
+   "fn": [],
+   "tried": 4
+  },
+  "plan tag": {
+   "fn": [],
+   "tried": 4
+  },
+  "role and restriction": {
+   "fn": [],
+   "tried": 4
+  },
+  "row count": {
+   "fn": [],
+   "tried": 4
+  }
+ }
+}
