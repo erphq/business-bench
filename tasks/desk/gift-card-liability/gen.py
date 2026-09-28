@@ -2,6 +2,9 @@
 """gift-card-liability: outstanding gift card liability per card at 31 August 2026 for a day spa.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-knobs
+    python gen.py --scale 3 --trap-count reload=7+promo_card=12 --out DIR   # a harder task; the answer moves
+    python gen.py --describe [--scale N ...]                                  # content counts of this draw
 
 Business: a day spa that sold gift cards on an old salon system until March 2023 and on a new POS since; the
 accountant wants the liability schedule per card for the year-end file.
@@ -25,6 +28,21 @@ from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("scale", "scale", default=1, levels=(1, 2, 3, 4),
+         changes="Cedarline-sold cards and ordinary migrated cards are multiplied by N (46 sold cards at 1)", measure="entities"),
+    Knob("trap_count.reload", "trap-count", default=3, levels=(3, 5, 7),
+         changes="cards kept alive by a reload; above 3 the extra ones are migrated cards sold in 2020-21 that would have "
+                 "expired but were reloaded in Cedarline or (per the Oakleaf SpaBook Last Reload column) before migration",
+         measure="trap_instances.reload"),
+    Knob("trap_count.promo_card", "trap-count", default=5, levels=(5, 8, 12),
+         changes="promo bonus cards that were never sold (Promo Issue, or an Activation on a $0.00 ticket); above 5 the "
+                 "extra ones are spring promo cards, most of them $0.00 activations with an ordinary note",
+         measure="trap_instances.promo_card"),
+)
 
 AS_OF = date(2026, 8, 31)
 MIGRATION = date(2023, 4, 1)
@@ -41,8 +59,9 @@ def five_years(d: date) -> date:
         return d.replace(year=d.year + 5, day=28)
 
 
-def build(seed: int) -> dict:
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
+    n = knobs["scale"]
     used = set()
 
     def last4():
@@ -76,7 +95,7 @@ def build(seed: int) -> dict:
         ("boundary", date(2021, 9, 14), None, None),
         ("plain_active", date(2022, 6, 3), None, None),
     ]
-    for i in range(8):
+    for i in range(8 * n):
         legacy_specs.append((f"legacy_{i}", date(2021, 10, 1) + timedelta(days=r.randint(0, 520)), None,
                              r.choice([None, "redeem_some", "redeem_some", "redeem_all"])))
     for i in range(2):
@@ -113,7 +132,7 @@ def build(seed: int) -> dict:
 
     # ---- new POS cards ----
     forced = ["split_tender", "partial_twice", "reversal", "june_activity", "reload_new", "unused"]
-    for i in range(30):
+    for i in range(30 * n):
         tag = forced[i] if i < len(forced) else "new"
         sold = MIGRATION + timedelta(days=r.randint(3, (AS_OF - MIGRATION).days - 75))
         if tag == "june_activity":
@@ -173,6 +192,10 @@ def build(seed: int) -> dict:
         {"type": "Void", "at": datetime(2026, 5, 8, 11, 31), "ticket_total": -150.0, "card_amount": -150.0, "note": "keyed wrong card - refunded to Visa"}]}
     cards.append(void)
 
+    # knob-only content, drawn from its own stream after every default draw (none of this runs at the defaults)
+    if knobs.trap_count("reload") != 3 or knobs.trap_count("promo_card") != 5:
+        extra_cards(rng(seed + 7_000_003), cards, used, knobs)
+
     # ---- truth ----
     for c in cards:
         if c["kind"] in ("promo", "void"):
@@ -191,6 +214,59 @@ def build(seed: int) -> dict:
         else:
             c["status"], c["liability"] = "active", round(bal, 2)
     return {"cards": cards, "staff": staff}
+
+
+def extra_cards(rk, cards: list, used: set, knobs) -> None:
+    """Knob content: more reload-rescued migrated cards and more promo cards, from the knob stream `rk`."""
+    def last4():
+        while True:
+            x = rk.randint(1102, 8987)
+            if x not in used and x % 1111:
+                used.add(x)
+                return str(x)
+
+    def t(d):
+        return datetime(d.year, d.month, d.day, rk.randint(9, 19), rk.choice([0, 5, 12, 20, 34, 41, 48, 55]))
+
+    def redeem(card, when, bal):
+        svc, price = rk.choice(SERVICES)
+        amt = round(min(price, round(bal / 2, 2)), 2)
+        card["events"].append({"type": "Redemption", "at": t(when), "ticket_total": price, "card_amount": amt,
+                               "note": (f"split: card {amt:.2f} / Visa {price - amt:.2f}" if price > amt else svc)})
+        return round(bal - amt, 2)
+
+    for i in range(knobs.trap_count("reload") - 3):
+        oak = i % 2 == 1   # alternate: reloaded in Cedarline after migration, reloaded in Oakleaf SpaBook before it
+        sold = date(2020, 10, 1) + timedelta(days=rk.randint(0, 230))   # five years run out before 31 August 2026
+        orig = rk.choice(VALUES[2:])
+        bal_mig = round(orig - rk.choice([0.0, 25.0, 40.0]), 2)
+        card = {"last4": last4(), "kind": "legacy", "tag": f"xreload_{i}", "sold": sold, "orig": orig, "bal_mig": bal_mig,
+                "legacy_reload": (date(2022, 1, 10) + timedelta(days=rk.randint(0, 400))) if oak else None,
+                "purchaser": " ".join(person(rk)), "events": []}
+        card["events"].append({"type": "Balance Import", "at": datetime(2023, 4, 1, 6, 0), "ticket_total": 0.0,
+                               "card_amount": bal_mig, "note": "Oakleaf SpaBook migration"})
+        bal = redeem(card, date(2023, 6, 1) + timedelta(days=rk.randint(0, 360)), bal_mig)
+        if not oak:
+            when = date(2024, 9, 1) + timedelta(days=rk.randint(0, 364))    # before the original five years end
+            amt = rk.choice([50.0, 75.0, 100.0])
+            card["events"].append({"type": "Reload", "at": t(when), "ticket_total": amt, "card_amount": amt, "note": "reload"})
+            bal = round(bal + amt, 2)
+            bal = redeem(card, when + timedelta(days=rk.randint(20, 200)), bal)
+        card["balance_before_expiry"] = bal
+        cards.append(card)
+    for i in range(knobs.trap_count("promo_card") - 5):
+        d0 = date(2026, 4, 20) + timedelta(days=rk.randint(0, 20))
+        card = {"last4": last4(), "kind": "promo", "tag": "promo", "sold": d0, "events": []}
+        if i % 3 == 2:
+            card["events"].append({"type": "Promo Issue", "at": t(d0), "ticket_total": 0.0, "card_amount": 25.0,
+                                   "note": "Mother's Day bonus card"})
+        else:
+            card["events"].append({"type": "Activation", "at": t(d0), "ticket_total": 0.0, "card_amount": 25.0,
+                                   "note": rk.choice(["front desk", "gift purchase", "Mother's Day"])})
+        if i % 2 == 0:
+            card["events"].append({"type": "Redemption", "at": t(d0 + timedelta(days=rk.randint(10, 60))), "ticket_total": 110.0,
+                                   "card_amount": 25.0, "note": "split: card 25.00 / Visa 85.00"})
+        cards.append(card)
 
 
 def acceptable(d: dict) -> bool:
@@ -212,12 +288,22 @@ def acceptable(d: dict) -> bool:
     return True
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains."""
+    cs = d["cards"]
+    sold = [c for c in cs if c["kind"] in ("legacy", "new")]
+    return {"rows": sum(len(c["events"]) for c in cs), "entities": len(sold), "rules": 6, "documents": 5,
+            "trap_instances": {"reload": sum(bool(c.get("legacy_reload")) or any(e["type"] == "Reload" for e in c["events"]) for c in sold),
+                               "promo_card": sum(c["kind"] == "promo" for c in cs),
+                               "expired": sum(c["status"] == "expired" for c in sold)}}
+
+
+def emit(seed: int, naive_dir: str | None, knobs=KNOBS.defaults(), out: str | None = None) -> None:
+    d = build(seed, knobs)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
     cards = d["cards"]
     r = rng(seed + 7)
 
@@ -314,7 +400,16 @@ def emit(seed: int, naive_dir: str | None) -> None:
                                       "split_tender", "partial_twice", "reversal", "june_activity", "reload_new")]
     status_keys = [lk(x) for x in ("expired_untouched", "expired_after_redemption", "legacy_reload", "pos_reload", "boundary", "split_tender")]
     promo = [c["last4"] for c in cards if c["kind"] in ("promo", "void")]
-    write_task_yaml(HERE, {
+    # extra reload-rescued cards (trap_count.reload > 3) join the must-match keys and the trap sentence (nothing at the defaults)
+    xr = [c for c in cards if c["tag"].startswith("xreload_")]
+    liability_keys += [c["last4"] for c in xr]
+    status_keys += [c["last4"] for c in xr]
+    more_reload = ""
+    if xr:
+        groups = [", ".join(c["last4"] for c in xr if not c["legacy_reload"]) + " reloaded in Cedarline",
+                  ", ".join(c["last4"] for c in xr if c["legacy_reload"]) + " reloaded in Oakleaf SpaBook"]
+        more_reload = " (so are " + " and ".join(g for g in groups if g[0].isdigit()) + ", all sold in 2020-21)"
+    spec = {
         "id": "gift-card-liability", "track": "desk", "category": "bookkeeping",
         "title": "Gift card liability per card at year end",
         "ask": ("Hannah needs our gift card liability as of August 31 for the year-end file. Everything from the old Oakleaf SpaBook "
@@ -327,7 +422,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             f"expiry runs five years from the last load, and for migrated cards the sale and reload dates exist only in the "
             f"Oakleaf SpaBook workbook: {lk('expired_untouched')} and {lk('expired_after_redemption')} have expired (the second after a "
             f"2024 partial redemption, which does not restart the clock), {lk('legacy_reload')} was reloaded in Oakleaf SpaBook in 2022 "
-            f"and {lk('pos_reload')} in Cedarline in 2025 so both are active, and {lk('boundary')} was sold 14 September 2021 "
+            f"and {lk('pos_reload')} in Cedarline in 2025 so both are active{more_reload}, and {lk('boundary')} was sold 14 September 2021 "
             "and is still active on 31 August (checks: liability per card; card status)",
             "the 2023-04-01 Balance Import rows carry the Oakleaf SpaBook balances; treating them as loads means nothing ever expires, "
             "and adding the Oakleaf SpaBook Balance column on top doubles every migrated card (checks: liability per card; card status)",
@@ -349,7 +444,8 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "key": "card_last4", "columns": ["status"], "min_accuracy": 1.0, "must_match_keys": status_keys},
             {"type": "text_not_contains", "name": "promo and voided cards left out", "path": "gift_cards.csv", "phrases": promo},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "gift-card-liability", seed, knobs))
     print(f"seed={seed} cards sold={len(sold)} total liability={total}")
     for c in sold:
         if c["tag"] not in ("new",) and not c["tag"].startswith("legacy_"):
@@ -373,11 +469,16 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_knob_args(ap, KNOBS)
     a = ap.parse_args()
+    knobs = parse_knob_args(a, KNOBS)
     for attempt in range(300):
-        d_ = build(a.seed * 1000 + attempt)
+        d_ = build(a.seed * 1000 + attempt, knobs)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    if a.describe:
+        print(describe_json("gift-card-liability", a.seed * 1000 + attempt, knobs, counts(d_, knobs)))
+        raise SystemExit(0)
+    emit(a.seed * 1000 + attempt, a.naive, knobs, a.out)
