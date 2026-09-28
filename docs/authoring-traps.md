@@ -15,6 +15,10 @@ This guide adds two things to a generator, following `tasks/desk/project-margin/
 
 Library: `tasks/lib/bizgen/traps.py`. Checks: `bench/validate_traps.py`, `bench/check_retrofit.py`.
 
+Switches only make a task easier. To make one harder (more rows, rules, noise, planted instances, a rule that needs
+a second document) add **difficulty knobs** instead: `docs/authoring-knobs.md`. A knob moves the answer; a switch
+must not.
+
 ## Rules
 
 1. **No flags, no change.** With no trap flag the generator's output is byte-identical to before, in

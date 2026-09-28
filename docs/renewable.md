@@ -61,11 +61,12 @@ verdicts. Under the raw verdicts before the scorer revision, 101 tasks would be 
 
 | route | meaning | saturated | near-saturated |
 |---|---|---|---|
-| switches+seed | retrofitted generator: `--out`, `--seed`, `--traps-off` | 1 (project-margin) | 20 |
-| seed (shadow copy) | not retrofitted: only `--seed`, and it writes into its own folder | 115 | 9 |
+| switches+seed | retrofitted generator: `--out`, `--seed`, `--traps-off` | 1 (project-margin) | 29 |
+| knobs+seed | difficulty knobs: `--out`, `--seed`, knob flags, `--describe` | 10 | 0 |
+| seed (shadow copy) | not retrofitted: only `--seed`, and it writes into its own folder | 105 | 0 |
 
 The retrofit targets were chosen for signal, so they are almost all tasks that already discriminate. Of the 116
-saturated tasks, only project-margin has trap switches. For the rest, the seed is the only lever. A generator
+saturated tasks, only project-margin has trap switches and ten have difficulty knobs. For the other 105, the seed is the only lever. A generator
 without `--out` is run from a **shadow copy**: the task folder is copied to scratch space, `tasks/lib` is linked
 beside it, and `gen.py --seed N` is run there. The results are copied to the output folder without `gen.py`.
 The published folder is never written. The unit tests hash it before and after to check this. `--help` is also
@@ -80,8 +81,12 @@ enumerates the product of:
 * **Trap off-sets**: from `gen.py --list-traps`, closed under `requires`, chosen with `envelope.py`'s designs
   (`single`, `pairs`, `full`, `random:N`). These are available only on retrofitted generators.
 * **Knobs**: `--knob NAME=V1,V2` for any flag the generator's `--help` lists, other than the reserved ones
-  (`seed`, `out`, `traps-off`, `mutant`, `list-traps`, `naive`). A flag the generator does not have is refused;
-  the generator is not edited. **No desk generator has such a flag today** (see "Knobs that would help").
+  (`seed`, `out`, `traps-off`, `mutant`, `list-traps`, `naive`, `list-knobs`, `describe`). A flag the generator
+  does not have is refused; the generator is not edited. Ten saturated generators declare **difficulty knobs**
+  (`tasks/lib/bizgen/knobs.py`, `docs/authoring-knobs.md`): size, rules, noise, trap count and cross-document
+  rules. For them, with no `--knob`, `search` enumerates the declared levels (`--knob-design`, default
+  `single+max`: each knob alone at each level, then every knob at its top level) and records each setting's
+  `--describe` content counts in the manifest. Their route is `knobs+seed`: written with `--out`, no shadow copy.
 
 Each setting is generated into `ROOT/<task>__vNN` and hashed. Within one draw, a trap-off setting must leave
 `checks` and `reference/` equal to the same seed with every trap on. Otherwise the answer moved, and it is
@@ -92,7 +97,7 @@ reported as a problem.
 Difficulty is predicted relative to the **canonical setting** (published seed, every trap on), which is
 regenerated in the current environment. It is measured in logits, and positive means harder:
 
-    delta = sum_k w_k * (x_k(setting) - x_k(canonical))  -  sum_{j switched off} e_j
+    delta = sum_k w_k * (x_k(setting) - x_k(canonical))  -  sum_{j switched off} e_j  +  sum_m s_m * u_m
 
 * `w_k` are the task-feature weights of the difficulty model (`bench/difficulty.py`, an LLTM fitted on the
   ledger), with task-clustered bootstrap draws. `difficulty.LedgerModel` exposes the same fit that
@@ -103,8 +108,15 @@ regenerated in the current environment. It is measured in logits, and positive m
   tasks, not the effect of a pitfall within one task. Turning a trap off instead moves the logit by
   `e_j ~ Normal(0.5, 1.0)`, the prior `envelope.py predict` uses before any variant has been run. Both tools
   therefore forecast trap effects the same way.
+* **Knob prior.** `s_m` is how many declared levels knob *m* sits above its default (the published task; linear
+  between levels) and `u_m ~ HalfNormal` with mean 0.5 logit: one level is worth about one trap, with the sign
+  fixed by the knob's declaration that each level is harder. One draw per knob, scaled by its levels, so levels of
+  one knob are assumed to add alike, and knobs are assumed to add to each other. This is a design assumption, like
+  the trap prior, until variants at that level have been run; `validate_knobs.py` only checks that the declared
+  content count grows. The manifest splits each delta into `model_part` and `knob_prior_part`.
 * **Monotonicity by construction.** Removing a pitfall never adds one (authoring rule 6). A setting with any trap
-  off is therefore marked `harder_eligible: false` and is never proposed as harder, whatever the model says.
+  off, or any knob below its default, is therefore marked `harder_eligible: false` and is never proposed as harder,
+  whatever the model says.
 
 Per system *s*, the forecast is anchored on that system's observed attempts on the published task:
 
@@ -212,10 +224,21 @@ and references do. Hashes are therefore environment-specific: seal and check in 
 * **Trap effects are a prior**, Normal(0.5, 1.0) per trap, until variants have been run (`envelope.py fit`).
 * **The ledger anchor is 3 repetitions per system.** A saturated task's anchor is Beta(3.5, 0.5), mean 0.875.
   So a forecast for a saturated task says "about 0.87, wide", not "certainly passes".
-* **No harder setting can be reached today.** Trap switches only remove pitfalls. With every trap on, the task is
-  already at the top of that axis, and seeds only re-roll values. Re-hardening needs knobs the generators do not
-  have (next section). Until then, `search` states this explicitly and proposes nothing, rather than proposing a
-  "harder" seed on a difference smaller than its own interval.
+* **"Credibly harder" is almost entirely the knob prior.** On the ten knobbed tasks the model part of every delta
+  is between 0.00 and +0.26 logit; the rest is the stated prior. The task-feature model sees a knob only through
+  workspace size and file count, whose weights cross zero, so it can *widen* the interval (four `scale` settings
+  are not credibly harder for that reason) but never supply evidence that a level is harder. A proposal is a
+  pre-registrable hypothesis, not a measurement: register it, run it, and publish the score (`envelope.py score`).
+  After a first run, the per-level effect should be fitted per knob kind (as `envelope.py fit` does for traps).
+* **Stacking is additive by assumption.** The all-knobs-at-max setting is always the proposal (delta 3 to 4 logit,
+  predicted P(pass) about 0.37 to 0.48 from 0.87). That is the most extreme setting searched, not the most useful
+  one: for re-hardening, pick the setting whose forecast is nearest the target pass rate (for example the single
+  knob levels at delta 1.0 to 1.5, P about 0.69 to 0.76), and seed several levels so the dose-response is measured.
+* **Only ten saturated generators have knobs.** The other 106 saturated tasks can still only be re-rolled by seed,
+  and for them `search` still proposes nothing.
+* **Seal matches the canonical setting.** `seal --knob` generates at a knob setting, but "matched difficulty" is
+  measured against the published setting, so a knobbed draw is rejected by `--tol`. Sealing at a harder setting needs
+  the knobbed setting as the anchor; not built.
 * **Environment.** Without LibreOffice, workbook tasks cannot be fully verified here. `UNVERIFIED-XLSX (env)`
   variants must be re-verified where LibreOffice is available (`BENCH_RECALC_DOCKER_IMAGE`, or `soffice` on
   PATH) before release.
@@ -224,10 +247,32 @@ and references do. Hashes are therefore environment-specific: seal and check in 
 * Hand-written `task.yaml` files with expected values pinned to one seed do not follow a new seed. For those, the
   reference fails its checks and the draw is rejected. It is never accepted silently.
 
-## Knobs that would help (not added: generators are being edited on other branches)
+## Knobs (pilot on ten saturated tasks)
 
-To make re-hardening real, generators would need flags that move difficulty upward while the answer is still
-computed exactly:
+The flags this section asked for now exist on ten saturated generators (`docs/authoring-knobs.md` has the pattern;
+`bench/validate_knobs.py` checks every level: reference passes, untouched workspace fails, workspace moves, same
+flags give the same bytes, the declared content count grows, the default reproduces the published folder):
+
+| task | knobs (levels; first is the published task) |
+|---|---|
+| duplicate-payments | scale 1,2,4,8; trap_count.dup_vendor_record 1-4; trap_count.dup_leading_zero 1-3 |
+| mileage-reimbursement | scale 1-4 (clinicians); trap_count.odometer 1-3 (paper odometer workbooks); trap_count.personal 1-3 |
+| tenant-ledger-balances | scale 1-3 (lots); trap_count.moveout 2-5; trap_count.mailed 1-4 |
+| shift-coverage-gaps | rules 5-8; trap_count.split 2-4; trap_count.cancelled 1-3 |
+| phones-to-e164 | scale 1-4; noise 0.5,0.7,0.9 (blank Country column rate); trap_count.invalid_number 7,10,14 |
+| gift-card-liability | scale 1-4; trap_count.reload 3,5,7; trap_count.promo_card 5,8,12 |
+| plan-change-proration | scale 1-4; rules 1-3 (discount classes); cross_doc 0,1 (nonprofit status in a second document) |
+| sales-tax-liability | scale 1,2,4; rules 1-3; trap_count.expired_cert 1-3 |
+| commission-clawbacks | scale 1-3; rules 5-7 (recall and small-clawback clauses); trap_count.two_partials 1-3 |
+| credit-notes-apply | scale 1,2,4; cross_doc 0-2 (discounts in customer price agreements); trap_count.spill_over 1-3 |
+
+Search on the published seed, `--knob-design single+max` (this branch, macOS, `bb-nolxml`): 78 knob settings, 74
+credibly harder (90% lower bound of delta above 0). The four that are not are `scale` settings (duplicate-payments
+8, mileage-reimbursement 2, sales-tax-liability 2 and 4) whose workspace-size term widens the interval below zero.
+Single-knob top levels give delta +1.0 to +1.5 logit (predicted P(pass) 0.68 to 0.76 for both systems, from 0.87);
+all knobs at max give +3.0 to +4.0 (P 0.37 to 0.48). See "Limits" before quoting either.
+
+Still wanted:
 
 * `--rows N` / `--scale F`: volume (invoices, ledger lines, attendees) per task.
 * `--rules N`: number of business rules in play (commission bands, rate tiers, policy clauses).
@@ -238,8 +283,5 @@ computed exactly:
   delegation-envelope pitch).
 * `--describe`: print per-draw counts (rows, trap instances) as JSON, so seeds can be matched on content rather
   than on file sizes.
-* `--out` on the 138 generators that are not retrofitted, so that the shadow copy is no longer needed.
-
-When a generator gains any of these as a flag, `renew.py search --knob NAME=...` can use it without code
-changes. The difficulty model will need a feature for it; until variants at that setting have been run, its
-effect should get the same kind of stated prior as a trap.
+* Knobs, `--describe` and `--out` on the remaining generators (the pattern is in `docs/authoring-knobs.md`).
+* A fitted per-level effect per knob kind, once knobbed variants have been run, to replace the prior.
