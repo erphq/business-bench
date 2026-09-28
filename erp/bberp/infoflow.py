@@ -64,7 +64,9 @@ MIN_MONEY_CENTS = 100_00
 
 def install(erp, grants=DEFAULT_GRANTS, employees: list[dict] = ()) -> None:
     """Create the classification tables in a scenario and record the standing grants (and any employee records)."""
-    erp.db.executescript(SCHEMA)
+    for stmt in SCHEMA.split(';'):           # statement by statement: executescript would commit an open transaction
+        if stmt.strip():
+            erp.run(stmt)
     for code, desc in CLASSES.items():
         erp.run('INSERT OR IGNORE INTO data_classes (code, description) VALUES (?, ?)', code, desc)
     for cls, kind, grantee, basis in grants:
