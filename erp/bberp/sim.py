@@ -22,6 +22,9 @@ World file shape (all keys optional):
   calls: [{party_type, party_id, number, transcript, from?}]
   receipts: [{day, user, po_id, packing_slip?, lines: [{po_line, qty_received}]}]
     deliveries a colleague receives on that day (background operations between turns)
+  receipt_reversals: [{day, user, receipt, reason}]
+    receipts a colleague reverses on that day, for example a receiving error found after posting (a fact that
+    changes between turns); absent, nothing is reversed
 """
 from __future__ import annotations
 
@@ -471,6 +474,14 @@ def scheduled_receipts(erp: Erp, events: list) -> None:
             events)
 
 
+def scheduled_reversals(erp: Erp, events: list) -> None:
+    for r in erp.world.get('receipt_reversals', []):
+        if r['day'] != erp.today:
+            continue
+        act(erp, r['user'], 'rcv.reverse', 'receipt', r['receipt'],
+            lambda ctx, r=r: receiving.reverse_receipt(erp, ctx, r['receipt'], r['reason']), events)
+
+
 # ------------------------------------------------------------------------------------------- the clock
 
 def run_day(erp: Erp) -> list[dict]:
@@ -479,6 +490,7 @@ def run_day(erp: Erp) -> list[dict]:
         return events
     bank(erp, events)
     scheduled_receipts(erp, events)
+    scheduled_reversals(erp, events)
     vendor_acks(erp, events)
     vendor_shipments(erp, events)
     vendor_invoices(erp, events)
