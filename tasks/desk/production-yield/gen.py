@@ -2,6 +2,9 @@
 """production-yield: a month of batch records to yield and scrap per production line, by weight.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off trials,format --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant rework --out DIR             # a deliverable that falls for one trap
 
 Business: a snack co-packer with three lines (bars, granola, date bites). Operators write output the way each
 line counts it - cases, loose pieces, bags, kilograms, grams - and the plant manager wants yield and scrap by line.
@@ -23,6 +26,26 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "bar_units": "Bar line good output recorded in cases and pieces of SKUs with different weights (off: in kg)",
+        "granola_units": "Granola good output in bags of two sizes on some batches (off: in kg)",
+        "bites_grams": "Bites scrap in grams on most batches (off: in kg)",
+        "trials": "two R&D trial batches in the export and the trial bar on the spec sheet (off: left out of both)",
+        "format": "DD/MM/YYYY dates explained in a preamble line, counts with and without thousands separators "
+                  "(off: ISO dates, no preamble, plain counts)",
+    },
+    fixed={
+        "rework": "rework batches add no input and their input comes off scrap",
+        "formulas": "the summary must be live formulas",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["bar_units", "granola_units", "bites_grams", "rework", "trials", "format", "formulas"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -238,12 +261,60 @@ def batch_rows(B, rework_rule=True, trials=False) -> list[list]:
     return rows
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def kg_text(x: float) -> str:
+    return f"{x:.3f}".rstrip("0").rstrip(".")
+
+
+def variant_record(b: dict, row: list, traps: TrapSet) -> list:
+    """One export row with the switched-off pitfalls removed (quantities already drawn for the canonical row)."""
+    row = list(row)
+    if not traps.on("format"):
+        row[1] = b["date"].isoformat()
+        for k in (6, 8, 10):
+            row[k] = row[k].replace(",", "")
+    if b["good_unit"] != "kg" and ((b["line"] == "Bar line" and not traps.on("bar_units"))
+                                   or (b["line"] == "Granola line" and not traps.on("granola_units"))):
+        row[8], row[9] = kg_text(b["good_kg"]), "kg"
+    if b["line"] == "Bites line" and b["scrap_unit"] == "g" and not traps.on("bites_grams"):
+        row[10], row[11] = kg_text(b["scrap_kg"]), "kg"
+    return row
+
+
+def tomasz_note(traps: TrapSet) -> str:
+    units = traps.on("bar_units") or traps.on("granola_units") or traps.on("bites_grams")
+    return ("August yield report\n\n"
+            "I need yield and scrap for each line for August, and for the plant as a whole.\n\n"
+            + ("Do it all by weight. Input is the kilograms of mix charged to the batch. The operators record good output and\n"
+               "scrap the way their line counts them - cases, pieces, bags, kilograms or grams - so convert with the spec\n"
+               "sheet (a case of bars is the units per case times the bar weight; a bag is its net weight).\n\n" if units else
+               "Do it all by weight. Input is the kilograms of mix charged to the batch. Where an operator recorded output in\n"
+               "pieces, convert with the spec sheet.\n\n")
+            + "  yield      = good output kg / input kg\n"
+              "  scrap rate = scrap kg / input kg\n\n"
+              "Rework: when a batch has a lot of rejects we quarantine them and run them back through the line later as a\n"
+              "Rework batch, which names the batch it came from. That material was already input on the original batch, so do\n"
+              "not count a rework batch's input again. Whatever the rework batch turns into good product counts as good output\n"
+              "for the line, and it is no longer scrap - take the rework input off the scrap. Anything the rework batch rejects\n"
+              "again is scrap.\n\n"
+            + ("Trial batches are R&D and not production. Leave them out.\n\n" if traps.on("trials") else "")
+            + "The totals need to stay as formulas so I can drop September's records in.\n\n"
+              "Tomasz\n")
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom grader module travels with the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     B = d["batches"]
     t = totals(B)
 
@@ -257,31 +328,19 @@ def emit(seed: int, naive_dir: str | None) -> None:
             return f"{x:g}"
         body.append([b["id"], b["date"].strftime("%d/%m/%Y"), b["line"], b["sku"], b["type"], b["of"], q(b["inp"], "kg"), b["inp_unit"],
                      q(b["good_qty"], b["good_unit"]), b["good_unit"], q(b["scrap_qty"], b["scrap_unit"]), b["scrap_unit"], b["note"]])
+    if not traps.canonical:  # every row drew as before; the removed pitfalls are undone afterwards
+        body = [variant_record(b, row, traps) for b, row in zip(B, body) if traps.on("trials") or b["type"] != "Trial"]
     write_csv(os.path.join(ws, "batch_records_2026-08.csv"),
               ["Batch", "Date", "Line", "SKU", "Batch type", "Rework of", "Qty in", "Unit in", "Good qty", "Good unit", "Scrap qty",
-               "Scrap unit", "Operator notes"], body, preamble=["MES batch record export - August 2026 - dates DD/MM/YYYY", ""])
+               "Scrap unit", "Operator notes"], body,
+              preamble=["MES batch record export - August 2026 - dates DD/MM/YYYY", ""] if traps.on("format") else None)
     write_xlsx(os.path.join(ws, "product_specs.xlsx"), {"Specs": {
         "merged_title": "Finished goods specifications (QA-SPEC-004 rev 7)",
         "header": ["SKU", "Description", "Line", "Unit weight (g)", "Units per case", "Bag net weight (g)"],
         "rows": [[s[0], s[1], s[2], s[3] if s[3] else "", s[4], s[5] if s[5] else ""] for s in SPECS] +
-                [["BAR-PRO-50", "Protein bar 50 g (in development)", "Bar line", 50, 20, ""]],
+                ([["BAR-PRO-50", "Protein bar 50 g (in development)", "Bar line", 50, 20, ""]] if traps.on("trials") else []),
         "widths": {"A": 14, "B": 32, "C": 14, "D": 16, "E": 14, "F": 18}}}, creator="QA")
-    write_text(os.path.join(ws, "note_from_tomasz.txt"),
-               "August yield report\n\n"
-               "I need yield and scrap for each line for August, and for the plant as a whole.\n\n"
-               "Do it all by weight. Input is the kilograms of mix charged to the batch. The operators record good output and\n"
-               "scrap the way their line counts them - cases, pieces, bags, kilograms or grams - so convert with the spec\n"
-               "sheet (a case of bars is the units per case times the bar weight; a bag is its net weight).\n\n"
-               "  yield      = good output kg / input kg\n"
-               "  scrap rate = scrap kg / input kg\n\n"
-               "Rework: when a batch has a lot of rejects we quarantine them and run them back through the line later as a\n"
-               "Rework batch, which names the batch it came from. That material was already input on the original batch, so do\n"
-               "not count a rework batch's input again. Whatever the rework batch turns into good product counts as good output\n"
-               "for the line, and it is no longer scrap - take the rework input off the scrap. Anything the rework batch rejects\n"
-               "again is scrap.\n\n"
-               "Trial batches are R&D and not production. Leave them out.\n\n"
-               "The totals need to stay as formulas so I can drop September's records in.\n\n"
-               "Tomasz\n")
+    write_text(os.path.join(ws, "note_from_tomasz.txt"), tomasz_note(traps))
 
     # ---- reference
     write_csv(os.path.join(ref, "yield_by_line.csv"), ["line", "input_kg", "good_kg", "scrap_kg", "yield", "scrap_rate"],
@@ -299,13 +358,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "output counts and their input comes off scrap. Trial batches excluded.")
     write_xlsx(os.path.join(sol, "yield.xlsx"), report_workbook(batch_rows(B), note), creator="reference")
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "production-yield", "track": "desk", "category": "reports",
         "title": "August yield and scrap by production line",
         "ask": ("Tomasz wants August's yield and scrap for each production line from the batch records. Save it as yield.xlsx with "
                 "live formulas; his note in the folder says how he wants it worked out.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the Bar line records good output mostly in cases and sometimes loose pieces; three bar SKUs have "
             "different weights and case packs (42 g x 24, 45 g x 20), so a single conversion or a raw sum of the quantity column is wrong "
             "(checks: Bar line good output kg; yield per line)",
@@ -320,7 +379,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "dates are DD/MM/YYYY per the export's preamble line, and counts come with and without thousands separators "
             "(check: plant input kg)",
             "the summary has to be live formulas so next month's records can be dropped in (check: live formulas)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "yield.xlsx exists", "path": "yield.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "yield.xlsx", "min_count": 8},
@@ -337,7 +396,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "expected": t["plant"]["inp"], "rel_tol": cent_tol(t["plant"]["inp"], 0.002), "near_text": "total"},
             {"type": "custom", "name": "yield per line", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "production-yield", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} batches={len(B)} rework={sum(1 for b in B if b['type'] == 'Rework')} totals={t} "
           f"naive_rework_yield={ {l: rw[l]['yield'] for l in LINES} }")
 
@@ -352,15 +415,52 @@ def write_naive(d: dict, out: str) -> None:
     write_xlsx(os.path.join(out, "yield.xlsx"), report_workbook(rows, "naive"), creator="naive")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """yield.xlsx from an agent that is right except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    B = [dict(b) for b in d["batches"]]
+    for b in B:
+        if trap == "bar_units" and b["line"] == "Bar line" and b["good_unit"] != "kg":           # quantity column summed raw
+            b["good_kg"] = float(b["good_qty"])
+        elif trap == "granola_units" and b["line"] == "Granola line" and b["good_unit"] != "kg":
+            b["good_kg"] = float(b["good_qty"])
+        elif trap == "bites_grams" and b["line"] == "Bites line" and b["scrap_unit"] != "kg":    # grams read as kg
+            b["scrap_kg"] = float(b["scrap_qty"])
+    if trap == "format":
+        # dates parsed month-first where they can be: DD <= 12 lands outside August and is filtered out
+        B = [b for b in B if b["date"].day > 12 or b["date"].day == 8]
+    rows = batch_rows(B, rework_rule=trap != "rework", trials=trap == "trials")
+    note = "By weight."
+    os.makedirs(out, exist_ok=True)
+    wb = report_workbook(rows, note)
+    if trap == "formulas":  # the same figures, typed in as values
+        tt = totals(B)
+        summ = [[l, tt[l]["inp"], tt[l]["good"], tt[l]["scrap"], tt[l]["yield"], tt[l]["scrap_rate"]] for l in LINES]
+        pl = tt["plant"]
+        summ.append(["Plant total", pl["inp"], pl["good"], pl["scrap"], pl["yield"], round(pl["scrap"] / pl["inp"], 4)])
+        summ += [[], [note]]
+        wb["Yield by line"]["rows"] = summ
+    write_xlsx(os.path.join(out, "yield.xlsx"), wb, creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(1000):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 1000 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

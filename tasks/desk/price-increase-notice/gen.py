@@ -2,6 +2,9 @@
 """price-increase-notice: a florist's weekly standing-order price increase, drafted as one notice with a mailing note.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off date,old_notice --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant rounding --out DIR             # a deliverable that falls for one trap
 
 Traps (each caught by a check, see task.yaml):
   * Grace's first email says the increase takes effect October 1; two messages later it moves to Monday, November 2
@@ -18,12 +21,31 @@ Traps (each caught by a check, see task.yaml):
   * the bud vase set has no new price because it is being discontinued  (check: bud vase sets discontinued)
 """
 from __future__ import annotations
-import math, os, sys
+import argparse, math, os, shutil, sys
 from datetime import date
 from decimal import Decimal, ROUND_HALF_UP
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the emails and the folder are written, so
+# build() and its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "date": "the first email says October 1 and a later one moves it to November 2 (off: the first email gives "
+                "November 2 and the exchange moving the date is gone)",
+        "lobby_price": "Grace's last email gives a lobby price that contradicts the final schedule (off: no price in the email)",
+        "annual_list": "Grace lists the annual customers from memory, one wrong and one missing (off: she names the right three)",
+        "old_notice": "last year's notice with a LOYAL10 code sits in the folder (off: not in the folder)",
+    },
+    fixed={
+        "rounding": "percent changes rounded to the nearest whole percent on the current price",
+        "bud_vase": "the bud vase set is discontinued and has no new price",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["date", "rounding", "lobby_price", "annual_list", "old_notice", "bud_vase"]
 
 SHOP = "Ivy Lane Florist"
 OWNER = "Grace Lindqvist"
@@ -86,9 +108,51 @@ def build(seed: int) -> dict:
 
 def money_s(x: float) -> str: return f"${x:,.2f}"
 
-def emit(seed: int) -> None:
+def notice_md(d: dict, effective: str = "Monday, November 2, 2026", pct_of=None, lobby_new: float | None = None,
+              annual: list | None = None, code: bool = False, bud_priced: bool = False) -> str:
+    """The reference notice. The keyword arguments are the mistakes a mutant makes: the superseded date, another percent
+    rule, the lobby price from the email, Grace's list of annual customers, last year's code, the bud vases priced."""
+    I, C = d["items"], d["custs"]
+    order = ["counter", "lobby", "statement", "delivery"]
+    lines = [f"# Standing order price update from {SHOP}", "", "Dear customer,", "",
+             f"Thank you for letting {SHOP} bring fresh flowers to your business every week. Rising wholesale flower costs mean we need to update "
+             "our standing order prices.", "",
+             f"The new prices take effect on {effective}. Deliveries before then stay at your current prices.", "",
+             "| Item | Current weekly price | New weekly price | Change |", "|---|---|---|---|"]
+    for k in order:
+        it = I[k]
+        new = lobby_new if k == "lobby" and lobby_new is not None else it["new"]
+        p = it["pct"] if pct_of is None and new == it["new"] else (pct_of or (lambda o, n: r_half_up(pct(o, n))))(it["old"], new)
+        lines.append(f"| {it['name']} | {money_s(it['old'])} | {money_s(new)} | {p}% |")
+        if bud_priced and k == "statement":
+            lines.append(f"| Bud vase set (5 vases) | {money_s(d['bud_old'])} | {money_s(d['bud_old'])} | 0% |")
+    if bud_priced:
+        lines += [""]
+    else:
+        lines += ["", "We are discontinuing the bud vase sets; the last bud vase deliveries will be the week of October 26.", ""]
+    if code:
+        lines += ["As a thank-you for your loyalty, use code LOYAL10 for 10% off your first month at the new prices.", ""]
+    lines += ["If you have questions about your standing order, just reply to this letter or call the shop.", "", "Warmly,", "", OWNER, SHOP, "", "---", "",
+              f"Note for {MAILER.split()[0]} (not part of the letter): leave these annual-contract customers off the mailing; they keep current prices until renewal.", ""]
+    if annual is None:
+        for c in sorted(C[:3], key=lambda x: x["renewal"]):
+            lines.append(f"- {c['name']} - renews {c['renewal'].strftime('%B %-d, %Y')}")
+    else:
+        for c in annual:
+            lines.append(f"- {c['name']} - renews {c['renewal'].strftime('%B %-d, %Y') if c['renewal'] else 'date not on file'}")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed); I = d["items"]; C = d["custs"]
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     order = ["counter", "lobby", "statement", "delivery"]
     rows = [[I[k]["name"], I[k]["old"], I[k]["new"], ""] for k in order[:3]]
     rows.append(["Bud vase set (5 vases)", d["bud_old"], "-", "Discontinued - last deliveries week of Oct 26"])
@@ -106,40 +170,38 @@ def emit(seed: int) -> None:
     write_csv(os.path.join(ws, "standing_order_customers.csv"),
               ["Business", "Contact", "Email", "Standing order", "Contract", "Contract start", "Renewal date", "Status"], crow)
     a0, a1, a2, conv = C[0], C[1], C[2], C[3]
-    write_email_thread(os.path.join(ws, "email_price_increase.txt"), [
+    date_on, lobby_on = traps.on("date"), traps.on("lobby_price")
+    listed = (a0, conv, a2) if traps.on("annual_list") else (a0, a1, a2)
+    thread = [
         {"from": f"{OWNER} <grace@ivylaneflorist.com>", "to": "office@ivylaneflorist.com", "cc": MAILER, "date": "Tue, 8 Sep 2026 09:05",
          "subject": "price notice for standing orders",
          "body": ("Can you draft the price increase notice for our standing order customers? Finance approved the new schedule "
-                  "(new_price_schedule_2026.xlsx in the folder) and that sheet is final, so use it for every number. The new prices take effect October 1.\n\n"
+                  "(new_price_schedule_2026.xlsx in the folder) and that sheet is final, so use it for every number. "
+                  + ("The new prices take effect October 1.\n\n" if date_on else "The new prices take effect Monday, November 2.\n\n") +
                   "For each item give the current weekly price, the new weekly price and the percent change, rounded to the nearest whole percent. "
                   "Say that we're discontinuing the bud vase sets. No discount code this year, we did that last time.\n\n"
-                  f"Customers on an annual contract keep their current prices until their renewal date - that's {a0['name']}, {conv['name']} and {a2['name']}. "
-                  f"They shouldn't get this letter, so add a short note at the bottom for {MAILER.split()[0]} saying who to leave off the mailing and when each of them renews.")},
-        {"from": f"{MAILER} <kim@ivylaneflorist.com>", "to": f"{OWNER} <grace@ivylaneflorist.com>", "date": "Thu, 10 Sep 2026 14:31", "subject": "RE: price notice for standing orders",
-         "body": "Our customer terms say 30 days' written notice for a price change, and I can't get the letters printed and out before October 2. Can we push the date?"},
-        {"from": f"{OWNER} <grace@ivylaneflorist.com>", "to": f"{MAILER} <kim@ivylaneflorist.com>", "date": "Fri, 11 Sep 2026 08:12", "subject": "RE: price notice for standing orders",
-         "body": (f"Good catch. Make it Monday, November 2 instead. Everything else stays the same - and remember the medium lobby goes to ${d['wrong_lobby']:.0f} a week.")}])
-    write_text(os.path.join(ws, "price_notice_2025.md"),
+                  f"Customers on an annual contract keep their current prices until their renewal date - that's {listed[0]['name']}, {listed[1]['name']} and {listed[2]['name']}. "
+                  f"They shouldn't get this letter, so add a short note at the bottom for {MAILER.split()[0]} saying who to leave off the mailing and when each of them renews.")}]
+    if date_on:
+        thread += [
+            {"from": f"{MAILER} <kim@ivylaneflorist.com>", "to": f"{OWNER} <grace@ivylaneflorist.com>", "date": "Thu, 10 Sep 2026 14:31", "subject": "RE: price notice for standing orders",
+             "body": "Our customer terms say 30 days' written notice for a price change, and I can't get the letters printed and out before October 2. Can we push the date?"},
+            {"from": f"{OWNER} <grace@ivylaneflorist.com>", "to": f"{MAILER} <kim@ivylaneflorist.com>", "date": "Fri, 11 Sep 2026 08:12", "subject": "RE: price notice for standing orders",
+             "body": (f"Good catch. Make it Monday, November 2 instead. Everything else stays the same - and remember the medium lobby goes to ${d['wrong_lobby']:.0f} a week."
+                      if lobby_on else "Good catch. Make it Monday, November 2 instead. Everything else stays the same.")}]
+    elif lobby_on:  # the date was right from the start; the lobby price still arrives in a follow-up
+        thread.append({"from": f"{OWNER} <grace@ivylaneflorist.com>", "to": f"{MAILER} <kim@ivylaneflorist.com>", "date": "Fri, 11 Sep 2026 08:12",
+                       "subject": "RE: price notice for standing orders",
+                       "body": f"One more thing - remember the medium lobby goes to ${d['wrong_lobby']:.0f} a week."})
+    write_email_thread(os.path.join(ws, "email_price_increase.txt"), thread)
+    if traps.on("old_notice"):
+        write_text(os.path.join(ws, "price_notice_2025.md"),
         f"# A note about our prices\n\nDear valued customer,\n\nThank you for letting {SHOP} bring flowers to your business every week. "
         "After two years without a change, our weekly standing order prices will rise by about 5% effective September 1, 2025, because of higher "
         "wholesale flower and fuel costs.\n\nAs a thank-you for your loyalty, use code LOYAL10 for 10% off your first month at the new prices.\n\n"
         f"Warmly,\n{OWNER}\n{SHOP}\n")
 
-    lines = [f"# Standing order price update from {SHOP}", "", "Dear customer,", "",
-             f"Thank you for letting {SHOP} bring fresh flowers to your business every week. Rising wholesale flower costs mean we need to update "
-             "our standing order prices.", "",
-             f"The new prices take effect on Monday, November 2, 2026. Deliveries before then stay at your current prices.", "",
-             "| Item | Current weekly price | New weekly price | Change |", "|---|---|---|---|"]
-    for k in order:
-        it = I[k]
-        lines.append(f"| {it['name']} | {money_s(it['old'])} | {money_s(it['new'])} | {it['pct']}% |")
-    lines += ["", "We are discontinuing the bud vase sets; the last bud vase deliveries will be the week of October 26.", "",
-              "If you have questions about your standing order, just reply to this letter or call the shop.", "", "Warmly,", "", OWNER, SHOP, "", "---", "",
-              f"Note for {MAILER.split()[0]} (not part of the letter): leave these annual-contract customers off the mailing; they keep current prices until renewal.", ""]
-    for c in sorted(C[:3], key=lambda x: x["renewal"]):
-        lines.append(f"- {c['name']} - renews {c['renewal'].strftime('%B %-d, %Y')}")
-    lines.append("")
-    write_text(os.path.join(sol, "notice.md"), "\n".join(lines))
+    write_text(os.path.join(sol, "notice.md"), notice_md(d))
     write_json(os.path.join(ref, "notes.json"), {
         "annual": [{"name": c["name"], "renewal": c["renewal"].isoformat()} for c in C[:3]], "converted": conv["name"], "effective": EFFECTIVE.isoformat(),
         "items": {k: {"old": I[k]["old"], "new": I[k]["new"], "pct": I[k]["pct"]} for k in order}, "wrong_lobby": d["wrong_lobby"]})
@@ -159,19 +221,19 @@ def emit(seed: int) -> None:
         if k == "lobby":
             spec["none"] = [price_rx(d["wrong_lobby"])]
         item_checks.append(spec)
-    write_task_yaml(HERE, {
+    task = {
         "id": "price-increase-notice", "track": "desk", "category": "drafting",
         "title": "Draft the standing order price increase notice",
         "ask": "Please draft the price increase notice for our standing order customers and save it as notice.md. Grace's emails and the new price schedule are in the folder.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the first email says the new prices take effect October 1; the last one moves the date to Monday, November 2 (check: effective date)",
             f"percent changes round to the nearest whole percent on the current price; for the counter arrangement ({money_s(I['counter']['old'])} to {money_s(I['counter']['new'])}) and the delivery fee ({money_s(I['delivery']['old'])} to {money_s(I['delivery']['new'])}) truncating or dividing by the new price gives a different whole percent (checks: counter arrangement: new price and rounded percent; delivery fee: new price and rounded percent)",
             f"Grace's last email says the medium lobby arrangement goes to ${d['wrong_lobby']:.0f}; the approved schedule she called final says {money_s(I['lobby']['new'])} (check: lobby arrangement: new price and rounded percent)",
             f"Grace lists {conv['name']} among the annual-contract customers, but the customer list shows it went month-to-month in June, and she leaves out {a1['name']}, which is annual; the mailing note must name the three annual customers with renewal dates and not exclude {conv['name']} (check: mailing note names the annual-contract customers)",
             "last year's notice is in the folder with a September 2025 date and a LOYAL10 discount code; Grace says no code this year (check: no discount code)",
             "the bud vase set has no new price because it is being discontinued, so the notice must say so rather than price it (check: bud vase sets discontinued)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "text_sentence_matches", "name": "effective date", "path": "notice.md",
              "all": [r"(effective|take effect|takes effect|start|starting|begin|beginning|from|as of|on and after)",
@@ -185,7 +247,42 @@ def emit(seed: int) -> None:
             {"type": "text_not_contains", "name": "no discount code", "path": "notice.md", "phrases": ["LOYAL10"]},
             {"type": "custom", "name": "mailing note names the annual-contract customers", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        task["variant"] = {"of": "price-increase-notice", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, task)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """notice.md right in every respect except that it falls for `trap`."""
+    C = d["custs"]
+    if trap == "date":            # the first email's date kept
+        text = notice_md(d, effective="Thursday, October 1, 2026")
+    elif trap == "rounding":      # percent changes truncated instead of rounded
+        text = notice_md(d, pct_of=lambda o, n: math.floor(pct(o, n)))
+    elif trap == "lobby_price":   # the lobby price from Grace's last email instead of the final schedule
+        text = notice_md(d, lobby_new=d["wrong_lobby"])
+    elif trap == "annual_list":   # Grace's list of annual customers taken as given
+        text = notice_md(d, annual=[C[0], C[3], C[2]])
+    elif trap == "old_notice":    # last year's discount code carried over
+        text = notice_md(d, code=True)
+    elif trap == "bud_vase":      # the bud vase set priced as if it continued
+        text = notice_md(d, bud_priced=True)
+    else:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "notice.md"), text)
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

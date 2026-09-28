@@ -3,6 +3,9 @@
 the general manager's minutes guidelines become the meeting minutes.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off upload_date --out DIR   # same draw, that pitfall removed, same answer
+    python gen.py --mutant reversals --out DIR        # a deliverable that falls for one trap
 
 Business: a member-owned grocery co-op. The monthly leadership meeting was recorded and run through a transcription
 service a week later; the general manager wants proper minutes.
@@ -21,11 +24,29 @@ Traps (each caught by a check, see task.yaml):
                                                                                      (checks: bulk bins decision; minutes facts)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, shutil, sys
 from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. The switchable trap is removed when the transcript is written, so build()
+# and its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "upload_date": "the transcript is named and stamped with its upload date a week after the meeting "
+                       "(off: named by the meeting date, no upload stamp; the meeting date still comes from the invite)",
+    },
+    fixed={
+        "reversals": "the freezer vendor and the Christmas Eve closing are reversed later in the meeting",
+        "marcus": "two people called Marcus; the invite says which one attended",
+        "relative_dates": "relative dates become calendar dates per the guidelines and the invite's recurrence",
+        "bins": "the bulk bins are decided early and never revisited; the Sunday idea is parked, not decided",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["upload_date", "reversals", "marcus", "relative_dates", "bins"]
 
 COOP = "Alder Creek Food Co-op"
 DOMAIN = "aldercreek.coop"
@@ -75,10 +96,56 @@ def ts(sec: int) -> str:
     return f"[{sec // 3600:02d}:{sec % 3600 // 60:02d}:{sec % 60:02d}]"
 
 
-def emit(seed: int) -> None:
+def minutes_md(d: dict, meeting: date = MEETING, reversed_: bool = True, marcus: str = "grocery", dues: dict | None = None,
+               bins: bool = True, sunday_decided: bool = False) -> str:
+    """The reference minutes. The keyword arguments are the mistakes a mutant makes: the wrong meeting date, the first
+    version of each reversed decision, the wrong Marcus, other due dates, the bins decision lost, the parked idea decided."""
+    P = dict(d["P"])
+    P["grocery"] = P[marcus]
+    dear, cheap = d["dear"], d["cheap"]
+    attendees = ["gm", "grocery", "hr", "marketing", "facilities"]
+    long = lambda x: x.strftime("%B %-d, %Y") if isinstance(x, date) else x
+    att = ", ".join(P[a]["full"] for a in attendees)
+    act_rows = "\n".join(f"| {a['task'] if reversed_ else a['task'].replace('Northwind', 'Polar Tech')} | {P[a['owner']]['full']} | "
+                         f"{long(a['due'] if dues is None else dues[a['key']])} |" for a in d["actions"])
+    if reversed_:
+        freezer = (f"1. Walk-in freezer compressor: the repair goes to Northwind Refrigeration at ${dear:,}. (Polar Tech was chosen first but cannot get the part until mid-November, so the decision was reversed.)\n")
+        xmas = "3. Holiday hours: the store closes at 5:00 PM on Christmas Eve, is closed Christmas Day, and keeps normal hours the rest of the week. (An earlier 3 PM closing was changed after last year's numbers were reviewed.)\n\n"
+    else:
+        freezer = f"1. Walk-in freezer compressor: the repair goes to Polar Tech Refrigeration at ${cheap:,}.\n"
+        xmas = "3. Holiday hours: the store closes at 3:00 PM on Christmas Eve, is closed Christmas Day, and keeps normal hours the rest of the week.\n\n"
+    bins_line = (f"2. Bulk department: approved adding {d['bins']} gravity bulk bins by the coffee grinder (quote ${d['bins_budget']:,}).\n"
+                 if bins else "")
+    if not bins:
+        xmas = xmas.replace("3. Holiday", "2. Holiday", 1)
+    if sunday_decided:
+        xmas = xmas[:-1] + f"{4 if bins else 3}. Sunday hours: the store opens at 8 AM on Sundays.\n\n"
+        parked = ""
+    else:
+        parked = ("## Discussed, not decided\n\n"
+                  "- Opening at 8 AM on Sundays: parked until January, pending staffing numbers.\n\n")
+    return (f"# {COOP} - Leadership meeting minutes\n\n"
+            f"**Date:** {meeting.strftime('%A')}, {long(meeting)}\n\n"
+            f"**Attendees:** {att}\n\n"
+            "## Decisions\n\n"
+            + freezer + bins_line + xmas + parked +
+            "## Action items\n\n"
+            "| Action | Owner | Due |\n|---|---|---|\n"
+            f"{act_rows}\n"
+            + (f"| Coordinate the bulk bin install | {P['marketing']['full']} with {P['grocery']['full']} | No date set |\n\n" if bins else "\n") +
+            f"Next meeting: Monday, {long(NEXT_MEETING)}.\n")
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
     P = d["P"]
-    ws, ref, sol = task_dirs(HERE)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     g, m, h, k, fa = (P[x]["first"] for x in ("gm", "grocery", "hr", "marketing", "facilities"))
     cheap, dear = d["cheap"], d["dear"]
     lines = [
@@ -122,13 +189,15 @@ def emit(seed: int) -> None:
     for spk, txt in lines:
         body.append(f"{ts(sec)} {spk}: {txt}")
         sec += 12 + len(txt) // 4 + r.randint(3, 40)
-    out = [f"Transcript export - {COOP}",
-           "Title: Monthly leadership meeting",
-           f"Uploaded: {UPLOAD.strftime('%a %b %-d, %Y')} 9:02 AM",
-           f"Duration: {ts(sec + 20)[1:-1]}",
-           "Speakers are labelled by first name as entered at upload.",
-           ""] + body
-    write_text(os.path.join(ws, f"transcript_{UPLOAD.isoformat()}.txt"), "\n".join(out) + "\n")
+    stamped = traps.on("upload_date")
+    head = [f"Transcript export - {COOP}",
+            "Title: Monthly leadership meeting"]
+    if stamped:
+        head.append(f"Uploaded: {UPLOAD.strftime('%a %b %-d, %Y')} 9:02 AM")
+    head += [f"Duration: {ts(sec + 20)[1:-1]}",
+             "Speakers are labelled by first name as entered at upload.",
+             ""]
+    write_text(os.path.join(ws, f"transcript_{(UPLOAD if stamped else MEETING).isoformat()}.txt"), "\n".join(head + body) + "\n")
 
     attendees = ["gm", "grocery", "hr", "marketing", "facilities"]
     ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Alder Creek Food Co-op//Calendar//EN", "BEGIN:VEVENT",
@@ -169,38 +238,22 @@ def emit(seed: int) -> None:
                           "naive_due": a["naive_due"].isoformat(), "keyword": a["keyword"], "task": a["task"]} for a in d["actions"]]}
     write_json(os.path.join(ref, "facts.json"), facts)
 
-    long = lambda x: x.strftime("%B %-d, %Y")
-    att = ", ".join(P[a]["full"] for a in attendees)
-    act_rows = "\n".join(f"| {a['task']} | {P[a['owner']]['full']} | {long(a['due'])} |" for a in d["actions"])
-    minutes = (f"# {COOP} - Leadership meeting minutes\n\n"
-               f"**Date:** Monday, {long(MEETING)}\n\n"
-               f"**Attendees:** {att}\n\n"
-               "## Decisions\n\n"
-               f"1. Walk-in freezer compressor: the repair goes to Northwind Refrigeration at ${dear:,}. (Polar Tech was chosen first but cannot get the part until mid-November, so the decision was reversed.)\n"
-               f"2. Bulk department: approved adding {d['bins']} gravity bulk bins by the coffee grinder (quote ${d['bins_budget']:,}).\n"
-               "3. Holiday hours: the store closes at 5:00 PM on Christmas Eve, is closed Christmas Day, and keeps normal hours the rest of the week. (An earlier 3 PM closing was changed after last year's numbers were reviewed.)\n\n"
-               "## Discussed, not decided\n\n"
-               "- Opening at 8 AM on Sundays: parked until January, pending staffing numbers.\n\n"
-               "## Action items\n\n"
-               "| Action | Owner | Due |\n|---|---|---|\n"
-               f"{act_rows}\n"
-               f"| Coordinate the bulk bin install | {P['marketing']['full']} with {P['grocery']['full']} | No date set |\n\n"
-               f"Next meeting: Monday, {long(NEXT_MEETING)}.\n")
+    minutes = minutes_md(d)
     write_text(os.path.join(sol, "minutes.md"), minutes)
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "minutes-from-transcript", "track": "desk", "category": "drafting",
         "title": "Minutes from the leadership meeting recording",
         "ask": (f"Can you turn the transcript of our last leadership meeting into proper minutes? My guidelines for minutes are in the folder "
                 "with the invite and the staff list. Save them as minutes.md.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"the transcript file is named and stamped with its upload date, {UPLOAD.strftime('%B %-d')}; the meeting was {MEETING.strftime('%A, %B %-d')} per the invite, and relative dates resolve from it (next Friday {next_friday(MEETING).strftime('%B %-d')} not {next_friday(UPLOAD).strftime('%B %-d')}, two weeks from today {(MEETING + timedelta(days=14)).strftime('%B %-d')} not {(UPLOAD + timedelta(days=14)).strftime('%B %-d')}) (check: minutes facts)",
             f"two decisions are reversed later in the meeting: the freezer goes to Northwind at ${dear:,} once Polar Tech (${cheap:,}) cannot get the part, and Christmas Eve closing moves from 3 pm to 5 pm (checks: freezer repair decision; minutes facts)",
             f"owners are named by first name only; the directory has two people called Marcus and the invite shows {P['grocery']['full']} attended while {P['treasurer']['full']} declined (check: minutes facts)",
             "'next Friday', 'two weeks from today', 'the end of the month' and 'before our next meeting' must become calendar dates; the guidelines define next Friday as the following week's and the invite's recurrence gives the first Monday of November (check: minutes facts)",
             f"the {d['bins']} bulk bins are approved early and never revisited, while the Sunday opening idea is parked and is not a decision (checks: bulk bins decision; minutes facts)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "minutes.md exists", "path": "minutes.md"},
             {"type": "text_sentence_matches", "name": "freezer repair decision", "path": "minutes.md",
@@ -209,8 +262,45 @@ def emit(seed: int) -> None:
              "all": [r"bulk", rf"(?<![\d$,.]){d['bins']}(?![\d,.])|\b{['ten', 'twelve', 'fourteen'][[10, 12, 14].index(d['bins'])]}\b"]},
             {"type": "custom", "name": "minutes facts", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "minutes-from-transcript", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """minutes.md right in every respect except that it falls for `trap`."""
+    if trap == "upload_date":        # the meeting dated by the upload stamp, relative dates resolved from it
+        text = minutes_md(d, meeting=UPLOAD, dues={a["key"]: a["naive_due"] for a in d["actions"]})
+    elif trap == "reversals":        # the first version of both reversed decisions recorded
+        text = minutes_md(d, reversed_=False)
+    elif trap == "marcus":           # the Marcus in the directory who declined the invite
+        text = minutes_md(d, marcus="treasurer")
+    elif trap == "relative_dates":   # 'next Friday' read as this week's Friday; 'before our next meeting' left as said
+        dues = {a["key"]: a["due"] for a in d["actions"]}
+        dues["freezer"] = MEETING + timedelta(days=(4 - MEETING.weekday()) % 7)
+        dues["parking"] = "Before the next meeting"
+        text = minutes_md(d, dues=dues)
+    elif trap == "bins":             # the early bulk-bin decision lost and the parked Sunday idea recorded as decided
+        text = minutes_md(d, bins=False, sunday_decided=True)
+    else:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "minutes.md"), text)
+
+
+# Grader finding: the `bins` mutant (bulk-bin decision dropped, parked Sunday opening recorded as a decision) fails
+# "bulk bins decision" but passes "minutes facts", which checks neither the bins nor the parked Sunday idea although the
+# trap cites it. The function is kept and left out of MUTANTS.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "bins"}
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

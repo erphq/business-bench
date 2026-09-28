@@ -2,6 +2,9 @@
 """vendor-spend-categories: year-to-date spend per vendor and category for a country inn, from the AP export.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off spellings,voids --out DIR     # same draw, those pitfalls removed, same answer
+    python gen.py --mutant credits --out DIR                # a deliverable that falls for one trap
 
 Business: Juniper Hollow Inn, a 22-room inn in Savannah. The bookkeeping system exports every bill, vendor
 credit and void for January to August with vendor names typed however the clerk typed them. The housekeeping
@@ -26,6 +29,21 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only; build() is unchanged.
+TRAPS = TrapSet(
+    switchable={
+        "spellings": "vendor names typed two to five ways in the export",
+        "credits": "vendor credits exported as positive amounts with Type = Credit",
+        "duplicate_vendor": "Lowcountry Supply on the category list twice, the wrong category first",
+        "voids": "voided bills left in the export with their original amounts",
+        "format_noise": "text amounts with thousands separators, a two-line preamble, a BOM and CRLF endings "
+                        "(the totals must still be live formulas)",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["spellings", "credits", "duplicate_vendor", "voids", "format_noise"]
 
 VENDORS = [  # canonical, category, spellings, (bills per month lo, hi), (amount lo, hi)
     ("Sysco Savannah", "Food & Beverage", ["Sysco Savannah", "SYSCO SAVANNAH INC", "Sysco Savannah, Inc.", "Sysco  Savannah", "sysco savannah llc"], (3, 5), (380, 1650)),
@@ -140,22 +158,34 @@ def clean_rows(d: dict) -> list[list]:
     return [[t["no"], t["date"].isoformat(), t["type"], t["vendor"], t["raw"], t["signed"], t["status"]] for t in d["txns"]]
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     sp, ct = d["spend"], d["cat_tot"]
 
     # ---- workspace ----
-    rows = [[t["type"], t["no"], t["date"].strftime("%m/%d/%Y"), t["raw"], t["memo"], money_str(t["amt"], 0), t["status"]] for t in d["txns"]]
+    noisy = traps.on("format_noise")
+    if traps.canonical:
+        rows = [[t["type"], t["no"], t["date"].strftime("%m/%d/%Y"), t["raw"], t["memo"], money_str(t["amt"], 0), t["status"]] for t in d["txns"]]
+    else:
+        rows = [[t["type"], t["no"], t["date"].strftime("%m/%d/%Y"), t["raw"] if traps.on("spellings") else t["vendor"], t["memo"],
+                 (money_str(t["amt"], 0) if noisy else t["amt"]) if traps.on("credits") or t["type"] != "Credit"
+                 else (money_str(-t["amt"], 7) if noisy else -t["amt"]), t["status"]]
+                for t in d["txns"] if traps.on("voids") or t["status"] != "Voided"]
     write_csv(os.path.join(ws, "ap_transactions_2026-01-01_to_2026-08-31.csv"),
               ["Type", "Num", "Date", "Vendor", "Memo", "Amount", "Status"], rows,
-              preamble=["Juniper Hollow Inn", "Vendor Transactions: January 1 - August 31, 2026"], bom=True, crlf=True)
+              preamble=["Juniper Hollow Inn", "Vendor Transactions: January 1 - August 31, 2026"] if noisy else None,
+              bom=noisy, crlf=noisy)
     map_rows = []
     for canon, cat, *_ in VENDORS:
-        if canon == AMBIG:
+        if canon == AMBIG and traps.on("duplicate_vendor"):
             map_rows.append([canon, AMBIG_WRONG, "ice machine"])
         map_rows.append([canon, cat, ""])
     write_xlsx(os.path.join(ws, "vendor_categories.xlsx"), {"Vendors": {
@@ -172,12 +202,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
          "date": "Tue, 8 Sep 2026 11:32", "subject": "RE: What we spend, and with whom",
          "body": "My list is in the folder. Lowcountry Supply is on there twice, sorry - we bought the ice machine from "
                  "them back in 2024 and I put it under repairs. Everything we buy from them now is cleaning chemicals, "
-                 "trash liners and room supplies, so they belong under Housekeeping & Amenities."},
+                 "trash liners and room supplies, so they belong under Housekeeping & Amenities."
+                 if traps.on("duplicate_vendor") else "My list is in the folder."},
         {"from": "Margaret Hughes <margaret@juniperhollowinn.com>", "to": "you", "date": "Tue, 8 Sep 2026 12:10",
          "subject": "RE: What we spend, and with whom",
          "body": "Two more things. Vendor credits come off that vendor's spend - Coastal Linen credited us for the "
                  "stained sheets and Booking.com refunded commission on a cancelled stay. Bills count whether or not we've "
-                 "paid them yet. And anything marked Voided never happened.\n\nSave it as vendor_spend.xlsx please."}])
+                 "paid them yet." + (" And anything marked Voided never happened." if traps.on("voids") else "")
+                 + "\n\nSave it as vendor_spend.xlsx please."}])
 
     # ---- reference ----
     write_csv(os.path.join(ref, "vendor_spend.csv"), ["vendor", "category", "spend"],
@@ -190,13 +222,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_xlsx(os.path.join(sol, "vendor_spend.xlsx"), workbook(clean_rows(d), d["cat_of"]), creator="reference")
 
     hk, rm = "Housekeeping & Amenities", "Repairs & Maintenance"
-    write_task_yaml(HERE, {
+    spec = {
         "id": "vendor-spend-categories", "track": "desk", "category": "spreadsheet",
         "title": "Year-to-date spend by vendor and category",
         "ask": ("The owners want to see what we've spent this year with each vendor, grouped into Deb's categories. "
                 "Build vendor_spend.xlsx from the AP export and keep the totals live - the email thread has the details.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"vendor names are typed two to five ways ('{MANY_NAMES}', 'SYSCO SAVANNAH INC', 'Sysco  Savannah', "
             "'sysco savannah llc'); a pivot on the raw Vendor column splits every vendor and matches few of them to "
             "Deb's list (checks: Sysco Savannah spend; total spend)",
@@ -208,7 +240,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "four bills are voided but stay in the export with their original amounts (check: total spend)",
             "amounts are text with thousands separators under a two-line preamble with a BOM and CRLF endings, and "
             "the category totals must be live formulas that recalculate clean (checks: live formulas; no error cells)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "vendor_spend.xlsx exists", "path": "vendor_spend.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "vendor_spend.xlsx", "min_count": 8},
@@ -224,7 +256,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "xlsx_value_present", "name": "total spend", "path": "vendor_spend.xlsx",
              "expected": d["grand"], "rel_tol": cent_tol(d["grand"]), "near_text": "total"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "vendor-spend-categories", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(out or HERE, spec)
     print(f"seed={seed} txns={len(d['txns'])} grand={d['grand']}")
     print("spend:", sp); print("categories:", ct)
 
@@ -239,15 +275,57 @@ def write_naive(d: dict, out: str) -> None:
     write_xlsx(os.path.join(out, "vendor_spend.xlsx"), workbook(rows, cat_raw), creator="naive")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """vendor_spend.xlsx from an agent that is right except that it falls for `trap`."""
+    rows, cat_of = clean_rows(d), dict(d["cat_of"])
+    if trap == "spellings":            # the vendor as exported; only the exact spelling on Deb's list is summed
+        rows = [x[:3] + [x[4]] + x[4:] for x in rows]
+    elif trap == "credits":            # credits summed as exported, positive
+        rows = [x[:5] + [0.0 if t["status"] == "Voided" else t["amt"]] + x[6:] for x, t in zip(rows, d["txns"])]
+    elif trap == "duplicate_vendor":   # the first row on Deb's list wins
+        cat_of[AMBIG] = AMBIG_WRONG
+    elif trap == "voids":              # voided bills kept at their original amounts
+        rows = [x[:5] + [-t["amt"] if t["type"] == "Credit" else t["amt"]] + x[6:] for x, t in zip(rows, d["txns"])]
+    elif trap != "format_noise":
+        raise KeyError(trap)
+    wb = workbook(rows, cat_of)
+    if trap == "format_noise":         # totals pasted from a pivot as values, nothing live
+        wb = static_workbook(d)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "vendor_spend.xlsx"), wb, creator="mutant")
+
+
+def static_workbook(d: dict) -> dict:
+    sp, ct, cat_of = d["spend"], d["cat_tot"], d["cat_of"]
+    vendors = sorted(cat_of, key=lambda v: (CATEGORIES.index(cat_of[v]), v))
+    rows = [[v, cat_of[v], sp[v]] for v in vendors] + [[], ["Category", "", "Spend"]]
+    rows += [[c, "", ct[c]] for c in CATEGORIES] + [["Total spend, January to August 2026", "", d["grand"]]]
+    return {"Spend by vendor": {"header": ["Vendor", "Category", "Spend"], "rows": rows,
+                                "number_formats": {"C": "#,##0.00"}, "widths": {"A": 36, "B": 26, "C": 14}},
+            "Data": {"header": ["no", "date", "type", "vendor", "vendor as exported", "net amount", "status"],
+                     "rows": clean_rows(d), "widths": {"D": 28, "E": 34}}}
+
+
+# Grader finding: 'format_noise' is left out. Its sentence cites 'live formulas' and 'no error cells', but no single
+# mistake fails both: totals pasted as values (this mutant) fail 'live formulas' and pass 'no error cells', and
+# amounts left as text feed SUMIFS zeros without an error cell (caught only by the value checks, e.g. total spend).
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "format_noise"}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

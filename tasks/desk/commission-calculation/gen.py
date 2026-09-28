@@ -2,6 +2,9 @@
 """commission-calculation: August commissions for a team-sales desk on a graduated plan, with refund recoveries.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off noise --out DIR        # same draw, that pitfall removed, same answer
+    python gen.py --mutant refund_rate --out DIR     # a deliverable that falls for one trap
 
 Business: an outdoor outfitter's team-sales desk (uniforms and gear for schools and clubs). Five reps, a written
 commission plan, last month's statement, this month's CRM export and accounting's refund log.
@@ -28,6 +31,25 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. The one switchable trap is removed when the CRM export is written, so
+# build() and every random draw are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "noise": "quotes, negotiations and lost deals with amounts in the CRM export, under a two-line preamble "
+                 "(off: only Closed Won rows, no preamble)",
+    },
+    fixed={
+        "bands": "graduated bands on the rep's cumulative month, not the whole month at the top band reached",
+        "refund_rate": "refunds recovered at the rate the refunded deal was paid, not the rep's current band",
+        "senior_plan": "Haddad on the Senior plan from August 1, stated only in Marcus's email",
+        "splits": "two-owner deals credited half to each rep",
+        "formulas": "the statement must work from live formulas",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["bands", "refund_rate", "senior_plan", "splits", "noise", "formulas"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -237,13 +259,19 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverable
 
-def statement_sheets(d: dict, aug_rows: list[list], ref_rows: list[list]) -> dict:
+def statement_sheets(d: dict, aug_rows: list[list], ref_rows: list[list], plans: dict | None = None,
+                     top_band: bool = False) -> dict:
+    """The reference statement. `plans` overrides a rep's plan and `top_band` pays the whole month at the top band
+    reached; both are only used by mutants."""
     n_o = len(aug_rows) + 1
     n_r = len(ref_rows) + 1
     rows = []
     for i, rp in enumerate(d["reps"], start=2):
-        plan = d["stmt"][rp]["plan"]
-        if plan == "Senior":
+        plan = d["stmt"][rp]["plan"] if plans is None else plans[rp]
+        if top_band:
+            comm = (f"=ROUND(C{i}*IF(C{i}<=40000,0.05,0.09),2)" if plan == "Senior" else
+                    f"=ROUND(C{i}*IF(C{i}<=20000,0.03,IF(C{i}<=50000,0.05,0.08)),2)")
+        elif plan == "Senior":
             comm = f"=ROUND(MIN(C{i},40000)*0.05+MAX(C{i}-40000,0)*0.09,2)"
         else:
             comm = f"=ROUND(MIN(C{i},20000)*0.03+MAX(MIN(C{i},50000)-20000,0)*0.05+MAX(C{i}-50000,0)*0.08,2)"
@@ -260,12 +288,17 @@ def statement_sheets(d: dict, aug_rows: list[list], ref_rows: list[list]) -> dic
     }
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     reps, st = d["reps"], d["stmt"]
     A, B, H, C, D = reps
     r = rng(seed + 12)
@@ -279,9 +312,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
         crm.append({"id": n["id"], "date": n["date"], "owner": n["rep"], "stage": n["stage"], "amount": n["amount"], "acct": r.choice(ACCOUNTS),
                     "k": n["k"]})
     crm.sort(key=lambda x: x["id"])
+    noise_on = traps.on("noise")
+    if not noise_on:  # every account was drawn above as usual; the non-won rows are dropped afterwards
+        crm = [x for x in crm if x["stage"] == "Closed Won"]
     write_csv(os.path.join(ws, "crm_opportunities_2026-08.csv"), ["Order #", "Close Date", "Account", "Owner", "Stage", "Amount"],
               [[x["id"], x["date"].strftime("%m/%d/%Y"), x["acct"], x["owner"], x["stage"], f"${x['amount']:,.2f}"] for x in crm],
-              preamble=["Team Sales - Opportunities by close date", "Close date 08/01/2026 - 08/31/2026"], crlf=True)
+              preamble=["Team Sales - Opportunities by close date", "Close date 08/01/2026 - 08/31/2026"] if noise_on else None,
+              crlf=True)
 
     # ---- July statement (static, as issued) ----
     jl = [ln for rp in reps for ln in d["jul_lines"][rp]]
@@ -361,13 +398,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
 
     rb = next(rf for rf in d["refunds"] if rf["line"]["rep"] == B)
     rc = next(rf for rf in d["refunds"] if rf["line"]["rep"] == C)
-    write_task_yaml(HERE, {
+    spec = {
         "id": "commission-calculation", "track": "desk", "category": "spreadsheet",
         "title": "August sales commissions with refund recoveries",
         "ask": ("Work out August commissions for the team sales reps and save them as commissions.xlsx. Everything you need is in "
                 "the folder - the plan, July's statement, the CRM export, the refunds and Marcus's emails.\n"),
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "the bands are graduated on each rep's cumulative month: every dollar earns its own band's rate, so paying the whole month "
             f"at the top band reached overpays {A} by hundreds and rating each deal by its own size is also wrong (check: Osei commission)",
             f"refunds are recovered at the rate the refunded deal was paid: {B}'s refunded July deal sat in the 8% band on July's "
@@ -381,7 +418,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             f"the CRM export carries {len(d['noise'])} quotes, negotiations and lost deals with amounts under a two-line preamble; only "
             "Closed Won counts (check: total net payout)",
             "Marcus wants the numbers to work from formulas; a pasted-values sheet fails (check: live formulas)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "commissions.xlsx", "min_count": 10},
             {"type": "xlsx_no_errors", "name": "no error cells", "path": "commissions.xlsx"},
@@ -396,7 +433,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "xlsx_value_present", "name": "total net payout", "path": "commissions.xlsx",
              "expected": d["total_net"], "rel_tol": cent_tol(d["total_net"], 0.004), "near_text": "total"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "commission-calculation", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} aug_deals={len(d['aug'])} jul_deals={len(d['jul'])} total_net={d['total_net']}")
     for rp in reps:
         print("  ", rp, st[rp])
@@ -413,15 +453,62 @@ def write_naive(d: dict, out: str) -> None:
                creator="naive")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """commissions.xlsx right in every respect except that it falls for `trap`."""
+    reps, st = d["reps"], d["stmt"]
+    H = reps[2]
+    lines = {rp: list(d["aug_lines"][rp]) for rp in reps}
+    plans = {rp: st[rp]["plan"] for rp in reps}
+    rates = [rf["rate"] for rf in d["refunds"]]
+    top_band = False
+    if trap == "bands":            # whole month paid at the top band reached
+        top_band = True
+    elif trap == "refund_rate":    # every recovery at the rep's current (August) top band
+        def top(rp):
+            return next(rate for t, rate in (SENIOR if plans[rp] == "Senior" else STANDARD) if st[rp]["bookings"] <= t)
+        rates = [top(rf["line"]["rep"]) for rf in d["refunds"]]
+    elif trap == "senior_plan":    # Marcus's email missed: Haddad stays on the standard plan
+        plans[H] = "Standard"
+    elif trap == "splits":         # two-owner deals credited in full to the first owner named
+        lines = {rp: [] for rp in reps}
+        for dl in d["aug"]:
+            lines[dl["reps"][0]].append({"id": dl["id"], "date": dl["date"], "credit": dl["amount"]})
+    elif trap == "noise":          # quotes, negotiations and lost deals counted as bookings
+        for n in d["noise"]:
+            lines[n["rep"]].append({"id": n["id"], "date": n["date"], "credit": n["amount"]})
+    elif trap != "formulas":
+        raise KeyError(trap)
+    aug_rows = sorted([[ln["id"], ln["date"].isoformat(), rp, ln["credit"]] for rp in reps for ln in lines[rp]],
+                      key=lambda x: (x[1], x[0], x[2]))
+    ref_rows = [[rf["id"], rf["date"].isoformat(), rf["line"]["id"], rf["line"]["rep"], rf["amount"], rate, f"=ROUND(E{i}*F{i},2)"]
+                for i, (rf, rate) in enumerate(zip(d["refunds"], rates), start=2)]
+    sheets = statement_sheets(d, aug_rows, ref_rows, plans, top_band)
+    if trap == "formulas":         # the right figures, pasted as values
+        rows = [[rp, st[rp]["plan"], st[rp]["bookings"], st[rp]["commission"], st[rp]["recoveries"], st[rp]["net"]] for rp in reps]
+        rows.append(["Total", ""] + [round(sum(st[rp][k] for rp in reps), 2) for k in ("bookings", "commission", "recoveries", "net")])
+        sheets["August 2026"]["rows"] = rows
+        sheets["Refunds"]["rows"] = [r_[:6] + [rf["recovery"]] for r_, rf in zip(ref_rows, d["refunds"])]
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "commissions.xlsx"), sheets, creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(800):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 800 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

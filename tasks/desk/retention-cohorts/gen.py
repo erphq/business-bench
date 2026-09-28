@@ -2,6 +2,9 @@
 """retention-cohorts: web-shop orders to a monthly cohort retention table (customers, not orders).
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off email_noise,multi_orders --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant refunds --out DIR                       # a deliverable that falls for one trap
 
 Traps (each caught by a check, see task.yaml):
   * the cohort is the month of a customer's FIRST EVER order; the folder also holds last year's export
@@ -15,11 +18,31 @@ Traps (each caught by a check, see task.yaml):
   * the summary must be live formulas over the cleaned data                              (check: live formulas)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, sys
 from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the exports are written, so build() and
+# its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "prior_year": "last year's orders sit in a second export with other column names, US dates and CRLF (off: the "
+                      "whole history in one export in the 2026 format; 2025 buyers who reorder are still not new)",
+        "email_noise": "customer emails vary in case and stray spaces (off: every email as the customer's own)",
+        "multi_orders": "customers place two or three orders in an active month (off: one counted order per customer and "
+                        "month; cancelled, refunded and partly refunded orders all kept)",
+    },
+    fixed={
+        "refunds": "fully refunded and cancelled orders never happened",
+        "partial": "partial refunds still count as orders",
+        "formulas": "the summary counts are live formulas over cleaned data",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["prior_year", "refunds", "partial", "email_noise", "multi_orders", "formulas"]
 
 COHORTS = [f"2026-{m:02d}" for m in range(1, 7)]
 OLD_MONTHS = [f"2025-{m:02d}" for m in range(7, 13)]
@@ -166,24 +189,46 @@ def _acceptable(d) -> bool:
     if any(abs(a - total_new) < 0.2 for o in d["orders"] for a in (o["total"], o["refunded"])): return False
     return True
 
-def emit(seed: int) -> None:
+def one_per_month(d: dict) -> list:
+    """The orders with extra same-month orders removed: every order that does not count is kept, and of each customer's
+    counted orders in a month only one stays (a partly refunded one when there is one). Cohorts and activity are unchanged."""
+    counted, keep, seen = d["counted"], [], {}
+    for o in d["orders"]:
+        if counted(o):
+            seen.setdefault((o["cust"]["cid"], _mk(o["date"].date())), []).append(o)
+    chosen = {id(next((o for o in grp if o["status"] == "Partially refunded"), grp[0])) for grp in seen.values()}
+    return [o for o in d["orders"] if not counted(o) or id(o) in chosen]
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     orders = d["orders"]
+    noisy_email = traps.on("email_noise")
+    split = traps.on("prior_year")
     new_rows, old_rows = [], []
-    for o in orders:
-        if o["date"].year == 2026:
-            new_rows.append([f"#{o['num']}", o["date"].strftime("%Y-%m-%d %H:%M"), o["email_shown"], o["cust"]["name"], o["status"],
+    for o in (orders if traps.on("multi_orders") else one_per_month(d)):
+        email = o["email_shown"] if noisy_email else o["cust"]["email"]
+        if o["date"].year == 2026 or not split:
+            new_rows.append([f"#{o['num']}", o["date"].strftime("%Y-%m-%d %H:%M"), email, o["cust"]["name"], o["status"],
                              money_str(o["total"], 1), money_str(o["refunded"], 1) if o["refunded"] else ""])
         else:
-            old_rows.append([str(o["num"]), o["date"].strftime("%m/%d/%Y"), o["email_shown"], o["cust"]["name"], money_str(o["total"], 2),
+            old_rows.append([str(o["num"]), o["date"].strftime("%m/%d/%Y"), email, o["cust"]["name"], money_str(o["total"], 2),
                              {"Cancelled": "cancelled", "Refunded": "refunded", "Partially refunded": "partial_refund"}.get(o["status"], "complete")])
-    write_csv(os.path.join(ws, "orders_export_2026-01-01_2026-06-30.csv"), ["Order #", "Order Date", "Customer Email", "Customer Name", "Status", "Total", "Refunded"], new_rows, bom=True)
-    write_csv(os.path.join(ws, "orders_2025_jul-dec.csv"), ["Order", "Placed", "Buyer E-mail", "Buyer", "Amount", "State"], old_rows, crlf=True)
+    write_csv(os.path.join(ws, "orders_export_2026-01-01_2026-06-30.csv" if split else "orders_export_2025-07-01_2026-06-30.csv"),
+              ["Order #", "Order Date", "Customer Email", "Customer Name", "Status", "Total", "Refunded"], new_rows, bom=True)
+    if split:
+        write_csv(os.path.join(ws, "orders_2025_jul-dec.csv"), ["Order", "Placed", "Buyer E-mail", "Buyer", "Amount", "State"], old_rows, crlf=True)
     write_text(os.path.join(ws, "cohort_notes.txt"),
         "Cohort table - notes for whoever builds it (Leila)\n\n"
-        "A customer's cohort is the month of their first ever order with us. The web shop opened in July 2025, so between the\n"
-        "two exports in this folder you have the complete order history. Anyone who bought in 2025 is an existing customer,\n"
+        "A customer's cohort is the month of their first ever order with us. The web shop opened in July 2025, so "
+        + ("between the\ntwo exports in this folder you have the complete order history." if split else
+           "the\nexport in this folder is the complete order history.") +
+        " Anyone who bought in 2025 is an existing customer,\n"
         "not a new one, and does not belong in a 2026 cohort even if they ordered again this year.\n\n"
         "An order that was cancelled, or refunded in full, never happened as far as this table is concerned. A partial refund\n"
         "is still a real order.\n\n"
@@ -207,6 +252,42 @@ def emit(seed: int) -> None:
             k = _offset(co, mk)
             if 1 <= k <= 5: act_rows.append([c["email"], co, mk, f"Month {k}", 1])
     cust_rows.sort(key=lambda x: (x[2], x[0])); act_rows.sort(key=lambda x: (x[1], x[0], x[2]))
+    write_xlsx(os.path.join(sol, "cohorts.xlsx"), solution_sheets(cust_rows, act_rows), creator="reference")
+    t = d["table"]
+    total_new = sum(t[co]["new"] for co in COHORTS)
+    spec = {
+        "id": "retention-cohorts", "track": "desk", "category": "reports",
+        "title": "Customer cohort retention table for the first half",
+        "ask": "Build me a cohort retention table for January to June this year from the shop order exports, cohort months down the side written like 2026-01. My notes in the folder explain what I mean. Save it as cohorts.xlsx with the counts as formulas.\n",
+        "followup": None, "timeout_s": 1200,
+        "traps": active_trap_text([
+            "the cohort is the month of the first EVER order; last year's export (different column names, US dates, CRLF) is in the folder and its customers who reorder in 2026 are not new (check: January new customers)",
+            "fully refunded orders (Refunded equals Total, status Refunded) and Cancelled orders never happened; eight customers' first orders are fully refunded so their cohort shifts or disappears, six later-month orders are refunded so a retention cell changes (checks: January new customers; February new customers)",
+            "partial refunds still count as orders (check: February new customers)",
+            "the same customer's email appears in different case and with stray spaces; a raw group-by splits customers (check: total new customers)",
+            "customers place two or three orders in an active month; counting orders instead of customers inflates the later-month cells (check: January cohort month 1)",
+            "the summary counts must be live formulas over cleaned data (check: live formulas)",
+        ], TRAP_KEYS, traps),
+        "checks": [
+            {"type": "file_exists", "name": "cohorts.xlsx exists", "path": "cohorts.xlsx"},
+            {"type": "xlsx_has_formulas", "name": "live formulas", "path": "cohorts.xlsx", "min_count": 12},
+            {"type": "xlsx_no_errors", "name": "no error cells", "path": "cohorts.xlsx"},
+            {"type": "xlsx_value_present", "name": "January new customers", "path": "cohorts.xlsx", "expected": t["2026-01"]["new"], "rel_tol": 0.001, "near_text": "2026-01"},
+            {"type": "xlsx_value_present", "name": "February new customers", "path": "cohorts.xlsx", "expected": t["2026-02"]["new"], "rel_tol": 0.001, "near_text": "2026-02"},
+            {"type": "xlsx_value_present", "name": "January cohort month 1", "path": "cohorts.xlsx", "expected": t["2026-01"][1], "rel_tol": 0.001, "near_text": "2026-01"},
+            {"type": "xlsx_value_present", "name": "March cohort month 2", "path": "cohorts.xlsx", "expected": t["2026-03"][2], "rel_tol": 0.001, "near_text": "2026-03"},
+            {"type": "xlsx_value_present", "name": "total new customers", "path": "cohorts.xlsx", "expected": total_new, "rel_tol": 0.001, "near_text": "total"},
+        ],
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "retention-cohorts", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+    print(f"seed={seed} orders={len(orders)} table={t} total_new={total_new}")
+
+
+def solution_sheets(cust_rows: list, act_rows: list, values: dict | None = None) -> dict:
+    """The reference workbook: Customers, Activity and a Summary of formulas over them. `values` (a cohort table)
+    types the summary counts in instead; only the formulas mutant uses it."""
     nc, na = len(cust_rows) + 1, len(act_rows) + 1
     summary = []
     for i, co in enumerate(COHORTS, start=2):
@@ -226,36 +307,79 @@ def emit(seed: int) -> None:
             row.append(f'=IF(B{prow}=0,"",ROUND({L}{srow}/B{prow}*100,1))' if _offset(co, "2026-06") >= j else "n/a")
         summary.append(row)
     summary.append([]); summary.append(["Cohort = month of first ever order (2025 buyers excluded); cancelled and fully refunded orders not counted; a customer counts once per month."])
-    write_xlsx(os.path.join(sol, "cohorts.xlsx"), {
+    if values is not None:
+        for i, co in enumerate(COHORTS):
+            summary[i] = [co, values[co]["new"]] + [values[co][j] if _offset(co, "2026-06") >= j else "n/a" for j in range(1, 6)]
+        summary[len(COHORTS)] = ["Total", sum(values[co]["new"] for co in COHORTS)]
+        for i, co in enumerate(COHORTS):
+            n = values[co]["new"]
+            summary[base - 2 + i] = [co, n] + [(round(values[co][j] / n * 100, 1) if n else "") if _offset(co, "2026-06") >= j else "n/a"
+                                               for j in range(1, 6)]
+    return {
         "Summary": {"header": ["Cohort", "New customers"] + OFFSETS, "rows": summary, "widths": {"A": 12, "B": 15}},
         "Customers": {"header": ["email", "name", "cohort"], "rows": cust_rows, "widths": {"A": 32, "B": 22}},
-        "Activity": {"header": ["email", "cohort", "active_month", "offset", "one"], "rows": act_rows, "widths": {"A": 32}}}, creator="reference")
-    total_new = sum(t[co]["new"] for co in COHORTS)
-    write_task_yaml(HERE, {
-        "id": "retention-cohorts", "track": "desk", "category": "reports",
-        "title": "Customer cohort retention table for the first half",
-        "ask": "Build me a cohort retention table for January to June this year from the shop order exports, cohort months down the side written like 2026-01. My notes in the folder explain what I mean. Save it as cohorts.xlsx with the counts as formulas.\n",
-        "followup": None, "timeout_s": 1200,
-        "traps": [
-            "the cohort is the month of the first EVER order; last year's export (different column names, US dates, CRLF) is in the folder and its customers who reorder in 2026 are not new (check: January new customers)",
-            "fully refunded orders (Refunded equals Total, status Refunded) and Cancelled orders never happened; eight customers' first orders are fully refunded so their cohort shifts or disappears, six later-month orders are refunded so a retention cell changes (checks: January new customers; February new customers)",
-            "partial refunds still count as orders (check: February new customers)",
-            "the same customer's email appears in different case and with stray spaces; a raw group-by splits customers (check: total new customers)",
-            "customers place two or three orders in an active month; counting orders instead of customers inflates the later-month cells (check: January cohort month 1)",
-            "the summary counts must be live formulas over cleaned data (check: live formulas)",
-        ],
-        "checks": [
-            {"type": "file_exists", "name": "cohorts.xlsx exists", "path": "cohorts.xlsx"},
-            {"type": "xlsx_has_formulas", "name": "live formulas", "path": "cohorts.xlsx", "min_count": 12},
-            {"type": "xlsx_no_errors", "name": "no error cells", "path": "cohorts.xlsx"},
-            {"type": "xlsx_value_present", "name": "January new customers", "path": "cohorts.xlsx", "expected": t["2026-01"]["new"], "rel_tol": 0.001, "near_text": "2026-01"},
-            {"type": "xlsx_value_present", "name": "February new customers", "path": "cohorts.xlsx", "expected": t["2026-02"]["new"], "rel_tol": 0.001, "near_text": "2026-02"},
-            {"type": "xlsx_value_present", "name": "January cohort month 1", "path": "cohorts.xlsx", "expected": t["2026-01"][1], "rel_tol": 0.001, "near_text": "2026-01"},
-            {"type": "xlsx_value_present", "name": "March cohort month 2", "path": "cohorts.xlsx", "expected": t["2026-03"][2], "rel_tol": 0.001, "near_text": "2026-03"},
-            {"type": "xlsx_value_present", "name": "total new customers", "path": "cohorts.xlsx", "expected": total_new, "rel_tol": 0.001, "near_text": "total"},
-        ],
-    })
-    print(f"seed={seed} orders={len(orders)} table={t} total_new={total_new}")
+        "Activity": {"header": ["email", "cohort", "active_month", "offset", "one"], "rows": act_rows, "widths": {"A": 32}}}
+
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> tuple[list, list, dict]:
+    """(Customers rows, Activity rows, cohort table) for a deliverable that is right except that it falls for `trap`."""
+    counted = d["counted"]
+    groups = {}
+    for o in d["orders"]:
+        if trap == "prior_year" and o["date"].year < 2026:           # last year's export never opened
+            continue
+        if trap == "refunds":                                          # refunded and cancelled orders counted
+            ok = True
+        elif trap == "partial":                                        # partly refunded orders dropped too
+            ok = counted(o) and o["status"] != "Partially refunded"
+        else:
+            ok = counted(o)
+        if not ok:
+            continue
+        key = o["email_shown"] if trap == "email_noise" else o["cust"]["email"]   # raw group-by on the email as typed
+        groups.setdefault(key, []).append(o)
+    cust_rows, act_rows = [], []
+    table = {co: {"new": 0, **{k: 0 for k in range(1, 6)}} for co in COHORTS}
+    for key, os_ in groups.items():
+        months = sorted(_mk(o["date"].date()) for o in os_)
+        co = months[0]
+        if co < "2026-01":
+            continue
+        cust_rows.append([key, os_[0]["cust"]["name"], co])
+        table[co]["new"] += 1
+        active = months if trap == "multi_orders" else sorted(set(months))   # one Activity row per order, not per month
+        for mk in active:
+            k = _offset(co, mk)
+            if 1 <= k <= 5:
+                act_rows.append([key, co, mk, f"Month {k}", 1])
+                table[co][k] += 1
+    cust_rows.sort(key=lambda x: (x[2], x[0])); act_rows.sort(key=lambda x: (x[1], x[0], x[2]))
+    return cust_rows, act_rows, table
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    cust_rows, act_rows, table = mutant_rows(d, trap)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "cohorts.xlsx"),
+               solution_sheets(cust_rows, act_rows, table if trap == "formulas" else None), creator="mutant")
+
+
+# Grader finding: the `multi_orders` mutant (orders counted instead of customers) passes "January cohort month 1".
+# Its January Month 1 cell rises, but its inflated January Month 2 cell lands on the true Month 1 value, and
+# xlsx_value_present accepts any cell in the row or column that mentions 2026-01. It fails only "March cohort month 2",
+# which the trap does not cite. The function is kept and left out of MUTANTS.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "multi_orders"}
+
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

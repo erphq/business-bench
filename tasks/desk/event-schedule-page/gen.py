@@ -2,6 +2,9 @@
 """event-schedule-page: a beekeepers' conference session sheet as a one-file HTML schedule by day, room and time.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off rooms,draft_tab --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant utc --out DIR                  # a deliverable that falls for one trap
 
 Business: a regional beekeepers' association running its two-day fall conference at a college in Fort Collins.
 The registration platform exports sessions with UTC start times and a duration; volunteers typed the rooms.
@@ -20,12 +23,31 @@ from __future__ import annotations
 import argparse
 import html
 import os
+import shutil
 import sys
 from datetime import datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the workbook is written, so build() and
+# its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "rooms": "rooms typed several ways, hiding one overlap (off: every room typed as on the room list)",
+        "draft_tab": "the workbook opens on an August draft tab with older times (off: the Sessions tab only)",
+    },
+    fixed={
+        "utc": "start times are UTC; the page is Mountain Daylight Time",
+        "friday_date": "Friday evening sessions carry Saturday's date in UTC",
+        "duration": "a session holds its room for its duration; back to back is not a conflict",
+        "cancelled": "a cancelled session sits on top of a live one in the Extraction Lab",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["utc", "friday_date", "duration", "rooms", "cancelled", "draft_tab"]
 
 OFFSET = timedelta(hours=6)          # MDT = UTC-6
 ROOMS = ["Main Hall", "Room 104", "Room 106", "Extraction Lab", "Courtyard"]
@@ -142,7 +164,7 @@ def fmt_time(t: datetime) -> str:
     return f"{h}:{t.minute:02d} {'AM' if t.hour < 12 else 'PM'}"
 
 
-def schedule_html(d: dict) -> str:
+def schedule_html(d: dict, rooms: list = ROOMS) -> str:
     live = d["live"]
     out = ["<!DOCTYPE html>", '<html lang="en">', "<head>", '<meta charset="utf-8">',
            "<title>Fall Honey Conference 2026 - schedule</title>", "<style>",
@@ -158,7 +180,7 @@ def schedule_html(d: dict) -> str:
            "in the same room.</p>"]
     for day, label in (("Fri", "Friday, October 2"), ("Sat", "Saturday, October 3")):
         out.append(f"<h2>{label}</h2>")
-        for room in ROOMS:
+        for room in rooms:
             ss = sorted([s for s in live if s["day"] == day and s["room"] == room], key=lambda s: s["start"])
             if not ss:
                 continue
@@ -173,37 +195,48 @@ def schedule_html(d: dict) -> str:
     return "\n".join(out)
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     sessions, live = d["sessions"], d["live"]
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     order = sorted(sessions, key=lambda s: s["id"])
     header = ["Session ID", "Title", "Presenter", "Room", "Start (UTC)", "Duration (min)", "Status"]
-    write_xlsx(os.path.join(ws, "fall_conference_sessions.xlsx"), {
-        "Draft v1 (Aug)": {"header": header,
-                           "rows": [[s["id"], s["title"], s["speaker"], s["room"], m.strftime("%Y-%m-%dT%H:%M:00Z"),
-                                     s["dur"], "Confirmed"] for s, m in sorted(d["draft"], key=lambda x: x[0]["id"])],
-                           "widths": {"B": 40, "C": 22, "E": 22}},
-        "Sessions": {"header": header,
-                     "rows": [[s["id"], s["title"], s["speaker"], s["room_raw"], s["utc"].strftime("%Y-%m-%dT%H:%M:00Z"),
-                               s["dur"], s["status"]] for s in order],
-                     "widths": {"B": 40, "C": 22, "E": 22}, "freeze": "A2"},
-    }, creator="Hivemind Registrations")
+    room_key = "room_raw" if traps.on("rooms") else "room"
+    book = {}
+    if traps.on("draft_tab"):
+        book["Draft v1 (Aug)"] = {"header": header,
+                                  "rows": [[s["id"], s["title"], s["speaker"], s["room"], m.strftime("%Y-%m-%dT%H:%M:00Z"),
+                                            s["dur"], "Confirmed"] for s, m in sorted(d["draft"], key=lambda x: x[0]["id"])],
+                                  "widths": {"B": 40, "C": 22, "E": 22}}
+    book["Sessions"] = {"header": header,
+                        "rows": [[s["id"], s["title"], s["speaker"], s[room_key], s["utc"].strftime("%Y-%m-%dT%H:%M:00Z"),
+                                  s["dur"], s["status"]] for s in order],
+                        "widths": {"B": 40, "C": 22, "E": 22}, "freeze": "A2"}
+    write_xlsx(os.path.join(ws, "fall_conference_sessions.xlsx"), book, creator="Hivemind Registrations")
     write_text(os.path.join(ws, "note_from_ingrid.txt"),
                "From: Ingrid Haddad <program@frontrangebees.org>\nTo: you\nDate: Sun, 13 Sep 2026 19:48\n"
                "Subject: schedule page for the conference\n\n"
                "Could you turn the session sheet into the schedule page? It goes on the lobby screen and the "
                "volunteers' phones, so one HTML file that works without a connection and without scripts (the lobby "
                "screen's kiosk browser has them switched off).\n\n"
-               "Use the Sessions tab. The draft tab is from August and half of it has moved since.\n\n"
+               + ("Use the Sessions tab. The draft tab is from August and half of it has moved since.\n\n"
+                  if traps.on("draft_tab") else "Use the Sessions tab.\n\n") +
                "Lay it out by day, then by room, sessions in time order, with start and end times. Everything we "
                "are running is in Fort Collins, so the page is Mountain time - the platform exports every start "
                "time in UTC and nobody in the building thinks in UTC.\n\n"
                "Anything marked Cancelled comes off the page.\n\n"
-               "The volunteers type the rooms however they like. If two sessions end up in the same room at the "
+               + ("The volunteers type the rooms however they like. " if traps.on("rooms") else "") +
+               "If two sessions end up in the same room at the "
                "same time, keep both on the page but put the word CONFLICT on each of them so I can sort it out "
                "with the presenters. A session that starts the minute the one before it ends is fine, that is how "
                "we planned the day.\n\n"
@@ -221,7 +254,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_text(os.path.join(sol, "index.html"), schedule_html(d))
     ovb = [s for s in sessions if s["tag"] == "ovB"]
     cx = d["cancelled"]
-    traps = [
+    trap_text = [
         "every start time in the sheet is UTC and the conference runs on Mountain Daylight Time, six hours behind; "
         "a page that prints the sheet's times has the keynote before breakfast (check: page structure: local start times)",
         "Friday evening sessions start after midnight UTC, so the sheet dates them 2026-10-03; grouping by the sheet's "
@@ -237,13 +270,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "the workbook opens on an August draft tab with the same sessions at older times and no cancellation "
         "(checks: page structure: local start times; cancelled session left off)",
     ]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "event-schedule-page", "track": "desk", "category": "tooling",
         "title": "Conference schedule page for the lobby screen",
         "ask": "Ingrid needs the conference schedule as a web page for the lobby screen and the volunteers' phones. "
                "Her note explains what she wants; the sessions are in the workbook. Save it as index.html.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": traps,
+        "traps": active_trap_text(trap_text, TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "index.html exists", "path": "index.html"},
             {"type": "text_contains_all", "name": "every running session listed", "path": "index.html",
@@ -252,7 +285,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "phrases": [cx["title"]]},
             {"type": "custom", "name": "page structure", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "event-schedule-page", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} live={len(live)} conflicts={[s['title'] for s in live if s['conflict']]}")
 
 
@@ -270,14 +306,62 @@ def write_naive(d: dict, out: str) -> None:
     write_text(os.path.join(out, "index.html"), "\n".join(parts))
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def _mark_conflicts(ss: list, touching: bool = False) -> None:
+    for s in ss:
+        s["conflict"] = any(o is not s and o["room"] == s["room"] and
+                            (o["start"] <= s["end"] and s["start"] <= o["end"] if touching else
+                             o["start"] < s["end"] and s["start"] < o["end"]) for o in ss)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """index.html right in every respect except that it falls for `trap`."""
+    ss = [dict(s) for s in d["live"]]
+    rooms = ROOMS
+    if trap == "utc":               # the sheet's UTC clock printed as the local time (days still right)
+        for s in ss:
+            s["start"], s["end"] = s["utc"], s["utc"] + timedelta(minutes=s["dur"])
+    elif trap == "friday_date":     # grouped by the sheet's UTC date: Friday evening lands on Saturday
+        for s in ss:
+            s["day"] = "Fri" if s["utc"].day == 2 else "Sat"
+    elif trap == "duration":        # a session that starts the minute another ends counted as overlapping
+        _mark_conflicts(ss, touching=True)
+    elif trap == "rooms":           # rooms grouped on the text as typed
+        for s in ss:
+            s["room"] = s["room_raw"]
+        rooms = list(dict.fromkeys(sp for r_ in ROOMS for sp in ROOM_SPELL[r_] + ["Rm 104", "104"]))
+        _mark_conflicts(ss)
+    elif trap == "cancelled":       # the cancelled session left on the page
+        ss = [dict(s) for s in d["sessions"]]
+        _mark_conflicts(ss)
+    elif trap == "draft_tab":       # the August draft tab: older times, nothing cancelled
+        moved = {id(s): m for s, m in d["draft"]}
+        ss = [dict(s) for s in d["sessions"]]
+        for s, orig in zip(ss, d["sessions"]):
+            s["start"] = moved[id(orig)] - OFFSET
+            s["end"] = s["start"] + timedelta(minutes=s["dur"])
+        _mark_conflicts(ss)
+    else:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "index.html"), schedule_html({"live": ss}, rooms))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(500):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

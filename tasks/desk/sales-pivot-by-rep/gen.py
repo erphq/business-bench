@@ -2,6 +2,9 @@
 """sales-pivot-by-rep: a brewery's invoice-line export into reps down the side, January to June across.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off spellings,deposits --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant credits --out DIR                 # a deliverable that falls for one trap
 
 Business: a craft brewery that self-distributes kegs and cases to bars, restaurants and bottle shops with
 six field reps. The brewery system exports invoice lines; the order desk types the rep name by hand.
@@ -21,12 +24,32 @@ from __future__ import annotations
 
 import argparse
 import os
+import shutil
 import sys
 from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the export is written, so build() and
+# its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "spellings": "two reps typed several ways in the Sales Rep column (off: every rep typed as on the rep list)",
+        "credits": "credit memos exported with a trailing minus (off: a leading minus; the credits are still netted)",
+        "deposits": "keg deposit and deposit-return lines in the export (off: not exported)",
+        "format_noise": "a two-line preamble, CRLF endings, text amounts with thousands separators, and last half-year's "
+                        "report beside the export (off: plain header and amounts, LF endings, no old report)",
+    },
+    fixed={
+        "leave_zero": "Patel has no April rows; her April cell must read 0",
+        "formulas": "totals across and down must be live formulas",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["spellings", "credits", "deposits", "leave_zero", "formulas", "format_noise"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -186,13 +209,18 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverable
 
-def pivot_sheets(data_rows: list[list], reps: list[str], label_total: str = "Total") -> dict:
+def pivot_sheets(data_rows: list[list], reps: list[str], label_total: str = "Total", blank_empty: bool = False) -> dict:
+    """The reference pivot. `blank_empty` leaves a rep-month with no rows blank, as a pivot table does (mutant only)."""
     n = len(data_rows) + 1
     rows = []
     for i, rep in enumerate(reps, start=2):
         line = [rep]
         for j, _m in enumerate(MONTHS):
             c = chr(ord("B") + j)
+            if blank_empty:
+                line.append(f'=IF(COUNTIFS(Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{c}$1)=0,"",'
+                            f"SUMIFS(Data!$E$2:$E${n},Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{c}$1))")
+                continue
             line.append(f"=SUMIFS(Data!$E$2:$E${n},Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{c}$1)")
         line.append(f"=SUM(B{i}:G{i})")
         rows.append(line)
@@ -213,23 +241,48 @@ def amount_text(v: float) -> str:
     return f"{abs(v):,.2f}-" if v < 0 else f"{v:,.2f}"
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     names, net, totals = d["reps"], d["net"], d["totals"]
     cruz, walker, patel = names[0], names[1], names[2]
     sm = d["sens_month"]
+    noisy, trailing = traps.on("format_noise"), traps.on("credits")
+    rep_key = "typed" if traps.on("spellings") else "rep"
+    lines = d["lines"] if traps.on("deposits") else [x for x in d["lines"] if x["kind"] != "deposit"]
 
-    rows = [[x["type"], x["doc"], x["date"].strftime("%m/%d/%Y"), x["account"], x["typed"], x["item"], x["qty"], amount_text(x["amount"])]
-            for x in d["lines"]]
+    def amount(v: float) -> str:
+        if noisy and trailing:
+            return amount_text(v)
+        body = f"{abs(v):,.2f}" if noisy else f"{abs(v):.2f}"
+        return (body + "-" if trailing else "-" + body) if v < 0 else body
+
+    rows = [[x["type"], x["doc"], x["date"].strftime("%m/%d/%Y"), x["account"], x[rep_key], x["item"], x["qty"], amount(x["amount"])]
+            for x in lines]
     write_csv(os.path.join(ws, "invoice_lines_2026-01_to_2026-06.csv"),
               ["Doc Type", "Doc No", "Doc Date", "Account", "Sales Rep", "Item", "Qty", "Ext Amount"], rows,
-              preamble=["Tamarack Brewing - Invoice line detail", "Doc dates 01/01/2026 - 06/30/2026"], crlf=True)
+              preamble=["Tamarack Brewing - Invoice line detail", "Doc dates 01/01/2026 - 06/30/2026"] if noisy else None,
+              crlf=noisy)
 
     # distractor: last half-year's report, static numbers, with a rep who has since left
+    if noisy:
+        write_old_report(ws, seed, names)
+    note_from_kwame(ws, names, traps)
+    write_reference(d, ref, sol)
+    write_spec(d, seed, here, traps)
+
+
+def write_old_report(ws: str, seed: int, names: list) -> None:
     old_r = rng(seed + 404)
     old_reps = [n for n in names if n != names[5]] + ["Gary Lindqvist"]
     old_months = [f"2025-{m:02d}" for m in range(7, 13)]
@@ -242,16 +295,22 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "merged_title": "Rep sales July - December 2025", "header": ["Rep"] + old_months + ["Total"], "rows": old_rows,
         "widths": {"A": 22}}}, creator="Sales")
 
+
+def note_from_kwame(ws: str, names: list, traps: TrapSet) -> None:
+    cruz, walker, patel = names[0], names[1], names[2]
     others = ", ".join(names[3:])
     write_text(os.path.join(ws, "note_from_kwame.txt"),
                "Rep numbers for January to June\n"
                "\n"
                f"Our reps this half: {cruz}, {walker}, {patel}, {others}.\n"
-               "The order desk types the rep on every invoice by hand, so expect the names to be all over the place.\n"
+               + ("The order desk types the rep on every invoice by hand, so expect the names to be all over the place.\n"
+                  if traps.on("spellings") else "") +
                "\n"
-               "What counts: everything we invoiced for beer and merch, less credit memos. Keg deposits are not sales -\n"
-               "that is the customer's money and we hand it back when the empty shell comes in - so the deposit lines\n"
-               "and the deposit returns stay out of it.\n"
+               + ("What counts: everything we invoiced for beer and merch, less credit memos. Keg deposits are not sales -\n"
+                  "that is the customer's money and we hand it back when the empty shell comes in - so the deposit lines\n"
+                  "and the deposit returns stay out of it.\n"
+                  if traps.on("deposits") else
+                  "What counts: everything we invoiced for beer and merch, less credit memos.\n") +
                "\n"
                f"Every rep gets a row and every month gets a number, even if it is zero ({patel.split()[0]} was on leave in April).\n"
                "The commission sheet reads straight across and chokes on blanks. Totals across and down, and keep it\n"
@@ -259,6 +318,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
                "\n"
                "- Kwame\n")
 
+
+def write_reference(d: dict, ref: str, sol: str) -> None:
+    names, net, totals = d["reps"], d["net"], d["totals"]
+    walker, patel = names[1], names[2]
+    sm = d["sens_month"]
     write_csv(os.path.join(ref, "rep_month.csv"), ["rep", "month", "net_sales"],
               [[n, m, f"{net[(n, m)]:.2f}"] for n in names for m in MONTHS])
     write_csv(os.path.join(ref, "rep_totals.csv"), ["rep", "net_sales"], [[n, f"{totals[n]:.2f}"] for n in names] + [["ALL", f"{d['grand']:.2f}"]])
@@ -269,14 +333,19 @@ def emit(seed: int, naive_dir: str | None) -> None:
                                                  "deposit_lines_net": dep_total, "credit_total": cred_total, "grand_total": d["grand"]})
     write_xlsx(os.path.join(sol, "sales_by_rep.xlsx"), pivot_sheets(clean_rows(d), names), creator="reference")
 
+
+def write_spec(d: dict, seed: int, here: str, traps: TrapSet) -> None:
+    names, net, totals = d["reps"], d["net"], d["totals"]
+    cruz, walker, patel = names[0], names[1], names[2]
+    sm = d["sens_month"]
     month_word = date(2026, int(sm[-2:]), 1).strftime("%B")
-    write_task_yaml(HERE, {
+    spec = {
         "id": "sales-pivot-by-rep", "track": "desk", "category": "spreadsheet",
         "title": "Rep by month sales table from the invoice export",
         "ask": ("Kwame needs January to June sales for each rep by month, with totals, from the invoice export in this folder. "
                 "Save it as sales_by_rep.xlsx and keep it live. His note has what counts.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the order desk typed Dana Cruz four ways (Dana Cruz, D. Cruz, 'Cruz, Dana', DANA CRUZ) and Christopher Walker two ways; "
             "a group-by on the raw Sales Rep column splits both across several rows (checks: Cruz H1 total; Walker H1 total)",
             "credit memos are exported with a trailing minus ('182.00-'); stripping to digits books them as sales and a strict "
@@ -288,7 +357,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "totals across and down must be live formulas, not pasted values (check: live formulas)",
             "the export carries a two-line preamble, CRLF endings and text amounts with thousands separators, and last half-year's "
             "report with a departed rep sits beside it (check: H1 total, all reps)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "sales_by_rep.xlsx", "min_count": 12},
             {"type": "xlsx_no_errors", "name": "no error cells", "path": "sales_by_rep.xlsx"},
@@ -302,7 +371,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "expected": d["grand"], "rel_tol": cent_tol(d["grand"], 0.003), "near_text": "total"},
             {"type": "custom", "name": "Patel April reads 0", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "sales-pivot-by-rep", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} lines={len(d['lines'])} grand={d['grand']} cruz={totals[cruz]} walker={totals[walker]} "
           f"walker_{sm}={net[(walker, sm)]}")
 
@@ -320,15 +392,52 @@ def write_naive(d: dict, out: str) -> None:
     write_xlsx(os.path.join(out, "sales_by_rep.xlsx"), {"Pivot": {"header": ["Sales Rep"] + MONTHS + ["Total"], "rows": rows}}, creator="naive")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """sales_by_rep.xlsx right in every respect except that it falls for `trap`."""
+    names = d["reps"]
+    keep = [x for x in d["lines"] if x["kind"] != "deposit"]
+    rep_key, reps, blank = "rep", list(names), False
+    if trap == "spellings":        # grouped on the Sales Rep column as typed
+        rep_key = "typed"
+        reps = [s_ for n in names for s_ in d["spell"].get(n, [n])]
+    elif trap == "credits":        # a strict number parse drops the trailing-minus credit memos
+        keep = [x for x in keep if x["kind"] != "credit"]
+    elif trap == "deposits":       # a plain sum of Ext Amount: deposit lines and returns kept
+        keep = list(d["lines"])
+    elif trap == "leave_zero":     # a pivot's blank where a rep-month has no rows
+        blank = True
+    elif trap not in ("formulas", "format_noise"):
+        raise KeyError(trap)
+    data = [[x["doc"], x["date"].isoformat(), x["date"].strftime("%Y-%m"), x[rep_key], x["amount"]] for x in keep]
+    if trap == "format_noise":     # the text amounts pasted as text (minus moved to the front): SUMIFS skips them
+        data = [r_[:4] + [f"{r_[4]:.2f}"] for r_ in data]
+    sheets = pivot_sheets(data, reps, blank_empty=blank)
+    if trap == "formulas":         # the right figures, pasted as values
+        net, totals = d["net"], d["totals"]
+        rows = [[n] + [net[(n, m)] for m in MONTHS] + [totals[n]] for n in names]
+        rows.append(["Total"] + [round(sum(net[(n, m)] for n in names), 2) for m in MONTHS] + [d["grand"]])
+        sheets["By Rep"]["rows"] = rows
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "sales_by_rep.xlsx"), sheets, creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

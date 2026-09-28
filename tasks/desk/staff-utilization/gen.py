@@ -2,6 +2,9 @@
 """staff-utilization: an accounting firm's September time entries, HR roster and leave export to utilization per person.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off statuses,format_noise --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant holiday --out DIR                    # a deliverable that falls for one trap
 
 Business: Mossbank Accounting, an eight-person CPA practice. The managing partner reviews billable utilization
 every month; September has a firm holiday, a new starter, two part-timers and a handful of leave requests in
@@ -22,13 +25,36 @@ Traps (each caught by a check, see task.yaml):
 """
 from __future__ import annotations
 
+import argparse
 import os
+import shutil
 import sys
 from datetime import date, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the exports are written, so build() and
+# its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "statuses": "rejected, cancelled and pending requests in the leave export (off: approved requests only; "
+                    "Omar's half day stays, it is part of the answer)",
+        "format_noise": "'Last, First' names under a two-line preamble with CRLF endings, and the office manager on the "
+                        "roster (off: 'First Last', plain header, LF endings, no office manager; internal time and "
+                        "write-offs stay, they are part of the answer)",
+    },
+    fixed={
+        "std_week": "capacity from the roster's standard week: 37.5 full-time, 24 and 30 part-time",
+        "holiday": "Labor Day is a firm holiday; the HR Days column counts it inside a leave request",
+        "aug_leave": "a vacation starting in August counts only its September weekdays",
+        "start_date": "the new starter's capacity runs from her start date",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["std_week", "holiday", "aug_leave", "statuses", "start_date", "format_noise"]
 
 M_START, M_END = date(2026, 9, 1), date(2026, 9, 30)
 HOLIDAY = date(2026, 9, 7)
@@ -159,16 +185,18 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverables
 
-def util_sheets(d: dict) -> dict:
+def util_sheets(d: dict, leave_rows: list | None = None) -> dict:
+    """The reference workbook. A mutant passes its own staff rows in `d` and its own `leave_rows`."""
     staff = d["staff"]
     time_rows = [[e["id"], e["date"].isoformat(), e["hours"], 1 if e["bill"] == "Y" else 0] for e in d["entries"]]
-    leave_rows = []
-    for lv in d["leave"]:
-        if lv["status"] != "Approved":
-            continue
-        for dd in weekdays(lv["from"], lv["to"]):
-            if M_START <= dd <= M_END and dd != HOLIDAY:
-                leave_rows.append([lv["id"], dd.isoformat(), lv["part"], lv["type"]])
+    if leave_rows is None:
+        leave_rows = []
+        for lv in d["leave"]:
+            if lv["status"] != "Approved":
+                continue
+            for dd in weekdays(lv["from"], lv["to"]):
+                if M_START <= dd <= M_END and dd != HOLIDAY:
+                    leave_rows.append([lv["id"], dd.isoformat(), lv["part"], lv["type"]])
     nt, nl = len(time_rows) + 1, len(leave_rows) + 1
     rows = []
     for i, o in enumerate(staff, start=2):
@@ -200,21 +228,28 @@ def cent_tolerant(spec: dict) -> dict:
     return spec
 
 
-def emit(seed: int) -> None:
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom check travels with the copy so it can be graded on its own
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     names = {s[0]: s[1] for s in STAFF}
+    noisy = traps.on("format_noise")
 
     # ---- workspace ----
     write_csv(os.path.join(ws, "time_entries_september_2026.csv"),
               ["Work Date", "Staff", "Client", "Service", "Hours", "Billable"],
-              [[e["date"].strftime("%m/%d/%Y"), f"{names[e['id']].split()[1]}, {names[e['id']].split()[0]}", e["client"], e["service"],
-                f"{e['hours']:.2f}", e["bill"]] for e in d["entries"]],
-              preamble=["Mossbank Accounting - Time Detail", "Period: 09/01/2026 - 09/30/2026"], crlf=True)
+              [[e["date"].strftime("%m/%d/%Y"), f"{names[e['id']].split()[1]}, {names[e['id']].split()[0]}" if noisy else names[e["id"]],
+                e["client"], e["service"], f"{e['hours']:.2f}", e["bill"]] for e in d["entries"]],
+              preamble=["Mossbank Accounting - Time Detail", "Period: 09/01/2026 - 09/30/2026"] if noisy else None, crlf=noisy)
     write_xlsx(os.path.join(ws, "hr_roster.xlsx"), {"Staff": {
         "header": ["Employee ID", "Name", "Title", "Employment", "Standard hours / week", "Start date", "Manager"],
         "rows": [[s[0], s[1], s[2], s[3], s[4], s[5], "" if s[0] == "E101" else "Dana Mossbank"] for s in STAFF]
-                + [["E090", "Mei Chen", "Office manager", "Full-time", 37.5, date(2016, 5, 9), "Dana Mossbank"]],
+                + ([["E090", "Mei Chen", "Office manager", "Full-time", 37.5, date(2016, 5, 9), "Dana Mossbank"]] if noisy else []),
         "widths": {"B": 18, "C": 20, "E": 22, "F": 12}},
         "Holidays 2026": {"header": ["Date", "Holiday", "Office"],
                           "rows": [[date(2026, 1, 1), "New Year's Day", "Closed"], [date(2026, 5, 25), "Memorial Day", "Closed"],
@@ -225,13 +260,14 @@ def emit(seed: int) -> None:
     write_csv(os.path.join(ws, "leave_requests_export.csv"),
               ["Employee ID", "Employee", "Leave Type", "Start", "End", "Days", "Status", "Submitted"],
               [[lv["id"], names[lv["id"]], lv["type"], lv["from"].isoformat(), lv["to"].isoformat(), f"{lv['days']:g}", lv["status"],
-                (lv["from"] - timedelta(days=12)).isoformat()] for lv in sorted(d["leave"], key=lambda x: (x["from"], x["id"]))])
+                (lv["from"] - timedelta(days=12)).isoformat()] for lv in sorted(d["leave"], key=lambda x: (x["from"], x["id"]))
+               if traps.on("statuses") or lv["status"] == "Approved"])
     write_text(os.path.join(ws, "note_from_dana.txt"),
                "September utilization, please, same as we talk about it in partner meetings: billable hours divided by the hours\n"
                "each person was actually available.\n\n"
                "Available hours are the working days in the month times the person's standard day - their standard week from the\n"
                "HR roster divided by five. Working days are weekdays the office is open, less any approved leave. Anyone who\n"
-               "started this month is counted from their start date. Mei is admin and is not on the report.\n\n"
+               "started this month is counted from their start date." + (" Mei is admin and is not on the report." if noisy else "") + "\n\n"
                "One row per person with their available hours, billable hours and utilization, and a firm total at the bottom.\n\n"
                "Dana\n")
 
@@ -249,13 +285,13 @@ def emit(seed: int) -> None:
     write_xlsx(os.path.join(sol, "utilization.xlsx"), util_sheets(d), creator="reference")
 
     b = d["by_id"]
-    write_task_yaml(HERE, cent_tolerant({
+    spec = cent_tolerant({
         "id": "staff-utilization", "track": "desk", "category": "spreadsheet",
         "title": "September billable utilization per person",
         "ask": ("Dana wants September's utilization for everyone from the time entries, the HR roster and the leave export. "
                 "Build utilization.xlsx with live formulas - her note says how the firm counts it.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "capacity comes from the roster's standard week: full-time is 37.5 hours (7.5 a day, not 8) and the two part-timers "
             "work 24 and 30 hours (checks: Omar Haddad capacity; utilization per person)",
             "Labor Day (7 September, on the roster's holiday tab) is a firm holiday, leaving 21 working days; Kenneth's approved "
@@ -270,7 +306,7 @@ def emit(seed: int) -> None:
             "internal admin, training and marketing time is logged under the firm itself and marked N, as are write-offs; the "
             "time export names staff 'Last, First' under a two-line preamble with CRLF endings, and the roster also lists the "
             "office manager, who is not on the report (checks: utilization per person; firm capacity total)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "utilization.xlsx exists", "path": "utilization.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "utilization.xlsx", "min_count": 16},
@@ -287,18 +323,60 @@ def emit(seed: int) -> None:
              "expected": d["firm_cap"], "rel_tol": 0.002, "near_text": "total"},
             {"type": "custom", "name": "utilization per person", "module": "check.py"},
         ],
-    }))
+    })
+    if not traps.canonical:
+        spec["variant"] = {"of": "staff-utilization", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} entries={len(d['entries'])}")
     for o in d["staff"]:
         print("  ", {k: v for k, v in o.items() if k != "start"})
     print("  firm", d["firm_cap"], d["firm_bill"], d["firm_util"])
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """utilization.xlsx right in every respect except that it falls for `trap`."""
+    staff = [dict(o) for o in d["staff"]]
+    approved = lambda lv: lv["status"] == "Approved"                              # noqa: E731
+    in_month = lambda dd: M_START <= dd <= M_END and dd != HOLIDAY                # noqa: E731
+    if trap == "std_week":         # an 8-hour day for everyone instead of the roster's standard week
+        for o in staff:
+            o["wk"] = 40.0
+    elif trap == "holiday":        # a leave day that falls on Labor Day taken off again
+        in_month = lambda dd: M_START <= dd <= M_END                              # noqa: E731
+    elif trap == "aug_leave":      # the whole request taken off, August days included
+        in_month = lambda dd: dd <= M_END and dd != HOLIDAY                       # noqa: E731
+    elif trap == "statuses":       # every request in the export treated as leave
+        approved = lambda lv: True                                                # noqa: E731
+    elif trap == "start_date":     # the new starter given the whole month
+        for o in staff:
+            if o["id"] == "E107":
+                o["work_days"] = 21
+    elif trap == "format_noise":   # the office manager from the roster put on the report
+        staff.append({"id": "E090", "name": "Mei Chen", "wk": 37.5, "start": date(2016, 5, 9), "work_days": 21})
+    else:
+        raise KeyError(trap)
+    leave_rows = [[lv["id"], dd.isoformat(), lv["part"], lv["type"]]
+                  for lv in d["leave"] if approved(lv) for dd in weekdays(lv["from"], lv["to"]) if in_month(dd)]
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "utilization.xlsx"), util_sheets(dict(d, staff=staff), leave_rows), creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
-    s = argparse_seed()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    s = a.seed
     for attempt in range(800):
         if acceptable(build(s * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw in 800 attempts")
-    emit(s * 1000 + attempt)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(s * 1000 + attempt, traps, a.out, a.mutant)

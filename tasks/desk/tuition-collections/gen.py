@@ -2,6 +2,9 @@
 """tuition-collections: spring tuition collected vs outstanding by program for a Montessori school.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off scheduled,autumn --out DIR     # same draw, those pitfalls removed, same answer
+    python gen.py --mutant sibling_pct --out DIR             # a deliverable that falls for one trap
 
 Business: a 90-family independent school. Invoices come out of the billing system, payments out of the
 bank feed, and the scholarships and sibling discounts live in the bursar's own spreadsheet.
@@ -23,6 +26,24 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only; build() is unchanged.
+TRAPS = TrapSet(
+    switchable={
+        "scheduled": "future payment-plan instalments in the bank feed, marked Scheduled",
+        "returned": "returned ACH payments still in the bank feed",
+        "sibling_pct": "sibling discounts written as a percentage in the same Value column as dollar scholarships",
+        "no_family_id": "payments with no family id or invoice, only 'Ref INV-...' in the memo",
+        "autumn": "the closed autumn term's invoices in the folder and its receipts in the same feed",
+        "format_noise": "'$5,400.00' text amounts, three date formats, preambles, a BOM and CRLF endings",
+    },
+    fixed={
+        "credits_not_receipts": "scholarships and sibling discounts are credits against what is owed, not receipts",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["scheduled", "returned", "credits_not_receipts", "sibling_pct", "no_family_id", "autumn", "format_noise"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -224,59 +245,67 @@ def report_sheets(inv_rows, cred_rows, pay_rows) -> dict:
     }
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out_dir: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out_dir)
+        return
+    here = out_dir or HERE
+    ws, ref, sol = task_dirs(HERE) if out_dir is None else variant_dirs(out_dir)
     billed, cred, coll, net, out, tot = d["billed"], d["cred"], d["coll"], d["net"], d["out"], d["tot"]
 
     # ---- workspace ----
-    def inv_rows(pool):
-        return [[i["no"], i["fam"], i["student"], i["prog"], i["term"],
-                 money_str(i["amount"], sum(ord(c) for c in i["no"]) % 2 * 4 + 1),
-                 date_variant(i["due"], sum(ord(c) for c in i["no"]) % 3)]
-                for i in sorted(pool, key=lambda x: x["no"])]
+    if not traps.canonical:
+        write_variant_workspace(d, ws, traps)
+    else:
+        def inv_rows(pool):
+            return [[i["no"], i["fam"], i["student"], i["prog"], i["term"],
+                     money_str(i["amount"], sum(ord(c) for c in i["no"]) % 2 * 4 + 1),
+                     date_variant(i["due"], sum(ord(c) for c in i["no"]) % 3)]
+                    for i in sorted(pool, key=lambda x: x["no"])]
 
-    hdr = ["Invoice No", "Family ID", "Student", "Program", "Term", "Amount", "Due"]
-    write_csv(os.path.join(ws, "invoices_spring_2026.csv"), hdr, inv_rows(d["spring"]),
-              preamble=["Tuition invoices - Spring 2026 term"], bom=True)
-    write_csv(os.path.join(ws, "invoices_autumn_2025.csv"), hdr, inv_rows(d["autumn"]),
-              preamble=["Tuition invoices - Autumn 2025 term (closed)"])
-    write_csv(os.path.join(ws, "payments_bank_feed.csv"),
-              ["Payment ID", "Received", "Family ID", "Payer", "Applied to", "Amount", "Method", "Status", "Memo"],
-              [[p["id"], date_variant(p["date"], sum(ord(c) for c in p["id"]) % 3),
-                "" if p["fam_blank"] else p["inv"]["fam"], p["payer"],
-                "" if p["fam_blank"] else p["inv"]["no"],
-                money_str(p["amount"], 1), p["method"], p["status"],
-                f"Ref {p['inv']['no']}" if p["fam_blank"] else ""] for p in d["payments"]],
-              preamble=["Bank feed - tuition receipts", "01/05/2026 through 06/30/2026"], crlf=True)
-    stable_xlsx(os.path.join(ws, "credits_and_discounts.xlsx"), {"Credits": {
-        "merged_title": "Scholarships and discounts - Spring 2026",
-        "preamble": [["Bursar's working sheet. Percentages are of that child's tuition."]],
-        "header": ["Student", "Family ID", "Program", "Credit type", "Value", "Applies to invoice", "Notes"],
-        "rows": [[c["inv"]["student"], c["inv"]["fam"], c["inv"]["prog"], c["kind"],
-                  f"{c['pct']}%" if c["pct"] else money_str(c["raw"], 1), c["inv"]["no"], c["note"]]
-                 for c in d["credits"]],
-        "widths": {"A": 22, "C": 18, "D": 18, "F": 16, "G": 22}}}, creator="Bursar")
-    write_text(os.path.join(ws, "note_from_the_bursar.txt"),
-               "Where we stand on spring tuition\n"
-               "\n"
-               f"Please run the numbers as at {CUTOFF.strftime('%B %-d')}, the last day of the bank feed I trust.\n"
-               "\n"
-               "Scholarships and sibling discounts are credits. They come off what the family owes; they are not\n"
-               "money in the account, so please do not count them as collected. A sibling discount is a percentage\n"
-               "of that child's own tuition.\n"
-               "\n"
-               "Most families are on a payment plan, so their invoice arrives in three or five pieces. The bank feed\n"
-               "shows the whole plan including the instalments still to come, and a few payments came back to us.\n"
-               "Only money that has actually landed counts.\n"
-               "\n"
-               "The autumn file is there because the trustees asked about it last week. It is a closed term and is\n"
-               "not part of this report - but some of those invoices were settled in this same feed.\n"
-               "\n"
-               "- Ingrid\n")
+        hdr = ["Invoice No", "Family ID", "Student", "Program", "Term", "Amount", "Due"]
+        write_csv(os.path.join(ws, "invoices_spring_2026.csv"), hdr, inv_rows(d["spring"]),
+                  preamble=["Tuition invoices - Spring 2026 term"], bom=True)
+        write_csv(os.path.join(ws, "invoices_autumn_2025.csv"), hdr, inv_rows(d["autumn"]),
+                  preamble=["Tuition invoices - Autumn 2025 term (closed)"])
+        write_csv(os.path.join(ws, "payments_bank_feed.csv"),
+                  ["Payment ID", "Received", "Family ID", "Payer", "Applied to", "Amount", "Method", "Status", "Memo"],
+                  [[p["id"], date_variant(p["date"], sum(ord(c) for c in p["id"]) % 3),
+                    "" if p["fam_blank"] else p["inv"]["fam"], p["payer"],
+                    "" if p["fam_blank"] else p["inv"]["no"],
+                    money_str(p["amount"], 1), p["method"], p["status"],
+                    f"Ref {p['inv']['no']}" if p["fam_blank"] else ""] for p in d["payments"]],
+                  preamble=["Bank feed - tuition receipts", "01/05/2026 through 06/30/2026"], crlf=True)
+        stable_xlsx(os.path.join(ws, "credits_and_discounts.xlsx"), {"Credits": {
+            "merged_title": "Scholarships and discounts - Spring 2026",
+            "preamble": [["Bursar's working sheet. Percentages are of that child's tuition."]],
+            "header": ["Student", "Family ID", "Program", "Credit type", "Value", "Applies to invoice", "Notes"],
+            "rows": [[c["inv"]["student"], c["inv"]["fam"], c["inv"]["prog"], c["kind"],
+                      f"{c['pct']}%" if c["pct"] else money_str(c["raw"], 1), c["inv"]["no"], c["note"]]
+                     for c in d["credits"]],
+            "widths": {"A": 22, "C": 18, "D": 18, "F": 16, "G": 22}}}, creator="Bursar")
+        write_text(os.path.join(ws, "note_from_the_bursar.txt"),
+                   "Where we stand on spring tuition\n"
+                   "\n"
+                   f"Please run the numbers as at {CUTOFF.strftime('%B %-d')}, the last day of the bank feed I trust.\n"
+                   "\n"
+                   "Scholarships and sibling discounts are credits. They come off what the family owes; they are not\n"
+                   "money in the account, so please do not count them as collected. A sibling discount is a percentage\n"
+                   "of that child's own tuition.\n"
+                   "\n"
+                   "Most families are on a payment plan, so their invoice arrives in three or five pieces. The bank feed\n"
+                   "shows the whole plan including the instalments still to come, and a few payments came back to us.\n"
+                   "Only money that has actually landed counts.\n"
+                   "\n"
+                   "The autumn file is there because the trustees asked about it last week. It is a closed term and is\n"
+                   "not part of this report - but some of those invoices were settled in this same feed.\n"
+                   "\n"
+                   "- Ingrid\n")
 
     # ---- reference ----
     write_csv(os.path.join(ref, "collections_by_program.csv"),
@@ -299,14 +328,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     pr = [[p["id"], p["inv"]["no"], p["inv"]["prog"], p["amount"]] for p in sorted(d["counted"], key=lambda x: x["id"])]
     stable_xlsx(os.path.join(sol, "collections.xlsx"), report_sheets(ir, cr, pr), creator="reference")
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "tuition-collections", "track": "desk", "category": "reports",
         "title": "Spring tuition collected and outstanding by program",
         "ask": ("Where do we stand on spring tuition, program by program - what has actually come in and what is "
                 "still owed? Save it as collections.xlsx with live formulas. Ingrid's note explains the credits "
                 "and the payment plans.\n"),
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "most families are on a three or five instalment plan and the bank feed carries the instalments that "
             "have not happened yet, marked Scheduled with dates after the cut-off; a plain sum of the amount column "
             "books money the school has not received (checks: Primary collected; total collected)",
@@ -323,7 +352,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "(checks: total collected; total net due)",
             "amounts are '$5,400.00' text, dates come in three formats and the exports carry preambles, a BOM and "
             "CRLF endings (check: total collected)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "collections.xlsx exists", "path": "collections.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "collections.xlsx", "min_count": 10},
@@ -339,7 +368,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "xlsx_value_present", "name": "total collected", "path": "collections.xlsx",
              "expected": tot["collected"], "rel_tol": cent_tol(tot["collected"], 0.005), "near_text": "collected"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "tuition-collections", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} spring={len(d['spring'])} autumn={len(d['autumn'])} credits={len(d['credits'])} "
           f"payments={len(d['payments'])} counted={len(d['counted'])}")
     print("billed:", billed, "\ncredits:", cred, "\ncollected:", coll, "\nnet:", net, "\noutstanding:", out)
@@ -355,15 +388,132 @@ def write_naive(d: dict, out: str) -> None:
     stable_xlsx(os.path.join(out, "collections.xlsx"), report_sheets(ir, cr, pr), creator="naive")
 
 
+# --------------------------------------------------------------------------- variants
+
+def write_variant_workspace(d: dict, ws: str, traps: TrapSet) -> None:
+    """The workspace with the switched-off pitfalls removed. Same files, same rows otherwise."""
+    noisy = traps.on("format_noise")
+
+    def money(x, style):
+        return money_str(x, style) if noisy else x
+
+    def when(day, key):
+        return date_variant(day, sum(ord(c) for c in key) % 3) if noisy else day.isoformat()
+
+    def inv_rows(pool):
+        return [[i["no"], i["fam"], i["student"], i["prog"], i["term"],
+                 money(i["amount"], sum(ord(c) for c in i["no"]) % 2 * 4 + 1), when(i["due"], i["no"])]
+                for i in sorted(pool, key=lambda x: x["no"])]
+
+    hdr = ["Invoice No", "Family ID", "Student", "Program", "Term", "Amount", "Due"]
+    write_csv(os.path.join(ws, "invoices_spring_2026.csv"), hdr, inv_rows(d["spring"]),
+              preamble=["Tuition invoices - Spring 2026 term"] if noisy else None, bom=noisy)
+    if traps.on("autumn"):
+        write_csv(os.path.join(ws, "invoices_autumn_2025.csv"), hdr, inv_rows(d["autumn"]),
+                  preamble=["Tuition invoices - Autumn 2025 term (closed)"] if noisy else None)
+    pays = [p for p in d["payments"]
+            if (traps.on("scheduled") or p["status"] != "Scheduled")
+            and (traps.on("returned") or p["status"] != "Returned")
+            and (traps.on("autumn") or p["inv"]["term"] == "Spring 2026")]
+    blank = traps.on("no_family_id")
+    write_csv(os.path.join(ws, "payments_bank_feed.csv"),
+              ["Payment ID", "Received", "Family ID", "Payer", "Applied to", "Amount", "Method", "Status", "Memo"],
+              [[p["id"], when(p["date"], p["id"]),
+                "" if p["fam_blank"] and blank else p["inv"]["fam"], p["payer"],
+                "" if p["fam_blank"] and blank else p["inv"]["no"],
+                money(p["amount"], 1), p["method"], p["status"],
+                f"Ref {p['inv']['no']}" if p["fam_blank"] and blank else ""] for p in pays],
+              preamble=["Bank feed - tuition receipts", "01/05/2026 through 06/30/2026"] if noisy else None, crlf=noisy)
+    pct = traps.on("sibling_pct")
+    stable_xlsx(os.path.join(ws, "credits_and_discounts.xlsx"), {"Credits": {
+        "merged_title": "Scholarships and discounts - Spring 2026",
+        "preamble": [["Bursar's working sheet. Percentages are of that child's tuition." if pct else "Bursar's working sheet."]],
+        "header": ["Student", "Family ID", "Program", "Credit type", "Value", "Applies to invoice", "Notes"],
+        "rows": [[c["inv"]["student"], c["inv"]["fam"], c["inv"]["prog"], c["kind"],
+                  f"{c['pct']}%" if c["pct"] and pct else money(c["amount"], 1), c["inv"]["no"], c["note"]]
+                 for c in d["credits"]],
+        "widths": {"A": 22, "C": 18, "D": 18, "F": 16, "G": 22}}}, creator="Bursar")
+    plan = []
+    if traps.on("scheduled"):
+        plan.append("Most families are on a payment plan, so their invoice arrives in three or five pieces. The bank feed\n"
+                    "shows the whole plan including the instalments still to come"
+                    + (", and a few payments came back to us.\n" if traps.on("returned") else ".\n"))
+    elif traps.on("returned"):
+        plan.append("A few payments in the bank feed came back to us.\n")
+    if plan:
+        plan.append("Only money that has actually landed counts.\n\n")
+    write_text(os.path.join(ws, "note_from_the_bursar.txt"),
+               "Where we stand on spring tuition\n"
+               "\n"
+               f"Please run the numbers as at {CUTOFF.strftime('%B %-d')}, the last day of the bank feed I trust.\n"
+               "\n"
+               "Scholarships and sibling discounts are credits. They come off what the family owes; they are not\n"
+               "money in the account, so please do not count them as collected."
+               + (" A sibling discount is a percentage\nof that child's own tuition.\n" if pct else "\n") +
+               "\n"
+               + "".join(plan)
+               + ("The autumn file is there because the trustees asked about it last week. It is a closed term and is\n"
+                  "not part of this report - but some of those invoices were settled in this same feed.\n\n"
+                  if traps.on("autumn") else "") +
+               "- Ingrid\n")
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_sheets(d: dict, trap: str) -> dict:
+    """The workbook from an agent that is right except that it falls for `trap`."""
+    spring = sorted(d["spring"], key=lambda x: x["no"])
+    credits = [(c["inv"]["no"], c["inv"]["prog"], c["amount"]) for c in d["credits"]]
+    counted = list(d["counted"])
+    extra_pay = []
+    if trap == "scheduled":             # every instalment on the plan counted, landed or not
+        counted = [p for p in d["payments"] if p["status"] != "Returned" and p["inv"]["term"] == "Spring 2026"]
+    elif trap == "returned":            # returned payments left in
+        counted = [p for p in d["payments"] if p["status"] != "Scheduled" and p["date"] <= CUTOFF
+                   and p["inv"]["term"] == "Spring 2026"]
+    elif trap == "credits_not_receipts":  # credits booked as money received instead of reducing what is owed
+        extra_pay = [[f"CR-{i + 1:03d}", no, prog, amt] for i, (no, prog, amt) in enumerate(credits)]
+        credits = []
+    elif trap == "sibling_pct":         # '10%' read as ten dollars
+        credits = [(c["inv"]["no"], c["inv"]["prog"], float(c["raw"]) if c["pct"] else c["amount"]) for c in d["credits"]]
+    elif trap == "no_family_id":        # payments without a family id or invoice dropped
+        counted = [p for p in counted if not p["fam_blank"]]
+    elif trap == "autumn":              # both invoice files and every receipt in the window taken as this term's
+        spring = sorted(d["spring"] + d["autumn"], key=lambda x: x["no"])
+        counted = [p for p in d["payments"] if p["status"] == "Cleared" and p["date"] <= CUTOFF]
+    elif trap == "format_noise":        # dates read as MM/DD/YYYY only; the other two formats fail and drop out
+        counted = [p for p in counted if sum(ord(c) for c in p["id"]) % 3 == 1]
+    else:
+        raise KeyError(trap)
+    ir = [[i["no"], i["fam"], i["student"], i["prog"], i["amount"]] for i in spring]
+    cr = [list(c) for c in credits]
+    pr = [[p["id"], p["inv"]["no"], p["inv"]["prog"], p["amount"]] for p in sorted(counted, key=lambda x: x["id"])] + extra_pay
+    return report_sheets(ir, cr, pr)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    stable_xlsx(os.path.join(out, "collections.xlsx"), mutant_sheets(d, trap), creator="mutant")
+
+
+# Grader finding: 'credits_not_receipts' is left out. Its faithful mutant (credits booked as payments, no credit
+# deduction) fails 'Toddler credits' but passes 'Lower Elementary outstanding', which the trap also cites:
+# billed - 0 - (collected + credits) equals billed - credits - collected, so outstanding does not move.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "credits_not_receipts"}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

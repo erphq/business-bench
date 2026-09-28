@@ -2,6 +2,9 @@
 """shipping-rate-lookup: this week's outbound orders priced against the parcel carrier's zone and rate card.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off zip_format,old_table --out DIR     # same draw, those pitfalls removed, same answer
+    python gen.py --mutant residential --out DIR                 # a deliverable that falls for one trap
 
 Business: a ceramics studio in Portland, Oregon that ships pottery by a regional ground carrier and wants to
 check the carrier's invoice before paying it.
@@ -27,6 +30,21 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only; build() is unchanged. Three
+# sentences pair a removable pitfall with a rule the answer depends on; the switch removes only the pitfall.
+TRAPS = TrapSet(
+    switchable={
+        "zip_format": "ZIPs that lost their leading zero, and ZIP+4 values (the three-digit zone lookup stays)",
+        "ounces": "four small parcels weighed in ounces (rounding up to the next whole pound stays)",
+        "long_side": "the long side printed second or third on some labels (the 48-inch large package rule stays)",
+        "company_placeholder": "'N/A', '-' or 'none' in the Company column (the residential surcharge rule stays)",
+        "old_table": "last year's Ground 2025 table on the rate workbook's first sheet",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["zip_format", "ounces", "long_side", "company_placeholder", "old_table"]
 
 ZONES = [("005", "099", 8), ("100", "199", 8), ("200", "299", 8), ("300", "349", 8), ("350", "399", 7), ("400", "499", 7),
          ("500", "599", 6), ("600", "699", 6), ("700", "799", 6), ("800", "816", 5), ("820", "831", 5), ("832", "838", 4),
@@ -166,16 +184,29 @@ def acceptable(d: dict) -> bool:
     return True
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out_dir: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out_dir)
+        return
+    here = out_dir or HERE
+    ws, ref, sol = task_dirs(HERE) if out_dir is None else variant_dirs(out_dir)
     orders = d["orders"]
 
-    rows = [[o["id"], "09/11/2026", o["name"], o["company_shown"], o["addr"], o["city"], o["state"], o["zip_shown"],
-             o["weight_shown"], o["dims_shown"], o["item"]] for o in orders]
+    if traps.canonical:
+        rows = [[o["id"], "09/11/2026", o["name"], o["company_shown"], o["addr"], o["city"], o["state"], o["zip_shown"],
+                 o["weight_shown"], o["dims_shown"], o["item"]] for o in orders]
+    else:
+        rows = [[o["id"], "09/11/2026", o["name"],
+                 o["company_shown"] if traps.on("company_placeholder") else o["company"], o["addr"], o["city"], o["state"],
+                 o["zip_shown"] if traps.on("zip_format") else o["zip5"],
+                 o["weight_shown"] if traps.on("ounces") or o.get("role") != "ounces" else f"{o['weight']:g}",
+                 o["dims_shown"] if traps.on("long_side") else " x ".join(str(x) for x in o["dims"]), o["item"]]
+                for o in orders]
     write_csv(os.path.join(ws, "orders_to_ship_2026-09-11.csv"),
               ["Order #", "Order Date", "Ship To Name", "Ship To Company", "Address", "City", "State", "ZIP", "Weight (lb)",
                "Dims (in)", "Contents"], rows, crlf=True)
@@ -184,7 +215,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
     zones_hdr = ["Zone"] + [z for z in range(2, 9)]
     old = [[lb] + [rate(z, lb, 2025) for z in range(2, 9)] for lb in range(1, MAX_LB + 1)]
     new = [[lb] + [rate(z, lb) for z in range(2, 9)] for lb in range(1, MAX_LB + 1)]
-    write_xlsx(os.path.join(ws, "cascade_parcel_rate_card.xlsx"), {
+    sheets = {
         "Ground 2025": {"merged_title": "Cascade Parcel Ground - daily rates effective January 1, 2025 (USD)",
                         "header": ["Weight (lb)"] + [f"Zone {z}" for z in range(2, 9)], "rows": old,
                         "number_formats": {c: "0.00" for c in "BCDEFGH"}},
@@ -200,7 +231,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
             [f"and is assessed a Large Package surcharge of ${LARGE_SURCHARGE:.2f} per package in addition to the transportation charge."],
             ["Rates shown are per package and exclude accessorial charges. Accessorials are published separately."],
         ], "widths": {"A": 110}},
-    }, creator="Cascade Parcel")
+    }
+    if not traps.on("old_table"):
+        del sheets["Ground 2025"]
+    write_xlsx(os.path.join(ws, "cascade_parcel_rate_card.xlsx"), sheets, creator="Cascade Parcel")
 
     write_email_thread(os.path.join(ws, "email_cascade_residential.txt"), [
         {"from": "Tomasz Kowalski <tkowalski@cascadeparcel.com>", "to": "shipping@umberceramics.com", "date": "Mon, 17 Aug 2026 13:05",
@@ -229,13 +263,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
     must_zone = roles["leading_zero"] + roles["zip4"][:2]
     must_weight = roles["ounces"] + roles["whole_pound"] + roles["large"] + roles["large_heavy"]
     must_cost = roles["na_company"] + roles["large"] + roles["large_heavy"] + roles["exactly_48"] + roles["leading_zero"]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "shipping-rate-lookup", "track": "desk", "category": "spreadsheet",
         "title": "Work out what the carrier should charge per order",
         "ask": ("Before Cascade's invoice arrives I want to know what each of today's orders should cost to ship. "
                 "Use their rate card and the emails in the folder, and save it as orders_shipping.csv.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "zones go by the first three ZIP digits, but three East Coast ZIPs lost their leading zero in the export (05401 is written "
             "5401, so its first three digits read as 540, a different zone) and six carry a ZIP+4 suffix (check: zone)",
             "billable weight is actual weight rounded up to the next whole pound: 6.0 stays 6 while 6.1 bills as 7, so rounding to "
@@ -247,7 +281,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "orders carry 'N/A', '-' or 'none' in the Company column, which is not a business name (check: shipping cost)",
             "the rate workbook opens on last year's Ground 2025 table, about 6% cheaper than the 2026 table on the next sheet "
             "(check: shipping cost)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "orders_shipping.csv", "columns": header},
             {"type": "csv_set_equal", "name": "every order priced", "path": "orders_shipping.csv", "column": "order_id",
@@ -262,7 +296,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "key": "order_id", "columns": ["shipping_cost"], "numeric": True, "tolerance": 0.011, "min_accuracy": 1.0,
              "must_match_keys": must_cost},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "shipping-rate-lookup", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} orders={len(orders)} residential={sum(1 for o in orders if o['residential'])} roles={ {k: len(v) for k, v in roles.items()} }")
 
 
@@ -279,15 +317,56 @@ def write_naive(d: dict, out: str) -> None:
     write_csv(os.path.join(out, "orders_shipping.csv"), ["order_id", "zone", "billable_weight", "shipping_cost"], rows)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    """orders_shipping.csv rows from an agent that is right except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    rows = []
+    for o in d["orders"]:
+        zone, weight, residential, year = o["zone"], o["weight"], o["residential"], 2026
+        longest = max(o["dims"])
+        if trap == "zip_format":             # the first three characters of the ZIP as written
+            zone = next((z for lo, hi, z in ZONES if lo <= o["zip_shown"][:3] <= hi), 8)
+        elif trap == "ounces" and o.get("role") == "ounces":   # '9 oz' read as 9 lb
+            weight = float(o["weight_shown"].split()[0])
+        elif trap == "long_side":            # the first printed dimension taken as the long side
+            longest = int(o["dims_shown"].split(" x ")[0])
+        elif trap == "company_placeholder":  # 'N/A', '-' and 'none' taken as business names
+            residential = not o["company_shown"]
+        elif trap == "old_table":            # priced from the first sheet
+            year = 2025
+        large = longest > 48
+        bill = max(math.ceil(round(weight, 4) - 1e-9), 1)
+        if large:
+            bill = max(bill, LARGE_MIN_LB)
+        cost = round(rate(zone, bill, year) + (RESIDENTIAL if residential else 0) + (LARGE_SURCHARGE if large else 0), 2)
+        rows.append([o["id"], zone, bill, f"{cost:.2f}"])
+    return rows
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "orders_shipping.csv"), ["order_id", "zone", "billable_weight", "shipping_cost"],
+              mutant_rows(d, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

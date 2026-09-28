@@ -2,6 +2,9 @@
 """event-attendee-merge: ticketing export, the paper sign-up sheet and the waitlist into one door list.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off cancelled,waitlist --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant walkups --out DIR                 # a deliverable that falls for one trap
 
 Business: an independent bookshop hosting a ticketed author evening. Most people bought online, regulars signed
 the paper sheet at the till, and the overflow went on a waitlist form; the owner emailed the waitlist when seats
@@ -29,6 +32,25 @@ from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "ticket_rows": "the ticketing export is one row per ticket (off: one row per order with a ticket count)",
+        "two_orders": "one buyer placed two one-ticket orders (off: shown as one two-ticket order)",
+        "cancelled": "cancelled and refunded orders, including a rebooker's refunded order, are in the export",
+        "paper_dups": "four online buyers are also on the paper sheet with noisy emails (off: their paper rows dropped)",
+        "waitlist": "declined and uncontacted waitlisters on the form, one confirmed under a nickname in the email",
+        "guest_words": "guests written in words on paper and as a party size on the waitlist (off: guest counts)",
+    },
+    fixed={
+        "walkups": "two walk-ups with only a phone number must both be listed",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["ticket_rows", "two_orders", "cancelled", "paper_dups", "walkups", "waitlist", "guest_words"]
 
 NICK = {"Elizabeth": "Liz", "Jennifer": "Jen", "Katherine": "Kate", "Rebecca": "Becky", "Margaret": "Maggie", "Robert": "Bob",
         "William": "Will", "Michael": "Mike", "Christopher": "Chris", "Thomas": "Tom", "Daniel": "Dan", "Joseph": "Joe",
@@ -176,25 +198,61 @@ def acceptable(d: dict) -> bool:
     return True
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def ticket_export(d: dict, traps: TrapSet) -> tuple[list, list]:
+    """(header, rows) of the ticketing export, with the switched-off pitfalls removed."""
+    orders = d["orders"]
+    if not traps.on("cancelled"):
+        orders = [o for o in orders if o["status"] == "Attending"]
+    if not traps.on("two_orders"):  # the two one-ticket orders shown as the first one, for two tickets
+        two = [o for o in orders if o["buyer"] is d["two_order"] and o["status"] == "Attending"]
+        orders = [dict(o, qty=2) if o is two[0] else o for o in orders if o is not two[1]]
+    rows = []
+    if traps.on("ticket_rows"):
+        for o in orders:
+            b = o["buyer"]
+            for t in range(o["qty"]):
+                rows.append([o["no"], o["when"].strftime("%Y-%m-%d %H:%M:%S"), f"{o['no']}{t + 1:03d}", b["first"], b["last"],
+                             b["email"], "General Admission", "25.00", "Eventbrite Completed", o["status"]])
+        return (["Order #", "Order Date", "Attendee #", "First Name", "Last Name", "Email", "Ticket Type", "Total Paid",
+                 "Order Type", "Attendee Status"], rows)
+    for o in orders:
+        b = o["buyer"]
+        rows.append([o["no"], o["when"].strftime("%Y-%m-%d %H:%M:%S"), str(o["qty"]), b["first"], b["last"], b["email"],
+                     "General Admission", f"{25 * o['qty']}.00", "Eventbrite Completed", o["status"]])
+    return (["Order #", "Order Date", "Tickets", "First Name", "Last Name", "Email", "Ticket Type", "Total Paid", "Order Type",
+             "Order Status"], rows)
+
+
+def booking_rules(traps: TrapSet) -> str:
+    """The sentences of Nadia's ask that describe the pitfalls still in the files."""
+    text = "A cancelled or refunded ticket is not coming. " if traps.on("cancelled") else ""
+    paper, two = traps.on("paper_dups"), traps.on("two_orders")
+    if paper and two:
+        text += ("Regulars who signed the paper sheet and then bought online are one booking, not two, "
+                 "and if someone bought on more than one order it is still one booking, the extra tickets are their guests. ")
+    elif paper:
+        text += "Regulars who signed the paper sheet and then bought online are one booking, not two. "
+    elif two:
+        text += "If someone bought on more than one order it is still one booking, the extra tickets are their guests. "
+    return text
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out_dir: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out_dir)
+        return
+    here = out_dir or HERE
+    ws, ref, sol = task_dirs(HERE) if out_dir is None else variant_dirs(out_dir)
     r = rng(seed + 5)
 
     # ticketing export: one row per ticket
-    rows = []
-    for o in d["orders"]:
-        b = o["buyer"]
-        for t in range(o["qty"]):
-            rows.append([o["no"], o["when"].strftime("%Y-%m-%d %H:%M:%S"), f"{o['no']}{t + 1:03d}", b["first"], b["last"], b["email"],
-                         "General Admission", "25.00", "Eventbrite Completed",
-                         o["status"]])
-    write_csv(os.path.join(ws, "eventbrite_attendees_report.csv"),
-              ["Order #", "Order Date", "Attendee #", "First Name", "Last Name", "Email", "Ticket Type", "Total Paid", "Order Type",
-               "Attendee Status"], rows, bom=True)
+    theader, rows = ticket_export(d, traps)
+    write_csv(os.path.join(ws, "eventbrite_attendees_report.csv"), theader, rows, bom=True)
 
     # paper sheet typed up at the till
     prow = []
@@ -205,34 +263,47 @@ def emit(seed: int, naive_dir: str | None) -> None:
             nm = nm.upper()
         prow.append([nm, row["email_shown"], phone_variant(p["phone"], r.randrange(7)) if (not row["email_shown"] or r.random() < 0.6) else "",
                      r.choice(PAPER_GUESTS[row["guests"]])])
+    words = traps.on("guest_words")
+    if not traps.canonical:  # every row drew as before; the removed pitfalls are undone afterwards
+        if not words:
+            for pr, row in zip(prow, d["paper"]):
+                pr[3] = str(row["guests"])
+        if not traps.on("paper_dups"):
+            prow = [pr for pr, row in zip(prow, d["paper"]) if row["p"] not in d["paper_dups"]]
     write_xlsx(os.path.join(ws, "signup_sheet_at_till.xlsx"), {"Sheet1": {
-        "merged_title": "Author evening sign-up (in store)", "header": ["Name", "Email", "Phone", "How many coming"], "rows": prow,
+        "merged_title": "Author evening sign-up (in store)",
+        "header": ["Name", "Email", "Phone", "How many coming" if words else "Guests"], "rows": prow,
         "widths": {"A": 24, "B": 32, "C": 16, "D": 12}}}, creator="Till")
 
     wrows = []
     for w in d["waitlist"]:
         p = w["p"]
-        wrows.append([w["when"].strftime("%m/%d/%Y %H:%M"), f"{p['first']} {p['last']}", p["email"], str(w["party"])])
-    write_csv(os.path.join(ws, "waitlist_form_responses.csv"), ["Timestamp", "Full name", "Email address", "How many in your party?"], wrows)
+        if not traps.on("waitlist") and p not in d["promoted"]:
+            continue
+        wrows.append([w["when"].strftime("%m/%d/%Y %H:%M"), f"{p['first']} {p['last']}", p["email"],
+                      str(w["party"]) if words else str(w["party"] - 1)])
+    write_csv(os.path.join(ws, "waitlist_form_responses.csv"),
+              ["Timestamp", "Full name", "Email address", "How many in your party?" if words else "Guests besides you"], wrows)
 
     np_ = d["nick_person"]
-    promoted_names = [f"{NICK[np_['first']]} {np_['last']}"] + [f"{p['first']} {p['last']}" for p in d["promoted"][1:]]
+    promoted_names = [f"{NICK[np_['first']] if traps.on('waitlist') else np_['first']} {np_['last']}"] + \
+        [f"{p['first']} {p['last']}" for p in d["promoted"][1:]]
     r.shuffle(promoted_names)
     dec = d["declined"]
+    declined_text = (f" {dec['first']} {dec['last']} said thanks but can't make it now. I haven't contacted anyone else on the waitlist, "
+                     "so nobody else from that list is coming." if traps.on("waitlist") else "")
     write_email_thread(os.path.join(ws, "email_thread_door_list.txt"), [
         {"from": "Nadia Haddad <nadia@wrensparrowbooks.com>", "to": "shop@wrensparrowbooks.com", "date": "Mon, 14 Sep 2026 10:02",
          "subject": "Door list for Thursday",
          "body": ("We had a run of cancellations and refunds last week, so I emailed the top of the waitlist on Friday.\n\n"
-                  f"Confirmed and coming: {', '.join(promoted_names[:-1])} and {promoted_names[-1]}. "
-                  f"{dec['first']} {dec['last']} said thanks but can't make it now. I haven't contacted anyone else on the waitlist, "
-                  "so nobody else from that list is coming.")},
+                  f"Confirmed and coming: {', '.join(promoted_names[:-1])} and {promoted_names[-1]}."
+                  + declined_text)},
         {"from": "Nadia Haddad <nadia@wrensparrowbooks.com>", "to": "shop@wrensparrowbooks.com", "date": "Mon, 14 Sep 2026 10:20",
          "subject": "Re: Door list for Thursday",
          "body": ("Forgot the actual ask. Can someone put together the door list from the online tickets, the paper sheet from the till "
                   "and the waitlist people above?\n\n"
-                  "One line per booking: name, email, guests (how many people they are bringing besides themselves). A cancelled or "
-                  "refunded ticket is not coming. Regulars who signed the paper sheet and then bought online are one booking, not two, "
-                  "and if someone bought on more than one order it is still one booking, the extra tickets are their guests. "
+                  "One line per booking: name, email, guests (how many people they are bringing besides themselves). "
+                  + booking_rules(traps) +
                   "Keep the walk-ups who only left a phone number, they are coming.\n\nThanks, Nadia")},
     ])
 
@@ -258,13 +329,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
     paper_guests = [row["p"]["email"] for row in d["paper"] if row["email_shown"] and row["guests"] >= 1]
     wait_pairs = [w["p"]["email"] for w in d["waitlist"] if w["p"] in d["promoted"] and w["party"] == 2]
     must = sorted(set(pair_buyers[:3] + [d["two_order"]["email"], d["rebook"]["email"]] + paper_guests[:3] + wait_pairs))
-    write_task_yaml(HERE, {
+    spec = {
         "id": "event-attendee-merge", "track": "desk", "category": "spreadsheet",
         "title": "Door list for the author evening",
         "ask": ("Thursday's author evening needs a final door list from the online tickets, the paper sign-up sheet and the waitlist. "
                 "Nadia's emails say who is in. Save it as attendees.csv.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the ticketing export is one row per ticket and a two-ticket order repeats the buyer's name and email on both rows; "
             "a dedupe on email drops the guest and keeping both rows lists the buyer twice (checks: guests per booking; one line per booking)",
             f"{d['two_order']['first']} {d['two_order']['last']} bought two one-ticket orders a month apart; it is one booking "
@@ -281,7 +352,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "one line per booking)",
             "guests are written 'just me', '+1', 'me + 1', '2 of us', '3 of us' on paper, as a party size on the waitlist, and as "
             "extra ticket rows online (check: guests per booking)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "attendees.csv", "columns": header},
             {"type": "csv_set_equal", "name": "one line per booking (emails)", "path": "attendees.csv", "column": "email", "ref": "bookings_with_email.csv",
@@ -296,7 +367,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "text_not_contains", "name": "unconfirmed waitlist left off", "path": "attendees.csv",
              "phrases": [dec["email"]] + [p["email"] for p in d["uncontacted"]]},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "event-attendee-merge", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} bookings={len(out)} headcount={headcount} ticket_rows={len(rows)}")
 
 
@@ -325,15 +400,76 @@ def write_naive(d: dict, out: str) -> None:
     write_csv(os.path.join(out, "attendees.csv"), ["name", "email", "guests"], rows)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    """attendees.csv rows from an agent that is right except that it falls for `trap`."""
+    final = {k: dict(v) for k, v in d["final"].items()}
+    walk = list(d["walk_rows"])
+    extra = []                    # rows written as well as one per booking
+    if trap == "ticket_rows":     # one line per ticket row: a two-ticket buyer listed twice, each with no guest
+        for k, v in final.items():
+            if v["source"] == "online" and v["tickets"] > 1:
+                v["guests"] = 0
+                extra += [[f"{v['p']['first']} {v['p']['last']}", k, 0]] * (v["tickets"] - 1)
+    elif trap == "two_orders":    # the later order read as a replacement of the earlier one: no guest
+        final[d["two_order"]["email"]]["guests"] = 0
+    elif trap == "cancelled":     # the status column ignored: every order is coming
+        for o in d["orders"]:
+            if o["status"] == "Attending":
+                continue
+            k = o["buyer"]["email"]
+            if k in final:
+                final[k]["guests"] += o["qty"]
+            else:
+                final[k] = {"p": o["buyer"], "guests": o["qty"] - 1, "source": "online"}
+    elif trap == "paper_dups":    # a dedupe on the email as typed keeps the regulars' paper rows too
+        for row in d["paper"]:
+            if row["p"] in d["paper_dups"]:
+                extra.append([f"{row['p']['first']} {row['p']['last']}", row["email_shown"], row["guests"]])
+    elif trap == "walkups":       # a dedupe on email folds the two blank-email walk-ups into one
+        walk = walk[:1]
+    elif trap == "waitlist":      # everyone on the waitlist form taken as coming
+        for w in d["waitlist"]:
+            if w["p"]["email"] not in final:
+                final[w["p"]["email"]] = {"p": w["p"], "guests": w["party"] - 1, "source": "waitlist"}
+    elif trap == "guest_words":   # the waitlist's party size read as the number of guests
+        for w in d["waitlist"]:
+            if w["p"] in d["promoted"]:
+                final[w["p"]["email"]]["guests"] = w["party"]
+    else:
+        raise KeyError(trap)
+    rows = [[f"{v['p']['first']} {v['p']['last']}", k, v["guests"]]
+            for k, v in sorted(final.items(), key=lambda kv: (kv[1]["p"]["last"], kv[1]["p"]["first"]))]
+    rows += [[f"{w['p']['first']} {w['p']['last']}", "", w["guests"]] for w in walk]
+    return rows + extra
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "attendees.csv"), ["name", "email", "guests"], mutant_rows(d, trap))
+
+
+# Grader findings: faithful mutants left out of MUTANTS because a check their trap cites cannot see them.
+#   ticket_rows: a buyer listed once per ticket repeats an email, but "one line per booking (emails)" compares
+#     the SET of emails, so duplicates pass it (row count and guests per booking fail).
+#   paper_dups: the regulars' paper rows kept beside their online rows differ only in case and spaces, which the
+#     same check normalises away before comparing sets (row count fails).
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k not in ("ticket_rows", "paper_dups")}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

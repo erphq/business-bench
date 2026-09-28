@@ -2,6 +2,9 @@
 """regional-sales-monthly: Q2 sales by territory for a dental-supply distributor, one export per month.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off overlap,total_line --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant credits --out DIR                 # a deliverable that falls for one trap
 
 Business: a dental and orthodontic supply distributor whose ERP is exported once a month, one file per
 month, with an overlapping date range at each boundary. The prior-quarter file is still in the folder.
@@ -23,6 +26,26 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap sentence in task.yaml, keyed. Switchable traps are removed when the exports are written, so build() and
+# its random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "overlap": "the May and June exports re-list the last days of the previous month (off: each file starts on the 1st)",
+        "march_tail": "the April export opens with late-March orders (off: it starts on April 1)",
+        "total_line": "the April and June exports end with a TOTAL footer line (off: no footer)",
+        "format_noise": "text amounts in three styles, three date formats, the June export's renamed and quoted columns, "
+                        "BOM and CRLF endings (off: plain amounts, ISO dates, one header, plain files; credit memos keep "
+                        "their parentheses, which belong to the fixed credit trap)",
+    },
+    fixed={
+        "credits": "credit memos are negative, netted into the month they were issued",
+        "gap": "Mountain has no rows in the May export: a gap, not zero sales, reported in the memo",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["overlap", "march_tail", "credits", "total_line", "gap", "format_noise"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -164,21 +187,28 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverables
 
-def report_sheets(data_rows: list[list]) -> dict:
+def report_sheets(data_rows: list[list], plain_total: bool = False, estimate_gap: bool = False) -> dict:
+    """The reference report. `plain_total` makes the quarter total a plain sum of the Data amount column and
+    `estimate_gap` fills Mountain's missing May with the average of its April and June; both only for mutants."""
     n = len(data_rows) + 1
     rows = []
     for i, t in enumerate(TERRITORIES, start=2):
         line = [t]
         for j, m in enumerate(MONTHS):
             c = chr(ord("B") + j)
+            if estimate_gap and (t, m) == (GAP[0], f"2026-{GAP[1]:02d}"):
+                line.append(f"=ROUND((B{i}+D{i})/2,2)")
+                continue
             line.append(f'=IF(COUNTIFS(Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{c}$1)=0,"no data",'
                         f'SUMIFS(Data!$E$2:$E${n},Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{c}$1))')
         line.append(f"=SUM(B{i}:D{i})")
         rows.append(line)
     last = 1 + len(TERRITORIES)
-    rows.append(["Total"] + [f"=SUM({c}2:{c}{last})" for c in "BCDE"])
-    rows.append([])
-    rows.append(["Mountain has no rows in the 2026-05 export - a gap in the file, not a month of zero sales."])
+    rows.append(["Total"] + [f"=SUM({c}2:{c}{last})" for c in "BCD"]
+                + [f"=SUM(Data!$E$2:$E${n})" if plain_total else f"=SUM(E2:E{last})"])
+    if not estimate_gap:
+        rows.append([])
+        rows.append(["Mountain has no rows in the 2026-05 export - a gap in the file, not a month of zero sales."])
     return {
         "Data": {"header": ["doc_no", "doc_date", "month", "territory", "amount"], "rows": data_rows,
                  "widths": {"B": 12, "D": 14}},
@@ -202,13 +232,19 @@ def file_rows(rows: list[dict], style_amt, style_date) -> list[list]:
             for x in rows]
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     net, totals = d["net"], d["totals"]
+    noisy = traps.on("format_noise")
 
     def amt_style(x):
         return 5 if x["amt"] < 0 else [1, 0, 4][sum(ord(c) for c in x["id"]) % 3]
@@ -216,19 +252,39 @@ def emit(seed: int, naive_dir: str | None) -> None:
     def date_style(x):
         return [0, 1, 2][sum(ord(c) for c in x["id"]) % 3]
 
+    if not noisy:   # plain numbers and ISO dates; credit memos keep their parentheses (the credit trap is fixed)
+        def amt_style(x):  # noqa: F811
+            return 5 if x["amt"] < 0 else 2
+
+        def date_style(x):  # noqa: F811
+            return 0
+
+    def amount_text(x: float, style: int) -> str:
+        return money_str(x, style) if noisy or x >= 0 else f"({-x:.2f})"
+
+    def file_rows_(rows):
+        return [[x["id"], date_variant(x["date"], date_style(x)), x["terr"], x["cust"], amount_text(x["amt"], amt_style(x))]
+                for x in rows]
+
     hdr = ["Doc No", "Doc Date", "Territory", "Customer", "Amount"]
-    for m, label, rng_text in ((3, "2026-03", "02/24/2026 - 03/31/2026"), (4, "2026-04", "03/27/2026 - 04/30/2026"),
-                               (5, "2026-05", "04/26/2026 - 05/31/2026"), (6, "2026-06", "05/27/2026 - 06/30/2026")):
-        rows = file_rows(d["files"][m], amt_style, date_style)
-        if m in (4, 6):   # the ERP prints a total line at the end of these runs
-            rows = rows + [["TOTAL", "", "", "", money_str(sum(x["amt"] for x in d["files"][m]), 1)]]
-        if m == 6:        # the June run came out of the upgraded ERP with renamed columns
+    overlap_on, tail_on = traps.on("overlap"), traps.on("march_tail")
+    for m, label, rng_text in ((3, "2026-03", "02/24/2026 - 03/31/2026"),
+                               (4, "2026-04", "03/27/2026 - 04/30/2026" if tail_on else "04/01/2026 - 04/30/2026"),
+                               (5, "2026-05", "04/26/2026 - 05/31/2026" if overlap_on else "05/01/2026 - 05/31/2026"),
+                               (6, "2026-06", "05/27/2026 - 06/30/2026" if overlap_on else "06/01/2026 - 06/30/2026")):
+        src = d["files"][m]
+        if (m == 4 and not tail_on) or (m in (5, 6) and not overlap_on):
+            src = [x for x in src if x["date"].month == m]
+        rows = file_rows(src, amt_style, date_style) if noisy else file_rows_(src)
+        if m in (4, 6) and traps.on("total_line"):   # the ERP prints a total line at the end of these runs
+            rows = rows + [["TOTAL", "", "", "", amount_text(sum(x["amt"] for x in src), 1 if noisy else 2)]]
+        if m == 6 and noisy:        # the June run came out of the upgraded ERP with renamed columns
             write_csv(os.path.join(ws, f"sales_{label}.csv"),
                       ["Document", "Posting Date", "Sales Territory", "Customer Name", "Net Amount"], rows,
                       preamble=["Sales by territory (v2 export)", f"Range {rng_text}"], quote_all=True)
         else:
             write_csv(os.path.join(ws, f"sales_{label}.csv"), hdr, rows,
-                      preamble=["Sales by territory", f"Range {rng_text}"], crlf=(m == 5), bom=(m == 4))
+                      preamble=["Sales by territory", f"Range {rng_text}"], crlf=(m == 5 and noisy), bom=(m == 4 and noisy))
     write_text(os.path.join(ws, "note_from_ramona.txt"),
                "Quarterly territory numbers - what I need\n"
                "\n"
@@ -258,14 +314,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     stable_xlsx(os.path.join(sol, "regional.xlsx"), report_sheets(clean_rows(d)), creator="reference")
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "regional-sales-monthly", "track": "desk", "category": "reports",
         "title": "Q2 sales by territory from the monthly exports",
         "ask": ("Ramona needs the Q2 sales by territory - territories down the side, months across - from the monthly "
                 "exports in this folder. Save it as regional.xlsx with live formulas, plus memo.md with what she "
                 "should know. Her note says how she counts them.\n"),
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "every monthly export overlaps the previous month by a few days, so the last orders of April are in both "
             "the April and May files and the last orders of May are in both the May and June files; each order counts "
             "once, in the month of its own date (checks: Pacific May; Atlantic quarter total)",
@@ -282,7 +338,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "amounts are '$1,234.50', '1,234.50 USD' and plain text, dates come in three formats, the June export "
             "renamed every column and quotes every field, and two files carry a BOM or CRLF endings "
             "(check: quarter total, all territories)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "regional.xlsx exists", "path": "regional.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "regional.xlsx", "min_count": 12},
@@ -303,7 +359,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
                      r"\bnot (in|present in|included in) the (export|file|data)\b|\bblank\b|\bempty\b)"],
              "none": [r"(rather than (a |an )?(missing|gap)|\bnot (a |an )?(missing|gap)\b|no evidence of (a |an )?(missing|gap))"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "regional-sales-monthly", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} orders={len(d['orders'])} credits={len(d['credits'])} "
           f"file_rows={ {m: len(v) for m, v in d['files'].items()} }")
     print("territory totals:", {t: f"{v:.2f}" for t, v in totals.items()}, "grand:", d["grand"])
@@ -352,15 +411,87 @@ def write_naive(d: dict, out: str) -> None:
                "Sales rose through the quarter and the numbers come straight from the monthly exports.\n")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    """Data-sheet rows for a deliverable that is right except that it falls for `trap`."""
+    if trap in ("gap", "total_line"):
+        rows = clean_rows(d)
+        if trap == "total_line":   # the export footers read in as data (month of their file, no territory)
+            for m in (4, 6):
+                rows.append(["TOTAL", "", f"2026-{m:02d}", "", round(sum(x["amt"] for x in d["files"][m]), 2)])
+        return rows
+    rows, seen = [], set()
+    for m in (4, 5, 6):
+        for x in d["files"][m]:
+            month = mkey(x["date"])
+            if trap == "overlap":           # every row of every file kept: the re-listed tails counted twice
+                if x["date"].month == 3:
+                    continue
+            elif trap == "march_tail":      # the April file's rows all taken as April
+                if m == 4 and x["date"].month == 3:
+                    month = "2026-04"
+                elif x["id"] in seen:
+                    continue
+            else:
+                if x["date"].month == 3 or x["id"] in seen:
+                    continue
+            seen.add(x["id"])
+            amt = round(x["amt"], 2)
+            if trap == "credits":           # credit memos read as positive amounts
+                amt = abs(amt)
+            elif trap == "format_noise":    # '1,234.50 USD' amounts do not parse and are dropped
+                if x["amt"] >= 0 and [1, 0, 4][sum(ord(c) for c in x["id"]) % 3] == 4:
+                    continue
+            elif trap not in ("overlap", "march_tail"):
+                raise KeyError(trap)
+            rows.append([x["id"], x["date"].isoformat(), month, x["terr"], amt])
+    rows.sort(key=lambda r_: (r_[1], r_[0]))
+    return rows
+
+
+def mutant_memo(rows: list[list], trap: str) -> str:
+    net = {}
+    for doc, _, month, terr, amt in rows:
+        if terr:
+            net[(terr, month)] = round(net.get((terr, month), 0.0) + amt, 2)
+    gap = (GAP[0], f"2026-{GAP[1]:02d}")
+    if trap == "gap":
+        net[gap] = round((net[(GAP[0], "2026-04")] + net[(GAP[0], "2026-06")]) / 2, 2)
+    totals = {t: round(sum(v for (tt, _), v in net.items() if tt == t), 2) for t in TERRITORIES}
+    grand = round(sum(r_[4] for r_ in rows), 2) if trap == "total_line" else round(sum(totals.values()), 2)
+    text = (f"# Q2 2026 net sales by territory\n\nNet sales for April to June came to {grand:,.2f} across the five "
+            f"territories. Mountain finished the quarter at {totals['Mountain']:,.2f}.\n\n")
+    if trap == "gap":
+        text += "Mountain's May figure is estimated as the average of its April and June, so every territory has three months.\n"
+    else:
+        text += "Mountain has no rows in the 2026-05 export - the month is missing from the file, so its total covers April and June.\n"
+    return text
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    rows = mutant_rows(d, trap)
+    os.makedirs(out, exist_ok=True)
+    stable_xlsx(os.path.join(out, "regional.xlsx"),
+                report_sheets(rows, plain_total=(trap == "total_line"), estimate_gap=(trap == "gap")), creator="mutant")
+    write_text(os.path.join(out, "memo.md"), mutant_memo(rows, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(300):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 300 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

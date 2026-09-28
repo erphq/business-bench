@@ -2,6 +2,9 @@
 """helpdesk-tickets-report: a month of internal IT helpdesk tickets to tickets per category and SLA breaches.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off spellings,old_policy --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant holiday --out DIR                   # a deliverable that falls for one trap
 
 Business: the IT team at a title company (about 120 staff). The ops meeting wants May's ticket volume by
 category and how many tickets missed their resolution target. The export is raw; the rules are in the
@@ -26,6 +29,25 @@ from datetime import date, datetime, time, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "spellings": "priorities spelled nine ways across old imports and the web form (off: P1-P4 throughout)",
+        "not_tickets": "Merged, Spam and late-April tickets are in the export (off: only May tickets)",
+        "old_policy": "the superseded 2024 policy sits beside the 2026 one (off: not in the folder)",
+    },
+    fixed={
+        "business_hours": "targets run in business hours from the next opening",
+        "holiday": "the clock does not run on Memorial Day",
+        "open_tickets": "open tickets already past target are breaches",
+        "memo": "the memo states the breach count in a sentence",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["spellings", "business_hours", "holiday", "open_tickets", "not_tickets", "old_policy", "memo"]
 
 CATEGORIES = ["Hardware", "Software", "Network", "Accounts & Access", "Email", "Printers"]
 CAT_WEIGHT = [0.20, 0.22, 0.13, 0.20, 0.15, 0.10]
@@ -279,29 +301,51 @@ Merged duplicates, spam, and the late-April tickets that were closed in May are 
 """
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def gwen_first_body(traps: TrapSet) -> str:
+    if traps.on("not_tickets"):
+        return ("I pulled the ticket export first thing this morning. For the ops meeting I need May's tickets by category "
+                "and how many missed the SLA, using this year's policy.\n\n"
+                "May means tickets opened in May. The export is everything updated during the month, so it also has a few "
+                "April tickets we closed in the first days of May - those were in April's numbers already.\n\n"
+                "Anything with status Merged was a duplicate of another ticket and Spam is spam, neither is a ticket.")
+    return ("I pulled the ticket export first thing this morning. For the ops meeting I need May's tickets by category "
+            "and how many missed the SLA, using this year's policy.\n\n"
+            "May means tickets opened in May.")
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     T = d["tickets"]
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     s = summarize(T)
     tot_t, tot_b = s["_total"]
 
     # ---- workspace
+    spelled = traps.on("spellings")
     write_csv(os.path.join(ws, "helpdesk_tickets_export_2026-06-01.csv"),
               ["Ticket ID", "Subject", "Category", "Priority", "Status", "Created", "Resolved", "Assigned To", "Requester"],
-              [[t["id"], t["subject"], t["cat"], t["spelling"], t["status"], fmt_dt(t["created"]),
-                fmt_dt(t["resolved"]), t["tech"], t["requester"]] for t in T], bom=True)
+              [[t["id"], t["subject"], t["cat"], t["spelling"] if spelled else t["prio"], t["status"], fmt_dt(t["created"]),
+                fmt_dt(t["resolved"]), t["tech"], t["requester"]] for t in T
+               if t["counted"] or traps.on("not_tickets")], bom=True)
     write_text(os.path.join(ws, "IT_service_levels_2026.txt"),
                "Meridian Title - IT service levels\n"
-               "Effective 1 January 2026. Replaces the 2024 document.\n\n"
+               + ("Effective 1 January 2026. Replaces the 2024 document.\n\n" if traps.on("old_policy")
+                  else "Effective 1 January 2026.\n\n") +
                "1. Priorities\n\n"
-               "P1 Critical  - a branch or a closing cannot proceed. The old helpdesk called this Urgent and imported\n"
-               "               tickets still show it that way.\n"
+               + ("P1 Critical  - a branch or a closing cannot proceed. The old helpdesk called this Urgent and imported\n"
+                  "               tickets still show it that way.\n" if spelled else
+                  "P1 Critical  - a branch or a closing cannot proceed.\n") +
                "P2 High      - one person cannot work, or a deadline today is at risk.\n"
-               "P3 Normal    - everything else with a workaround. Tickets raised from the web form show Medium.\n"
+               + ("P3 Normal    - everything else with a workaround. Tickets raised from the web form show Medium.\n" if spelled
+                  else "P3 Normal    - everything else with a workaround.\n") +
                "P4 Low       - requests and questions.\n\n"
                "2. Resolution targets\n\n"
                "P1   4 business hours\n"
@@ -315,19 +359,16 @@ def emit(seed: int, naive_dir: str | None) -> None:
                "4. What counts as a breach\n\n"
                "A ticket breaches when it is resolved after its target. Time to resolve is measured from Created to\n"
                "Resolved in business hours.\n")
-    write_text(os.path.join(ws, "IT_service_levels_2024.txt"),
-               "Meridian Title - IT service levels (2024)\n\n"
-               "Business hours: Monday to Friday 08:00 to 17:00.\n\n"
-               "Targets (business hours): Urgent 4, High 8, Normal 16, Low 40.\n\n"
-               "Measured from ticket creation to resolution.\n")
+    if traps.on("old_policy"):
+        write_text(os.path.join(ws, "IT_service_levels_2024.txt"),
+                   "Meridian Title - IT service levels (2024)\n\n"
+                   "Business hours: Monday to Friday 08:00 to 17:00.\n\n"
+                   "Targets (business hours): Urgent 4, High 8, Normal 16, Low 40.\n\n"
+                   "Measured from ticket creation to resolution.\n")
     write_email_thread(os.path.join(ws, "email_from_gwen.txt"), [
         {"from": "Gwen Adeyemi <gwen@meridiantitle.com>", "to": "you", "date": "Mon, 1 Jun 2026 08:05",
          "subject": "May helpdesk numbers for Thursday",
-         "body": ("I pulled the ticket export first thing this morning. For the ops meeting I need May's tickets by category "
-                  "and how many missed the SLA, using this year's policy.\n\n"
-                  "May means tickets opened in May. The export is everything updated during the month, so it also has a few "
-                  "April tickets we closed in the first days of May - those were in April's numbers already.\n\n"
-                  "Anything with status Merged was a duplicate of another ticket and Spam is spam, neither is a ticket.")},
+         "body": gwen_first_body(traps)},
         {"from": "Gwen Adeyemi <gwen@meridiantitle.com>", "to": "you", "date": "Mon, 1 Jun 2026 08:19",
          "subject": "RE: May helpdesk numbers for Thursday",
          "body": ("One more thing. Some tickets are still open. If one of them is already past its target it has breached, "
@@ -352,14 +393,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_xlsx(os.path.join(sol, "tickets_report.xlsx"), report_workbook(rows), creator="reference")
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "helpdesk-tickets-report", "track": "desk", "category": "reports",
         "title": "May helpdesk tickets by category and SLA breaches",
         "ask": ("Can you turn the helpdesk export into May's report for Thursday's ops meeting - tickets per category and how "
                 "many breached the SLA? Save it as tickets_report.xlsx with live formulas, and write the headline in memo.md. "
                 "Gwen's email and the policy in the folder say how we count.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "priorities are spelled nine ways across old-helpdesk imports and the web form (P1, Urgent, 1 - Critical, Hi, Medium, med, ...); "
             "the 2026 policy says Urgent is P1 Critical and Medium is P3 Normal, and reading an unrecognised spelling as a default "
             "target moves the breach count (check: total SLA breaches)",
@@ -374,7 +415,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "May tickets, and Email carries spam, merges and April tickets (checks: Email tickets; total tickets)",
             "the superseded 2024 policy (08:00-17:00, Normal 16 hours) sits beside the 2026 one (check: total SLA breaches)",
             "the memo must state the breach count in a sentence (check: memo states the breach count)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "tickets_report.xlsx exists", "path": "tickets_report.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "tickets_report.xlsx", "min_count": 8},
@@ -391,7 +432,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "all": [r"(breach|missed|outside (the |their |its )?(sla|target)|over (the |their |its )?(sla|target)|\blate\b|overdue|exceeded|past (the |their |its )?target)",
                      rf"(?<![\d.,]){tot_b}(?![\d]|[.,]\d)"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "helpdesk-tickets-report", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} rows={len(T)} summary={s} variants={ {k: v[k]['_total'] for k in v} }")
 
 
@@ -410,15 +455,57 @@ def write_naive(d: dict, out: str) -> None:
     write_text(os.path.join(out, "memo.md"), f"# Helpdesk, May\n\nWe logged {len(rows)} tickets in May and {b} of them breached the SLA.\n")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """tickets_report.xlsx and memo.md from an agent that is right except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    rows = []
+    for t in d["tickets"]:
+        end = t["resolved"] or EXPORT_AT
+        prio, elapsed, target = t["prio"], t["elapsed"], TARGET[t["prio"]]
+        if trap == "spellings":         # only the official names recognised; anything else read as Normal
+            prio = OFFICIAL.get(t["spelling"].lower(), "P3")
+            target = TARGET[prio]
+        elif trap == "business_hours":  # elapsed calendar hours
+            elapsed = round((end - t["created"]).total_seconds() / 3600, 2)
+        elif trap == "holiday":         # the clock runs on Memorial Day
+            elapsed = round(bh_between(t["created"], end, holidays=set()), 2)
+        elif trap == "old_policy":      # the 2024 hours and targets
+            elapsed = round(bh_between(t["created"], end, close_h=17), 2)
+            target = OLD_TARGET[prio]
+        breach = elapsed > target
+        if trap == "open_tickets" and t["resolved"] is None:  # an open ticket never breaches
+            breach = False
+        counted = t["counted"] or trap == "not_tickets"         # every row in the export counted
+        rows.append([t["id"], t["cat"], prio, fmt_dt(t["created"]), fmt_dt(t["resolved"]), t["status"], target,
+                     elapsed, 1 if breach else 0, 1 if counted else 0])
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "tickets_report.xlsx"), report_workbook(rows), creator="mutant")
+    n, b = sum(x[9] for x in rows), sum(x[8] for x in rows if x[9])
+    if trap == "memo":  # the count left to the workbook; the memo gives only the rate
+        text = f"# Helpdesk, May 2026\n\nWe opened {n} tickets in May and {b / n:.1%} of them breached their SLA.\n"
+    else:
+        text = f"# Helpdesk, May 2026\n\nWe opened {n} tickets in May. {b} tickets breached their SLA ({b / n:.1%}).\n"
+    write_text(os.path.join(out, "memo.md"), text)
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(500):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 500 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

@@ -2,6 +2,9 @@
 """vendor-tax-forms: new-vendor tax forms to the vendor tax log, TINs masked and incomplete forms flagged.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off remit,scan --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant tins --out DIR            # a deliverable that falls for one trap
 
 Business: a brewery is opening a taproom and onboarding nine vendors. Accounts payable needs each vendor's legal
 name, entity type, masked TIN and tax address before the first payment, and needs to know whose paperwork is not usable.
@@ -19,10 +22,32 @@ Traps (each caught by a check, see task.yaml):
   * one form is an image-only scan                                           (checks: entity types; masked TINs)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "names": "the request list names vendors by trade name and the letterhead heads with its trade name (off: the "
+                 "request list and letterhead use the legal name; the forms still carry legal and DBA names)",
+        "entity_boxes": "every form prints all classification options with [ ] and one [X] (off: only the checked option "
+                        "is printed; the LLC letter and the single-member LLC's individual box remain)",
+        "remit": "the letterhead vendor prints a remit-to PO Box above its tax address (off: no remit-to line)",
+        "scan": "the partnership's form is an image-only scan (off: a text PDF of the same form)",
+    },
+    fixed={
+        "incomplete": "one form has no box checked and no signature: incomplete, with everything else filled in",
+        "missing": "one vendor never returned a form and still gets a row marked missing",
+        "tins": "the log carries only the last four digits of each TIN",
+        "tin_types": "the sole proprietor gives an SSN and the single-member LLC an EIN",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["names", "entity_boxes", "incomplete", "missing", "remit", "tins", "tin_types", "scan"]
 
 MM = 2.8346
 BIZ = "Tamarack Brewing"
@@ -88,10 +113,12 @@ def build(seed: int) -> dict:
     return dict(V=V, by=by, ap=person(r))
 
 
-def boxes(v, checked=True, style="[X]"):
+def boxes(v, checked=True, style="[X]", only_checked=False):
     out = []
     for code, label in OPTIONS:
         mark = style if checked and (code == v["entity"] or (code == "llc" and v["entity"].startswith("llc_"))) else "[ ]"
+        if only_checked and checked and mark == "[ ]":
+            continue
         if code == "llc":
             letter = v.get("llc", "") if mark != "[ ]" else "____"
             out.append(f"{mark} {label} {letter}")
@@ -100,17 +127,23 @@ def boxes(v, checked=True, style="[X]"):
     return out
 
 
-def emit(seed: int) -> None:
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed); V = d["V"]; by = d["by"]
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     F = os.path.join(ws, "vendor_tax_forms"); os.makedirs(F, exist_ok=True)
+    one_box = not traps.on("entity_boxes")
+    bx = (lambda v, checked=True: boxes(v, checked, only_checked=True)) if one_box else boxes  # noqa: E731
 
     def our_form(fn, v, font, pagesize, signed=True, checked=True, version="rev. 03/2024"):
         blocks = [("title", "Vendor Tax Information Form"), ("small", f"{BIZ} - Accounts Payable  |  {version}  |  Return to ap@tamarackbrewing.example"), ("hr", None),
                   ("kv", [("1. Name (as shown on your income tax return)", v["legal"]), ("2. Business name / disregarded entity name, if different", v["dba"] or "")],
                    {"col_widths": [70 * MM, 100 * MM]}),
                   ("h", "3. Federal tax classification (check only one)")]
-        for ln in boxes(v, checked):
+        for ln in bx(v, checked):
             blocks.append(("p", ln))
         blocks += [("spacer", 4),
                    ("kv", [("4. Address (number, street, suite)", v["street"]), ("5. City, state, ZIP", f"{v['city']}, {v['state']} {v['zip']}")],
@@ -132,7 +165,7 @@ def emit(seed: int) -> None:
     # ---- S corporation: older form version laid out as a grid table
     s = by["scorp"]
     grid = [["Field", "Vendor entry"], ["Legal name", s["legal"]], ["Trade name (DBA)", s["dba"]],
-            ["Tax classification", "<br/>".join(boxes(s))], ["Mailing address", f"{s['street']}<br/>{s['city']}, {s['state']} {s['zip']}"],
+            ["Tax classification", "<br/>".join(bx(s))], ["Mailing address", f"{s['street']}<br/>{s['city']}, {s['state']} {s['zip']}"],
             ["TIN", f"EIN {s['tin']}"], ["Signed", f"/s/ {s['signer']}, President, 08/19/2026"]]
     write_pdf_document(os.path.join(F, f"{s['dba'].replace(' ', '_')}_tax_info.pdf"), [
         ("title", "New Vendor Setup - Tax Information"), ("small", f"{BIZ} Accounts Payable (form rev. 2019)"), ("spacer", 6),
@@ -142,16 +175,16 @@ def emit(seed: int) -> None:
     # ---- letterhead vendor (C corporation), trade name large, remit-to PO Box above the tax address
     lh = by["letterhead"]
     write_pdf_document(os.path.join(F, f"{lh['dba'].split()[0]}_taxpayer_letter.pdf"), [
-        ("title", lh["dba"].upper()), ("small", "Commercial and storefront window cleaning since 2004"), ("hr", None),
+        ("title", (lh["dba"] if traps.on("names") else lh["legal"]).upper()), ("small", "Commercial and storefront window cleaning since 2004"), ("hr", None),
         ("right", "August 21, 2026"), ("p", f"Accounts Payable<br/>{BIZ}"), ("spacer", 6),
         ("p", "<b>Re: Taxpayer identification information</b>"), ("spacer", 4),
         ("p", f"As requested, here is our tax information for your vendor file. {lh['dba']} is a trade name of {lh['legal']}, "
               "which is the legal entity that files our tax returns. We are taxed as a C corporation."),
         ("spacer", 4),
-        ("kv", [("Remit payments to", lh["remit"]), ("Legal name", lh["legal"]), ("Employer identification number", lh["tin"]),
+        ("kv", [("Remit payments to", lh["remit"])] * traps.on("remit") + [("Legal name", lh["legal"]), ("Employer identification number", lh["tin"]),
                 ("Address for tax reporting", f"{lh['street']}, {lh['city']}, {lh['state']} {lh['zip']}")], {"col_widths": [60 * MM, 110 * MM]}),
         ("spacer", 6), ("p", "Our completed classification checklist is below."),
-    ] + [("small", ln) for ln in boxes(lh)] + [
+    ] + [("small", ln) for ln in bx(lh)] + [
         ("spacer", 10), ("p", f"Sincerely,<br/><br/>/s/ {lh['signer']}<br/>Controller, {lh['legal']}"),
     ], font="Courier", base_size=9)
 
@@ -162,17 +195,21 @@ def emit(seed: int) -> None:
     sc = by["scan"]
     lines = ["VENDOR TAX INFORMATION FORM", f"{BIZ} - Accounts Payable", "", f"1. Name: {sc['legal']}", "2. Business name: (blank)", "",
              "3. Tax classification (check one):"]
-    for ln in boxes(sc):
+    for ln in bx(sc):
         lines.append("  " + ln.replace("Limited liability company. Tax classification (C=C corporation, S=S corporation, P=Partnership):", "LLC - class (C/S/P):"))
     lines += ["", f"4. Address: {sc['street']}", f"5. City/State/ZIP: {sc['city']}, {sc['state']} {sc['zip']}", "", f"6. EIN: {sc['tin']}", "",
               f"Signature: /s/ {sc['signer']}", "Date: 08/24/2026"]
-    write_scan_pdf(os.path.join(F, "scan_20260825_0912.pdf"), lines, font_size=30, seed=seed * 37 + 6, skew_deg=0.25, noise=220)
+    if traps.on("scan"):
+        write_scan_pdf(os.path.join(F, "scan_20260825_0912.pdf"), lines, font_size=30, seed=seed * 37 + 6, skew_deg=0.25, noise=220)
+    else:  # the same form as a text PDF
+        write_pdf_document(os.path.join(F, "scan_20260825_0912.pdf"), [("p", html_escape(ln) or "&nbsp;") for ln in lines],
+                           font="Courier", base_size=10)
 
     # ---- purchasing's vendor list (trade names)
     rv = rng(seed + 77)
     vrows = []
     for v in sorted(V, key=lambda x: x["id"]):
-        vrows.append([v["id"], v["trade"], v["cat"], rv.choice(["Kelsey", "Marco", "Dana"]), "08/1{}/2026".format(rv.randint(0, 9))])
+        vrows.append([v["id"], v["trade"] if traps.on("names") or not v["legal"] else v["legal"], v["cat"], rv.choice(["Kelsey", "Marco", "Dana"]), "08/1{}/2026".format(rv.randint(0, 9))])
     write_csv(os.path.join(ws, "new_vendor_requests.csv"), ["Vendor ID", "Vendor", "Category", "Requested by", "Requested"], vrows)
 
     ap = d["ap"]
@@ -205,12 +242,12 @@ def emit(seed: int) -> None:
     write_json(os.path.join(ref, "notes.json"), {k: {"id": by[k]["id"], "legal": by[k]["legal"], "dba": by[k]["dba"], "trade": by[k]["trade"], "tin": by[k]["tin"],
                                                      "entity": by[k]["entity"], "remit": by[k].get("remit", "")} for k in by})
     kid = lambda *ks: [by[k]["id"] for k in ks]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "vendor-tax-forms", "track": "desk", "category": "extraction",
         "title": "Log new vendors' tax forms with masked TINs",
         "ask": "We can't pay the new taproom vendors until their tax info is logged. Can you fill in vendor_tax.csv from the forms they sent? AP's instructions are in the folder.\n",
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "the request list names vendors by trade name; the forms put the legal name on line 1 and the DBA on line 2, so a sole proprietor's legal name is a person, a single-member LLC's line 1 is its owner, and the letterhead vendor prints its trade name in capitals above the legal name (check: legal and DBA names)",
             "every form prints all seven classification options with [ ] and marks one [X]; the LLC option carries a tax-classification letter (S), and the single-member LLC checks the individual box (check: entity types)",
             "one form has no classification box checked and a blank signature line; form_status is incomplete with entity_type blank and everything else filled in (checks: form status; entity types)",
@@ -219,7 +256,7 @@ def emit(seed: int) -> None:
             "the forms print full SSNs and EINs; the log must carry only the last four digits and no full number in any format (checks: masked TINs; no full TIN in the file)",
             "the sole proprietor gives an SSN and the single-member LLC an EIN although both are entity type individual (check: TIN types)",
             "the partnership's form is an image-only scan (checks: entity types; masked TINs)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "vendor_tax.csv", "columns": header},
             {"type": "csv_set_equal", "name": "one row per vendor", "path": "vendor_tax.csv", "column": "vendor_id", "ref": "vendor_tax.csv", "normalize": ["strip", "lower"]},
@@ -238,8 +275,62 @@ def emit(seed: int) -> None:
             {"type": "csv_values_match", "name": "form status", "path": "vendor_tax.csv", "ref": "vendor_tax.csv", "key": "vendor_id",
              "columns": ["form_status"], "min_accuracy": 1.0, "must_match_keys": kid("incomplete", "missing", "letterhead")},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "vendor-tax-forms", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+def html_escape(t: str) -> str:
+    import html
+    return html.escape(t)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+HEADER = ["vendor_id", "legal_name", "dba_name", "entity_type", "tin_type", "tin_masked", "address", "city", "state", "zip", "form_status"]
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """vendor_tax.csv from an agent that is right except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    rows = []
+    for v in sorted(d["V"], key=lambda x: x["id"]):
+        v = dict(v)
+        k = v["key"]
+        if trap == "missing" and k == "missing":         # no form, so no row
+            continue
+        if trap == "names" and v["legal"]:               # the request list's trade name taken as the legal name
+            v["legal"], v["dba"] = v["trade"], ""
+        if trap == "entity_boxes" and k == "llc_s":      # the LLC's classification letter read as the entity
+            v["entity"] = "s_corporation"
+        if trap == "incomplete" and k == "incomplete":   # an unchecked form logged as complete, entity from the name
+            v["entity"], v["form_status"] = "llc_c", "complete"
+        if trap == "remit" and k == "letterhead":        # the remit-to PO Box taken as the address
+            v["street"] = v["remit"].split(",")[0]
+        if trap == "tin_types" and v["entity"] == "individual":  # an individual assumed to give an SSN
+            v["tin_type"] = "SSN"
+        if trap == "scan" and k == "scan":               # the image-only form not read: only the request list's name
+            v.update(entity="", tin_type="", tin="", street="", city="", state="", zip="", form_status="incomplete")
+        if trap == "tins":                               # the full number copied from the form
+            mask = v["tin"]
+        else:
+            mask = "" if not v["tin"] else ("***-**-" + v["tin"][-4:] if v["tin_type"] == "SSN" else "**-***" + v["tin"][-4:])
+        rows.append([v["id"], v["legal"], v["dba"], v["entity"], v["tin_type"], mask, v["street"], v["city"], v["state"], v["zip"],
+                     v["form_status"]])
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "vendor_tax.csv"), HEADER, rows)
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

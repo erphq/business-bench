@@ -2,6 +2,9 @@
 """subscription-status-monthly: active subscribers and cancellations per month for a coffee subscription.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off trials,retries --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant quarterly --out DIR           # a deliverable that falls for one trap
 
 Business: a small coffee roaster that ships beans on subscription: monthly plans billed on the signup
 anniversary, a quarterly plan paid up front, and a free first bag to try. The billing tool exports invoices;
@@ -30,6 +33,25 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "trials": "$0.00 free-first-bag invoices, and trial users' cancellation tickets (off: neither in the files)",
+        "retries": "failed charges with a paid retry, and void invoices after cancelled or unconverted renewals "
+                   "(off: only paid invoices in the export)",
+    },
+    fixed={
+        "effective_month": "a cancellation counts in the month its paid period ends",
+        "quarterly": "quarterly subscribers are active in all three months of a prepaid period",
+        "came_back": "customers who cancel and resubscribe are active again, the old cancellation still counted",
+        "formulas": "the monthly counts must be live formulas",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["trials", "effective_month", "quarterly", "came_back", "retries", "formulas"]
 
 MONTHS = [f"2026-{m:02d}" for m in range(1, 7)]
 MONTH_END = {m: (date(2026, int(m[5:]) % 12 + 1, 1) - timedelta(days=1)) for m in MONTHS}
@@ -173,8 +195,11 @@ def acceptable(d: dict) -> bool:
     return all(na[m] != act[m] and nc[m] != can[m] for m in MONTHS) and all(act[m] != can[m] for m in MONTHS)
 
 
-def workbook(d: dict, active: dict | None = None, cancelled: dict | None = None, naive: bool = False) -> dict:
+def workbook(d: dict, active: dict | None = None, cancelled: dict | None = None, naive: bool = False,
+             status_rows: list | None = None) -> dict:
     """Invoices sheet as exported, a Status sheet with one row per customer-month flag, and a Summary of COUNTIFS."""
+    if status_rows is not None:
+        return summary_workbook(status_rows)
     status_rows = []
     na_created = {}
     for c in d["customers"]:
@@ -188,6 +213,10 @@ def workbook(d: dict, active: dict | None = None, cancelled: dict | None = None,
                 x = sum(1 for sp in c["spells"] if sp["end"] and mkey(sp["end"]) == m)
             if a or x:
                 status_rows.append([c["id"], m, a, x])
+    return summary_workbook(status_rows)
+
+
+def summary_workbook(status_rows: list) -> dict:
     n = len(status_rows) + 1
     summary = []
     for i, m in enumerate(MONTHS, start=2):
@@ -199,19 +228,56 @@ def workbook(d: dict, active: dict | None = None, cancelled: dict | None = None,
     }
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def owner_note(traps: TrapSet) -> str:
+    return ("Subscriber counts - how I count them\n"
+            "\n"
+            + ("A subscriber is someone paying us for coffee. The free first bag is a trial: they are not a subscriber\n"
+               "until their first paid box, and if they cancel during the trial that is not a lost subscriber either.\n"
+               if traps.on("trials") else "A subscriber is someone paying us for coffee.\n")
+            + "\n"
+              "Active in a month means they have a paid period that covers the last day of that month. Quarterly\n"
+              "people pay once for three months, so they are active all three.\n"
+              "\n"
+              "When someone cancels, they keep getting coffee until the end of the period they already paid for.\n"
+              "Count the cancellation in the month that paid period ends, not the month they emailed us.\n"
+              "\n"
+              "If somebody cancels and comes back later, they are active again from their new paid period, and the\n"
+              "earlier cancellation still counts in its month.\n"
+              "\n"
+            + ("The billing tool retries a failed card the next day, so a failed invoice usually has a paid twin.\n"
+               "\n" if traps.on("retries") else "")
+            + "I want January to June: active subscribers at the end of each month and cancellations in each month.\n"
+              "\n"
+              "- Wren\n")
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_xlsx(os.path.join(naive_dir, "subscriptions.xlsx"), workbook(d, naive=True), creator="naive")
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom grader module travels with the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     r = rng(seed + 13)
     rows = []
     seq = 20417
+    trials_on, retries_on = traps.on("trials"), traps.on("retries")
+    trial_only = {c["email"] for c in d["customers"] if c.get("trial_only")}
     for i in sorted(d["invoices"], key=lambda x: (x["created"], x["k"])):
         if not (EXPORT_FROM <= i["created"] <= EXPORT_TO):
             continue
         seq += 1 + int(i["k"] * 3)
+        if not trials_on and (i["note"] == "first bag free" or i["email"] in trial_only):
+            continue  # numbered as before so every other invoice keeps its number
+        if not retries_on and i["status"] in ("failed", "void"):
+            continue
         rows.append([f"INV-{seq}", i["cid"], i["email"], PLANS[i["plan"]][0], i["start"].isoformat(), i["end"].isoformat(),
                      f"{i['amount']:.2f}", i["status"], i["created"].isoformat(), i["note"]])
     write_csv(os.path.join(ws, "billing_invoices_2025-10-01_2026-07-05.csv"),
@@ -220,29 +286,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
     trows = []
     for n_, t in enumerate(sorted(d["tickets"], key=lambda t: t["requested"]), start=3100):
         email = t["email"].upper() if r.random() < 0.2 else t["email"]
-        trows.append([f"#{n_}", date_variant(t["requested"], 1), email, "Cancel subscription", t["reason"], r.choice(["Sam", "Jo", "Sam"])])
+        row = [f"#{n_}", date_variant(t["requested"], 1), email, "Cancel subscription", t["reason"], r.choice(["Sam", "Jo", "Sam"])]
+        if trials_on or t["email"] not in trial_only:
+            trows.append(row)
     write_csv(os.path.join(ws, "helpdesk_cancellation_tickets.csv"), ["Ticket", "Received", "From", "Subject", "Reason", "Handled by"],
               trows, bom=True, crlf=True)
-    write_text(os.path.join(ws, "note_from_owner.txt"),
-               "Subscriber counts - how I count them\n"
-               "\n"
-               "A subscriber is someone paying us for coffee. The free first bag is a trial: they are not a subscriber\n"
-               "until their first paid box, and if they cancel during the trial that is not a lost subscriber either.\n"
-               "\n"
-               "Active in a month means they have a paid period that covers the last day of that month. Quarterly\n"
-               "people pay once for three months, so they are active all three.\n"
-               "\n"
-               "When someone cancels, they keep getting coffee until the end of the period they already paid for.\n"
-               "Count the cancellation in the month that paid period ends, not the month they emailed us.\n"
-               "\n"
-               "If somebody cancels and comes back later, they are active again from their new paid period, and the\n"
-               "earlier cancellation still counts in its month.\n"
-               "\n"
-               "The billing tool retries a failed card the next day, so a failed invoice usually has a paid twin.\n"
-               "\n"
-               "I want January to June: active subscribers at the end of each month and cancellations in each month.\n"
-               "\n"
-               "- Wren\n")
+    write_text(os.path.join(ws, "note_from_owner.txt"), owner_note(traps))
     write_csv(os.path.join(ref, "monthly_counts.csv"), ["month", "active", "cancelled"],
               [[m, d["active"][m], d["cancelled"][m]] for m in MONTHS])
     na, nc = naive_counts(d)
@@ -250,14 +299,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
                                                   "trial_only_customers": sum(1 for c in d["customers"] if c.get("trial_only")),
                                                   "came_back": [c["id"] for c in d["customers"] if c.get("came_back")]})
     write_xlsx(os.path.join(sol, "subscriptions.xlsx"), workbook(d), creator="reference")
-    write_task_yaml(HERE, {
+    spec = {
         "id": "subscription-status-monthly", "track": "desk", "category": "spreadsheet",
         "title": "Active subscribers and cancellations by month",
         "ask": ("How many coffee subscribers did we have each month this year, January to June, and how many cancelled? Work it "
                 "out from the billing export and the help desk tickets and save it as subscriptions.xlsx with the counts as "
                 "formulas. My note explains how I count.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the free first bag is a $0.00 invoice: trial users are not subscribers until a paid period, and the trial users "
             "who emailed to cancel are in the help desk file but are not cancellations (checks: active and cancelled by month; "
             "June active subscribers)",
@@ -271,7 +320,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "failed card charges are retried the next day, so one period has a failed row and a paid row, and cancelled "
             "renewals leave a void invoice after the last paid period (check: active and cancelled by month)",
             "the monthly counts must be live formulas over the invoice data (check: live formulas)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "subscriptions.xlsx", "min_count": 6},
             {"type": "xlsx_no_errors", "name": "no error cells", "path": "subscriptions.xlsx"},
@@ -281,20 +330,86 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "xlsx_value_present", "name": "April cancellations", "path": "subscriptions.xlsx",
              "expected": float(d["cancelled"]["2026-04"]), "rel_tol": 0.0001, "near_text": "cancel"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "subscription-status-monthly", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} customers={len(d['customers'])} invoices={len(rows)} tickets={len(d['tickets'])}")
     print("  active   ", d["active"], "\n  naive    ", na)
     print("  cancelled", d["cancelled"], "\n  naive    ", nc)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_status(d: dict, trap: str) -> list[list]:
+    """Status rows [customer, month, active, cancellations] from an agent that falls for `trap`."""
+    rows = []
+    inv_by = {}
+    for i in d["invoices"]:
+        inv_by.setdefault(i["cid"], []).append(i)
+    tickets = {}
+    for t in d["tickets"]:
+        tickets.setdefault(t["email"], []).append(t)
+    for c in d["customers"]:
+        periods, ends = [], []    # (start, end) active periods; months a cancellation counts in
+        for k, sp in enumerate(c["spells"]):
+            if trap == "came_back" and k > 0:          # a cancelled customer stays gone
+                break
+            ps = list(sp["periods"])
+            end = sp["end"]
+            if trap == "retries" and end:              # the void renewal read as one more paid period
+                void = [i for i in inv_by.get(c["id"], []) if i["status"] == "void" and i["start"] > end]
+                if void:
+                    ps.append((void[0]["start"], void[0]["end"]))
+                    end = void[0]["end"]
+            if trap == "quarterly" and sp["plan"] == "Q1":  # active only in the month the quarter was invoiced
+                ps = [(s, min(e, MONTH_END[mkey(s)] if mkey(s) in MONTH_END else e)) for s, e in ps]
+            periods += ps
+            if end:
+                ends.append(mkey(sp["cancel_request"]) if trap == "effective_month" else mkey(end))
+        if trap == "trials":                            # the free bag counted as a subscription, its cancellation too
+            for i in inv_by.get(c["id"], []):
+                if i["note"] == "first bag free":
+                    periods.append((i["start"], i["end"]))
+                    if c.get("trial_only") and c["email"] in tickets:
+                        ends.append(mkey(i["end"]))
+        for m in MONTHS:
+            me = MONTH_END[m]
+            a = int(any(s <= me <= e for s, e in periods))
+            x = sum(1 for e in ends if e == m)
+            if a or x:
+                rows.append([c["id"], m, a, x])
+    return rows
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """subscriptions.xlsx from an agent that is right except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    if trap == "formulas":  # the right counts, typed in as values
+        wb = workbook(d)
+        wb["Summary"]["rows"] = [[m, d["active"][m], d["cancelled"][m]] for m in MONTHS]
+    else:
+        wb = workbook(d, status_rows=mutant_status(d, trap))
+    write_xlsx(os.path.join(out, "subscriptions.xlsx"), wb, creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(500):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw in 500 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

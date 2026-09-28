@@ -2,6 +2,9 @@
 """fundraiser-progress-page: a junior rowing club's boat campaign as one progress page with totals and top donors.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off refunds,bounced --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant anonymous --out DIR            # a deliverable that falls for one trap
 
 Business: a volunteer-run junior rowing club raising money for a new eight. Online gifts come from the giving
 platform's export (all campaigns in one file, refunds as statuses, an anonymous tick box); the treasurer logs
@@ -26,6 +29,26 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "refunds": "refunded gifts listed with their amount; one gift partly refunded (off: refunded gifts dropped, the "
+                   "partial one shown at the amount kept)",
+        "bounced": "a bounced check is in the treasurer's log (off: its row dropped)",
+        "other_campaigns": "general fund and regatta entry gifts are in the export (off: only boat-fund gifts)",
+        "combined": "donors give online and by check and the log writes names surname first (off: the log writes "
+                    "names first name first; the gifts still have to be added together)",
+    },
+    fixed={
+        "anonymous": "a donor who ticked Hide my name also gave a named check and must appear only as Anonymous",
+        "progress": "percent of goal, amount still to raise and donor count follow from the goal and the rules",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["refunds", "bounced", "other_campaigns", "combined", "anonymous", "progress"]
 
 GOAL = 48000_00
 CAMPAIGN = "New eight for the juniors"
@@ -132,30 +155,70 @@ def usd(c: int) -> str:
     return f"${c / 100:,.2f}"
 
 
-def page_html(d: dict) -> str:
+def page_html(d: dict, pct_digits: int = 1) -> str:
     total, top = d["total"], d["top"]
     pct = total / GOAL * 100
     out = ["<!DOCTYPE html>", '<html lang="en">', "<head>", '<meta charset="utf-8">',
            "<title>New eight for the juniors - campaign progress</title>", "<style>",
            "body{font-family:'Helvetica Neue',Arial,sans-serif;margin:28px auto;max-width:680px;color:#14243b;padding:0 16px}",
            ".bar{background:#dfe6ef;height:22px;border-radius:11px;overflow:hidden}",
-           f".fill{{background:#1f5aa6;height:100%;width:{pct:.1f}%}}",
+           f".fill{{background:#1f5aa6;height:100%;width:{pct:.1f}%}}" if pct_digits == 1 else
+           f".fill{{background:#1f5aa6;height:100%;width:{pct:.{pct_digits}f}%}}",
            "table{border-collapse:collapse;width:100%}", "td{padding:6px 8px;border-bottom:1px solid #e3e8ee}",
            "td.n{text-align:right}", "</style>", "</head>", "<body>",
            "<h1>New eight for the juniors</h1>",
-           f"<p><strong>{usd(total)} raised</strong> of our {usd(GOAL)} goal - <strong>{pct:.1f}%</strong> of the way there.</p>",
+           f"<p><strong>{usd(total)} raised</strong> of our {usd(GOAL)} goal - <strong>{pct:.1f}%</strong> of the way there.</p>" if pct_digits == 1 else
+           f"<p><strong>{usd(total)} raised</strong> of our {usd(GOAL)} goal - <strong>{pct:.{pct_digits}f}%</strong> of the way there.</p>",
            '<div class="bar"><div class="fill"></div></div>',
            f"<p>{usd(GOAL - total)} still to raise. {len(d['givers'])} donors so far.</p>",
            "<h2>Top donors</h2>", "<table><tbody>"]
     for i, dn in enumerate(top, 1):
-        nm = "Anonymous" if dn["anon"] else f"{dn['first']} {dn['last']}"
+        nm = "Anonymous" if dn["anon"] else dn.get("display") or f"{dn['first']} {dn['last']}"
         out.append(f"<tr><td>{i}</td><td>{html.escape(nm)}</td><td class=\"n\">{usd(dn['net'])}</td></tr>")
     out += ["</tbody></table>", "<p>Thank you to everyone who has given. Gifts are counted once they clear; refunded "
             "gifts are not included.</p>", "</body>", "</html>", ""]
     return "\n".join(out)
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def treasurer_note(traps: TrapSet) -> str:
+    return ("From: Dana Whitlock (treasurer)\nTo: you\nDate: Sat, 12 Sep 2026 10:30\nSubject: progress page for the boat campaign\n\n"
+            "The board wants a progress page for the new eight we can put on the club website and the screen in the "
+            "boathouse. One HTML file please, it gets uploaded as is, and no scripts - the site builder strips them.\n\n"
+            "Our goal is $48,000. The page should show how much we have raised, what percent of the goal that is "
+            "(one decimal is fine), how much is still to raise, how many donors have given, and a Top donors list "
+            "with the five biggest donors and what each has given in total.\n\n"
+            "What counts:\n"
+            + (f"- Only gifts to the \"{CAMPAIGN}\" campaign. The platform export has everything - general fund, regatta "
+               "entry fees - in the same file.\n" if traps.on("other_campaigns") else "")
+            + ("- Refunded gifts do not count. If only part of a gift was refunded, count what we kept.\n"
+               if traps.on("refunds") else "")
+            + ("- My log has the checks and cash. One check bounced; it is marked in the note column.\n"
+               if traps.on("bounced") else "- My log has the checks and cash.\n")
+            + "- A donor is a person, not a gift. Plenty of people gave online and also handed me a check, so add "
+              "those together." + (" My log writes names surname first.\n\n" if traps.on("combined") else "\n\n")
+            + "Privacy: if someone ticked Hide my name on any gift, their name never goes on the page, even if they "
+              "also gave by check. In the top donors list they show as Anonymous.\n\n"
+              "Dana\n")
+
+
+def export_rows(online: list, traps: TrapSet) -> list[list]:
+    rows = []
+    for g in online:
+        cents, status, refunded = g["cents"], g["status"], g["refunded"]
+        if not traps.on("other_campaigns") and g["campaign"] != CAMPAIGN:
+            continue
+        if not traps.on("refunds"):
+            if status == "Refunded":
+                continue
+            cents, status, refunded = cents - refunded, "Succeeded", 0
+        rows.append([g["id"], g["date"].strftime("%m/%d/%Y"), g["donor"]["first"], g["donor"]["last"], g["donor"]["email"],
+                     g["campaign"], f"${cents / 100:,.2f}", status, f"${refunded / 100:,.2f}" if refunded else "",
+                     "Yes" if g["anon"] else ""])
+    return rows
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     donors = d["donors"]
     r = rng(seed + 19)
@@ -173,36 +236,27 @@ def emit(seed: int, naive_dir: str | None) -> None:
     if naive_dir:
         write_naive(d, online, offline, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom grader module travels with the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     write_csv(os.path.join(ws, "givewell_platform_export_2026-09-12.csv"),
               ["Donation ID", "Date", "Donor first name", "Donor last name", "Email", "Campaign", "Amount", "Status",
-               "Refunded amount", "Hide my name"],
-              [[g["id"], g["date"].strftime("%m/%d/%Y"), g["donor"]["first"], g["donor"]["last"], g["donor"]["email"],
-                g["campaign"], f"${g['cents'] / 100:,.2f}", g["status"], f"${g['refunded'] / 100:,.2f}" if g["refunded"] else "",
-                "Yes" if g["anon"] else ""] for g in online], bom=True, crlf=True)
+               "Refunded amount", "Hide my name"], export_rows(online, traps), bom=True, crlf=True)
+    surname_first = traps.on("combined")
     write_xlsx(os.path.join(ws, "treasurer_checks_and_cash_log.xlsx"), {"Boat fund deposits": {
         "merged_title": "Boat fund - checks and cash (deposited by treasurer)",
         "header": ["Date received", "Donor", "Method", "Amount", "Note"],
-        "rows": [[g["date"], f"{g['donor']['last']}, {g['donor']['first']}", "Check #" + str(1000 + i * 7) if g["channel"] == "check" else "Cash",
-                  g["cents"] / 100, g["note"]] for i, g in enumerate(offline)],
+        "rows": [[g["date"], f"{g['donor']['last']}, {g['donor']['first']}" if surname_first else f"{g['donor']['first']} {g['donor']['last']}",
+                  "Check #" + str(1000 + i * 7) if g["channel"] == "check" else "Cash",
+                  g["cents"] / 100, g["note"]] for i, g in enumerate(offline)
+                 if traps.on("bounced") or "NSF" not in g["note"]],
         "widths": {"A": 14, "B": 24, "C": 14, "E": 30}}}, creator="Treasurer")
-    write_text(os.path.join(ws, "note_from_treasurer.txt"),
-               "From: Dana Whitlock (treasurer)\nTo: you\nDate: Sat, 12 Sep 2026 10:30\nSubject: progress page for the boat campaign\n\n"
-               "The board wants a progress page for the new eight we can put on the club website and the screen in the "
-               "boathouse. One HTML file please, it gets uploaded as is, and no scripts - the site builder strips them.\n\n"
-               "Our goal is $48,000. The page should show how much we have raised, what percent of the goal that is "
-               "(one decimal is fine), how much is still to raise, how many donors have given, and a Top donors list "
-               "with the five biggest donors and what each has given in total.\n\n"
-               "What counts:\n"
-               f"- Only gifts to the \"{CAMPAIGN}\" campaign. The platform export has everything - general fund, regatta "
-               "entry fees - in the same file.\n"
-               "- Refunded gifts do not count. If only part of a gift was refunded, count what we kept.\n"
-               "- My log has the checks and cash. One check bounced; it is marked in the note column.\n"
-               "- A donor is a person, not a gift. Plenty of people gave online and also handed me a check, so add "
-               "those together. My log writes names surname first.\n\n"
-               "Privacy: if someone ticked Hide my name on any gift, their name never goes on the page, even if they "
-               "also gave by check. In the top donors list they show as Anonymous.\n\n"
-               "Dana\n")
+    write_text(os.path.join(ws, "note_from_treasurer.txt"), treasurer_note(traps))
     top = d["top"]
     anon_all = [dn for dn in donors if dn["anon"]]
     write_json(os.path.join(ref, "expected.json"), {
@@ -219,7 +273,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
     comb = next(dn for dn in top if len([g for g in dn["gifts"] if counts(g)]) > 1 and not dn["anon"]
                 and len({g["channel"] for g in dn["gifts"]}) > 1)
     dec = d["decoys"]
-    traps = [
+    trap_text = [
         f"refunded gifts keep their amount and only say Refunded - including a large one from "
         f"{dec['refunded']['first']} {dec['refunded']['last']} that would rank in the top five - and one gift is "
         "Partially refunded with the refunded amount in its own column (checks: total raised and progress; page "
@@ -236,13 +290,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "percent of goal, amount still to raise and the donor count (people, not gifts) all follow from the treasurer's "
         "goal and rules (checks: total raised and progress; page structure: progress figures)",
     ]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "fundraiser-progress-page", "track": "desk", "category": "tooling",
         "title": "Boat campaign progress page with top donors",
         "ask": "Could you build the progress page for our boat campaign from the donation export and the treasurer's "
                "check log? Dana's note has the rules. Save it as index.html.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": traps,
+        "traps": active_trap_text(trap_text, TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "index.html exists", "path": "index.html"},
             {"type": "text_contains_all", "name": "named top donors and the anonymous slot", "path": "index.html",
@@ -254,7 +308,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "numbers": [d["total"] / 100, (GOAL - d["total"]) / 100, round(d["total"] / GOAL * 100, 1)], "rel_tol": 0.0000001},
             {"type": "custom", "name": "page structure", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "fundraiser-progress-page", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} total={d['total'] / 100:.2f} pct={d['total'] / GOAL * 100:.1f} donors={len(d['givers'])} "
           f"top={[(dn['first'] + ' ' + dn['last'], dn['net'] / 100, dn['anon']) for dn in top]}")
 
@@ -278,14 +336,53 @@ def write_naive(d: dict, online: list, offline: list, out: str) -> None:
     write_text(os.path.join(out, "index.html"), "\n".join(parts))
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """index.html from an agent that is right except that it falls for `trap`."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    ents: dict = {}
+    for dn in d["donors"]:
+        offline = any(g["channel"] != "online" for g in dn["gifts"])
+        for g in dn["gifts"]:
+            if g["campaign"] != CAMPAIGN and trap != "other_campaigns":     # every campaign counted
+                continue
+            if g["status"] == "Refunded" and trap != "refunds":             # refunds read as gifts, at full amount
+                continue
+            if "NSF" in g["note"] and trap != "bounced":                    # the bounced check counted
+                continue
+            amt = g["cents"] - (0 if trap == "refunds" else g["refunded"])
+            key, display = id(dn), None
+            if trap == "combined" and not dn["anon"] and g["channel"] != "online":
+                # log names taken as written, so the check-giver is a second donor
+                key, display = (id(dn), "log"), f"{dn['last']}, {dn['first']}"
+            e = ents.setdefault(key, {"first": dn["first"], "last": dn["last"], "display": display, "net": 0,
+                                      # Hide my name applied to the online gift only: a named check names the donor
+                                      "anon": dn["anon"] and not (trap == "anonymous" and offline)})
+            e["net"] += amt
+    givers = [e for e in ents.values() if e["net"] > 0]
+    ranked = sorted(givers, key=lambda e: -e["net"])
+    md = {"total": sum(e["net"] for e in givers), "top": ranked[:5], "givers": givers}
+    os.makedirs(out, exist_ok=True)
+    # progress: the percent of goal rounded to a whole number
+    write_text(os.path.join(out, "index.html"), page_html(md, 0 if trap == "progress" else 1))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(2000):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

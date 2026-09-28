@@ -2,6 +2,9 @@
 """project-status-board: the crew's task board for one remodel job as a single printable HTML page.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off bathroom,assignees --out DIR     # same draw, those pitfalls removed, same answer
+    python gen.py --mutant hold_blank --out DIR                # a deliverable that falls for one trap
 
 Business: a residential remodeling contractor running a kitchen job and a bathroom job at once. The project app
 lets anyone type a status, exports one row per assignee, and keeps both jobs in the same export.
@@ -26,6 +29,26 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only; build() and the export's
+# shuffle and phone-number draws are identical in every variant.
+TRAPS = TrapSet(
+    switchable={
+        "free_status": "statuses typed freely in many spellings and cases",
+        "hold_blank": "an On hold status and a blank status the note maps to In progress and Not started",
+        "assignees": "a task with two people on it exported once per assignee",
+        "done_spelling": "finished dependencies spelled Complete, Finished or Closed rather than Done (flagging every "
+                         "task with a dependency stays a pitfall)",
+        "bathroom": "the other job's tasks in the same export",
+    },
+    fixed={
+        "blocked_in_progress": "an In progress task can still be blocked, and blocked cards stay in their column",
+    },
+    requires={"done_spelling": "free_status"},
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["free_status", "hold_blank", "assignees", "done_spelling", "blocked_in_progress", "bathroom"]
 
 JOB = "Alder Street kitchen"
 OTHER = "Hillcrest bathroom"
@@ -51,6 +74,7 @@ SPELL = {"Not started": ["Not started", "not started", "To do", "todo", "Open", 
          "In progress": ["In progress", "in progress", "WIP", "Started", "Doing"],
          "Done": ["Done", "done", "Complete", "Completed", "Finished", "Closed"]}
 COLUMNS = ["Not started", "In progress", "Done"]
+RAW_COL = {sp: c for c, ss in SPELL.items() for sp in ss}
 LABELS = {"Not started": r"\bnot[ -]started\b|\bto[ -]?do\b", "In progress": r"\bin[ -]progress\b",
           "Done": r"\bdone\b|\bcompleted?\b|\bfinished\b"}
 CREW = ["Luis Ortiz", "Dana Kelly", "Tomasz Nowak", "Aisha Mensah", "Ryan Brooks", "Wei Chen"]
@@ -157,7 +181,7 @@ def export_rows(d: dict, r) -> list[list]:
     return rows
 
 
-def board_html(d: dict) -> str:
+def board_html(d: dict, columns: list[str] = COLUMNS) -> str:
     tasks = d["tasks"]
     out = ["<!DOCTYPE html>", '<html lang="en">', "<head>", '<meta charset="utf-8">',
            f"<title>{JOB} - task board</title>", "<style>",
@@ -173,7 +197,7 @@ def board_html(d: dict) -> str:
            "<p>Status as of 11 September 2026. Cards marked BLOCKED are waiting on a task that is not Done yet.</p>",
            '<div class="board">']
     ids = {t["id"]: t for t in tasks}
-    for c in COLUMNS:
+    for c in columns:
         col = sorted([t for t in tasks if t["col"] == c], key=lambda t: (t["due"], t["id"]))
         out.append('<section class="col">')
         out.append(f"<h2>{c} ({len(col)})</h2>")
@@ -188,36 +212,49 @@ def board_html(d: dict) -> str:
     return "\n".join(out)
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     tasks = d["tasks"]
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom grader module travels with the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     r = rng(seed + 11)
+    rows = export_rows(d, r)   # shuffled with every row present, so the draws that follow never move
+    if not traps.canonical:
+        rows = variant_rows(d, rows, traps)
     write_csv(os.path.join(ws, "project_tasks_export_2026-09-11.csv"),
-              ["Task ID", "Project", "Task", "Assignee", "Status", "Depends on", "Due date"], export_rows(d, r), crlf=True)
+              ["Task ID", "Project", "Task", "Assignee", "Status", "Depends on", "Due date"], rows, crlf=True)
     write_csv(os.path.join(ws, "crew_phone_list.csv"), ["Name", "Role", "Mobile"],
               [[c, role, phone_variant(phone_digits(r), 0)] for c, role in
                zip(CREW, ["Lead carpenter", "Project manager", "Carpenter", "Electrician", "Plumber", "Helper"])])
     hold, blank = d["on_hold"], d["blank"]
-    write_text(os.path.join(ws, "note_from_rosa.txt"),
-               "From: Rosa Alvarez\nTo: you\nDate: Fri, 11 Sep 2026 07:05\nSubject: board for the Alder Street crew\n\n"
-               "Morning. The crew wants the kitchen board back on the wall - I print it on the black and white "
-               "printer in the trailer, so it has to be one page that opens without the internet. Plain page, no scripts - "
-               "the trailer laptop blocks them.\n\n"
-               "Only the Alder Street kitchen. The Hillcrest bathroom is in the same export but that crew has its own "
-               "wall.\n\n"
-               "Three columns: Not started, In progress, Done, with how many cards are in each column right on the "
-               "column heading. One card per task - when two people are on a task the app spits it out twice, but "
-               "it is still one task.\n\n"
-               "People type whatever they like in the status box. On hold still goes under In progress (we started "
-               "it, it is just parked) and a blank status means nobody has touched it yet, so Not started.\n\n"
-               "Anything that is waiting on another task that is not Done yet is blocked. Leave it in its column but "
-               "print the word BLOCKED on the card - colour does not survive our printer. If everything it waits on "
-               "is done, it is not blocked, whatever else it says.\n\n"
-               "Rosa\n")
+    if not traps.canonical:
+        write_text(os.path.join(ws, "note_from_rosa.txt"), variant_note(traps))
+    else:
+        write_text(os.path.join(ws, "note_from_rosa.txt"),
+                   "From: Rosa Alvarez\nTo: you\nDate: Fri, 11 Sep 2026 07:05\nSubject: board for the Alder Street crew\n\n"
+                   "Morning. The crew wants the kitchen board back on the wall - I print it on the black and white "
+                   "printer in the trailer, so it has to be one page that opens without the internet. Plain page, no scripts - "
+                   "the trailer laptop blocks them.\n\n"
+                   "Only the Alder Street kitchen. The Hillcrest bathroom is in the same export but that crew has its own "
+                   "wall.\n\n"
+                   "Three columns: Not started, In progress, Done, with how many cards are in each column right on the "
+                   "column heading. One card per task - when two people are on a task the app spits it out twice, but "
+                   "it is still one task.\n\n"
+                   "People type whatever they like in the status box. On hold still goes under In progress (we started "
+                   "it, it is just parked) and a blank status means nobody has touched it yet, so Not started.\n\n"
+                   "Anything that is waiting on another task that is not Done yet is blocked. Leave it in its column but "
+                   "print the word BLOCKED on the card - colour does not survive our printer. If everything it waits on "
+                   "is done, it is not blocked, whatever else it says.\n\n"
+                   "Rosa\n")
     write_json(os.path.join(ref, "expected.json"), {
         "tasks": [{"id": t["id"], "title": t["title"], "column": t["col"], "blocked": t["blocked"],
                    "raw_status": t["raw_status"]} for t in tasks],
@@ -227,7 +264,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
     })
     write_text(os.path.join(sol, "index.html"), board_html(d))
     counts = {c: sum(1 for t in tasks if t["col"] == c) for c in COLUMNS}
-    traps = [
+    trap_text = [
         "statuses are typed freely (WIP, Started, Doing, todo, Open, Complete, Finished, Closed and mixed case); "
         "grouping on the exact text leaves cards in odd columns or off the board "
         "(checks: page structure: column per card; page structure: column counts)",
@@ -244,13 +281,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "the Hillcrest bathroom job's tasks are mixed into the same export, dates sorted together "
         "(checks: bathroom job left off; page structure: one card per task)",
     ]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "project-status-board", "track": "desk", "category": "tooling",
         "title": "Kitchen job task board for the crew wall",
         "ask": "Please make the Alder Street crew board from this morning's task export - Rosa's note has how she "
                "wants it. I need it as index.html.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": traps,
+        "traps": active_trap_text(trap_text, TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "index.html exists", "path": "index.html"},
             {"type": "text_contains_all", "name": "every kitchen task on the board", "path": "index.html",
@@ -261,7 +298,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "numbers": [counts[c] for c in COLUMNS], "rel_tol": 0},
             {"type": "custom", "name": "page structure", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "project-status-board", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(out or HERE, spec)
     print(f"seed={seed} counts={counts} blocked={[t['title'] for t in tasks if t['blocked']]}")
 
 
@@ -284,14 +325,114 @@ def write_naive(d: dict, out: str) -> None:
     write_text(os.path.join(out, "index.html"), "\n".join(parts))
 
 
+# --------------------------------------------------------------------------- variants
+
+def variant_rows(d: dict, rows: list[list], traps: TrapSet) -> list[list]:
+    """The shuffled export with the switched-off pitfalls removed afterwards (rows dropped or respelled in place)."""
+    by_id = {t["id"]: t for t in d["tasks"]}
+    out, seen = [], set()
+    for x in rows:
+        x = list(x)
+        t = by_id.get(x[0])
+        if t is None:                                   # the bathroom job
+            if not traps.on("bathroom"):
+                continue
+            if not traps.on("free_status"):
+                x[4] = RAW_COL[x[4]]
+            out.append(x)
+            continue
+        if not traps.on("assignees"):
+            if t["id"] in seen:
+                continue
+            seen.add(t["id"])
+            x[3] = "; ".join(t["who"])
+        special = t is d["on_hold"] or t is d["blank"]
+        if special and not traps.on("hold_blank"):
+            x[4] = t["col"]
+        elif not special and not traps.on("free_status"):
+            x[4] = t["col"]
+        elif not special and not traps.on("done_spelling") and t["col"] == "Done":
+            x[4] = "Done"
+        out.append(x)
+    return out
+
+
+def variant_note(traps: TrapSet) -> str:
+    """Rosa's note, with the sentences about a switched-off pitfall left out."""
+    status = " ".join(([] if not traps.on("free_status") else ["People type whatever they like in the status box."])
+                      + ([] if not traps.on("hold_blank") else
+                         ["On hold still goes under In progress (we started it, it is just parked) and a blank status "
+                          "means nobody has touched it yet, so Not started."]))
+    return ("From: Rosa Alvarez\nTo: you\nDate: Fri, 11 Sep 2026 07:05\nSubject: board for the Alder Street crew\n\n"
+            "Morning. The crew wants the kitchen board back on the wall - I print it on the black and white "
+            "printer in the trailer, so it has to be one page that opens without the internet. Plain page, no scripts - "
+            "the trailer laptop blocks them.\n\n"
+            + ("Only the Alder Street kitchen. The Hillcrest bathroom is in the same export but that crew has its own "
+               "wall.\n\n" if traps.on("bathroom") else "Only the Alder Street kitchen.\n\n") +
+            "Three columns: Not started, In progress, Done, with how many cards are in each column right on the "
+            "column heading. One card per task"
+            + (" - when two people are on a task the app spits it out twice, but it is still one task.\n\n"
+               if traps.on("assignees") else ".\n\n")
+            + (status + "\n\n" if status else "") +
+            "Anything that is waiting on another task that is not Done yet is blocked. Leave it in its column but "
+            "print the word BLOCKED on the card - colour does not survive our printer. If everything it waits on "
+            "is done, it is not blocked, whatever else it says.\n\n"
+            "Rosa\n")
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_board(d: dict, trap: str) -> str:
+    """index.html from an agent that is right except that it falls for `trap`."""
+    tasks = [dict(t) for t in d["tasks"]]
+    columns = list(COLUMNS)
+    if trap == "free_status":          # grouped on the exact status text; the rest lands in an Other column
+        for t, src in zip(tasks, d["tasks"]):
+            if src is not d["on_hold"] and src is not d["blank"] and t["raw_status"] not in COLUMNS:
+                t["col"] = "Other"
+        columns.append("Other")
+    elif trap == "hold_blank":         # On hold and a blank status given columns of their own
+        for t, src in zip(tasks, d["tasks"]):
+            if src is d["on_hold"]:
+                t["col"] = "On hold"
+            elif src is d["blank"]:
+                t["col"] = "No status"
+        columns += ["On hold", "No status"]
+    elif trap == "assignees":          # one card per export row
+        tasks = [dict(t, who=[w]) for t in tasks for w in t["who"]]
+    elif trap == "done_spelling":      # only the literal word Done counts as done for a dependency
+        by_id = {t["id"]: t for t in d["tasks"]}
+        for t in tasks:
+            t["blocked"] = t["col"] != "Done" and any(by_id[dt["id"]]["raw_status"] != "Done" for dt in t["deps_t"])
+    elif trap == "blocked_in_progress":  # only tasks nobody has started are flagged
+        for t in tasks:
+            t["blocked"] = t["blocked"] and t["col"] == "Not started"
+    elif trap == "bathroom":           # the other job's rows kept
+        tasks += [dict(b, col=RAW_COL[b["raw_status"]], blocked=False) for b in d["bath"]]
+    else:
+        raise KeyError(trap)
+    return board_html(dict(d, tasks=tasks), columns)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "index.html"), mutant_board(d, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(2000):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

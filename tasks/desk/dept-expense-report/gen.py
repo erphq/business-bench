@@ -2,6 +2,9 @@
 """dept-expense-report: a quarter of employee expense lines to spend by department by month, with overruns.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off booth,status --out DIR     # same draw, those pitfalls removed, same answer
+    python gen.py --mutant blank_cc --out DIR            # a deliverable that falls for one trap
 
 Business: a 40-person media agency. The expense tool exports every line with the cost center the employee
 picked; finance reports by department against the annual budgets the CFO set in January.
@@ -27,6 +30,23 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only; build(), set_budgets() and
+# the render-time cost-center draws are identical in every variant, so the answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "cc_format": "cost centers written four ways in the export (the roll-up to departments stays)",
+        "blank_cc": "lines with no cost center, to be charged to the employee's home cost center",
+        "annual_budget": "budgets given as annual figures, to be phased to the quarter",
+        "booth": "the NAB booth coded to Events, with a thread that proposes a split before moving it to Sales - East",
+        "status": "Rejected and Draft lines in the export",
+        "march": "March-dated lines approved in April in the export",
+        "format_noise": "'$1,234.56' text amounts, MM/DD/YYYY dates, a two-line preamble and CRLF endings",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["cc_format", "blank_cc", "annual_budget", "booth", "status", "march", "format_noise"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -271,56 +291,71 @@ out, and expenses dated in March stay in Q1.
 """
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     set_budgets(d)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out, seed)
+        return
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     L, t, q = d["lines"], d["t"], d["q_budget"]
     lead = d["events_lead"]
     booth = next(x for x in L if x["kind"] == "booth")
 
     # ---- workspace
     r = rng(seed + 17)
-    write_csv(os.path.join(ws, "expense_lines_2026-04-01_to_2026-06-30.csv"),
-              ["Report ID", "Line", "Employee", "Expense Date", "Merchant", "Category", "Amount", "Cost Center", "Status"],
-              [[x["report"], x["line"], f"{x['emp']['first']} {x['emp']['last']}", x["date"].strftime("%m/%d/%Y"), x["merchant"],
-                x["cat"], money_str(x["amt"], 1), cc_written(r, x["cc"]) if x["cc"] else "", x["status"]] for x in L],
-              preamble=["Expense lines - approval activity 04/01/2026 to 06/30/2026", ""], crlf=True)
+    if traps.canonical:
+        write_csv(os.path.join(ws, "expense_lines_2026-04-01_to_2026-06-30.csv"),
+                  ["Report ID", "Line", "Employee", "Expense Date", "Merchant", "Category", "Amount", "Cost Center", "Status"],
+                  [[x["report"], x["line"], f"{x['emp']['first']} {x['emp']['last']}", x["date"].strftime("%m/%d/%Y"), x["merchant"],
+                    x["cat"], money_str(x["amt"], 1), cc_written(r, x["cc"]) if x["cc"] else "", x["status"]] for x in L],
+                  preamble=["Expense lines - approval activity 04/01/2026 to 06/30/2026", ""], crlf=True)
+    else:
+        noisy = traps.on("format_noise")
+        write_csv(os.path.join(ws, "expense_lines_2026-04-01_to_2026-06-30.csv"),
+                  ["Report ID", "Line", "Employee", "Expense Date", "Merchant", "Category", "Amount", "Cost Center", "Status"],
+                  export_rows(d, r, traps),
+                  preamble=["Expense lines - approval activity 04/01/2026 to 06/30/2026", ""] if noisy else None, crlf=noisy)
     write_xlsx(os.path.join(ws, "cost_centers.xlsx"), {
         "Cost centers": {"merged_title": "Chart of cost centers - FY2026", "header": ["Code", "Cost center", "Department", "Owner"],
                          "rows": [[c, n, dep, ""] for c, n, dep in CENTERS], "widths": {"B": 22, "C": 14}},
         "People": {"header": ["Employee", "Home cost center", "Title"],
                    "rows": sorted([[f"{e['last']}, {e['first']}", int(e["home"]), e["dept"] + " team"] for e in d["staff"]]),
                    "widths": {"A": 24, "B": 18, "C": 18}}}, creator="Finance")
-    write_text(os.path.join(ws, "budget_note_from_hiroshi.txt"),
-               "Q2 expense report - what I need\n\n"
-               "Spend by department for April, May and June, and a short memo on anyone over budget.\n\n"
-               "Budgets below are the annual expense budgets the partners approved in January. We phase them evenly\n"
-               "through the year.\n\n"
-               + "".join(f"  {k:<11} ${d['annual'][k]:,}\n" for k in DEPTS) +
-               "\nOnly lines that were approved or already reimbursed are spend. Put each expense in the month it was\n"
-               "incurred, not the month it was approved. Q1 is closed, so anything dated March stays out even if it\n"
-               "was approved in April.\n\n"
-               "If someone left the cost center blank, charge it to their home cost center on the People tab.\n\n"
-               "- Hiroshi\n")
-    write_email_thread(os.path.join(ws, "email_thread_nab_booth.txt"), [
-        {"from": f"{lead['first']} {lead['last']} <{lead['first'].lower()}@vantagepointmedia.com>", "to": "Hiroshi Tanaka <hiroshi@vantagepointmedia.com>",
-         "date": "Tue, 21 Apr 2026 10:02", "subject": "NAB booth on my card",
-         "body": (f"The NAB Show booth (${d['booth_amt']:,.2f}, {booth['report']} line {booth['line']}) went through on my card "
-                  "and the tool coded it to Events. The booth was really for the sales team's client meetings. Could we split it "
-                  "half Events, half Sales?")},
-        {"from": "Marcus Reed <marcus@vantagepointmedia.com>", "to": "Hiroshi Tanaka <hiroshi@vantagepointmedia.com>",
-         "date": "Tue, 21 Apr 2026 11:37", "subject": "RE: NAB booth on my card",
-         "body": "A split works for me."},
-        {"from": "Hiroshi Tanaka <hiroshi@vantagepointmedia.com>", "to": f"{lead['first']} {lead['last']}, Marcus Reed",
-         "date": "Wed, 22 Apr 2026 08:15", "subject": "RE: NAB booth on my card",
-         "body": ("No split. Trade shows moved into the Sales budget in January, so the whole booth is Sales - East (3100). "
-                  "I cannot recode it in the tool after reimbursement, so whoever builds the quarterly report please move it by hand.")},
-        {"from": f"{lead['first']} {lead['last']} <{lead['first'].lower()}@vantagepointmedia.com>", "to": "Hiroshi Tanaka",
-         "date": "Wed, 22 Apr 2026 08:40", "subject": "RE: NAB booth on my card", "body": "Understood, thanks."}])
+    if traps.canonical:
+        write_text(os.path.join(ws, "budget_note_from_hiroshi.txt"),
+                   "Q2 expense report - what I need\n\n"
+                   "Spend by department for April, May and June, and a short memo on anyone over budget.\n\n"
+                   "Budgets below are the annual expense budgets the partners approved in January. We phase them evenly\n"
+                   "through the year.\n\n"
+                   + "".join(f"  {k:<11} ${d['annual'][k]:,}\n" for k in DEPTS) +
+                   "\nOnly lines that were approved or already reimbursed are spend. Put each expense in the month it was\n"
+                   "incurred, not the month it was approved. Q1 is closed, so anything dated March stays out even if it\n"
+                   "was approved in April.\n\n"
+                   "If someone left the cost center blank, charge it to their home cost center on the People tab.\n\n"
+                   "- Hiroshi\n")
+    else:
+        write_text(os.path.join(ws, "budget_note_from_hiroshi.txt"), variant_note(d, traps))
+    if traps.on("booth"):
+        write_email_thread(os.path.join(ws, "email_thread_nab_booth.txt"), [
+            {"from": f"{lead['first']} {lead['last']} <{lead['first'].lower()}@vantagepointmedia.com>", "to": "Hiroshi Tanaka <hiroshi@vantagepointmedia.com>",
+             "date": "Tue, 21 Apr 2026 10:02", "subject": "NAB booth on my card",
+             "body": (f"The NAB Show booth (${d['booth_amt']:,.2f}, {booth['report']} line {booth['line']}) went through on my card "
+                      "and the tool coded it to Events. The booth was really for the sales team's client meetings. Could we split it "
+                      "half Events, half Sales?")},
+            {"from": "Marcus Reed <marcus@vantagepointmedia.com>", "to": "Hiroshi Tanaka <hiroshi@vantagepointmedia.com>",
+             "date": "Tue, 21 Apr 2026 11:37", "subject": "RE: NAB booth on my card",
+             "body": "A split works for me."},
+            {"from": "Hiroshi Tanaka <hiroshi@vantagepointmedia.com>", "to": f"{lead['first']} {lead['last']}, Marcus Reed",
+             "date": "Wed, 22 Apr 2026 08:15", "subject": "RE: NAB booth on my card",
+             "body": ("No split. Trade shows moved into the Sales budget in January, so the whole booth is Sales - East (3100). "
+                      "I cannot recode it in the tool after reimbursement, so whoever builds the quarterly report please move it by hand.")},
+            {"from": f"{lead['first']} {lead['last']} <{lead['first'].lower()}@vantagepointmedia.com>", "to": "Hiroshi Tanaka",
+             "date": "Wed, 22 Apr 2026 08:40", "subject": "RE: NAB booth on my card", "body": "Understood, thanks."}])
 
     # ---- reference
     write_csv(os.path.join(ref, "dept_month.csv"), ["department"] + MONTHS + ["q2_total", "q2_budget", "over_under"],
@@ -341,14 +376,17 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
     over_words = r"(\bover\b|\bexceed|\babove\b|\boverr?un|\boverspen[dt]|\bbeyond\b)"
-    write_task_yaml(HERE, {
+    spec = {
         "id": "dept-expense-report", "track": "desk", "category": "reports",
         "title": "Q2 expenses by department against budget",
         "ask": ("Hiroshi wants Q2 expenses by department, month by month, and a note on who went over budget. Build it as "
                 "dept_expenses.xlsx with live formulas and write the memo as memo.md. His note and the booth thread are in "
+                "the folder with the export.\n") if traps.on("booth") else
+               ("Hiroshi wants Q2 expenses by department, month by month, and a note on who went over budget. Build it as "
+                "dept_expenses.xlsx with live formulas and write the memo as memo.md. His note is in "
                 "the folder with the export.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the export writes cost centers four ways ('4200', 'CC-4200', '4200 - Events', 'Events (4200)') and twelve cost centers "
             "roll up to five departments through cost_centers.xlsx; a group-by on the raw column gives neither departments nor "
             "stable groups (check: Marketing Q2 total)",
@@ -365,7 +403,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "(check: total Q2 spend)",
             "amounts are '$1,234.56' text, dates are MM/DD/YYYY and the export has a two-line preamble with CRLF endings "
             "(check: total Q2 spend)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "dept_expenses.xlsx exists", "path": "dept_expenses.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "dept_expenses.xlsx", "min_count": 12},
@@ -389,7 +427,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "text_numbers_present", "name": "memo carries both overrun amounts", "path": "memo.md",
              "numbers": [d["over"]["Sales"], d["over"]["Production"]], "rel_tol": 0.01},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "dept-expense-report", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(out or HERE, spec)
     print(f"seed={seed} lines={len(L)} q2={ {k: t[(k, 'Q2')] for k in DEPTS} } total={t['total']} budget={q} over={d['over']}")
 
 
@@ -408,15 +450,121 @@ def write_naive(d: dict, out: str) -> None:
                "mainly on advertising and the NAB booth.\n")
 
 
+# --------------------------------------------------------------------------- variants
+
+def export_rows(d: dict, r, traps: TrapSet) -> list[list]:
+    """The expense export with the switched-off pitfalls removed. The cost-center spelling is drawn for every
+    line exactly as in the canonical export, kept or not, so the rest of the file does not move."""
+    noisy = traps.on("format_noise")
+    rows = []
+    for x in d["lines"]:
+        cc = x["cc"]
+        if x["kind"] == "booth" and not traps.on("booth"):
+            cc = "3100"                               # coded to Sales - East in the tool
+        written = cc_written(r, cc) if x["cc"] else ""
+        if not traps.on("cc_format") and cc:
+            written = cc
+        if not cc and not traps.on("blank_cc"):
+            written = x["emp"]["home"]                # the tool filled in the home cost center
+        if not traps.on("status") and x["status"] in ("Rejected", "Draft"):
+            continue
+        if not traps.on("march") and x["kind"] == "march":
+            continue
+        rows.append([x["report"], x["line"], f"{x['emp']['first']} {x['emp']['last']}",
+                     x["date"].strftime("%m/%d/%Y") if noisy else x["date"].isoformat(), x["merchant"],
+                     x["cat"], money_str(x["amt"], 1) if noisy else x["amt"], written, x["status"]])
+    return rows
+
+
+def variant_note(d: dict, traps: TrapSet) -> str:
+    """Hiroshi's note, with the sentences about a switched-off pitfall reworded or left out."""
+    if traps.on("annual_budget"):
+        budgets = ("Budgets below are the annual expense budgets the partners approved in January. We phase them evenly\n"
+                   "through the year.\n\n" + "".join(f"  {k:<11} ${d['annual'][k]:,}\n" for k in DEPTS))
+    else:
+        budgets = ("Budgets below are the Q2 expense budgets, already phased from the annual budgets the partners\n"
+                   "approved in January.\n\n" + "".join(f"  {k:<11} ${d['q_budget'][k]:,}\n" for k in DEPTS))
+    rules = ([] if not traps.on("status") else ["Only lines that were approved or already reimbursed are spend."]) + \
+            ["Put each expense in the month it was incurred, not the month it was approved."] + \
+            ([] if not traps.on("march") else ["Q1 is closed, so anything dated March stays out even if it was approved in April."])
+    return ("Q2 expense report - what I need\n\n"
+            "Spend by department for April, May and June, and a short memo on anyone over budget.\n\n"
+            + budgets + "\n" + " ".join(rules) + "\n\n"
+            + ("If someone left the cost center blank, charge it to their home cost center on the People tab.\n\n"
+               if traps.on("blank_cc") else "")
+            + "- Hiroshi\n")
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str, seed: int) -> list[list]:
+    """Lines sheet rows from an agent that is right except that it falls for `trap`."""
+    r = rng(seed + 17)
+    rows = []
+    for x in d["lines"]:
+        written = cc_written(r, x["cc"]) if x["cc"] else ""
+        month = f"{x['date'].year}-{x['date'].month:02d}"
+        cc, dept, count = truth_cc(x), truth_dept(x), counted(x)
+        if trap == "cc_format" and x["cc"] and x["kind"] != "booth":   # only a bare code finds its department
+            cc = written
+            dept = CC_DEPT.get(written, "Unassigned")
+        elif trap == "blank_cc" and not x["cc"]:                       # blank cost centers left unassigned
+            cc, dept = "", "Unassigned"
+        elif trap == "booth" and x["kind"] == "booth":                 # the booth left where the tool coded it
+            cc, dept = x["cc"], CC_DEPT[x["cc"]]
+        elif trap == "status":                                         # every line in the export counted
+            count = x["date"] >= date(2026, 4, 1)
+        elif trap == "march" and x["kind"] == "march":                 # counted in April, when it was approved
+            month, count = "2026-04", x["status"] in ("Approved", "Reimbursed")
+        elif trap == "format_noise" and x["amt"] >= 1000:              # '$1,234.56' fails to parse and drops out
+            continue
+        rows.append([x["line"], x["date"].isoformat(), month, f"{x['emp']['first']} {x['emp']['last']}",
+                     x["merchant"], x["cat"], x["amt"], cc, dept, x["status"], 1 if count else 0])
+    return rows
+
+
+def mutant_memo(rows: list[list], q_budget: dict) -> str:
+    q2 = {k: round(sum(x[6] for x in rows if x[8] == k and x[10] and x[2] in MONTHS), 2) for k in DEPTS}
+    total = round(sum(q2.values()), 2)
+    over = {k: round(q2[k] - q_budget[k], 2) for k in DEPTS}
+    text = f"# Q2 2026 expenses by department\n\nExpense spend for April to June came to ${total:,.2f} across the five departments.\n\n"
+    bad = [k for k in DEPTS if over[k] > 0]
+    for k in bad:
+        text += f"- {k} is over budget by ${over[k]:,.2f}: ${q2[k]:,.2f} against ${q_budget[k]:,.2f}.\n"
+    ok = [k for k in DEPTS if k not in bad]
+    if ok:
+        text += "\n" + ", ".join(ok) + " " + ("is" if len(ok) == 1 else "are") + " within budget.\n"
+    return text
+
+
+def write_mutant(d: dict, trap: str, out: str, seed: int) -> None:
+    rows = mutant_rows(d, trap, seed)
+    budgets = d["annual"]
+    q_budget = d["q_budget"]
+    if trap == "annual_budget":   # the annual figure compared with one quarter's spend
+        budgets = {k: v * 4 for k, v in d["annual"].items()}
+        q_budget = d["annual"]
+    os.makedirs(out, exist_ok=True)
+    note = "Spend by expense date; approved and reimbursed lines only. Q2 budget from Hiroshi's note."
+    write_xlsx(os.path.join(out, "dept_expenses.xlsx"), report_workbook(rows, budgets, note), creator="mutant")
+    write_text(os.path.join(out, "memo.md"), mutant_memo(rows, q_budget))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(800):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 800 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

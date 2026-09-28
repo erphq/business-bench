@@ -3,6 +3,9 @@
 amendments, an unsigned draft amendment and the vendor's renewal email become a renewal summary memo for the owner.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off draft_amendment,vendor_email --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant commencement --out DIR                      # a deliverable that falls for one trap
 
 Business: a group of small coastal inns. The owner is thinking of putting guest Wi-Fi out to bid and wants to know when
 the network services contract ends, the last day to give notice, what it costs per year now, and what happens if
@@ -27,6 +30,23 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only; build() is unchanged.
+TRAPS = TrapSet(
+    switchable={
+        "draft_amendment": "the unsigned draft Amendment 3 (IPTV and a 24-month extension) is in the contracts folder",
+        "vendor_email": "the account manager's email with a wrong renewal date, notice deadline and annual value",
+    },
+    fixed={
+        "commencement": "the initial term runs from the Service Commencement Date, not the Effective Date",
+        "notice_period": "Amendment 2 lengthens the notice period from 90 to 120 days",
+        "amendment_fees": "the current annual value adds Amendment 1's property and Amendment 2's upgrade",
+        "auto_renewal": "the agreement renews automatically for 12 months with increases capped at 4 percent",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["commencement", "notice_period", "amendment_fees", "draft_amendment", "vendor_email", "auto_renewal"]
 
 CUSTOMER = "Saltmarsh Inn Group, LLC"
 VENDOR = "Brightline Hospitality Networks, Inc."
@@ -68,10 +88,16 @@ def long(d: date) -> str:
     return d.strftime("%B %-d, %Y")
 
 
-def emit(seed: int) -> None:
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
     P = d["P"]
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom grader module travels with the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     C = os.path.join(ws, "contracts")
     # ---- MSA
     write_pdf_document(os.path.join(C, "Brightline_MSA_Saltmarsh_executed.pdf"), [
@@ -149,22 +175,25 @@ def emit(seed: int) -> None:
         ("p", f"Signed for Brightline: {P['vendor_signer']}, January 20, 2026. Signed for Customer: {P['owner']}, January 22, 2026."),
     ], font="Courier", base_size=9)
     # ---- Amendment 3 draft
-    write_pdf_document(os.path.join(C, "Amendment_3_DRAFT_for_discussion.pdf"), [
-        ("title", "DRAFT - Amendment No. 3"),
-        ("small", "For discussion only. Not an offer. Not binding unless signed by both parties."),
-        ("p", f"1. Add managed in-room TV (IPTV) at all Properties for a monthly fee of ${d['iptv']:,.2f}."),
-        ("p", f"2. Extend the Initial Term by {words(24)} (24) months."),
-        ("p", "Signed for Brightline: ____________________     Signed for Customer: ____________________"),
-    ], font="Helvetica", base_size=10)
+    if traps.on("draft_amendment"):
+        write_pdf_document(os.path.join(C, "Amendment_3_DRAFT_for_discussion.pdf"), [
+            ("title", "DRAFT - Amendment No. 3"),
+            ("small", "For discussion only. Not an offer. Not binding unless signed by both parties."),
+            ("p", f"1. Add managed in-room TV (IPTV) at all Properties for a monthly fee of ${d['iptv']:,.2f}."),
+            ("p", f"2. Extend the Initial Term by {words(24)} (24) months."),
+            ("p", "Signed for Brightline: ____________________     Signed for Customer: ____________________"),
+        ], font="Helvetica", base_size=10)
     # ---- account manager email
-    write_email_thread(os.path.join(ws, "email_from_brightline.txt"), [
-        {"from": f"{P['am']} <{P['am'].split()[0].lower()}@brightlinehn.com>", "to": f"{P['owner']} <{P['owner'].split()[0].lower()}@saltmarshinns.com>",
-         "date": "Tue, 8 Sep 2026 11:20", "subject": "Your Brightline agreement - renewal coming up",
-         "body": (f"Hi {P['owner'].split()[0]},\n\nHope the summer season was a good one. A quick heads-up that your Brightline agreement comes up for renewal on "
-                  f"{long(AM_RENEW)}. If you'd like to make any changes, we'd need to hear from you by {long(AM_NOTICE)} (90 days before).\n\n"
-                  f"For your planning, your current annual contract value is ${d['base'] * 12:,}. I also attached the IPTV proposal we talked about "
-                  "in the spring in case you'd like to add it at renewal.\n\n"
-                  f"Best,\n{P['am']}\nAccount Manager, Brightline Hospitality Networks")}])
+    if traps.on("vendor_email"):
+        write_email_thread(os.path.join(ws, "email_from_brightline.txt"), [
+            {"from": f"{P['am']} <{P['am'].split()[0].lower()}@brightlinehn.com>", "to": f"{P['owner']} <{P['owner'].split()[0].lower()}@saltmarshinns.com>",
+             "date": "Tue, 8 Sep 2026 11:20", "subject": "Your Brightline agreement - renewal coming up",
+             "body": (f"Hi {P['owner'].split()[0]},\n\nHope the summer season was a good one. A quick heads-up that your Brightline agreement comes up for renewal on "
+                      f"{long(AM_RENEW)}. If you'd like to make any changes, we'd need to hear from you by {long(AM_NOTICE)} (90 days before).\n\n"
+                      f"For your planning, your current annual contract value is ${d['base'] * 12:,}."
+                      + (" I also attached the IPTV proposal we talked about in the spring in case you'd like to add it at renewal."
+                         if traps.on("draft_amendment") else "") + "\n\n"
+                      f"Best,\n{P['am']}\nAccount Manager, Brightline Hospitality Networks")}])
     # ---- owner note
     write_text(os.path.join(ws, "note_from_owner.txt"),
         f"From {P['owner']}:\n\n"
@@ -177,45 +206,22 @@ def emit(seed: int) -> None:
              "notice_days": NOTICE_DAYS, "annual": d["annual"], "monthly": d["monthly"], "am_renew": AM_RENEW.isoformat(), "am_notice": AM_NOTICE.isoformat(),
              "am_annual": d["base"] * 12, "effective_end": (date(2027, 3, 14)).isoformat(), "naive": d["naive"]}
     write_json(os.path.join(ref, "facts.json"), facts)
-    memo = (f"# Renewal summary: Brightline managed Wi-Fi agreement\n\n"
-            f"To: {P['owner']}\nRe: {VENDOR} - Managed Network Services Agreement dated {long(EFFECTIVE)}\n\n"
-            "## Key dates\n\n"
-            f"- **Current term ends: {long(TERM_END)}.** The initial term is 36 months from the Service Commencement Date, which the Go-Live "
-            f"Certificate sets as {long(COMMENCE)} (not the {long(EFFECTIVE)} signing date). Neither signed amendment changes the term.\n"
-            f"- **Last day to give notice of non-renewal: {long(NOTICE_BY)}.** Amendment No. 2 changed the notice period in Section 3.2 from 90 to "
-            f"{NOTICE_DAYS} days before the end of the term. Notice must be in writing and is effective when Brightline receives it (courier or "
-            "certified mail to Brightline, Attn: Contracts, 500 Commerce Way, Suite 210, Burlington, MA 01803).\n\n"
-            "## What we pay now\n\n"
-            f"Current monthly fees total ${d['monthly']:,}, so the current annual value is ${d['annual']:,}:\n\n"
-            "| Property | Monthly fee | Source |\n|---|---|---|\n"
-            f"| The Saltmarsh Inn (1 Gbps) | ${d['upgrade']:,} | Amendment No. 2, from February 1, 2026 |\n"
-            f"| Harbor House | ${d['harbor']:,} | Schedule A |\n"
-            f"| Pelican Lodge | ${d['pelican']:,} | Schedule A |\n"
-            f"| Driftwood Cottages | ${d['driftwood']:,} | Amendment No. 1, from October 1, 2024 |\n"
-            f"| **Total** | **${d['monthly']:,}** | |\n\n"
-            "Amendment No. 3 (managed TV and a 24-month extension) is an unsigned draft and changes nothing.\n\n"
-            "## If we do nothing\n\n"
-            f"The agreement renews automatically for a 12-month renewal term (April 1, 2027 to March 31, 2028), and Brightline may raise the fees "
-            "for the renewal term by up to 4% with at least 60 days' written notice.\n\n"
-            "## Note on Brightline's email\n\n"
-            f"The account manager's September 8 email gives the wrong renewal date, uses the old 90-day notice period and quotes the original "
-            "annual value from before both amendments. The dates and figures above are from the signed documents.\n")
-    write_text(os.path.join(sol, "renewal_summary.md"), memo)
+    write_text(os.path.join(sol, "renewal_summary.md"), memo_text(d))
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "contract-renewal-summary", "track": "desk", "category": "drafting",
         "title": "Renewal summary for the Wi-Fi services contract",
         "ask": (f"{P['owner'].split()[0]} wants a renewal summary of our Brightline Wi-Fi contract before we decide whether to go out to bid; the note in the "
                 "folder says what is needed. Save it as renewal_summary.md.\n"),
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             f"the initial term runs 36 months from the Service Commencement Date on the go-live certificate ({long(COMMENCE)}), not the Effective Date ({long(EFFECTIVE)}), so it ends {long(TERM_END)} (check: term, notice and the vendor's figures)",
             f"Amendment 2 lengthens the non-renewal notice from 90 to 120 days, so notice is due by {long(NOTICE_BY)}; 90 days gives December 31, 2026 and counting from the Effective Date gives mid-December or mid-November (check: term, notice and the vendor's figures)",
             f"the current annual value is ${d['annual']:,} (${d['monthly']:,} a month: Schedule A plus Amendment 1's Driftwood Cottages plus Amendment 2's upgrade); the original schedule gives ${d['naive']['original']:,}, Amendment 1 alone ${d['naive']['amend1_only']:,} (check: current annual value)",
             f"Amendment 3 is an unsigned draft adding IPTV at ${d['iptv']:,} a month and a 24-month extension; counting it gives ${d['naive']['with_draft']:,} (checks: current annual value; term, notice and the vendor's figures)",
             f"the account manager's email gives a {long(AM_RENEW)} renewal, a {long(AM_NOTICE)} notice deadline and ${d['base'] * 12:,} a year; a summary may mention them only as wrong (check: term, notice and the vendor's figures)",
             "the agreement renews automatically for 12-month terms and renewal fees may rise by up to 4 percent (checks: automatic renewal; renewal price cap)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "renewal_summary.md exists", "path": "renewal_summary.md"},
             {"type": "text_numbers_present", "name": "current annual value", "path": "renewal_summary.md", "numbers": [d["annual"]], "rel_tol": 0.00001},
@@ -226,8 +232,94 @@ def emit(seed: int) -> None:
             {"type": "text_sentence_matches", "name": "renewal price cap", "path": "renewal_summary.md",
              "all": [r"(?<![\d.])4\s*(%|percent|per cent)|four percent", r"increas|rais|price|fee|go up|escalat"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "contract-renewal-summary", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(out or HERE, spec)
+
+
+def memo_text(d: dict, trap: str | None = None) -> str:
+    """The renewal summary. With `trap` set, the summary an agent that fell for that one trap would write:
+    every figure follows from its own reading of the documents."""
+    P = d["P"]
+    term_end, notice_days, fees, iptv = TERM_END, NOTICE_DAYS, [d["upgrade"], d["harbor"], d["pelican"], d["driftwood"]], 0
+    term_why = (f"The initial term is 36 months from the Service Commencement Date, which the Go-Live Certificate sets as {long(COMMENCE)} "
+                f"(not the {long(EFFECTIVE)} signing date). Neither signed amendment changes the term.")
+    notice_why = f"Amendment No. 2 changed the notice period in Section 3.2 from 90 to {NOTICE_DAYS} days before the end of the term."
+    draft = "Amendment No. 3 (managed TV and a 24-month extension) is an unsigned draft and changes nothing.\n\n"
+    renew = (f"The agreement renews automatically for a 12-month renewal term (April 1, 2027 to March 31, 2028), and Brightline may raise the fees "
+             "for the renewal term by up to 4% with at least 60 days' written notice.\n\n")
+    email = ("## Note on Brightline's email\n\n"
+             f"The account manager's September 8 email gives the wrong renewal date, uses the old 90-day notice period and quotes the original "
+             "annual value from before both amendments. The dates and figures above are from the signed documents.\n")
+    if trap == "commencement":        # the 36 months counted from the Effective Date
+        term_end = date(2027, 3, 14)
+        term_why = f"The initial term is 36 months from the {long(EFFECTIVE)} Effective Date. Neither signed amendment changes the term."
+    elif trap == "notice_period":     # Section 3.2's 90 days, the amendment's change missed
+        notice_days = OLD_NOTICE_DAYS
+        notice_why = f"Section 3.2 requires notice at least {OLD_NOTICE_DAYS} days before the end of the term."
+        email = email.replace(", uses the old 90-day notice period", "")
+    elif trap == "amendment_fees":    # Amendment 2's upgrade not carried into the fees
+        fees[0] = d["inn"]
+    elif trap == "draft_amendment":   # the unsigned draft read as signed: IPTV added and the term extended
+        iptv = d["iptv"]
+        term_end = date(2029, 3, 31)
+        term_why += " Amendment No. 3 extends the initial term by a further 24 months."
+        term_why = term_why.replace("Neither signed amendment changes the term. ", "Amendments 1 and 2 do not change the term. ")
+        draft = f"Amendment No. 3 adds managed in-room TV at ${iptv:,} a month and extends the term by 24 months.\n\n"
+        renew = renew.replace("(April 1, 2027 to March 31, 2028)", "(April 1, 2029 to March 31, 2030)")
+    elif trap == "vendor_email":      # the account manager's email taken as the facts
+        return (f"# Renewal summary: Brightline managed Wi-Fi agreement\n\n"
+                f"To: {P['owner']}\nRe: {VENDOR} - Managed Network Services Agreement dated {long(EFFECTIVE)}\n\n"
+                "## Key dates\n\n"
+                f"- **Current term ends: {long(AM_RENEW - timedelta(days=1))}.** The agreement comes up for renewal on {long(AM_RENEW)}.\n"
+                f"- **Last day to give notice of non-renewal: {long(AM_NOTICE)}**, 90 days before renewal, in writing to Brightline.\n\n"
+                "## What we pay now\n\n"
+                f"The current annual contract value is ${d['base'] * 12:,}.\n\n"
+                "## If we do nothing\n\n" + renew.rstrip("\n") + "\n")
+    elif trap == "auto_renewal":      # the renewal clause missed: the contract simply ends
+        renew = f"The agreement ends on {long(term_end)} and service stops unless we sign a new contract.\n\n"
+    elif trap is not None:
+        raise KeyError(trap)
+    notice_by = term_end - timedelta(days=notice_days)
+    monthly = sum(fees) + iptv
+    labels = [("The Saltmarsh Inn (1 Gbps)", "Amendment No. 2, from February 1, 2026"), ("Harbor House", "Schedule A"),
+              ("Pelican Lodge", "Schedule A"), ("Driftwood Cottages", "Amendment No. 1, from October 1, 2024")]
+    if fees[0] == d["inn"]:
+        labels[0] = ("The Saltmarsh Inn", "Schedule A")
+    rows = "".join(f"| {n} | ${f:,} | {src} |\n" for (n, src), f in zip(labels, fees))
+    if iptv:
+        rows += f"| Managed TV, all properties | ${iptv:,} | Amendment No. 3 |\n"
+    return (f"# Renewal summary: Brightline managed Wi-Fi agreement\n\n"
+            f"To: {P['owner']}\nRe: {VENDOR} - Managed Network Services Agreement dated {long(EFFECTIVE)}\n\n"
+            "## Key dates\n\n"
+            f"- **Current term ends: {long(term_end)}.** {term_why}\n"
+            f"- **Last day to give notice of non-renewal: {long(notice_by)}.** {notice_why} Notice must be in writing and is effective when "
+            "Brightline receives it (courier or certified mail to Brightline, Attn: Contracts, 500 Commerce Way, Suite 210, Burlington, MA 01803).\n\n"
+            "## What we pay now\n\n"
+            f"Current monthly fees total ${monthly:,}, so the current annual value is ${monthly * 12:,}:\n\n"
+            "| Property | Monthly fee | Source |\n|---|---|---|\n"
+            + rows +
+            f"| **Total** | **${monthly:,}** | |\n\n"
+            + draft +
+            "## If we do nothing\n\n"
+            + renew + email)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "renewal_summary.md"), memo_text(d, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

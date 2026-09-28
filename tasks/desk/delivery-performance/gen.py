@@ -2,6 +2,9 @@
 """delivery-performance: on-time delivery by hub, and why the late ones were late, for a final-mile carrier.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off utc,splits --out DIR     # same draw, those pitfalls removed, same answer
+    python gen.py --mutant utc --out DIR               # a deliverable that falls for one trap
 
 Business: a three-hub furniture and appliance delivery operation. The handhelds stamp every scan in UTC,
 the customer was promised a window in local time, and big items sometimes arrive on two trucks.
@@ -22,6 +25,23 @@ from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only; build() is unchanged.
+TRAPS = TrapSet(
+    switchable={
+        "utc": "scan times stamped in UTC while the promised windows are hub local time",
+        "splits": "split shipments appear as two stop rows under one shipment number",
+        "non_delivered": "attempted, refused and cancelled stops sit in the same file",
+        "reasons": "late reasons typed as free text, some left blank",
+    },
+    fixed={
+        "windows": "on time means inside the promised window, not on the promised day",
+        "rates": "an on-time rate must be reported for every hub",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["windows", "utc", "splits", "non_delivered", "reasons", "rates"]
 
 
 # bizgen.write_xlsx leaves openpyxl's save-time wall clock in docProps/core.xml, so two runs a
@@ -173,7 +193,7 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverables
 
-def report_sheets(data_rows: list[list]) -> dict:
+def report_sheets(data_rows: list[list], with_rate: bool = True) -> dict:
     n = len(data_rows) + 1
     rows = []
     for i, h in enumerate(HUB_NAMES, start=2):
@@ -193,11 +213,13 @@ def report_sheets(data_rows: list[list]) -> dict:
     rows.append([])
     rows.append(["On time means the last piece of the shipment landed inside the promised window, in hub local "
                  "time. Attempted, refused and cancelled stops are not deliveries."])
+    if not with_rate:  # the rate column left off the report
+        rows = [row[:4] for row in rows]
     return {
         "Data": {"header": ["shipment_id", "hub", "promised_window_local", "last_piece_local", "window_end_local",
                             "on_time", "late_reason"], "rows": data_rows,
                  "widths": {"A": 14, "C": 22, "D": 20, "E": 20, "G": 16}},
-        "Report": {"header": ["Hub", "Shipments delivered", "On time", "Late", "On-time %"], "rows": rows,
+        "Report": {"header": ["Hub", "Shipments delivered", "On time", "Late", "On-time %"][:5 if with_rate else 4], "rows": rows,
                    "widths": {"A": 26, "B": 20, "C": 11, "D": 9, "E": 12}},
     }
 
@@ -212,44 +234,37 @@ def clean_rows(d: dict) -> list[list]:
     return out
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom grader module travels with the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     cnt, ont, late, buckets, tot = d["cnt"], d["ont"], d["late"], d["buckets"], d["tot"]
 
     # ---- workspace ----
     rows = []
-    for s in d["stops"]:
-        sh = s["sh"]
-        rows.append([s["stop"], sh["id"], sh["hub"], sh["cust"], sh["item"], s["pieces"],
-                     date_variant(sh["day"], sum(ord(c) for c in s["stop"]) % 2), sh["wlabel"],
-                     s["utc"].strftime("%Y-%m-%dT%H:%M:%SZ"), s["status"],
-                     sh.get("reason", "") if s["seq"] == len(sh["stops"]) - 1 else ""])
+    if traps.canonical:
+        for s in d["stops"]:
+            sh = s["sh"]
+            rows.append([s["stop"], sh["id"], sh["hub"], sh["cust"], sh["item"], s["pieces"],
+                         date_variant(sh["day"], sum(ord(c) for c in s["stop"]) % 2), sh["wlabel"],
+                         s["utc"].strftime("%Y-%m-%dT%H:%M:%SZ"), s["status"],
+                         sh.get("reason", "") if s["seq"] == len(sh["stops"]) - 1 else ""])
+    else:
+        rows = variant_rows(d, traps)
     write_csv(os.path.join(ws, "deliveries_august_2026.csv"),
               ["Stop ID", "Shipment", "Hub", "Customer", "Item", "Pieces", "Promised date", "Promised window",
                "Scanned at", "Stop status", "Late reason"], rows,
               preamble=["Final mile - stop scans", "08/01/2026 - 08/31/2026"], bom=True)
-    write_text(os.path.join(ws, "dispatch_notes.txt"),
-               "Reading the stop file (please read this before you start)\n"
-               "\n"
-               "Scanned at is what the handheld sends, and the handheld talks UTC. Our hubs do not: in August\n"
-               "Portland runs seven hours behind UTC, Denver six, Austin five. The promised window is what the\n"
-               "customer was told, in their own time.\n"
-               "\n"
-               "Windows: AM is 08:00 to 12:00, PM is 12:00 to 17:00, All day is 08:00 to 17:00, and the rest are\n"
-               "written out. A delivery is on time if it is in the window - the day alone is not good enough, that\n"
-               "is the whole argument we keep having with the retailers.\n"
-               "\n"
-               "Big items go out on two trucks. Both stops carry the same shipment number. It is one delivery to\n"
-               "the customer and it is only on time if the last piece is in the window.\n"
-               "\n"
-               "Attempted, refused and cancelled stops are not deliveries. Leave them out of the percentage.\n"
-               "\n"
-               "The drivers type the late reason however they like. We report five reasons - weather, mechanical,\n"
-               "customer, address, route volume - and everything else, including the blanks, is not recorded.\n")
+    write_text(os.path.join(ws, "dispatch_notes.txt"), dispatch_notes(traps))
 
     # ---- reference ----
     write_csv(os.path.join(ref, "hub_performance.csv"), ["hub", "delivered", "on_time", "late", "on_time_rate"],
@@ -266,13 +281,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
     # ---- reference solution ----
     stable_xlsx(os.path.join(sol, "delivery.xlsx"), report_sheets(clean_rows(d)), creator="reference")
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "delivery-performance", "track": "desk", "category": "reports",
         "title": "On-time delivery by hub, and why the late ones were late",
         "ask": ("I need August's on-time delivery by hub and a breakdown of why the late ones were late. Save it as "
                 "delivery.xlsx with live formulas. Dispatch's notes explain how the stop file reads.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the promise is a window inside the day (AM, PM, All day, 13:00-15:00), so comparing dates alone marks "
             "hours-late deliveries as on time (checks: Portland on time; on-time rates per hub)",
             "every scan is stamped in UTC while the windows are hub local time (Portland -7, Denver -6, Austin -5 in "
@@ -288,7 +303,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "(check: weather delays)",
             "the on-time percentage is graded as a fraction or a percentage, but it must be there for every hub "
             "(check: on-time rates per hub)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "delivery.xlsx exists", "path": "delivery.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "delivery.xlsx", "min_count": 12},
@@ -303,7 +318,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "expected": tot["delivered"], "rel_tol": 0.001, "near_text": "total"},
             {"type": "custom", "name": "on-time rates per hub", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "delivery-performance", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(out or HERE, spec)
     print(f"seed={seed} shipments={len(d['shipments'])} stop_rows={len(d['stops'])} delivered={tot['delivered']}")
     print("delivered:", cnt, "on time:", ont, "late:", late)
     print("rates:", d["rate"], "all:", tot["rate"])
@@ -324,15 +343,117 @@ def write_naive(d: dict, out: str) -> None:
     stable_xlsx(os.path.join(out, "delivery.xlsx"), report_sheets(rows), creator="naive")
 
 
+def dispatch_notes(traps: TrapSet) -> str:
+    """How the stop file reads. With every trap on this is exactly the canonical note; a paragraph about a
+    pitfall that was switched off is reworded so it does not send the agent looking for it."""
+    utc = ("Scanned at is what the handheld sends, and the handheld talks UTC. Our hubs do not: in August\n"
+           "Portland runs seven hours behind UTC, Denver six, Austin five. The promised window is what the\n"
+           "customer was told, in their own time.\n"
+           if traps.on("utc") else
+           "Scanned at is hub local time. The promised window is what the\n"
+           "customer was told, in their own time.\n")
+    splits = ("Big items go out on two trucks. Both stops carry the same shipment number. It is one delivery to\n"
+              "the customer and it is only on time if the last piece is in the window.\n\n") if traps.on("splits") else ""
+    nd = ("Attempted, refused and cancelled stops are not deliveries. Leave them out of the percentage.\n\n"
+          if traps.on("non_delivered") else "")
+    reasons = ("The drivers type the late reason however they like. We report five reasons - weather, mechanical,\n"
+               "customer, address, route volume - and everything else, including the blanks, is not recorded.\n"
+               if traps.on("reasons") else
+               "The late reason is already one of the five we report - weather, mechanical, customer, address,\n"
+               "route volume - or Not recorded.\n")
+    return ("Reading the stop file (please read this before you start)\n"
+            "\n"
+            + utc +
+            "\n"
+            "Windows: AM is 08:00 to 12:00, PM is 12:00 to 17:00, All day is 08:00 to 17:00, and the rest are\n"
+            "written out. A delivery is on time if it is in the window - the day alone is not good enough, that\n"
+            "is the whole argument we keep having with the retailers.\n"
+            "\n"
+            + splits + nd + reasons)
+
+
+def variant_rows(d: dict, traps: TrapSet) -> list[list]:
+    """The stop file with the switched-off pitfalls removed: scans in hub local time, one row per shipment
+    (the last piece, pieces summed), only delivered stops, late reasons as the bucket names."""
+    rows = []
+    for s in d["stops"]:
+        sh = s["sh"]
+        last = s["seq"] == len(sh["stops"]) - 1
+        if not traps.on("splits") and not last:
+            continue
+        if not traps.on("non_delivered") and s["status"] != "Delivered":
+            continue
+        pieces = sum(x["pieces"] for x in sh["stops"]) if not traps.on("splits") else s["pieces"]
+        scan = s["utc"].strftime("%Y-%m-%dT%H:%M:%SZ") if traps.on("utc") else s["local"].strftime("%Y-%m-%d %H:%M")
+        reason = sh.get("reason", "") if last else ""
+        if not traps.on("reasons") and last:
+            reason = sh["bucket"]
+        rows.append([s["stop"], sh["id"], sh["hub"], sh["cust"], sh["item"], pieces,
+                     date_variant(sh["day"], sum(ord(c) for c in s["stop"]) % 2), sh["wlabel"],
+                     scan, s["status"], reason])
+    return rows
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    """Data rows from an agent that is right except that it falls for `trap`."""
+    if trap in ("windows", "utc", "reasons", "rates"):
+        out = []
+        for s in sorted(d["delivered"], key=lambda x: x["id"]):
+            day0 = datetime(s["day"].year, s["day"].month, s["day"].day)
+            end, start = day0 + timedelta(minutes=s["wend"]), day0 + timedelta(minutes=s["wstart"])
+            last = s["stops"][-1]["local"]
+            on_time, bucket = s["on_time"], s["bucket"]
+            if trap == "windows":     # on time if it came on the promised day
+                on_time = 1 if last.date() == s["day"] else 0
+            elif trap == "utc":       # the UTC stamp read as local time
+                last = s["stops"][-1]["utc"]
+                on_time = 1 if start <= last <= end else 0
+            elif trap == "reasons":   # only reasons typed exactly as a bucket name are counted in it
+                bucket = s.get("reason", "") if not on_time else ""
+            out.append([s["id"], s["hub"], f"{s['day'].isoformat()} {s['wlabel']}", last.strftime("%Y-%m-%d %H:%M"),
+                        end.strftime("%Y-%m-%d %H:%M"), on_time, bucket])
+        return out
+    if trap in ("splits", "non_delivered"):
+        out = []
+        for s in sorted(d["stops"], key=lambda x: x["stop"]):
+            sh = s["sh"]
+            if trap == "splits" and sh["status"] != "Delivered":
+                continue
+            if trap == "non_delivered" and s["seq"] != len(sh["stops"]) - 1:
+                continue
+            day0 = datetime(sh["day"].year, sh["day"].month, sh["day"].day)
+            end, start = day0 + timedelta(minutes=sh["wend"]), day0 + timedelta(minutes=sh["wstart"])
+            last = s["local"]
+            on_time = 1 if start <= last <= end else 0
+            out.append([sh["id"], sh["hub"], f"{sh['day'].isoformat()} {sh['wlabel']}", last.strftime("%Y-%m-%d %H:%M"),
+                        end.strftime("%Y-%m-%d %H:%M"), on_time, sh["bucket"] if not on_time else ""])
+        return out
+    raise KeyError(trap)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    stable_xlsx(os.path.join(out, "delivery.xlsx"), report_sheets(mutant_rows(d, trap), with_rate=trap != "rates"),
+                creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(600):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 600 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)
