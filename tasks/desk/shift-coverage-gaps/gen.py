@@ -2,6 +2,9 @@
 """shift-coverage-gaps: uncovered operator-hours per day for an answering service's published week.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-knobs
+    python gen.py --rules 8 --trap-count split=4+cancelled=3 --out DIR    # a harder task; the answer moves
+    python gen.py --describe [--rules N ...]                                # content counts of this draw
 
 Business: Lanternline Answering Service in Omaha, a 24/7 after-hours answering service for doctors, vets and
 trades. The scheduling app exports the published week one row per shift; the operations manager keeps the
@@ -27,6 +30,18 @@ from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.knobs import Knob, KnobSet, add_knob_args, describe_json, output_dirs, parse_knob_args, record  # noqa: E402
+
+# Difficulty knobs (docs/authoring-knobs.md). The defaults are the published task and leave every draw as it was.
+KNOBS = KnobSet(
+    Knob("rules", "rules", default=5, levels=(5, 6, 7, 8),
+         changes="time bands in the minimum-staffing table (5 at the default); each added band splits one with a "
+                 "different minimum", measure="rules"),
+    Knob("trap_count.split", "trap-count", default=2, levels=(2, 3, 4),
+         changes="split shifts written as one row with two pieces", measure="trap_instances.split"),
+    Knob("trap_count.cancelled", "trap-count", default=1, levels=(1, 2, 3),
+         changes="shifts still on the schedule whose comment says they were cancelled", measure="trap_instances.cancelled"),
+)
 
 WEEK = [date(2026, 10, 5) + timedelta(days=i) for i in range(7)]
 EXPORT_DAYS = [date(2026, 10, 4)] + WEEK
@@ -41,11 +56,20 @@ WEEKEND_MIX = {"OVN1": (1, 2), "OVN2": (0, 1), "EARLY": (0, 1), "DAY": (1, 2), "
 SPLIT_DAYS = {date(2026, 10, 7): "SPLIT", date(2026, 10, 10): "SPLIT2"}
 CANCEL_DAY = date(2026, 10, 8)
 TRAINEE_DAY = date(2026, 10, 9)
+# Minimum-staffing tables with more bands (knob "rules"): each level splits one more band of the published table.
+BAND_SETS = {
+    6: [(0, 6, 2, 2, 2), (6, 8, 3, 2, 2), (8, 12, 2, 3, 3), (12, 17, 3, 3, 3), (17, 22, 4, 3, 3), (22, 24, 3, 3, 3)],
+    7: [(0, 6, 2, 2, 2), (6, 8, 3, 2, 2), (8, 12, 2, 3, 3), (12, 17, 3, 3, 3), (17, 20, 4, 3, 3), (20, 22, 4, 4, 3),
+        (22, 24, 3, 3, 3)],
+    8: [(0, 4, 2, 2, 2), (4, 6, 3, 2, 2), (6, 8, 3, 2, 2), (8, 12, 2, 3, 3), (12, 17, 3, 3, 3), (17, 20, 4, 3, 3),
+        (20, 22, 4, 4, 3), (22, 24, 3, 3, 3)],
+}
+CANCEL_NOTES = ["CANCELLED - no-show, nobody picked it up", "CANCELLED - family emergency, open shift not filled"]
 
 
-def need(d: date, slot: int) -> int:
+def need(d: date, slot: int, bands=BANDS) -> int:
     h = slot / 2
-    for a, b, wk, sat, sun in BANDS:
+    for a, b, wk, sat, sun in bands:
         if a <= h < b:
             return sun if d.weekday() == 6 else sat if d.weekday() == 5 else wk
     raise ValueError
@@ -57,7 +81,12 @@ def fmt_t(h: float) -> str:
     return datetime(2026, 1, 1, hh, mm).strftime("%I:%M %p").lstrip("0")
 
 
-def build(seed: int) -> dict:
+def span(s: dict) -> tuple[datetime, datetime]:
+    base = datetime.combine(s["date"], datetime.min.time())
+    return base + timedelta(hours=TYPES[s["type"]][0][0]), base + timedelta(hours=TYPES[s["type"]][-1][1])
+
+
+def build(seed: int, knobs=KNOBS.defaults()) -> dict:
     r = rng(seed)
     staff = [f"{f} {l}" for f, l in people(r, 20)]
     shifts = []
@@ -86,10 +115,32 @@ def build(seed: int) -> dict:
         p = min(ok, key=lambda p: (free_at[p], staff.index(p))) if r.random() < 0.5 else r.choice(ok)
         s["who"] = p
         free_at[p] = end
-    return {"shifts": shifts, "staff": staff}
+    if knobs.canonical:
+        return {"shifts": shifts, "staff": staff, "bands": BANDS, "split_days": list(SPLIT_DAYS), "cancel_days": [CANCEL_DAY]}
+
+    # knob-only content, drawn from its own stream after every default draw (none of this runs at the defaults)
+    rk = rng(seed + 3_000_017)
+    split_days = list(SPLIT_DAYS)
+    cancel_days = [CANCEL_DAY]
+    for x in sorted(rk.sample([x for x in WEEK if x not in SPLIT_DAYS], knobs.trap_count("split") - 2)):
+        s = {"date": x, "type": rk.choice(["SPLIT", "SPLIT2"]), "pos": "Operator", "comment": "split"}
+        start, end = span(s)
+        # someone with 8 hours' rest either side of the split day
+        ok = [p for p in staff if all(e + timedelta(hours=8) <= start or end + timedelta(hours=8) <= b
+                                      for b, e in (span(t) for t in shifts if t["who"] == p))]
+        s["who"] = rk.choice(ok)
+        shifts.append(s)
+        split_days.append(x)
+    for i, x in enumerate(sorted(rk.sample([x for x in WEEK if x != CANCEL_DAY], knobs.trap_count("cancelled") - 1))):
+        cands = [s for s in shifts if s["date"] == x and s["type"] in ("SWING", "EVE") and s["pos"] == "Operator" and not s["comment"]]
+        rk.choice(cands)["comment"] = CANCEL_NOTES[i]
+        cancel_days.append(x)
+    shifts.sort(key=lambda s: (s["date"], TYPES[s["type"]][0][0], s["type"]))
+    return {"shifts": shifts, "staff": staff, "bands": BAND_SETS.get(knobs["rules"], BANDS), "split_days": split_days,
+            "cancel_days": cancel_days}
 
 
-def coverage(shifts, cancelled=False, split_whole=False, clip_midnight=False, trainees=False) -> dict:
+def coverage(shifts, cancelled=False, split_whole=False, clip_midnight=False, trainees=False, bands=BANDS) -> dict:
     staffed = {d: [0] * 48 for d in WEEK}
     for s in shifts:
         if s["comment"].startswith("CANCELLED") and not cancelled:
@@ -108,27 +159,28 @@ def coverage(shifts, cancelled=False, split_whole=False, clip_midnight=False, tr
                 if day in staffed:
                     staffed[day][int((k % 24) * 2)] += 1
                 k += 0.5
-    return {d: sum(max(0, need(d, i) - staffed[d][i]) * 0.5 for i in range(48)) for d in WEEK}
+    return {d: sum(max(0, need(d, i, bands) - staffed[d][i]) * 0.5 for i in range(48)) for d in WEEK}
 
 
 def acceptable(d: dict) -> bool:
-    truth = coverage(d["shifts"])
+    bands = d["bands"]
+    truth = coverage(d["shifts"], bands=bands)
     if sum(1 for v in truth.values() if v > 0) < 5:
         return False
-    variants = {"cancelled": (coverage(d["shifts"], cancelled=True), [CANCEL_DAY]),
-                "split": (coverage(d["shifts"], split_whole=True), list(SPLIT_DAYS)),
-                "clip": (coverage(d["shifts"], clip_midnight=True), [WEEK[0]]),
-                "trainee": (coverage(d["shifts"], trainees=True), [TRAINEE_DAY])}
+    variants = {"cancelled": (coverage(d["shifts"], cancelled=True, bands=bands), d["cancel_days"]),
+                "split": (coverage(d["shifts"], split_whole=True, bands=bands), d["split_days"]),
+                "clip": (coverage(d["shifts"], clip_midnight=True, bands=bands), [WEEK[0]]),
+                "trainee": (coverage(d["shifts"], trainees=True, bands=bands), [TRAINEE_DAY])}
     for name, (cov, days) in variants.items():
         if any(cov[x] == truth[x] for x in days):
             return False
     # a netting reading (a day's required hours minus its staffed hours) differs on most days
-    if sum(1 for x in WEEK if netting(d["shifts"])[x] != truth[x]) < 4:
+    if sum(1 for x in WEEK if netting(d["shifts"], bands)[x] != truth[x]) < 4:
         return False
     return True
 
 
-def netting(shifts) -> dict:
+def netting(shifts, bands=BANDS) -> dict:
     staffed = {d: [0] * 48 for d in WEEK}
     for s in shifts:
         if s["comment"].startswith("CANCELLED") or s["pos"] == "Trainee":
@@ -140,19 +192,29 @@ def netting(shifts) -> dict:
                 if day in staffed:
                     staffed[day][int((k % 24) * 2)] += 1
                 k += 0.5
-    return {d: max(0.0, sum(need(d, i) - staffed[d][i] for i in range(48)) * 0.5) for d in WEEK}
+    return {d: max(0.0, sum(need(d, i, bands) - staffed[d][i] for i in range(48)) * 0.5) for d in WEEK}
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
-    truth = coverage(d["shifts"])
+def counts(d: dict, knobs) -> dict:
+    """--describe: what this draw contains."""
+    sh = d["shifts"]
+    return {"rows": len(sh), "entities": len(d["staff"]), "rules": len(d["bands"]), "documents": 3,
+            "trap_instances": {"split": sum(len(TYPES[s["type"]]) > 1 for s in sh),
+                               "cancelled": sum(s["comment"].startswith("CANCELLED") for s in sh),
+                               "trainee": sum(s["pos"] == "Trainee" for s in sh)}}
+
+
+def emit(seed: int, naive_dir: str | None, knobs=KNOBS.defaults(), out: str | None = None) -> None:
+    d = build(seed, knobs)
+    bands = d["bands"]
+    truth = coverage(d["shifts"], bands=bands)
     header = ["date", "uncovered_hours"]
     if naive_dir:
         os.makedirs(naive_dir, exist_ok=True)
-        nv = coverage(d["shifts"], cancelled=True, split_whole=True, clip_midnight=True, trainees=True)
+        nv = coverage(d["shifts"], cancelled=True, split_whole=True, clip_midnight=True, trainees=True, bands=bands)
         write_csv(os.path.join(naive_dir, "coverage_gaps.csv"), header, [[x.isoformat(), f"{nv[x]:g}"] for x in WEEK])
         return
-    ws, ref, sol = task_dirs(HERE)
+    here, (ws, ref, sol) = output_dirs(HERE, out, task_dirs)
 
     rows = []
     for s in d["shifts"]:
@@ -163,10 +225,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
                      text, f"{hours:.2f}", "" if s["comment"] == "split" else s["comment"]])
     write_csv(os.path.join(ws, "published_schedule_2026-10-04_to_2026-10-11.csv"),
               ["Employee", "Position", "Date", "Day", "Shift", "Paid Hours", "Comments"], rows, bom=True, crlf=True)
-    bands = [[f"{a:02d}:00", f"{b:02d}:00" if b < 24 else "24:00 (midnight)", wk, sat, sun] for a, b, wk, sat, sun in BANDS]
+    band_rows = [[f"{a:02d}:00", f"{b:02d}:00" if b < 24 else "24:00 (midnight)", wk, sat, sun] for a, b, wk, sat, sun in bands]
     write_xlsx(os.path.join(ws, "minimum_coverage.xlsx"), {"Minimum operators": {
         "merged_title": "Minimum operators on the phones", "header": ["From", "To", "Mon-Fri", "Saturday", "Sunday"],
-        "rows": bands, "widths": {"A": 10, "B": 18}}}, creator="Gwen Foster")
+        "rows": band_rows, "widths": {"A": 10, "B": 18}}}, creator="Gwen Foster")
     write_text(os.path.join(ws, "note_from_gwen.txt"),
                "Coverage check before the week of October 5\n"
                "\n"
@@ -192,13 +254,23 @@ def emit(seed: int, naive_dir: str | None) -> None:
     ref_rows = [[x.isoformat(), f"{truth[x]:g}"] for x in WEEK]
     write_csv(os.path.join(ref, "coverage_gaps.csv"), header, ref_rows)
     write_csv(os.path.join(sol, "coverage_gaps.csv"), header, ref_rows)
-    write_json(os.path.join(ref, "notes.json"), {
+    notes = {
         "variants": {k: {x.isoformat(): v for x, v in cov.items()} for k, cov in (
-            ("cancelled_counted", coverage(d["shifts"], cancelled=True)), ("split_as_one_block", coverage(d["shifts"], split_whole=True)),
-            ("overnight_clipped_at_midnight", coverage(d["shifts"], clip_midnight=True)), ("trainee_counted", coverage(d["shifts"], trainees=True)))},
-        "cancel_day": CANCEL_DAY.isoformat(), "split_days": [x.isoformat() for x in SPLIT_DAYS], "trainee_day": TRAINEE_DAY.isoformat()})
+            ("cancelled_counted", coverage(d["shifts"], cancelled=True, bands=bands)),
+            ("split_as_one_block", coverage(d["shifts"], split_whole=True, bands=bands)),
+            ("overnight_clipped_at_midnight", coverage(d["shifts"], clip_midnight=True, bands=bands)),
+            ("trainee_counted", coverage(d["shifts"], trainees=True, bands=bands)))},
+        "cancel_day": CANCEL_DAY.isoformat(), "split_days": [x.isoformat() for x in d["split_days"]], "trainee_day": TRAINEE_DAY.isoformat()}
+    if len(d["cancel_days"]) > 1:
+        notes["cancel_days"] = [x.isoformat() for x in d["cancel_days"]]
+    write_json(os.path.join(ref, "notes.json"), notes)
+    # With more planted instances the trap sentences name them all (the sentences are unchanged at the defaults).
+    cancel_text = (f"a shift on {CANCEL_DAY.isoformat()} still appears with its hours but the comment says it was cancelled "
+                   if len(d["cancel_days"]) == 1 else
+                   f"shifts on {', '.join(x.isoformat() for x in sorted(d['cancel_days']))} still appear with their hours but the comments "
+                   "say they were cancelled ")
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "shift-coverage-gaps", "track": "desk", "category": "spreadsheet",
         "title": "How short the published week is against minimum coverage",
         "ask": ("Before next week's schedule goes live, Gwen wants to know how many hours we're short each day against "
@@ -209,9 +281,9 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "night shifts ('10:00 PM - 6:00 AM', '11:00 PM - 7:00 AM', '5:00 PM - 1:30 AM') cover the next calendar "
             "day; Sunday 4 October's night shifts are the only cover early on Monday 5 October, and cutting shifts at "
             "midnight or dropping the Sunday rows leaves Monday badly short (check: uncovered hours per day)",
-            f"a shift on {CANCEL_DAY.isoformat()} still appears with its hours but the comment says it was cancelled "
+            f"{cancel_text}"
             "with no cover (check: uncovered hours per day)",
-            f"split shifts on {', '.join(x.isoformat() for x in SPLIT_DAYS)} are one row with two pieces; reading "
+            f"split shifts on {', '.join(x.isoformat() for x in sorted(d['split_days']))} are one row with two pieces; reading "
             "first start to last end puts someone on the phones through the middle of the day "
             "(check: uncovered hours per day)",
             f"a trainee shadows the {TRAINEE_DAY.isoformat()} evening and does not count, while supervisors do "
@@ -230,21 +302,27 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "csv_values_match", "name": "uncovered hours per day", "path": "coverage_gaps.csv", "ref": "coverage_gaps.csv",
              "key": "date", "columns": ["uncovered_hours"], "numeric": True, "tolerance": 0.01, "min_accuracy": 1.0},
         ],
-    })
+    }
+    write_task_yaml(here, record(spec, "shift-coverage-gaps", seed, knobs))
     print(f"seed={seed} shifts={len(d['shifts'])}")
     print("truth:", {x.isoformat(): v for x, v in truth.items()})
-    print("naive:", {x.isoformat(): v for x, v in coverage(d["shifts"], True, True, True, True).items()})
+    print("naive:", {x.isoformat(): v for x, v in coverage(d["shifts"], True, True, True, True, bands).items()})
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_knob_args(ap, KNOBS)
     a = ap.parse_args()
+    knobs = parse_knob_args(a, KNOBS)
     for attempt in range(500):
-        d_ = build(a.seed * 1000 + attempt)
+        d_ = build(a.seed * 1000 + attempt, knobs)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 500 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    if a.describe:
+        print(describe_json("shift-coverage-gaps", a.seed * 1000 + attempt, knobs, counts(d_, knobs)))
+        raise SystemExit(0)
+    emit(a.seed * 1000 + attempt, a.naive, knobs, a.out)
