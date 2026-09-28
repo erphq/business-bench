@@ -230,3 +230,49 @@ null agent, and six negative controls, each of which must fail the checks it tar
 | receive everything as shipped | receipts and refusals |
 | edit each invoice to the PO and receipt, then validate it | invoice lines as billed; the `edit_billed_amounts` breach |
 | enter every invoice in the inbox | one entry per invoice, duplicate not entered |
+
+## 5. Belief revision: `freight-accrual-revision`
+
+Built and validated in `tasks/process/freight-accrual-revision/`. Facts change between turns, and the agent must
+retract or adjust everything it derived from the old facts, and nothing else. Omar Haddad, staff accountant, books
+inbound-freight accruals for September 2026 (record to report, clerical band, two turns).
+
+| Turn | Business date | Request (Priya Raman, controller) |
+|---|---|---|
+| 1 | Wed 30 Sep | book September's inbound freight accruals from the receipts in the ERP and the carrier's rate schedule |
+| 2 | Fri 2 Oct | make sure Wednesday's accruals still hold, bring them up to date, and say what changed in `freight-accruals.md` |
+
+**Turn 1: derived work.** One entry per September receipt from a vendor on Miami Valley Freight Lines' schedule
+(debit 5100, credit 2100, dated 30 September, the receipt number in the memo): the receipt's value at PO prices times
+the lane rate (FRT-1.1 to FRT-1.3). Receipts from prepaid vendors carry no accrual, and the August schedule in the same
+inbox is not the month's. At seed 0 that is eight accruals over twelve September receipts; lane rates, the planted
+receipt's value and the corrected rate come from the seed.
+
+**Between the turns: the facts change** (Thursday 1 October, the simulator):
+
+| Change | How it arrives | Correct handling |
+|---|---|---|
+| The warehouse reverses the Great Lakes receipt of 29 September: the pallet was addressed to a neighbour | a scheduled receipt reversal (`receipt_reversals` in the world file, `erp/bberp/sim.py`); no message | reverse its accrual dated 30 September and book nothing (FRT-1.1, FRT-2.1) |
+| MVF corrects lane L3's September rate (Coastline Seals) | an email in the accounting inbox | reverse every lane-L3 accrual dated 30 September and rebook it at the corrected rate (FRT-1.2, FRT-2.1, FRT-2.2) |
+
+**Turn 2: revision.** Every other accrual stays exactly as booked (FRT-2.3); a correction is a reversal, never a
+difference entry beside the old one (FRT-2.2).
+
+**Checks.** September freight per receipt (every September receipt, zero where nothing is owed) and per account;
+the set of receipts whose Wednesday accrual was reversed after the change, which must be exactly the changed ones;
+`audit_forbidden` `stale_derived_entry`; control ties; master data; and two sentences in the note.
+
+**The audit rule.** `stale_derived_entry` (`bench/process_rules.py`) flags a journal entry the agent prepared from a
+source that was revised afterwards and that is still live at grading (submitted, approved or posted, not reversed).
+An entry names its source in its memo, note or line memos. Revised sources are every receipt reversed during the
+episode plus the revisions the check declares (`revised: '{truth:revised_sources}'`, here the lane-L3 receipts). A
+difference entry posted beside a stale original does not clear it. Entries prepared after the revision are left to
+the state checks. Unit tests: `tests/test_belief_revision.py` (violating logs, a clean log, whole-token references).
+
+| Negative control | Checks it must fail |
+|---|---|
+| `neg:ignore_revision`: turn 2 changes nothing | freight per receipt and per account; accruals reversed; the stale-entry breach |
+| `neg:reverse_everything`: reverse every accrual and rebook from scratch | accruals reversed (the unchanged ones are not to be touched) |
+| `neg:adjust_without_reversal`: post the difference beside each old entry | accruals reversed; the stale-entry breach (the net figures are right) |
+| `neg:reverse_in_october`: reversals dated the day they are made | freight per receipt and per account (September keeps the old figures) |
+| `neg:august_rates`: turn 1 uses last month's schedule | freight per receipt and per account |

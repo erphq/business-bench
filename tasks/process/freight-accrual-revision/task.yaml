@@ -1,0 +1,64 @@
+id: freight-accrual-revision
+track: process
+family: record-to-report
+band: clerical
+title: Book September's freight accruals, then revise them when the facts behind them change
+summary: |
+  Omar Haddad, staff accountant, books one inbound-freight accrual per September receipt from the carrier's rate
+  schedule. Between the turns the warehouse reverses one receipt as a receiving error and the carrier corrects one
+  lane's rate. On Friday he must retract or adjust every accrual derived from those two facts, by reversal dated in
+  September, and leave every other accrual standing (a belief-revision task: derived work must follow its sources).
+agent_user: omar.haddad
+negative_controls:
+  neg:ignore_revision: [freight accrued per September receipt, September freight totals, accruals reversed after the facts changed, no accrual left standing on a revised source]
+  neg:reverse_everything: [accruals reversed after the facts changed]
+  neg:adjust_without_reversal: [accruals reversed after the facts changed, no accrual left standing on a revised source]
+  neg:reverse_in_october: [freight accrued per September receipt, September freight totals]
+  neg:august_rates: [freight accrued per September receipt, September freight totals]
+checks:
+  - type: state_values
+    name: freight accrued per September receipt
+    projection: accruals_by_receipt
+    key: receipt
+    columns: [accrued]
+    numeric: true
+    tolerance: 0.011
+    cites: [FRT-1.1, FRT-1.2, FRT-1.3, FRT-2.1]
+  - type: state_set
+    name: accounts the accruals touch
+    projection: september_freight
+    key: account
+    cites: [FRT-1.3]
+  - type: state_values
+    name: September freight totals
+    projection: september_freight
+    key: account
+    columns: [net]
+    numeric: true
+    tolerance: 0.05
+    cites: [FRT-1.2, FRT-1.3, FRT-2.1, JNL-1.1]
+  - type: state_set
+    name: accruals reversed after the facts changed
+    projection: accruals_reversed
+    key: receipt
+    cites: [FRT-2.1, FRT-2.2, FRT-2.3]
+  - type: audit_forbidden
+    name: no accrual left standing on a revised source
+    rule: stale_derived_entry
+    revised: '{truth:revised_sources}'
+    cites: [FRT-2.1, FRT-2.2]
+  - type: ledger_ties
+    name: control accounts tie to their subledgers
+  - type: state_unchanged
+    name: master data untouched
+    tables: [vendors, items, price_agreements, budgets, approval_limits, bank_accounts]
+  - type: text_sentence_matches
+    name: note names the reversed receipt
+    path: freight-accruals.md
+    all: ['{truth:reversed_receipt}', '(?i)revers|misdeliver|receiving error|not ours']
+    cites: [FRT-2.4]
+  - type: text_sentence_matches
+    name: note names the corrected lane rate
+    path: freight-accruals.md
+    all: ['(?i)\bL3\b|Portland|Coastline', '{truth:corrected_rate_re}']
+    cites: [FRT-2.4]
