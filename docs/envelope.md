@@ -157,9 +157,9 @@ Not established without a panel of systems and more tasks:
 * **Prior forecasts are guesses.** Before any variant has been run, the per-trap effects come from a
   stated prior. The first scored forecast mainly tests that prior. The Brier skill against the "traps do
   not matter" baseline is the number to watch.
-* **Pre-registration strength.** `run.py` does not record a start time, so a normal run is timed from
-  file mtimes. Copying or archiving can reset those. Having `run.py` write `started_utc` into
-  `result.json` would make the check robust. That is a proposed change, not yet made.
+* **Pre-registration strength.** `run.py` records `started_utc` in each `result.json`, and the check
+  uses it. Attempts from before that change are timed from file mtimes, which copying or archiving
+  can reset.
 * **Synthetic output is not evidence.** Anything produced by `simulate` shows only that the pipeline
   works.
 
