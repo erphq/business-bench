@@ -3,6 +3,9 @@
 conveyor e-stop export and the first aid log become a formal incident report on the company template.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off swapped_names,urgent_care --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant action_changes --out DIR                 # a deliverable that falls for one trap
 
 Business: a regional distribution center. An order picker's hand was caught at a conveyor merge while
 clearing a jammed tote. The safety manager needs the formal report for the insurer and the file.
@@ -23,11 +26,31 @@ Traps (each caught by a check, see task.yaml):
     cause is under investigation                                          (checks: no fault language; cause under investigation)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, sys
 from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "time_sources": "notes and witnesses give three different times, and the e-stop export holds a Line 1 stop "
+                        "that afternoon and a Line 3 test stop the day before (off: every account gives the e-stop "
+                        "minute and the two decoy stops are gone)",
+        "swapped_names": "the supervisor's notes swap the injured picker and the co-worker who hit the e-stop",
+        "urgent_care": "the notes say first aid only, no doctor; the first aid log records an urgent care referral",
+        "action_changes": "the guard's due date and the refresher's owner change later in the thread (off: the safety "
+                          "manager's list and the supervisor's notes carry the final owner and date from the start)",
+        "fault_language": "the notes call the picker careless and not paying attention",
+        "export_noise": "a week of unrelated conveyor events, a preamble, BOM and CRLF in the e-stop export, and "
+                        "another pick module first aid entry the same morning",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["time_sources", "swapped_names", "urgent_care", "action_changes", "fault_language", "export_noise"]
 
 COMPANY = "Silverline Logistics"
 SITE = "Tacoma distribution center"
@@ -110,131 +133,13 @@ def hm(t: datetime) -> str:
     return t.strftime("%H:%M")
 
 
-def emit(seed: int) -> None:
-    d = build(seed)
+def report_text(d: dict) -> str:
+    """The reference report."""
     P = d["P"]
-    ws, ref, sol = task_dirs(HERE)
     inj, cow, loa, sup, saf, fac, fa = (P[k] for k in ["injured", "coworker", "loader", "supervisor", "safety", "facilities", "first_aider"])
     hand = d["hand"]
     day_long = "Thursday 3 September 2026"
-
-    # ---- supervisor's rushed notes (wrong on who, when, treatment and blame) ----
-    write_text(os.path.join(ws, "shift_notes_thu_Bshift.txt"), f"""B shift notes - Thu 9/3 - {sup['first']}
-
-- staffing short 2 on pick module, borrowed {loa['first']} from dock for 2hrs
-- L1 induct jammed again after lunch, maint cleared it
-
-INCIDENT L3 merge, about 2:15
-{cow['full']} got their hand caught at the L3 merge clearing a stuck tote. {inj['first']} ({inj['last']}) saw it and hit the e-stop.
-honestly wasn't paying attention, reached in without stopping the line. careless.
-first aid only, no doctor needed. bandaged in the break room.
-line down ~30 min, I reset it.
-
-follow ups
-- {loa['first']} to run a jam clearing refresher for pick module since they know the merge
-- need a guard on that merge, ask facilities
-- signs at the merges "STOP LINE BEFORE CLEARING"
-- write it up for {saf['first']}
-""")
-
-    # ---- witness statements ----
-    write_email_thread(os.path.join(ws, "witness_statements.txt"), [
-        {"from": f"{cow['full']} <{cow['first'].lower()}.{cow['last'].lower()}@silverlinelogistics.com>",
-         "to": f"{sup['full']}; {saf['full']}", "date": "Thu, 3 Sep 2026 16:48", "subject": "what I saw on line 3",
-         "body": (f"{sup['first']} asked me to write down what happened.\n\n"
-                  f"I was picking at the station next to the Line 3 merge, around 2:30 I think, right before my break. "
-                  f"A tote got stuck at the merge and {inj['first']} reached in to free it. The tote moved and {inj['first']}'s "
-                  f"{hand} hand got pinched between the tote and the side rail. {inj['first']} yelled and I hit the e-stop "
-                  f"on the post by the merge. The line stopped right away.\n\n"
-                  f"I walked {inj['first']} to the break room and {fa['first']} did first aid. There was a lot of blood from "
-                  f"two fingers. I was not hurt.\n\n{cow['first']}")},
-        {"from": f"{loa['full']} <{loa['first'][0].lower()}{loa['last'].lower()}@silverlinelogistics.com>",
-         "to": f"{saf['full']}", "date": "Fri, 4 Sep 2026 07:12", "subject": "RE: statement - L3",
-         "body": (f"I was bringing empties to the L3 merge a little after two when the line stopped. {cow['first']} had hit "
-                  f"the e-stop and {inj['full']} was holding their {hand} hand. That merge jams a few times a week and "
-                  f"people clear it by hand, there is nothing stopping you reaching in. I did not see the moment it "
-                  f"happened.\n\n{loa['first']}")},
-    ])
-
-    # ---- safety manager thread (authoritative on rules, time source, owners) ----
-    g1, gd, td, sd = d["guard_first_due"], d["guard_due"], d["training_due"], d["signage_due"]
-    write_email_thread(os.path.join(ws, "email_thread_safety.txt"), [
-        {"from": f"{saf['full']} <{saf['first'].lower()}.{saf['last'].lower()}@silverlinelogistics.com>",
-         "to": f"{sup['full']}; {fac['full']}", "date": "Fri, 4 Sep 2026 09:05", "subject": "Line 3 incident - formal report",
-         "body": (f"Thanks for the notes and statements. The insurer wants the formal report on our template "
-                  f"(incident_report_template.md) and it goes in the file, so a few rules:\n\n"
-                  f"1. Time of the incident: use the Line 3 e-stop in the conveyor controller export. That is the only "
-                  f"clock we have. Everybody's memory is a guess.\n"
-                  f"2. Who was injured and how they were treated comes from the first aid log. {fa['first']} filled it in "
-                  f"at the time.\n"
-                  f"3. No blame and no fault in the report. Do not write that anyone was careless or not paying attention. "
-                  f"We have not done the root cause yet; say the cause is under investigation (RCA review is Tuesday).\n"
-                  f"4. Every corrective action needs one owner and a due date.\n\n"
-                  f"Proposed actions:\n"
-                  f"- fixed guard at the Line 3 merge pinch point - {fac['full']} - due {g1.strftime('%-d %b')}\n"
-                  f"- jam-clearing (stop the line first) refresher for all pick module staff - {loa['full']} - due {td.strftime('%-d %b')}\n"
-                  f"- STOP LINE BEFORE CLEARING signs at every merge - {sup['full']} - due {sd.strftime('%-d %b')}\n\n"
-                  f"{saf['first']}")},
-        {"from": f"{fac['full']} <{fac['first'].lower()}.{fac['last'].lower()}@silverlinelogistics.com>",
-         "to": f"{saf['full']}", "date": "Fri, 4 Sep 2026 11:40", "subject": "RE: Line 3 incident - formal report",
-         "body": (f"The guard panel has to come from the conveyor vendor. Earliest install is {gd.strftime('%A %-d %B')}, "
-                  f"so please put that as the due date for the guard. Until then I have taped off the merge.\n\n{fac['first']}")},
-        {"from": f"{saf['full']} <{saf['first'].lower()}.{saf['last'].lower()}@silverlinelogistics.com>",
-         "to": f"{sup['full']}; {fac['full']}", "date": "Fri, 4 Sep 2026 13:22", "subject": "RE: Line 3 incident - formal report",
-         "body": (f"OK, guard due {gd.strftime('%-d %B')} then. One more change: I will run the jam-clearing refresher myself, "
-                  f"not {loa['first']}. {loa['first']} is on the dock and it needs to come from safety. Same due date. "
-                  f"Signs stay with {sup['first']}.\n\n{saf['first']}")},
-    ])
-
-    # ---- first aid log (authoritative for who and treatment) ----
-    cast_first = {v["first"] for v in P.values()}; cast_last = {v["last"] for v in P.values()}
-    other = []
-    while len(other) < 4:
-        f, l = person(d["r"])
-        if f not in cast_first and l not in cast_last and (f, l) not in other:
-            other.append((f, l))
-    aid_rows = [
-        ["2026-08-27", "10:15", f"{other[0][0]} {other[0][1]}", "Returns", "Paper cut, right index finger", "Cleaned, plaster", "No", fa["full"]],
-        ["2026-09-01", "07:40", f"{other[1][0]} {other[1][1]}", "Dock", "Dust in eye", "Eyewash station", "No", fa["full"]],
-        ["2026-09-03", "09:52", f"{other[2][0]} {other[2][1]}", "Pick module", "Small cut, box cutter, left thumb", "Cleaned, plaster", "No", fa["full"]],
-        ["2026-09-03", hm(d["t_aid"]), inj["full"], "Pick module",
-         f"Laceration and bruising, {hand} hand (ring and little finger), caught at L3 merge",
-         f"Cleaned, pressure dressing, ice. Possible fracture. Referred to urgent care ({d['urgent_care']}), driven by {sup['first']} {sup['last']} at {hm(d['t_depart'])}",
-         "Yes - urgent care", fa["full"]],
-        ["2026-09-04", "12:30", f"{other[3][0]} {other[3][1]}", "Dock", "Pulled muscle, lower back, lifting", "Ice pack, rest", "No", fa["full"]],
-    ]
-    write_csv(os.path.join(ws, "first_aid_log_2026.csv"), ["Date", "Time", "Name", "Department", "Injury", "Treatment given", "Referred for medical treatment", "First aider"], aid_rows)
-
-    write_csv(os.path.join(ws, "conveyor_estop_events_wk36.csv"), ["Timestamp (local)", "Line", "Device", "Event", "Source", "Note"],
-              estop_rows(d), preamble=["ConveyorLogix event export", "Site: TAC-DC1  Range: 2026-08-31 to 2026-09-05"], bom=True, crlf=True)
-
-    write_text(os.path.join(ws, "incident_report_template.md"), f"""# {COMPANY} - Incident Report
-
-## 1. Summary
-
-## 2. Date, time and location
-
-## 3. People involved
-- Injured person (name, role):
-- Witnesses:
-- Supervisor on shift:
-
-## 4. Injury and treatment
-
-## 5. Sequence of events
-
-## 6. Immediate actions taken
-
-## 7. Cause
-
-## 8. Corrective actions
-| Action | Owner | Due date |
-|---|---|---|
-
-## 9. Prepared by / date
-""")
-
-    # ---- reference solution: a plain, careful report ----
+    gd, td, sd = d["guard_due"], d["training_due"], d["signage_due"]
     t = d["t_estop"]
     t12 = t.strftime("%-I:%M %p")
     report = f"""# {COMPANY} - Incident Report
@@ -280,7 +185,167 @@ The cause is under investigation. A root cause review is scheduled for Tuesday 8
 ## 9. Prepared by / date
 Prepared for {saf['full']}, Safety Manager, 4 September 2026.
 """
-    write_text(os.path.join(sol, "incident_report.md"), report)
+    return report
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
+    d = build(seed)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    P = d["P"]
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom corrective-action check travels with the copy
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
+    inj, cow, loa, sup, saf, fac, fa = (P[k] for k in ["injured", "coworker", "loader", "supervisor", "safety", "facilities", "first_aider"])
+    hand = d["hand"]
+    day_long = "Thursday 3 September 2026"
+    t12s = d["t_estop"].strftime("%-I:%M")   # the e-stop minute as people say it, used when `time_sources` is off
+    if traps.on("swapped_names"):
+        who = f"{cow['full']} got their hand caught at the L3 merge clearing a stuck tote. {inj['first']} ({inj['last']}) saw it and hit the e-stop."
+    else:
+        who = f"{inj['full']} got their hand caught at the L3 merge clearing a stuck tote. {cow['first']} ({cow['last']}) saw it and hit the e-stop."
+    blame = "honestly wasn't paying attention, reached in without stopping the line. careless.\n" if traps.on("fault_language") else ""
+    aid = ("first aid only, no doctor needed. bandaged in the break room." if traps.on("urgent_care") else
+           "first aid in the break room, then referred to urgent care.")
+    trainer = loa if traps.on("action_changes") else saf
+    since = " since they know the merge" if traps.on("action_changes") else ""
+
+    # ---- supervisor's rushed notes (wrong on who, when, treatment and blame) ----
+    write_text(os.path.join(ws, "shift_notes_thu_Bshift.txt"), f"""B shift notes - Thu 9/3 - {sup['first']}
+
+- staffing short 2 on pick module, borrowed {loa['first']} from dock for 2hrs
+- L1 induct jammed again after lunch, maint cleared it
+
+INCIDENT L3 merge, {"about 2:15" if traps.on("time_sources") else "at " + t12s}
+{who}
+{blame}{aid}
+line down ~30 min, I reset it.
+
+follow ups
+- {trainer['first']} to run a jam clearing refresher for pick module{since}
+- need a guard on that merge, ask facilities
+- signs at the merges "STOP LINE BEFORE CLEARING"
+- write it up for {saf['first']}
+""")
+
+    # ---- witness statements ----
+    write_email_thread(os.path.join(ws, "witness_statements.txt"), [
+        {"from": f"{cow['full']} <{cow['first'].lower()}.{cow['last'].lower()}@silverlinelogistics.com>",
+         "to": f"{sup['full']}; {saf['full']}", "date": "Thu, 3 Sep 2026 16:48", "subject": "what I saw on line 3",
+         "body": (f"{sup['first']} asked me to write down what happened.\n\n"
+                  f"I was picking at the station next to the Line 3 merge, {'around 2:30 I think' if traps.on('time_sources') else 'at ' + t12s}, right before my break. "
+                  f"A tote got stuck at the merge and {inj['first']} reached in to free it. The tote moved and {inj['first']}'s "
+                  f"{hand} hand got pinched between the tote and the side rail. {inj['first']} yelled and I hit the e-stop "
+                  f"on the post by the merge. The line stopped right away.\n\n"
+                  f"I walked {inj['first']} to the break room and {fa['first']} did first aid. There was a lot of blood from "
+                  f"two fingers. I was not hurt.\n\n{cow['first']}")},
+        {"from": f"{loa['full']} <{loa['first'][0].lower()}{loa['last'].lower()}@silverlinelogistics.com>",
+         "to": f"{saf['full']}", "date": "Fri, 4 Sep 2026 07:12", "subject": "RE: statement - L3",
+         "body": (f"I was bringing empties to the L3 merge {'a little after two' if traps.on('time_sources') else 'at ' + t12s} when the line stopped. {cow['first']} had hit "
+                  f"the e-stop and {inj['full']} was holding their {hand} hand. That merge jams a few times a week and "
+                  f"people clear it by hand, there is nothing stopping you reaching in. I did not see the moment it "
+                  f"happened.\n\n{loa['first']}")},
+    ])
+
+    # ---- safety manager thread (authoritative on rules, time source, owners) ----
+    g1, gd, td, sd = d["guard_first_due"], d["guard_due"], d["training_due"], d["signage_due"]
+    changes = traps.on("action_changes")
+    listed_due, listed_trainer = (g1, loa) if changes else (gd, saf)
+    thread = [
+        {"from": f"{saf['full']} <{saf['first'].lower()}.{saf['last'].lower()}@silverlinelogistics.com>",
+         "to": f"{sup['full']}; {fac['full']}", "date": "Fri, 4 Sep 2026 09:05", "subject": "Line 3 incident - formal report",
+         "body": (f"Thanks for the notes and statements. The insurer wants the formal report on our template "
+                  f"(incident_report_template.md) and it goes in the file, so a few rules:\n\n"
+                  f"1. Time of the incident: use the Line 3 e-stop in the conveyor controller export. That is the only "
+                  f"clock we have. Everybody's memory is a guess.\n"
+                  f"2. Who was injured and how they were treated comes from the first aid log. {fa['first']} filled it in "
+                  f"at the time.\n"
+                  f"3. No blame and no fault in the report. Do not write that anyone was careless or not paying attention. "
+                  f"We have not done the root cause yet; say the cause is under investigation (RCA review is Tuesday).\n"
+                  f"4. Every corrective action needs one owner and a due date.\n\n"
+                  f"Proposed actions:\n"
+                  f"- fixed guard at the Line 3 merge pinch point - {fac['full']} - due {listed_due.strftime('%-d %b')}\n"
+                  f"- jam-clearing (stop the line first) refresher for all pick module staff - {listed_trainer['full']} - due {td.strftime('%-d %b')}\n"
+                  f"- STOP LINE BEFORE CLEARING signs at every merge - {sup['full']} - due {sd.strftime('%-d %b')}\n\n"
+                  f"{saf['first']}")},
+        {"from": f"{fac['full']} <{fac['first'].lower()}.{fac['last'].lower()}@silverlinelogistics.com>",
+         "to": f"{saf['full']}", "date": "Fri, 4 Sep 2026 11:40", "subject": "RE: Line 3 incident - formal report",
+         "body": (f"The guard panel has to come from the conveyor vendor. Earliest install is {gd.strftime('%A %-d %B')}, "
+                  + ("so please put that as the due date for the guard. " if changes else "which is the date on your list. ")
+                  + f"Until then I have taped off the merge.\n\n{fac['first']}")},
+    ]
+    if changes:
+        thread.append(
+        {"from": f"{saf['full']} <{saf['first'].lower()}.{saf['last'].lower()}@silverlinelogistics.com>",
+         "to": f"{sup['full']}; {fac['full']}", "date": "Fri, 4 Sep 2026 13:22", "subject": "RE: Line 3 incident - formal report",
+         "body": (f"OK, guard due {gd.strftime('%-d %B')} then. One more change: I will run the jam-clearing refresher myself, "
+                  f"not {loa['first']}. {loa['first']} is on the dock and it needs to come from safety. Same due date. "
+                  f"Signs stay with {sup['first']}.\n\n{saf['first']}")})
+    write_email_thread(os.path.join(ws, "email_thread_safety.txt"), thread)
+
+    # ---- first aid log (authoritative for who and treatment) ----
+    cast_first = {v["first"] for v in P.values()}; cast_last = {v["last"] for v in P.values()}
+    other = []
+    while len(other) < 4:
+        f, l = person(d["r"])
+        if f not in cast_first and l not in cast_last and (f, l) not in other:
+            other.append((f, l))
+    aid_rows = [
+        ["2026-08-27", "10:15", f"{other[0][0]} {other[0][1]}", "Returns", "Paper cut, right index finger", "Cleaned, plaster", "No", fa["full"]],
+        ["2026-09-01", "07:40", f"{other[1][0]} {other[1][1]}", "Dock", "Dust in eye", "Eyewash station", "No", fa["full"]],
+        ["2026-09-03", "09:52", f"{other[2][0]} {other[2][1]}", "Pick module", "Small cut, box cutter, left thumb", "Cleaned, plaster", "No", fa["full"]]
+        if traps.on("export_noise") else None,
+        ["2026-09-03", hm(d["t_aid"]), inj["full"], "Pick module",
+         f"Laceration and bruising, {hand} hand (ring and little finger), caught at L3 merge",
+         f"Cleaned, pressure dressing, ice. Possible fracture. Referred to urgent care ({d['urgent_care']}), driven by {sup['first']} {sup['last']} at {hm(d['t_depart'])}",
+         "Yes - urgent care", fa["full"]],
+        ["2026-09-04", "12:30", f"{other[3][0]} {other[3][1]}", "Dock", "Pulled muscle, lower back, lifting", "Ice pack, rest", "No", fa["full"]],
+    ]
+    aid_rows = [x for x in aid_rows if x is not None]
+    write_csv(os.path.join(ws, "first_aid_log_2026.csv"), ["Date", "Time", "Name", "Department", "Injury", "Treatment given", "Referred for medical treatment", "First aider"], aid_rows)
+
+    ev = estop_rows(d)   # always drawn, so the rest of the draw is unchanged
+    if not traps.on("time_sources"):   # the Line 1 stop that afternoon and the Line 3 test stop the day before
+        ev = [x for x in ev if not (x[1] == "L1" and x[3].startswith("ESTOP")) and x[5] != "maint test"]
+    noisy = traps.on("export_noise")
+    if not noisy:                      # only Line 3 and e-stop events: the unrelated jams and overloads dropped
+        ev = [x for x in ev if x[1] == "L3" or x[4] != "AUTO"]
+    write_csv(os.path.join(ws, "conveyor_estop_events_wk36.csv"), ["Timestamp (local)", "Line", "Device", "Event", "Source", "Note"],
+              ev, preamble=["ConveyorLogix event export", "Site: TAC-DC1  Range: 2026-08-31 to 2026-09-05"] if noisy else None,
+              bom=noisy, crlf=noisy)
+
+    write_text(os.path.join(ws, "incident_report_template.md"), f"""# {COMPANY} - Incident Report
+
+## 1. Summary
+
+## 2. Date, time and location
+
+## 3. People involved
+- Injured person (name, role):
+- Witnesses:
+- Supervisor on shift:
+
+## 4. Injury and treatment
+
+## 5. Sequence of events
+
+## 6. Immediate actions taken
+
+## 7. Cause
+
+## 8. Corrective actions
+| Action | Owner | Due date |
+|---|---|---|
+
+## 9. Prepared by / date
+""")
+
+    # ---- reference solution: a plain, careful report ----
+    write_text(os.path.join(sol, "incident_report.md"), report_text(d))
+    t = d["t_estop"]
 
     actions = [
         {"action": "guard at the Line 3 merge", "keyword": r"\bguard", "owner": fac["last"], "due": gd.isoformat(), "due_regex": date_regex(gd),
@@ -293,21 +358,21 @@ Prepared for {saf['full']}, Safety Manager, 4 September 2026.
         "incident_time": hm(t), "injured": inj["full"], "coworker_who_pressed_estop": cow["full"], "urgent_care": d["urgent_care"],
         "actions": actions})
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "incident-report", "track": "desk", "category": "drafting",
         "title": "Formal incident report for the Line 3 injury",
         "ask": (f"Turn last Thursday's Line 3 injury into a formal incident report on our template for the insurer and the file. "
                 f"The notes, statements and logs are all in the folder, and {saf['first']}'s emails say how the report has to be done. "
                 f"Save it as incident_report.md.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"three accounts give three times (notes 'about 2:15', one witness 'around 2:30', the other 'a little after two'); the safety manager makes the Line 3 e-stop in the controller export the clock of record ({hm(t)}), and that export also holds a Line 1 jam stop at {hm(d['decoy_l1'])} the same afternoon and a Line 3 test stop at {hm(d['decoy_prev'])} the day before (check: incident time from the e-stop log)",
             f"the supervisor's notes swap the injured picker ({inj['full']}) with the co-worker who pressed the e-stop ({cow['full']}); the first aid log and both witness emails name the picker (check: injured person named)",
             "the notes say first aid only and no doctor; the first aid log records a referral to urgent care (check: urgent care referral)",
             f"the corrective actions change inside the thread: facilities moves the guard from {g1.isoformat()} to {gd.isoformat()}, and the safety manager takes the refresher training off {loa['full']}, the loader named in the notes and in the safety manager's first email (check: corrective actions with owners and due dates)",
             "the notes call the picker careless and not paying attention; the safety manager forbids fault language and wants the cause reported as under investigation (checks: no fault language; cause under investigation)",
             "the e-stop export carries a week of unrelated jam and overload events with a two-line preamble, a BOM and CRLF endings; the first aid log has another pick module entry the same morning (check: incident time from the e-stop log)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "incident_report.md exists", "path": "incident_report.md"},
             {"type": "text_sentence_matches", "name": "incident time from the e-stop log", "path": "incident_report.md",
@@ -327,8 +392,74 @@ Prepared for {saf['full']}, Safety Manager, 4 September 2026.
              "phrases": ["paying attention", "careless", "inattenti", "at fault", "was to blame", "her fault", "his fault"]},
             {"type": "custom", "name": "corrective actions with owners and due dates", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "incident-report", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def _sub(text: str, old: str, new: str) -> str:
+    assert old in text, old
+    return text.replace(old, new)
+
+
+def wrong_time(text: str, d: dict, when: str, why: str) -> str:
+    """The report with the incident time taken from the wrong source: `when` (HH:MM, 24h) replaces the e-stop time."""
+    t = d["t_estop"]
+    w = datetime.strptime(when, "%H:%M")
+    text = _sub(text, f"- Time: {hm(t)} ({t.strftime('%-I:%M %p')}), the time the Line 3 e-stop was pressed according to the "
+                      "conveyor controller export. Witness estimates ranged from a little after 2:00 to 2:30 PM; the controller "
+                      "log is the record.", f"- Time: {when} ({w.strftime('%-I:%M %p')}), {why}.")
+    text = _sub(text, f"1. At {hm(t - timedelta(seconds=41))} the controller recorded a jam at the Line 3 merge.",
+                "1. A tote jammed at the Line 3 merge.")
+    return _sub(text, f"3. At {hm(t)} ", f"3. At {when} ")
+
+
+def mutant_report(d: dict, trap: str) -> str:
+    """The reference report with the one mistake an agent that fell for `trap` would make."""
+    text, P = report_text(d), d["P"]
+    inj, cow, loa, saf, fac = P["injured"], P["coworker"], P["loader"], P["safety"], P["facilities"]
+    if trap == "time_sources":      # the Line 1 e-stop at the time the notes give
+        text = wrong_time(text, d, hm(d["decoy_l1"]), "when the e-stop was pressed according to the conveyor controller export")
+    elif trap == "export_noise":    # the same-morning pick module first aid entry taken as the incident
+        text = wrong_time(text, d, "09:52", "when first aid was logged for the pick module injury")
+    elif trap == "swapped_names":   # the notes' version of who was hurt and who hit the e-stop
+        text = text.replace(inj["full"], "\0").replace(cow["full"], inj["full"]).replace("\0", cow["full"])
+    elif trap == "urgent_care":     # the notes' "first aid only, no doctor"
+        text = _sub(text, " received first aid on site and was referred to urgent care.", " received first aid on site.")
+        text = _sub(text, f" {inj['full']} was referred to urgent care ({d['urgent_care']}) and was driven there by "
+                          f"{P['supervisor']['full']} at {hm(d['t_depart'])}.", " First aid only; no doctor was needed.")
+        text = _sub(text, "- First aid given and referral to urgent care.", "- First aid given.")
+    elif trap == "action_changes":  # the safety manager's first list, before the thread changed it
+        text = _sub(text, f"| {fac['full']} | {d['guard_due'].isoformat()} |", f"| {fac['full']} | {d['guard_first_due'].isoformat()} |")
+        text = _sub(text, f"| {saf['full']} | {d['training_due'].isoformat()} |", f"| {loa['full']} | {d['training_due'].isoformat()} |")
+    elif trap == "fault_language":  # the notes' blame carried into the cause
+        text = _sub(text, "The cause is under investigation. A root cause review is scheduled for Tuesday 8 September 2026.",
+                    f"The picker was not paying attention: {inj['full']} reached in to clear the jam without stopping the line.")
+    else:
+        raise KeyError(trap)
+    return text
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "incident_report.md"), mutant_report(d, trap))
+
+
+# Grader-blind mutant, kept out of MUTANTS (see docs/authoring-traps.md):
+#   swapped_names - a report naming the co-worker as the injured person passes "injured person named" (and every
+#   other check). text_sentence_matches needs one sentence with the true picker's surname and an injury word and
+#   none of the `none` patterns; the template's witness line ("<picker> (..., pressed the e-stop); <loader> (...
+#   did not see the moment of injury)") is such a sentence, and the per-sentence `none` guard never looks at the
+#   sentences that call the co-worker injured.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "swapped_names"}
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    emit(a.seed, parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS), a.out, a.mutant)

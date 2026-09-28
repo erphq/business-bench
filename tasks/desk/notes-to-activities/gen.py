@@ -2,6 +2,9 @@
 """notes-to-activities: a sign shop's spreadsheet account notes split into one CRM activity per dated note.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off separators,date_formats --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant initials --out DIR                     # a deliverable that falls for one trap
 
 Business: Northstar Sign Co. makes storefront, monument and wayfinding signs for local businesses. Sales has kept an
 accounts tracker in a workbook since last November, with every call, email and site visit typed into one Notes cell.
@@ -28,6 +31,27 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves. The draws in render_cell
+# are made as before and only what is written into the cell changes, so the pins in `checks` do not move.
+TRAPS = TrapSet(
+    switchable={
+        "separators": "entries separated by new lines, blank lines, ' | ' or ' ; ', some wrapping onto an undated "
+                      "second line (off: one entry per line, no wrapped lines)",
+        "date_formats": "entry dates in eight spellings, most without a year (off: every entry dated YYYY-MM-DD)",
+        "initials": "initials typed JM, jm, J.M., (KT) or left off, and MB for a deactivated user (off: every entry "
+                    "carries the Pipedrive owner's initials, JM style)",
+        "empty_notes": "three accounts with an empty Notes cell (off: those accounts are not in the tracker)",
+    },
+    fixed={
+        "install_date": "some bodies mention a later install date that is not an activity (it is part of the note text)",
+        "type_keywords": "Type comes from the keyword table",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["separators", "date_formats", "install_date", "initials", "type_keywords", "empty_notes"]
 
 HEADER = ["Account ID", "Organization", "Activity Date", "Type", "Owner Email", "Note"]
 USERS = [("Jason Miller", "JM", "jason.miller@northstarsigns.com", "Active"),
@@ -100,8 +124,9 @@ def owner_of(acct: dict, note: dict) -> str:
     return EMAIL[note["initials"] or acct["rep"]]
 
 
-def render_cell(r, acct: dict) -> tuple[str, list]:
-    """Returns the Notes cell text and, per note, how it was written (for pins)."""
+def render_cell(r, acct: dict, traps: TrapSet = TRAPS) -> tuple[str, list]:
+    """Returns the Notes cell text and, per note, how it was written (for pins). The draws are the same for every
+    trap setting and `meta` always describes the canonical cell, so the pins do not depend on the switches."""
     notes = list(acct["notes"])
     if r.random() < 0.4:
         notes.reverse()                                       # some reps type newest first
@@ -114,6 +139,12 @@ def render_cell(r, acct: dict) -> tuple[str, list]:
         ini = nt["initials"]
         ini_txt = "" if not ini else r.choice([ini, ini.lower(), f"{ini[0]}.{ini[1]}.", ini])
         layout = r.randrange(4)
+        canon_ini = ini_txt
+        if not traps.on("date_formats"):
+            dt = nt["date"].isoformat()
+        if not traps.on("initials"):
+            ini = nt["initials"] or acct["rep"]
+            ini_txt = "SC" if ini == "MB" else ini
         if not ini:
             entry = f"{dt} - {nt['body']}"
         elif layout == 0:
@@ -124,33 +155,49 @@ def render_cell(r, acct: dict) -> tuple[str, list]:
             entry = f"{ini_txt} {dt} {nt['body']}"
         else:
             entry = f"({dt} {ini_txt}) {nt['body']}"
+        wrapped = False
         if r.random() < 0.2:
-            entry += "\n   " + r.choice(["they want it before the grand opening", "follow up after the board meets",
-                                         "owner prefers texts", "need the landlord sign-off first"])
+            more = r.choice(["they want it before the grand opening", "follow up after the board meets",
+                             "owner prefers texts", "need the landlord sign-off first"])
+            wrapped = True
+            if traps.on("separators"):
+                entry += "\n   " + more
         parts.append(entry)
-        meta.append({"date": nt["date"], "style": style, "wrapped": "\n   " in entry, "ini": ini_txt})
+        meta.append({"date": nt["date"], "style": style, "wrapped": wrapped, "ini": canon_ini})
     seps = [r.choice(["\n", " | ", " ; ", "\n\n"]) for _ in parts[1:]]
+    for m, sep in zip(meta[1:], seps):
+        m["sep"] = sep
+    if not traps.on("separators"):
+        seps = ["\n" for _ in seps]
     cell = parts[0] if parts else ""
     for sep, p in zip(seps, parts[1:]):
         cell += sep + p
     return cell, meta
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     r = rng(seed + 17)
     cells = {}
     metas = {}
     for a in d["accounts"]:
-        cells[a["id"]], metas[a["id"]] = render_cell(r, a)
+        cells[a["id"]], metas[a["id"]] = render_cell(r, a, traps)
     if naive_dir:
         write_naive(d, cells, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, metas, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    tracker = [[a["id"], a["name"], r.choice(["Salem", "Portland", "Beaverton", "Tigard", "Lake Oswego", "Gresham"]),
+                r.choice(["Prospect", "Quoted", "Won", "Lost", "Installed"]), a["rep"], cells[a["id"]]] for a in d["accounts"]]
+    if not traps.on("empty_notes"):
+        tracker = [row for row in tracker if row[5]]
     write_xlsx(os.path.join(ws, "accounts_tracker.xlsx"), {"Accounts": {
         "header": ["Account ID", "Company", "City", "Stage", "Rep", "Notes"],
-        "rows": [[a["id"], a["name"], r.choice(["Salem", "Portland", "Beaverton", "Tigard", "Lake Oswego", "Gresham"]),
-                  r.choice(["Prospect", "Quoted", "Won", "Lost", "Installed"]), a["rep"], cells[a["id"]]] for a in d["accounts"]],
+        "rows": tracker,
         "widths": {"B": 26, "F": 90}}}, creator="Northstar Sales")
     write_csv(os.path.join(ws, "pipedrive_users_export.csv"), ["Name", "Email", "Role", "Status"],
               [[u[0], u[2], "Regular user" if u[1] != "JM" else "Admin", u[3]] for u in USERS])
@@ -175,7 +222,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
                "- Maria Bennett (MB) left in January and her login is deactivated; Pipedrive won't take activities for her,\n"
                "  so everything that would be hers goes under Sofia Cruz, who took over her accounts.\n"
                "- Note: the text of the note is fine as it is, without the date and initials.\n"
-               "- Accounts with nothing in Notes don't need anything.\n")
+               + ("- Accounts with nothing in Notes don't need anything.\n" if traps.on("empty_notes") else ""))
 
     rows, owner_pins, date_pins = [], set(), set()
     for a in d["accounts"]:
@@ -191,13 +238,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_csv(os.path.join(ref, "activities.csv"), HEADER, rows)
     write_csv(os.path.join(sol, "activities.csv"), HEADER, rows)
     write_json(os.path.join(ref, "notes.json"), {"activities": len(rows), "owner_pins": sorted(owner_pins), "date_pins": sorted(date_pins)})
-    write_task_yaml(HERE, {
+    spec = {
         "id": "notes-to-activities", "track": "desk", "category": "reformatting",
         "title": "Split the tracker notes into Pipedrive activities",
         "ask": ("We're moving sales onto Pipedrive. Can you turn the notes in our accounts tracker into their activity import "
                 "and save it as activities.csv? Jason's notes on how he wants it and the template are in the folder.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "each Notes cell holds several dated entries separated by a new line, a blank line, ' | ' or ' ; ', and some "
             "entries wrap onto an indented second line with no date; splitting on new lines alone both merges and splits "
             f"activities (checks: row count, {len(rows)} activities; activity date and type)",
@@ -211,7 +258,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "Type comes from the keyword table (left vm is a Call, sent quote is an Email, stopped by is a Meeting) "
             "(check: activity date and type)",
             "three accounts have an empty Notes cell and get no activity (check: accounts with activities)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "Pipedrive template columns, exact order", "path": "activities.csv", "columns": HEADER, "exact": True},
             {"type": "csv_set_equal", "name": "accounts with activities", "path": "activities.csv", "column": "Account ID", "ref": "activities.csv"},
@@ -221,7 +268,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "csv_values_match", "name": "owner", "path": "activities.csv", "ref": "activities.csv",
              "key": ["Account ID", "Activity Date"], "columns": ["Owner Email"], "min_accuracy": 1.0, "must_match_keys": sorted(owner_pins)},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "notes-to-activities", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} activities={len(rows)} owner_pins={len(owner_pins)} date_pins={len(date_pins)}")
 
 
@@ -254,9 +304,51 @@ def write_naive(d: dict, cells: dict, out: str) -> None:
     write_csv(os.path.join(out, "activities.csv"), HEADER, rows)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, metas: dict, trap: str) -> list[list]:
+    """The reference activities with the one mistake an agent that fell for `trap` would make."""
+    rows = []
+    for a in d["accounts"]:
+        mm = {m["date"]: m for m in metas[a["id"]]}
+        if not a["notes"] and trap == "empty_notes":   # a placeholder row for an account with nothing in Notes
+            rows.append([a["id"], a["name"], "", "", EMAIL[a["rep"]], ""])
+        for nt in sorted(a["notes"], key=lambda x: x["date"]):
+            day, typ, owner = nt["date"], nt["type"], owner_of(a, nt)
+            if trap == "separators" and mm[nt["date"]].get("sep") in (" | ", " ; "):
+                continue                                # split on new lines only: this entry merged into the one before
+            if trap == "date_formats" and day.year == 2025:
+                day = day.replace(year=2026)            # year-less dates given the current year
+            if trap == "initials" and (nt["initials"] or a["rep"]) == "MB":
+                owner = "maria.bennett@northstarsigns.com"   # the deactivated user kept
+            if trap == "type_keywords" and nt["body"].startswith("left v"):
+                typ = "Email"                           # a left voicemail read as a message, not a call
+            rows.append([a["id"], a["name"], day.isoformat(), typ, owner, nt["body"]])
+            m = re.search(r"install booked for (\d+)/(\d+)", nt["body"])
+            if trap == "install_date" and m:            # the install date split out as another activity
+                rows.append([a["id"], a["name"], date(2026, int(m.group(1)), int(m.group(2))).isoformat(), typ, owner,
+                             "install booked"])
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    return rows
+
+
+def write_mutant(d: dict, metas: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "activities.csv"), HEADER, mutant_rows(d, metas, trap))
+
+
+# Grader-blind mutant, kept out of MUTANTS (see docs/authoring-traps.md):
+#   install_date - splitting at the install date adds an extra activity per such note. "row count" fails, but the
+#   cited "activity date and type" (csv_values_match keyed on account + date) only looks up the reference's keys,
+#   so extra rows are invisible to it.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "install_date"}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
-    emit(a.seed, a.naive)
+    emit(a.seed, a.naive, parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS), a.out, a.mutant)

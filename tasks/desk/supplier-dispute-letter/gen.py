@@ -2,6 +2,9 @@
 """supplier-dispute-letter: a supplier invoice that does not match the purchase order becomes a dispute letter.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off short_split,freight_threshold --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant under_price --out DIR                        # a deliverable that falls for one trap
 
 Business: a small steel fabrication shop buys welding consumables from a distributor under a supply agreement.
 The latest invoice bills price increases the shop never accepted, a short shipment, a surcharge and freight.
@@ -21,11 +24,31 @@ Traps (each caught by a check, see task.yaml):
   * the letter must cite the price clause from the agreement             (check: price clause cited)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, sys
 from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "short_split": "the contact tips arrive in two deliveries that add up to the full quantity (off: one delivery; "
+                       "the flap discs stay short, which the answer depends on)",
+        "freight_threshold": "the ops note says freight is free over $2,000 and should come off; the agreement says "
+                             "$2,500 (off: the note gives the agreement's threshold)",
+    },
+    fixed={
+        "price_increase": "two lines billed at an unaccepted July price increase",
+        "surcharge": "a fuel surcharge barred by section 4.5",
+        "under_price": "a line billed below the PO price that must not be netted off",
+        "clause_cite": "the letter must identify the invoice and PO and cite section 4.2",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["price_increase", "short_split", "surcharge", "freight_threshold", "under_price", "clause_cite"]
 
 BUYER = "Ironwood Fabrication"
 SUPPLIER = "Cascade Industrial Supply"
@@ -89,9 +112,65 @@ def build(seed: int) -> dict:
             "ar_contact": "{} {}".format(*person(r)), "ops": "{} {}".format(*person(r))}
 
 
-def emit(seed: int) -> None:
+def letter_text(d: dict, disputed: list | None = None, total: float | None = None, freight_para: str | None = None) -> str:
+    """The dispute letter. With no overrides this is the reference; a mutant passes the lines it would dispute."""
+    L = d["lines"]
+    disputed = d["disputed"] if disputed is None else disputed
+    total = d["total_disputed"] if total is None else total
+    pay_now = r2(d["inv_total"] - total)
+    if freight_para is None:
+        freight_para = (f"We are not disputing the freight charge of ${d['freight']:,.2f}, as the merchandise value of the order "
+                        "is below the $2,500.00 threshold in section 6.1.")
+    rows = []
+    for x in disputed:
+        l = next((l for l in L if l["line"] == x["line"]), None)
+        label = f"Line {x['line']} ({x['sku']}, {l['desc']})" if l else "Line 8 (fuel surcharge)"
+        rows.append(f"| {label} | {x['why']} | {x['amount']:,.2f} |")
+    letter = f"""{BUYER}
+4410 Mill Rd, Tacoma WA 98402
+
+26 August 2026
+
+{SUPPLIER}
+Accounts Receivable
+Attention: {d['ar_contact']}
+
+**Re: Dispute of invoice {d['inv_no']} dated 25 August 2026, our purchase order {d['po_no']}**
+
+Dear {d['ar_contact']},
+
+Under section 7.4 of Supply Agreement SA-2025-11 we are giving written notice that we dispute part of invoice {d['inv_no']}. The disputed lines and amounts are:
+
+| Invoice line | Reason | Amount disputed (USD) |
+|---|---|---|
+{chr(10).join(rows)}
+
+Total disputed: ${total:,.2f}.
+
+The price lines are disputed under section 4.2 of the agreement, which fixes prices for the term unless we accept a new price in writing; we did not accept the increase announced in your notice of 20 July 2026, so the purchase order prices apply. Under section 7.3 we pay only for quantities received. Under section 4.5 no fuel or other surcharge may be added without our written agreement.
+
+{freight_para}
+
+We will pay the undisputed amount of ${pay_now:,.2f} on terms. Please issue a credit memo for ${total:,.2f}, or a corrected invoice.
+
+Sincerely,
+
+{d['ops']}
+Operations Manager, {BUYER}
+"""
+    return letter
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom disputed-lines check travels with the copy
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     L = d["lines"]
     po_date, ship1, ship2, inv_date = date(2026, 8, 10), date(2026, 8, 19), date(2026, 8, 24), date(2026, 8, 25)
 
@@ -107,7 +186,9 @@ def emit(seed: int) -> None:
     # receiving log: tips arrive in two deliveries, discs short
     rec = []
     for l in L:
-        if l["role"] == "split":
+        if l["role"] == "split" and not traps.on("short_split"):
+            rec.append([ship1.isoformat(), d["po_no"], l["line"], l["sku"], l["qty"], ""])
+        elif l["role"] == "split":
             first = l["qty"] - 10
             rec.append([ship1.isoformat(), d["po_no"], l["line"], l["sku"], first, "partial"])
             rec.append([ship2.isoformat(), d["po_no"], l["line"], l["sku"], 10, "balance received"])
@@ -183,6 +264,9 @@ Pricing Team
 """)
 
     ops_first = d["ops"].split()[0]
+    freight_bullet = ("- they charged freight too. Orders over $2,000 ship free under the agreement so that should come off."
+                      if traps.on("freight_threshold") else
+                      "- they charged freight too. Orders of $2,500 or more ship free under the agreement, so check whether it applies.")
     write_text(os.path.join(ws, "note_from_ops.txt"), f"""Cascade invoice {d['inv_no']} (our {d['po_no']}) doesn't match. Can you write the dispute letter to their AR team,
 attention {d['ar_contact']}? It has to reach them within 15 days of the invoice date. Things I noticed:
 
@@ -190,7 +274,7 @@ attention {d['ar_contact']}? It has to reach them within 15 days of the invoice 
   supply agreement fixes prices for the year unless we accept in writing.
 - receiving says we did not get everything they billed, check the receiving log against the invoice
 - there is a fuel surcharge on it, pretty sure the agreement doesn't allow that
-- they charged freight too. Orders over $2,000 ship free under the agreement so that should come off.
+{freight_bullet}
 - a couple of lines might be billed a bit under the PO. Don't bring those up.
 
 We'll pay the undisputed part now and want a credit memo for the rest. List each line you are disputing with its
@@ -200,63 +284,26 @@ amount and the total. Save it as dispute.md.
 """)
 
     # reference solution
-    rows = []
-    for x in d["disputed"]:
-        l = next((l for l in L if l["line"] == x["line"]), None)
-        label = f"Line {x['line']} ({x['sku']}, {l['desc']})" if l else "Line 8 (fuel surcharge)"
-        rows.append(f"| {label} | {x['why']} | {x['amount']:,.2f} |")
-    letter = f"""{BUYER}
-4410 Mill Rd, Tacoma WA 98402
-
-26 August 2026
-
-{SUPPLIER}
-Accounts Receivable
-Attention: {d['ar_contact']}
-
-**Re: Dispute of invoice {d['inv_no']} dated 25 August 2026, our purchase order {d['po_no']}**
-
-Dear {d['ar_contact']},
-
-Under section 7.4 of Supply Agreement SA-2025-11 we are giving written notice that we dispute part of invoice {d['inv_no']}. The disputed lines and amounts are:
-
-| Invoice line | Reason | Amount disputed (USD) |
-|---|---|---|
-{chr(10).join(rows)}
-
-Total disputed: ${d['total_disputed']:,.2f}.
-
-The price lines are disputed under section 4.2 of the agreement, which fixes prices for the term unless we accept a new price in writing; we did not accept the increase announced in your notice of 20 July 2026, so the purchase order prices apply. Under section 7.3 we pay only for quantities received. Under section 4.5 no fuel or other surcharge may be added without our written agreement.
-
-We are not disputing the freight charge of ${d['freight']:,.2f}, as the merchandise value of the order is below the $2,500.00 threshold in section 6.1.
-
-We will pay the undisputed amount of ${d['pay_now']:,.2f} on terms. Please issue a credit memo for ${d['total_disputed']:,.2f}, or a corrected invoice.
-
-Sincerely,
-
-{d['ops']}
-Operations Manager, {BUYER}
-"""
-    write_text(os.path.join(sol, "dispute.md"), letter)
+    write_text(os.path.join(sol, "dispute.md"), letter_text(d))
     write_json(os.path.join(ref, "facts.json"), {"inv_no": d["inv_no"], "po_no": d["po_no"], "disputed": d["disputed"],
                                                   "total_disputed": d["total_disputed"], "pay_now": d["pay_now"],
                                                   "invoice_total": d["inv_total"], "freight": d["freight"],
                                                   "with_freight": d["with_freight"], "netted": d["netted"]})
 
     wf = d["with_freight"]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "supplier-dispute-letter", "track": "desk", "category": "drafting",
         "title": "Dispute letter for a supplier invoice that does not match the PO",
         "ask": f"The Cascade invoice for our last welding supplies order doesn't match what we ordered and received. Please write the dispute letter to their AR team; {ops_first}'s note says what goes in it. Save it as dispute.md.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "two lines (shielding gas, gloves) are billed at the July increase prices; section 4.2 fixes prices unless the buyer accepts in writing, and the notice was never accepted, so the PO price governs (checks: disputed lines with amounts; total disputed and amount paid now)",
             "the flap discs are billed at the ordered 40 or 50 but 10 are backordered per the receiving log; the contact tips arrived in two deliveries that add up to the full quantity and are not short (checks: disputed lines with amounts; total disputed and amount paid now)",
             "the fuel surcharge is barred by section 4.5 and is disputed in full (check: disputed lines with amounts)",
             f"the ops note says freight is free over $2,000, but section 6.1 says $2,500 and the PO merchandise value is ${d['po_total']:,.2f}, so the ${d['freight']:,.2f} freight stands; disputing it gives ${wf:,.2f} (checks: total disputed and amount paid now; freight-inclusive total absent)",
             f"the nozzle line is billed below the PO price and the note says not to raise it; netting it against the overcharges gives ${d['netted']:,.2f} (check: total disputed and amount paid now)",
             "the letter must identify the invoice and PO and cite the price clause from the agreement, not just 'our contract' (checks: invoice and PO referenced; price clause cited)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "dispute.md exists", "path": "dispute.md"},
             {"type": "text_contains_all", "name": "invoice and PO referenced", "path": "dispute.md", "phrases": [d["inv_no"], d["po_no"]]},
@@ -268,8 +315,66 @@ Operations Manager, {BUYER}
             {"type": "text_not_contains", "name": "freight-inclusive total absent", "path": "dispute.md",
              "phrases": [f"{wf:,.2f}", f"{wf:.2f}"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "supplier-dispute-letter", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_letter(d: dict, trap: str) -> str:
+    """The reference letter with the one mistake an agent that fell for `trap` would make."""
+    disputed = list(d["disputed"])
+    if trap == "price_increase":    # the July prices taken as agreed
+        disputed = [x for x in disputed if next((l for l in d["lines"] if l["line"] == x["line"]), {}).get("role") != "price"]
+        text = letter_text(d, disputed, r2(sum(x["amount"] for x in disputed)))
+        return text.replace("The price lines are disputed under section 4.2 of the agreement, which fixes prices for the term unless we "
+                            "accept a new price in writing; we did not accept the increase announced in your notice of 20 July 2026, "
+                            "so the purchase order prices apply. ", "")
+    if trap == "short_split":       # only the first tip delivery counted, so the tips read as 10 packs short
+        tips = next(l for l in d["lines"] if l["role"] == "split")
+        extra = {"line": tips["line"], "sku": tips["sku"], "kw": r"(contact tip|\btips?\b)", "amount": r2(10 * tips["inv_price"]),
+                 "why": f"billed for {tips['qty']} but {tips['qty'] - 10} were received"}
+        disputed = sorted(disputed + [extra], key=lambda x: x["line"])
+        return letter_text(d, disputed, r2(sum(x["amount"] for x in disputed)))
+    if trap == "surcharge":         # the fuel surcharge paid
+        disputed = [x for x in disputed if x["sku"] != "FUEL"]
+        text = letter_text(d, disputed, r2(sum(x["amount"] for x in disputed)))
+        return text.replace(" Under section 4.5 no fuel or other surcharge may be added without our written agreement.", "")
+    if trap == "freight_threshold":  # the ops note's $2,000 threshold: freight disputed too
+        freight = {"line": 9, "sku": "FRT", "kw": r"freight", "amount": d["freight"], "why": "freight on an order over $2,000"}
+        return letter_text(d, disputed + [freight], d["with_freight"],
+                           freight_para=f"The freight charge of ${d['freight']:,.2f} is disputed because the order is over $2,000.")
+    if trap == "under_price":       # the nozzle undercharge netted against the overcharges
+        under = next(l for l in d["lines"] if l["role"] == "under")
+        credit = {"line": under["line"], "sku": under["sku"], "kw": r"(nozzle)",
+                  "amount": -r2((under["po_price"] - under["inv_price"]) * under["qty"]),
+                  "why": f"billed at {under['inv_price']:.2f}, below the PO price of {under['po_price']:.2f}"}
+        disputed = sorted(disputed + [credit], key=lambda x: x["line"])
+        return letter_text(d, disputed, d["netted"])
+    if trap == "clause_cite":       # vague references: no invoice or PO number, "our contract" for the clause
+        text = letter_text(d).replace(d["inv_no"], "your latest invoice").replace(d["po_no"], "our recent order")
+        return text.replace("section 4.2 of the agreement", "our contract").replace(
+            "Under section 7.4 of Supply Agreement SA-2025-11", "Under our contract")
+    raise KeyError(trap)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "dispute.md"), mutant_letter(d, trap))
+
+
+# Grader-blind mutant, kept out of MUTANTS (see docs/authoring-traps.md):
+#   short_split - a letter that also disputes the contact tips as 10 packs short (only the first delivery counted)
+#   fails "total disputed and amount paid now" but passes the cited "disputed lines with amounts": that custom check
+#   only asks that every reference line appear with its amount, never that nothing else is disputed.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "short_split"}
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    emit(a.seed, parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS), a.out, a.mutant)

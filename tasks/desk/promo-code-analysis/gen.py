@@ -2,6 +2,9 @@
 """promo-code-analysis: August promo code usage and revenue per code, with expired and unknown codes called out.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off code_spelling,cancelled --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant stacked --out DIR                      # a deliverable that falls for one trap
 
 Business: an independent bookshop selling online and at the till. Marketing runs a handful of codes; the till
 lets staff type any code and apply a manual discount, and the website kept one summer code alive past its end.
@@ -23,6 +26,25 @@ from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "code_spelling": "codes typed in mixed case with spaces inside and around them, stacked codes sometimes "
+                         "without a space after the comma (off: codes exactly as on marketing's list)",
+        "late_summer": "SUMMERREADS15 used online for a week after it ended (off: those orders are not in the export)",
+        "revenue_def": "the export's Total column adds shipping and tax (off: no Shipping, Tax or Total columns)",
+        "cancelled": "cancelled orders, some with codes, in the export (off: cancelled orders not exported)",
+    },
+    fixed={
+        "stacked": "stacked codes: an order counts under each code it used",
+        "status": "codes that ended before August are EXPIRED and codes not on the list UNKNOWN, reported with the rest",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["code_spelling", "stacked", "late_summer", "status", "revenue_def", "cancelled"]
 
 MONTH0, MONTH1 = date(2026, 8, 1), date(2026, 8, 31)
 # code, campaign, type, value, start, end
@@ -206,8 +228,17 @@ def acceptable(d: dict) -> bool:
 HEADER = ["code", "orders", "revenue", "status"]
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def late_use(o: dict) -> bool:
+    """An order that used SUMMERREADS15 after its end date."""
+    return "SUMMERREADS15" in o["codes"] and o["day"] > CODE["SUMMERREADS15"][5]
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
     if naive_dir:
         # split on commas, upper-case and strip, count every order, revenue = order total, everything OK
         os.makedirs(naive_dir, exist_ok=True)
@@ -219,14 +250,21 @@ def emit(seed: int, naive_dir: str | None) -> None:
         write_csv(os.path.join(naive_dir, "promo_summary.csv"), HEADER,
                   [[c, a[0], f"{a[1]:.2f}", "OK"] for c, a in sorted(agg.items())])
         return
-    ws, ref, sol = task_dirs(HERE)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     r = rng(seed + 11)
     rows = []
+    totals = traps.on("revenue_def")
     for o in sorted(d["orders"], key=lambda z: z["ts"]):
+        if not traps.on("late_summer") and late_use(o) or not traps.on("cancelled") and o["status"] == "cancelled":
+            continue
+        typed = o["typed"] if traps.on("code_spelling") else ", ".join(o["codes"])
         rows.append([o["id"], o["ts"].strftime("%Y-%m-%d %H:%M"), o["channel"], o["status"], f"{o['sub']:.2f}",
-                     f"{o['disc']:.2f}", f"{o['ship']:.2f}", f"{o['tax']:.2f}", f"{o['total']:.2f}", o["typed"]])
+                     f"{o['disc']:.2f}"] + ([f"{o['ship']:.2f}", f"{o['tax']:.2f}", f"{o['total']:.2f}"] if totals else [])
+                    + [typed])
     write_csv(os.path.join(ws, "orders_2026-08.csv"),
-              ["Order", "Created", "Channel", "Status", "Subtotal", "Discount", "Shipping", "Tax", "Total", "Discount codes"],
+              ["Order", "Created", "Channel", "Status", "Subtotal", "Discount"]
+              + (["Shipping", "Tax", "Total"] if totals else []) + ["Discount codes"],
               rows, crlf=True)
     write_xlsx(os.path.join(ws, "promo_codes_2026.xlsx"), {"Codes": {
         "merged_title": "Promo codes 2026 (marketing)",
@@ -246,9 +284,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
                   "- Codes aren't case sensitive and the till ignores spaces, so 'summer reads15' is SUMMERREADS15. "
                   "Please report the codes in capitals as they appear on marketing's list.\n"
                   "- People can stack codes. If an order used two codes, count it under both.\n"
-                  "- Cancelled orders don't count.\n"
-                  "- SUMMERREADS15 ended on 15 August (the end date is the last good day) but Tom didn't switch it off on "
-                  "the website for another week. Orders that used it after the 15th don't count for the campaign.\n"
+                  + ("- Cancelled orders don't count.\n" if traps.on("cancelled") else "")
+                  + ("- SUMMERREADS15 ended on 15 August (the end date is the last good day) but Tom didn't switch it off on "
+                     "the website for another week. Orders that used it after the 15th don't count for the campaign.\n"
+                     if traps.on("late_summer") else
+                     "- SUMMERREADS15 ended on 15 August (the end date is the last good day).\n") +
                   "- The till lets staff type anything. If a code is on the list but finished before August, mark it "
                   "EXPIRED. If it isn't on the list at all, mark it UNKNOWN - I want to see those with their orders "
                   "and revenue so I can talk to the team. Everything else is OK.\n\n"
@@ -260,14 +300,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_json(os.path.join(ref, "notes.json"), {"variants": {k: {c: [n, round(v_, 2)] for c, (n, v_) in vv.items()}
                                                               for k, vv in variants(d).items()}})
     must = ["SUMMERREADS15", "FREESHIP50", "TEACHER10", "SPRING2026", "SUMMERREAD15"]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "promo-code-analysis", "track": "desk", "category": "spreadsheet",
         "title": "How the August promo codes did",
         "ask": ("Hannah wants to know how each promo code did in August, including any codes that shouldn't have "
                 "gone through. Use the order export and marketing's code list and save promo_summary.csv; her email "
                 "has the details.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "codes are typed in mixed case with spaces inside and around them ('summer reads15', ' Freeship50'); "
             "grouping the raw text splits one code into several rows (checks: codes used; orders per code)",
             "online orders stack FREESHIP50 with a percent code and the till stacks BACKTOSCHOOL with TEACHER10, "
@@ -279,7 +319,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "WELCOME5 and BOOKCLUB2O (letter O) are not on the list at all and are UNKNOWN (checks: status per code; codes used)",
             "revenue is subtotal less discount; the Total column adds shipping and tax (check: revenue per code)",
             "five cancelled orders carry codes and count for nothing (check: orders per code)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "promo_summary.csv", "columns": HEADER},
             {"type": "csv_set_equal", "name": "codes used", "path": "promo_summary.csv", "column": "code",
@@ -293,19 +333,65 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "csv_values_match", "name": "status per code", "path": "promo_summary.csv", "ref": "promo_summary.csv",
              "key": "code", "columns": ["status"], "min_accuracy": 1.0},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "promo-code-analysis", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed}", ref_rows)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    """The summary an agent that fell for `trap`, and only that trap, would hand over."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    agg = {}
+    for o in d["orders"]:
+        if o["status"] == "cancelled" and trap != "cancelled":
+            continue
+        if trap == "code_spelling":   # the typed text grouped as it stands (trimmed only)
+            used = [(t.strip(), c) for t, c in zip(o["typed"].split(","), o["codes"])]
+        else:
+            used = [(c, c) for c in (o["codes"][:1] if trap == "stacked" else o["codes"])]
+        for label, c in used:
+            if c in CODE:
+                _, _, _, _, start, end = CODE[c]
+                status = "EXPIRED" if end < MONTH0 else "OK"
+                if status == "OK" and not (start <= o["day"] <= end) and trap != "late_summer":
+                    continue
+                if trap == "status":      # the marketing list taken as the universe: listed codes all OK
+                    status = "OK"
+            else:
+                if trap == "status":      # codes not on the list left out
+                    continue
+                status = "UNKNOWN"
+            a = agg.setdefault(label, {"orders": 0, "revenue": 0.0, "status": status})
+            a["orders"] += 1
+            a["revenue"] = round(a["revenue"] + (o["total"] if trap == "revenue_def" else o["sub"] - o["disc"]), 2)
+    return [[c, a["orders"], f"{a['revenue']:.2f}", a["status"]] for c, a in sorted(agg.items())]
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "promo_summary.csv"), HEADER, mutant_rows(d, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(1000):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)
