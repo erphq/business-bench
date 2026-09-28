@@ -2,6 +2,9 @@
 """mrr-report: monthly recurring revenue and churn for a small analytics SaaS, from a billing event log.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off trials,format_noise --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant annual --out DIR                   # a deliverable that falls for one trap
 
 Business: a 50-account B2B analytics product. Billing writes one row per subscription event; nobody has
 ever turned that into an MRR schedule, and the board now wants one.
@@ -24,6 +27,25 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "annual": "annual contracts written at the yearly amount, some with a blank billing period",
+        "notice": "cancellations logged before their effective date",
+        "trials": "trial accounts logged at list price",
+        "format_noise": "text amounts, three date formats, a two-line preamble and CRLF endings",
+    },
+    fixed={
+        "plan_changes": "upgrade and downgrade rows carry the new full price, not the change",
+        "reactivation": "two churned accounts come back and count again",
+        "memo_month": "the memo must name the month the churn took effect in",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["plan_changes", "annual", "notice", "trials", "reactivation", "format_noise", "memo_month"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -269,49 +291,81 @@ def clean_rows(d: dict) -> list[list]:
     return out
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def event_rows(d: dict, traps: TrapSet) -> list[list]:
+    """The billing event log as exported. With every trap on these are exactly the canonical rows."""
+    noisy, annual = traps.on("format_noise"), traps.on("annual")
+    events = d["events"]
+    if not traps.on("trials"):
+        events = [e for e in events if e["kind"] != "trial"]
+    if not traps.on("notice"):  # every cancellation logged on the day it takes effect
+        events = sorted((dict(e, date=e["effective"], note="effective immediately") if e["kind"] == "cancellation" else e
+                         for e in events), key=lambda e: (e["date"], e["id"]))
+    rows = []
+    for e in events:
+        st = sum(ord(c) for c in e["id"]) % 3
+        period = "" if st == 0 and e["plan"] in ANNUAL and annual else ("Annual" if e["plan"] in ANNUAL else "Monthly")
+        amount = e["amount"] if annual else monthly_value(e["plan"], e["amount"])
+        rows.append([e["id"], date_variant(e["date"], [0, 1, 2][st]) if noisy else e["date"].isoformat(), e["acct"],
+                     {"new": "new", "upgrade": "Upgrade", "downgrade": "Downgrade", "cancellation": "Cancellation",
+                      "reactivation": "Reactivation", "trial": "Trial start"}[e["kind"]],
+                     e["plan"], period, money_str(amount, [1, 0, 6][st]) if noisy else f"{amount:.2f}",
+                     e["effective"].isoformat() if e["effective"] != e["date"] else "", e["note"]])
+    return rows
+
+
+def finance_emails(traps: TrapSet) -> list[dict]:
+    second = ("Two things the log does not make obvious. When somebody moves plan, the amount on that row is the "
+              "new price they pay from that day - it is not the increase. And a cancellation ends on its "
+              "effective date, not the day support logged it; the big ones give us notice, so the money keeps "
+              "coming until the effective date.\n\n" if traps.on("notice") else
+              "One thing the log does not make obvious. When somebody moves plan, the amount on that row is the "
+              "new price they pay from that day - it is not the increase.\n\n")
+    if traps.on("trials"):
+        second += ("Trials are on list price in the log but we do not bill them. "
+                   "They are not revenue until the account converts.\n\n")
+    second += "In the memo, tell me which month the churn landed in and what it cost us."
+    return [
+        {"from": "Marcus Lindqvist <marcus@kestrelanalytics.io>", "to": "you", "date": "Thu, 2 Jul 2026 09:20",
+         "subject": "MRR schedule for the board pack",
+         "body": ("The board wants MRR by month for the first half and a clear view of what we lost to churn. "
+                  "Everything is in the billing event log; the December book is there as the starting point.\n\n"
+                  "MRR is what the active subscriptions are worth on the last day of the month. "
+                  + ("Annual contracts are written at the yearly amount in the log - they count at a twelfth of that."
+                     if traps.on("annual") else
+                     "Annual contracts are shown in the log at their monthly value."))},
+        {"from": "Marcus Lindqvist <marcus@kestrelanalytics.io>", "to": "you", "date": "Thu, 2 Jul 2026 09:41",
+         "subject": "RE: MRR schedule for the board pack",
+         "body": second}]
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     ending, churned = d["ending"], d["churned"]
 
     # ---- workspace ----
-    rows = []
-    for e in d["events"]:
-        st = sum(ord(c) for c in e["id"]) % 3
-        period = "" if st == 0 and e["plan"] in ANNUAL else ("Annual" if e["plan"] in ANNUAL else "Monthly")
-        rows.append([e["id"], date_variant(e["date"], [0, 1, 2][st]), e["acct"],
-                     {"new": "new", "upgrade": "Upgrade", "downgrade": "Downgrade", "cancellation": "Cancellation",
-                      "reactivation": "Reactivation", "trial": "Trial start"}[e["kind"]],
-                     e["plan"], period, money_str(e["amount"], [1, 0, 6][st]),
-                     e["effective"].isoformat() if e["effective"] != e["date"] else "", e["note"]])
+    noisy = traps.on("format_noise")
     write_csv(os.path.join(ws, "subscription_events_2026.csv"),
-              ["Event ID", "Logged", "Account", "Event", "Plan", "Billing period", "Contract amount",
-               "Effective date", "Note"], rows,
-              preamble=["Billing event log", "Exported 07/02/2026 - includes the 2025 book"], crlf=True)
+              ["Event ID", "Logged", "Account", "Event", "Plan", "Billing period",
+               "Contract amount" if traps.on("annual") else "Monthly value", "Effective date", "Note"],
+              event_rows(d, traps),
+              preamble=["Billing event log", "Exported 07/02/2026 - includes the 2025 book"] if noisy else None,
+              crlf=noisy)
     opening = [(a["name"], round(d["value_on"](a, month_end("2025-12")), 2)) for a in d["accounts"]]
     opening = sorted([x for x in opening if x[1] > 0])
     stable_xlsx(os.path.join(ws, "opening_book_dec2025.xlsx"), {"Book": {
         "merged_title": "Subscriptions on the book at 31 Dec 2025",
         "header": ["Account", "Monthly value"], "rows": [[n, v] for n, v in opening],
         "number_formats": {"B": "#,##0.00"}, "widths": {"A": 30, "B": 16}}}, creator="Finance")
-    write_email_thread(os.path.join(ws, "email_from_finance.txt"), [
-        {"from": "Marcus Lindqvist <marcus@kestrelanalytics.io>", "to": "you", "date": "Thu, 2 Jul 2026 09:20",
-         "subject": "MRR schedule for the board pack",
-         "body": ("The board wants MRR by month for the first half and a clear view of what we lost to churn. "
-                  "Everything is in the billing event log; the December book is there as the starting point.\n\n"
-                  "MRR is what the active subscriptions are worth on the last day of the month. Annual contracts "
-                  "are written at the yearly amount in the log - they count at a twelfth of that.")},
-        {"from": "Marcus Lindqvist <marcus@kestrelanalytics.io>", "to": "you", "date": "Thu, 2 Jul 2026 09:41",
-         "subject": "RE: MRR schedule for the board pack",
-         "body": ("Two things the log does not make obvious. When somebody moves plan, the amount on that row is the "
-                  "new price they pay from that day - it is not the increase. And a cancellation ends on its "
-                  "effective date, not the day support logged it; the big ones give us notice, so the money keeps "
-                  "coming until the effective date.\n\nTrials are on list price in the log but we do not bill them. "
-                  "They are not revenue until the account converts.\n\nIn the memo, tell me which month the churn "
-                  "landed in and what it cost us.")}])
+    write_email_thread(os.path.join(ws, "email_from_finance.txt"), finance_emails(traps))
 
     # ---- reference ----
     write_csv(os.path.join(ref, "mrr_by_month.csv"), ["month", "ending_mrr", "churned_mrr", "paying_accounts"],
@@ -328,14 +382,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
 
     month_word = {"2026-01": "January", "2026-02": "February", "2026-03": "March", "2026-04": "April",
                   "2026-05": "May", "2026-06": "June"}[WORST]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "mrr-report", "track": "desk", "category": "reports",
         "title": "MRR by month and churn for the first half",
         "ask": ("The board pack needs our MRR month by month for the first half and what we lost to churn. Build it "
                 "as mrr.xlsx with live formulas and write memo.md alongside it. Marcus's email says how he wants "
                 "the subscriptions counted.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "upgrade and downgrade rows carry the account's new full price, not the change; adding them to the "
             "previous price inflates MRR from the month of the move onwards "
             "(checks: March ending MRR; June ending MRR)",
@@ -354,7 +408,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "preamble with CRLF endings (check: March ending MRR)",
             f"the churn is concentrated in one month ({month_word}) behind the notice periods, so a memo written off "
             "the logged dates names the wrong month (check: memo names the month the churn landed in)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "mrr.xlsx exists", "path": "mrr.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "mrr.xlsx", "min_count": 10},
@@ -374,7 +428,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
                      r"(\bchurn|\bcancel|\blost\b|\bleft\b)"],
              "none": [r"\bno churn\b", r"\bnothing churned\b"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "mrr-report", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} accounts={len(d['accounts'])} events={len(d['events'])}")
     print("ending:", {m: f"{ending[m]:.2f}" for m in MONTHS})
     print("churned:", {m: f"{churned[m]:.2f}" for m in MONTHS}, "h1 churn:", d["churn_total"])
@@ -422,15 +480,96 @@ def write_naive(d: dict, out: str) -> None:
                "The schedule in mrr.xlsx shows the month-by-month figures straight from the billing log.\n")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_points(a: dict, trap: str) -> list[tuple]:
+    """An account's (date, monthly value) steps read from its event rows the way an agent that falls for
+    `trap` would read them. With no mistake this reproduces the account's true steps."""
+    pts: list[tuple] = []
+    for e in a["events"]:
+        amount = e["amount"]
+        if trap == "format_noise" and amount >= 1000:   # "$5,388.00" fails a plain number parse and drops out
+            amount = 0.0
+        mv = amount if trap == "annual" else monthly_value(e["plan"], amount)
+        if e["kind"] == "trial":
+            if trap == "trials":                        # trials counted at list price
+                pts.append((e["date"], mv))
+            continue
+        if e["kind"] == "cancellation":
+            pts.append((e["date"] if trap == "notice" else e["effective"], 0.0))
+        elif e["kind"] == "reactivation" and trap == "reactivation":
+            continue                                    # a churned account stays churned
+        elif e["kind"] in ("upgrade", "downgrade") and trap == "plan_changes":
+            prev = pts[-1][1] if pts else 0.0           # the row amount added on as if it were the change
+            pts.append((e["date"], round(prev + mv, 2)))
+        else:
+            pts.append((e["date"], mv))
+    pts.sort(key=lambda p: p[0])
+    return pts
+
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    out = []
+    for a in sorted(d["accounts"], key=lambda x: x["name"]):
+        pts = mutant_points(a, trap)
+        for m in MONTHS:
+            me = month_end(m)
+            v = 0.0
+            for pd, pv in pts:
+                if pd <= me:
+                    v = pv
+            lost = 0.0
+            for j, (pd, pv) in enumerate(pts):
+                if pv == 0.0 and j > 0 and f"{pd.year}-{pd.month:02d}" == m:
+                    lost += pts[j - 1][1]
+            out.append([a["name"], m, round(v, 2), round(lost, 2), 1 if v > 0 else 0])
+    return out
+
+
+def mutant_memo(rows: list[list], by_logged: bool, d: dict) -> str:
+    ending = {m: round(sum(r[2] for r in rows if r[1] == m), 2) for m in MONTHS}
+    churned = {m: round(sum(r[3] for r in rows if r[1] == m), 2) for m in MONTHS}
+    if by_logged:  # the memo reads churn off the logged dates
+        churned = {m: 0.0 for m in MONTHS}
+        for a in d["accounts"]:
+            pts = mutant_points(a, "notice")
+            for j, (pd, pv) in enumerate(pts):
+                if pv == 0.0 and j > 0 and f"{pd.year}-{pd.month:02d}" in churned:
+                    churned[f"{pd.year}-{pd.month:02d}"] = round(churned[f"{pd.year}-{pd.month:02d}"] + pts[j - 1][1], 2)
+    worst = max(REPORT_MONTHS, key=lambda m: churned[m])
+    word = {"2026-01": "January", "2026-02": "February", "2026-03": "March", "2026-04": "April",
+            "2026-05": "May", "2026-06": "June"}[worst]
+    total = round(sum(churned[m] for m in REPORT_MONTHS), 2)
+    return (f"# MRR and churn, first half 2026\n\nWe opened the year at {ending['2025-12']:,.2f} MRR and closed June at "
+            f"{ending['2026-06']:,.2f}. March ended at {ending['2026-03']:,.2f}.\n\n"
+            f"**Churn landed in {word}.** {churned[worst]:,.2f} of MRR cancelled in {word}; total churn for the six "
+            f"months was {total:,.2f}.\n")
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    rows = mutant_rows(d, "none" if trap == "memo_month" else trap)
+    os.makedirs(out, exist_ok=True)
+    stable_xlsx(os.path.join(out, "mrr.xlsx"), report_sheets(rows), creator="mutant")
+    write_text(os.path.join(out, "memo.md"), mutant_memo(rows, trap == "memo_month", d))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(600):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 600 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

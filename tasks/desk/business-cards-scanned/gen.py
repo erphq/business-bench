@@ -2,6 +2,9 @@
 """business-cards-scanned: ten scanned business cards from a trade show -> one CRM contact row per person.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off image_scan --out DIR     # same draw, cards as text PDFs, same answer
+    python gen.py --mutant surname_first --out DIR     # a deliverable that falls for one trap
 
 Business: Lumen & Ash, a Denver architectural lighting maker, came back from an international lighting expo with a stack of
 business cards. The sales coordinator scanned each card on the office scanner; marketing wants them in the CRM.
@@ -26,6 +29,24 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. The card text, the scan list and its order are part of the answer (reference/notes.json
+# records each scan's file and printed figures), so only the image-only rendering can be switched off.
+TRAPS = TrapSet(
+    switchable={
+        "image_scan": "every card is an image-only scan (text PDFs with the same lines when off)",
+    },
+    fixed={
+        "titles_names": "title above the name, a company named like a person, honorific and post-nominal",
+        "surname_first": "French card prints the surname first in capitals",
+        "phone_labels": "varied phone labels, mobile printed first, a fax line, a lone (mobile) number",
+        "intl_format": "trunk zeros, domestic Australian/UK numbers and North American numbers without +1",
+        "duplicate": "one card scanned twice",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["titles_names", "surname_first", "phone_labels", "intl_format", "duplicate", "image_scan"]
 
 HEADER = ["email", "first_name", "last_name", "title", "company", "office_phone", "mobile_phone", "country"]
 
@@ -108,10 +129,21 @@ def build(seed: int) -> dict:
     return {"C": C, "rows": rows}
 
 
-def emit(seed: int, d: dict, naive_dir: str | None) -> None:
+def write_text_card(path: str, lines: list[str]) -> None:
+    """The card as a plain text PDF: same lines, same order, a text layer instead of a picture."""
+    import html
+    write_pdf_document(path, [("p", html.escape(x)) if x else ("spacer", 8) for x in lines], base_size=11)
+
+
+def emit(seed: int, d: dict, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     if naive_dir:
         return write_naive(d, naive_dir)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        return write_mutant(d, mutant, out)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    scanned = traps.on("image_scan")
     S = os.path.join(ws, "expo_cards")
     os.makedirs(S, exist_ok=True)
     C = d["C"]
@@ -124,8 +156,12 @@ def emit(seed: int, d: dict, naive_dir: str | None) -> None:
         c = stack[idx]
         fname = f"Scan_2026-09-17_{i:03d}.pdf"
         files.setdefault(c["key"], []).append(fname)
-        write_scan_pdf(os.path.join(S, fname), c["lines"], width=r.choice([1050, 1100]), height=640, font_size=r.choice([30, 32]),
-                       skew_deg=round(r.uniform(-0.5, 0.5), 2), noise=r.randint(120, 220), seed=seed * 37 + i)
+        if scanned:
+            write_scan_pdf(os.path.join(S, fname), c["lines"], width=r.choice([1050, 1100]), height=640, font_size=r.choice([30, 32]),
+                           skew_deg=round(r.uniform(-0.5, 0.5), 2), noise=r.randint(120, 220), seed=seed * 37 + i)
+        else:  # same draws, so the scan order and the reference stay put
+            r.choice([1050, 1100]); r.choice([30, 32]); r.uniform(-0.5, 0.5); r.randint(120, 220)
+            write_text_card(os.path.join(S, fname), c["lines"])
     write_text(os.path.join(ws, "note_from_jess.txt"),
                "Expo cards\n\n"
                "I scanned every business card we brought back from the expo (expo_cards folder, one scan per card - I may have run one "
@@ -148,12 +184,12 @@ def emit(seed: int, d: dict, naive_dir: str | None) -> None:
     write_json(os.path.join(ref, "notes.json"), {"files": files, "scan_figures": figs})
     K = {c["key"]: c["email"] for c in C}
     P = "contacts.csv"
-    write_task_yaml(HERE, {
+    spec = {
         "id": "business-cards-scanned", "track": "desk", "category": "extraction",
         "title": "CRM contacts from the scanned expo business cards",
         "ask": "Jess scanned the business cards from the expo. Can you turn them into contacts.csv for the CRM? Her note says how marketing wants it.\n",
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "titles vs names: the Morgan Hale card prints 'VP, Business Development' above the person's name and the company is named like a "
             "person, and the Halcyon and Northshore cards carry 'Dr' and ', P.Eng.' around the name (checks: names; titles and companies)",
             "the French card prints the surname first in capitals ('LAURENT Camille' style), so the first line is not first name then last "
@@ -166,7 +202,7 @@ def emit(seed: int, d: dict, naive_dir: str | None) -> None:
             "American numbers need +1 (checks: office phones; mobile phones)",
             "the Halcyon Acoustics card was scanned twice (checks: one row per contact; row count)",
             "every card is a small image-only scan with no text layer (checks: names; one row per contact)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": P, "columns": HEADER},
             {"type": "csv_set_equal", "name": "one row per contact", "path": P, "column": "email", "ref": P, "normalize": ["strip", "lower"]},
@@ -182,7 +218,10 @@ def emit(seed: int, d: dict, naive_dir: str | None) -> None:
             {"type": "csv_values_match", "name": "countries", "path": P, "ref": P, "key": "email", "columns": ["country"],
              "normalize": ["alnum"], "min_accuracy": 1.0, "must_match_keys": [K["uk_mobile_first"], K["us_mobile"]]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "business-cards-scanned", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} contacts={len(d['rows'])} scans={len(stack)}")
 
 
@@ -205,9 +244,63 @@ def write_naive(d: dict, out: str) -> None:
     write_csv(os.path.join(out, "contacts.csv"), HEADER, rows)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    """contacts.csv rows transcribed correctly except for `trap`."""
+    C = {c["key"]: c for c in d["C"]}
+    rows = {c["key"]: dict(c) for c in d["C"]}
+    extra = []
+    if trap == "titles_names":      # honorific and post-nominal kept; the Morgan Hale card read company-as-person, tagline as company
+        rows["uk_dr"]["first"] = "Dr " + C["uk_dr"]["first"]
+        rows["ca_peng"]["last"] = C["ca_peng"]["last"] + ", P.Eng."
+        rows["us_title_first"].update(first="Morgan", last="Hale", company="Lighting and daylight design")
+    elif trap == "surname_first":   # first word taken as the first name
+        rows["fr"].update(first=C["fr"]["last"].upper(), last=C["fr"]["first"])
+    elif trap == "phone_labels":    # printed order taken as office then mobile, fax counted as a phone
+        for k in ("au", "uk_mobile_first", "us_mobile"):
+            rows[k].update(office=C[k]["mobile"], mobile=C[k]["office"])
+        rows["uk_fax"]["mobile"] = "+441614960999"
+    elif trap == "intl_format":     # printed digits kept: trunk zeros stay, domestic numbers get no country code
+        def printed(n: str, key: str) -> str:
+            if not n:
+                return n
+            if key in ("au", "uk_mobile_first"):
+                cc = "+61" if key == "au" else "+44"
+                return "0" + n[len(cc):]
+            if n.startswith(("+44", "+33")):
+                return n[:3] + "0" + n[3:]
+            if n.startswith("+1"):
+                return n[2:]
+            return n
+        for k, c in C.items():
+            rows[k].update(office=printed(c["office"], k), mobile=printed(c["mobile"], k))
+    elif trap == "duplicate":       # both scans of the Halcyon card transcribed
+        extra = ["uk_dr"]
+    elif trap == "image_scan":      # no text layer found, nothing extracted
+        return []
+    else:
+        raise KeyError(trap)
+    out = [[c["email"], c["first"], c["last"], c["title"], c["company"], c["office"], c["mobile"], c["country"]]
+           for c in list(rows.values()) + [rows[k] for k in extra]]
+    return sorted(out)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "contacts.csv"), HEADER, mutant_rows(d, trap))
+
+
+# "duplicate" is left out: its faithful mutant (the Halcyon row twice, identical) fails "row count" but passes
+# "one row per contact", a set comparison on email that cannot see a repeated row. Kept here, reported as a grader finding.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "duplicate"}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
-    emit(a.seed, build(a.seed), a.naive)
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, build(a.seed), a.naive, traps, a.out, a.mutant)

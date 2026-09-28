@@ -2,6 +2,9 @@
 """team-directory-page: a playhouse's HR export as a one-file staff directory grouped by department.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off former,secondary --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant scene_shop --out DIR            # a deliverable that falls for one trap
 
 Business: a nonprofit community theatre with a box office, a scene shop and an education program. The HR system
 exports one row per job (people with a second job appear twice), department codes rather than names, and keeps
@@ -26,6 +29,22 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "former": "four Terminated staff whose last day has passed are in the export",
+        "notice": "one person with notice given is marked Terminated with a future last day",
+        "preferred": "Preferred name holds a first name, a whole name, or nothing",
+        "scene_shop": "Scene Shop staff carry the retired SCN code",
+        "secondary": "two people appear twice, once for a secondary job",
+        "leave": "two people are on Leave of absence",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["former", "notice", "preferred", "scene_shop", "secondary", "leave"]
 
 TODAY = date(2026, 9, 14)
 DEPTS = [("ADM", "Administration"), ("BOX", "Box Office"), ("DEV", "Development"), ("EDU", "Education"),
@@ -137,7 +156,7 @@ def acceptable(d: dict) -> bool:
     return len({s["ext"] for s in staff}) == len(staff)
 
 
-def page_html(d: dict) -> str:
+def page_html(d: dict, shown: list[str] = SHOWN) -> str:
     cur = d["current"]
     out = ["<!DOCTYPE html>", '<html lang="en">', "<head>", '<meta charset="utf-8">',
            "<title>Lantern Street Playhouse - staff directory</title>", "<style>",
@@ -146,7 +165,7 @@ def page_html(d: dict) -> str:
            "table{border-collapse:collapse;width:100%}", "td,th{text-align:left;padding:5px 8px;border-bottom:1px solid #e4e4e4}",
            "</style>", "</head>", "<body>", "<h1>Lantern Street Playhouse staff directory</h1>",
            "<p>Current staff as of 14 September 2026. Extensions dial from any lobby phone.</p>"]
-    for dept in SHOWN:
+    for dept in shown:
         people_ = sorted([s for s in cur if s["dept"] == dept], key=lambda s: s["display"].split()[-1])
         if not people_:
             continue
@@ -160,49 +179,83 @@ def page_html(d: dict) -> str:
     return "\n".join(out)
 
 
-def export_rows(d: dict, r) -> list[list]:
+def export_rows(d: dict, r, traps: TrapSet | None = None) -> list[list]:
     rows = []
-    for s in d["staff"]:
-        rows.append([s["emp_id"], s["legal_first"], s["last"], s["preferred_raw"], s["code"], s["title"], "Primary",
-                     s["email"], s["ext"], s["status"], s["effective"].strftime("%m/%d/%Y")])
-    for x in d["extra"]:
-        s = x["of"]
-        rows.append([s["emp_id"], s["legal_first"], s["last"], s["preferred_raw"], x["code"], x["title"], "Secondary",
-                     s["email"], s["ext"], s["status"], date(2025, r.randint(1, 12), r.randint(1, 28)).strftime("%m/%d/%Y")])
+    if traps is None or traps.canonical:
+        for s in d["staff"]:
+            rows.append([s["emp_id"], s["legal_first"], s["last"], s["preferred_raw"], s["code"], s["title"], "Primary",
+                         s["email"], s["ext"], s["status"], s["effective"].strftime("%m/%d/%Y")])
+    else:
+        for s in d["staff"]:
+            if not traps.on("former") and s["status"] == "Terminated" and s["effective"] < TODAY:
+                continue
+            status, eff = s["status"], s["effective"]
+            if s is d["notice"] and not traps.on("notice"):  # shown as an ordinary current employee
+                status, eff = "Active", date(2021, 1 + s["ext"] % 12, 1 + s["ext"] % 28)
+            if status == "Leave of absence" and not traps.on("leave"):
+                status = "Active"
+            rows.append([s["emp_id"], s["legal_first"], s["last"],
+                         s["preferred_raw"] if traps.on("preferred") else s["display"],
+                         "PRD" if s["code"] == "SCN" and not traps.on("scene_shop") else s["code"], s["title"], "Primary",
+                         s["email"], s["ext"], status, eff.strftime("%m/%d/%Y")])
+    if traps is None or traps.on("secondary"):
+        for x in d["extra"]:
+            s = x["of"]
+            rows.append([s["emp_id"], s["legal_first"], s["last"], s["preferred_raw"], x["code"], x["title"], "Secondary",
+                         s["email"], s["ext"], s["status"], date(2025, r.randint(1, 12), r.randint(1, 28)).strftime("%m/%d/%Y")])
+        if traps is not None and not traps.canonical:  # keep the secondary rows consistent with the primary ones
+            prim = {row[0]: row for row in rows if row[6] == "Primary"}
+            for row in rows:
+                if row[6] == "Secondary":
+                    row[3], row[9] = prim[row[0]][3], prim[row[0]][9]
     rows.sort(key=lambda x: x[0])
     return rows
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def director_note(md: dict, traps: TrapSet) -> str:
+    return (f"From: {md['display']}, Managing Director\nTo: you\nDate: Mon, 14 Sep 2026 08:40\n"
+            "Subject: new staff directory page\n\n"
+            "The printed directory by the stage door is two seasons out of date. I would like a directory page we "
+            "can put on the backstage screen and send round - one HTML file, nothing it has to load, no scripts (the "
+            "screens are locked down).\n\n"
+            "Group people by department, with each person's name, job title, work email and desk extension.\n\n"
+            "Names: use the name people actually go by. The Preferred name field is what they asked us to use"
+            + (" - some people typed only a first name there, some typed their whole name. If it is empty, use the legal "
+               "name. " if traps.on("preferred") else ". ")
+            + "Please do not print someone's legal first name when they have told us otherwise.\n\n"
+            + " ".join(["Anyone whose employment has ended is off the page."]
+                       + (["A few people have given notice and HR already marks them Terminated with their last day; they "
+                           "are still with us until that day, so keep them."] if traps.on("notice") else [])
+                       + (["People on leave are still staff."] if traps.on("leave") else []))
+            + "\n\n"
+            + ("Some people hold two jobs here. List everyone once, under their main job.\n\n" if traps.on("secondary") else "")
+            + f"{md['pref_first']}\n")
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     cur = d["current"]
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom grader module travels with the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     r = rng(seed + 3)
     write_csv(os.path.join(ws, "hris_jobs_export_2026-09-14.csv"),
               ["Employee ID", "Legal first name", "Legal last name", "Preferred name", "Dept code", "Job title", "Job type",
-               "Work email", "Desk ext", "Employment status", "Status effective"], export_rows(d, r), crlf=True)
+               "Work email", "Desk ext", "Employment status", "Status effective"], export_rows(d, r, traps), crlf=True)
     write_csv(os.path.join(ws, "department_codes.csv"), ["Code", "Department", "Notes"],
               [[c, n, "Folded into Production (PRD) from 1 July 2026 - same crew, one department" if c == "SCN" else ""]
-               for c, n in DEPTS])
+               for c, n in DEPTS if c != "SCN" or traps.on("scene_shop")])
     md = d["md"]
-    write_text(os.path.join(ws, "note_from_managing_director.txt"),
-               f"From: {md['display']}, Managing Director\nTo: you\nDate: Mon, 14 Sep 2026 08:40\n"
-               "Subject: new staff directory page\n\n"
-               "The printed directory by the stage door is two seasons out of date. I would like a directory page we "
-               "can put on the backstage screen and send round - one HTML file, nothing it has to load, no scripts (the "
-               "screens are locked down).\n\n"
-               "Group people by department, with each person's name, job title, work email and desk extension.\n\n"
-               "Names: use the name people actually go by. The Preferred name field is what they asked us to use - "
-               "some people typed only a first name there, some typed their whole name. If it is empty, use the legal "
-               "name. Please do not print someone's legal first name when they have told us otherwise.\n\n"
-               "Anyone whose employment has ended is off the page. A few people have given notice and HR already "
-               "marks them Terminated with their last day; they are still with us until that day, so keep them. "
-               "People on leave are still staff.\n\n"
-               "Some people hold two jobs here. List everyone once, under their main job.\n\n"
-               f"{md['pref_first']}\n")
+    write_text(os.path.join(ws, "note_from_managing_director.txt"), director_note(md, traps))
     write_json(os.path.join(ref, "expected.json"), {
         "staff": [{"display": s["display"], "legal": f"{s['legal_first']} {s['last']}", "legal_first": s["legal_first"],
                    "pref_first": s["pref_first"], "email": s["email"], "ext": s["ext"], "title": s["title"],
@@ -213,7 +266,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_text(os.path.join(sol, "index.html"), page_html(d))
     nt, mar = d["notice"], d["mar"]
     scn = [s for s in cur if s["code"] == "SCN"]
-    traps = [
+    trap_text = [
         "four people are Terminated with a last day before today; they are off the page entirely "
         "(checks: former staff left off; page structure: one row per person)",
         f"{nt['display']} is also marked Terminated but the effective date is {nt['effective'].isoformat()}, after "
@@ -227,13 +280,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
         "under the primary job (checks: page structure: one row per person; page structure: department per person)",
         "two people are on Leave of absence and stay listed (check: every current staff member named)",
     ]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "team-directory-page", "track": "desk", "category": "tooling",
         "title": "Staff directory page for the backstage screen",
         "ask": f"Please build the new staff directory page from this morning's HR export. {md['pref_first']}'s note says "
                "what goes on it. Save it as index.html.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": traps,
+        "traps": active_trap_text(trap_text, TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "index.html exists", "path": "index.html"},
             {"type": "text_contains_all", "name": "every current staff member named", "path": "index.html",
@@ -242,7 +295,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "phrases": [s["display"] for s in d["gone"]] + [s["email"] for s in d["gone"]]},
             {"type": "custom", "name": "page structure", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "team-directory-page", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} current={len(cur)} gone={[s['display'] for s in d['gone']]} notice={nt['display']}")
 
 
@@ -264,14 +321,46 @@ def write_naive(d: dict, out: str) -> None:
     write_text(os.path.join(out, "index.html"), "\n".join(parts))
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """index.html from an agent that is right except that it falls for `trap`."""
+    cur = list(d["current"])
+    shown = SHOWN
+    if trap == "former":          # every export row kept, Terminated or not
+        cur = cur + d["gone"]
+    elif trap == "notice":        # every Terminated row dropped, notice-period included
+        cur = [s for s in cur if s is not d["notice"]]
+    elif trap == "preferred":     # a one-word Preferred name not taken as the name they go by
+        cur = [dict(s, display=f"{s['legal_first']} {s['last']}") if s["preferred_raw"] and " " not in s["preferred_raw"] else s
+               for s in cur]
+    elif trap == "scene_shop":    # SCN read as its own department
+        cur = [dict(s, dept="Scene Shop") if s["code"] == "SCN" else s for s in cur]
+        shown = SHOWN + ["Scene Shop"]
+    elif trap == "secondary":     # one entry per export row, so secondary jobs appear again
+        cur = cur + [dict(x["of"], dept=DEPT_NAME[x["code"]], title=x["title"]) for x in d["extra"]]
+    elif trap == "leave":         # only Active staff listed
+        cur = [s for s in cur if s["status"] != "Leave of absence"]
+    else:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "index.html"), page_html(dict(d, current=cur), shown))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(2000):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

@@ -2,6 +2,9 @@
 """permission-forms-scanned: scanned field-trip permission slips matched to a class roster for the school office.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off ocr,sibling --out DIR    # same draw, those pitfalls removed, same answer
+    python gen.py --mutant old_form --out DIR          # a deliverable that falls for one trap
 
 Traps (each caught by a check, see task.yaml):
   * every slip is an image-only scan; OCR is the only way in                         (checks: student and guardian names; permission and signature)
@@ -23,6 +26,26 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "ocr": "every slip is an image-only scan with skew and dust",
+        "old_form": "three families used last year's form, guardian named before the child",
+        "unsigned": "an unsigned slip ticks 'may attend' and 'Yes' for photos",
+        "two_slips": "one family sent two slips and the later one was scanned first",
+        "sibling": "a Room 2 sibling's slip is in the stack",
+    },
+    fixed={
+        "names": "guardians with a different last name and a nickname on one slip; roster spelling wanted",
+        "declined": "one parent ticked 'may NOT attend'",
+        "no_slip": "a roster student returned nothing and still needs a row",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["ocr", "old_form", "names", "unsigned", "declined", "two_slips", "no_slip", "sibling"]
 
 NICK = {"Elizabeth": "Liz", "Jonathan": "Jon", "Matthew": "Matt", "Nicholas": "Nick", "Christopher": "Chris", "Daniel": "Danny",
         "Anthony": "Tony", "Rebecca": "Becca", "Joshua": "Josh", "Margaret": "Maggie", "Stephanie": "Steph", "Kimberly": "Kim"}
@@ -80,12 +103,48 @@ def old_form(student_name, guardian, phone, photo, dstr):
             "Photos may be taken for school use", "(circle one):", "   (YES)    NO" if photo else "    YES    (NO)", "",
             f"Phone: {phone}", "", f"Signed: {guardian}", f"Date: {dstr}"]
 
-def emit(seed: int) -> None:
+def write_text_pdf(path: str, lines: list[str]) -> None:
+    """A slip as a plain text PDF, used when the `ocr` trap is off."""
+    import html
+    write_pdf_document(path, [("p", html.escape(ln)) if ln else ("spacer", 8) for ln in lines], font="Courier", base_size=11)
+
+
+def note_text(traps: TrapSet) -> str:
+    return ("Hi,\n\nThe permission slips for the pumpkin farm trip on October 9 are scanned in the permission_slips folder. "
+            "The office needs a consents.csv with one row for every student on my roster, with these columns:\n\n"
+            "student_id, student_name, guardian_name, guardian_phone, form_returned, permission, photo_release, signed, date_signed\n\n"
+            "student_name the way it is on the roster (First Last). guardian_name is the parent or guardian who filled in the slip. "
+            "form_returned, permission, photo_release and signed are yes or no. date_signed as YYYY-MM-DD.\n\n"
+            "A slip only counts if a parent or guardian signed it: if it isn't signed, put no for permission and photo release and leave the date blank. "
+            + ("If a family sent in more than one slip, the most recent one is the one that counts. " if traps.on("two_slips") else "")
+            + "For anyone who hasn't returned a slip, "
+            "put no in the yes/no columns and leave guardian, phone and date blank.\n\n"
+            f"Thank you!\n{TEACHER}\nRoom 4\n")
+
+
+def reference_rows(S: list[dict]) -> list[list]:
+    rows = []
+    for s in sorted(S, key=lambda x: x["id"]):
+        if not s["returned"]:
+            rows.append([s["id"], f"{s['first']} {s['last']}", "", "", "no", "no", "no", "no", ""]); continue
+        yn = lambda b: "yes" if b else "no"
+        ok = s["signed"]
+        rows.append([s["id"], f"{s['first']} {s['last']}", f"{s['g_first']} {s['g_last']}", s["phone"], "yes",
+                     yn(ok and s["attend"]), yn(ok and s["photo"]), yn(ok), s["date"].isoformat() if ok else ""])
+    return rows
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed); S = d["students"]; sib = d["sibling"]
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     F = os.path.join(ws, "permission_slips"); os.makedirs(F, exist_ok=True)
     dfmt = [lambda x: f"{x.month}/{x.day}/{x.year}", lambda x: x.strftime("%B %-d, %Y"), lambda x: x.strftime("%-d %b %Y")]
     pages = []  # (lines, seed offset)
+    dropped = set()  # pages a switched-off trap removes; the shuffle still runs over every page so the draw is shared
     for i, s in enumerate(S):
         if not s["returned"]:
             continue
@@ -93,11 +152,15 @@ def emit(seed: int) -> None:
         gname = f"{s['g_first']} {s['g_last']}"
         ph = phone_fmt(s["phone"], i)
         dstr = dfmt[i % 3](s["date"])
-        if s["form"] == "old":
+        if s["form"] == "old" and traps.on("old_form"):
             pages.append(old_form(sname, gname, ph, s["photo"], dstr))
-        else:
+        elif s["signed"] or traps.on("unsigned"):
             pages.append(current_form(sname, "4 (Upper Elementary)", gname, ph, s["attend"], s["photo"], s["signed"], dstr))
+        else:  # the unsigned slip with nothing ticked in favour
+            pages.append(current_form(sname, "4 (Upper Elementary)", gname, ph, False, False, False, dstr))
         if s.get("double"):
+            if not traps.on("two_slips"):
+                dropped.add(len(pages))
             pages.append(current_form(sname, "4 (Upper Elementary)", gname, ph, True, s["early_photo"], True, dfmt[(i + 1) % 3](s["early_date"])))
     pages.append(current_form(f"{sib['first']} {sib['last']}", "2 (Lower Elementary)", f"{sib['g_first']} {sib['g_last']}",
                               phone_fmt(sib["phone"], 1), True, True, True, dfmt[0](sib["date"])))
@@ -110,46 +173,37 @@ def emit(seed: int) -> None:
     a, b = order.index(idx_later), order.index(idx_later + 1)
     if a > b:
         order[a], order[b] = order[b], order[a]
+    if not traps.on("sibling"):
+        dropped.add(len(pages) - 1)
+    if dropped:
+        order = [pi for pi in order if pi not in dropped]
     for n, pi in enumerate(order):
-        write_scan_pdf(os.path.join(F, f"Scan_2026-09-22_{n + 1:03d}.pdf"), pages[pi], font_size=32, seed=seed * 31 + n,
-                       skew_deg=[0.5, -0.7, 0.9, -0.4][n % 4], noise=500 + 40 * (n % 5))
+        if traps.on("ocr"):
+            write_scan_pdf(os.path.join(F, f"Scan_2026-09-22_{n + 1:03d}.pdf"), pages[pi], font_size=32, seed=seed * 31 + n,
+                           skew_deg=[0.5, -0.7, 0.9, -0.4][n % 4], noise=500 + 40 * (n % 5))
+        else:
+            write_text_pdf(os.path.join(F, f"Scan_2026-09-22_{n + 1:03d}.pdf"), pages[pi])
 
     roster = [[s["id"], s["last"], s["first"], r.choice(["4", "5", "6"])] for s in S]
     rrng = rng(seed + 5); rrng.shuffle(roster)
     write_csv(os.path.join(ws, "room4_roster.csv"), ["Student ID", "Last Name", "First Name", "Grade"], sorted(roster, key=lambda x: (x[1], x[2])),
               preamble=["Fernbrook Montessori - Room 4 class list 2026-27", ""], bom=True, crlf=True)
-    write_text(os.path.join(ws, "note_from_ms_osei.txt"),
-        "Hi,\n\nThe permission slips for the pumpkin farm trip on October 9 are scanned in the permission_slips folder. "
-        "The office needs a consents.csv with one row for every student on my roster, with these columns:\n\n"
-        "student_id, student_name, guardian_name, guardian_phone, form_returned, permission, photo_release, signed, date_signed\n\n"
-        "student_name the way it is on the roster (First Last). guardian_name is the parent or guardian who filled in the slip. "
-        "form_returned, permission, photo_release and signed are yes or no. date_signed as YYYY-MM-DD.\n\n"
-        "A slip only counts if a parent or guardian signed it: if it isn't signed, put no for permission and photo release and leave the date blank. "
-        "If a family sent in more than one slip, the most recent one is the one that counts. For anyone who hasn't returned a slip, "
-        "put no in the yes/no columns and leave guardian, phone and date blank.\n\n"
-        f"Thank you!\n{TEACHER}\nRoom 4\n")
+    write_text(os.path.join(ws, "note_from_ms_osei.txt"), note_text(traps))
 
     header = ["student_id", "student_name", "guardian_name", "guardian_phone", "form_returned", "permission", "photo_release", "signed", "date_signed"]
-    rows = []
-    for s in sorted(S, key=lambda x: x["id"]):
-        if not s["returned"]:
-            rows.append([s["id"], f"{s['first']} {s['last']}", "", "", "no", "no", "no", "no", ""]); continue
-        yn = lambda b: "yes" if b else "no"
-        ok = s["signed"]
-        rows.append([s["id"], f"{s['first']} {s['last']}", f"{s['g_first']} {s['g_last']}", s["phone"], "yes",
-                     yn(ok and s["attend"]), yn(ok and s["photo"]), yn(ok), s["date"].isoformat() if ok else ""])
+    rows = reference_rows(S)
     write_csv(os.path.join(ref, "consents.csv"), header, rows)
     write_csv(os.path.join(sol, "consents.csv"), header, rows)
     ids = {k: S[k]["id"] for k in range(12)}
     write_json(os.path.join(ref, "notes.json"), {"old_form": [ids[1], ids[2], ids[8]], "nickname": ids[3], "declined": ids[4], "unsigned": ids[5],
                                                   "two_slips": ids[6], "no_slip": ids[9], "different_last_name": [ids[2], ids[7]],
                                                   "room2_sibling": f"{sib['first']} {sib['last']}"})
-    write_task_yaml(HERE, {
+    spec = {
         "id": "permission-forms-scanned", "track": "desk", "category": "extraction",
         "title": "Match the scanned field trip slips to the class roster",
         "ask": "Ms. Osei scanned the field trip permission slips that came back. Please match them up with her class roster and save it as consents.csv - her note says what the office needs.\n",
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "every slip is an image-only scan with a slight skew and dust; there is no text layer (checks: student and guardian names; permission and signature)",
             "three families used last year's form, which reads 'I, <guardian>, parent or legal guardian of <student>', so the guardian's name comes first (check: student and guardian names)",
             f"two guardians have a different last name from the child, and the slip for {S[3]['first']} {S[3]['last']} calls the child {NICK[S[3]['first']]}; the roster id and spelling are what the office wants (checks: one row per roster student; student and guardian names)",
@@ -158,7 +212,7 @@ def emit(seed: int) -> None:
             "one family sent two slips, a week apart; the later one switches the photo release to yes and was scanned before the earlier one (checks: photo release; date signed)",
             "one roster student returned nothing and still needs a row with no in the yes/no columns (checks: one row per roster student; permission and signature)",
             "a signed slip for a Room 2 sibling of a Room 4 student is in the stack and is not on the roster (checks: row count; other-class slip left out)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "consents.csv", "columns": header},
             {"type": "csv_set_equal", "name": "one row per roster student", "path": "consents.csv", "column": "student_id", "ref": "consents.csv", "normalize": ["strip", "lower"]},
@@ -176,7 +230,61 @@ def emit(seed: int) -> None:
              "columns": ["date_signed"], "min_accuracy": 1.0, "must_match_keys": [ids[5], ids[6]]},
             {"type": "text_not_contains", "name": "other-class slip left out", "path": "consents.csv", "phrases": [sib["first"]]},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "permission-forms-scanned", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[list]:
+    """consents.csv from an agent that is right except that it falls for `trap`."""
+    S = d["students"]; sib = d["sibling"]
+    by_id = {s["id"]: s for s in S}
+    rows = [list(r) for r in reference_rows(S)]
+    for row in rows:
+        s = by_id[row[0]]
+        if trap == "ocr" and s["returned"]:          # no text layer, nothing read: every slip looks missing
+            row[2:] = ["", "", "no", "no", "no", "no", ""]
+        elif trap == "old_form" and s["form"] == "old":  # the first name on last year's form taken as the guardian's
+            row[2] = f"{s['first']} {s['last']}"
+        elif trap == "names":
+            if s["g_last"] != s["last"]:              # guardian assumed to share the child's last name
+                row[2] = f"{s['g_first']} {s['last']}"
+            if s.get("nick"):                         # the slip's nickname kept, so the roster id never matched
+                row[0], row[1] = "", f"{NICK[s['first']]} {s['last']}"
+        elif trap == "unsigned" and not s["signed"] and s["returned"]:  # the ticks read, the blank signature missed
+            row[5:8] = ["yes", "yes", "yes"]
+        elif trap == "declined" and s["returned"] and not s["attend"]:  # 'attend' found, so marked yes
+            row[5] = "yes"
+        elif trap == "two_slips" and s.get("double"):  # the last-scanned (earlier) slip taken as the latest
+            row[6], row[8] = "yes" if s["early_photo"] else "no", s["early_date"].isoformat()
+    if trap == "no_slip":                            # only students with a slip get a row
+        rows = [r for r in rows if by_id[r[0]]["returned"]]
+    if trap == "sibling":                            # the Room 2 slip added as another student
+        rows.append(["", f"{sib['first']} {sib['last']}", f"{sib['g_first']} {sib['g_last']}", sib["phone"], "yes", "yes", "yes",
+                     "yes", sib["date"].isoformat()])
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    return rows
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "consents.csv"),
+              ["student_id", "student_name", "guardian_name", "guardian_phone", "form_returned", "permission", "photo_release",
+               "signed", "date_signed"], mutant_rows(d, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

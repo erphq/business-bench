@@ -2,6 +2,9 @@
 """cash-flow-monthly: a caterer's checking and savings exports to money in and out by month, with a memo.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off transfers,coffee --out DIR    # same draw, those pitfalls removed, same answer
+    python gen.py --mutant pending --out DIR                 # a deliverable that falls for one trap
 
 Business: Fernwood Catering Co. banks event deposits, card payments and corporate lunch accounts in an operating checking account and
 keeps a tax reserve in a savings account at a different bank. The owner wants March to August money in and money
@@ -28,6 +31,25 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "transfers": "sweeps and the June transfer back show up in both exports",
+        "owner_draw": "the owner's draw to account 8832 is worded like the sweeps",
+        "pending": "pending rows and September postings trail the checking export",
+        "coffee": "NIGHTJAR COFFEE ROASTERS contains FEE, so a substring search counts coffee as a bank fee",
+        "format_noise": "savings has signed parenthesised amounts, a running balance, an opening row, BOM and CRLF; "
+                        "checking has Debit/Credit columns and a preamble",
+    },
+    fixed={
+        "fee_spike": "June fees across both accounts are the answer's fee line and must be named in the memo",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["transfers", "owner_draw", "pending", "fee_spike", "coffee", "format_noise"]
 
 MONTHS = [3, 4, 5, 6, 7, 8]
 MONTH_NAME = {3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August"}
@@ -204,28 +226,59 @@ def cent_tolerant(spec: dict) -> dict:
     return spec
 
 
-def emit(seed: int) -> None:
-    d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+def render_desc(t: dict, traps: TrapSet) -> str:
+    """The description as the bank export shows it; with a trap off its misleading wording is made plain."""
+    desc = t["desc"]
+    if not traps.on("coffee") and "NIGHTJAR COFFEE" in desc:
+        return desc.replace("NIGHTJAR COFFEE ROASTERS", "NIGHTJAR BEAN ROASTERS")
+    if not traps.on("owner_draw") and OWNER in desc:
+        return f"OWNER DRAW TO PERSONAL ACCOUNT XXXXXX{OWNER}"
+    return desc
 
-    # ---- workspace ----
-    chk = [t for t in d["tx"] if t["acct"] == CHK]
+
+def write_workspace(d: dict, ws: str, traps: TrapSet) -> None:
+    tx = d["tx"]
+    if not traps.on("transfers"):
+        tx = [t for t in tx if t["kind"] != "transfer"]
+    if not traps.on("pending"):
+        tx = [t for t in tx if t["kind"] != "pending" and t["date"] <= P_END]
+    noisy = traps.on("format_noise")
+    chk = [t for t in tx if t["acct"] == CHK]
     posted = [t for t in chk if t["kind"] != "pending"]
     pending = [t for t in chk if t["kind"] == "pending"]
     write_csv(os.path.join(ws, "first_meridian_checking_x2210.csv"),
               ["Posting Date", "Description", "Debit", "Credit", "Status"],
-              [[t["date"].strftime("%m/%d/%Y"), t["desc"], f"{-t['amount']:.2f}" if t["amount"] < 0 else "",
+              [[t["date"].strftime("%m/%d/%Y"), render_desc(t, traps), f"{-t['amount']:.2f}" if t["amount"] < 0 else "",
                 f"{t['amount']:.2f}" if t["amount"] > 0 else "", "Posted"] for t in posted]
-              + [[t["date"].strftime("%m/%d/%Y"), t["desc"], f"{-t['amount']:.2f}" if t["amount"] < 0 else "",
+              + [[t["date"].strftime("%m/%d/%Y"), render_desc(t, traps), f"{-t['amount']:.2f}" if t["amount"] < 0 else "",
                   f"{t['amount']:.2f}" if t["amount"] > 0 else "", "Pending"] for t in pending],
-              preamble=["First Meridian Bank - Business Checking XXXXXX2210", "Transactions 03/01/2026 through 09/02/2026", ""])
-    sav = [t for t in d["tx"] if t["acct"] == SAV]
-    bal = 41250.00
-    srows = [["03/01/2026", "Opening balance", "", f"{bal:,.2f}"]]
-    for t in sav:
-        bal += t["amount"]
-        srows.append([t["date"].strftime("%m/%d/%Y"), t["desc"], money_str(t["amount"], 5) if t["amount"] < 0 else f"{t['amount']:,.2f}", f"{bal:,.2f}"])
-    write_csv(os.path.join(ws, "cascade_cu_savings_4471.csv"), ["Date", "Description", "Amount", "Balance"], srows, bom=True, crlf=True)
+              preamble=["First Meridian Bank - Business Checking XXXXXX2210",
+                        "Transactions 03/01/2026 through " + ("09/02/2026" if traps.on("pending") else "08/31/2026"), ""]
+              if noisy else None)
+    sav = [t for t in tx if t["acct"] == SAV]
+    if noisy:
+        bal = 41250.00
+        srows = [["03/01/2026", "Opening balance", "", f"{bal:,.2f}"]]
+        for t in sav:
+            bal += t["amount"]
+            srows.append([t["date"].strftime("%m/%d/%Y"), render_desc(t, traps), money_str(t["amount"], 5) if t["amount"] < 0 else f"{t['amount']:,.2f}", f"{bal:,.2f}"])
+        write_csv(os.path.join(ws, "cascade_cu_savings_4471.csv"), ["Date", "Description", "Amount", "Balance"], srows, bom=True, crlf=True)
+    else:
+        write_csv(os.path.join(ws, "cascade_cu_savings_4471.csv"), ["Date", "Description", "Debit", "Credit"],
+                  [[t["date"].strftime("%m/%d/%Y"), render_desc(t, traps), f"{-t['amount']:.2f}" if t["amount"] < 0 else "",
+                    f"{t['amount']:.2f}" if t["amount"] > 0 else ""] for t in sav])
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
+    d = build(seed)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+
+    # ---- workspace ----
+    write_workspace(d, ws, traps)
     write_text(os.path.join(ws, "note_from_jonah.txt"),
                "I'm meeting the bank about a line of credit and they want to see cash flow for March through August.\n\n"
                "Both accounts count - operating checking at First Meridian (ends 2210) and the tax reserve savings at Cascade\n"
@@ -248,13 +301,13 @@ def emit(seed: int) -> None:
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
     inf, out, fees = d["inflow"], d["outflow"], d["fees"]
-    write_task_yaml(HERE, cent_tolerant({
+    spec = cent_tolerant({
         "id": "cash-flow-monthly", "track": "desk", "category": "reports",
         "title": "Money in and out by month for the bank meeting",
         "ask": ("Jonah is meeting the bank about a line of credit and needs March to August cash flow from our two bank exports. "
                 "Build cashflow.xlsx with live formulas and a short memo.md - his note says what he wants.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the monthly tax-reserve sweep appears as a debit in checking and a credit in savings (twice across a month end, a day "
             "apart), and in June $15,000 came back from savings; counting either side inflates money in and money out "
             "(checks: June money in; total money in)",
@@ -269,7 +322,7 @@ def emit(seed: int) -> None:
             "the savings export pays the quarterly estimated tax straight to the IRS, uses one signed Amount column with parentheses, "
             "a running balance, an opening-balance row, a BOM and CRLF endings, while checking has Debit and Credit columns and a "
             "three-line preamble (checks: June money out; total money in)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "cashflow.xlsx exists", "path": "cashflow.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "cashflow.xlsx", "min_count": 18},
@@ -291,17 +344,86 @@ def emit(seed: int) -> None:
                      r"(spike|jump|surge|rose|higher|increase|unusual|more than|times|overdraft|nsf|returned|jumped|up from|above|elevated)"],
              "none": [r"(no (unusual|spike|jump)|not (unusual|a spike)|normal (fees|level))"]},
         ],
-    }))
+    })
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "cash-flow-monthly", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} tx={len(d['tx'])}")
     print("  in", inf, "out", out, "fees", fees, "tot", d["tot_in"], d["tot_out"])
     print("  naive", d["naive"])
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_tx(d: dict, trap: str) -> list[dict]:
+    """The transactions, classified the way an agent that fell for `trap` would classify them."""
+    tx = [dict(t) for t in d["tx"]]
+    for t in tx:
+        if trap == "transfers" and t["kind"] == "transfer":      # both sides of every transfer counted
+            t["kind"] = "in" if t["amount"] > 0 else "out"
+        elif trap == "owner_draw" and OWNER in t["desc"]:        # the draw taken for another sweep
+            t["kind"] = "transfer"
+        elif trap == "pending" and t["kind"] == "pending":       # the trailing Pending rows counted as cleared
+            t["kind"] = "in" if t["amount"] > 0 else "out"
+        elif trap == "fee_spike" and t["fee"] and t["acct"] == SAV:  # fee line built from checking only
+            t["fee"] = False
+        elif trap == "coffee" and "FEE" in t["desc"].upper() and t["amount"] < 0:  # substring match on FEE
+            t["fee"] = True
+        elif trap == "format_noise" and t["acct"] == SAV and t["amount"] < 0 and t["kind"] != "transfer":
+            t["amount"] = -t["amount"]; t["kind"] = "in"           # parenthesised amounts read as positive
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    return tx
+
+
+def mutant_memo(tx: list[dict], name_spike: bool) -> str:
+    inflow = {m: 0.0 for m in MONTHS}; outflow = {m: 0.0 for m in MONTHS}; fees = {m: 0.0 for m in MONTHS}
+    for t in tx:
+        if not (P_START <= t["date"] <= P_END):
+            continue
+        m = t["date"].month
+        if t["kind"] == "in":
+            inflow[m] += t["amount"]
+        elif t["kind"] == "out":
+            outflow[m] += -t["amount"]
+        if t["fee"]:
+            fees[m] += -t["amount"]
+    fees = {m: round(v, 2) for m, v in fees.items()}
+    dd = {"fees": fees, "tot_in": round(sum(inflow.values()), 2), "tot_out": round(sum(outflow.values()), 2)}
+    if name_spike:
+        return memo_text(dd)
+    return f"""# Cash flow, March to August 2026
+
+Across both accounts the business took in ${dd['tot_in']:,.2f} and paid out ${dd['tot_out']:,.2f}, a net
+{'increase' if dd['tot_in'] >= dd['tot_out'] else 'decrease'} of ${abs(dd['tot_in'] - dd['tot_out']):,.2f}.
+
+- Transfers between checking and savings are left out of both columns; the $6,000 transfer to account 8832 in August is an owner's draw and counts as money out.
+- Pending items at the end of the checking export and the September postings are not included.
+"""
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    tx = mutant_tx(d, trap)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "cashflow.xlsx"), cash_sheets({"tx": tx}), creator="mutant")
+    write_text(os.path.join(out, "memo.md"), mutant_memo(tx, trap != "fee_spike"))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
-    s = argparse_seed()
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    s = a.seed
     for attempt in range(800):
         if acceptable(build(s * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw in 800 attempts")
-    emit(s * 1000 + attempt)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(s * 1000 + attempt, traps, a.out, a.mutant)

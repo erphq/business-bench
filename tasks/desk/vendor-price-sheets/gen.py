@@ -2,6 +2,9 @@
 """vendor-price-sheets: a wholesale bakery loads its suppliers' new price sheets for every item on its ordering guide.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off superseded,fax --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant dairy_discount --out DIR      # a prices.csv that falls for one trap
 
 Traps (each caught by a check, see task.yaml):
   * Pacific Packaging's superseded March list is in the folder as PPS_pricelist_FINAL.pdf, with lower prices and
@@ -21,6 +24,24 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "superseded": "Pacific Packaging's superseded March list in the folder (off: not in the folder)",
+        "butter_date": "butter effective date only in a footnote (off: an Effective column on every dairy row)",
+        "fax": "coffee roaster's list is an image-only fax (off: a text PDF with the same content)",
+    },
+    fixed={
+        "cwt": "flour quoted per cwt with a per-cwt allowance; bags are 50 lb and 25 lb",
+        "dairy_discount": "dairy quantity discounts only in a footnote under list prices",
+        "break_edge": "an order quantity exactly on a break, and 0 as next break on the top tier",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["superseded", "cwt", "dairy_discount", "break_edge", "butter_date", "fax"]
 
 BUYER = "Rosa Alvarez"
 BAKERY = "Ellington Bakeries"
@@ -90,9 +111,13 @@ def build(seed: int) -> dict:
 
 def m2(x: float) -> str: return f"${x:,.2f}"
 
-def emit(seed: int) -> None:
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     P = os.path.join(ws, "price_sheets"); os.makedirs(P, exist_ok=True)
 
     # Pacific Packaging, current (Helvetica, gridded tier table)
@@ -107,8 +132,9 @@ def emit(seed: int) -> None:
         ("spacer", 8), ("small", "Freight prepaid on orders over $750. Prices subject to change with 30 days' notice.")],
         font="Helvetica", base_size=10)
     # Pacific Packaging, superseded March list (named FINAL)
-    rows = [["Item", "Description", "Qty 1-9", "Qty 10-49", "Qty 50+"]] + [[s, desc, m2(o[0]), m2(o[1]), m2(o[2])] for s, desc, _, o in d["pps"]]
-    write_pdf_document(os.path.join(P, "PPS_pricelist_FINAL.pdf"), [
+    if traps.on("superseded"):
+      rows = [["Item", "Description", "Qty 1-9", "Qty 10-49", "Qty 50+"]] + [[s, desc, m2(o[0]), m2(o[1]), m2(o[2])] for s, desc, _, o in d["pps"]]
+      write_pdf_document(os.path.join(P, "PPS_pricelist_FINAL.pdf"), [
         ("title", "Pacific Packaging Supply - Price List"), ("p", "Case prices. Quantity pricing by cases per item per order."), ("spacer", 4),
         ("table", rows, {"col_widths": [70, 210, 60, 65, 60]}),
         ("spacer", 10), ("small", "Prices effective March 1, 2026 until further notice.  Pacific Packaging Supply, Tacoma WA.")],
@@ -125,13 +151,21 @@ def emit(seed: int) -> None:
         ("spacer", 10), ("p", "With thanks for your business,<br/>Cascade Mill &amp; Grain Sales Office")],
         font="Times-Roman", pagesize="a4", base_size=11)
     # Bluestem Dairy (Courier, list only, discounts and butter dates in footnotes)
-    rows = [["Item #", "Description", "Unit", "List"]] + [[s + ("*" if butter else ""), desc, unit, m2(lst)] for s, desc, unit, lst, butter in d["bd"]]
+    if traps.on("butter_date"):
+        rows = [["Item #", "Description", "Unit", "List"]] + [[s + ("*" if butter else ""), desc, unit, m2(lst)] for s, desc, unit, lst, butter in d["bd"]]
+        widths = [70, 230, 60, 60]
+        butter_note = ("small", "* Butter is market priced. Butter prices marked * are effective 10/01/2026 through 10/31/2026 and replace the September butter prices.")
+    else:
+        rows = [["Item #", "Description", "Unit", "List", "Effective"]] + [[s, desc, unit, m2(lst), "10/01/2026" if butter else "10/05/2026"]
+                                                                          for s, desc, unit, lst, butter in d["bd"]]
+        widths = [70, 200, 50, 55, 70]
+        butter_note = ("small", "Butter is market priced; butter prices run through 10/31/2026 and replace the September butter prices.")
     write_pdf_document(os.path.join(P, "Bluestem_Dairy_wholesale.pdf"), [
         ("kv", [("Customer", BAKERY), ("Sheet date", "09/28/2026"), ("Prices effective", "10/05/2026")]), ("hr", None),
         ("title", "BLUESTEM DAIRY - WHOLESALE PRICE SHEET"), ("spacer", 4),
-        ("table", rows, {"shade_header": True, "col_widths": [70, 230, 60, 60]}),
+        ("table", rows, {"shade_header": True, "col_widths": widths}),
         ("spacer", 8),
-        ("small", "* Butter is market priced. Butter prices marked * are effective 10/01/2026 through 10/31/2026 and replace the September butter prices."),
+        butter_note,
         ("small", "Quantity discounts, per item per order: 24 to 71 units, 5% off list. 72 units or more, 8% off list."),
         ("small", "Bluestem Dairy Co-op, Madison WI. Net 15.")],
         font="Courier", base_size=9.5)
@@ -141,7 +175,11 @@ def emit(seed: int) -> None:
     for sku, desc, (p1, p2, p3) in d["nj"]:
         lines.append(f"{sku:<6} {desc:<18} {p1:>6.2f}  {p2:>6.2f}  {p3:>6.2f}")
     lines += ["", "QTY BREAKS BY BAGS OF EACH COFFEE", "PER ORDER. NET 30.", "", "FAX TO: ELLINGTON BAKERIES - ROSA"]
-    write_scan_pdf(os.path.join(P, "fax_nightjar_0901.pdf"), lines, font_size=30, seed=seed + 21, skew_deg=-0.6, noise=600)
+    if traps.on("fax"):
+        write_scan_pdf(os.path.join(P, "fax_nightjar_0901.pdf"), lines, font_size=30, seed=seed + 21, skew_deg=-0.6, noise=600)
+    else:  # the same fax content as a text PDF
+        write_pdf_document(os.path.join(P, "fax_nightjar_0901.pdf"),
+                           [("p", ln) if ln else ("spacer", 6) for ln in lines], font="Courier", base_size=10)
 
     # ordering guide (merged title, preamble)
     grows = [[it["ours"], it["sku"], it["qty"], it["unit"]] for it in d["items"]]
@@ -167,19 +205,19 @@ def emit(seed: int) -> None:
     write_csv(os.path.join(ref, "prices.csv"), header, rows)
     write_csv(os.path.join(sol, "prices.csv"), header, rows)
     write_json(os.path.join(ref, "notes.json"), {"superseded_prices": {s: o for s, _, _, o in d["pps"]}})
-    write_task_yaml(HERE, {
+    spec = {
         "id": "vendor-price-sheets", "track": "desk", "category": "extraction",
         "title": "Load the fall supplier price sheets for the ordering guide",
         "ask": "The suppliers sent their fall price sheets. Get the prices for everything on our ordering guide into prices.csv so Rosa can load them - her note says what she needs.\n",
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "Pacific Packaging's superseded March list sits in the folder as PPS_pricelist_FINAL.pdf with lower prices and 10-49 / 50+ breaks; the October list says it supersedes all earlier lists (checks: unit price at our order quantity; next price break)",
             "the mill quotes flour per hundredweight with a per-cwt volume allowance; a 50 lb bag is half a cwt after the allowance, and the rye comes in 25 lb bags (check: unit price at our order quantity)",
             "the dairy sheet prints list prices only; the 5% (24-71) and 8% (72+) quantity discounts are in a footnote under the table (checks: unit price at our order quantity; order total)",
             "the 12in cake boxes are ordered 10 cases at a time, exactly on the 10-24 break, and items already on the top tier carry 0 as the next break (check: next price break)",
             "the dairy's butter lines are market priced and take effect 10/01, while the rest of the sheet takes effect 10/05; the mill's date is in its covering prose (check: effective dates)",
             "the coffee roaster's list is an image-only fax (checks: one row per item; vendor names)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "prices.csv", "columns": header},
             {"type": "csv_set_equal", "name": "one row per item", "path": "prices.csv", "column": "sku", "ref": "prices.csv", "normalize": ["strip", "lower"]},
@@ -196,7 +234,64 @@ def emit(seed: int) -> None:
             {"type": "csv_values_match", "name": "effective dates", "path": "prices.csv", "ref": "prices.csv", "key": "sku",
              "columns": ["effective_date"], "min_accuracy": 1.0, "must_match_keys": ["BD-2210", "BD-2215", "BD-4001", "CMG-104"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "vendor-price-sheets", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_items(d: dict, trap: str) -> list[dict]:
+    """The reference rows, right except that they fall for `trap`."""
+    items = [dict(it) for it in d["items"]]
+    by = {it["sku"]: it for it in items}
+    if trap == "superseded":        # the March list named FINAL used instead of the October list
+        for s, _, _, o in d["pps"]:
+            it = by[s]; tiers = [(1, o[0]), (10, o[1]), (50, o[2])]
+            it["unit_price"] = [p for m, p in tiers if it["qty"] >= m][-1]
+            it["next_break"] = next((m for m, _ in tiers if m > it["qty"]), 0)
+            it["effective"] = date(2026, 3, 1)
+    elif trap == "cwt":             # the per-cwt price (less allowance) taken as the price of a bag
+        for s, _, _, cwt in d["cmg"]:
+            it = by[s]; allow = 3.00 if it["qty"] >= 40 else 1.50 if it["qty"] >= 10 else 0.0
+            it["unit_price"] = round(cwt - allow, 2)
+    elif trap == "dairy_discount":  # the footnoted quantity discounts missed: list price paid
+        for s, _, _, lst, _ in d["bd"]:
+            by[s]["unit_price"] = lst
+    elif trap == "break_edge":      # a break read as "more than": 10 cases do not reach the 10-24 price
+        for s, _, t, _ in d["pps"]:
+            it = by[s]; tiers = [(1, t[0]), (10, t[1]), (25, t[2])]
+            it["unit_price"] = [p for m, p in tiers if m == 1 or it["qty"] > m][-1]
+            it["next_break"] = next((m for m, _ in tiers if m > 1 and m >= it["qty"]), 0)
+    elif trap == "butter_date":     # the sheet's header date used for the butter lines too
+        for s, _, _, _, butter in d["bd"]:
+            if butter:
+                by[s]["effective"] = date(2026, 10, 5)
+    elif trap == "fax":             # the image-only fax never read
+        items = [it for it in items if it["vendor"] != "Nightjar Coffee Roasters"]
+    else:
+        raise KeyError(trap)
+    for it in items:
+        it["total"] = round(it["qty"] * it["unit_price"], 2)
+    return items
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    header = ["sku", "vendor", "unit_price", "order_total", "next_break_qty", "effective_date"]
+    rows = [[it["sku"], it["vendor"], f"{it['unit_price']:.2f}", f"{it['total']:.2f}", it["next_break"], it["effective"].isoformat()]
+            for it in mutant_items(d, trap)]
+    write_csv(os.path.join(out, "prices.csv"), header, rows)
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

@@ -2,6 +2,9 @@
 """ap-aging: payables aging by vendor at 31 August for a cidery, with a memo naming the most overdue bill.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off drafts,partial --out DIR      # same draw, those pitfalls removed, same answer
+    python gen.py --mutant eom_terms --out DIR              # a deliverable that falls for one trap
 
 Business: a cider maker buying fruit, glass, labels, CO2, barrels and freight on a mix of vendor terms. The owner
 wants the aging for the bank's line-of-credit review.
@@ -26,6 +29,24 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws (and emit()'s own rng) are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "partial": "export carries Amount beside Open Balance; partly paid bills age on the open part",
+        "drafts": "two Draft bills listed in the export",
+    },
+    fixed={
+        "due_date": "bills age from the due date under the vendor's terms, not the bill date",
+        "eom_terms": "Net 30 EOM and 2% 10 Net 30 terms",
+        "credits": "applied credit comes off its bill; unapplied credits sit in Current as negatives",
+        "most_overdue": "the most overdue bill is not the one with the oldest bill date",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["due_date", "eom_terms", "partial", "credits", "drafts", "most_overdue"]
 
 AS_OF = date(2026, 8, 31)
 BUCKETS = ["Current", "1-30", "31-60", "61-90", "Over 90"]
@@ -228,30 +249,11 @@ Summit Gas credit for a bill already paid are shown as negatives in Current. The
 """
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
-    if naive_dir:
-        write_naive(d, naive_dir)
-        return
-    ws, ref, sol = task_dirs(HERE)
-    r = rng(seed + 9)
-    bills, credits = d["bills"], d["credits"]
-
-    rows = []
-    for b in bills:
-        style = r.randrange(3)
-        rows.append([b["no"], b["vendor"], date_variant(b["date"], [1, 0, 3][style]), b["terms_override"], money_str(b["amount"], 1),
-                     money_str(r2(b["amount"] - b["paid"]), 1), b["status"]])
-    write_csv(os.path.join(ws, "bills_export_2026-08-31.csv"), ["Bill No", "Vendor", "Bill Date", "Terms", "Amount", "Open Balance", "Status"],
-              rows, preamble=["Two Rivers Cider Works - Unpaid Bills", "As of 08/31/2026 (terms shown only where the bill overrides the vendor default)"], crlf=True)
-    write_xlsx(os.path.join(ws, "vendor_list.xlsx"), {"Vendors": {
-        "header": ["Vendor", "Default Terms", "Category", "Contact"],
-        "rows": [[v[0], v[2], cat, f"{f} {l}"] for v, cat, (f, l) in zip(VENDORS, ["Fruit", "Packaging", "Packaging", "CO2 and gases", "Freight",
-                                                                                  "Barrels", "Packaging", "Facilities", "Fruit", "Facilities"], people(r, 10))],
-        "widths": {"A": 30, "B": 16, "C": 14, "D": 20}}}, creator="Two Rivers")
-    write_csv(os.path.join(ws, "vendor_credits_open.csv"), ["Credit No", "Vendor", "Credit Date", "Amount", "Apply To Bill", "Memo"],
-              [[c["no"], c["vendor"], c["date"].strftime("%m/%d/%Y"), f"{c['amount']:.2f}", c["applies"], c["memo"]] for c in credits])
-    write_text(os.path.join(ws, "note_from_wes.txt"), """The bank wants an AP aging as of August 31 for the line of credit review.
+def wes_note(traps: TrapSet) -> str:
+    """Wes's instructions. With the drafts out of the export, the line about leaving them out is dropped so the
+    agent is not sent looking for bills that are not there."""
+    drafts = "- Drafts aren't approved bills. Leave them out.\n" if traps.on("drafts") else ""
+    return """The bank wants an AP aging as of August 31 for the line of credit review.
 
 - Age every bill from when it was due, not when it was dated. Terms are on the vendor list; a bill only has terms
   in the export when we agreed something different for that bill, and then those win.
@@ -261,13 +263,51 @@ def emit(seed: int, naive_dir: str | None) -> None:
 - Use what we still owe on each bill - some are partly paid.
 - Vendor credits that name a bill come off that bill. A credit that doesn't name a bill we still owe goes in current
   as a negative for that vendor.
-- Drafts aren't approved bills. Leave them out.
-
+""" + drafts + """
 Put the aging by vendor, with totals, in ap_aging.xlsx with formulas, and write memo.md for the bank with the total we
 owe, how much of it is past due, and the bill that has been overdue the longest.
 
 - Wes
-""")
+"""
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
+    d = build(seed)
+    if naive_dir:
+        write_naive(d, naive_dir)
+        return
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    r = rng(seed + 9)
+    bills, credits = d["bills"], d["credits"]
+    keep_drafts, keep_amount = traps.on("drafts"), traps.on("partial")
+
+    rows = []
+    for b in bills:
+        style = r.randrange(3)  # drawn for every bill, drafts included, so the rest of emit's draws never move
+        if not keep_drafts and b["status"] == "Draft":
+            continue
+        rows.append([b["no"], b["vendor"], date_variant(b["date"], [1, 0, 3][style]), b["terms_override"], money_str(b["amount"], 1),
+                     money_str(r2(b["amount"] - b["paid"]), 1), b["status"]])
+        if not keep_amount:
+            del rows[-1][4]
+    header = ["Bill No", "Vendor", "Bill Date", "Terms", "Amount", "Open Balance", "Status"]
+    if not keep_amount:
+        del header[4]
+    write_csv(os.path.join(ws, "bills_export_2026-08-31.csv"), header,
+              rows, preamble=["Two Rivers Cider Works - Unpaid Bills", "As of 08/31/2026 (terms shown only where the bill overrides the vendor default)"], crlf=True)
+    write_xlsx(os.path.join(ws, "vendor_list.xlsx"), {"Vendors": {
+        "header": ["Vendor", "Default Terms", "Category", "Contact"],
+        "rows": [[v[0], v[2], cat, f"{f} {l}"] for v, cat, (f, l) in zip(VENDORS, ["Fruit", "Packaging", "Packaging", "CO2 and gases", "Freight",
+                                                                                  "Barrels", "Packaging", "Facilities", "Fruit", "Facilities"], people(r, 10))],
+        "widths": {"A": 30, "B": 16, "C": 14, "D": 20}}}, creator="Two Rivers")
+    write_csv(os.path.join(ws, "vendor_credits_open.csv"), ["Credit No", "Vendor", "Credit Date", "Amount", "Apply To Bill", "Memo"],
+              [[c["no"], c["vendor"], c["date"].strftime("%m/%d/%Y"), f"{c['amount']:.2f}", c["applies"], c["memo"]] for c in credits])
+    write_text(os.path.join(ws, "note_from_wes.txt"), wes_note(traps))
 
     write_xlsx(os.path.join(sol, "ap_aging.xlsx"), report_sheets(d), creator="reference")
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
@@ -285,13 +325,13 @@ owe, how much of it is past due, and the bill that has been overdue the longest.
     def pin(name, value, near):
         return {"type": "xlsx_value_present", "name": name, "path": "ap_aging.xlsx", "expected": value, "rel_tol": cent_tol(value), "near_text": near}
     digits = o["no"].split("-")[1]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "ap-aging", "track": "desk", "category": "bookkeeping",
         "title": "Payables aging by vendor for the line of credit review",
         "ask": ("The bank wants our accounts payable aging as of August 31. Wes's note says how to do it and the bills, vendor list "
                 "and credits are in the folder. Save the aging as ap_aging.xlsx and the write-up as memo.md.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "bills age from the due date under each vendor's terms from the vendor list, and the export only shows terms where a bill "
             "overrides them (a Pacific Corrugated bill on Net 60 is still current); aging from the bill date pushes most of the book a "
             "bucket older (checks: current bucket total; 31-60 bucket total)",
@@ -305,7 +345,7 @@ owe, how much of it is past due, and the bill that has been overdue the longest.
             "two Draft bills (Northline Freight and Barrel & Stave) are not approved and are not payables (checks: total payables; Northline Freight total)",
             f"the bill overdue longest is {o['no']} from {o['vendor']} ({o['days']} days past due); Barrel & Stave's {ob['no']} has the "
             "oldest bill date but Net 60 terms (check: memo names the most overdue bill)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "ap_aging.xlsx exists", "path": "ap_aging.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "ap_aging.xlsx", "min_count": 10},
@@ -324,7 +364,10 @@ owe, how much of it is past due, and the bill that has been overdue the longest.
                      r"(oldest|longest|most (overdue|past due|late)|furthest|overdue the longest|largest number of days|most days)"],
 },
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "ap-aging", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} bills={len(bills)} total={d['total']} past_due={d['past_due']} buckets={btot} oldest={o['no']} {o['days']}d")
     print("vendors:", vtot)
 
@@ -343,15 +386,66 @@ def write_naive(d: dict, out: str) -> None:
     write_text(os.path.join(out, "memo.md"), f"# AP aging\n\nWe owe {tot[-1]:,.2f}. The oldest bill is {ob['no']} from {ob['vendor']}.\n")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_aging(d: dict, trap: str) -> dict:
+    """The aging, recomputed from the bills and credits the way an agent that fell for `trap` would, and right
+    in every other respect. Returns the fields report_sheets() and memo_text() read."""
+    bills, credits = d["bills"], d["credits"]
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    use = [b for b in bills if b["status"] == "Open" or trap == "drafts"]   # drafts: every listed bill is a payable
+    open_nos = {b["no"] for b in use}
+    rows = []
+    for b in use:
+        cred = 0.0 if trap == "credits" else sum(c["amount"] for c in credits if c["applies"] == b["no"])
+        base = b["amount"] if trap == "partial" else b["amount"] - b["paid"]   # partial: the Amount column
+        terms = b["terms"]
+        if trap == "eom_terms":        # Net 30 EOM read as Net 30; 2% 10 Net 30 read as due in 10 days
+            terms = {"net 30 eom": "Net 30", "2% 10 net 30": "Net 10"}.get(terms.lower(), terms)
+        due = b["date"] if trap == "due_date" else due_date(b["date"], terms)   # due_date: aged from the bill date
+        days = (AS_OF - due).days
+        rows.append({"vendor": b["vendor"], "ref": b["no"], "open": r2(base - cred), "bucket": bucket(days), "days": days,
+                     "date": b["date"], "terms": terms, "due": due, "bill": b})
+    if trap != "credits":              # credits: the credit file never opened
+        for c in credits:
+            if c["applies"] not in open_nos:
+                rows.append({"vendor": c["vendor"], "ref": c["no"], "open": -c["amount"], "bucket": "Current", "days": 0,
+                             "date": c["date"], "terms": "credit", "due": None})
+    vendors = d["vendors"]
+    grid = {(v, k): r2(sum(x["open"] for x in rows if x["vendor"] == v and x["bucket"] == k)) for v in vendors for k in BUCKETS}
+    vtot = {v: r2(sum(grid[(v, k)] for k in BUCKETS)) for v in vendors}
+    btot = {k: r2(sum(grid[(v, k)] for v in vendors)) for k in BUCKETS}
+    top = max((x for x in rows if x["due"]), key=lambda x: x["days"])
+    if trap == "most_overdue":         # the bill with the oldest date taken as the most overdue
+        top = min((x for x in rows if x["due"]), key=lambda x: (x["date"], x["ref"]))
+    oldest = dict(top["bill"], open=top["open"], days=top["days"], terms=top["terms"])
+    return {"rows": rows, "grid": grid, "vtot": vtot, "btot": btot, "total": r2(sum(vtot.values())),
+            "past_due": r2(sum(btot[k] for k in BUCKETS[1:])), "oldest": oldest, "vendors": vendors}
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    m = mutant_aging(d, trap)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "ap_aging.xlsx"), report_sheets(m), creator="mutant")
+    write_text(os.path.join(out, "memo.md"), memo_text(m))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(600):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

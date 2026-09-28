@@ -2,6 +2,9 @@
 """incident-summary: half-year safety incidents by site and type for a metal fabrication shop.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off site_names,voided --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant relisted --out DIR               # a deliverable that falls for one trap
 
 Business: a fabricator with four sites. Supervisors type incidents into a shared workbook (one sheet per
 quarter) and the floor tablets collect near misses into their own export. EHS wants one summary.
@@ -24,6 +27,25 @@ from datetime import date
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "site_names": "each site written four or five ways (off: the canonical site name everywhere)",
+        "relisted": "late Q1 incidents repeated at the top of the Q2 sheet (off: listed once, on Q1)",
+        "type_codes": "Type column mixes legend codes with free text (off: the legend's type names)",
+        "voided": "voided / reported-in-error rows left in the log (off: not in the log)",
+        "format_noise": "three date formats, merged titles, instruction rows, CSV preamble and BOM (off: clean files)",
+    },
+    fixed={
+        "near_misses": "near misses are a separate export, reported on their own line, never in the incident count",
+        "warehouse": "the Warehouse has no incidents but is still a site on the report",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["site_names", "relisted", "type_codes", "voided", "near_misses", "warehouse", "format_noise"]
 
 
 # bizgen.write_xlsx leaves openpyxl's save-time wall clock in docProps/core.xml, so two runs a
@@ -175,19 +197,25 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverables
 
-def report_sheets(inc_rows: list[list], nm_rows: list[list]) -> dict:
+def _col(j: int) -> str:
+    """Column letter for 0-based index j counted from A (chr for A..Z, as the reference always was)."""
+    return chr(ord("A") + j) if j < 26 else _col(j // 26 - 1) + chr(ord("A") + j % 26)
+
+
+def report_sheets(inc_rows: list[list], nm_rows: list[list], sites: list[str] = SITES,
+                  types: list[str] = TYPE_NAMES) -> dict:
     n, nn = len(inc_rows) + 1, len(nm_rows) + 1
     rows = []
-    for i, s in enumerate(SITES, start=2):
+    for i, s in enumerate(sites, start=2):
         line = [s]
-        for j in range(len(TYPE_NAMES)):
-            c = chr(ord("B") + j)
+        for j in range(len(types)):
+            c = _col(1 + j)
             line.append(f"=COUNTIFS(Incidents!$C$2:$C${n},$A{i},Incidents!$D$2:$D${n},{c}$1)")
-        line.append(f"=SUM(B{i}:{chr(ord('B') + len(TYPE_NAMES) - 1)}{i})")
+        line.append(f"=SUM(B{i}:{_col(len(types))}{i})")
         line.append(f"=COUNTIF(NearMisses!$C$2:$C${nn},$A{i})")
         rows.append(line)
-    last = 1 + len(SITES)
-    cols = [chr(ord("B") + j) for j in range(len(TYPE_NAMES) + 2)]
+    last = 1 + len(sites)
+    cols = [_col(1 + j) for j in range(len(types) + 2)]
     rows.append(["All sites"] + [f"=SUM({c}2:{c}{last})" for c in cols])
     rows.append([])
     rows.append(["Incidents exclude voided rows and near misses. Near misses come from the tablet export and are "
@@ -196,54 +224,92 @@ def report_sheets(inc_rows: list[list], nm_rows: list[list]) -> dict:
         "Incidents": {"header": ["incident_id", "date", "site", "type", "severity"], "rows": inc_rows,
                       "widths": {"C": 14, "D": 22}},
         "NearMisses": {"header": ["report_id", "date", "site"], "rows": nm_rows, "widths": {"C": 14}},
-        "Report": {"header": ["Site"] + TYPE_NAMES + ["Total incidents", "Near misses"], "rows": rows,
+        "Report": {"header": ["Site"] + list(types) + ["Total incidents", "Near misses"], "rows": rows,
                    "widths": {"A": 14, "H": 16, "I": 14}},
     }
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def ehs_email(traps: TrapSet) -> str:
+    names = traps.on("site_names"); codes = traps.on("type_codes")
+    first = ("I need the half-year safety numbers for the board and for the insurer: how many incidents at each "
+             "of our four sites, broken out by type. Our sites are Plant 1, Plant 2, East Fab and the Warehouse")
+    if names and codes:
+        first += (" - the crews write them down however they feel like it (PLANT 2, Plant #2, Plant Two, it "
+                  "is all the same place), and the type column is half legend codes and half whatever they typed. "
+                  "The legend sheet in the workbook says what the codes mean.")
+    elif names:
+        first += (" - the crews write them down however they feel like it (PLANT 2, Plant #2, Plant Two, it "
+                  "is all the same place).")
+    elif codes:
+        first += (". The type column is half legend codes and half whatever they typed. "
+                  "The legend sheet in the workbook says what the codes mean.")
+    else:
+        first += "."
+    last = ("Anything marked voided or reported in error is not an incident either. And every site goes on the "
+            "report, even a site that had a clean half.\n\n" if traps.on("voided") else
+            "Every site goes on the report, even a site that had a clean half.\n\n")
+    return (first + "\n\n"
+            "Near misses are not incidents. They matter, so give them their own line, but they never go into "
+            "the incident count - the insurer reads that number literally.\n\n"
+            + last +
+            "In the memo tell me which site had the most incidents this half.")
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     grid, site_tot, nm_tot = d["grid"], d["site_tot"], d["nm_tot"]
+    noisy = traps.on("format_noise")
+    names, codes, voids = traps.on("site_names"), traps.on("type_codes"), traps.on("voided")
 
     # ---- workspace ----
     def sheet_rows(month_lo, month_hi, extra=()):
         rows = []
         for x in list(extra) + [y for y in d["incidents"] if month_lo <= y["date"].month <= month_hi]:
-            rows.append([x["id"], date_variant(x["date"], sum(ord(c) for c in x["id"]) % 3), x["shown_site"],
-                         x["shown_type"], x["desc"], x["sev"], x["who"], x["status"]])
+            if x["void"] and not voids:
+                continue
+            rows.append([x["id"], date_variant(x["date"], sum(ord(c) for c in x["id"]) % 3) if noisy else x["date"],
+                         x["shown_site"] if names else x["site"], x["shown_type"] if codes else x["type"],
+                         x["desc"], x["sev"], x["who"], x["status"]])
         return rows
 
     hdr = ["Incident ID", "Date", "Site", "Type", "Description", "Severity", "Reported by", "Status"]
-    stable_xlsx(os.path.join(ws, "incident_log_2026_h1.xlsx"), {
+    if traps.on("relisted"):
+        q1_rows, q2_rows = sheet_rows(1, 3), sheet_rows(4, 6, extra=sorted(d["dups"], key=lambda x: x["id"]))
+        q2_pre = [["Late entries from Q1 are repeated at the top of this sheet"]]
+    else:
+        q1_rows, q2_rows = sheet_rows(1, 3), sheet_rows(4, 6)
+        q2_pre = [["Site supervisors: enter every injury here"]]
+    sheets = {
         "Q1": {"merged_title": "Incident log - Q1 2026", "preamble": [["Site supervisors: enter every injury here"]],
-               "header": hdr, "rows": sheet_rows(1, 3), "widths": {"A": 14, "C": 14, "D": 20, "E": 46, "G": 20}},
+               "header": hdr, "rows": q1_rows, "widths": {"A": 14, "C": 14, "D": 20, "E": 46, "G": 20}},
         "Q2": {"merged_title": "Incident log - Q2 2026",
-               "preamble": [["Late entries from Q1 are repeated at the top of this sheet"]],
-               "header": hdr, "rows": sheet_rows(4, 6, extra=sorted(d["dups"], key=lambda x: x["id"])),
+               "preamble": q2_pre,
+               "header": hdr, "rows": q2_rows,
                "widths": {"A": 14, "C": 14, "D": 20, "E": 46, "G": 20}},
         "Legend": {"merged_title": "Type codes", "header": ["Code", "Type"],
                    "rows": [[code, name] for name, code, _ in TYPES], "widths": {"B": 24}},
-    }, creator="EHS")
+    }
+    if not noisy:
+        for sheet in sheets.values():
+            sheet.pop("merged_title", None); sheet.pop("preamble", None)
+    stable_xlsx(os.path.join(ws, "incident_log_2026_h1.xlsx"), sheets, creator="EHS")
     write_csv(os.path.join(ws, "near_miss_tablet_export.csv"), ["Report ID", "Date", "Site", "What happened", "Logged by"],
-              [[x["id"], date_variant(x["date"], 1), x["shown_site"], x["what"], x["who"]] for x in d["near"]],
-              preamble=["Floor tablet export - near miss reports", "01/01/2026 - 06/30/2026"], bom=True)
+              [[x["id"], date_variant(x["date"], 1) if noisy else x["date"].isoformat(),
+                x["shown_site"] if names else x["site"], x["what"], x["who"]] for x in d["near"]],
+              preamble=["Floor tablet export - near miss reports", "01/01/2026 - 06/30/2026"] if noisy else None, bom=noisy)
     write_email_thread(os.path.join(ws, "email_from_ehs.txt"), [
         {"from": "Aisha Okafor <aisha@ironwoodfab.com>", "to": "you", "date": "Wed, 8 Jul 2026 07:55",
          "subject": "half-year safety summary",
-         "body": ("I need the half-year safety numbers for the board and for the insurer: how many incidents at each "
-                  "of our four sites, broken out by type. Our sites are Plant 1, Plant 2, East Fab and the "
-                  "Warehouse - the crews write them down however they feel like it (PLANT 2, Plant #2, Plant Two, it "
-                  "is all the same place), and the type column is half legend codes and half whatever they typed. "
-                  "The legend sheet in the workbook says what the codes mean.\n\n"
-                  "Near misses are not incidents. They matter, so give them their own line, but they never go into "
-                  "the incident count - the insurer reads that number literally.\n\n"
-                  "Anything marked voided or reported in error is not an incident either. And every site goes on the "
-                  "report, even a site that had a clean half.\n\n"
-                  "In the memo tell me which site had the most incidents this half.")}])
+         "body": ehs_email(traps)}])
 
     # ---- reference ----
     write_csv(os.path.join(ref, "incidents_by_site_type.csv"), ["site", "type", "incidents"],
@@ -262,14 +328,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     stable_xlsx(os.path.join(sol, "incidents.xlsx"), report_sheets(inc_rows, nm_rows), creator="reference")
     write_text(os.path.join(sol, "memo.md"), memo_text(d))
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "incident-summary", "track": "desk", "category": "reports",
         "title": "Half-year safety incidents by site and type",
         "ask": ("Aisha needs the first-half safety numbers for the board and the insurer, by site and by type. "
                 "Save it as incidents.xlsx with live formulas and put the headline in memo.md. Her email says how "
                 "she counts them.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "each site is written four or five ways across the two sheets and the tablet export (PLANT 2, Plant #2, "
             "Plant Two, Fab East); a group-by on the raw site column splits every site and names the wrong worst site "
             "(checks: Plant 2 incidents; Plant 1 lacerations; memo names the worst site)",
@@ -284,7 +350,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "misses, so a group-by over the incident log drops it from the report (check: warehouse near misses)",
             "dates come in three formats, the workbook sheets carry a merged title and an instruction row, and the "
             "tablet export has a two-line preamble and a BOM (check: total incidents, all sites)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "incidents.xlsx exists", "path": "incidents.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "incidents.xlsx", "min_count": 12},
@@ -304,7 +370,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
                      r"(\bmost\b|\bhighest\b|\bworst\b|\bmore incidents\b|\bled\b|\bleads\b|\btop\b)"],
              "none": [r"\bfewest\b", r"\bleast\b", r"\bcleanest\b"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "incident-summary", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} incidents={len(d['incidents'])} live={len(d['live'])} near={len(d['near'])} "
           f"voided={sum(1 for x in d['incidents'] if x['void'])} relisted={[x['id'] for x in d['dups']]}")
     print("site totals:", site_tot, "near misses:", nm_tot)
@@ -350,15 +419,70 @@ def write_naive(d: dict, out: str) -> None:
                "across the sites. Incidents are spread fairly evenly and no single site stands out.\n")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """incidents.xlsx and memo.md, right except that they fall for `trap`."""
+    if trap not in TRAPS.names:
+        raise KeyError(trap)
+    inc = [x for x in d["incidents"] if not x["void"] or trap == "voided"]            # voided rows counted
+    if trap == "relisted":                                                            # Q2 re-listings counted again
+        inc = inc + list(d["dups"])
+    if trap == "format_noise":                   # instruction row taken as the header: first data row of Q1 lost
+        first_q1 = min((x for x in d["incidents"] if x["date"].month <= 3), key=lambda x: (x["date"], x["k"]))
+        inc = [x for x in inc if x is not first_q1]
+    near = list(d["near"])
+    if trap == "format_noise":                   # the export's preamble line read as the header: first report lost
+        near = near[1:]
+    site = (lambda x: x["shown_site"]) if trap == "site_names" else (lambda x: x["site"])
+    typ = (lambda x: x["shown_type"]) if trap == "type_codes" else (lambda x: x["type"])
+    inc_rows = [[x["id"], x["date"].isoformat(), site(x), typ(x), x["sev"]] for x in sorted(inc, key=lambda y: y["id"])]
+    nm_rows = [[x["id"], x["date"].isoformat(), site(x)] for x in sorted(near, key=lambda y: y["id"])]
+    types = list(TYPE_NAMES)
+    if trap == "type_codes":                     # a raw pivot: one column per spelling
+        types = list(dict.fromkeys(r[3] for r in sorted(inc_rows, key=lambda r: r[3].lower())))
+    if trap == "near_misses":                    # near misses folded into the incident log as one more type
+        inc_rows += [[r[0], r[1], r[2], "Near miss", ""] for r in nm_rows]
+        types.append("Near miss")
+        nm_rows = []
+    if trap == "site_names":                     # a group-by on the raw site column
+        sites = list(dict.fromkeys(r[2] for r in sorted(inc_rows + nm_rows, key=lambda r: r[2].lower())))
+    elif trap == "warehouse":                    # sites taken from the incident log only
+        sites = [s for s in SITES if any(r[2] == s for r in inc_rows)]
+    else:
+        sites = list(SITES)
+    os.makedirs(out, exist_ok=True)
+    stable_xlsx(os.path.join(out, "incidents.xlsx"), report_sheets(inc_rows, nm_rows, sites, types), creator="mutant")
+    tot = {s: sum(1 for r in inc_rows if r[2] == s) for s in sites}
+    nm = {s: sum(1 for r in nm_rows if r[2] == s) for s in sites}
+    ranked = sorted(sites, key=lambda s: -tot[s])
+    text = (f"# Safety summary, January to June 2026\n\n{len(inc_rows)} incidents were recorded across the sites, "
+            f"alongside {len(nm_rows)} near misses reported on the floor tablets.\n\n"
+            f"**{ranked[0]} had the most incidents this half, {tot[ranked[0]]} of them**, ahead of {ranked[1]} on "
+            f"{tot[ranked[1]]}.\n")
+    if "Warehouse" in sites and tot["Warehouse"] == 0:
+        text += f"\nThe Warehouse recorded no injuries this half and logged {nm['Warehouse']} near misses.\n"
+    write_text(os.path.join(out, "memo.md"), text)
+
+
+# near_misses is left out: folding the near misses into the incident count still shows the Warehouse's near-miss
+# count on the Warehouse row (as its only incidents), so "warehouse near misses" cannot see that mistake; "total
+# incidents, all sites" does. Recorded as a grader finding.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "near_misses"}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None, help="write a deliberately naive solution to this directory instead")
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 400 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

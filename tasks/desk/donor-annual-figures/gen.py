@@ -2,6 +2,9 @@
 """donor-annual-figures: a donor CRM gift export to fiscal-year totals, top donors and donor retention.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off inkind,name_variants --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant fiscal_year --out DIR               # a deliverable that falls for one trap
 
 Business: an animal rescue with a July-June fiscal year. The treasurer needs FY2026 against FY2025 for the
 board: net cash raised, the top ten donors and donor retention, counted the way the gift reporting policy says.
@@ -24,6 +27,24 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "refund_rows": "partial refunds and chargebacks as separate negative rows (off: netted into the original gift's Amount)",
+        "inkind": "in-kind gifts in the export at fair-market value (off: not in the export)",
+        "name_variants": "donor names typed several ways under one Donor ID (off: one name per donor)",
+    },
+    fixed={
+        "fiscal_year": "fiscal year 1 July - 30 June, named for the year it ends in",
+        "refunded_status": "fully refunded gifts keep a positive amount with Status Refunded; the memo must say so",
+        "lone_refunded": "an FY2025 donor whose only FY2026 gift was refunded is not retained",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["fiscal_year", "refunded_status", "refund_rows", "inkind", "name_variants", "lone_refunded"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -288,24 +309,57 @@ Things to know:
 """
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     acceptable(d)
     if naive_dir:
         write_naive(d, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     G, f = d["gifts"], d["f"]
     name = {x["id"]: x["name"] for x in d["donors"]}
 
     # ---- workspace
     r = rng(seed + 3)
     body = []
+    fold, kept_refund_rows = {}, False
+    if not traps.on("refund_rows"):   # partial refunds and chargebacks netted into the gift they reverse
+        for g in G:
+            if g["kind"] == "refund" and g["of"]["status"] == "Posted":
+                fold[g["of"]["gid"]] = fold.get(g["of"]["gid"], 0.0) + g["amt"]
     for g in G:
         amt = g["amt"]
         amt_s = f"({abs(amt):,.2f})" if amt < 0 and r.random() < 0.5 else (f"-{abs(amt):,.2f}" if amt < 0 else f"{amt:,.2f}")
+        if not traps.canonical:
+            if g["kind"] == "inkind" and not traps.on("inkind"):
+                continue
+            if fold:
+                if g["kind"] == "refund":
+                    if g["of"]["gid"] in fold:
+                        continue
+                    kept_refund_rows = True
+                elif g["gid"] in fold:
+                    amt = round(amt + fold[g["gid"]], 2)
+                    if abs(amt) < 0.005:
+                        continue
+                    amt_s = f"{amt:,.2f}"
+            shown = d["shown_name"][g["gid"]] if traps.on("name_variants") else g["donor"]["name"]
+            body.append([g["gid"], g["donor"]["id"], shown, g["date"].strftime("%m/%d/%Y"), amt_s, g["type"],
+                         g["camp"], g["status"], g["note"]])
+            continue
         body.append([g["gid"], g["donor"]["id"], d["shown_name"][g["gid"]], g["date"].strftime("%m/%d/%Y"), amt_s, g["type"],
                      g["camp"], g["status"], g["note"]])
+    refund_para = ("4. Refunds and chargebacks. A gift refunded in full shows Status 'Refunded' and did not happen. A partial refund\n"
+                   "   or a card chargeback is entered as its own negative line naming the gift it reverses; net it against that\n"
+                   "   original gift, in the original gift's fiscal year, even when the refund is processed later.\n\n"
+                   if traps.on("refund_rows") or kept_refund_rows else
+                   "4. Refunds and chargebacks. A gift refunded in full shows Status 'Refunded' and did not happen. Partial refunds\n"
+                   "   and card chargebacks are already netted into the Amount of the gift they reverse.\n\n")
     write_csv(os.path.join(ws, "gifts_export_2024-01-01_to_2026-06-30.csv"),
               ["Gift ID", "Donor ID", "Donor Name", "Gift Date", "Amount", "Gift Type", "Campaign", "Status", "Notes"], body, bom=True)
     write_text(os.path.join(ws, "gift_reporting_policy.txt"),
@@ -316,9 +370,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
                "   (at the value on the day received) and donor-advised fund grants.\n\n"
                "3. In-kind gifts. Goods and services are recorded at fair market value so we can thank the donor, but they\n"
                "   are not fundraising revenue. Leave them out of totals, donor counts, rankings and retention.\n\n"
-               "4. Refunds and chargebacks. A gift refunded in full shows Status 'Refunded' and did not happen. A partial refund\n"
-               "   or a card chargeback is entered as its own negative line naming the gift it reverses; net it against that\n"
-               "   original gift, in the original gift's fiscal year, even when the refund is processed later.\n\n"
+               + refund_para +
                "5. Donors. A donor is a Donor ID. The CRM prints the name as it was typed on each gift.\n\n"
                "6. Retention. Donor retention for a year is the number of donors who gave in the prior fiscal year and gave\n"
                "   again in this one, divided by the number of donors who gave in the prior fiscal year. 'Gave' means net\n"
@@ -355,14 +407,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     top_id = f["ranking"][0][1]
     top_last = d["top"]["last"].lower()
     fdn_word = d["fdn"]["name"].split()[0].lower()
-    write_task_yaml(HERE, {
+    spec = {
         "id": "donor-annual-figures", "track": "desk", "category": "reports",
         "title": "FY2026 fundraising figures for the board",
         "ask": ("Nadia needs this year's fundraising figures for the board packet - totals against last year, the top ten donors "
                 "and donor retention. Put them in annual_figures.xlsx with live formulas and write a cover memo as memo.md. "
                 "Her email and the gift policy are in the folder.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the fiscal year runs 1 July - 30 June and is named for the year it ends in; the export starts in January 2024 and a "
             "calendar-year reading shifts both years (checks: FY2026 net cash raised; FY2025 net cash raised)",
             f"fully refunded gifts keep their positive amount and only say Status 'Refunded' - including the "
@@ -378,7 +430,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             f"'{d['top']['variants'][2]}') under one Donor ID, one of their gifts is partly refunded, and other donors vary in "
             "case and initials; grouping by name splits donors (checks: top donor FY2026 total; retained donors)",
             "an FY2025 donor whose only FY2026 gift was refunded did not give in FY2026 and is not retained (check: retained donors)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "annual_figures.xlsx exists", "path": "annual_figures.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "annual_figures.xlsx", "min_count": 6},
@@ -398,7 +450,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "all": [rf"\b{fdn_word}\b", r"(refund|returned|\breturn\b|revers|charge ?back|cancel|given back|sent back|paid back|withdrawn|clawed back)"],
              "none": [r"\b(not|never)\b[^.;]{0,12}\b(refund|returned|revers)"]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "donor-annual-figures", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+    if out is not None:   # the custom grader travels with a copy of the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     print(f"seed={seed} gifts={len(G)} tot={f['tot']} gave={ {k: len(v) for k, v in f['gave'].items()} } retained={f['retained']} "
           f"rate={f['rate']} top={f['ranking'][:3]} naive={ {k: (d['v'][k]['tot']['FY2026'], d['v'][k]['retained']) for k in d['v']} }")
 
@@ -423,15 +481,76 @@ def write_naive(d: dict, out: str) -> None:
     write_text(os.path.join(out, "memo.md"), "# Fundraising figures\n\nGiving was up this year, helped by a large foundation grant and a donated van.\n")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """annual_figures.xlsx and memo.md built the reference way, except that they fall for `trap`."""
+    if trap not in TRAPS.names:
+        raise KeyError(trap)
+    G = d["gifts"]
+    name = {x["id"]: x["name"] for x in d["donors"]}
+    credit_fn, key = credit, (lambda g: g["donor"]["id"])
+    if trap == "fiscal_year":          # calendar years, everything else by the policy
+        def credit_fn(g):
+            fy, amt = credit(g)
+            if fy is None:
+                return fy, amt
+            y = (g["of"] if g["kind"] == "refund" else g)["date"].year
+            return (f"FY{y}" if y in (2025, 2026) else None), amt
+    elif trap == "refunded_status":    # the Status column ignored: a refunded gift counts at face value
+        credit_fn = lambda g: (fy_of(g["date"]), g["amt"]) if g["status"] == "Refunded" and g["kind"] == "cash" else credit(g)
+    elif trap == "refund_rows":        # refund rows booked in the year they were processed
+        credit_fn = lambda g: (fy_of(g["date"]), g["amt"]) if g["kind"] == "refund" else credit(g)
+    elif trap == "inkind":             # in-kind gifts counted at fair-market value
+        credit_fn = lambda g: (fy_of(g["date"]), g["amt"]) if g["kind"] == "inkind" else credit(g)
+    elif trap == "name_variants":      # donors grouped by the name as typed
+        key = lambda g: d["shown_name"][g["gid"]]
+        name = {d["shown_name"][g["gid"]]: d["shown_name"][g["gid"]] for g in G}
+    f = figures(G, credit_fn, key)
+    retained, rate = f["retained"], f["rate"]
+    if trap == "lone_refunded":        # a donor with a gift on file in FY2026 counted as giving, refunded or not
+        on_file = {key(g) for g in G if g["kind"] == "cash" and fy_of(g["date"]) == "FY2026"}
+        retained = len(f["gave"]["FY2025"] & (f["gave"]["FY2026"] | on_file))
+        rate = round(retained / len(f["gave"]["FY2025"]), 4)
+    gift_rows = []
+    for g in G:
+        fy, net = credit_fn(g)
+        gift_rows.append([g["gid"], key(g), g["date"].isoformat(), g["type"], g["status"], g["amt"], fy or "", round(net, 2)])
+    active = sorted({key(g) for g in G if credit_fn(g)[0] in ("FY2025", "FY2026")})
+    top10 = f["ranking"][:10]
+    wb = report_workbook(gift_rows, [[k, name[k]] for k in active], [k for _, k in top10], name)
+    if trap == "lone_refunded":
+        wb["Summary"]["rows"][2] = ["Retained donors (gave in FY2025 and again in FY2026)", "", retained]
+        wb["Summary"]["rows"][3] = ["Donor retention rate", "", rate]
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "annual_figures.xlsx"), wb, creator="mutant")
+    t = f["tot"]
+    text = (f"# FY2026 fundraising figures\n\nNet cash raised in FY2026 was ${t['FY2026']:,.2f}, against ${t['FY2025']:,.2f} in "
+            f"FY2025. {len(f['gave']['FY2026'])} donors gave in FY2026.\n\nDonor retention was {rate:.1%}: {retained} of the "
+            f"{len(f['gave']['FY2025'])} FY2025 donors gave again in FY2026.\n\nThe top donor was {name[top10[0][1]]} at "
+            f"${top10[0][0]:,.2f}.\n\n")
+    if trap == "refunded_status":
+        text += f"- The largest single gift was ${d['major']['amt']:,.0f} from {d['fdn']['name']}.\n"
+    else:
+        text += f"- The ${d['major']['amt']:,.0f} gift from {d['fdn']['name']} was refunded in full, so it is not in FY2026.\n"
+    write_text(os.path.join(out, "memo.md"), text)
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(600):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw in 600 attempts")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

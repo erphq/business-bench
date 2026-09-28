@@ -2,6 +2,9 @@
 """fifo-cogs: a pet supply store's first-half receipts, till sales and returns to FIFO cost of goods sold by month.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off price_list,case_uom --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant restock_returns --out DIR          # a deliverable that falls for one trap
 
 Business: Barkwell Pet Supply, one shop, seven lines that matter to the CPA. Last year's closing FIFO layers come from
 the CPA's file, receipts from the receiving log (two lines bought by the case), sales and returns from the till export.
@@ -28,6 +31,24 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
 from openpyxl.utils import get_column_letter  # noqa: E402
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "damaged": "damaged, discarded returns listed on the till export",
+        "case_uom": "two lines received by the case (qty and cost per case); per unit when off",
+        "price_list": "a July supplier list-price file in the folder",
+        "july_backorder": "a July dog food receipt and a backordered line in the receiving log",
+    },
+    fixed={
+        "layers": "FIFO layers run across months from last year's closing layers",
+        "restock_returns": "restocked returns come off COGS at the cost they went out at",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["layers", "restock_returns", "damaged", "case_uom", "price_list", "july_backorder"]
 
 MONTHS = [f"2026-{m:02d}" for m in range(1, 7)]
 # sku, description, pack size (1 = each), base unit cost (cents), shelf price (cents), supplier
@@ -301,8 +322,31 @@ def workbook(d: dict, cogs: dict, sku_tot: dict, ending_units: dict, opening_val
     }
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def cpa_email_body(traps: TrapSet) -> str:
+    """Mensah's rules. A sentence about a pitfall that a variant removed is dropped, so nobody goes looking for it."""
+    damaged = (" If the return was damaged and thrown away, it does not go back into stock and COGS stays as it was."
+               if traps.on("damaged") else "")
+    cases = " Case lines are cost per case - divide by the units in the case." if traps.on("case_uom") else ""
+    return ("Hi Tara,\n\nFor the mid-year review I need cost of goods sold on FIFO for the seven lines on my layer sheet, January "
+            "through June. The rules:\n\n"
+            "1. Start from my 12/31/2025 layers. Each sale uses up the oldest units first, at the cost those units were bought at.\n"
+            "2. Receipts count on the day they were received, and anything received (or put back on the shelf) on a day is "
+            "available for that day's sales.\n"
+            "3. Customer returns: if the item goes back on the shelf, take what those units cost when they were sold (look up "
+            "the original receipt) off COGS in the month of the return, and put them back into stock as a new layer at that "
+            "cost, dated the day they came back." + damaged + "\n"
+            "4. Use what we actually paid from the receiving log." + cases + "\n\n"
+            "What I need: COGS by month for each of the seven items with monthly totals, and a roll-forward per item from my "
+            "opening value through what was received and COGS to what is left on hand at June 30. Keep it formula-driven.\n\n"
+            "Thanks,\nMensah")
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
     if naive_dir:
         nv = naive(d)
         os.makedirs(naive_dir, exist_ok=True)
@@ -311,7 +355,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
                                                                   {k: 0 for k in pl}, {k: nv["ending"][k] + nv["sku_tot"][k] for k in pl}),
                    creator="naive")
         return
-    ws, ref, sol = task_dirs(HERE)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom month-by-month check travels with the copy
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
+    by_case, stray, damaged = traps.on("case_uom"), traps.on("july_backorder"), traps.on("damaged")
     desc_of = {p[0]: p[1] for p in PRODUCTS}
 
     # ---- workspace: CPA's closing layers
@@ -325,6 +374,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
     # ---- workspace: receiving log
     rec = []
     for x in sorted(d["receipts"], key=lambda x: (x["date"], x["po"])):
+        if not stray and (x is d["july"] or x is d["backorder"]):
+            continue
+        if not by_case and x["uom"] != "EA":  # the case line written per unit: same units, same cost, same line total
+            x = dict(x, uom_qty=x["units"], uom="EA", uom_cost=x["unit_cost"])
         rec.append([x["date"], f"PO-{x['po']}", x["supplier"], x["sku"], desc_of[x["sku"]], x["uom_qty"] if x["status"] == "Received" else 0,
                     x["uom"], money_str(x["uom_cost"] / 100, 1), money_str(x["uom_qty"] * x["uom_cost"] / 100 if x["status"] == "Received" else 0, 1),
                     x["status"] if x["status"] != "Received" else "Received", f"ordered {x['uom_qty']}" if x["status"] != "Received" else ""])
@@ -338,6 +391,8 @@ def emit(seed: int, naive_dir: str | None) -> None:
     for s in d["sales"]:
         till.append([s["receipt"], s["time"], s["sku"], desc_of[s["sku"]], s["qty"], s["price"] / 100, s["qty"] * s["price"] / 100, "Sale", "", ""])
     for rt in d["returns"]:
+        if not damaged and not rt["restock"]:
+            continue
         till.append([rt["receipt"], rt["time"], rt["sku"], desc_of[rt["sku"]], -rt["qty"], rt["price"] / 100, -rt["qty"] * rt["price"] / 100,
                      "Return", rt["reason"], rt["orig"]])
     till.sort(key=lambda x: (x[1], x[0]))
@@ -346,27 +401,16 @@ def emit(seed: int, naive_dir: str | None) -> None:
               [[x[0], x[1].strftime("%m/%d/%Y %I:%M %p")] + x[2:5] + [f"{x[5]:.2f}", f"{x[6]:.2f}"] + x[7:] for x in till], bom=True)
 
     # ---- workspace: supplier price list (a distractor: list prices, not what was paid)
-    pl = price_list(d)
-    write_csv(os.path.join(ws, "supplier_price_list_2026-07.csv"), ["Supplier", "SKU", "Item", "Pack", "List cost per pack", "Effective"],
-              [[p[5], p[0], p[1], "each" if p[2] == 1 else f"case of {p[2]}", f"{pl[p[0]] * p[2] / 100:.2f}", "07/01/2026"] for p in PRODUCTS])
+    if traps.on("price_list"):
+        pl = price_list(d)
+        write_csv(os.path.join(ws, "supplier_price_list_2026-07.csv"), ["Supplier", "SKU", "Item", "Pack", "List cost per pack", "Effective"],
+                  [[p[5], p[0], p[1], "each" if p[2] == 1 else f"case of {p[2]}", f"{pl[p[0]] * p[2] / 100:.2f}", "07/01/2026"] for p in PRODUCTS])
 
     # ---- workspace: CPA email
     write_email_thread(os.path.join(ws, "email_from_cpa_cogs.txt"), [
         {"from": "Mensah Osei <mensah@oseicpa.com>", "to": "Tara Wood <tara@barkwellpet.com>", "date": "Tue, 7 Jul 2026 08:44",
          "subject": "First-half COGS - FIFO",
-         "body": ("Hi Tara,\n\nFor the mid-year review I need cost of goods sold on FIFO for the seven lines on my layer sheet, January "
-                  "through June. The rules:\n\n"
-                  "1. Start from my 12/31/2025 layers. Each sale uses up the oldest units first, at the cost those units were bought at.\n"
-                  "2. Receipts count on the day they were received, and anything received (or put back on the shelf) on a day is "
-                  "available for that day's sales.\n"
-                  "3. Customer returns: if the item goes back on the shelf, take what those units cost when they were sold (look up "
-                  "the original receipt) off COGS in the month of the return, and put them back into stock as a new layer at that "
-                  "cost, dated the day they came back. If the return was damaged and thrown away, it does not go back into stock and "
-                  "COGS stays as it was.\n"
-                  "4. Use what we actually paid from the receiving log. Case lines are cost per case - divide by the units in the case.\n\n"
-                  "What I need: COGS by month for each of the seven items with monthly totals, and a roll-forward per item from my "
-                  "opening value through what was received and COGS to what is left on hand at June 30. Keep it formula-driven.\n\n"
-                  "Thanks,\nMensah")}])
+         "body": cpa_email_body(traps)}])
 
     # ---- reference
     write_csv(os.path.join(ref, "cogs_by_month.csv"), ["sku", "month", "cogs"],
@@ -389,12 +433,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
 
     cat_r = [rt for rt in d["returns"] if rt["sku"] == "CAT-WF12"]
     lit_r = [rt for rt in d["returns"] if rt["sku"] == "LIT-CC35"]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "fifo-cogs", "track": "desk", "category": "bookkeeping",
         "title": "First-half FIFO cost of goods sold",
         "ask": "Mensah needs our cost of goods sold for January to June on FIFO for the mid-year review. His email says how he wants it. Save it as cogs.xlsx.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "each item starts from the CPA's two 2025 layers and each receipt adds a dearer layer, so a sale late in a layer is split "
             "across two costs and months carry layers forward; costing at the latest or an average price moves every month "
             "(checks: dog food COGS; total COGS; cost of goods sold, one line per month)",
@@ -409,7 +453,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "(check: total COGS)",
             f"the receiving log also holds a dog food receipt dated {d['july']['date'].isoformat()} and a backordered dog food line "
             "with nothing received; neither belongs in June 30 stock (check: dog food on hand at June 30)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "cogs.xlsx", "min_count": 10},
             {"type": "xlsx_no_errors", "name": "no formula errors", "path": "cogs.xlsx"},
@@ -422,19 +466,107 @@ def emit(seed: int, naive_dir: str | None) -> None:
             pin("tug toy COGS", "TOY-TR-L", d["sku_tot"]["TOY-TR-L"]),
             pin("dog food on hand at June 30", "DOG-SR25", d["ending"]["DOG-SR25"]),
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "fifo-cogs", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} sales={len(d['sales'])} total={d['total'] / 100:.2f} monthly={[v / 100 for v in d['monthly']]}")
     print({k: v / 100 for k, v in d["sku_tot"].items()}, "dog ending", d["ending"]["DOG-SR25"] / 100)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_fifo(d: dict, trap: str) -> dict:
+    """COGS and roll-forward worked the way an agent that fell for `trap` would, right in every other respect."""
+    if trap not in TRAP_KEYS:
+        raise KeyError(trap)
+    pl = price_list(d)
+    opening = [dict(x) for x in d["opening"]]
+    receipts = []
+    for rc in d["receipts"]:
+        if trap == "july_backorder":          # every line in the log taken as received stock
+            rc = dict(rc, status="Received")
+        elif not (rc["status"] == "Received" and rc["date"] <= H1_END):
+            continue
+        rc = dict(rc)
+        if trap == "case_uom" and rc["uom"] != "EA":   # cost per case taken as the cost of one unit
+            rc["unit_cost"] = rc["uom_cost"]
+        if trap == "price_list":              # July list cost used instead of what was paid
+            rc["unit_cost"] = pl[rc["sku"]]
+        receipts.append(rc)
+    returns = [dict(rt) for rt in d["returns"]]
+    if trap == "damaged":                     # damaged returns credited and restocked like the rest
+        for rt in returns:
+            rt["restock"] = True
+    avg = {}
+    if trap == "layers":                      # one average cost per item for the half instead of FIFO layers
+        for p in PRODUCTS:
+            units = sum(x["qty"] for x in opening if x["sku"] == p[0]) + sum(x["units"] for x in receipts if x["sku"] == p[0])
+            value = sum(x["qty"] * x["cost"] for x in opening if x["sku"] == p[0]) + sum(
+                x["units"] * x["unit_cost"] for x in receipts if x["sku"] == p[0])
+            avg[p[0]] = value / units
+    opening_val = {p[0]: sum(x["qty"] * x["cost"] for x in opening if x["sku"] == p[0]) for p in PRODUCTS}
+    purchases = {p[0]: sum(x["units"] * x["unit_cost"] for x in receipts if x["sku"] == p[0]) for p in PRODUCTS}
+    if avg:
+        for x in opening:
+            x["cost"] = avg[x["sku"]]
+        for x in receipts:
+            x["unit_cost"] = avg[x["sku"]]
+    events = [(rc["date"], 0, "r", rc) for rc in receipts] + [(rt["date"], 1, "t", rt) for rt in returns] + \
+             [(sl["date"], 2, "s", sl) for sl in d["sales"]]
+    events.sort(key=lambda e: (e[0], e[1], e[3].get("seq", 0)))
+    layers = {p[0]: [dict(x) for x in opening if x["sku"] == p[0]] for p in PRODUCTS}
+    cogs = {(p[0], m): 0 for p in PRODUCTS for m in MONTHS}
+    pieces = {}
+    for day, _, kind, ev in events:
+        sku = ev["sku"]
+        if kind == "r":
+            layers[sku].append({"sku": sku, "date": day, "qty": ev["units"], "cost": ev["unit_cost"]})
+            layers[sku].sort(key=lambda x: x["date"])
+        elif kind == "s":
+            need, got = ev["qty"], []
+            while need:
+                lay = layers[sku][0]
+                take = min(need, lay["qty"])
+                got.append((take, lay["cost"])); lay["qty"] -= take; need -= take
+                if lay["qty"] == 0:
+                    layers[sku].pop(0)
+            pieces[ev["receipt"]] = got
+            if mkey(day) in MONTHS:
+                cogs[(sku, mkey(day))] += sum(q * c for q, c in got)
+        elif ev["restock"]:
+            cost = pieces[ev["orig"]][0][1]
+            if trap == "restock_returns" and sku == "CAT-WF12":   # credited at the newest cost on hand, not the sale's
+                cost = max((x for x in receipts if x["sku"] == sku and x["date"] <= day), key=lambda x: x["date"])["unit_cost"]
+            layers[sku].append({"sku": sku, "date": day, "qty": ev["qty"], "cost": cost})
+            layers[sku].sort(key=lambda x: x["date"])
+            cogs[(sku, mkey(day))] -= ev["qty"] * cost
+    sku_tot = {p[0]: sum(cogs[(p[0], m)] for m in MONTHS) for p in PRODUCTS}
+    ending_units = {p[0]: sum(x["qty"] for x in layers[p[0]]) for p in PRODUCTS}
+    return {"cogs": cogs, "sku_tot": sku_tot, "ending_units": ending_units, "opening_val": opening_val, "purchases": purchases}
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    m = mutant_fifo(d, trap)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "cogs.xlsx"), workbook(d, m["cogs"], m["sku_tot"], m["ending_units"], m["opening_val"], m["purchases"]),
+               creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a_ = ap.parse_args()
+    traps = parse_trap_args(a_, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         if acceptable(build(a_.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a_.seed * 1000 + attempt, a_.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a_.seed * 1000 + attempt, a_.naive, traps, a_.out, a_.mutant)

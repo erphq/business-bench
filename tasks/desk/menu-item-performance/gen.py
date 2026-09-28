@@ -2,6 +2,9 @@
 """menu-item-performance: a cafe's August POS item export -> menu items ranked by quantity and by margin.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off rename,july --out DIR    # same draw, those pitfalls removed, same answer
+    python gen.py --mutant modifiers --out DIR         # a deliverable that falls for one trap
 
 Business: Juniper Street Cafe exports item-level sales from its POS. The owner wants every menu item with quantity,
 net sales, food cost and margin, ranked both ways, using the recipe cost sheet.
@@ -25,6 +28,23 @@ from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "rename": "Avocado Toast renamed Smashed Avocado Toast mid-month; both names in the export",
+        "staff_gross": "staff meals print a full Gross Price with a 50% discount",
+        "july": "July's POS export sits in the folder",
+    },
+    fixed={
+        "modifiers": "modifier lines carry charges and costs that roll into their parent item",
+        "comps_voids": "comps count in quantity and cost with no sales; voids count nowhere",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["modifiers", "comps_voids", "rename", "staff_gross", "july"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -149,35 +169,73 @@ def acceptable(d: dict) -> bool:
     return True
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def render_lines(lines: list[dict], traps: TrapSet) -> list[dict]:
+    """POS lines as the export prints them. With every trap on these are the lines themselves."""
+    if not traps.on("rename"):
+        lines = [dict(x, name=NEW_NAME if x["name"] == OLD_NAME else x["name"],
+                      parent=NEW_NAME if x["parent"] == OLD_NAME else x["parent"]) for x in lines]
+    if not traps.on("staff_gross"):  # staff meals printed at the price the staff member paid
+        lines = [dict(x, gross=x["net"], discount=0.0, disc="") if x["disc"] == "Staff meal 50%" and not x["void"] else x
+                 for x in lines]
+    return lines
+
+
+def note_text(traps: TrapSet) -> str:
+    return ("Menu review for August\n\n"
+            "I want to see every menu item for August with how many we sold, what it brought in, what it cost us, and the margin in "
+            "dollars - ranked by how many we sold and ranked by margin, so I can see what to push and what to cut.\n\n"
+            "How to read the POS export:\n"
+            "- Modifiers print as their own lines (the ones starting with +). They are not menu items. What we charge for them and "
+            "what they cost belong to the item they were added to - an oat milk latte is a latte.\n"
+            "- Sales are what the customer actually paid, the Net Price." + (" Staff meals are half price." if traps.on("staff_gross") else "")
+            + "\n"
+            "- Comps are on the house: the food still went out, so count the item and its cost, but it earned nothing.\n"
+            "- Voided lines were rung in by mistake and never made. Ignore them completely.\n"
+            + (f"- We renamed {OLD_NAME} to {NEW_NAME} on August 15 - same dish. Report it once under the new name; the cost sheet "
+               "only has the new name.\n" if traps.on("rename") else "")
+            + "\n"
+            "Plate costs are in the recipe sheet Rosa updated.\n\n- Marcus\n")
+
+
+def solution_sheets(t: dict) -> dict:
+    rq, rm = ranks(t, "qty"), ranks(t, "margin")
+    order = sorted(t, key=lambda k: rm[k])
+    group = {x[0]: x[1] for x in MENU}
+    rows_ = []
+    for i, k in enumerate(order, start=2):
+        rows_.append([k, group.get(k, "Breakfast"), t[k]["qty"], t[k]["sales"], t[k]["cost"], f"=ROUND(D{i}-E{i},2)",
+                      f"=IF(D{i}=0,0,ROUND(F{i}/D{i},4))", rq[k], rm[k]])
+    n = len(order) + 1
+    rows_.append(["Total", "", f"=SUM(C2:C{n})", f"=SUM(D2:D{n})", f"=SUM(E2:E{n})", f"=SUM(F2:F{n})", f"=IF(D{n + 1}=0,0,ROUND(F{n + 1}/D{n + 1},4))", "", ""])
+    rows_.append([])
+    rows_.append(["Modifier charges and costs are included in their item. Comps count in quantity and cost with no sales; voids are excluded."])
+    return {"August 2026": {
+        "header": ["Item", "Menu group", "Quantity sold", "Net sales", "Food cost", "Margin $", "Margin %", "Rank by quantity", "Rank by margin"],
+        "rows": rows_, "number_formats": {"D": "#,##0.00", "E": "#,##0.00", "G": "0.0%"}, "widths": {"A": 24, "B": 14}}}
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
     if naive_dir:
         return write_naive(d, naive_dir)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        return write_mutant(d, mutant, out)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     hdr = ["Check #", "Opened", "Server", "Menu Group", "Item", "Parent Item", "Qty", "Gross Price", "Discount", "Discount Reason", "Net Price", "Voided"]
 
     def rows(lines):
         return [[x["check"], x["time"].strftime("%m/%d/%Y %I:%M %p"), x["server"], x["group"], x["name"], x["parent"], 1, f"{x['gross']:.2f}",
                  f"{x['discount']:.2f}", x["disc"] if not x["void"] else "", f"{x['net']:.2f}", "Yes" if x["void"] else "No"] for x in lines]
-    write_csv(os.path.join(ws, "pos_item_details_2026-08.csv"), hdr, rows(d["aug"]))
-    write_csv(os.path.join(ws, "pos_item_details_2026-07.csv"), hdr, rows(d["jul"]))
+    write_csv(os.path.join(ws, "pos_item_details_2026-08.csv"), hdr, rows(render_lines(d["aug"], traps)))
+    if traps.on("july"):
+        write_csv(os.path.join(ws, "pos_item_details_2026-07.csv"), hdr, rows(render_lines(d["jul"], traps)))
     write_xlsx(os.path.join(ws, "recipe_costs.xlsx"), {
         "Menu items": {"merged_title": "Plate costs - updated 15 Aug 2026", "header": ["Item", "Menu group", "Menu price", "Plate cost"],
                        "rows": [[x[0], x[1], x[2], x[3]] for x in MENU], "number_formats": {"C": "0.00", "D": "0.00"}, "widths": {"A": 24, "B": 16}},
         "Modifiers": {"header": ["Modifier", "Charge", "Cost"], "rows": [[m[0], m[1], m[2]] for m in MODS], "widths": {"A": 20}}}, creator="Kitchen")
-    write_text(os.path.join(ws, "note_from_marcus.txt"),
-               "Menu review for August\n\n"
-               "I want to see every menu item for August with how many we sold, what it brought in, what it cost us, and the margin in "
-               "dollars - ranked by how many we sold and ranked by margin, so I can see what to push and what to cut.\n\n"
-               "How to read the POS export:\n"
-               "- Modifiers print as their own lines (the ones starting with +). They are not menu items. What we charge for them and "
-               "what they cost belong to the item they were added to - an oat milk latte is a latte.\n"
-               "- Sales are what the customer actually paid, the Net Price. Staff meals are half price.\n"
-               "- Comps are on the house: the food still went out, so count the item and its cost, but it earned nothing.\n"
-               "- Voided lines were rung in by mistake and never made. Ignore them completely.\n"
-               f"- We renamed {OLD_NAME} to {NEW_NAME} on August 15 - same dish. Report it once under the new name; the cost sheet "
-               "only has the new name.\n\n"
-               "Plate costs are in the recipe sheet Rosa updated.\n\n- Marcus\n")
+    write_text(os.path.join(ws, "note_from_marcus.txt"), note_text(traps))
     t = d["truth"]; rq, rm = ranks(t, "qty"), ranks(t, "margin")
     order = sorted(t, key=lambda k: rm[k])
     write_csv(os.path.join(ref, "menu_performance.csv"), ["item", "quantity", "net_sales", "food_cost", "margin", "rank_quantity", "rank_margin"],
@@ -186,24 +244,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
                                                                                           for v, n in d["naive"].items()},
                                                   "voids": sum(1 for x in d["aug"] if x["void"] and x["kind"] == "item"),
                                                   "comps": sum(1 for x in d["aug"] if x["comp"] and x["kind"] == "item")})
-    rows_ = []
-    for i, k in enumerate(order, start=2):
-        rows_.append([k, next(x[1] for x in MENU if x[0] == k), t[k]["qty"], t[k]["sales"], t[k]["cost"], f"=ROUND(D{i}-E{i},2)",
-                      f"=IF(D{i}=0,0,ROUND(F{i}/D{i},4))", rq[k], rm[k]])
-    n = len(order) + 1
-    rows_.append(["Total", "", f"=SUM(C2:C{n})", f"=SUM(D2:D{n})", f"=SUM(E2:E{n})", f"=SUM(F2:F{n})", f"=IF(D{n + 1}=0,0,ROUND(F{n + 1}/D{n + 1},4))", "", ""])
-    rows_.append([])
-    rows_.append(["Modifier charges and costs are included in their item. Comps count in quantity and cost with no sales; voids are excluded."])
-    write_xlsx(os.path.join(sol, "menu_performance.xlsx"), {"August 2026": {
-        "header": ["Item", "Menu group", "Quantity sold", "Net sales", "Food cost", "Margin $", "Margin %", "Rank by quantity", "Rank by margin"],
-        "rows": rows_, "number_formats": {"D": "#,##0.00", "E": "#,##0.00", "G": "0.0%"}, "widths": {"A": 24, "B": 14}}}, creator="reference")
-    write_task_yaml(HERE, {
+    write_xlsx(os.path.join(sol, "menu_performance.xlsx"), solution_sheets(t), creator="reference")
+    spec = {
         "id": "menu-item-performance", "track": "desk", "category": "reports",
         "title": "August menu items ranked by sales and margin",
         "ask": ("I'm redoing the menu. Using the August POS export and Rosa's cost sheet, show me every item ranked by how many we sold and by "
                 "margin - my note has how to read the export. Save it as menu_performance.xlsx.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "modifiers (\"+ Oat milk\", \"+ Add bacon\") are separate lines with their own price and a Parent Item; they are not menu items "
             "and their charge and cost roll into the parent, so dropping or ranking them separately moves the parent's margin "
             "(checks: Latte margin; Breakfast Sandwich margin)",
@@ -214,7 +262,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
             f"(check: {NEW_NAME} quantity)",
             "staff meals are half price, so the Gross Price column overstates sales; sales are the Net Price (check: total margin)",
             "July's POS export sits in the folder with the same columns (check: total margin)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "menu_performance.xlsx exists", "path": "menu_performance.xlsx"},
             {"type": "xlsx_no_errors", "name": "no formula errors", "path": "menu_performance.xlsx"},
@@ -229,7 +277,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
             {"type": "xlsx_value_present", "name": "total margin", "path": "menu_performance.xlsx", "expected": d["total_margin"],
              "rel_tol": cent_tol(d["total_margin"], 0.004), "near_text": "total"},
         ],
-    })
+    }
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "menu-item-performance", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} aug_lines={len(d['aug'])} jul_lines={len(d['jul'])} total_margin={d['total_margin']}")
     for k in PINNED_QTY + PINNED_MARGIN:
         print(f"  {k}: {t[k]} naive=" + ", ".join(f"{v}:{d['naive'][v].get(k, {}).get('qty')}/{d['naive'][v].get(k, {}).get('margin')}" for v in d["naive"]))
@@ -249,15 +301,45 @@ def write_naive(d: dict, out: str) -> None:
     write_xlsx(os.path.join(out, "menu_performance.xlsx"), {"Items": {"header": ["Item", "Qty", "Sales", "Cost", "Margin"], "rows": rows}}, creator="naive")
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_truth(d: dict, trap: str) -> dict:
+    """Per-item figures from an agent that is right except that it falls for `trap`."""
+    aug = d["aug"]
+    if trap == "modifiers":       # modifier lines dropped instead of rolled into their parent
+        return aggregate(aug, roll_mods=False)
+    if trap == "comps_voids":     # every zero-net line dropped, comps included
+        return aggregate(aug, drop_zero=True)
+    if trap == "rename":          # the old and new toast names kept apart
+        return aggregate(aug, merge_rename=False)
+    if trap == "staff_gross":     # staff meals taken at the Gross Price
+        return aggregate([dict(x, net=x["gross"]) if x["disc"] == "Staff meal 50%" and not x["void"] else x for x in aug])
+    if trap == "july":            # July's export read in along with August
+        return aggregate(aug + d["jul"])
+    raise KeyError(trap)
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    t = mutant_truth(d, trap)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "menu_performance.xlsx"), solution_sheets(t), creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(500):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

@@ -3,6 +3,9 @@
 current returns policy become the reply that states the refund.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off order_typo,export_format --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant unit_refund --out DIR                   # a deliverable that falls for one trap
 
 Business: an online cookware shop. A customer ordered a cookware set, two cast iron skillets and a utensil set
 with a Labor Day discount code; one skillet arrived cracked and the set came a few days late on standard shipping.
@@ -23,14 +26,32 @@ Traps (each caught by a check, see task.yaml):
     promise both                                                            (check: no promise the policy forbids)
 """
 from __future__ import annotations
-import os, sys
+import argparse, os, sys
 from datetime import date, datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "order_typo": "her email quotes her order number with two digits swapped (another customer's real order)",
+        "export_format": "Shopify-style export: order-level fields on first lines only, BOM and CRLF",
+        "old_timing": "the 2025 saved replies say refunds take 7-10 business days",
+    },
+    fixed={
+        "unit_refund": "refund is one skillet's price after the code plus its tax",
+        "forbidden_promises": "she asks for shipping and a gift card the policy does not give; the saved replies promise them",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["order_typo", "unit_refund", "export_format", "old_timing", "forbidden_promises"]
 
 SHOP = "Copperleaf Kitchen Supply"
+OWNER = "Leila Haddad"
 DOMAIN = "copperleafkitchen.com"
 TAX = Decimal("0.075")
 CODE = "LABORDAY15"
@@ -129,10 +150,40 @@ def m(x: Decimal) -> str:
     return f"{x:.2f}"
 
 
-def emit(seed: int) -> None:
+def reply_letter(d: dict) -> str:
+    """The reference reply."""
+    cust, her, owner = d["cust"], d["her"], OWNER
+    return (f"Subject: Your cracked skillet - order {her['no']}\n\n"
+            f"Hi {cust['first']},\n\n"
+            f"Thank you for letting us know, and I'm sorry one of your 12-inch cast iron skillets arrived cracked. That's not the condition "
+            f"anything should reach you in, and thank you for sending the photo.\n\n"
+            f"I found your order under {her['no']} (the number in your email had two digits swapped). We've approved your damage claim for the one "
+            "cracked skillet and, as you asked, we're refunding it rather than sending a replacement.\n\n"
+            f"Your refund is ${m(d['refund'])}. That is what you paid for that skillet: the ${m(d['sk_price'])} price less your {CODE} discount, "
+            f"which comes to ${m(d['unit_net'])}, plus the ${m(d['unit_tax'])} sales tax charged on it. "
+            "It goes back to your original payment method, and we process refunds within 5 business days. "
+            "Your bank may take a few extra days to show it on your statement. There's no need to send the cracked skillet back.\n\n"
+            "I understand the cookware set arriving later than the estimate was frustrating, and I'm sorry for that. "
+            "Our policy doesn't let us refund the original shipping charge when only part of an order is damaged, and we're not able to offer "
+            "gift cards or credits for standard deliveries that arrive after the estimated date. I know that isn't everything you asked for, "
+            "and I wanted to be straightforward with you about it.\n\n"
+            "If anything else in the order isn't right, just reply to this email and we'll take care of it.\n\n"
+            f"Best regards,\n\n{owner}\n{SHOP}\n")
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    if out is not None:  # the custom promise / order-number check travels with the copy
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     cust, her = d["cust"], d["her"]
+    quoted = d["wrong_no"] if traps.on("order_typo") else her["no"]
+    shopify = traps.on("export_format")
     # ---- order export, Shopify style: order-level fields only on the first line of each order
     header = ["Name", "Email", "Financial Status", "Paid at", "Fulfillment Status", "Accepts Marketing", "Currency", "Subtotal", "Shipping",
               "Taxes", "Total", "Discount Code", "Discount Amount", "Shipping Method", "Created at", "Lineitem quantity", "Lineitem name",
@@ -145,21 +196,21 @@ def emit(seed: int) -> None:
         total = sub + tax + o["shipping"]
         stamp = o["created"].replace(second=(o["created"].minute * 7) % 60).strftime("%Y-%m-%d %H:%M:%S -0700")
         for i, l in enumerate(o["lines"]):
-            first = i == 0
+            first = i == 0 or not shopify
             rows.append([o["no"], o["email"], "paid" if first else "", stamp if first else "", "fulfilled" if first else "", "no" if first else "",
                          "USD" if first else "", m(sub) if first else "", m(o["shipping"]) if first else "", m(tax) if first else "",
                          m(total) if first else "", o["code"] if first else "", m(disc) if first and o["code"] else ("" if not first else "0.00"),
                          o["method"] if first else "", stamp if first else "", l["qty"], l["name"], m(l["unit"]), l["sku"], m(l["disc"]), m(l["tax"]),
                          o["name"] if first else "", o["city"][0] if first else "", o["city"][1] if first else ""])
-    write_csv(os.path.join(ws, "orders_export_2026-08-24_to_2026-09-02.csv"), header, rows, bom=True, crlf=True)
+    write_csv(os.path.join(ws, "orders_export_2026-08-24_to_2026-09-02.csv"), header, rows, bom=shopify, crlf=shopify)
 
     # ---- the complaint, forwarded by the owner
-    owner = "Leila Haddad"
+    owner = OWNER
     set_name = her["lines"][0]["name"]
     write_email_thread(os.path.join(ws, "email_customer_complaint.txt"), [
         {"from": f"{cust['first']} {cust['last']} <{cust['email']}>", "to": f"hello@{DOMAIN}", "date": "Fri, 4 Sep 2026 07:52",
-         "subject": f"Cracked skillet - order #{d['wrong_no']}",
-         "body": (f"Hi,\n\nI'm writing about my order #{d['wrong_no']}. I ordered two of the 12 inch cast iron skillets (one is a gift for my sister), "
+         "subject": f"Cracked skillet - order #{quoted}",
+         "body": (f"Hi,\n\nI'm writing about my order #{quoted}. I ordered two of the 12 inch cast iron skillets (one is a gift for my sister), "
                   f"the {set_name.lower()} and the utensil set. Everything finally arrived yesterday, September 3rd, and one of the skillets has a crack "
                   "right through the handle where it joins the pan. Photo attached. The other skillet is fine and I'm keeping it.\n\n"
                   f"I have to be honest, I'm pretty disappointed. The cookware set showed up almost a week after the date your site gave me, "
@@ -168,7 +219,7 @@ def emit(seed: int) -> None:
                   "I don't want a replacement, just the refund please.\n\nThanks,\n"
                   f"{cust['first']} {cust['last']}")},
         {"from": f"{owner} <leila@{DOMAIN}>", "to": "support@copperleafkitchen.com", "date": "Fri, 4 Sep 2026 09:30",
-         "subject": f"FW: Cracked skillet - order #{d['wrong_no']}",
+         "subject": f"FW: Cracked skillet - order #{quoted}",
          "body": ("Can you draft a reply to her for me to look over? Stick to the returns policy we put up in July. "
                   "I checked the photo and the crack is real, so the damage claim is approved.\n\nLeila")},
     ])
@@ -194,7 +245,7 @@ def emit(seed: int) -> None:
         "Your bank may take a few extra days to post the refund to your statement. We don't issue store credit or gift cards in place of a refund.\n")
 
     # ---- distractor: old saved replies
-    write_text(os.path.join(ws, "support_saved_replies_2025.txt"),
+    saved = (
         "SAVED REPLIES - support inbox (updated March 2025)\n"
         "==================================================\n\n"
         "[Damaged item - refund]\n"
@@ -207,42 +258,29 @@ def emit(seed: int) -> None:
         "SORRY10.\n\n"
         "[Where is my refund]\n"
         "Hi {first name},\n\nRefunds take 7-10 business days to process, and then your bank may need a few more days.\n")
+    if not traps.on("old_timing"):  # the saved replies brought in line with the July processing time
+        saved = saved.replace("7-10 business days", "up to 5 business days")
+    write_text(os.path.join(ws, "support_saved_replies_2025.txt"), saved)
 
     # ---- reference and reference solution
     facts = {"order_no": her["no"], "wrong_no": d["wrong_no"], "refund": float(d["refund"]), "unit_net": float(d["unit_net"]),
              "unit_tax": float(d["unit_tax"]), "shipping": float(d["shipping"]), "naive": {k: float(v) for k, v in d["naive"].items()}}
     write_json(os.path.join(ref, "facts.json"), facts)
-    letter = (f"Subject: Your cracked skillet - order {her['no']}\n\n"
-              f"Hi {cust['first']},\n\n"
-              f"Thank you for letting us know, and I'm sorry one of your 12-inch cast iron skillets arrived cracked. That's not the condition "
-              f"anything should reach you in, and thank you for sending the photo.\n\n"
-              f"I found your order under {her['no']} (the number in your email had two digits swapped). We've approved your damage claim for the one "
-              "cracked skillet and, as you asked, we're refunding it rather than sending a replacement.\n\n"
-              f"Your refund is ${m(d['refund'])}. That is what you paid for that skillet: the ${m(d['sk_price'])} price less your {CODE} discount, "
-              f"which comes to ${m(d['unit_net'])}, plus the ${m(d['unit_tax'])} sales tax charged on it. "
-              "It goes back to your original payment method, and we process refunds within 5 business days. "
-              "Your bank may take a few extra days to show it on your statement. There's no need to send the cracked skillet back.\n\n"
-              "I understand the cookware set arriving later than the estimate was frustrating, and I'm sorry for that. "
-              "Our policy doesn't let us refund the original shipping charge when only part of an order is damaged, and we're not able to offer "
-              "gift cards or credits for standard deliveries that arrive after the estimated date. I know that isn't everything you asked for, "
-              "and I wanted to be straightforward with you about it.\n\n"
-              "If anything else in the order isn't right, just reply to this email and we'll take care of it.\n\n"
-              f"Best regards,\n\n{owner}\n{SHOP}\n")
-    write_text(os.path.join(sol, "response.md"), letter)
+    write_text(os.path.join(sol, "response.md"), reply_letter(d))
 
-    write_task_yaml(HERE, {
+    spec = {
         "id": "refund-apology-letter", "track": "desk", "category": "drafting",
         "title": "Reply to a customer about a cracked skillet",
         "ask": (f"{cust['first']} {cust['last']} emailed us about a cracked skillet and a late delivery. Please draft my reply to her, sticking to our "
                 "refund policy, and save it as response.md.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"her email quotes order #{d['wrong_no']}, two digits swapped; that number is another customer's order in the export, and her name and email find {her['no']} (checks: correct order number; no promise the policy forbids and no wrong order number)",
             f"the skillet line is quantity 2 with the {CODE} code allocated per line and tax charged per line; one unit's price after the code plus its tax is ${m(d['refund'])}, not the ${m(d['sk_price'])} list price she asks for, the whole line (${m(d['naive']['line_total'])}) or the price without tax (${m(d['unit_net'])}) (check: refund amount per policy)",
             "the export is Shopify style: order-level fields sit only on each order's first line, amounts are text, and it has a BOM and CRLF endings (check: refund amount per policy)",
             "the July policy processes refunds within 5 business days; the 2025 saved replies still say 7-10 business days (check: processing time)",
             "she asks for her shipping back and a $25 gift card for the late set; the policy refunds shipping only when every item arrives damaged and offers no credits for late standard deliveries, while the saved replies promise a shipping refund, store credit and a discount code (check: no promise the policy forbids and no wrong order number)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "response.md exists", "path": "response.md"},
             {"type": "text_contains_all", "name": "correct order number", "path": "response.md", "phrases": [her["no"][3:]]},
@@ -253,8 +291,52 @@ def emit(seed: int) -> None:
              "none": [r"(\b7\b|\bseven\b)\s*(-|–|to)\s*(\b10\b|\bten\b)", r"\b(10|ten)\s+(business|working)\s+days"]},
             {"type": "custom", "name": "no promise the policy forbids and no wrong order number", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "refund-apology-letter", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_letter(d: dict, trap: str) -> str:
+    """The reference reply with the one mistake an agent that fell for `trap` would make."""
+    text, her = reply_letter(d), d["her"]
+    refund_para = (f"Your refund is ${m(d['refund'])}. That is what you paid for that skillet: the ${m(d['sk_price'])} price less your {CODE} discount, "
+                   f"which comes to ${m(d['unit_net'])}, plus the ${m(d['unit_tax'])} sales tax charged on it. ")
+    promise_para = ("Our policy doesn't let us refund the original shipping charge when only part of an order is damaged, and we're not able to offer "
+                    "gift cards or credits for standard deliveries that arrive after the estimated date. I know that isn't everything you asked for, "
+                    "and I wanted to be straightforward with you about it.")
+    assert refund_para in text and promise_para in text
+    if trap == "order_typo":            # the order number from her email taken as hers
+        text = text.replace(" (the number in your email had two digits swapped)", "").replace(her["no"], d["wrong_no"])
+    elif trap == "unit_refund":         # the whole skillet line refunded, both units
+        text = text.replace(refund_para, f"Your refund is ${m(d['naive']['line_total'])}, what you paid for the skillets on your order, "
+                                         f"after your {CODE} discount and including sales tax. ")
+    elif trap == "export_format":       # the code sits only on the order's first line, so the skillet line read as undiscounted
+        text = text.replace(refund_para, f"Your refund is ${m(d['naive']['list_plus_tax'])}. That is what you paid for that skillet: the "
+                                         f"${m(d['sk_price'])} price plus the sales tax charged on it. ")
+    elif trap == "old_timing":          # the 2025 saved replies' processing time
+        text = text.replace("we process refunds within 5 business days", "refunds take 7-10 business days to process")
+    elif trap == "forbidden_promises":  # her shipping and a gift card promised, as the saved replies do
+        text = text.replace(promise_para, f"I'm also refunding the ${m(d['shipping'])} you paid for shipping, and we're sending you a $25 gift card "
+                                          "for the delay and the hassle.")
+    else:
+        raise KeyError(trap)
+    return text
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "response.md"), mutant_letter(d, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    emit(a.seed, parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS), a.out, a.mutant)

@@ -2,6 +2,9 @@
 """weekly-kpi-dashboard: an optician's five small system exports to a one-page weekly KPI workbook.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off pay_week,utc --out DIR    # same draw, those pitfalls removed, same answer
+    python gen.py --mutant web_status --out DIR         # a deliverable that falls for one trap
 
 Business: Glassworks Optical, a mall optician with its own glazing lab and a web store for contacts and sunglasses. The owner wants one page
 with the last six full weeks side by side before the Tuesday staff meeting. Every system exports its own way
@@ -27,6 +30,22 @@ from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "pay_week": "the scheduling export groups shifts under a Sunday-to-Saturday pay week",
+        "range": "every export starts and stops mid-week, outside the six full weeks",
+        "web_status": "refunded, voided and pending web orders are in the export",
+        "utc": "web timestamps carry a -0700 offset",
+        "jobs": "lab jobs carry an order date and unfinished jobs are listed",
+        "format_noise": "CLOSED text rows and a preamble in the till report; BOM and CRLF in the schedule export",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["pay_week", "range", "web_status", "utc", "jobs", "format_noise"]
 
 WEEKS = [date(2026, 8, 3) + timedelta(days=7 * i) for i in range(6)]       # Mondays
 W_START, W_END = WEEKS[0], WEEKS[-1] + timedelta(days=6)                   # 3 Aug .. 13 Sep
@@ -215,13 +234,15 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- deliverables
 
-def kpi_sheets(d: dict) -> dict:
+def kpi_sheets(d: dict, weeks: list = WEEKS, staff_monday=monday) -> dict:
+    W_START, W_END = weeks[0], weeks[-1] + timedelta(days=6)
     wk = lambda x: week_label(monday(x))
     pos = [[p["date"].isoformat(), wk(p["date"]), p["net"]] for p in d["pos"] if W_START <= p["date"] <= W_END]
     web = [[o["num"], o["ts"].date().isoformat(), wk(o["ts"].date()), o["total"], o["status"]] for o in d["web"]
            if W_START <= o["ts"].date() <= W_END]
     rep = [[t["num"], t["done"].isoformat(), wk(t["done"]), 1] for t in d["tickets"] if t["done"] and W_START <= t["done"] <= W_END]
-    hrs = [[s["date"].isoformat(), wk(s["date"]), s["who"], s["hours"]] for s in d["shifts"] if W_START <= s["date"] <= W_END]
+    hrs = [[s["date"].isoformat(), week_label(staff_monday(s["date"])), s["who"], s["hours"]] for s in d["shifts"]
+           if W_START <= staff_monday(s["date"]) <= W_END]
     sub = [[s["ts"].date().isoformat(), wk(s["ts"].date()), 1] for s in d["signups"]
            if s["status"] == "subscribed" and W_START <= s["ts"].date() <= W_END]
     n = {k_: len(v) + 1 for k_, v in (("pos", pos), ("web", web), ("rep", rep), ("hrs", hrs), ("sub", sub))}
@@ -236,7 +257,7 @@ def kpi_sheets(d: dict) -> dict:
         ("Sales per staff hour", lambda c: f"=IF({c}8=0,0,ROUND({c}5/{c}8,2))"),
         ("New subscribers", lambda c: f"=COUNTIF(Signups!$B$2:$B${n['sub']},{c}$2)"),
     ]
-    rows = [["Week (Mon-Sun)"] + [week_label(w) for w in WEEKS] + ["6 weeks"]]
+    rows = [["Week (Mon-Sun)"] + [week_label(w) for w in weeks] + ["6 weeks"]]
     for i, (label, f) in enumerate(lines, start=3):
         tail = "=IF(H8=0,0,ROUND(H5/H8,2))" if label == "Sales per staff hour" else (
             "=H3+H4" if label == "Total sales" else f"=SUM(B{i}:G{i})")
@@ -264,32 +285,58 @@ def cent_tolerant(spec: dict) -> dict:
     return spec
 
 
-def emit(seed: int) -> None:
+def write_workspace(d: dict, ws: str, traps: TrapSet) -> None:
+    """The five exports. With every trap on these are exactly the canonical files."""
+    inside = (lambda x: True) if traps.on("range") else (lambda x: W_START <= x <= W_END)
+    noisy = traps.on("format_noise")
+    pos = [p for p in d["pos"] if inside(p["date"]) and (noisy or not p["closed"])]
+    cash = (lambda x: money_str(x, 1)) if noisy else (lambda x: f"{x:.2f}")
+    write_csv(os.path.join(ws, "pos_end_of_day_report.csv"),
+              ["Business Date", "Gross Sales", "Discounts", "Returns", "Net Sales", "Transactions"],
+              [[p["date"].strftime("%a %m/%d/%Y"), "CLOSED" if p["closed"] else cash(p["gross"]),
+                "" if p["closed"] else cash(p["disc"]), "" if p["closed"] else cash(p["ret"]),
+                "" if p["closed"] else cash(p["net"]), "" if p["closed"] else p["txns"]] for p in pos],
+              preamble=["Glassworks Optical - End of Day Summary", "Location: Westgate Mall"] if noisy else None)
+    web = [o for o in d["web"] if inside(o["ts"].date()) and (traps.on("web_status") or o["status"] == "paid")]
+    stamp = "%Y-%m-%d %H:%M:%S -0700" if traps.on("utc") else "%Y-%m-%d %H:%M:%S"
+    write_csv(os.path.join(ws, "webstore_orders.csv"),
+              ["Name", "Created at", "Financial Status", "Total", "Currency"],
+              [[o["num"], o["ts"].strftime(stamp), o["status"], f"{o['total']:.2f}", "USD"] for o in web])
+    if traps.on("jobs"):
+        write_csv(os.path.join(ws, "lab_jobs.csv"),
+                  ["Job", "Ordered", "Type", "Status", "Finished", "Lab charge"],
+                  [[t["num"], t["opened"].strftime("%m/%d/%Y"), t["kind"], t["status"], t["done"].strftime("%m/%d/%Y") if t["done"] else "",
+                    f"{t['labor']:.2f}"] for t in d["tickets"] if not t["done"] or inside(t["done"])])
+    else:  # finished jobs only, listed by the day the lab finished them
+        write_csv(os.path.join(ws, "lab_jobs.csv"),
+                  ["Job", "Type", "Status", "Finished", "Lab charge"],
+                  [[t["num"], t["kind"], t["status"], t["done"].strftime("%m/%d/%Y"), f"{t['labor']:.2f}"]
+                   for t in sorted((t for t in d["tickets"] if t["done"] and inside(t["done"])), key=lambda t: (t["done"], t["num"]))])
+    shifts = [s for s in d["shifts"] if inside(s["date"])]
+    if traps.on("pay_week"):
+        write_csv(os.path.join(ws, "schedule_hours_export.csv"),
+                  ["Pay week (Sun-Sat)", "Shift date", "Employee", "Hours"],
+                  [[sunday_start(s["date"]).isoformat(), s["date"].isoformat(), s["who"], f"{s['hours']:.2f}"] for s in shifts],
+                  bom=noisy, crlf=noisy)
+    else:
+        write_csv(os.path.join(ws, "schedule_hours_export.csv"), ["Shift date", "Employee", "Hours"],
+                  [[s["date"].isoformat(), s["who"], f"{s['hours']:.2f}"] for s in shifts], bom=noisy, crlf=noisy)
+    write_csv(os.path.join(ws, "newsletter_audience.csv"),
+              ["Email Address", "Source", "Status", "Optin Time"],
+              [[s["email"], s["source"], s["status"], s["ts"].strftime("%Y-%m-%d %H:%M")] for s in d["signups"] if inside(s["ts"].date())])
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     k, six = d["k"], d["six"]
 
     # ---- workspace ----
-    write_csv(os.path.join(ws, "pos_end_of_day_report.csv"),
-              ["Business Date", "Gross Sales", "Discounts", "Returns", "Net Sales", "Transactions"],
-              [[p["date"].strftime("%a %m/%d/%Y"), "CLOSED" if p["closed"] else money_str(p["gross"], 1),
-                "" if p["closed"] else money_str(p["disc"], 1), "" if p["closed"] else money_str(p["ret"], 1),
-                "" if p["closed"] else money_str(p["net"], 1), "" if p["closed"] else p["txns"]] for p in d["pos"]],
-              preamble=["Glassworks Optical - End of Day Summary", "Location: Westgate Mall"])
-    write_csv(os.path.join(ws, "webstore_orders.csv"),
-              ["Name", "Created at", "Financial Status", "Total", "Currency"],
-              [[o["num"], o["ts"].strftime("%Y-%m-%d %H:%M:%S -0700"), o["status"], f"{o['total']:.2f}", "USD"] for o in d["web"]])
-    write_csv(os.path.join(ws, "lab_jobs.csv"),
-              ["Job", "Ordered", "Type", "Status", "Finished", "Lab charge"],
-              [[t["num"], t["opened"].strftime("%m/%d/%Y"), t["kind"], t["status"], t["done"].strftime("%m/%d/%Y") if t["done"] else "",
-                f"{t['labor']:.2f}"] for t in d["tickets"]])
-    write_csv(os.path.join(ws, "schedule_hours_export.csv"),
-              ["Pay week (Sun-Sat)", "Shift date", "Employee", "Hours"],
-              [[sunday_start(s["date"]).isoformat(), s["date"].isoformat(), s["who"], f"{s['hours']:.2f}"] for s in d["shifts"]],
-              bom=True, crlf=True)
-    write_csv(os.path.join(ws, "newsletter_audience.csv"),
-              ["Email Address", "Source", "Status", "Optin Time"],
-              [[s["email"], s["source"], s["status"], s["ts"].strftime("%Y-%m-%d %H:%M")] for s in d["signups"]])
+    write_workspace(d, ws, traps)
     write_text(os.path.join(ws, "note_from_kwame.txt"),
                "For Tuesday's staff meeting I want one page with the last six full weeks side by side, oldest on the left:\n"
                "store sales (net, from the till report), online sales, total sales, online orders, glasses jobs finished,\n"
@@ -311,13 +358,13 @@ def emit(seed: int) -> None:
     write_xlsx(os.path.join(sol, "kpi.xlsx"), kpi_sheets(d), creator="reference")
 
     w3, w4, w6 = WEEKS[2], WEEKS[3], WEEKS[5]
-    write_task_yaml(HERE, cent_tolerant({
+    spec = cent_tolerant({
         "id": "weekly-kpi-dashboard", "track": "desk", "category": "reports",
         "title": "One-page weekly KPIs from five system exports",
         "ask": ("Kwame wants a one-page weekly KPI sheet for the staff meeting built from the five exports in this folder. "
                 "Save it as kpi.xlsx with live formulas; his note lists what goes on it.\n"),
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "the scheduling export groups shifts under 'Pay week (Sun-Sat)' while the dashboard weeks run Monday to Sunday; "
             f"grouping on that column puts each Sunday in the following week, so the week of {w3.isoformat()} carries the "
             "wrong Sunday (checks: staff hours week of 17 Aug; sales per staff hour week of 17 Aug)",
@@ -332,7 +379,7 @@ def emit(seed: int) -> None:
             "lenses or still in the lab have no finish date (check: glasses jobs finished week of 7 Sep)",
             "the till report shows Mondays as CLOSED text rows and carries a two-line preamble; the scheduling export has "
             "a BOM and CRLF endings (check: total sales, six weeks)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "kpi.xlsx exists", "path": "kpi.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "kpi.xlsx", "min_count": 24},
@@ -348,18 +395,54 @@ def emit(seed: int) -> None:
             {"type": "xlsx_value_present", "name": "total sales, six weeks", "path": "kpi.xlsx",
              "expected": six["total"], "rel_tol": 0.003, "near_text": "total"},
         ],
-    }))
+    })
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "weekly-kpi-dashboard", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} pos={len(d['pos'])} web={len(d['web'])} tickets={len(d['tickets'])} shifts={len(d['shifts'])} signups={len(d['signups'])}")
     for w in WEEKS:
         print("  ", w, k[w], d["naive"][w])
     print("  six:", six)
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """kpi.xlsx from an agent that is right except that it falls for `trap`."""
+    m, weeks, staff_monday = dict(d), WEEKS, monday
+    if trap == "pay_week":        # shifts grouped on the pay-week column, each Sunday pushed into the next week
+        staff_monday = lambda x: sunday_start(x) + timedelta(days=1)
+    elif trap == "range":         # the last six weeks counted back from the end of the exports, partial week included
+        weeks = WEEKS[1:] + [WEEKS[-1] + timedelta(days=7)]
+    elif trap == "web_status":    # every order counted, whatever its financial status
+        m["web"] = [dict(o, status="paid") for o in d["web"]]
+    elif trap == "utc":           # timestamps converted to UTC before taking the date
+        m["web"] = [dict(o, ts=o["ts"] + timedelta(hours=7)) for o in d["web"]]
+    elif trap == "jobs":          # jobs counted in the week they were ordered, finished or not
+        m["tickets"] = [dict(t, done=t["opened"]) for t in d["tickets"]]
+    elif trap == "format_noise":  # '$1,234.00' till figures pasted as text, which SUMIFS skips
+        m["pos"] = [dict(p, net=money_str(p["net"], 1)) for p in d["pos"]]
+    else:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "kpi.xlsx"), kpi_sheets(m, weeks, staff_monday), creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
-    s = argparse_seed()
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    s = a.seed
     for attempt in range(800):
         if acceptable(build(s * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw in 800 attempts")
-    emit(s * 1000 + attempt)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(s * 1000 + attempt, traps, a.out, a.mutant)

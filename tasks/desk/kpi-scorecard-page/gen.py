@@ -2,6 +2,9 @@
 """kpi-scorecard-page: a commercial cleaning company's August operations scorecard as one HTML page.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off retired,revision --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant lower_better --out DIR          # an index.html that falls for one trap
 
 Business: a commercial cleaning contractor with office and clinic contracts. Branch managers key monthly numbers
 into an ops tracker (rates as fractions, three month formats, revisions as extra rows); the owner keeps targets in
@@ -26,6 +29,26 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and the
+# render-time draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "retired": "June rows for the retired Carpet cleaning metric in the tracker (off: not in the tracker)",
+        "months": "tracker holds June, July and August in three month formats (off: August rows only)",
+        "revision": "a revised August figure as a second row (off: only the revised row)",
+    },
+    fixed={
+        "lower_better": "five metrics are lower-is-better per the note",
+        "exact_target": "a figure exactly on its target counts as met",
+        "rate_fractions": "rates are fractions in the tracker; the page shows percents",
+        "no_target": "one metric has no target and reads No target",
+    },
+    requires={"retired": "months"},   # the retired metric's rows are June rows
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["lower_better", "exact_target", "rate_fractions", "no_target", "retired", "months", "revision"]
 
 # name, kind (pct | usd | num1 | count), lower is better, target
 METRICS = [
@@ -135,7 +158,7 @@ def raw_value(r, kind: str, v) -> str:
     return str(int(v))
 
 
-def page_html(d: dict) -> str:
+def page_html(d: dict, fmt=fmt_value) -> str:
     ms = d["metrics"]
     scored = [m for m in ms if m["target"] is not None]
     n_met = sum(1 for m in scored if m["met"])
@@ -149,19 +172,19 @@ def page_html(d: dict) -> str:
            "<table><thead><tr><th>Metric</th><th>August</th><th>Target</th><th>Better when</th><th>Result</th></tr></thead><tbody>"]
     for m in ms:
         if m["target"] is None:
-            out.append(f"<tr><td>{html.escape(m['name'])}</td><td class=\"n\">{fmt_value(m['kind'], m['actual'])}</td>"
+            out.append(f"<tr><td>{html.escape(m['name'])}</td><td class=\"n\">{fmt(m['kind'], m['actual'])}</td>"
                        "<td class=\"n\">-</td><td>-</td><td>No target</td></tr>")
             continue
         res = '<span class="met">Met</span>' if m["met"] else '<span class="missed">Missed</span>'
-        out.append(f"<tr><td>{html.escape(m['name'])}</td><td class=\"n\">{fmt_value(m['kind'], m['actual'])}</td>"
-                   f"<td class=\"n\">{fmt_value(m['kind'], m['target'])}</td><td>{'lower' if m['lower'] else 'higher'}</td>"
+        out.append(f"<tr><td>{html.escape(m['name'])}</td><td class=\"n\">{fmt(m['kind'], m['actual'])}</td>"
+                   f"<td class=\"n\">{fmt(m['kind'], m['target'])}</td><td>{'lower' if m['lower'] else 'higher'}</td>"
                    f"<td>{res}</td></tr>")
     out += ["</tbody></table>", "</body>", "</html>", ""]
     return "\n".join(out)
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
-    d = build(seed)
+def tracker_rows(d: dict, seed: int):
+    """(tracker rows, the rng positioned after them), drawn exactly as the canonical generator draws them."""
     ms = d["metrics"]
     r = rng(seed + 9)
     rows = []
@@ -184,12 +207,41 @@ def emit(seed: int, naive_dir: str | None) -> None:
             rows.append([r.choice(MONTH_STYLES[mon]), RETIRED, str(r.randint(30, 60)), "07/02/2026", "Marcus",
                          "last month before the Eastside sale"])
     rows.sort(key=lambda x: (x[1], x[3]))
+    return rows, r
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
+    d = build(seed)
+    ms = d["metrics"]
+    rows, r = tracker_rows(d, seed)
     if naive_dir:
         write_naive(d, rows, naive_dir)
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, seed, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    ws_rows = rows
+    if not traps.canonical:
+        aug = set(MONTH_STYLES["2026-08"])
+        ws_rows = []
+        for row in rows:
+            if not traps.on("retired") and row[1] == RETIRED:
+                continue
+            if not traps.on("months"):
+                if row[0] not in aug:
+                    continue
+                row = ["2026-08"] + row[1:]
+            if not traps.on("revision") and row[1] == d["revised"]:
+                if row[3] == "09/02/2026":
+                    continue
+                if row[3] == "09/08/2026":
+                    row = row[:5] + [""]
+            ws_rows.append(row)
     write_csv(os.path.join(ws, "ops_tracker_export.csv"), ["Month", "Metric", "Value", "Entered", "Entered by", "Comment"],
-              rows, bom=True, crlf=True)
+              ws_rows, bom=True, crlf=True)
 
     def target_cell(m):
         if m["target"] is None:
@@ -218,10 +270,11 @@ def emit(seed: int, naive_dir: str | None) -> None:
                "0.943 as 94.3%.\n\n"
                "New client inquiries has no target yet (sales still has not agreed one), so show the number but no "
                "Met or Missed - put No target.\n\n"
-               "If somebody revised a number in the tracker, the revision is the one that counts.\n\n"
-               "Carpet cleaning went with the Eastside branch sale in June, so that line is finished - it does not "
-               "belong on the scorecard any more.\n\n"
-               "Ruth\n")
+               + ("If somebody revised a number in the tracker, the revision is the one that counts.\n\n"
+                  if traps.on("revision") else "")
+               + ("Carpet cleaning went with the Eastside branch sale in June, so that line is finished - it does not "
+                  "belong on the scorecard any more.\n\n" if traps.on("retired") else "")
+               + "Ruth\n")
     scored = [m for m in ms if m["target"] is not None]
     write_json(os.path.join(ref, "expected.json"), {
         "metrics": [{"name": m["name"], "kind": m["kind"], "actual": m["actual"] * 100 if m["kind"] == "pct" else m["actual"],
@@ -232,7 +285,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
     write_text(os.path.join(sol, "index.html"), page_html(d))
     rev = next(m for m in ms if m["name"] == d["revised"])
     pct = [m for m in ms if m["kind"] == "pct"]
-    traps = [
+    trap_text = [
         "the note makes five metrics lower-is-better (turnover, complaints, callbacks, supply cost, injuries); a "
         "higher-is-better reading flips at least three results (check: page structure: met or missed)",
         f"{d['exact']} lands exactly on its target, which the note counts as met (check: page structure: met or missed)",
@@ -247,13 +300,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
         f"{rev['name']} has two August rows; the later one is a revision that changes the result "
         "(checks: page structure: figures; page structure: met or missed)",
     ]
-    write_task_yaml(HERE, {
+    spec = {
         "id": "kpi-scorecard-page", "track": "desk", "category": "tooling",
         "title": "August operations scorecard page",
         "ask": "Ruth wants the August scorecard as a web page for Thursday's branch meeting. The numbers are in the "
                "tracker export and the targets workbook, and her note explains the rest. Save it as index.html.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": traps,
+        "traps": active_trap_text(trap_text, TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "index.html exists", "path": "index.html"},
             {"type": "text_contains_all", "name": "every metric listed", "path": "index.html",
@@ -264,7 +317,13 @@ def emit(seed: int, naive_dir: str | None) -> None:
              "numbers": [round(m["actual"] * 100, 1) for m in pct], "rel_tol": 0.0004},
             {"type": "custom", "name": "page structure", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "kpi-scorecard-page", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+    if out is not None:   # the custom grader travels with a copy of the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     print(f"seed={seed} met={[m['name'] for m in scored if m['met']]}")
 
 
@@ -288,14 +347,58 @@ def write_naive(d: dict, rows: list, out: str) -> None:
     write_text(os.path.join(out, "index.html"), "\n".join(parts))
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, seed: int, trap: str, out: str) -> None:
+    """index.html built the reference way, except that it falls for `trap`."""
+    if trap not in TRAPS.names:
+        raise KeyError(trap)
+    ms = [dict(m) for m in d["metrics"]]
+    fmt = fmt_value
+    for m in ms:
+        if m["target"] is None:
+            if trap == "no_target":        # TBD read as a zero target
+                m["target"], m["lower"] = 0, False
+                m["met"] = met(False, m["actual"], 0)
+            continue
+        if trap == "lower_better":         # every metric read as higher-is-better
+            m["lower"] = False
+        elif trap == "months":            # July's row picked up instead of August's
+            m["actual"] = d["hist"][(m["name"], "2026-07")]
+        elif trap == "revision" and m["name"] == d["revised"]:   # the first August entry kept
+            m["actual"] = m["first"]
+        if trap == "exact_target":         # on target read as missed
+            m["met"] = m["actual"] < m["target"] - 1e-9 if m["lower"] else m["actual"] > m["target"] + 1e-9
+        else:
+            m["met"] = met(bool(m["lower"]), m["actual"], m["target"])
+    if trap == "months":
+        for m in ms:
+            if m["target"] is None:
+                m["actual"] = d["hist"][(m["name"], "2026-07")]
+    if trap == "rate_fractions":           # rates left as the tracker's decimals
+        fmt = lambda kind, v: f"{v:.3f}" if kind == "pct" else fmt_value(kind, v)
+    if trap == "retired":                  # every metric in the tracker listed, the retired one included
+        rows, _ = tracker_rows(d, seed)
+        val = next(float(row[2]) for row in rows if row[1] == RETIRED)
+        ms.append({"name": RETIRED, "kind": "count", "lower": None, "target": None, "actual": val, "met": None})
+    os.makedirs(out, exist_ok=True)
+    write_text(os.path.join(out, "index.html"), page_html(dict(d, metrics=ms), fmt))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(2000):
         if acceptable(build(a.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

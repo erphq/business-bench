@@ -2,6 +2,9 @@
 """bom-cost-rollup: material cost per finished product from a multi-level BOM export and a price list.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off superseded,format_noise --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant multiply --out DIR                     # a deliverable that falls for one trap
 
 Business: a steel-furniture fabricator (workbenches, shelving, carts). Engineering's system exports the
 bill of materials as parent/component lines, one level at a time; purchasing keeps the price list.
@@ -25,6 +28,24 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "per100": "bolts priced per 100 on the price list (listed per each when off)",
+        "superseded": "superseded Rev A of the drawer unit still in the BOM export",
+        "caster_list": "new caster missing from the August list (price in the email) and a stale 2025 list in the folder",
+        "format_noise": "CSV preamble, BOM and CRLF; text prices under a merged title and instruction row",
+    },
+    fixed={
+        "multiply": "quantities multiply down a three-level BOM",
+        "formulas": "product costs must be live formulas",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["multiply", "per100", "superseded", "caster_list", "format_noise", "formulas"]
 
 
 def cent_tol(expected: float, rel: float = 0.01) -> float:
@@ -170,7 +191,8 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- files
 
-def price_rows(price: dict, include_caster: bool) -> list[list]:
+def price_rows(price: dict, include_caster: bool, per100: bool = True, text: bool = True) -> list[list]:
+    """per100=False lists the per-100 parts at the price of one (4 decimals, exact); text=False writes numbers."""
     rows = []
     vendors = {"TUB": "Dorsey Metals", "ANG": "Dorsey Metals", "PLT": "Dorsey Metals", "SHT": "Dorsey Metals",
                "BLT": "Fastenal", "NUT": "Fastenal", "LEV": "Fastenal", "TOP": "Hardwood Supply Co",
@@ -179,7 +201,11 @@ def price_rows(price: dict, include_caster: bool) -> list[list]:
     for code_, desc, per, _, _ in PARTS:
         if code_ == CASTER and not include_caster:
             continue
-        rows.append([code_, desc, vendors[code_.split("-")[0]], f"${price[code_]:,.2f}", per])
+        if per100 or per != "100":
+            rows.append([code_, desc, vendors[code_.split("-")[0]], f"${price[code_]:,.2f}" if text else price[code_], per])
+        else:
+            rows.append([code_, desc, vendors[code_.split("-")[0]],
+                         f"${price[code_] / 100:,.4f}" if text else price[code_] / 100, "each"])
     return rows
 
 
@@ -215,8 +241,34 @@ def solution_sheets(d: dict, rows_by_product: dict | None = None, unit_per: dict
     }
 
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def dale_email(d: dict, traps: TrapSet) -> list[dict]:
+    """Dale's two emails. A sentence that points at a pitfall is dropped in a variant where that pitfall is gone."""
+    revision = ("Use whatever revision is current; engineering changed the drawer slides in the "
+                "spring and the old revision is still sitting in the system.\n\n" if traps.on("superseded") else "")
+    prices = ("Prices: use Kwame's August price list. Ignore the 2025 one, it's only there because nobody "
+              "cleans up this folder." if traps.on("caster_list") else "Prices: use Kwame's August price list.")
+    caster = (f"Forgot one thing. We switched caster suppliers in July and the new casters ({CASTER}) aren't on "
+              f"the August list yet. Silverline quoted ${d['price'][CASTER]:.2f} each, use that.\n\n"
+              if traps.on("caster_list") else "")
+    return [
+        {"from": "Dale Morgan <dale@ironwoodfab.com>", "to": "you", "date": "Wed, 3 Sep 2026 16:05",
+         "subject": "material cost per product",
+         "body": ("Ruth (our accountant) needs a standard material cost for the five things we actually sell: "
+                  "IW-7230, IW-4830, IW-SR5, IW-MC2 and IW-TS1. Material only - no labor, no powder coat, no freight.\n\n"
+                  "Engineering exported the bills of materials this morning; the subassemblies have their own bills "
+                  "in the same export. " + revision + prices)},
+        {"from": "Dale Morgan <dale@ironwoodfab.com>", "to": "you", "date": "Wed, 3 Sep 2026 16:22",
+         "subject": "RE: material cost per product",
+         "body": (caster + "Please build it so I can change a price and see the product costs move - Ruth will ask "
+                  "again when steel goes up.")}]
+
+
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None,
+         mutant: str | None = None) -> None:
     d = build(seed)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
     t = truth(d)
     if naive_dir:
         # The obvious shortcut: take every line under a product at its own qty-per (no multiplying down the tree),
@@ -227,7 +279,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
         per = {p[0]: 1 for p in PARTS}; per["_price"] = naive_price
         write_xlsx(os.path.join(naive_dir, "assembly_costs.xlsx"), solution_sheets(d, rows, per), creator="naive")
         return
-    ws, ref, sol = task_dirs(HERE)
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    noisy, per100 = traps.on("format_noise"), traps.on("per100")
+    keep_superseded, stale = traps.on("superseded"), traps.on("caster_list")
 
     bom_rows = []
     for parent in ["IW-4830", "IW-6030", "IW-7230", "IW-MC2", "IW-SR5", "IW-TS1", "SA-CKT", "SA-DBX", "SA-DRW",
@@ -237,37 +292,30 @@ def emit(seed: int, naive_dir: str | None) -> None:
             cdesc = dict(PRODUCTS).get(comp) or SUB_DESC.get(comp) or next(p[1] for p in PARTS if p[0] == comp)
             uom = UOM[next(p[2] for p in PARTS if p[0] == comp)] if comp not in d["bom"] else "EA"
             qtxt = f"{qty:.2f}" if isinstance(qty, float) and qty != int(qty) else f"{int(qty)}"
-            bom_rows.append([parent, pdesc, rev, status, seq * 10, comp, cdesc, qtxt, uom])
+            if keep_superseded or status != "Superseded":
+                bom_rows.append([parent, pdesc, rev, status, seq * 10, comp, cdesc, qtxt, uom])
     write_csv(os.path.join(ws, "bom_export_2026-09-02.csv"),
               ["Parent Item", "Parent Description", "Rev", "Status", "Seq", "Component", "Component Description",
                "Qty Per", "UoM"], bom_rows,
-              preamble=["Ironwood Fabrication - Bill of Materials (single level, all parents)", "Printed 09/02/2026 07:41"],
-              bom=True, crlf=True)
-    write_xlsx(os.path.join(ws, "price_list_2026-08.xlsx"), {"Prices": {
-        "merged_title": "Purchased parts price list - August 2026",
-        "preamble": [["Maintained by purchasing (K. Osei). Prices exclude freight."]],
-        "header": ["Part", "Description", "Vendor", "Price", "Per"], "rows": price_rows(d["price"], False),
-        "widths": {"A": 12, "B": 40, "C": 22, "D": 12, "E": 8}}}, creator="Purchasing")
-    write_xlsx(os.path.join(ws, "price_list_2025.xlsx"), {"Prices": {
-        "merged_title": "Purchased parts price list - 2025",
-        "header": ["Part", "Description", "Vendor", "Price", "Per"], "rows": price_rows(d["old_price"], True),
-        "widths": {"A": 12, "B": 40, "C": 22, "D": 12, "E": 8}}}, creator="Purchasing")
-    write_email_thread(os.path.join(ws, "email_from_dale.txt"), [
-        {"from": "Dale Morgan <dale@ironwoodfab.com>", "to": "you", "date": "Wed, 3 Sep 2026 16:05",
-         "subject": "material cost per product",
-         "body": ("Ruth (our accountant) needs a standard material cost for the five things we actually sell: "
-                  "IW-7230, IW-4830, IW-SR5, IW-MC2 and IW-TS1. Material only - no labor, no powder coat, no freight.\n\n"
-                  "Engineering exported the bills of materials this morning; the subassemblies have their own bills "
-                  "in the same export. Use whatever revision is current; engineering changed the drawer slides in the "
-                  "spring and the old revision is still sitting in the system.\n\n"
-                  "Prices: use Kwame's August price list. Ignore the 2025 one, it's only there because nobody "
-                  "cleans up this folder.")},
-        {"from": "Dale Morgan <dale@ironwoodfab.com>", "to": "you", "date": "Wed, 3 Sep 2026 16:22",
-         "subject": "RE: material cost per product",
-         "body": (f"Forgot one thing. We switched caster suppliers in July and the new casters ({CASTER}) aren't on "
-                  f"the August list yet. Silverline quoted ${d['price'][CASTER]:.2f} each, use that.\n\n"
-                  "Please build it so I can change a price and see the product costs move - Ruth will ask "
-                  "again when steel goes up.")}])
+              preamble=["Ironwood Fabrication - Bill of Materials (single level, all parents)", "Printed 09/02/2026 07:41"]
+              if noisy else None, bom=noisy, crlf=noisy)
+    august = {"merged_title": "Purchased parts price list - August 2026",
+              "preamble": [["Maintained by purchasing (K. Osei). Prices exclude freight."]],
+              "header": ["Part", "Description", "Vendor", "Price", "Per"],
+              "rows": price_rows(d["price"], not stale, per100, noisy),
+              "widths": {"A": 12, "B": 40, "C": 22, "D": 12, "E": 8}}
+    if not noisy:
+        del august["merged_title"], august["preamble"]
+    write_xlsx(os.path.join(ws, "price_list_2026-08.xlsx"), {"Prices": august}, creator="Purchasing")
+    if stale:
+        old = {"merged_title": "Purchased parts price list - 2025",
+               "header": ["Part", "Description", "Vendor", "Price", "Per"],
+               "rows": price_rows(d["old_price"], True, per100, noisy),
+               "widths": {"A": 12, "B": 40, "C": 22, "D": 12, "E": 8}}
+        if not noisy:
+            del old["merged_title"]
+        write_xlsx(os.path.join(ws, "price_list_2025.xlsx"), {"Prices": old}, creator="Purchasing")
+    write_email_thread(os.path.join(ws, "email_from_dale.txt"), dale_email(d, traps))
 
     # ---- reference ----
     write_csv(os.path.join(ref, "assembly_costs.csv"), ["item", "description", "material_cost"],
@@ -288,14 +336,14 @@ def emit(seed: int, naive_dir: str | None) -> None:
     for c, _ in PRODUCTS:
         checks.append({"type": "xlsx_value_present", "name": f"{c} {names[c]} cost", "path": "assembly_costs.xlsx",
                        "expected": t[c], "rel_tol": cent_tol(t[c]), "near_text": c.lower()})
-    write_task_yaml(HERE, {
+    spec = {
         "id": "bom-cost-rollup", "track": "desk", "category": "spreadsheet",
         "title": "Material cost per product from the bill of materials",
         "ask": ("Our accountant needs the material cost of each product we sell. Work it out from the BOM export and "
                 "the price list and give me assembly_costs.xlsx, built so I can change a price later. Dale's email "
                 "has the details.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "the BOM export is single-level parent/component lines three levels deep (product > frame > leg > tube, "
             "product > drawer unit > drawer box > sheet); each quantity has to be multiplied by every quantity above "
             "it, and taking each line at its own qty-per undercounts legs, tube, shelves and drawer boxes "
@@ -312,21 +360,61 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "text like '$15.07' under a merged title row (check: IW-4830 48in workbench cost)",
             "the owner wants to change a price and see costs move, so the product costs must be live formulas "
             "(check: live formulas)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": checks,
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "bom-cost-rollup", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed}", t)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    """assembly_costs.xlsx built the reference way, except that it falls for `trap`."""
+    rows, per = None, None
+    if trap == "multiply":          # each line at its own qty-per
+        rows = {c: explode(d["bom"], c, multiply=False) for c, _ in PRODUCTS}
+    elif trap == "per100":          # the Price column read as the price of one bolt
+        per = {p[0]: 1 for p in PARTS if p[2] == "100"}
+    elif trap == "superseded":      # every revision in the export counted
+        rows = {c: explode(d["bom"], c, superseded=True) for c, _ in PRODUCTS}
+    elif trap == "caster_list":     # the 2025 list used, caster and all
+        per = {"_price": d["old_price"]}
+    elif trap == "format_noise":    # the export read one line too far down: its first BOM line (IW-4830's frame) lost
+        bom = dict(d["bom"]); bom["IW-4830"] = bom["IW-4830"][1:]
+        rows = {c: explode(bom, c) for c, _ in PRODUCTS}
+    elif trap != "formulas":
+        raise KeyError(trap)
+    sheets = solution_sheets(d, rows, per)
+    if trap == "formulas":          # right numbers, typed in as values
+        for row in sheets["Prices"]["rows"]:
+            row[4] = round(row[2] / row[3], 4)
+        unit = {row[0]: row[4] for row in sheets["Prices"]["rows"]}
+        for row in sheets["Exploded"]["rows"]:
+            row[5] = unit[row[3]]; row[6] = round(row[4] * row[5], 4)
+        for row in sheets["Summary"]["rows"]:
+            row[2] = round(sum(e[6] for e in sheets["Exploded"]["rows"] if e[0] == row[0]), 2)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "assembly_costs.xlsx"), sheets, creator="mutant")
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(500):
         d_ = build(a.seed * 1000 + attempt)
         if acceptable(d_):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a.seed * 1000 + attempt, a.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a.seed * 1000 + attempt, a.naive, traps, a.out, a.mutant)

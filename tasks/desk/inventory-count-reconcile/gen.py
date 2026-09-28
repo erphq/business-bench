@@ -2,6 +2,9 @@
 """inventory-count-reconcile: two counters' physical count sheets against the system stock export.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off a14_dup,relabel --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant units --out DIR                # a variances.csv that falls for one trap
 
 Traps (each caught by a check, see task.yaml):
   * counters wrote cases and eaches under five unit spellings; convert with the case quantity  (check: counted quantity in each)
@@ -16,6 +19,24 @@ import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and the
+# render-time draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "units": "count lines in cases under five unit spellings (off: every line in eaches, one spelling)",
+        "a14_dup": "bin A14 counted on both sheets (off: only Maria's line)",
+        "relabel": "old SKUs from the August relabel list on Maria's sheet (off: current SKUs, no relabel list)",
+        "export_format": "export with BOM, CRLF, preamble and two-bin items on two rows (off: plain, one row per item)",
+    },
+    fixed={
+        "negative": "two SKUs have negative system stock; variance is against the negative figure",
+        "uncounted": "four bins never counted; those items are off by the full system quantity",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["units", "a14_dup", "negative", "relabel", "uncounted", "export_format"]
 
 def write_xlsx_pinned(path: str, sheets: dict, creator: str = "Export") -> None:
     """write_xlsx, then pin dcterms:modified: openpyxl re-stamps it with the wall clock inside save(),
@@ -103,56 +124,108 @@ def build(seed: int) -> dict:
     return {"items": items, "truth": truth, "off": off, "neg": neg, "a14": a14_item, "relabeled": relabeled, "used_old": used_old,
             "uncounted_bins": uncounted_bins, "bins": bins}
 
-def emit(seed: int) -> None:
-    d = build(seed); r = rng(seed + 77)
-    ws, ref, sol = task_dirs(HERE)
+def count_lines(d: dict, seed: int) -> tuple[list[dict], list[dict]]:
+    """Maria's and Devon's count lines, drawn exactly as the canonical generator draws them."""
+    r = rng(seed + 77)
     items = d["items"]
-    # system export
-    srows = []
-    for it in items:
-        for b in it["bins"]:
-            srows.append([it["sku"], it["name"], b, it["sys_by_bin"][b], it["case_qty"], "07/31/2026"])
-    srows.sort(key=lambda x: x[2])
-    write_csv(os.path.join(ws, "stock_on_hand_export_2026-09-12.csv"), ["SKU", "Item", "Bin", "On Hand (EA)", "Case Qty", "Last Counted"], srows,
-              preamble=["Nightjar Coffee Roasters - Stock status by bin", "Generated 09/12/2026 06:00 by warehouse.system"], bom=True, crlf=True)
-    write_csv(os.path.join(ws, "sku_relabel_aug2026.csv"), ["old_sku", "new_sku", "item"], [[it["old_sku"], it["sku"], it["name"]] for it in d["relabeled"]])
     used_old_ids = set(id(i) for i in d["used_old"])
-    # Maria: aisle A, xlsx, cs/ea, old labels on five lines
-    mrows = []
+    mlines = []
     for b in [x for x in d["bins"] if x.startswith("A")]:
         it = next(i for i in items if b in i["bins"])
         if b not in it["count_by_bin"]: continue
         q = it["count_by_bin"][b]; cq = it["case_qty"]
-        sku = it["old_sku"] if id(it) in used_old_ids else it["sku"]
+        old = id(it) in used_old_ids
+        sku = it["old_sku"] if old else it["sku"]
         if cq > 1 and q % cq == 0 and r.random() < 0.7:
-            mrows.append([b, sku, q // cq, r.choice(UNITS_CASE_M), "old label" if id(it) in used_old_ids and r.random() < 0.5 else ""])
+            unit = r.choice(UNITS_CASE_M)
+            mlines.append({"bin": b, "item": it, "q": q, "case": True, "sku": sku, "unit": unit,
+                           "note": "old label" if old and r.random() < 0.5 else ""})
         else:
-            mrows.append([b, sku, q, r.choice(UNITS_EA_M), ""])
-    write_xlsx_pinned(os.path.join(ws, "count_sheet_maria_aisleA.xlsx"), {"Count": {
-        "merged_title": "Physical count 9/12 - aisle A - counter: Maria", "header": ["Bin", "SKU", "Qty", "Unit", "Notes"], "rows": mrows,
-        "widths": {"B": 12, "E": 16}}}, creator="Maria")
-    # Devon: aisle B csv, plus A14 at the top (duplicate of Maria's, in eaches)
-    a14 = d["a14"]; q = a14["count_by_bin"]["A14"]
-    drows = [["A14", a14["sku"], q, "each", "started here by mistake"]]
+            mlines.append({"bin": b, "item": it, "q": q, "case": False, "sku": sku, "unit": r.choice(UNITS_EA_M), "note": ""})
+    a14 = d["a14"]
+    dlines = [{"bin": "A14", "item": a14, "q": a14["count_by_bin"]["A14"], "case": False, "sku": a14["sku"],
+               "unit": "each", "note": "started here by mistake", "dup": True}]
     for b in [x for x in d["bins"] if x.startswith("B")]:
         it = next(i for i in items if b in i["bins"])
         if b not in it["count_by_bin"]: continue
         q = it["count_by_bin"][b]; cq = it["case_qty"]
         if cq > 1 and q % cq == 0 and r.random() < 0.6:
-            drows.append([b, it["sku"], q // cq, r.choice(UNITS_CASE_D), ""])
+            dlines.append({"bin": b, "item": it, "q": q, "case": True, "sku": it["sku"], "unit": r.choice(UNITS_CASE_D), "note": ""})
         else:
-            drows.append([b, it["sku"], q, r.choice(UNITS_EA_D), ""])
-    write_csv(os.path.join(ws, "count_devon_aisleB.csv"), ["bin", "item_code", "counted", "uom", "comment"], drows, crlf=True)
+            dlines.append({"bin": b, "item": it, "q": q, "case": False, "sku": it["sku"], "unit": r.choice(UNITS_EA_D), "note": ""})
+    return mlines, dlines
+
+
+def sheet_rows(lines: list[dict], traps: TrapSet, each_unit: str) -> list[list]:
+    rows = []
+    for x in lines:
+        if x.get("dup") and not traps.on("a14_dup"):
+            continue
+        sku = x["sku"] if traps.on("relabel") else x["item"]["sku"]
+        note = x["note"] if traps.on("relabel") or x["note"] != "old label" else ""
+        if not traps.on("units"):
+            rows.append([x["bin"], sku, x["q"], each_unit, note])
+        elif x["case"]:
+            rows.append([x["bin"], sku, x["q"] // x["item"]["case_qty"], x["unit"], note])
+        else:
+            rows.append([x["bin"], sku, x["q"], x["unit"], note])
+    return rows
+
+
+def rosa_email(traps: TrapSet) -> str:
+    dup = ("Devon started in aisle A by mistake and did A14 before I sent him over to B, so that bin is on "
+           "both sheets. Count it once. " if traps.on("a14_dup") else "")
+    old = ("Some of aisle A still has the old shelf labels from before the August renumbering, "
+           "so Maria wrote whatever was on the label; the relabel list is in the folder." if traps.on("relabel") else "")
+    para = ("A few things: " + dup + old).rstrip() if (dup or old) else ""
+    cases = ("Where they counted in cases, use the case quantity from the export to get to eaches. "
+             if traps.on("units") else "")
+    return (("Both count sheets are in the folder with the stock export from this morning.\n\n"
+             + (para + "\n\n" if para else ""))
+            + cases + "If a bin is not on either "
+            "sheet nobody counted it, so the count for that stock is zero. The system has a couple of negative quantities, "
+            "compare against what it actually says.\n\nI want one line per item that is off, with what the system has, "
+            "what we counted, and the difference. Items that match do not need to be in it. - Rosa")
+
+
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
+    d = build(seed)
+    if mutant:
+        write_mutant(d, seed, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
+    items = d["items"]
+    # system export
+    srows = []
+    if traps.on("export_format"):
+        for it in items:
+            for b in it["bins"]:
+                srows.append([it["sku"], it["name"], b, it["sys_by_bin"][b], it["case_qty"], "07/31/2026"])
+        srows.sort(key=lambda x: x[2])
+        write_csv(os.path.join(ws, "stock_on_hand_export_2026-09-12.csv"), ["SKU", "Item", "Bin", "On Hand (EA)", "Case Qty", "Last Counted"], srows,
+                  preamble=["Nightjar Coffee Roasters - Stock status by bin", "Generated 09/12/2026 06:00 by warehouse.system"], bom=True, crlf=True)
+    else:
+        for it in items:
+            srows.append([it["sku"], it["name"], "; ".join(it["bins"]), sum(it["sys_by_bin"].values()), it["case_qty"], "07/31/2026"])
+        srows.sort(key=lambda x: x[2])
+        write_csv(os.path.join(ws, "stock_on_hand_export_2026-09-12.csv"), ["SKU", "Item", "Bin", "On Hand (EA)", "Case Qty", "Last Counted"], srows)
+    if traps.on("relabel"):
+        write_csv(os.path.join(ws, "sku_relabel_aug2026.csv"), ["old_sku", "new_sku", "item"], [[it["old_sku"], it["sku"], it["name"]] for it in d["relabeled"]])
+    mlines, dlines = count_lines(d, seed)
+    mrows = [[x["bin"], x["sku"], x["q"] // x["item"]["case_qty"] if x["case"] else x["q"], x["unit"], x["note"]] for x in mlines]
+    # Maria: aisle A, xlsx, cs/ea, old labels on five lines
+    write_xlsx_pinned(os.path.join(ws, "count_sheet_maria_aisleA.xlsx"), {"Count": {
+        "merged_title": "Physical count 9/12 - aisle A - counter: Maria", "header": ["Bin", "SKU", "Qty", "Unit", "Notes"],
+        "rows": mrows if traps.canonical else sheet_rows(mlines, traps, "ea"),
+        "widths": {"B": 12, "E": 16}}}, creator="Maria")
+    # Devon: aisle B csv, plus A14 at the top (duplicate of Maria's, in eaches)
+    a14 = d["a14"]
+    write_csv(os.path.join(ws, "count_devon_aisleB.csv"), ["bin", "item_code", "counted", "uom", "comment"],
+              sheet_rows(dlines, traps, "each"), crlf=True)
     write_email_thread(os.path.join(ws, "email_from_rosa.txt"), [
         {"from": "Rosa Delgado <rosa@nightjar.coffee>", "to": "you", "date": "Sat, 12 Sep 2026 15:40", "subject": "count sheets from this morning",
-         "body": ("Both count sheets are in the folder with the stock export from this morning.\n\n"
-                  "A few things: Devon started in aisle A by mistake and did A14 before I sent him over to B, so that bin is on "
-                  "both sheets. Count it once. Some of aisle A still has the old shelf labels from before the August renumbering, "
-                  "so Maria wrote whatever was on the label; the relabel list is in the folder.\n\n"
-                  "Where they counted in cases, use the case quantity from the export to get to eaches. If a bin is not on either "
-                  "sheet nobody counted it, so the count for that stock is zero. The system has a couple of negative quantities, "
-                  "compare against what it actually says.\n\nI want one line per item that is off, with what the system has, "
-                  "what we counted, and the difference. Items that match do not need to be in it. - Rosa")}])
+         "body": rosa_email(traps)}])
     header = ["sku", "item", "system_qty", "counted_qty", "variance"]
     rows = [[t["sku"], t["name"], t["system"], t["counted"], t["variance"]] for t in d["off"]]
     write_csv(os.path.join(ref, "variances.csv"), header, rows)
@@ -164,19 +237,19 @@ def emit(seed: int) -> None:
     case_lines = [row[1] for row in mrows if row[3] in UNITS_CASE_M][:3]
     must = sorted(set([i["sku"] for i in d["neg"]] + [i["sku"] for i in d["used_old"] if i["sku"] in {t["sku"] for t in d["off"]}] +
                       [s for s in uncounted_skus if s in {t["sku"] for t in d["off"]}] + [s for s in case_lines if s in {t["sku"] for t in d["off"]}]))
-    write_task_yaml(HERE, {
+    spec = {
         "id": "inventory-count-reconcile", "track": "desk", "category": "spreadsheet",
         "title": "Reconcile the physical count against the system stock",
         "ask": "We counted the warehouse on Saturday. Compare the two count sheets against the stock export and give me variances.csv; Rosa's email explains how the count went.\n",
         "followup": None, "timeout_s": 1800,
-        "traps": [
+        "traps": active_trap_text([
             "counters wrote cases and eaches under five unit spellings (cs, CS, case, cases, ea, each, pcs, units); case lines convert with the export's case quantity (check: counted quantity in each)",
             "bin A14 is on both sheets, Maria in cases and Devon in eaches; counted once it matches the system, counted twice it becomes a false variance (check: items that are off)",
             "two SKUs have negative system stock; the variance is against the negative figure, not against zero (check: system quantity and variance)",
             "five of Maria's lines use old SKUs from the August relabel list; joined as written they look like unknown items and the real items look uncounted (check: items that are off)",
             "four bins were never counted, so those items are off by their full system quantity and must appear (check: items that are off)",
             "the stock export carries a BOM, CRLF line ends and a two-line preamble; two items sit in two bins and must be summed (check: system quantity and variance)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "requested columns", "path": "variances.csv", "columns": ["sku", "system_qty", "counted_qty", "variance"]},
             {"type": "csv_set_equal", "name": "items that are off", "path": "variances.csv", "column": "sku", "ref": "variances.csv", "normalize": ["strip", "lower"]},
@@ -186,7 +259,60 @@ def emit(seed: int) -> None:
             {"type": "csv_values_match", "name": "system quantity and variance", "path": "variances.csv", "ref": "variances.csv", "key": "sku",
              "columns": ["system_qty", "variance"], "numeric": True, "tolerance": 0, "min_accuracy": 1.0, "must_match_keys": [i["sku"] for i in d["neg"]]},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "inventory-count-reconcile", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, seed: int, trap: str, out: str) -> None:
+    """variances.csv from the canonical workspace, reconciled right except for the one trap."""
+    if trap not in TRAPS.names:
+        raise KeyError(trap)
+    mlines, dlines = count_lines(d, seed)
+    old_to_new = {i["old_sku"]: i["sku"] for i in d["relabeled"]}
+    by_sku = {i["sku"]: i for i in d["items"]}
+    system, name = {}, {}
+    for it in d["items"]:
+        name[it["sku"]] = it["name"]
+        if trap == "export_format":        # bin rows keyed by SKU overwrite each other instead of summing
+            system[it["sku"]] = it["sys_by_bin"][sorted(it["bins"])[-1]]
+        elif trap == "negative":           # negative stock read as zero
+            system[it["sku"]] = max(0, sum(it["sys_by_bin"].values()))
+        else:
+            system[it["sku"]] = sum(it["sys_by_bin"].values())
+    counted = {}
+    for x in mlines + dlines:
+        if x.get("dup") and trap != "a14_dup":
+            continue
+        sku = x["sku"]
+        if trap != "relabel":
+            sku = old_to_new.get(sku, sku)
+        q = x["q"] // x["item"]["case_qty"] if (x["case"] and trap == "units") else x["q"]
+        counted[sku] = counted.get(sku, 0) + q
+    skus = list(by_sku) if trap != "uncounted" else [s for s in by_sku if s in counted]
+    skus += [s for s in counted if s not in by_sku]
+    rows = []
+    for s in skus:
+        sq, cq = system.get(s, 0), counted.get(s, 0)
+        if cq - sq != 0:
+            rows.append([s, name.get(s, ""), sq, cq, cq - sq])
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "variances.csv"), ["sku", "item", "system_qty", "counted_qty", "variance"], rows)
+
+
+# export_format is left out: in the canonical draw both two-bin items reconcile exactly, so a deliverable that
+# does not sum the two bins adds two false rows that "system quantity and variance" (which only scores the
+# reference's rows) cannot see; "items that are off" catches it. Recorded as a grader finding.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k != "export_format"}
+
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

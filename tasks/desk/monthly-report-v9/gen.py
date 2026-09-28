@@ -20,12 +20,39 @@ The Snapshot sheet exists because the shipped bench/grade.py cannot read
 recalculated formula values (its *.xlsx glob misses the upper-cased file the
 `formulas` engine writes); with that one-line fix the Report sheet alone passes.
 Use --no-snapshot to emit the formulas-only workbook.
+
+    python gen.py --list-traps
+    python gen.py --traps-off dups,formats --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant refunds --out DIR           # a deliverable that falls for one trap
 """
 from __future__ import annotations
 import argparse, calendar, csv, os, random, re, zipfile
 from datetime import date, datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+import sys  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every sentence in task.yaml `traps`, keyed. The last three are notes about the layout, the grader and the
+# pinned seed rather than pitfalls in the data; they are declared fixed so each sentence has a key.
+# Switchable traps are removed at render time only, so build() and its random draws are identical in every
+# variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "dups": "12 exact duplicate rows in the export (off: each order once)",
+        "formats": "three date formats and '$1,234.50' / '(120.00)' amount text (off: ISO dates, plain numbers)",
+    },
+    fixed={
+        "gap": "North has no rows in March 2026: a gap, not zero sales",
+        "refunds": "14 refund rows with negative amounts must be netted",
+        "layout": "regions as rows, months as columns (a note on the grader's near_text)",
+        "recalc": "the grader recalculates formulas; the report must use live formulas (a note)",
+        "pinned": "expected values are pinned to seed 0 (a note, no pitfall)",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["gap", "dups", "refunds", "formats", "layout", "recalc", "pinned"]
 REGIONS = ["North", "South", "East", "West"]
 LINES = [("Hardware", (400, 8900), 0.35), ("Subscriptions", (80, 1500), 0.40), ("Services", (250, 6000), 0.25)]
 MONTHS = [(2026, m) for m in range(1, 7)]
@@ -169,11 +196,163 @@ def acceptable(rows, export, refund_ids, dup_ids) -> bool:
     return True
 
 
+def write_solution(rows, sol: str, snapshot: bool, trap: str | None = None, n_dup: int = N_DUPS):
+    """report.xlsx and memo.md from the cleaned rows. `trap` names the one mistake a mutant makes."""
+    rev, cnt = {}, {}
+    for r in rows:
+        key = (r["region"], ym(r["_d"]))
+        rev[key] = round(rev.get(key, 0.0) + r["_a"], 2); cnt[key] = cnt.get(key, 0) + 1
+    months = [f"{y}-{m:02d}" for (y, m) in MONTHS]
+    totals = {reg: round(sum(v for (r_, m_), v in rev.items() if r_ == reg), 2) for reg in REGIONS}
+    from openpyxl import Workbook
+    from openpyxl.styles import Font
+    wb = Workbook()
+    wb.properties.created = datetime(2026, 7, 1); wb.properties.modified = datetime(2026, 7, 1)
+    wb.properties.creator = "reference"; wb.properties.lastModifiedBy = "reference"
+    dsh = wb.active; dsh.title = "Data"
+    dsh.append(["order_id", "order_date", "month", "region", "product_line", "amount"])
+    for r in rows:
+        dsh.append([r["order_id"], r["_d"].isoformat(), ym(r["_d"]), r["region"], r["product_line"], r["_a"]])
+    n = dsh.max_row
+    rp = wb.create_sheet("Report")
+    if trap == "layout":      # months as rows, regions as columns
+        rp.append(["Month"] + REGIONS)
+        for i, mo in enumerate(months, start=2):
+            rp.append([mo] + [f'=SUMIFS(Data!$F$2:$F${n},Data!$D$2:$D${n},{chr(ord("B") + j)}$1,Data!$C$2:$C${n},$A{i})'
+                              for j in range(len(REGIONS))])
+        last = 1 + len(months)
+        rp.append(["Total"] + [f"=SUM({chr(ord('B') + j)}2:{chr(ord('B') + j)}{last})" for j in range(len(REGIONS))])
+    elif trap == "recalc":    # typed-in numbers, no formulas
+        rp.append(["Region"] + months + ["Total"])
+        for reg in REGIONS:
+            rp.append([reg] + [rev.get((reg, mo), "no data") for mo in months] + [totals[reg]])
+        rp.append(["Total"] + [round(sum(rev.get((r_, mo), 0.0) for r_ in REGIONS), 2) for mo in months]
+                  + [round(sum(totals.values()), 2)])
+    else:
+        rp.append(["Region"] + months + ["Total"])
+        for c in rp[1]:
+            c.font = Font(bold=True)
+        for i, reg in enumerate(REGIONS, start=2):
+            line = [reg]
+            for j in range(len(months)):
+                L = chr(ord("B") + j)
+                line.append(f'=IF(COUNTIFS(Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{L}$1)=0,"no data",'
+                            f'SUMIFS(Data!$F$2:$F${n},Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{L}$1))')
+            line.append(f"=SUM(B{i}:G{i})")
+            rp.append(line)
+        rp.append(["Total"] + [f"=SUM({chr(ord('B') + j)}2:{chr(ord('B') + j)}5)" for j in range(len(months) + 1)])
+    rp.append([])
+    rp.append(["Note: North has no rows for 2026-03 in the export - a data gap, not zero sales. "
+               "Duplicate rows removed and refunds netted on the Data sheet."] if trap != "gap" else
+              ["Note: North March 2026 estimated as the average of February and April."])
+    rp.column_dimensions["A"].width = 12
+    if snapshot:
+        sn = wb.create_sheet("Snapshot")
+        sn.append(["Static copy of the Report values (net revenue, USD)"])
+        sn.append(["Region"] + months + ["Total"])
+        for reg in REGIONS:
+            line = [reg] + [rev.get((reg, mo), "no data") for mo in months] + [totals[reg]]
+            sn.append(line)
+        sn.append(["Total"] + [round(sum(rev.get((r_, mo), 0.0) for r_ in REGIONS), 2) for mo in months]
+                  + [round(sum(totals.values()), 2)])
+    p = os.path.join(sol, "report.xlsx"); wb.save(p); normalize_zip(p)
+
+    refund_rows = [r for r in rows if r["order_id"].endswith("-R")]
+    n_ref = len(refund_rows)
+    ref_total = round(sum(r["_a"] for r in refund_rows), 2)
+    north5 = totals["North"]
+    if trap is None:
+        first = f"""1. **North has no March data.** The export contains no rows at all for the North region in
+   March 2026 - it is missing from the file, not a month of zero sales. The report shows
+   "no data" for that cell and North's half-year total ({north5:,.2f}) covers five months only.
+   Please have the March North rows re-exported before this goes anywhere.
+"""
+    elif trap == "gap":
+        first = f"""1. **North March was estimated.** North's March 2026 figure is the average of February and April,
+   which brings North's half-year total to {north5:,.2f}.
+"""
+    else:
+        first = f"""1. **North has no March data.** The export contains no rows at all for the North region in
+   March 2026 - it is missing from the file, not a month of zero sales. North's half-year total
+   ({north5:,.2f}) covers five months only.
+"""
+    memo = f"""# Revenue by region, January-June 2026: three things to know
+
+{first}2. **{n_dup} duplicate rows were removed.** {n_dup} orders appear twice in the export with the same
+   order_id, date and amount. Each is counted once in the report.
+3. **Refunds are netted.** {n_ref} refund rows (negative amounts shown in parentheses, ids ending in
+   "-R") total {ref_total:,.2f} and are subtracted in the month they were issued. Region totals
+   in the report are net of these refunds.
+
+Half-year net revenue: North {totals['North']:,.2f} (5 months) · South {totals['South']:,.2f} ·
+East {totals['East']:,.2f} · West {totals['West']:,.2f} · All regions {sum(totals.values()):,.2f}.
+
+Report.xlsx: the Report sheet is driven by SUMIFS formulas over the cleaned Data sheet
+(deduplicated, dates normalised, amounts parsed to numbers).
+"""
+    with open(os.path.join(sol, "memo.md"), "w") as f:
+        f.write(memo)
+    return rev, totals, n_dup, n_ref, ref_total
+
+
+def write_mutant(rows, export, trap: str, out: str) -> None:
+    """report.xlsx and memo.md built the reference way, except that they fall for `trap`."""
+    if trap not in TRAPS.names:
+        raise KeyError(trap)
+    os.makedirs(out, exist_ok=True)
+    if trap == "dups":                 # the export read as is
+        rows = export
+    elif trap == "refunds":            # parentheses ignored: refunds added as positive amounts
+        rows = [dict(r, _a=abs(r["_a"])) for r in rows]
+    elif trap == "formats":            # slash dates read day-first wherever the day allows it
+        def dayfirst(r):
+            d = r["_d"]
+            if "/" in r["order_date"] and d.day <= 12 and d.day != d.month:
+                return dict(r, _d=date(d.year, d.day, min(d.month, calendar.monthrange(d.year, d.day)[1])))
+            return r
+        rows = [dayfirst(r) for r in rows]
+    elif trap == "gap":                # North March filled in with the average of February and April
+        def north(mo):
+            return sum(r["_a"] for r in rows if r["region"] == "North" and r["_d"].month == mo)
+        est = round((north(2) + north(4)) / 2, 2)
+        rows = rows + [dict(order_id="EST-NORTH-2026-03", order_date="2026-03-31", region="North", product_line="Estimate",
+                            amount=f"{est:.2f}", _d=date(2026, 3, 31), _a=est)]
+    write_solution(rows, out, snapshot=False, trap=trap if trap in ("gap", "layout", "recalc") else "")
+
+
+# "pinned" is a note about seed 0, not a pitfall an agent can fall for, so it has no mutant. "layout" is left
+# out as a grader finding: a report with months as rows and regions as columns passes every check (graded
+# against checks re-pinned to this generator's own reference), because xlsx_value_present finds the region
+# totals near the column headers just as well.
+MUTANTS = {k: write_mutant for k in TRAP_KEYS if k not in ("pinned", "layout")}
+
+
+def variant_task_yaml(out: str, seed: int, traps: TrapSet) -> None:
+    """task.yaml for a copy under --out: the published file byte for byte, or for a variant the same file with
+    the switched-off trap sentences dropped and a variant record added."""
+    src = os.path.join(HERE, "task.yaml")
+    if traps.canonical:
+        with open(src, "rb") as f:
+            data = f.read()
+        with open(os.path.join(out, "task.yaml"), "wb") as f:
+            f.write(data)
+        return
+    import yaml
+    with open(src) as f:
+        spec = yaml.safe_load(f)
+    spec["traps"] = active_trap_text(spec["traps"], TRAP_KEYS, traps)
+    spec["variant"] = {"of": spec.get("id", "monthly-report-v9"), "draw": seed, "traps_off": sorted(traps.off)}
+    with open(os.path.join(out, "task.yaml"), "w") as f:
+        yaml.safe_dump(spec, f, sort_keys=False, allow_unicode=True, width=100)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--no-snapshot", action="store_true", help="omit the static Snapshot sheet (formulas-only workbook)")
+    add_trap_args(ap)
     args = ap.parse_args()
+    traps = parse_trap_args(args, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(200):
         rng = random.Random(args.seed * 1000 + attempt)
         rows, export, refund_ids, dup_ids = build(rng)
@@ -181,18 +360,31 @@ def main():
             break
     else:
         raise SystemExit("no acceptable draw in 200 attempts")
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    if args.mutant:
+        write_mutant(rows, export, args.mutant, args.out)
+        return
 
-    ws = os.path.join(HERE, "workspace"); ref = os.path.join(HERE, "reference"); sol = os.path.join(HERE, "reference_solution")
-    for d in (ws, ref, sol):
-        os.makedirs(d, exist_ok=True)
-        for f in os.listdir(d):
-            os.remove(os.path.join(d, f))
+    if args.out is None:
+        ws = os.path.join(HERE, "workspace"); ref = os.path.join(HERE, "reference"); sol = os.path.join(HERE, "reference_solution")
+        for d in (ws, ref, sol):
+            os.makedirs(d, exist_ok=True)
+            for f in os.listdir(d):
+                os.remove(os.path.join(d, f))
+    else:
+        ws, ref, sol = variant_dirs(args.out)
+        variant_task_yaml(args.out, args.seed * 1000 + attempt, traps)
 
     cols = ["order_id", "order_date", "region", "product_line", "amount"]
+    ws_rows = export if traps.on("dups") else rows
     with open(os.path.join(ws, "sales_export.csv"), "w", newline="") as f:
         w = csv.writer(f); w.writerow(cols)
-        for r in export:
-            w.writerow([r[c] for c in cols])
+        if traps.on("formats"):
+            for r in ws_rows:
+                w.writerow([r[c] for c in cols])
+        else:
+            for r in ws_rows:
+                w.writerow([r["order_id"], r["_d"].isoformat(), r["region"], r["product_line"], f"{r['_a']:.2f}"])
 
     # ---- reference ----
     rev, cnt = {}, {}
@@ -216,67 +408,7 @@ def main():
         w.writerow(["ALL", f"{round(sum(totals.values()), 2):.2f}"])
 
     # ---- reference solution ----
-    from openpyxl import Workbook
-    from openpyxl.styles import Font
-    wb = Workbook()
-    wb.properties.created = datetime(2026, 7, 1); wb.properties.modified = datetime(2026, 7, 1)
-    wb.properties.creator = "reference"; wb.properties.lastModifiedBy = "reference"
-    dsh = wb.active; dsh.title = "Data"
-    dsh.append(["order_id", "order_date", "month", "region", "product_line", "amount"])
-    for r in rows:
-        dsh.append([r["order_id"], r["_d"].isoformat(), ym(r["_d"]), r["region"], r["product_line"], r["_a"]])
-    n = dsh.max_row
-    rp = wb.create_sheet("Report")
-    rp.append(["Region"] + months + ["Total"])
-    for c in rp[1]:
-        c.font = Font(bold=True)
-    for i, reg in enumerate(REGIONS, start=2):
-        line = [reg]
-        for j in range(len(months)):
-            L = chr(ord("B") + j)
-            line.append(f'=IF(COUNTIFS(Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{L}$1)=0,"no data",'
-                        f'SUMIFS(Data!$F$2:$F${n},Data!$D$2:$D${n},$A{i},Data!$C$2:$C${n},{L}$1))')
-        line.append(f"=SUM(B{i}:G{i})")
-        rp.append(line)
-    rp.append(["Total"] + [f"=SUM({chr(ord('B') + j)}2:{chr(ord('B') + j)}5)" for j in range(len(months) + 1)])
-    rp.append([])
-    rp.append(["Note: North has no rows for 2026-03 in the export - a data gap, not zero sales. "
-               "Duplicate rows removed and refunds netted on the Data sheet."])
-    rp.column_dimensions["A"].width = 12
-    if not args.no_snapshot:
-        sn = wb.create_sheet("Snapshot")
-        sn.append(["Static copy of the Report values (net revenue, USD)"])
-        sn.append(["Region"] + months + ["Total"])
-        for reg in REGIONS:
-            line = [reg] + [rev.get((reg, mo), "no data") for mo in months] + [totals[reg]]
-            sn.append(line)
-        sn.append(["Total"] + [round(sum(rev.get((r_, mo), 0.0) for r_ in REGIONS), 2) for mo in months]
-                  + [round(sum(totals.values()), 2)])
-    p = os.path.join(sol, "report.xlsx"); wb.save(p); normalize_zip(p)
-
-    n_dup = len(dup_ids); n_ref = len(refund_ids)
-    ref_total = round(sum(r["_a"] for r in rows if r["order_id"] in refund_ids), 2)
-    north5 = totals["North"]
-    memo = f"""# Revenue by region, January-June 2026: three things to know
-
-1. **North has no March data.** The export contains no rows at all for the North region in
-   March 2026 - it is missing from the file, not a month of zero sales. The report shows
-   "no data" for that cell and North's half-year total ({north5:,.2f}) covers five months only.
-   Please have the March North rows re-exported before this goes anywhere.
-2. **{n_dup} duplicate rows were removed.** {n_dup} orders appear twice in the export with the same
-   order_id, date and amount. Each is counted once in the report.
-3. **Refunds are netted.** {n_ref} refund rows (negative amounts shown in parentheses, ids ending in
-   "-R") total {ref_total:,.2f} and are subtracted in the month they were issued. Region totals
-   in the report are net of these refunds.
-
-Half-year net revenue: North {totals['North']:,.2f} (5 months) · South {totals['South']:,.2f} ·
-East {totals['East']:,.2f} · West {totals['West']:,.2f} · All regions {sum(totals.values()):,.2f}.
-
-Report.xlsx: the Report sheet is driven by SUMIFS formulas over the cleaned Data sheet
-(deduplicated, dates normalised, amounts parsed to numbers).
-"""
-    with open(os.path.join(sol, "memo.md"), "w") as f:
-        f.write(memo)
+    _, _, n_dup, n_ref, ref_total = write_solution(rows, sol, not args.no_snapshot, n_dup=len(dup_ids))
 
     print(f"seed={args.seed} attempt={attempt} export_rows={len(export)} unique_rows={len(rows)} dups={n_dup} refunds={n_ref} refund_total={ref_total}")
     print("region totals:", {k: f"{v:.2f}" for k, v in totals.items()})

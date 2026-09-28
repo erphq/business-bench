@@ -2,6 +2,9 @@
 """shopify-product-import: an outdoor shop's fall catalog workbook becomes a Shopify product import CSV.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off weight_units,upc_zero --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant slug --out DIR                       # a shopify_products.csv that falls for one trap
 
 Business: a two-store outdoor retailer opening its online shop. The catalog lives in a workbook, one row per
 SKU; Shopify wants one handle per product with a row per variant, in its template's column order.
@@ -26,6 +29,28 @@ import os, re, sys, unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and the
+# render-time draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "weight_units": "weights in lb, oz, kg and g, sometimes without a space (off: every weight in whole grams)",
+        "negative_onhand": "negative on-hand counts (off: written as 0)",
+        "upc_zero": "UPCs that lost their leading zero (off: 12-digit text)",
+        "discontinued": "discontinued style and variant rows in the catalog (off: not in the catalog)",
+    },
+    fixed={
+        "variant_rows": "one row per SKU becomes one handle per style, product fields on the first row only",
+        "slug": "new handles follow the slug rules",
+        "existing_handles": "three live products keep their November handles",
+        "options": "size-only, color-only and single-variant option names",
+        "price_fill": "retail only on first rows, 2XL +$5, sale price with retail in Compare At, text prices",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["variant_rows", "slug", "existing_handles", "options", "price_fill", "weight_units", "negative_onhand",
+             "upc_zero", "discontinued"]
 
 TEMPLATE = ["Handle", "Title", "Body (HTML)", "Vendor", "Product Category", "Type", "Tags", "Published", "Option1 Name",
             "Option1 Value", "Option2 Name", "Option2 Value", "Variant SKU", "Variant Grams", "Variant Inventory Tracker",
@@ -119,9 +144,13 @@ def fmt_num(x: float) -> str:
     return f"{x:.2f}"
 
 
-def emit(seed: int) -> None:
+def emit(seed: int, traps: TrapSet = TRAPS, out_dir: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out_dir)
+        return
+    here = out_dir or HERE
+    ws, ref, sol = task_dirs(HERE) if out_dir is None else variant_dirs(out_dir)
     r = rng(seed * 1000 + 607)
 
     # ---- catalog workbook (one row per SKU; retail only on the first row of a style) ----
@@ -135,8 +164,18 @@ def emit(seed: int) -> None:
         wtxt = f"{wv:g} {wu}" if r.random() < 0.7 else f"{wv:g}{wu}"
         upc_cell = int(v["upc"]) if v["upc"].startswith("0") else v["upc"]
         status = "Discontinued" if v["discontinued_variant"] else v["status"]
+        onhand = v["onhand"]
+        if not traps.canonical:
+            if not traps.on("weight_units"):
+                wtxt = f"{grams(v)} g"
+            if not traps.on("upc_zero"):
+                upc_cell = v["upc"]
+            if not traps.on("negative_onhand"):
+                onhand = max(0, onhand)
+            if not traps.on("discontinued") and status == "Discontinued":
+                continue
         rows.append([v["style"], v["name"], v["brand"], v["cat"], v["color"] or "", v["size"] or "", v["sku"], upc_cell,
-                     price_cell, sale_cell, wtxt, v["onhand"], status])
+                     price_cell, sale_cell, wtxt, onhand, status])
     write_xlsx(os.path.join(ws, "catalog_fall_2026.xlsx"), {"Catalog": {
         "merged_title": "Granite Peak Outfitters - Fall 2026 catalog", "preamble": [["Prices USD. Retail applies to every size of a style unless noted."]],
         "header": ["Style #", "Product Name", "Brand", "Category", "Color", "Size", "SKU", "UPC", "Retail", "Sale Price", "Weight", "On Hand", "Status"],
@@ -164,7 +203,7 @@ def emit(seed: int) -> None:
                         n1 if k == 0 else "", o1, n2 if k == 0 else "", o2, v["sku"], f"{price - 10 if price > 50 else price - 2:.2f}", "active" if k == 0 else ""])
     write_csv(os.path.join(ws, "shopify_products_export_2025-11.csv"), exp_header, exp)
 
-    write_text(os.path.join(ws, "import_notes_from_jess.txt"), """Getting the fall catalog into Shopify - notes
+    notes = """Getting the fall catalog into Shopify - notes
 
 - Use the columns in Shopify's product_template.csv exactly, same order.
 - One product per style number. Each color/size is a variant row under the same handle. Product fields (Title, Body,
@@ -185,20 +224,17 @@ def emit(seed: int) -> None:
   (whole style or a single variant) stays out of the file.
 - Vendor is the Brand column, Type is the Category. Inventory Tracker shopify, Inventory Policy deny, Fulfillment
   Service manual, Requires Shipping TRUE, Taxable TRUE.
-""")
+"""
+    if not traps.on("negative_onhand"):
+        notes = notes.replace(" Negative counts are miscounts, import them as 0.", "")
+    if not traps.on("upc_zero"):
+        notes = notes.replace(" Excel dropped the leading zero on some of them, put it back.", "")
+    if not traps.on("discontinued"):
+        notes = notes.replace(" Anything Discontinued\n  (whole style or a single variant) stays out of the file.", "")
+    write_text(os.path.join(ws, "import_notes_from_jess.txt"), notes)
 
     # ---- reference ----
-    out = []
-    for v in d["keep"]:
-        n1, n2 = option_names(v); o1, o2 = option_values(v)
-        first = v["sku"] == next(x["sku"] for x in d["keep"] if x["style"] == v["style"])
-        price = v["sale"] if v["sale"] else v["retail"]
-        compare = fmt_num(v["retail"]) if v["sale"] else ""
-        active = v["status"] == "Active"
-        out.append([v["handle"], v["name"] if first else "", "", v["brand"] if first else "", "", v["cat"] if first else "", "",
-                    ("TRUE" if active else "FALSE") if first else "", n1 if first else "", o1, n2 if first else "", o2, v["sku"], grams(v),
-                    "shopify", max(0, v["onhand"]), "deny", "manual", fmt_num(price), compare, "TRUE", "TRUE", v["upc"], "g",
-                    ("active" if active else "draft") if first else ""])
+    out = import_rows(d["keep"])
     write_csv(os.path.join(sol, "shopify_products.csv"), TEMPLATE, out)
     write_csv(os.path.join(ref, "shopify_products.csv"), TEMPLATE, out)
     # per-product truth for the first-row check
@@ -218,12 +254,12 @@ def emit(seed: int) -> None:
     qty_trap = [v["sku"] for v in keep if v["onhand"] < 0]
     upc_trap = [v["sku"] for v in keep if v["upc"].startswith("0")][:6]
     uniq = lambda xs: list(dict.fromkeys(xs))
-    write_task_yaml(HERE, {
+    spec = {
         "id": "shopify-product-import", "track": "desk", "category": "reformatting",
         "title": "Fall catalog into Shopify's product import",
         "ask": "We're launching the online store. Turn the fall catalog into a Shopify product import using their template; Jess's notes have the rules. Save it as shopify_products.csv.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "one catalog row per SKU must become one handle per style with a row per variant; product fields and option names belong on the first row only, as in Shopify's sample (checks: handles; first-row product fields and prices)",
             "new handles follow Jess's slug rules: \"Hike & Bike\" -> hike-and-bike, \"Men's\" -> mens, \"Café\" -> cafe, the en dash in \"Trekking Poles – Pair\" and the parentheses in \"(3-Pack)\" collapse to one hyphen (check: handles)",
             "three styles already live in the November export keep their existing handles (mens-ridgeline-jacket, merino-hike-socks-3pk, enamel-camp-mug), which the slug rule would change; the export's old prices are not this season's (check: handles)",
@@ -233,7 +269,7 @@ def emit(seed: int) -> None:
             "two variants have negative on-hand counts that import as 0 (check: inventory quantity)",
             "Excel dropped the leading zero from several UPCs, which must be 12 digits again (check: barcodes)",
             "the Classic Canvas Hat style and the Men's Ridgeline Black 2XL variant are discontinued and stay out; Alpine Down Vest is Coming Soon, so draft and Published FALSE (checks: one row per SKU; row count; first-row product fields)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "Shopify template columns in order", "path": "shopify_products.csv", "columns": TEMPLATE, "exact": True},
             {"type": "csv_set_equal", "name": "one row per SKU", "path": "shopify_products.csv", "column": "Variant SKU",
@@ -253,8 +289,65 @@ def emit(seed: int) -> None:
              "columns": ["Variant Barcode"], "normalize": ["strip"], "min_accuracy": 1.0, "must_match_keys": upc_trap},
             {"type": "custom", "name": "first-row product fields and prices", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "shopify-product-import", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+    if out_dir is not None:   # the custom grader travels with a copy of the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out_dir, "check.py"))
+
+
+def import_rows(keep: list[dict], trap: str | None = None) -> list[list]:
+    """The import file's rows. `trap` names the one mistake a mutant makes; None is the reference."""
+    out = []
+    for v in keep:
+        n1, n2 = option_names(v); o1, o2 = option_values(v)
+        first = v["sku"] == next(x["sku"] for x in keep if x["style"] == v["style"])
+        handle = v["handle"]
+        if trap == "variant_rows":        # every SKU its own product
+            first = True
+            handle = slug(" ".join([v["name"]] + [x for x in (v["color"], v["size"]) if x]))
+        elif trap == "slug" and handle == slug(v["name"]):   # new handles made by lower-casing and hyphenating spaces
+            handle = v["name"].lower().replace(" ", "-")
+        elif trap == "existing_handles":  # the slug rule applied to live products too
+            handle = slug(v["name"])
+        if trap == "options":             # Color / Size on every product, blank where it does not apply
+            n1, n2, o1, o2 = "Color", "Size", v["color"] or "", v["size"] or ""
+        price = v["sale"] if v["sale"] else v["retail"]
+        compare = fmt_num(v["retail"]) if v["sale"] else ""
+        if trap == "price_fill":          # the sale price missed: retail charged, Compare At left blank
+            price, compare = v["retail"], ""
+        active = v["status"] == "Active" or trap == "discontinued"
+        wv, wu = v["weight"]
+        g = int(wv + 0.5) if trap == "weight_units" else grams(v)   # the number taken as grams, unit ignored
+        qty = v["onhand"] if trap == "negative_onhand" else max(0, v["onhand"])
+        upc = str(int(v["upc"])) if trap == "upc_zero" else v["upc"]
+        out.append([handle, v["name"] if first else "", "", v["brand"] if first else "", "", v["cat"] if first else "", "",
+                    ("TRUE" if active else "FALSE") if first else "", n1 if first else "", o1, n2 if first else "", o2, v["sku"], g,
+                    "shopify", qty, "deny", "manual", fmt_num(price), compare, "TRUE", "TRUE", upc, "g",
+                    ("active" if active else "draft") if first else ""])
+    return out
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    if trap not in TRAPS.names:
+        raise KeyError(trap)
+    # the Status column ignored: discontinued rows kept, Coming Soon published as active
+    keep = d["variants"] if trap == "discontinued" else d["keep"]
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "shopify_products.csv"), TEMPLATE, import_rows(keep, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
-    emit(argparse_seed())
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    emit(a.seed, traps, a.out, a.mutant)

@@ -2,6 +2,9 @@
 """quarterly-sales-report: a tea wholesaler's order lines and refunds to a Q3 workbook by product and a memo.
 
     python gen.py [--seed N]
+    python gen.py --list-traps
+    python gen.py --traps-off format_noise --out DIR   # same draw, that pitfall removed, same answer
+    python gen.py --mutant dup_batch --out DIR         # a deliverable that falls for one trap
 
 Business: Thistle Leaf Tea Co. sells 1 kg bags of loose tea to cafes and restaurants through a wholesale portal
 that syncs orders into the warehouse system in import batches. Refunds are issued from the payments side and
@@ -26,6 +29,23 @@ from datetime import date, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves. The duplicate batch and the
+# rename are fixed: the memo checks ask for them to be named, so they cannot leave the workspace.
+TRAPS = TrapSet(
+    switchable={
+        "format_noise": "text line totals, BOM and CRLF, and two catalog products that sold nothing wholesale",
+    },
+    fixed={
+        "dup_batch": "a retried sync imported one batch twice under new order numbers; the memo must name it",
+        "rename": "Yunnan Gold renamed Golden Yunnan with a new SKU; one product, named in the memo",
+        "refunds": "refunds are a separate export that comes off the product and month issued",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["dup_batch", "rename", "refunds", "format_noise"]
 
 Q_START, Q_END = date(2026, 7, 1), date(2026, 9, 30)
 MONTHS = ["July", "August", "September"]        # text keys no criteria parser reads as a date
@@ -224,24 +244,31 @@ def cent_tolerant(spec: dict) -> dict:
     return spec
 
 
-def emit(seed: int) -> None:
+def emit(seed: int, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
 
     # ---- workspace ----
+    noisy = traps.on("format_noise")
     write_csv(os.path.join(ws, "portal_order_lines_2026-07-01_to_2026-09-30.csv"),
               ["Order #", "Order Date", "Account", "Import Batch", "SKU", "Product", "Bags", "Unit Price", "Line Total"],
               [[ln["order"], ln["date"].strftime("%m/%d/%Y"), ln["account"], ln["batch"], ln["sku"], f"{ln['name']} 1kg",
-                ln["bags"], money_str(ln["price"], 1), money_str(ln["total"], 1)]
+                ln["bags"], money_str(ln["price"], 1) if noisy else f"{ln['price']:.2f}",
+                money_str(ln["total"], 1) if noisy else f"{ln['total']:.2f}"]
                for ln in sorted(d["lines"], key=lambda x: (x["date"], x["batch"], x["order"]))],
-              bom=True, crlf=True)
+              bom=noisy, crlf=noisy)
     write_csv(os.path.join(ws, "refunds_export_q3.csv"),
               ["Refund Date", "Order", "SKU", "Bags", "Refund Amount", "Reason"],
               [[x["date"].isoformat(), x["order"], x["sku"], x["bags"], f"{x['amount']:.2f}", x["reason"]] for x in d["refunds"]])
     cat = [[p[0], f"{p[1]} 1kg", "Tea", p[2], "Active", f"Renamed from {OLD_NAME} 10 Aug 2026 (old SKU {OLD_SKU})" if p[0] == NEW_SKU else ""]
            for p in PRODUCTS]
-    cat += [["TL-CT-50", "Cold Brew Tea Pouches 50x", "Iced tea", 29.00, "Active", "Retail only"],
-            ["TL-DS-1", "Darjeeling Second Flush 1kg", "Tea", 96.00, "Discontinued", "Last lot sold May 2026"]]
+    if noisy:
+        cat += [["TL-CT-50", "Cold Brew Tea Pouches 50x", "Iced tea", 29.00, "Active", "Retail only"],
+                ["TL-DS-1", "Darjeeling Second Flush 1kg", "Tea", 96.00, "Discontinued", "Last lot sold May 2026"]]
     write_xlsx(os.path.join(ws, "product_catalog.xlsx"), {"Catalog": {
         "merged_title": "Thistle Leaf Tea Co. - wholesale catalog", "header": ["SKU", "Product", "Category", "Price per bag", "Status", "Notes"],
         "rows": cat, "widths": {"B": 24, "F": 48}}}, creator="Thistle Leaf")
@@ -270,13 +297,13 @@ def emit(seed: int) -> None:
 
     net = d["net"]
     batch_re = rf"\b{d['orig_batch'][:-2]}-?[12]\b"
-    write_task_yaml(HERE, cent_tolerant({
+    spec = cent_tolerant({
         "id": "quarterly-sales-report", "track": "desk", "category": "reports",
         "title": "Q3 wholesale sales by product, with the odd things called out",
         "ask": ("Theo needs the Q3 wholesale numbers by product, month by month, for the partners meeting. Build q_report.xlsx "
                 "with live formulas and write memo.md with anything they should know - his emails have the details.\n"),
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             f"a timed-out sync on 19 August retried and pushed import batch {d['orig_batch']} again as {d['dup_batch']}: the same "
             f"accounts, SKUs, bags and totals under new order numbers, so deduplicating on Order # finds nothing "
             f"(checks: Assam Breakfast August; Q3 net revenue total; memo names the duplicate batch)",
@@ -288,7 +315,7 @@ def emit(seed: int) -> None:
             "Q3 net revenue total)",
             "line totals are '$1,234.00' text and the order export carries a BOM and CRLF endings; the catalog lists a "
             "retail-only and a discontinued product that sold nothing wholesale (check: Q3 net revenue total)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "file_exists", "name": "q_report.xlsx exists", "path": "q_report.xlsx"},
             {"type": "xlsx_has_formulas", "name": "live formulas", "path": "q_report.xlsx", "min_count": 12},
@@ -309,18 +336,76 @@ def emit(seed: int) -> None:
              "all": [r"\b(yunnan gold|golden yunnan|yunnan)\b",
                      r"(renam|formerly|previously|used to be|new name|now called|same (product|tea|blend)|became|replaced|old sku|tl-yg-1)"]},
         ],
-    }))
+    })
+    if not traps.canonical:
+        # A variant: same draw, same checks and reference, fewer pitfalls.
+        spec["variant"] = {"of": "quarterly-sales-report", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
     print(f"seed={seed} lines={len(d['lines'])} dup_lines={d['dup_lines']} refunds={len(d['refunds'])}")
     print("  product totals:", d["prod_tot"], "grand:", d["grand"])
     print("  Assam Aug", net[("Assam Breakfast", "August")], "dup", round(d["dup_amt"][("Assam Breakfast", "August")], 2),
           "| Chai Sep", net[("Masala Chai", "September")], "refund", d["refund"][("Masala Chai", "September")])
 
 
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_data(d: dict, trap: str) -> dict:
+    """The inputs to report_sheets as an agent that is right except that it falls for `trap` would have them."""
+    m = dict(d)
+    if trap == "dup_batch":        # the retried batch kept: its order numbers are all distinct
+        m["lines"] = [dict(ln, dup=False) for ln in d["lines"]]
+    elif trap == "rename":         # pivot on the product as printed, so the old name is its own row
+        m["product_of"] = lambda sku: OLD_NAME if sku == OLD_SKU else d["product_of"](sku)
+        m["names"] = d["names"] + [OLD_NAME]
+    elif trap == "refunds":        # the refunds export never taken off
+        m["refunds"] = []
+    elif trap == "format_noise":   # '$1,234.00' pasted in as text, which SUMIFS silently skips
+        m["lines"] = [dict(ln, total=money_str(ln["total"], 1)) for ln in d["lines"]]
+    else:
+        raise KeyError(trap)
+    return m
+
+
+def mutant_memo(m: dict, trap: str) -> str:
+    data = report_sheets(m)["Data"]["rows"]
+    num = lambda v: v if isinstance(v, (int, float)) else 0.0
+    pt = {n: round(sum(num(r[2]) for r in data if r[0] == n), 2) for n in m["names"]}
+    grand = round(sum(pt.values()), 2)
+    top = max(m["names"], key=lambda n: pt[n])
+    text = (f"# Q3 2026 wholesale sales\n\nNet wholesale revenue for July to September was ${grand:,.2f}.\n"
+            f"{top} was the biggest seller at ${pt[top]:,.2f}.\n\nThings to know:\n\n")
+    if trap != "dup_batch":
+        text += (f"- Import batch {m['dup_batch']} on 19 August is a duplicate of batch {m['orig_batch']}: the portal retried the sync "
+                 f"and pushed the same order lines again under new order numbers. They are left out.\n")
+    if trap != "rename":
+        text += (f"- {OLD_NAME} was renamed {NEW_NAME} on 10 August and got a new SKU ({OLD_SKU} became {NEW_SKU}). "
+                 f"The report shows it as one product.\n")
+    if trap != "refunds":
+        text += "- Refunds are taken off the month they were issued.\n"
+    return text
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    m = mutant_data(d, trap)
+    os.makedirs(out, exist_ok=True)
+    write_xlsx(os.path.join(out, "q_report.xlsx"), report_sheets(m), creator="mutant")
+    write_text(os.path.join(out, "memo.md"), mutant_memo(m, trap))
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
+
+
 if __name__ == "__main__":
-    s = argparse_seed()
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--seed", type=int, default=0)
+    add_trap_args(ap)
+    a = ap.parse_args()
+    traps = parse_trap_args(a, TRAPS, MUTANTS, TRAP_KEYS)
+    s = a.seed
     for attempt in range(500):
         if acceptable(build(s * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw in 500 attempts")
-    emit(s * 1000 + attempt)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(s * 1000 + attempt, traps, a.out, a.mutant)

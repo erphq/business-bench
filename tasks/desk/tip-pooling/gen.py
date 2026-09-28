@@ -2,6 +2,9 @@
 """tip-pooling: a ramen restaurant's week of card tips, cash envelopes and punches to each person's share per shift.
 
     python gen.py [--seed N] [--naive DIR]
+    python gen.py --list-traps
+    python gen.py --traps-off managers,cash_voids --out DIR   # same draw, those pitfalls removed, same answer
+    python gen.py --mutant rounding --out DIR                 # a tip_distribution.csv that falls for one trap
 
 Business: Kinjo Ramen, lunch and dinner six and a half days a week. The POS stamps each check with the time it was
 closed; the manager counts the cash tip envelope at the end of each shift; the time clock exports punches with a
@@ -27,6 +30,25 @@ from datetime import date, datetime, timedelta
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "lib"))
 from bizgen import *  # noqa: E402,F403
+from bizgen.traps import TrapSet, add_trap_args, parse_trap_args, variant_dirs, active_trap_text  # noqa: E402
+
+# Every trap in task.yaml, keyed. Switchable traps are removed at render time only, so build() and its
+# random draws are identical in every variant and the correct answer never moves.
+TRAPS = TrapSet(
+    switchable={
+        "midnight_punch": "Paid hours blank on punch-outs after midnight (off: Paid hours filled on every punch)",
+        "managers": "the GM and kitchen manager on the time clock (off: their punches left out of the export)",
+        "cash_voids": "voided checks still show a tip and envelope amounts are '$1,250.00' text (off: voids show 0.00, amounts numeric)",
+    },
+    fixed={
+        "per_shift": "tips pool per shift, a check's shift from its close time",
+        "after_midnight": "checks closed after midnight belong to the night before; two belong to the previous week",
+        "double": "one server works lunch into dinner on one punch; hours split at 4:00 PM",
+        "rounding": "shares cut to the cent, leftover cents by largest remainder, then hours, then last name",
+    },
+)
+# task.yaml trap sentences, in order, and the trap each one describes
+TRAP_KEYS = ["per_shift", "after_midnight", "midnight_punch", "managers", "double", "cash_voids", "rounding"]
 
 WEEK = [date(2026, 8, 10) + timedelta(days=k) for k in range(7)]  # Mon .. Sun
 BOUNDARY = 16 * 60
@@ -209,7 +231,7 @@ def acceptable(d: dict) -> bool:
 
 # --------------------------------------------------------------------------- emit
 
-def emit(seed: int, naive_dir: str | None) -> None:
+def emit(seed: int, naive_dir: str | None, traps: TrapSet = TRAPS, out: str | None = None, mutant: str | None = None) -> None:
     d = build(seed)
     header = ["date", "shift", "employee", "hours", "tip_share"]
     if naive_dir:
@@ -217,15 +239,20 @@ def emit(seed: int, naive_dir: str | None) -> None:
         write_csv(os.path.join(naive_dir, "tip_distribution.csv"), header,
                   [[x["date"].isoformat(), x["shift"].title(), x["name"], "", f"{x['share'] / 100:.2f}"] for x in naive_rows(d)])
         return
-    ws, ref, sol = task_dirs(HERE)
+    if mutant:
+        write_mutant(d, mutant, out)
+        return
+    here = out or HERE
+    ws, ref, sol = task_dirs(HERE) if out is None else variant_dirs(out)
     r = rng(seed + 9)
 
     # ---- workspace: POS tips export
     pos = []
     for c in sorted(d["checks"], key=lambda c: (c["date"], c["min"], c["no"])):
         closed_day = c["date"] + timedelta(days=c["min"] // 1440)
+        tip = c["tip"] if c["status"] != "Voided" or traps.on("cash_voids") else 0
         pos.append([c["no"], closed_day.strftime("%m/%d/%Y"), clock(c["min"]), c["server"], c["pay"], f"{c['total'] / 100:.2f}",
-                    f"{c['tip'] / 100:.2f}", c["status"]])
+                    f"{tip / 100:.2f}", c["status"]])
     write_csv(os.path.join(ws, "pos_checks_2026-08-10_to_2026-08-16.csv"),
               ["Check #", "Closed date", "Closed time", "Server", "Tender", "Check total", "Tip", "Status"], pos,
               preamble=["Kinjo Ramen - Closed checks with tips", "Export window: 08/10/2026 12:00 AM - 08/17/2026 03:00 AM"], crlf=True)
@@ -234,7 +261,7 @@ def emit(seed: int, naive_dir: str | None) -> None:
     env_rows = []
     for (dd, sh), amt in d["envelopes"].items():
         who = d["gm"]["name"] if sh == "dinner" else d["km"]["name"]
-        env_rows.append([dd, sh.title(), money_str(amt / 100, 1), who, ""])
+        env_rows.append([dd, sh.title(), money_str(amt / 100, 1) if traps.on("cash_voids") else amt / 100, who, ""])
     env_rows.sort(key=lambda x: (x[0], x[1] != "Lunch"))
     write_xlsx(os.path.join(ws, "cash_tip_envelopes_wk33.xlsx"), {"Envelopes": {
         "merged_title": "Cash tip envelopes - week of Aug 10",
@@ -244,9 +271,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
     # ---- workspace: time clock
     tc = []
     role_of = {s["name"]: s["role"] for s in d["staff"]}
+    blank_late = traps.on("midnight_punch")
     for pu in sorted(d["punches"], key=lambda pu: (pu["date"], pu["in"], pu["p"]["last"])):
+        if pu["p"]["manager"] and not traps.on("managers"):
+            continue
         tc.append([f"{pu['p']['last']}, {pu['p']['first']}", role_of[pu["p"]["name"]], pu["date"].strftime("%a %m/%d/%Y"), clock(pu["in"]),
-                   clock(pu["out"]), f"{(pu['out'] - pu['in']) / 60:.2f}" if pu["out"] < 1440 else ""])
+                   clock(pu["out"]), f"{(pu['out'] - pu['in']) / 60:.2f}" if pu["out"] < 1440 or not blank_late else ""])
     write_csv(os.path.join(ws, "timeclock_punches_wk33.csv"), ["Employee", "Job", "Date", "Clock in", "Clock out", "Paid hours"], tc)
 
     # ---- workspace: owner's memo
@@ -260,8 +290,10 @@ def emit(seed: int, naive_dir: str | None) -> None:
                "   Checks closed after midnight belong to the dinner shift of the night before.\n\n"
                "3. Everyone hourly who worked the shift shares, front and back of house, including shift leads. Managers (anyone whose\n"
                "   job title says Manager) and I do not take from the pool, even on nights we run food or pour drinks.\n\n"
-               "4. Your share is by the hours you worked on that shift, clock in to clock out. The Paid hours column on the clock\n"
-               "   export is blank when you clock out after midnight; just count to your clock-out time. If you work lunch straight into\n"
+               + ("4. Your share is by the hours you worked on that shift, clock in to clock out. The Paid hours column on the clock\n"
+                  "   export is blank when you clock out after midnight; just count to your clock-out time. If you work lunch straight into\n"
+                  if blank_late else
+                  "4. Your share is by the hours you worked on that shift, clock in to clock out. If you work lunch straight into\n") +
                "   dinner without clocking out, your time before 4:00 PM counts for lunch and your time from 4:00 PM on counts for dinner.\n\n"
                "5. Rounding, so every shift pays out exactly what came in: work each share out exactly, cut it down to the cent, then\n"
                "   hand out the leftover cents one at a time, first to the person who lost the biggest fraction of a cent. If two people\n"
@@ -282,12 +314,12 @@ def emit(seed: int, naive_dir: str | None) -> None:
 
     dbl, gm, km, lead = d["double"], d["gm"], d["km"], d["lead"]
     after = sum(1 for c in d["checks"] if c["shift"] and c["min"] >= 1440)
-    write_task_yaml(HERE, {
+    spec = {
         "id": "tip-pooling", "track": "desk", "category": "bookkeeping",
         "title": "Split last week's tip pool by shift",
         "ask": "Can you split last week's tips for payroll? The POS export, the cash envelope sheet, the time clock and Hana's tip pool memo are all in the folder. Save it as tip_distribution.csv.\n",
         "followup": None, "timeout_s": 1200,
-        "traps": [
+        "traps": active_trap_text([
             "tips pool per shift (13 of them, no Monday lunch) and a check's shift comes from its close time; pooling by day or by "
             "week, or by the server on the check, moves every share (check: tip shares per person per shift)",
             f"{after} checks on Friday to Sunday dinner closed after midnight carry the next calendar date and belong to the night "
@@ -304,25 +336,98 @@ def emit(seed: int, naive_dir: str | None) -> None:
             "shares are cut down to the cent and the leftover cents go one at a time by largest lost fraction, then hours, then last "
             "name; rounding each share half-up leaves several shifts a cent or two off their pool "
             "(check: tip shares per person per shift - ties)",
-        ],
+        ], TRAP_KEYS, traps),
         "checks": [
             {"type": "csv_columns", "name": "payout sheet columns", "path": "tip_distribution.csv", "columns": header},
             {"type": "csv_row_count", "name": "one line per person per shift", "path": "tip_distribution.csv", "equals_ref": "tip_distribution.csv"},
             {"type": "text_not_contains", "name": "managers take nothing", "path": "tip_distribution.csv", "phrases": [gm["last"], km["last"]]},
             {"type": "custom", "name": "tip shares per person per shift", "module": "check.py"},
         ],
-    })
+    }
+    if not traps.canonical:
+        spec["variant"] = {"of": "tip-pooling", "draw": seed, "traps_off": sorted(traps.off)}
+    write_task_yaml(here, spec)
+    if out is not None:   # the custom grader travels with a copy of the task
+        import shutil
+        shutil.copyfile(os.path.join(HERE, "check.py"), os.path.join(out, "check.py"))
     print(f"seed={seed} rows={len(d['rows'])} pools={sum(d['pools'].values()) / 100:.2f} double={dbl['name']} gm={gm['name']} km={km['name']}")
+
+
+# --------------------------------------------------------------------------- per-trap mutants
+
+def mutant_rows(d: dict, trap: str) -> list[dict]:
+    """Payout rows computed as the memo says, except for the one trap."""
+    if trap not in TRAPS.names:
+        raise KeyError(trap)
+    pools_keys = list(d["pools"])
+    minutes = {}
+    for pu in d["punches"]:
+        p = pu["p"]
+        if p["manager"] and trap != "managers":           # managers shared like everyone else
+            continue
+        if pu["shift"] == "double":
+            if trap == "double":                           # the one punch booked to the shift it started in
+                minutes[(pu["date"], "lunch", p["name"])] = pu["out"] - pu["in"]
+            else:
+                minutes[(pu["date"], "lunch", p["name"])] = BOUNDARY - pu["in"]
+                minutes[(pu["date"], "dinner", p["name"])] = pu["out"] - BOUNDARY
+        else:
+            out_m = pu["out"] % 1440 if trap == "midnight_punch" else pu["out"]   # 12:40 AM read as 00:40 the same day
+            key = (pu["date"], pu["shift"], p["name"])
+            minutes[key] = minutes.get(key, 0) + out_m - pu["in"]
+    pools = {k: d["envelopes"][k] for k in pools_keys}
+    for c in d["checks"]:
+        if c["status"] != "Closed" and trap != "cash_voids":  # voided checks' tips pooled
+            continue
+        key = c["shift"]
+        if trap == "after_midnight":                       # shift taken from the calendar date and time as printed
+            day = c["date"] + timedelta(days=c["min"] // 1440)
+            key = (day, "lunch" if c["min"] % 1440 < BOUNDARY else "dinner")
+            if key not in pools and day in WEEK:
+                key = (day, "dinner")
+        if key in pools:
+            pools[key] += c["tip"]
+    last_of = {s["name"]: (s["last"], s["first"]) for s in d["staff"]}
+    groups = [[k] for k in pools_keys]
+    if trap == "per_shift":                                # pooled by calendar day
+        groups = [[k for k in pools_keys if k[0] == day] for day in WEEK]
+    rows = []
+    for g in groups:
+        pool = sum(pools[k] for k in g)
+        crew = sorted([(dd, ss, name, m) for (dd, ss, name), m in minutes.items() if (dd, ss) in g], key=lambda x: (x[2], x[1]))
+        M = sum(x[3] for x in crew)
+        base = [(x, pool * x[3] // M, pool * x[3] % M) for x in crew]
+        left = pool - sum(b[1] for b in base)
+        order = sorted(range(len(base)), key=lambda i: (-base[i][2], -base[i][0][3], last_of[base[i][0][2]]))
+        bonus = set(order[:left])
+        for i, (x, fl, rem) in enumerate(base):
+            share = int(pool * x[3] / M + 0.5) if trap == "rounding" else fl + (i in bonus)
+            rows.append({"date": x[0], "shift": x[1], "name": x[2], "minutes": x[3], "share": share})
+    return rows
+
+
+def write_mutant(d: dict, trap: str, out: str) -> None:
+    last_first = {s["name"]: f"{s['last']}, {s['first']}" for s in d["staff"]}
+    body = [[x["date"].isoformat(), x["shift"].title(), last_first[x["name"]], f"{x['minutes'] / 60:.2f}", f"{x['share'] / 100:.2f}"]
+            for x in sorted(mutant_rows(d, trap), key=lambda x: (x["date"], x["shift"] != "lunch", x["name"]))]
+    os.makedirs(out, exist_ok=True)
+    write_csv(os.path.join(out, "tip_distribution.csv"), ["date", "shift", "employee", "hours", "tip_share"], body)
+
+
+MUTANTS = {k: write_mutant for k in TRAP_KEYS}
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--naive", default=None)
+    add_trap_args(ap)
     a_ = ap.parse_args()
+    traps = parse_trap_args(a_, TRAPS, MUTANTS, TRAP_KEYS)
     for attempt in range(400):
         if acceptable(build(a_.seed * 1000 + attempt)):
             break
     else:
         raise SystemExit("no acceptable draw")
-    emit(a_.seed * 1000 + attempt, a_.naive)
+    # The acceptance loop always runs on the full task, so a variant or mutant shares the canonical draw.
+    emit(a_.seed * 1000 + attempt, a_.naive, traps, a_.out, a_.mutant)
