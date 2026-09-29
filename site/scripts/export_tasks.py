@@ -76,10 +76,13 @@ def process():
             subprocess.run([sys.executable, "gen.py", "--seed", "0", "--out", tmp], cwd=d, check=True,
                            stdout=subprocess.DEVNULL)
             meta = json.load(open(os.path.join(tmp, "meta.json"), encoding="utf-8"))
-        handbook = []
-        for f in sorted(os.listdir(os.path.join(d, "handbook"))):
-            text = open(os.path.join(d, "handbook", f), encoding="utf-8").read()
-            handbook.append({"file": f, "clauses": CLAUSE.findall(text), "markdown": text})
+            # The handbook as the agent receives it: a variant task (policies.yaml `extends:`) stores only its own
+            # pages and inherits the rest when its scenario is generated.
+            hb = os.path.join(tmp, "handbook") if os.path.isdir(os.path.join(tmp, "handbook")) else os.path.join(d, "handbook")
+            handbook = []
+            for f in sorted(os.listdir(hb)):
+                text = open(os.path.join(hb, f), encoding="utf-8").read()
+                handbook.append({"file": f, "clauses": CLAUSE.findall(text), "markdown": text})
         out.append({
             "id": tid, "title": str(y.get("title") or tid), "family": str(y.get("family") or ""), "band": str(y.get("band") or ""),
             "summary": " ".join(str(y.get("summary") or "").split()),

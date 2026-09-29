@@ -12,7 +12,8 @@ const cut = tasksMd.indexOf("\n## 4. Worked example");
 const tasksPart = (cut > 0 ? tasksMd.slice(0, cut) : tasksMd) +
   `\n\nThe worked example, which walks through \`procure-to-pay-week\` turn by turn with its planted cases, is in [the repository](${base}tasks.md#4-worked-example-b1-procure-to-pay-week).\n`;
 const rewire = (md: string) => md
-  .replace(/\]\(tasks\.md#(4-worked-example[^)]*)\)/g, `](${base}tasks.md#$1)`)
+  // Sections 4 onwards of tasks.md stay in the repository (see the cut above), so links into them go there.
+  .replace(/\]\(tasks\.md#([4-9]-[^)]*)\)/g, `](${base}tasks.md#$1)`)
   .replace(/\]\((?:README|environment|tasks)\.md#([^)]+)\)/g, "](#$1)")
   .replace(/\]\(README\.md\)/g, "](#specification)")
   .replace(/\]\(environment\.md\)/g, "](#the-environment)")
