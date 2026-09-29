@@ -15,12 +15,12 @@ class DeskCampaignTests(unittest.TestCase):
             with self.subTest(campaign=folder.name):
                 desk.verify_campaign(folder)
 
-    def test_2026_09_28_matrix_and_scores(self):
+    def test_2026_09_28_three_repetitions_and_scores(self):
         summary = desk.verify_campaign(desk.DESK / 'complete-desk-comparison-2026-09-28')
         self.assertEqual({s['harness']: (s['attempts'], s['passed'], s['raw_passed']) for s in summary}, {
-            'proto-sol6-sub': (187, 165, 148),
-            'codex-sol6': (187, 162, 146),
-            'proto-deepseek-direct': (187, 171, 154),
+            'proto-sol6-sub': (561, 495, 443),
+            'codex-sol6': (561, 487, 440),
+            'proto-deepseek-direct': (561, 502, 444),
         })
 
     def test_incomplete_matrix_is_rejected(self):

@@ -9,7 +9,7 @@ acceptance are different evidence states. Current scope is in [STATUS.md](../STA
 | Claim | Public evidence | What the public check establishes |
 |---|---|---|
 | Desk 507/561 versus 473/561 | [`results/latest/`](../results/latest/) ledger, summary and provenance | Complete declared matrix, aggregate arithmetic and frozen-scorer file identity |
-| Desk 171, 165 and 162 of 187 (28 September) | [`complete-desk-comparison-2026-09-28`](../results/desk/complete-desk-comparison-2026-09-28/) ledger, summary and provenance | Complete declared matrix, aggregate arithmetic, the declared paired bootstrap and frozen-scorer file identity |
+| Desk 502, 495 and 487 of 561 (28 September) | [`complete-desk-comparison-2026-09-28`](../results/desk/complete-desk-comparison-2026-09-28/) ledger, summary and provenance | Complete declared matrix, aggregate arithmetic, the declared paired bootstrap and frozen-scorer file identity |
 | Desk check-level/repetition analysis | Per-check frozen verdicts in `attempts.jsonl`; `docs/paper_details.py` | Recalculated diagnostics, not independent judgments of the private artifacts |
 | Process pilot 30/30 per system | [`pilot-process-2026-09-27`](../results/process/pilot-process-2026-09-27/) | Six tasks × two cells × five repetitions, all seed 0; local-mode conditions |
 | Seven process task packs | `tasks/process/*/task.yaml` | Implemented inventory; the seventh task has no published campaign result |
@@ -88,7 +88,7 @@ before export. A minimal one-arm declaration has this shape:
 ```
 
 With two or more arms, `paired_comparison` (`arms`, `seed`, `samples`) names the pair
-the design compares. Two optional per-arm keys are available. `usage_model_rename` maps
+the design compares. An arm whose attempts came from several private runs lists them as `labels`. Two optional per-arm keys are available. `usage_model_rename` maps
 a usage key recorded under the wrong model name to the effective one. `omit_cost: true`
 drops cost estimates priced under the wrong model.
 

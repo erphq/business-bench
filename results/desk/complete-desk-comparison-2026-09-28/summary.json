@@ -2,189 +2,201 @@
   {
     "harness": "proto-sol6-sub",
     "tasks": 187,
-    "attempts": 187,
-    "passed": 165,
-    "raw_passed": 148,
+    "attempts": 561,
+    "passed": 495,
+    "raw_passed": 443,
     "pass_rate": 0.8823529411764706,
-    "all_repetitions_pass": 165,
+    "all_repetitions_pass": 153,
     "by_repetition": {
-      "1": 165
+      "1": 165,
+      "2": 167,
+      "3": 163
     },
     "raw_by_repetition": {
-      "1": 148
+      "1": 148,
+      "2": 148,
+      "3": 147
     },
     "timed_out": 1,
     "nonzero_exit": 1,
     "passing_abnormal_exit": 0,
     "grader_error_attempts": 0,
-    "raw_grader_error_attempts": 1,
+    "raw_grader_error_attempts": 3,
     "usage_missing": 0,
     "cost_observations": 0,
     "estimated_cost_sum_usd": null,
     "estimated_cost_mean_usd": null,
-    "median_wall_s": 129.5,
-    "p90_wall_s": 249.1,
-    "sum_wall_s": 28982.6,
+    "median_wall_s": 114.8,
+    "p90_wall_s": 218.0,
+    "sum_wall_s": 76938.9,
     "usage": {
-      "input": 66266058,
-      "cached_input": 59328768,
-      "output": 942855,
-      "uncached_input": 6937290
+      "input": 172674402,
+      "cached_input": 153373312,
+      "output": 2821329,
+      "uncached_input": 19301090
     },
     "by_category": {
       "bookkeeping": {
-        "attempts": 36,
-        "passed": 32
+        "attempts": 108,
+        "passed": 95
       },
       "drafting": {
-        "attempts": 19,
-        "passed": 14
+        "attempts": 57,
+        "passed": 44
       },
       "extraction": {
-        "attempts": 26,
-        "passed": 23
+        "attempts": 78,
+        "passed": 71
       },
       "reformatting": {
-        "attempts": 26,
-        "passed": 25
+        "attempts": 78,
+        "passed": 75
       },
       "reports": {
-        "attempts": 30,
-        "passed": 23
+        "attempts": 90,
+        "passed": 67
       },
       "spreadsheet": {
-        "attempts": 41,
-        "passed": 40
+        "attempts": 123,
+        "passed": 120
       },
       "tooling": {
-        "attempts": 9,
-        "passed": 8
+        "attempts": 27,
+        "passed": 23
       }
     }
   },
   {
     "harness": "codex-sol6",
     "tasks": 187,
-    "attempts": 187,
-    "passed": 162,
-    "raw_passed": 146,
-    "pass_rate": 0.8663101604278075,
-    "all_repetitions_pass": 162,
+    "attempts": 561,
+    "passed": 487,
+    "raw_passed": 440,
+    "pass_rate": 0.8680926916221033,
+    "all_repetitions_pass": 144,
     "by_repetition": {
-      "1": 162
+      "1": 162,
+      "2": 162,
+      "3": 163
     },
     "raw_by_repetition": {
-      "1": 146
+      "1": 146,
+      "2": 148,
+      "3": 146
     },
     "timed_out": 0,
     "nonzero_exit": 0,
     "passing_abnormal_exit": 0,
     "grader_error_attempts": 0,
-    "raw_grader_error_attempts": 1,
+    "raw_grader_error_attempts": 3,
     "usage_missing": 0,
     "cost_observations": 0,
     "estimated_cost_sum_usd": null,
     "estimated_cost_mean_usd": null,
-    "median_wall_s": 97.1,
-    "p90_wall_s": 276.8,
-    "sum_wall_s": 26795.5,
+    "median_wall_s": 89.1,
+    "p90_wall_s": 238.5,
+    "sum_wall_s": 70442.3,
     "usage": {
-      "input": 31569817,
-      "cached_input": 27541120,
-      "output": 1015735,
-      "uncached_input": 4028697
+      "input": 92821093,
+      "cached_input": 81619328,
+      "output": 3008794,
+      "uncached_input": 11201765
     },
     "by_category": {
       "bookkeeping": {
-        "attempts": 36,
-        "passed": 30
+        "attempts": 108,
+        "passed": 92
       },
       "drafting": {
-        "attempts": 19,
-        "passed": 14
+        "attempts": 57,
+        "passed": 40
       },
       "extraction": {
-        "attempts": 26,
-        "passed": 24
+        "attempts": 78,
+        "passed": 72
       },
       "reformatting": {
-        "attempts": 26,
-        "passed": 26
+        "attempts": 78,
+        "passed": 77
       },
       "reports": {
-        "attempts": 30,
-        "passed": 22
+        "attempts": 90,
+        "passed": 68
       },
       "spreadsheet": {
-        "attempts": 41,
-        "passed": 38
+        "attempts": 123,
+        "passed": 115
       },
       "tooling": {
-        "attempts": 9,
-        "passed": 8
+        "attempts": 27,
+        "passed": 23
       }
     }
   },
   {
     "harness": "proto-deepseek-direct",
     "tasks": 187,
-    "attempts": 187,
-    "passed": 171,
-    "raw_passed": 154,
-    "pass_rate": 0.9144385026737968,
-    "all_repetitions_pass": 171,
+    "attempts": 561,
+    "passed": 502,
+    "raw_passed": 444,
+    "pass_rate": 0.8948306595365418,
+    "all_repetitions_pass": 147,
     "by_repetition": {
-      "1": 171
+      "1": 171,
+      "2": 168,
+      "3": 163
     },
     "raw_by_repetition": {
-      "1": 154
+      "1": 154,
+      "2": 146,
+      "3": 144
     },
-    "timed_out": 0,
-    "nonzero_exit": 0,
-    "passing_abnormal_exit": 0,
+    "timed_out": 1,
+    "nonzero_exit": 1,
+    "passing_abnormal_exit": 1,
     "grader_error_attempts": 0,
-    "raw_grader_error_attempts": 2,
+    "raw_grader_error_attempts": 4,
     "usage_missing": 0,
     "cost_observations": 0,
     "estimated_cost_sum_usd": null,
     "estimated_cost_mean_usd": null,
     "median_wall_s": 78.3,
-    "p90_wall_s": 182.2,
-    "sum_wall_s": 19572.1,
+    "p90_wall_s": 186.9,
+    "sum_wall_s": 59920.4,
     "usage": {
-      "input": 100329787,
-      "cached_input": 92237696,
-      "output": 3503419,
-      "uncached_input": 8092091
+      "input": 300149160,
+      "cached_input": 275304192,
+      "output": 10941018,
+      "uncached_input": 24844968
     },
     "by_category": {
       "bookkeeping": {
-        "attempts": 36,
-        "passed": 33
+        "attempts": 108,
+        "passed": 94
       },
       "drafting": {
-        "attempts": 19,
-        "passed": 17
+        "attempts": 57,
+        "passed": 51
       },
       "extraction": {
-        "attempts": 26,
-        "passed": 26
+        "attempts": 78,
+        "passed": 73
       },
       "reformatting": {
-        "attempts": 26,
-        "passed": 24
+        "attempts": 78,
+        "passed": 73
       },
       "reports": {
-        "attempts": 30,
-        "passed": 24
+        "attempts": 90,
+        "passed": 78
       },
       "spreadsheet": {
-        "attempts": 41,
-        "passed": 40
+        "attempts": 123,
+        "passed": 116
       },
       "tooling": {
-        "attempts": 9,
-        "passed": 7
+        "attempts": 27,
+        "passed": 17
       }
     }
   }

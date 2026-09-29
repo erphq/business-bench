@@ -36,17 +36,18 @@ const desc = `All ${n} desk tasks, ${repText} per system, frozen conservative-v7
 
   <h2 id="scores">Frozen and raw scores</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th style="width:30%">Frozen pass rate</th><th class="n">Frozen / {n * reps}</th><th class="n">Raw / {n * reps}</th><th class="n">Timed out</th><th class="n">Median min</th><th class="n">p90 min</th></tr></thead>
+    <thead><tr><th>System</th><th style="width:30%">Frozen pass rate</th><th class="n">Frozen / {n * reps}</th>{reps > 1 && <th class="n">By repetition</th>}{reps > 1 && <th class="n">All {reps} / {n}</th>}<th class="n">Raw / {n * reps}</th><th class="n">Timed out</th><th class="n">Median min</th><th class="n">p90 min</th></tr></thead>
     <tbody>{byRate.map((a) => { const s = S[a.id]; return (
       <tr id={a.id}>
         <td><span class="sys"><i class={`swatch s-${a.slot}`}></i><span>{a.system}</span></span><div class="dim" style="font-size:12px;margin-left:20px">{a.harness} · {a.route}</div></td>
         <td><Bar value={s.pass_rate} series={a.slot} /></td>
-        <td class="n">{s.passed}</td><td class="n">{s.raw_passed}</td><td class="n">{s.timed_out}</td>
+        <td class="n">{s.passed}</td>{reps > 1 && <td class="n">{Object.values(s.by_repetition).join(" · ")}</td>}{reps > 1 && <td class="n">{s.all_repetitions_pass}</td>}<td class="n">{s.raw_passed}</td><td class="n">{s.timed_out}</td>
         <td class="n">{(s.median_wall_s / 60).toFixed(2)}</td><td class="n">{(s.p90_wall_s / 60).toFixed(2)}</td>
       </tr>); })}</tbody>
   </table></div>
   {pair && <p>{pa.system} minus {pb.system} is {signed(pair.difference_percentage_points)} percentage points under the frozen scorer. A paired, task-clustered bootstrap ({fmt.int(pair.samples)} resamples, seed {pair.seed}) gives a descriptive 95% interval of {signed(pair.bootstrap_95_percent_interval_pp[0])} to {signed(pair.bootstrap_95_percent_interval_pp[1])} points. {shared.length > 0 && `The two share ${shared.map((k) => `${k} ${camp.configurations[pa.id][k]}`).join(" and ")}. `}The interval describes variation across these tasks; it excludes related task families, evaluator selection and deployment shift.</p>}
-  {reps === 1 && <p class="muted">With one repetition each score is a single draw per task. This campaign does not measure repeated success; the <a href="/results#repetitions">release</a> does, with three repetitions.</p>}
+  {reps === 1 && <p class="muted">With one repetition each score is a single draw per task; this campaign does not measure repeated success.</p>}
+  {reps > 1 && <p class="muted">The same supplied inputs are used in each repetition, so variation here measures execution repeatability, not performance on new business cases. Task times depend on what else was running (see Provenance).</p>}
 
   <h2 id="categories">By category</h2>
   <div class="tbl-wrap"><table class="tbl">

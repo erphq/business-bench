@@ -1,7 +1,7 @@
 {
   "campaign": "complete-desk-comparison-2026-09-28",
   "track": "desk",
-  "repetitions": 1,
+  "repetitions": 3,
   "expected_tasks_per_arm": 187,
   "included_arms": [
     "proto-sol6-sub",
@@ -10,9 +10,9 @@
   ],
   "execution_window_utc": [
     "2026-09-28T05:29:42Z",
-    "2026-09-28T07:33:31Z"
+    "2026-09-29T10:48:25Z"
   ],
-  "ledger_sha256": "aa3295e4d33e2702712da593438105eba8dc8543d37eb603754df8f39f3b3e58",
+  "ledger_sha256": "76b6ecc00c541d0100f945899d9d768ff3c31a9b98eedb546f9d83ba1d0a7ebd",
   "scorer_manifest_sha256": "b4720db00f2a55461ca70767a4baf8dd2d25aa9d301e8fe22ea13d21ccca358f",
   "configurations": {
     "proto-sol6-sub": {
@@ -25,7 +25,7 @@
       "sampling": "provider default",
       "adapter": "harnesses/proto-sol6-sub.sh (calls harnesses/proto-sub.sh)",
       "home": "llmProvider codex, selectedModel openai-codex/gpt-6-sol; no ERP.AI sign-in",
-      "concurrency": 4
+      "concurrency": "4 for every repetition"
     },
     "codex-sol6": {
       "system": "Codex CLI exec",
@@ -36,7 +36,7 @@
       "sampling": "CLI-managed",
       "adapter": "harnesses/codex-sol6.sh",
       "home": "minimal CODEX_HOME: sign-in plus a config with apps and plugins off",
-      "concurrency": 4
+      "concurrency": "4 for every repetition"
     },
     "proto-deepseek-direct": {
       "system": "Proto CLI, headless one-shot run (-y)",
@@ -49,23 +49,23 @@
       "max_tokens": 65536,
       "adapter": "harnesses/proto-deepseek-direct.sh (its header comment predates this campaign; the build is identified by bundle_sha256)",
       "home": "custom provider at api.deepseek.com; the home holds an ERP.AI sign-in bootstrap, but no ERP.AI actions were offered in its requests",
-      "concurrency": 8
+      "concurrency": "8 for every repetition"
     }
   },
   "evidence_verification": "Every attempt: the receipt names this run, its original_result_sha256 equals the hash of the original result.json, and it was scored by the frozen conservative-v7 package.",
   "cost_note": "No cost estimates are published for this campaign. The frozen pricing table has no gpt-6-sol or direct DeepSeek V4.1 Flash rate. Codex CLI results had been priced at gpt-5.6-sol rates because of a default model label, so those figures are omitted rather than published mispriced. Both gpt-6-sol cells used a ChatGPT subscription, which is not billed per token.",
   "usage_note": "Token usage for the Proto cells comes from Proto's provider traces and for Codex from the CLI's reported turn usage. Codex CLI results carried the usage extractor's default model label gpt-5.6-sol; the CLI's own session context records gpt-6-sol at high effort, so that key is renamed in usage.by_model.",
-  "limitations": "One repetition per task. Development-exposed task set: Proto's configuration was developed using traces from runs on these tasks, so this is not evidence of unseen generalization. Proto and Codex on gpt-6-sol share the model, reasoning level, subscription account, host and time window, so their difference reflects the harness and adapter under these conditions rather than any single component; the DeepSeek cell differs in model, provider and sampling. Raw artifacts remain private; hashes identify but do not reconstruct them.",
-  "exclusions": "Later Proto development runs on task subsets from the same day (efficiency and accuracy experiments), pilots, raw traces and credentials.",
+  "limitations": "Three repetitions of every task per system, on the same supplied inputs. The task set is public and was used in Proto's development, so results describe performance on these tasks rather than unseen work. Proto and Codex on gpt-6-sol share the model, reasoning level, subscription account and host; their repetitions ran under different loads (see conditions_by_repetition), so attempt times are not a controlled comparison. The DeepSeek system differs in model, provider and sampling. Raw artifacts remain private; hashes identify but do not reconstruct them.",
+  "exclusions": "Proto + gpt-6-sol attempts that made no model request because the provider rejected the sign-in (68) are not in the ledger; each affected task was rerun to completion. Also excluded: development runs on task subsets, smoke runs, pilots, raw traces and credentials.",
   "paired_task_bootstrap": {
     "arms": [
       "proto-sol6-sub",
       "codex-sol6"
     ],
-    "difference_percentage_points": 1.6042780748663101,
+    "difference_percentage_points": 1.4260249554367201,
     "bootstrap_95_percent_interval_pp": [
-      -3.2085561497326207,
-      6.417112299465241
+      -1.7825311942959003,
+      4.81283422459893
     ],
     "resampling_unit": "task, with its repetitions kept together",
     "seed": 20260928,

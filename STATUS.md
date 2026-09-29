@@ -8,7 +8,7 @@ Neither label establishes independent review or deployment readiness.
 
 | Track | Implemented inventory | Published evaluation | Boundary |
 |---|---|---|---|
-| Desk | 187 tasks | `complete-desk-comparison-2026-09-16`: 561 attempts per system; Proto + DeepSeek V4.1 Flash 507 accepted, Codex + GPT-5.6-sol 473. `complete-desk-comparison-2026-09-28`: 187 attempts per system, one repetition; Proto + DeepSeek V4.1 Flash 171, Proto + gpt-6-sol 165, Codex + gpt-6-sol 162 | Development-exposed fixtures and a retrospective common scorer. The release compares different models and non-contemporaneous cohorts; the later campaign matches model, account and window for the gpt-6-sol pair but has one repetition |
+| Desk | 187 tasks | `complete-desk-comparison-2026-09-16`: 561 attempts per system; Proto + DeepSeek V4.1 Flash 507 accepted, Codex + GPT-5.6-sol 473. `complete-desk-comparison-2026-09-28`: 561 attempts per system; Proto + DeepSeek V4.1 Flash 502 accepted, Proto + gpt-6-sol 495, Codex + gpt-6-sol 487 | Development-exposed fixtures and a retrospective common scorer. The release compares different models and non-contemporaneous cohorts; the later campaign matches model, account and host for the gpt-6-sol pair, but its repetitions ran under different loads |
 | Build | 20 task packs, each with three changes | No completed acceptance-validated campaign | Packs and probes are available; application correctness has not been established by a published build evaluation |
 | Process | Six clerical pilot tasks plus analyst task `ap-invoice-backlog` | `pilot-process-2026-09-27`: the six pilot tasks at seed 0, five repetitions per system; both systems 30/30, zero recorded breaches | Local mode, no practitioner review, no published analyst-task result |
 
@@ -17,11 +17,11 @@ The desk ledger retains original and frozen verdicts: 447 versus 431 original pa
 acceptance, partial-check fractions, repeated success, workload composition, evaluator
 sensitivity, and resource use. [Evidence map and verification commands](docs/reproducibility.md).
 
-The 28 September desk campaign ran Proto and Codex on gpt-6-sol at high reasoning in the
-same window, on the same subscription account and host. Proto passed 165 and Codex 162
-of 187 tasks: a paired difference of +1.60 points with a descriptive interval of −3.21
-to +6.42. A third cell, Proto on DeepSeek V4.1 Flash through DeepSeek's own API, passed
-171. It is not pooled with the release. Its ledger and conditions are in
+The 28 September desk campaign ran Proto and Codex on gpt-6-sol at high reasoning, on the
+same subscription account and host, three repetitions of all 187 tasks. Proto passed 495
+of 561 attempts and Codex 487: a paired difference of +1.4 points with a descriptive
+interval of −1.8 to +4.8. A third cell, Proto on DeepSeek V4.1 Flash through DeepSeek's own
+API, passed 502. It is not pooled with the release. Its ledger and conditions are in
 [`results/desk/complete-desk-comparison-2026-09-28/`](results/desk/complete-desk-comparison-2026-09-28/).
 
 The process pilot names Proto CLI 0.2.119 and Codex CLI 0.158.0-alpha.2.1, both using

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Export and verify named desk campaigns under results/desk/<campaign>/.
 
-A campaign is declared in results/desk/<campaign>/campaign.json: its arms (each with the private run label it was
-executed under and its configuration), repetitions, execution window and limitations. Export reads every attempt's
+A campaign is declared in results/desk/<campaign>/campaign.json: its arms (each with the private run label, or list
+of labels, it was executed under and its configuration), repetitions, execution window and limitations. Export reads every attempt's
 original result and conservative-v7 receipt over ssh, checks that each receipt scored exactly that result with the
 frozen scorer, and writes attempts.jsonl, summary.json and provenance.json. --verify checks every published desk
 campaign here: the complete task x arm x repetition matrix, summary arithmetic, the paired bootstrap, the ledger hash
@@ -154,8 +154,8 @@ def verify_all():
 def export(campaign, ssh, source, receipts):
     folder = DESK / campaign
     decl = json.loads((folder / 'campaign.json').read_text())
-    spec = [[arm, cfg['label'], cfg.get('usage_model_rename', {}), bool(cfg.get('omit_cost'))]
-            for arm, cfg in decl['arms'].items()]
+    spec = [[arm, label, cfg.get('usage_model_rename', {}), bool(cfg.get('omit_cost'))]
+            for arm, cfg in decl['arms'].items() for label in cfg.get('labels') or [cfg['label']]]
     data = subprocess.check_output(['ssh', ssh, shlex.join(['python3', '-c', REMOTE, source, receipts])],
                                    input=json.dumps(spec), text=True)
     rows = [json.loads(line) for line in data.splitlines()]

@@ -1,11 +1,13 @@
 {
   "campaign": "complete-desk-comparison-2026-09-28",
   "track": "desk",
-  "repetitions": 1,
-  "execution_window_utc": ["2026-09-28T05:29:42Z", "2026-09-28T07:33:31Z"],
+  "repetitions": 3,
+  "execution_window_utc": [
+    "2026-09-28T05:29:42Z",
+    "2026-09-29T10:48:25Z"
+  ],
   "arms": {
     "proto-sol6-sub": {
-      "label": "desk-head-20260927-s6-sol-proto",
       "configuration": {
         "system": "Proto CLI, headless one-shot run (-y), Uninterrupted mode",
         "build": "Proto runtime bundle built from Proto commit 3bbb33f8e plus unreleased changes: the open prompt-cache change erphq/proto#601 and working-tree changes later committed as 9cdfcb545..1103377dc. Proto's source is private; bundle_sha256 identifies the build",
@@ -16,12 +18,19 @@
         "sampling": "provider default",
         "adapter": "harnesses/proto-sol6-sub.sh (calls harnesses/proto-sub.sh)",
         "home": "llmProvider codex, selectedModel openai-codex/gpt-6-sol; no ERP.AI sign-in",
-        "concurrency": 4
-      }
+        "concurrency": "4 for every repetition"
+      },
+      "labels": [
+        "desk-head-20260927-s6-sol-proto",
+        "desk-head-20260927-s6r-psol-proto",
+        "desk-head-20260927-s6r-psolb-proto",
+        "desk-head-20260927-s6r-psolc-proto"
+      ]
     },
     "codex-sol6": {
-      "label": "desk-head-20260927-s6-sol-codex",
-      "usage_model_rename": {"gpt-5.6-sol": "gpt-6-sol"},
+      "usage_model_rename": {
+        "gpt-5.6-sol": "gpt-6-sol"
+      },
       "omit_cost": true,
       "configuration": {
         "system": "Codex CLI exec",
@@ -32,11 +41,14 @@
         "sampling": "CLI-managed",
         "adapter": "harnesses/codex-sol6.sh",
         "home": "minimal CODEX_HOME: sign-in plus a config with apps and plugins off",
-        "concurrency": 4
-      }
+        "concurrency": "4 for every repetition"
+      },
+      "labels": [
+        "desk-head-20260927-s6-sol-codex",
+        "desk-head-20260927-s6r-sol-codex"
+      ]
     },
     "proto-deepseek-direct": {
-      "label": "desk-head-20260927-s6-ds-proto",
       "configuration": {
         "system": "Proto CLI, headless one-shot run (-y)",
         "build": "the same Proto bundle as proto-sol6-sub",
@@ -48,13 +60,25 @@
         "max_tokens": 65536,
         "adapter": "harnesses/proto-deepseek-direct.sh (its header comment predates this campaign; the build is identified by bundle_sha256)",
         "home": "custom provider at api.deepseek.com; the home holds an ERP.AI sign-in bootstrap, but no ERP.AI actions were offered in its requests",
-        "concurrency": 8
-      }
+        "concurrency": "8 for every repetition"
+      },
+      "labels": [
+        "desk-head-20260927-s6-ds-proto",
+        "desk-head-20260927-s6r-ds-proto"
+      ]
     }
   },
-  "paired_comparison": {"arms": ["proto-sol6-sub", "codex-sol6"], "seed": 20260928, "samples": 20000},
+  "paired_comparison": {
+    "arms": [
+      "proto-sol6-sub",
+      "codex-sol6"
+    ],
+    "seed": 20260928,
+    "samples": 20000
+  },
   "cost_note": "No cost estimates are published for this campaign. The frozen pricing table has no gpt-6-sol or direct DeepSeek V4.1 Flash rate. Codex CLI results had been priced at gpt-5.6-sol rates because of a default model label, so those figures are omitted rather than published mispriced. Both gpt-6-sol cells used a ChatGPT subscription, which is not billed per token.",
   "usage_note": "Token usage for the Proto cells comes from Proto's provider traces and for Codex from the CLI's reported turn usage. Codex CLI results carried the usage extractor's default model label gpt-5.6-sol; the CLI's own session context records gpt-6-sol at high effort, so that key is renamed in usage.by_model.",
-  "limitations": "One repetition per task. Development-exposed task set: Proto's configuration was developed using traces from runs on these tasks, so this is not evidence of unseen generalization. Proto and Codex on gpt-6-sol share the model, reasoning level, subscription account, host and time window, so their difference reflects the harness and adapter under these conditions rather than any single component; the DeepSeek cell differs in model, provider and sampling. Raw artifacts remain private; hashes identify but do not reconstruct them.",
-  "exclusions": "Later Proto development runs on task subsets from the same day (efficiency and accuracy experiments), pilots, raw traces and credentials."
+  "limitations": "Three repetitions of every task per system, on the same supplied inputs. The task set is public and was used in Proto's development, so results describe performance on these tasks rather than unseen work. Proto and Codex on gpt-6-sol share the model, reasoning level, subscription account and host; their repetitions ran under different loads (see conditions_by_repetition), so attempt times are not a controlled comparison. The DeepSeek system differs in model, provider and sampling. Raw artifacts remain private; hashes identify but do not reconstruct them.",
+  "exclusions": "Proto + gpt-6-sol attempts that made no model request because the provider rejected the sign-in (68) are not in the ledger; each affected task was rerun to completion. Also excluded: development runs on task subsets, smoke runs, pilots, raw traces and credentials.",
+  "conditions_by_repetition": "Repetition 1 ran on 28 September 05:29-07:33 UTC with all three systems side by side. Repetitions 2 and 3 of Codex and of Proto on DeepSeek ran side by side from 28 September 20:57 to 29 September 00:45 UTC. Repetitions 2 and 3 of Proto on gpt-6-sol ran alone on 29 September. All used the same images, adapters and homes."
 }

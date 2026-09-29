@@ -9,7 +9,7 @@
   "bench/envelope.py": "794204a409988d05aa5ffdd3d642d3e0d6dbcd8042555b6f02c8d9d893bf2e3a",
   "bench/erp_fuzz.py": "7640144d7343269df4027b8c0d855a9e6aa7fc1ad3447092294bb5e56c3d4276",
   "bench/export_campaign.py": "2963c315912099bfafe5867b3b473483c84701b0eb0d3c14a03d24c5fa57216f",
-  "bench/export_desk_campaign.py": "9384d87579018a44cf6559e08e746c1dea8a6deedfa029156ff5be58ed68e9bc",
+  "bench/export_desk_campaign.py": "c925bb783cbd0fabde7d3280b675481e1801c35dc00e117299fe7ef6a4f011d6",
   "bench/export_process_campaign.py": "1ef9f8a8cf48a7a3680705ca81419f955ee32560e18802b583842c41566ce073",
   "bench/failures.py": "49984e27576fa9807f42760ec8befd5e047ade32c00a97f6db39d2f5827a654e",
   "bench/frozen_release.py": "b3b63a784cef48dff78a2a206edf60cfec48194458000bbf4bbcf23ba220d96a",

@@ -6,7 +6,7 @@ A benchmark of configured AI systems delivering business work. Desk and process 
 
 **Three tracks**
 
-- **Desk**, 187 tasks. The agent turns a folder of business files and a short request into deliverables, graded on identifier sets, keyed values, recalculated workbooks and sentence-level text rules. *Complete two-system comparison, 1,122 attempts, and a separate one-repetition three-system comparison, 561 attempts.*
+- **Desk**, 187 tasks. The agent turns a folder of business files and a short request into deliverables, graded on identifier sets, keyed values, recalculated workbooks and sentence-level text rules. *Complete two-system comparison, 1,122 attempts, and a later three-system comparison, 1,683 attempts, three repetitions each.*
 - **Build**, 20 applications. The agent builds an internal application from a requirement and seed data, then makes three changes; a tester works a 14-item enterprise baseline and an application checklist. *Tasks released, no scores published.*
 - **Process**, 7 implemented tasks: 6 clerical pilot tasks and the analyst task `ap-invoice-backlog`. The agent holds a role in bb-erp and works over several business dates; checks inspect ERP state, the audit log, control-account ties and requested notes. *A provisional campaign covers the six pilot tasks only; no published result covers the analyst task.*
 
@@ -19,15 +19,15 @@ A benchmark of configured AI systems delivering business work. Desk and process 
 
 The paired task-bootstrap difference is +6.06 points (descriptive 95% interval +1.25 to +11.05). It resamples task identifiers with their three repetitions, and does not account for related families, scorer selection, or development exposure. The two systems differ in model, harness and run dates. ERP.AI publishes the benchmark and develops Proto; the [self-audit](https://businessbench.org/audit) discloses that conflict and retrospective scoring changes.
 
-**Desk comparison, 28 September 2026**, label `complete-desk-comparison-2026-09-28`: every desk task once per system under the same frozen scorer. It is a separate campaign, not pooled with the release above.
+**Desk comparison, 28 September 2026**, label `complete-desk-comparison-2026-09-28`: every desk task three times per system under the same frozen scorer (1,683 attempts). It is a separate campaign, not pooled with the release above.
 
 | System | Passed | Rate |
 |---|---:|---:|
-| Proto + DeepSeek V4.1 Flash (DeepSeek API) | 171 / 187 | 91.4% |
-| Proto + gpt-6-sol | 165 / 187 | 88.2% |
-| Codex + gpt-6-sol | 162 / 187 | 86.6% |
+| Proto + DeepSeek V4.1 Flash (DeepSeek API) | 502 / 561 | 89.5% |
+| Proto + gpt-6-sol | 495 / 561 | 88.2% |
+| Codex + gpt-6-sol | 487 / 561 | 86.8% |
 
-Proto and Codex on gpt-6-sol shared the model, reasoning level (high), subscription account, host and time window. Their paired difference is +1.60 points (descriptive 95% interval −3.21 to +6.42), so this workload shows no clear difference in acceptance between them. It is one repetition on the same development-exposed tasks. [Conditions and data](results/desk/complete-desk-comparison-2026-09-28/).
+Proto and Codex on gpt-6-sol used the same model, reasoning level (high), subscription account and host. Their paired difference is +1.4 points (descriptive 95% interval −1.8 to +4.8). The tasks are public and were used in Proto's development; task times were measured under different loads. [Conditions and data](results/desk/complete-desk-comparison-2026-09-28/).
 
 **Process pilot campaign**, label `pilot-process-2026-09-27`: both harnesses on gpt-5.6-sol through a ChatGPT subscription, each of six fixed seed-0 scenarios run five times (60 attempts total).
 
@@ -110,6 +110,32 @@ python bench/report.py results/codex-full
 ```
 
 Every invocation needs a fresh label. Existing desk labels and attempt directories are refused instead of overwritten. A task failure is a valid recorded outcome; missing attempt records cause the runner to return an error. The adapter defaults to `gpt-5.6-sol` with high reasoning effort, but `CODEX_MODEL` can override it; record the effective configuration. Plugin/skill manifests are operator-supplied: this release does not assert that a bare login reproduces the historical campaign's full skill environment. Desk and build Codex adapters reuse the configured home; unlike process turns, the runner does not create a fresh Codex home per attempt. See the [adapter contract](harnesses/contract.md) before interpreting repetition isolation.
+
+## Run the benchmark with Proto
+
+Proto is ERP.AI's agent; the benchmark runs its headless runtime through the adapters in `harnesses/`. These steps reproduce the `proto-sol6-sub` system (gpt-6-sol through your own ChatGPT subscription).
+
+1. **Runtime.** Obtain a Proto runtime build from ERP.AI: a folder containing `index.mjs`. Each published campaign records the SHA-256 of the build it used (`bundle_sha256` in its provenance).
+2. **Images** (Docker): `PROTO_RUNTIME=/path/to/runtime bash docker/build.sh`, then `export BENCH_RECALC_DOCKER_IMAGE=bench-recalc:release`.
+3. **Home.** Proto reads its model settings from a benchmark-owned home, never your personal one:
+
+   ```bash
+   mkdir -p homes/proto-sol6-sub/.proto
+   echo '{"llmProvider": "codex", "selectedModel": "openai-codex/gpt-6-sol"}' > homes/proto-sol6-sub/.proto/config.json
+   CODEX_HOME=$PWD/homes/codex-sol codex login    # signs in once with your ChatGPT account
+   ```
+
+4. **Run** one task, then all of them, with fresh labels:
+
+   ```bash
+   python bench/run.py --docker business-bench:release-proto --harness proto-sol6-sub --tasks payments-match-v2 --label my-smoke
+   python bench/run.py --docker business-bench:release-proto --harness proto-sol6-sub --tasks all --runs 3 --parallel 4 --label my-proto
+   ```
+
+   For Codex on the same model and account, use `--harness codex-sol6`.
+5. **Score.** `python scoring/frozen-v7/scorer.py TASK_ID WORKSPACE` gives the frozen verdict for an output workspace; the runner's own grade is recorded separately.
+
+Runs use your own model access and may be billed. Do not commit `homes/`. A different runtime, model or home defines a new cell. Models through OpenRouter are set up as below.
 
 ## Optional Proto adapters
 
