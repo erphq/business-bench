@@ -1,0 +1,83 @@
+{
+ "kind": "envelope-score",
+ "predictions_sha256": "f565b0a390de53aa987fedcdc61613f8f52790e7914eec0407f009fdecc6dfdf",
+ "registry_entry": {
+  "created_utc": "2026-09-28T23:50:01Z",
+  "git_dirty": false,
+  "git_head": "d03d97f96703e1dc4c67469a2c9cce2bab5d69e0",
+  "k": 3,
+  "manifest_sha256": "591ff9938af4249099087a84c0e5fffb743e9b88fe8594ee4264d169185031dd",
+  "predictions_path": "/Users/somesh/projects/business-bench/forecasts/2026-09-28-trap-envelope/inventory-count-reconcile.json",
+  "predictions_sha256": "f565b0a390de53aa987fedcdc61613f8f52790e7914eec0407f009fdecc6dfdf",
+  "systems": [
+   "proto-deepseek"
+  ],
+  "task": "inventory-count-reconcile"
+ },
+ "first_attempt_utc": "2026-09-28T23:50:18Z",
+ "start_evidence": [
+  "recorded started_utc"
+ ],
+ "synthetic": false,
+ "brier": 0.20865625285380002,
+ "log_loss": 0.6095535097434863,
+ "brier_baseline": 0.140625,
+ "brier_passk": 0.03889255565,
+ "cells": [
+  {
+   "system": "proto-deepseek",
+   "variant": "v00",
+   "off": "(canonical)",
+   "n": 3,
+   "passed": 0,
+   "p_pred": 0.37527,
+   "passk_pred": 0.107536,
+   "allk": false,
+   "pvalue": 0.6494587935997802
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v01",
+   "off": "a14_dup",
+   "n": 3,
+   "passed": 0,
+   "p_pred": 0.4715,
+   "passk_pred": 0.209798,
+   "allk": false,
+   "pvalue": 0.524272134943634
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v02",
+   "off": "export_format",
+   "n": 3,
+   "passed": 0,
+   "p_pred": 0.47691,
+   "passk_pred": 0.216295,
+   "allk": false,
+   "pvalue": 0.5184710107411069
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v03",
+   "off": "relabel",
+   "n": 3,
+   "passed": 0,
+   "p_pred": 0.476138,
+   "passk_pred": 0.21489,
+   "allk": false,
+   "pvalue": 0.5157617804775898
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v04",
+   "off": "units",
+   "n": 3,
+   "passed": 0,
+   "p_pred": 0.475385,
+   "passk_pred": 0.214295,
+   "allk": false,
+   "pvalue": 0.5181689694240206
+  }
+ ]
+}

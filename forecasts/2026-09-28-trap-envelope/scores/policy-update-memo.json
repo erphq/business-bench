@@ -1,0 +1,83 @@
+{
+ "kind": "envelope-score",
+ "predictions_sha256": "bbf173b7c0494b806cbaaa26ee52cc924b35cc6ed971b5bf77c284c8e460b649",
+ "registry_entry": {
+  "created_utc": "2026-09-28T23:50:01Z",
+  "git_dirty": false,
+  "git_head": "d03d97f96703e1dc4c67469a2c9cce2bab5d69e0",
+  "k": 3,
+  "manifest_sha256": "2655d41c001fa6d3d1455b0613f4f4cec930d43348e8025e5fad74e5913b1bde",
+  "predictions_path": "/Users/somesh/projects/business-bench/forecasts/2026-09-28-trap-envelope/policy-update-memo.json",
+  "predictions_sha256": "bbf173b7c0494b806cbaaa26ee52cc924b35cc6ed971b5bf77c284c8e460b649",
+  "systems": [
+   "proto-deepseek"
+  ],
+  "task": "policy-update-memo"
+ },
+ "first_attempt_utc": "2026-09-28T23:58:22Z",
+ "start_evidence": [
+  "recorded started_utc"
+ ],
+ "synthetic": false,
+ "brier": 0.22100477318213327,
+ "log_loss": 0.6799806936614111,
+ "brier_baseline": 0.215625,
+ "brier_passk": 0.4828916891952,
+ "cells": [
+  {
+   "system": "proto-deepseek",
+   "variant": "v00",
+   "off": "(canonical)",
+   "n": 3,
+   "passed": 2,
+   "p_pred": 0.874379,
+   "passk_pred": 0.721701,
+   "allk": false,
+   "pvalue": 0.5564986446437118
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v01",
+   "off": "draft",
+   "n": 3,
+   "passed": 2,
+   "p_pred": 0.893683,
+   "passk_pred": 0.771426,
+   "allk": false,
+   "pvalue": 0.45700398829832545
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v02",
+   "off": "effective_date",
+   "n": 3,
+   "passed": 3,
+   "p_pred": 0.894959,
+   "passk_pred": 0.773913,
+   "allk": true,
+   "pvalue": 1.0
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v03",
+   "off": "renumbered",
+   "n": 3,
+   "passed": 2,
+   "p_pred": 0.892867,
+   "passk_pred": 0.769933,
+   "allk": false,
+   "pvalue": 0.4593056802236804
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v04",
+   "off": "moved_clause+renumbered",
+   "n": 3,
+   "passed": 2,
+   "p_pred": 0.910088,
+   "passk_pred": 0.809071,
+   "allk": false,
+   "pvalue": 0.38187627957012227
+  }
+ ]
+}

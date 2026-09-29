@@ -1,0 +1,105 @@
+{
+ "kind": "envelope-score",
+ "predictions_sha256": "8f32e4708de9db0e7c1964d86fc2f3c8e8dae8e370fbf1e009e1fdbc2edb5f65",
+ "registry_entry": {
+  "created_utc": "2026-09-28T23:50:01Z",
+  "git_dirty": false,
+  "git_head": "d03d97f96703e1dc4c67469a2c9cce2bab5d69e0",
+  "k": 3,
+  "manifest_sha256": "63796b324678114a7b066738c2a4f49e04cc79774f984d24a5c9fa6f5fb19fb7",
+  "predictions_path": "/Users/somesh/projects/business-bench/forecasts/2026-09-28-trap-envelope/proposal-from-notes.json",
+  "predictions_sha256": "8f32e4708de9db0e7c1964d86fc2f3c8e8dae8e370fbf1e009e1fdbc2edb5f65",
+  "systems": [
+   "proto-deepseek"
+  ],
+  "task": "proposal-from-notes"
+ },
+ "first_attempt_utc": "2026-09-29T00:02:21Z",
+ "start_evidence": [
+  "recorded started_utc"
+ ],
+ "synthetic": false,
+ "brier": 0.18626106168352377,
+ "log_loss": 0.5607887361427688,
+ "brier_baseline": 0.20014880952380953,
+ "brier_passk": 0.2322078856127143,
+ "cells": [
+  {
+   "system": "proto-deepseek",
+   "variant": "v00",
+   "off": "(canonical)",
+   "n": 3,
+   "passed": 2,
+   "p_pred": 0.624717,
+   "passk_pred": 0.327002,
+   "allk": false,
+   "pvalue": 1.0
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v01",
+   "off": "disposal",
+   "n": 3,
+   "passed": 3,
+   "p_pred": 0.69341,
+   "passk_pred": 0.445646,
+   "allk": true,
+   "pvalue": 0.8915758158016743
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v02",
+   "off": "highbay_count",
+   "n": 3,
+   "passed": 3,
+   "p_pred": 0.691793,
+   "passk_pred": 0.443592,
+   "allk": true,
+   "pvalue": 0.8872432996634906
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v03",
+   "off": "lift",
+   "n": 3,
+   "passed": 2,
+   "p_pred": 0.695438,
+   "passk_pred": 0.44733,
+   "allk": false,
+   "pvalue": 1.0
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v04",
+   "off": "old_proposal",
+   "n": 3,
+   "passed": 1,
+   "p_pred": 0.69083,
+   "passk_pred": 0.445171,
+   "allk": false,
+   "pvalue": 0.5479248779479644
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v05",
+   "off": "old_rates",
+   "n": 3,
+   "passed": 2,
+   "p_pred": 0.689906,
+   "passk_pred": 0.439592,
+   "allk": false,
+   "pvalue": 1.0
+  },
+  {
+   "system": "proto-deepseek",
+   "variant": "v06",
+   "off": "poles",
+   "n": 3,
+   "passed": 3,
+   "p_pred": 0.69175,
+   "passk_pred": 0.44313,
+   "allk": true,
+   "pvalue": 0.8864220921866768
+  }
+ ]
+}
