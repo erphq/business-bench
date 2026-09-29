@@ -175,6 +175,8 @@ def export(campaign, ssh, source, receipts):
                               'the original result.json, and it was scored by the frozen conservative-v7 package.',
         cost_note=decl['cost_note'], usage_note=decl['usage_note'], limitations=decl['limitations'],
         exclusions=decl['exclusions'])
+    if decl.get('conditions_by_repetition'):
+        provenance['conditions_by_repetition'] = decl['conditions_by_repetition']
     pair = decl.get('paired_comparison')
     if pair:
         provenance['paired_task_bootstrap'] = paired_bootstrap(rows, *pair['arms'], pair['seed'], pair['samples'])

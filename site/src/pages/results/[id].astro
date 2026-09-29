@@ -9,7 +9,8 @@ const camp = deskCampaign(id), prov = camp.provenance, desk = deskTasks();
 const S = camp.summary, arms = camp.arms, reps = camp.repetitions, n = desk.length, total = arms.length * reps;
 const byRate = [...arms].sort((a, b) => S[b.id].pass_rate - S[a.id].pass_rate);
 const armById = Object.fromEntries(arms.map((a) => [a.id, a]));
-const repText = reps === 1 ? "one repetition" : `${reps} repetitions`;
+const words = (k: number) => ["no", "one", "two", "three", "four", "five", "six"][k] ?? String(k);
+const repText = reps === 1 ? "one repetition" : `${words(reps)} repetitions`;
 const hm = (iso: string) => iso.slice(11, 16);
 const signed = (x: number, d = 2) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(d)}`;
 const passN = (t: string) => arms.reduce((k, a) => k + camp.matrix[t][a.id].filter((r) => r.passed).length, 0);
@@ -26,7 +27,7 @@ const desc = `All ${n} desk tasks, ${repText} per system, frozen conservative-v7
 <Base title={camp.title} description={desc} path={`/results/${id}`} crumbs={[{ name: "Results", path: "/results" }, { name: camp.title, path: `/results/${id}` }]}>
   <p class="meta"><a href="/results">Desk results</a><span class="sep">·</span>campaign <code>{id}</code><span class="sep">·</span>{camp.date}, {hm(camp.window[0])}–{hm(camp.window[1])} UTC</p>
   <h1>{camp.title}</h1>
-  <p class="lede">All {n} desk tasks, {repText} per system, the frozen <code>conservative-v7</code> scorer. Every scheduled attempt is in the denominator: {fmt.int(camp.attempts.length)} attempts from {["no", "one", "two", "three", "four", "five", "six"][arms.length] ?? arms.length} systems. Original verdicts remain available beside the frozen score.</p>
+  <p class="lede">All {n} desk tasks, {repText} per system, the frozen <code>conservative-v7</code> scorer. Every scheduled attempt is in the denominator: {fmt.int(camp.attempts.length)} attempts from {words(arms.length)} systems. Original verdicts remain available beside the frozen score.</p>
 
   <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([s, label]) => <a href={`#${s}`}>{label}</a>)}</nav>
   <div class="callout">
@@ -107,6 +108,7 @@ const desc = `All ${n} desk tasks, ${repText} per system, frozen conservative-v7
       <tr><td>Ledger SHA-256</td><td class="mono" style="word-break:break-all">{prov.ledger_sha256}</td></tr>
       <tr><td>Scorer manifest SHA-256</td><td class="mono" style="word-break:break-all">{prov.scorer_manifest_sha256}</td></tr>
       {arms.map((a) => <tr><td>Configuration: {a.system}</td><td>{Object.entries(camp.configurations[a.id]).map(([k, v]) => <span class="pill" style="margin:0 6px 4px 0">{k}: {String(v)}</span>)}</td></tr>)}
+      {prov.conditions_by_repetition && <tr><td>Conditions by repetition</td><td>{prov.conditions_by_repetition}</td></tr>}
       <tr><td>Evidence verification</td><td>{prov.evidence_verification}</td></tr>
       <tr><td>Excluded</td><td>{prov.exclusions}</td></tr>
     </tbody>
