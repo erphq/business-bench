@@ -2,7 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import Figure from "@/components/Figure.astro";
 import DotChart from "@/components/DotChart.astro";
-import { ARMS, SUMMARY_BY_ID, deskTasks, buildTasks, processTasks, processCampaign, PROCESS_PILOT, provenance, findings, intervals, deskComparison, deskCampaign, DESK_CAMPAIGN, REPO, SITE, ORG, AUTHORS, RELEASE, REPS, fmt } from "@/lib/data";
+import { ARMS, SUMMARY_BY_ID, deskTasks, buildTasks, processTasks, processCampaign, PROCESS_PILOT, provenance, findings, intervals, deskComparison, deskCampaign, DESK_CAMPAIGN, REPO, SITE, ORG, AUTHORS, RELEASE, REPS, fmt, taskBootstrap } from "@/lib/data";
 const desk = deskTasks(), build = buildTasks(), proc = processTasks(), pilot = processCampaign(PROCESS_PILOT);
 const F = Object.fromEntries(ARMS.map((a) => [a.id, findings(a.id)]));
 const I = Object.fromEntries(ARMS.map((a) => [a.id, intervals(a.id)]));
@@ -11,13 +11,24 @@ const attemptsTotal = ARMS.reduce((n, a) => n + SUMMARY_BY_ID[a.id].attempts, 0)
 const dc = deskCampaign(DESK_CAMPAIGN), dcRank = [...dc.arms].sort((a, b) => dc.summary[b.id].passed - dc.summary[a.id].passed);
 const count = (k: number) => ["no", "one", "two", "three", "four", "five", "six"][k] ?? String(k);
 const dcPair = dc.pair ? dc.pair.arms.map((id) => dc.arms.find((a) => a.id === id)!) : [];
-const desc = `Evaluate AI agents on complete business deliverables. Inspect ${desk.length} desk tasks and ${fmt.int(attemptsTotal)} recorded attempts, unscored application tasks, and a separate ERP process pilot.`;
+const desc = `Business Bench tests AI agents on everyday business work: ${desk.length} public tasks such as reconciling spreadsheets, preparing imports and writing reports, each checked automatically.`;
+// Latest results: per system, share of attempts accepted and share of tasks accepted every time, with 95% ranges over tasks.
+const latest = dcRank.map((a) => {
+  const perTask = desk.map((t) => dc.matrix[t.id][a.id]);
+  const frac = perTask.map((rs: any[]) => rs.filter((r: any) => r.passed).length / rs.length);
+  const all = perTask.map((rs: any[]) => (rs.every((r: any) => r.passed) ? 1 : 0));
+  const mean = (xs: number[]) => xs.reduce((s, x) => s + x, 0) / xs.length;
+  return { a, s: dc.summary[a.id], rate: mean(frac), rateCi: taskBootstrap(frac), all: mean(all), allCi: taskBootstrap(all) };
+});
+const plainName: Record<string, string> = { "proto-sol6-sub": "Proto on GPT-6 sol", "codex-sol6": "Codex on GPT-6 sol", "proto-deepseek-direct": "Proto on DeepSeek V4.1 Flash" };
+const gap = dc.pair!.difference_percentage_points, gapCi = dc.pair!.bootstrap_95_percent_interval_pp;
+const pts = (x: number) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(1)}`;
 const cite = `@misc{businessbench2026,
   title        = {Business Bench: Evaluating Agents on Business Deliverables},
   author       = {${AUTHORS.map((a) => { const p = a.split(" "); return `${p.slice(1).join(" ")}, ${p[0]}`; }).join(" and ")}},
   year         = {2026},
   howpublished = {\\url{${SITE}}},
-  note         = {Desk release ${RELEASE.id}}
+  note         = {Version ${RELEASE.version}}
 }`;
 const jsonld = [
   { "@context": "https://schema.org", "@type": "WebSite", name: "Business Bench", url: SITE + "/", publisher: { "@type": "Organization", name: ORG.name, url: ORG.url } },
@@ -32,76 +43,73 @@ const jsonld = [
 <Base title="Business Bench" description={desc} path="/" jsonld={jsonld}>
   <nav slot="contents" class="toc" aria-label="On this page">
     <span class="toc-h">On this page</span>
-    <a href="#abstract">The measurement problem</a><a href="#tracks">What is available</a><a href="#figure-1">Desk comparison</a>
-    <a href="#findings">What changes the conclusion</a><a href="#grading">Inspect the evidence</a><a href="#cite">Cite</a>
+    <a href="#latest">Latest results</a><a href="#what">What is tested</a><a href="#how">How answers are checked</a>
+    <a href="#earlier">Earlier results</a><a href="#caveats">Keep in mind</a><a href="#evidence">Check it yourself</a><a href="#cite">Cite</a>
   </nav>
   <h1>Business Bench</h1>
-  <p class="meta">Public tasks, executable evaluation and recorded attempts<span class="sep">·</span>MIT licence</p>
-  <p class="lede">Business Bench evaluates AI agents through the files and system state they produce: reconciled workbooks, usable imports, supported reports, and transactions that respect the company’s rules.</p>
+  <p class="meta">Public tasks, automatic checks and every recorded attempt<span class="sep">·</span>MIT licence</p>
+  <p class="lede">Business Bench tests AI agents on everyday business work: reconciling spreadsheets, preparing files for import, writing reports and handling routine finance tasks. Each task comes with its input files and a set of automatic checks, and an answer counts only if it passes all of them.</p>
   <p class="byline">{AUTHORS.join(", ")} · {ORG.name} Research</p>
-  <div class="article-links"><a href="/results">Inspect the results</a><a href="/tasks">Explore the tasks</a><a href="/paper">Read the paper</a></div>
+  <div class="article-links"><a href={`/results/${dc.label}`}>See the latest results</a><a href="/tasks">Browse the tasks</a><a href="/paper">Read the paper</a></div>
 
-  <section class="abstract" aria-labelledby="abstract">
-    <h2 id="abstract">The measurement problem</h2>
-    <p>A deliverable can satisfy most checks and still fail its purpose. A balanced workbook may omit a customer; a correct payment may violate an approval rule. Each task therefore declares an <strong>acceptance contract</strong>: the required artifact or state, the properties that matter, and the checks used to accept it.</p>
-    <p>Three questions must stay separate. <strong>Acceptance</strong> asks whether the declared checks pass. <strong>Repeatability</strong> asks whether another execution passes on the same inputs. <strong>Validity</strong> asks whether the checks capture the recipient’s actual requirements. The benchmark measures the first two; its public tasks and scoring rules make the third open to inspection and dispute.</p>
-  </section>
-
-  <h2 id="tracks">What is available</h2>
-  <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Track</th><th>Unit of work</th><th>Evaluation</th><th>Published evidence</th></tr></thead>
-    <tbody>
-      <tr><td><a href="/tasks#desk"><b>Desk</b></a><br />{desk.length} tasks</td><td>A file workspace becomes a set of deliverables.</td><td>Executable checks on keys, values, recalculated workbooks and declared text rules.</td><td><a href="/results">{fmt.int(attemptsTotal)} attempts</a><br />{ARMS.length} configured systems, {REPS} repetitions per task.<br /><a href={`/results/${dc.label}`}>{fmt.int(dc.attempts.length)} more attempts</a> in a separate {count(dc.arms.length)}-system campaign, {dc.repetitions === 1 ? "one repetition" : `${dc.repetitions} repetitions`}.</td></tr>
-      <tr><td><a href="/tasks#build"><b>Build</b></a><br />{build.length} task packs</td><td>A running application, followed by three changes.</td><td>A tester checks the application against its acceptance checklist and a shared enterprise baseline.</td><td><strong>No published scores.</strong><br />Specifications and validation of task packs.</td></tr>
-      <tr><td><a href="/process"><b>Process</b></a><br />{proc.length} tasks</td><td>A role in an ERP over several business dates.</td><td>Checks on final state, declared audit rules, account ties and handoff notes.</td><td><a href="/process#campaign">{pilot.tasks.length}-task pilot, {pilot.attempts.length} attempts</a><br />Local execution; practitioner review pending.</td></tr>
-    </tbody>
-  </table></div>
-  <p>These tracks test different objects under different protocols. Their scores are not pooled. The current process inventory includes tasks absent from the published pilot.</p>
-
-  <h2 id="desk-comparison">A complete desk comparison</h2>
-  <p>On the released {desk.length} tasks, Proto with DeepSeek V4.1 Flash passes {SUMMARY_BY_ID["proto-deepseek"].passed}/{SUMMARY_BY_ID["proto-deepseek"].attempts} attempts; Codex with GPT-5.6-sol passes {SUMMARY_BY_ID["codex-sol"].passed}/{SUMMARY_BY_ID["codex-sol"].attempts}. The model, harness, provider configuration and cohort dates vary together. This comparison describes two configured systems on an exposed workload.</p>
+  <h2 id="latest">Latest results</h2>
+  <p>We gave three AI agent setups all {desk.length} tasks, three times each, and checked every answer with the same rules. Proto is the agent built by {ORG.name}; Codex is OpenAI’s coding agent. Two of the setups use the same underlying model, GPT-6 sol, so the difference between them comes from the agent itself.</p>
   <Figure n={1} id="figure-1">
     <DotChart
-      label={`Desk acceptance and all-three acceptance: ${ARMS.map((a) => `${a.system}: ${fmt.pct(I[a.id].pass1.value)} of attempts, ${fmt.pct(I[a.id].passAll.value)} of tasks in all three repetitions`).join("; ")}.`}
+      label={latest.map((r) => `${plainName[r.a.id] ?? r.a.system}: ${fmt.pct(r.rate)} of answers accepted, ${fmt.pct(r.all)} of tasks accepted all three times`).join("; ")}
       domain={[0.6, 1]} ticks={[0.6, 0.7, 0.8, 0.9, 1]}
-      keys={[{ label: "Accepted attempts", shape: "" }, { label: `Tasks accepted in all ${REPS} repetitions`, shape: "ring" }]}
-      rows={ARMS.map((a) => ({
-        label: a.system, sub: a.harness, slot: a.slot, link: true,
+      keys={[{ label: "Answers accepted", shape: "" }, { label: "Tasks accepted all three times", shape: "ring" }]}
+      rows={latest.map((r) => ({
+        label: plainName[r.a.id] ?? r.a.system, sub: `${r.s.passed} of ${r.s.attempts} answers`, slot: r.a.slot,
         points: [
-          { value: I[a.id].pass1.value, lo: I[a.id].pass1.ci[0], hi: I[a.id].pass1.ci[1], title: `Accepted attempts ${fmt.pct(I[a.id].pass1.value)}` },
-          { value: I[a.id].passAll.value, lo: I[a.id].passAll.ci[0], hi: I[a.id].passAll.ci[1], shape: "ring", title: `All-three acceptance ${fmt.pct(I[a.id].passAll.value)}` },
-        ], valueText: fmt.pct(I[a.id].pass1.value), valueSub: `all three ${fmt.pct(I[a.id].passAll.value)}`,
+          { value: r.rate, lo: r.rateCi[0], hi: r.rateCi[1], title: `Answers accepted ${fmt.pct(r.rate)}` },
+          { value: r.all, lo: r.allCi[0], hi: r.allCi[1], shape: "ring", title: `Accepted all three times ${fmt.pct(r.all)}` },
+        ], valueText: fmt.pct(r.rate), valueSub: `every time ${fmt.pct(r.all)}`,
       }))}
     />
-    <Fragment slot="caption">Desk release <code>{RELEASE.id}</code>. All {fmt.int(attemptsTotal)} attempts use the shared retrospective scorer. Whiskers are descriptive 95% task-bootstrap intervals, retaining each task’s repetitions. The paired attempt-rate gap is {bs.difference_percentage_points.toFixed(2)} percentage points (interval {bs.bootstrap_95_percent_interval_pp.map((n: number) => n.toFixed(2)).join(" to ")}). These intervals exclude evaluator selection, related task families and deployment shift. <a href="/results">Inspect counts and conditions</a>.</Fragment>
+    <Fragment slot="caption">Results from {dc.date}. The lines show the range the result could plausibly fall in on a similar set of tasks (95% range). <a href={`/results/${dc.label}`}>Full results, task by task</a>.</Fragment>
   </Figure>
+  <ul>
+    <li><strong>Proto and Codex on the same model are close.</strong> Proto got {Math.abs(gap).toFixed(1)} points {gap >= 0 ? "more" : "fewer"} answers accepted, but the plausible range runs from {pts(gapCi[0])} to {pts(gapCi[1])}, so neither is clearly better on these tasks.</li>
+    <li><strong>Proto on DeepSeek V4.1 Flash did as well as either.</strong> It also took the least time per task.</li>
+    <li><strong>Getting it right every time is harder.</strong> Each setup solved roughly four in five tasks on all three tries; the rest were solved only some of the time.</li>
+  </ul>
 
-  <p>A separate campaign begun on {dc.date} ran every desk task {dc.repetitions === 1 ? "once" : `${count(dc.repetitions)} times`} with {count(dc.arms.length)} systems under the same frozen scorer: {dcRank.map((a) => `${a.system} ${dc.summary[a.id].passed}/${dc.summary[a.id].attempts}`).join(", ")}. {dc.pair && `${dcPair[0].system} and ${dcPair[1].system} used the same model, reasoning level and account; their paired difference is ${dc.pair.difference_percentage_points >= 0 ? "+" : "−"}${Math.abs(dc.pair.difference_percentage_points).toFixed(2)} points (descriptive 95% interval ${dc.pair.bootstrap_95_percent_interval_pp.map((x) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(2)}`).join(" to ")}). `}Its attempts are not pooled with the release. <a href={`/results/${dc.label}`}>Inspect that campaign</a>.</p>
-
-  <h2 id="findings">What changes the conclusion</h2>
+  <h2 id="what">What is tested</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Observation</th><th>Interpretation</th><th>Inspect</th></tr></thead>
+    <thead><tr><th>Kind of task</th><th>What the agent does</th><th>Results so far</th></tr></thead>
     <tbody>
-      <tr><td>Mean check completion is {fmt.pct(F["proto-deepseek"].meanCheckFraction, 2)} and {fmt.pct(F["codex-sol"].meanCheckFraction, 2)}.</td><td>Completing most requirements is more common than completing the whole declared contract. Check granularity also changes partial-credit scores.</td><td><a href="/analysis#conjunctive-gap">Acceptance boundary</a></td></tr>
-      <tr><td>All-three acceptance is {fmt.pct(F["proto-deepseek"].passAll)} and {fmt.pct(F["codex-sol"].passAll)}.</td><td>Repeated execution exposes instability on fixed fixtures; it does not test new cases or establish a deployment failure rate.</td><td><a href="/analysis#reliability">Repeatability</a></td></tr>
-      <tr><td>Equal category weights change the gap from {(comparison.frozenDifference * 100).toFixed(2)} to {(comparison.equalCategories.difference * 100).toFixed(2)} points.</td><td>The overall ordering depends on which work is represented. Reports and drafting account for more than the net advantage.</td><td><a href="/analysis#divergence">Workload sensitivity</a></td></tr>
-      <tr><td>Scorer changes shift the between-system gap by {(comparison.scorerSensitivity * 100).toFixed(2)} points on the same outputs.</td><td>A reproducible scorer can still make contestable measurement choices. Evaluator changes are distinct from agent improvements.</td><td><a href="/audit#grading-validity">Evaluator sensitivity</a></td></tr>
+      <tr><td><a href="/tasks#desk"><b>File tasks</b></a><br />{desk.length} tasks</td><td>Gets a folder of business files and a short request, and produces the finished files: a reconciled workbook, an import file, a summary report.</td><td><a href={`/results/${dc.label}`}>Latest results</a> and <a href="/results">earlier results</a></td></tr>
+      <tr><td><a href="/tasks#build"><b>App building</b></a><br />{build.length} tasks</td><td>Builds a small internal business app, then makes three changes to it.</td><td>Tasks published; no scores yet.</td></tr>
+      <tr><td><a href="/process"><b>Working inside an ERP</b></a><br />{proc.length} tasks</td><td>Takes a job such as a buyer or accounts clerk inside a business system for several simulated days.</td><td><a href="/process#campaign">Early pilot</a> on {pilot.tasks.length} tasks.</td></tr>
     </tbody>
   </table></div>
-  <div class="callout warn"><span class="t">Who produced the evidence</span><p>{ORG.name} publishes Business Bench and develops Proto. The primary desk scorer was frozen after outputs existed and increased Proto’s measured lead. The public ledger preserves original and revised verdicts; historical raw artifacts are not all public. The <a href="/audit">evidence audit</a> distinguishes what can be verified from what still needs independent review.</p></div>
 
-  <h2 id="grading">Inspect the evidence</h2>
+  <h2 id="how">How answers are checked</h2>
+  <p>A report can look finished and still be wrong: a balanced workbook may leave out a customer, and a correct payment may break an approval rule. So each task lists exactly what a correct answer must contain, and a program checks it: the right rows, the right numbers, formulas that recalculate, and the facts a written summary has to mention. An answer is accepted only if every check passes. The tasks and the checks are public, so anyone can see what was asked and dispute a check.</p>
+
+  <h2 id="earlier">Earlier results</h2>
+  <p>On 16 September we compared Proto on DeepSeek V4.1 Flash with Codex on GPT-5.6 sol over the same tasks, three times each. Proto got {SUMMARY_BY_ID["proto-deepseek"].passed} of {SUMMARY_BY_ID["proto-deepseek"].attempts} answers accepted and Codex {SUMMARY_BY_ID["codex-sol"].passed}. Those two setups used different models, so that comparison mixes the agent and the model. <a href="/results">See the earlier results</a>.</p>
+
+  <h2 id="caveats">Keep in mind</h2>
+  <ul>
+    <li>{ORG.name} builds Proto and runs this benchmark. The tasks, checks and every recorded answer are public so others can check the results; the <a href="/audit">audit page</a> lists what can and cannot be verified.</li>
+    <li>The tasks were available while Proto was being developed, so these results say how the agents do on these tasks, not on work they have never seen.</li>
+    <li>Passing most checks is common; passing all of them is harder. The <a href="/analysis">findings</a> page shows how close the failed answers came.</li>
+  </ul>
+
+  <h2 id="evidence">Check it yourself</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Your question</th><th>Start here</th><th>What it can establish</th></tr></thead>
+    <thead><tr><th>If you want to know</th><th>Start here</th></tr></thead>
     <tbody>
-      <tr><td>What was the agent asked to do?</td><td><a href="/tasks/payments-match-v2">A worked desk task</a>; <a href="/process/procure-to-pay-week">a process episode</a></td><td>Inputs, rules, expected handoff, and declared checks.</td></tr>
-      <tr><td>Do the published numbers reconcile?</td><td><a href="/reproduce">Verify the release</a>; <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">desk ledger</a></td><td>Complete recorded matrices, totals and recorded evidence fingerprints.</td></tr>
-      <tr><td>Do the tests measure useful work?</td><td><a href="/methods">Measurement protocol</a>; <a href="/audit">validity and audit limits</a></td><td>The current contract and controls; independent artifact adjudication remains an open requirement.</td></tr>
-      <tr><td>What would strengthen the result?</td><td><a href="/roadmap">Research roadmap</a>; <a href="/paper">paper</a></td><td>Prospective evaluator review, held-out work, matched comparisons and human baselines.</td></tr>
+      <tr><td>What an agent was asked to do</td><td><a href="/tasks/payments-match-v2">An example task</a></td></tr>
+      <tr><td>Whether the numbers add up</td><td><a href="/reproduce">Verify the results</a> without running any agent</td></tr>
+      <tr><td>How it was measured</td><td><a href="/methods">Methods</a> and <a href="/paper">the paper</a></td></tr>
+      <tr><td>How to run it on your own agent</td><td><a href={`${REPO}#run-the-benchmark-with-proto`} rel="noopener">Instructions on GitHub</a></td></tr>
     </tbody>
   </table></div>
 
   <h2 id="cite">Cite</h2>
   <pre class="cite" aria-label="BibTeX citation">{cite}</pre>
-  <p class="muted">Name the campaign and scorer when citing a result. The website combines ledger-derived statistics, task-source metadata and explanatory analysis; their provenance is linked where used. <a href={`${REPO}/issues`} rel="noopener">Report a task or measurement dispute</a> with the task ID, declared rule and evidence needed to reproduce it.</p>
+  <p class="muted">Found a problem with a task or a check? <a href={`${REPO}/issues`} rel="noopener">Report it on GitHub</a> with the task name.</p>
 </Base>

@@ -25,14 +25,14 @@ const sections = [["scores", "Scores"], ["categories", "Category results"], ["sc
 const desc = `All ${n} desk tasks, ${repText} per system, frozen conservative-v7 scorer: ${byRate.map((a) => `${a.system} ${S[a.id].passed}/${S[a.id].attempts}`).join(", ")}.`;
 ---
 <Base title={camp.title} description={desc} path={`/results/${id}`} crumbs={[{ name: "Results", path: "/results" }, { name: camp.title, path: `/results/${id}` }]}>
-  <p class="meta"><a href="/results">Desk results</a><span class="sep">·</span>campaign <code>{id}</code><span class="sep">·</span>{camp.date}, {hm(camp.window[0])}–{hm(camp.window[1])} UTC</p>
+  <p class="meta"><a href="/results">Results</a><span class="sep">·</span>{camp.date}, {hm(camp.window[0])}–{hm(camp.window[1])} UTC</p>
   <h1>{camp.title}</h1>
-  <p class="lede">All {n} desk tasks, {repText} per system, the frozen <code>conservative-v7</code> scorer. Every scheduled attempt is in the denominator: {fmt.int(camp.attempts.length)} attempts from {words(arms.length)} systems. Original verdicts remain available beside the frozen score.</p>
+  <p class="lede">{words(arms.length).charAt(0).toUpperCase() + words(arms.length).slice(1)} AI agent setups each did all {n} file tasks {reps === 1 ? "once" : `${words(reps)} times`}, and every answer was checked with the same rules: {fmt.int(camp.attempts.length)} answers in total, none left out.</p>
 
   <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([s, label]) => <a href={`#${s}`}>{label}</a>)}</nav>
   <div class="callout">
-    <span class="t">What is being compared</span>
-    <p>{prov.limitations} This is a separate campaign from the <a href="/results">release <code>{RELEASE.id}</code></a>; its attempts are not pooled with the release.</p>
+    <span class="t">Keep in mind</span>
+    <p>Proto is built by ERP.AI, which also runs this benchmark; Codex is OpenAI's coding agent. The two setups on GPT-6 sol share the model, its settings and the account, so their difference comes from the agent. The tasks were available while Proto was developed, and the three rounds did not all run under the same machine load, so compare task times with care. These results are separate from the <a href="/results">16 September results</a>.</p>
   </div>
 
   <h2 id="scores">Frozen and raw scores</h2>

@@ -33,19 +33,19 @@ const later = deskCampaignLabels().map(deskCampaign);
 const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two systems, one frozen scorer with raw verdicts retained, per-task matrix, resource use, and provenance.";
 ---
 <Base title="Results" description={desc} path="/results">
-  <p class="meta">Desk track<span class="sep">·</span>release <code>{prov.campaign}</code><span class="sep">·</span>snapshot {prov.scorecard_snapshot_utc.slice(0, 10)}</p>
-  <h1>Desk results</h1>
-  <p class="lede">All {desk.length} desk tasks, {reps} repetitions per system, one frozen scorer. Every scheduled attempt is in the denominator. Rates use the released summary and attempt ledger, which the tests reconcile. Original verdicts remain available alongside the shared frozen score; original grader errors are recorded as ungraded.</p>
+  <p class="meta">File tasks<span class="sep">·</span>results from 16 September 2026</p>
+  <h1>Results, 16 September 2026</h1>
+  <p class="lede">Two AI agent setups each did all {desk.length} file tasks {reps} times, and every answer was checked with the same rules. Proto (built by ERP.AI) used DeepSeek V4.1 Flash; Codex (OpenAI) used GPT-5.6 sol. Because the models differ, this compares complete setups, not the agents alone.</p>
 
   <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</nav>
   <div class="callout">
-    <span class="t">What is being compared</span>
-    <p>Two configured systems on a development-exposed task set. Models, harnesses, tools, sampling controls, and cohort dates vary together, so the comparison does not identify their separate effects. The scorer was constructed after outputs existed by the organization developing Proto. Start with categories relevant to your work, then inspect the task contracts and <a href="#scorer">scorer transitions</a>.</p>
+    <span class="t">Keep in mind</span>
+    <p>The two setups differ in model, agent and run dates, so this does not show which part made the difference. The final grading rules were fixed after the answers existed, by ERP.AI, which builds Proto; the original grades are kept alongside, and the <a href="#scorer">grading changes</a> section lists every answer whose verdict changed.</p>
   </div>
 
   {later.length > 0 && <div class="callout">
-    <span class="t">Separate desk campaigns</span>
-    <p>Later campaigns on the same {desk.length} tasks and frozen scorer have their own pages and are not pooled with this release: {later.map((c, i) => <><a href={`/results/${c.label}`}>{c.title}</a> ({c.repetitions === 1 ? "one repetition" : `${c.repetitions} repetitions`}; {[...c.arms].sort((a, b) => c.summary[b.id].passed - c.summary[a.id].passed).map((a) => `${a.system} ${c.summary[a.id].passed}/${c.summary[a.id].attempts}`).join(", ")}){i < later.length - 1 ? "; " : "."}</>)}</p>
+    <span class="t">Newer results</span>
+    <p>{later.map((c, i) => <><a href={`/results/${c.label}`}>{c.title}</a>: Proto and Codex on the same model, plus Proto on DeepSeek, each doing every task {c.repetitions === 1 ? "once" : "three times"} ({[...c.arms].sort((a, b) => c.summary[b.id].passed - c.summary[a.id].passed).map((a) => `${a.system} ${c.summary[a.id].passed} of ${c.summary[a.id].attempts}`).join(", ")}){i < later.length - 1 ? "; " : "."}</>)}</p>
   </div>}
 
   <h2 id="headline">Frozen and raw scores</h2>
