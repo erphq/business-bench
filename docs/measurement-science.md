@@ -39,7 +39,7 @@ A benchmark that tests itself reports its own defects, so the findings section b
 - **Desk validation:** `bench/validate_tasks.py --strict` gives task-for-task the same results as `main` in the same environment.
 - **Campaign exports:** `bench/export_campaign.py --verify` verifies 1,122 attempts and the frozen scorer fingerprint. `bench/export_process_campaign.py --verify` passes.
 - **Process validation:** `bench/validate_process.py --strict` passes on seeds 0–4 for freight-accrual-revision, month-end-close, payment-run, payment-run-need-to-know and requisition-approval-queue. It also passes on payment-run with `--faults lost-writes`. Two pre-existing defects that also fail on `main` (see task defects): margin-bridge seeds 3–4 and mrp-planner-week seed 2.
-- **Scorer gate:** the `check.py` fallback (commit `dbd13bf`) has 70 control items, 0 flips and 0 violations.
+- **Scorer gate:** the `check.py` fallback (commit `197fa16`) has 70 control items, 0 flips and 0 violations.
 
 ## First agent runs (2026-09-28)
 

@@ -26,3 +26,12 @@ The run had 99 attempts (33 variants × 3) and 54 passed. 2 of 33 forecast cells
 - **Unexplained failure.** inventory-count-reconcile fails whichever switchable trap is removed. It goes to the audit queue as a fixed-trap, task or grader question.
 - **Wrong direction.** In price-increase-notice, turning date or old_notice off made the task worse. That would come from the variant's wording or from noise at n = 3, and needs checking before it is trusted.
 - **Sample size.** Three repetitions per cell is small, so these are directions, not estimates.
+
+## Commit ids after the 2026-09-29 history rewrite
+
+On 2026-09-29 the branch history was rewritten to correct commit authorship. File contents and commit dates are unchanged, but commit ids changed. `registry.jsonl` and `scores/` keep the ids that were current at registration:
+
+| Recorded | Now |
+|---|---|
+| `d03d97f` (HEAD at registration) | `113efdf` |
+| `7a13f0a` (the registration commit, pushed 2026-09-28T23:50Z) | `165ad79` |
