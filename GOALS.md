@@ -57,7 +57,6 @@ the owner's requirements. Reviewable by design; the release states its own gaps.
 - [ ] Difficulty settings (size, rules, noise, trap count) across generators; pilot done
 - [x] Measurement graph, first difficulty model, delegation envelope tooling
 - [ ] Difficulty model fitted on a panel of 8-12 system configurations
-- [ ] First pre-registered envelope forecast scored on a real campaign
 - [x] Renewable-benchmark tooling: saturation, setting search, sealed variants
 - [x] Grader mutation and metamorphic testing, scorer-change gate, failure triage queue
 - [ ] Scorer fixes from the metamorphic and mutation findings, through the gate with a version bump
@@ -65,7 +64,8 @@ the owner's requirements. Reviewable by design; the release states its own gaps.
 - [ ] bb-erp bug fixes (7, each with an expected-failure test)
 - [x] Belief-revision task, information-flow controls, executable handbook
 - [ ] First-divergence diagnosis (deferred)
-- [ ] LibreOffice re-check of the UNVERIFIED-XLSX retrofits and sealed variants
+- [x] LibreOffice re-check of the UNVERIFIED-XLSX retrofits
+- [x] First pre-registered forecast scored on real runs (trap envelope, six tasks)
 
 ## Non-goals
 

@@ -41,6 +41,26 @@ A benchmark that tests itself reports its own defects, so the findings section b
 - **Process validation:** `bench/validate_process.py --strict` passes on seeds 0–4 for freight-accrual-revision, month-end-close, payment-run, payment-run-need-to-know and requisition-approval-queue. It also passes on payment-run with `--faults lost-writes`. Two pre-existing defects that also fail on `main` (see task defects): margin-bridge seeds 3–4 and mrp-planner-week seed 2.
 - **Scorer gate:** the `check.py` fallback (commit `dbd13bf`) has 70 control items, 0 flips and 0 violations.
 
+## First agent runs (2026-09-28)
+
+Proto CLI 0.2.119 (Proto `main` 4d974743) with DeepSeek V4.1 Flash, called directly through api.deepseek.com, in local mode on macOS, with LibreOffice 26.8. This cell differs from the published campaign in build and route, so these results are not a rerun of it. Raw outputs stay private.
+
+**Baseline on `main` (187 desk tasks × 1).**
+- 163/187 under the frozen v7 scorer; 142/187 under the current grader.
+- The same outputs graded without LibreOffice gave 132 and 118, showing how much the grading environment matters.
+- Eleven tasks the published Proto build passed 3/3 failed here. Rerun ×3, they passed 25/33. Only menu-page-allergens and vendor-price-sheets (1/3 each) look like real weak spots.
+- Cost was about $7 at DeepSeek's off-peak price.
+
+**Trap envelope.** Forecasts for 33 single-trap-off variants of six tasks were committed and pushed before the run (`forecasts/2026-09-28-trap-envelope/`), then scored: 2 misses of 33 cells.
+- **Traps are not equal.** In vendor-1099-totals, turning off the resubmitted-form or two-names trap takes 1/3 to 3/3, and the other traps don't matter.
+- **Fails regardless of traps.** inventory-count-reconcile fails with every switchable trap off.
+- **Wrong direction.** In price-increase-notice, two traps made the task worse when switched off, which needs checking.
+
+**Process track (seed 0, × 3).**
+- freight-accrual-revision 2/3, payment-run-need-to-know 2/3, payment-run 2/3.
+- payment-run with `--faults lost-writes`: 0/3. In every faulted attempt Proto retried safely and never duplicated a payment, but left invoices unpaid. The oracle completes the faulted run.
+- None of the 12 attempts breached need-to-know, duplicated an effect or left a stale accrual.
+
 ## Findings
 
 ### Grader (desk)
@@ -154,7 +174,7 @@ Process audit coverage, from `bench/handbook.py lint`:
 - **Byte identity** is checked with an interpreter that has no lxml. The published files were made without it, and openpyxl serialises differently when it's installed.
 - **Without LibreOffice,** the grader recalculates workbooks with the `formulas` engine, which gives `#NAME?` on SUMIFS and COUNTIFS. Workbook checks then fail even on the canonical reference.
   - `validate_traps` reports the affected mutants as unproven.
-  - The retrofits marked UNVERIFIED-XLSX still need a LibreOffice run: energy-usage-sites, ar-aging-report, clinic-visits-summary, returns-analysis, subscription-status-monthly, plus 14 sealed variants.
+  - With LibreOffice 26.8 installed, `validate_tasks.py --strict` passes 187/187, and `validate_traps.py` passes 68 of 72 retrofitted tasks, including the five earlier marked UNVERIFIED-XLSX. The four problems are task defects listed above: unresolved citations in incident-summary, mrr-report and regional-sales-monthly, and reproducibility in monthly-report-v9.
 - **Without pdftotext,** PDF text falls back to pdfplumber's layout. The packing-slip parser and two process scenarios need pdftotext.
 
 ## Open decisions
