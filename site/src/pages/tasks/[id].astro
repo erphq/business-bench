@@ -1,16 +1,17 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Reps from "@/components/Reps.astro";
-import { ARMS, CATEGORY_LABEL, deskTasks, matrix, scorer, REPO, type DeskTask } from "@/lib/data";
+import { recordedChecks, sameCheckSchema } from "@/lib/task-evidence";
+import { ARMS, CATEGORY_LABEL, deskTasks, matrix, scorer, deskCampaign, deskCampaignLabels, REPO, REPS, type DeskTask } from "@/lib/data";
 export async function getStaticPaths() { return deskTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
 const { task } = Astro.props as { task: DeskTask };
 const runs = matrix()[task.id];
 const isEq = scorer().equivalenceTasks.includes(task.id);
-const total = ARMS.length * 3;
-const failCounts: Record<string, number> = {};
-for (const a of ARMS) for (const r of runs[a.id]) for (const c of r.checks) if (c.required && !c.passed) failCounts[c.name] = (failCounts[c.name] ?? 0) + 1;
+const frozenChecks = recordedChecks(ARMS.flatMap(a => runs[a.id]));
+const schemaChanged = !sameCheckSchema(task.checks, frozenChecks);
 const med = (xs: number[]) => { const s = xs.filter((x) => x != null).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
 const mean = (xs: (number | null)[]) => { const s = xs.filter((x): x is number => x != null); return s.length ? s.reduce((a, b) => a + b, 0) / s.length : null; };
+const later = deskCampaignLabels().map(deskCampaign).filter((c) => c.matrix[task.id]);
 const desc = `${task.title}. A ${CATEGORY_LABEL[task.category].toLowerCase()} task from Business Bench: ${task.ask.slice(0, 140)}`;
 // Two tasks can share a title (a task and its variant); the page title then carries the id so each is distinct.
 const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ? `${task.title} (${task.id})` : task.title;
@@ -21,7 +22,7 @@ const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ?
   <p class="meta mono" style="margin-top:12px;font-size:12.5px">{task.id}<span class="sep">·</span>time budget {task.timeout_s} s<span class="sep">·</span><a href={`${REPO}/tree/main/tasks/desk/${task.id}`} rel="noopener">source</a></p>
 
   <h2>The request</h2>
-  <p class="muted" style="font-size:16px">Sent verbatim as the prompt. The agent works in a copy of the workspace below and sees nothing else.</p>
+  <p class="muted" style="font-size:16px">The task request supplied to the adapter, alongside the workspace below. Runtime instructions, authorized tools and skills also affect the system. Containerized runs withhold host-side references; local mode is not an isolation boundary.</p>
   <blockquote class="ask">{task.ask}</blockquote>
 
   <div class="task-files">
@@ -36,21 +37,38 @@ const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ?
     </section>
   </div>
 
-  <h2>Checks</h2>
-  <p class="muted">The task passes only when every required check passes. Reference answers, tolerances, and the planted traps are in the repository, not here.</p>
+  <h2 id="checks">Recorded acceptance checks</h2>
+  <p>The table uses check names and outcomes from the <strong>frozen campaign ledger</strong>. Acceptance requires all required predicates to pass; a predicate may itself contain a tolerance or coverage threshold. Its scope is part of the measurement contract.</p>
+  {schemaChanged && <div class="callout"><p>The frozen scorer's check set differs from this task's source declaration. These are different evaluator versions. The counts below report only checks actually recorded; a missing check is never counted as a pass.</p></div>}
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Check</th><th>Type</th><th>Required</th><th class="n">Failed (frozen) / {total}</th></tr></thead>
-    <tbody>{task.checks.map((c) => <tr><td>{c.name}</td><td><code>{c.type}</code></td><td>{c.required ? "yes" : "diagnostic"}</td><td class="n">{failCounts[c.name] ?? 0}</td></tr>)}</tbody>
+    <thead><tr><th>Recorded check</th><th>Type</th><th>Required</th><th class="n">Failed / observed</th></tr></thead>
+    <tbody>{frozenChecks.map((c) => <tr><td>{c.name}</td><td><code>{c.type}</code></td><td>{c.required ? "yes" : "diagnostic"}</td><td class="n">{c.failed} / {c.observed}</td></tr>)}</tbody>
   </table></div>
+  <details><summary>Current task declaration ({task.checks.length} checks)</summary>
+    <p>From <a href={`${REPO}/blob/main/tasks/desk/${task.id}/task.yaml`} rel="noopener">task.yaml</a>. Original runner grading and frozen retrospective scoring are separate. Read the <a href={`${REPO}/tree/main/scoring/frozen-v7`} rel="noopener">frozen source</a> for the rules behind the reported results.</p>
+    <ul>{task.checks.map(c => <li>{c.name} — <code>{c.type}</code>, {c.required ? "required" : "diagnostic"}</li>)}</ul>
+  </details>
 
-  <h2>Recorded results, complete desk comparison</h2>
-  {isEq && <div class="callout"><p>This is one of the {scorer().equivalenceTasks.length} tasks with a task-specific equivalence grader in the frozen scorer, which accepts alternative valid representations the original checks rejected. Raw and frozen verdicts can therefore differ here by design; see <a href="/results#scorer">what the frozen scorer changed</a>.</p></div>}
+  <h2 id="release-results">Recorded results, desk release</h2>
+  {isEq && <div class="callout"><p>This is one of the {scorer().equivalenceTasks.length} tasks with a task-specific equivalence grader in the frozen scorer, intended to accept equivalent representations. Whether an equivalence rule matches the business requirement remains open to review. Original and frozen verdicts can differ; see <a href="/results#scorer">what the frozen scorer changed</a>.</p></div>}
   <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep p eq"></i> pass, frozen scorer only</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> timed out</span></div>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th>Repetitions</th><th class="n">Frozen / 3</th><th class="n">Raw / 3</th><th class="n">Median minutes</th><th class="n">Mean cost (USD)</th></tr></thead>
+    <thead><tr><th>System</th><th>Repetitions</th><th class="n">Frozen / {REPS}</th><th class="n">Original / {REPS}</th><th class="n">Median minutes</th><th class="n">Mean model estimate (USD)</th></tr></thead>
     <tbody>{ARMS.map((a) => { const rs = runs[a.id]; const w = med(rs.map((r) => r.wall_s as number)); const c = mean(rs.map((r) => r.cost_usd)); return (
       <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td><Reps runs={rs} /></td>
         <td class="n">{rs.filter((r) => r.passed).length}</td><td class="n">{rs.filter((r) => r.raw_passed).length}</td><td class="n">{w != null ? (w / 60).toFixed(1) : "n/a"}</td><td class="n">{c != null ? c.toFixed(4) : "n/a"}</td></tr>); })}</tbody>
   </table></div>
-  <p class="muted">Per-attempt check verdicts, raw and frozen verdicts, usage, receipt and artifact hashes for this task are in <code>results/latest/attempts.jsonl</code> under <code>"task": "{task.id}"</code>.</p>
+  <p class="muted">These are repeated executions on the released fixture, not independent new business cases. Cost is captured model usage priced under the recorded assumptions, excluding infrastructure and human review. Per-attempt check verdicts, raw and frozen verdicts, usage, receipt and artifact hashes for this task are in <code>results/latest/attempts.jsonl</code> under <code>"task": "{task.id}"</code>.</p>
+
+  {later.map((c) => { const rs = c.matrix[task.id]; return (
+    <>
+      <h2 id={`campaign-${c.label}`}>Recorded results, {c.title.charAt(0).toLowerCase() + c.title.slice(1)}</h2>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>System</th><th>{c.repetitions === 1 ? "Attempt" : "Repetitions"}</th><th class="n">Frozen / {c.repetitions}</th><th class="n">Original / {c.repetitions}</th><th class="n">Median minutes</th></tr></thead>
+        <tbody>{c.arms.map((a) => { const runs2 = rs[a.id]; const w = med(runs2.map((r) => r.wall_s as number)); return (
+          <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td><Reps runs={runs2} /></td>
+            <td class="n">{runs2.filter((r) => r.passed).length}</td><td class="n">{runs2.filter((r) => r.raw_passed).length}</td><td class="n">{w != null ? (w / 60).toFixed(1) : "n/a"}</td></tr>); })}</tbody>
+      </table></div>
+      <p class="muted">A separate campaign under the same frozen scorer, not pooled with the release. <a href={`/results/${c.label}`}>Conditions and data</a>.</p>
+    </>); })}
 </Base>

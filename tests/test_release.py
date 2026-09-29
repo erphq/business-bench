@@ -20,9 +20,33 @@ class ReleaseTests(unittest.TestCase):
         rows = [json.loads(line) for line in (ROOT / 'results/latest/attempts.jsonl').read_text().splitlines()]
         expected = {'proto-deepseek': {0: 3, 1: 8, 2: 29, 3: 147},
                     'codex-sol': {0: 13, 1: 16, 2: 17, 3: 141}}
+        contract_counts = {
+            'proto-deepseek': {'accepted': 507, 'checks_passed': 3698, 'checks_total': 3801,
+                               'single_check_failures': 34, 'failed': 54},
+            'codex-sol': {'accepted': 473, 'checks_passed': 3558, 'checks_total': 3801,
+                          'single_check_failures': 39, 'failed': 88},
+        }
+        mean_fractions = {'proto-deepseek': 0.9733780380839204, 'codex-sol': 0.9441802157042799}
+        outside_passes = {'proto-deepseek': 377, 'codex-sol': 380}
         pairs = {}
         for system in expected:
             selected = [row for row in rows if row['harness'] == system]
+            required = [[check for check in row['checks'] if check['required']] for row in selected]
+            self.assertEqual({
+                'accepted': sum(row['passed'] for row in selected),
+                'checks_passed': sum(check['passed'] for checks in required for check in checks),
+                'checks_total': sum(len(checks) for checks in required),
+                'single_check_failures': sum(sum(not check['passed'] for check in checks) == 1
+                                             for checks in required),
+                'failed': sum(not row['passed'] for row in selected),
+            }, contract_counts[system])
+            mean_fraction = sum(sum(check['passed'] for check in checks) / len(checks)
+                                for checks in required) / len(selected)
+            self.assertAlmostEqual(mean_fraction, mean_fractions[system], places=12)
+            outside = [row for row in selected if row['category'] not in ('reports', 'drafting')]
+            self.assertEqual(len({row['task'] for row in outside}), 138)
+            self.assertEqual(len(outside), 414)
+            self.assertEqual(sum(row['passed'] for row in outside), outside_passes[system])
             grouped = defaultdict(list)
             for row in selected:
                 grouped[row['task']].append(row)

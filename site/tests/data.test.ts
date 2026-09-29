@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { ARMS, CATEGORIES, deskTasks, buildTasks, attempts, summary, matrix, scorer, readRepoFile } from "../src/lib/data";
+import { ARMS, CATEGORIES, deskTasks, buildTasks, attempts, summary, matrix, scorer, readRepoFile, deskCampaign, deskCampaignLabels, DESK_CAMPAIGN } from "../src/lib/data";
 import { slugify, renderMarkdown } from "../src/lib/markdown";
 
 const known = new Set(CATEGORIES.map((c) => c.id));
@@ -49,6 +49,32 @@ describe("ledger", () => {
   });
 });
 
+describe("desk campaigns", () => {
+  test("every published campaign has a complete matrix and a summary that agrees with its ledger", () => {
+    const labels = deskCampaignLabels();
+    expect(labels).toContain(DESK_CAMPAIGN);
+    for (const label of labels) {
+      const c = deskCampaign(label);
+      const runs = Array.from({ length: c.repetitions }, (_, i) => i + 1);
+      expect(c.attempts.length).toBe(deskTasks().length * c.arms.length * c.repetitions);
+      for (const t of deskTasks()) for (const a of c.arms) expect(c.matrix[t.id][a.id].map((r) => r.run)).toEqual(runs);
+      for (const a of c.arms) {
+        const rows = c.attempts.filter((r) => r.harness === a.id);
+        expect(rows.filter((r) => r.passed).length).toBe(c.summary[a.id].passed);
+        expect(rows.filter((r) => r.raw_passed).length).toBe(c.summary[a.id].raw_passed);
+        expect(new Set(rows.map((r) => r.scorer_manifest_sha256))).toEqual(new Set([scorer().manifestSha]));
+      }
+    }
+  });
+  test("the 2026-09-28 campaign names its systems and its declared pair", () => {
+    const c = deskCampaign(DESK_CAMPAIGN);
+    expect(c.title).toBe("Desk comparison, 28 September 2026");
+    expect(c.arms.map((a) => a.id)).toEqual(["proto-sol6-sub", "codex-sol6", "proto-deepseek-direct"]);
+    for (const a of c.arms) expect(a.system).not.toBe(a.id);
+    expect(c.pair?.arms).toEqual(["proto-sol6-sub", "codex-sol6"]);
+  });
+});
+
 describe("frozen scorer", () => {
   test("equivalence task list is read from scorer.py and every task exists", () => {
     const sc = scorer();
@@ -84,7 +110,9 @@ describe("findings", () => {
       const f = findings(a.id), s = SUMMARY_BY_ID[a.id];
       expect(Math.abs(f.pass1 - s.pass_rate)).toBeLessThan(1e-9);
       expect(Math.round(f.passAll * s.tasks)).toBe(s.all_three_pass);
-      expect(f.checkRate).toBeGreaterThanOrEqual(f.taskRate);
+      expect(f.meanCheckFraction).toBeGreaterThanOrEqual(f.taskRate);
+      expect(f.gap).toBeCloseTo(f.meanCheckFraction - f.taskRate, 12);
+      expect(f.checkRate).toBe(f.pooledCheckRate);
       expect(f.passAny).toBeGreaterThanOrEqual(f.pass1);
       expect(f.pass1).toBeGreaterThanOrEqual(f.passAll);
       expect(Object.values(f.failedDist).reduce((x, y) => x + y, 0)).toBe(f.failed);

@@ -3,7 +3,8 @@
 A build task is a business asking for an application. The harness has one hour per turn to hand back a
 URL, logins, and a `RESULT.json`; a tester then works a checklist; three change requests follow on the
 same app. `tasks/build/hvac-field-service/` is the worked example (its checklist predates the enterprise
-baseline; new tasks include the baseline from the start).
+baseline; new tasks include the baseline from the start). This guide and the baseline are authoring
+templates; they do not silently amend existing task checklists or establish accepted applications.
 
 ```
 tasks/build/<id>/
@@ -53,3 +54,9 @@ tasks/build/<id>/
 Then read the checklist once as the tester would, with only `counts.json` beside it, and fix any item
 whose expected value cannot be read off the seed data. Report per task: id, seed files and row counts,
 number of items, core items, the three change titles, and the trap you think will fail most agents.
+
+Run `python bench/validate_build.py` for task-pack validation. For agent-built apps, distinguish observed
+pass, observed failure and untested items; retain evidence for direct unauthorized requests, actual
+restart persistence and regressions after each change. A URL probe, successful login or generated
+tester sheet cannot establish the full checklist. Independently review ambiguity and valid alternatives
+before scoring a new campaign, and keep credentials and tester sheets out of public result bundles.

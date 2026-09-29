@@ -99,14 +99,47 @@ def ledger_text(rows: list[dict]) -> str:
     return ''.join(json.dumps(r, sort_keys=True) + '\n' for r in rows)
 
 
+def validate_matrix(rows: list[dict], description: dict) -> None:
+    """Require the declared experiment, not merely the expected number of rows."""
+    tasks = description.get('tasks')
+    cells = description.get('cells')
+    repetitions = description.get('repetitions')
+    seed = description.get('seed')
+    if not isinstance(tasks, list) or not tasks or any(not isinstance(t, str) or not t for t in tasks):
+        raise SystemExit('campaign must declare a nonempty tasks list before export')
+    if len(tasks) != len(set(tasks)):
+        raise SystemExit('campaign tasks must be distinct')
+    if not isinstance(cells, dict) or not cells or any(not isinstance(c, str) or not c for c in cells):
+        raise SystemExit('campaign must declare nonempty cells')
+    if type(repetitions) is not int or repetitions < 1 or type(seed) is not int:
+        raise SystemExit('campaign repetitions must be a positive integer and seed an integer')
+    expected = {(task, cell, seed, run) for task in tasks for cell in cells
+                for run in range(1, repetitions + 1)}
+    seen, run_ids = set(), set()
+    for row in rows:
+        if (not isinstance(row.get('task'), str) or not isinstance(row.get('harness'), str)
+                or type(row.get('seed')) is not int or type(row.get('run')) is not int):
+            raise SystemExit('attempt task/cell must be strings and seed/repetition integers')
+        identity = (row['task'], row['harness'], row['seed'], row['run'])
+        if identity in seen:
+            raise SystemExit(f'duplicate attempt identity: {identity}')
+        seen.add(identity)
+        run_id = row.get('run_id')
+        if not isinstance(run_id, str) or not run_id or run_id in run_ids:
+            raise SystemExit(f'missing or duplicate run_id: {run_id!r}')
+        run_ids.add(run_id)
+    missing, unexpected = expected - seen, seen - expected
+    if missing or unexpected:
+        raise SystemExit(f'campaign matrix mismatch: {len(missing)} missing, {len(unexpected)} unexpected; '
+                         'check declared tasks, cells, seed and repetition identifiers')
+
+
 def export(label: str) -> None:
     src = os.path.join(ROOT, 'results', label)
     desc = json.load(open(os.path.join(src, 'campaign.json'), encoding='utf-8'))
     runs = sorted(d for d in os.listdir(src) if os.path.isfile(os.path.join(src, d, 'result.json')))
     rows = [attempt_record(os.path.join(src, d)) for d in runs]
-    expected = len(desc['cells']) * desc['repetitions'] * len({r['task'] for r in rows})
-    if len(rows) != expected:
-        sys.exit(f'incomplete campaign: {len(rows)} attempts, expected {expected}')
+    validate_matrix(rows, desc)
     text = ledger_text(rows)
     out = os.path.join(PUBLISHED, label)
     os.makedirs(out, exist_ok=True)
@@ -137,6 +170,7 @@ def verify_one(out: str) -> None:
     if hashlib.sha256(data).hexdigest() != prov['ledger_sha256']:
         raise SystemExit(f'{out}: ledger hash does not match provenance')
     rows = [json.loads(line) for line in data.decode().splitlines() if line.strip()]
+    validate_matrix(rows, prov)
     if ledger_text(rows).encode() != data:
         raise SystemExit(f'{out}: ledger is not in canonical order')
     if len(rows) != prov['attempts'] or len(rows) != len(prov['cells']) * prov['repetitions'] * len(prov['tasks']):

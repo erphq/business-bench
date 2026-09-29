@@ -1,8 +1,10 @@
 """Process track: every task validates (oracle passes, runs are deterministic, the null agent and each negative
 control fail what they should), and vendor documents parse back into the data they were printed from."""
 import json
+import hashlib
 import os
 import sqlite3
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -96,6 +98,30 @@ echo "turn $BENCH_TURN" >> "$WS/notes.md"
                 self.assertEqual(os.listdir(os.path.join(turn_dir, 'home')), ['session.txt'])
             self.assertEqual(open(login).read(), '{"tokens": "operator"}')
 
+    def test_provider_keys_are_redacted_from_kept_homes(self):
+        with tempfile.TemporaryDirectory() as root, tempfile.TemporaryDirectory() as results:
+            os.makedirs(os.path.join(root, 'harnesses'))
+            os.symlink(os.path.join(ROOT, 'erp'), os.path.join(root, 'erp'))
+            cfg_dir = os.path.join(root, 'homes', 'proto-selftest', '.proto')
+            os.makedirs(cfg_dir)
+            cfg = {'llmProviders': {'custom': {'enabled': True, 'apiKey': 'sk-or-test-secret',
+                                               'baseUrl': 'https://openrouter.ai/api/v1'}},
+                   'selectedModel': 'custom::deepseek/deepseek-v4.1-flash', 'llm': {'maxTokens': 65536}}
+            json.dump(cfg, open(os.path.join(cfg_dir, 'config.json'), 'w'))
+            adapter = os.path.join(root, 'harnesses', 'proto-selftest.sh')
+            open(adapter, 'w').write('#!/usr/bin/env bash\nset -eu\n'
+                                     'grep -q sk-or-test-secret "$PROTO_BENCH_HOME/.proto/config.json"\n')
+            os.chmod(adapter, 0o755)
+            with mock.patch.object(process_run, 'ROOT', root):
+                res = process_run.run_attempt('margin-bridge', 'proto-selftest', 0, 1, results)
+            self.assertEqual([t['exit_code'] for t in res['turns']], [0])        # the harness saw the key
+            kept = json.load(open(os.path.join(res['work_dir'], 'turns', '1', 'home', '.proto', 'config.json')))
+            self.assertEqual(kept['llmProviders']['custom']['apiKey'], '[redacted]')
+            self.assertEqual(kept['llm']['maxTokens'], 65536)
+            self.assertEqual(json.load(open(os.path.join(cfg_dir, 'config.json'))), cfg)
+            found = subprocess.run(['grep', '-r', 'sk-or-test-secret', res['work_dir']], capture_output=True)
+            self.assertEqual(found.returncode, 1)                                 # nowhere in the kept attempt
+
     def test_a_harness_that_does_not_start_is_an_error_not_a_failure(self):
         task = 'month-end-close'
         process_run.ensure_scenario(task, 0)
@@ -120,7 +146,8 @@ class CampaignExport(unittest.TestCase):
             raw = os.path.join(root, 'results', 'demo')
             os.makedirs(raw)
             json.dump({'campaign': 'demo', 'track': 'process', 'seed': 0, 'repetitions': 2,
-                       'cells': {'cell-a': {}, 'cell-b': {}}, 'conditions': []}, open(os.path.join(raw, 'campaign.json'), 'w'))
+                       'tasks': ['task-x'], 'cells': {'cell-a': {}, 'cell-b': {}}, 'conditions': []},
+                      open(os.path.join(raw, 'campaign.json'), 'w'))
             for cell in ('cell-a', 'cell-b'):
                 for run in (1, 2):
                     d = os.path.join(raw, f'task-x__{cell}__s0__r{run}')
@@ -149,6 +176,49 @@ class CampaignExport(unittest.TestCase):
                 json.dump(summary, open(os.path.join(out, 'summary.json'), 'w'))
                 with self.assertRaises(SystemExit):
                     export_process_campaign.verify_one(out)
+
+    def test_declared_matrix_rejects_count_preserving_substitutions(self):
+        published = os.path.join(ROOT, 'results', 'process', 'pilot-process-2026-09-27')
+        with open(os.path.join(published, 'provenance.json')) as f:
+            provenance = json.load(f)
+        with open(os.path.join(published, 'attempts.jsonl')) as f:
+            original = [json.loads(line) for line in f if line.strip()]
+        # Recompute both hash and summary after each corruption: row-count/hash-only
+        # verification would accept these apparently self-consistent publications.
+        replacements = {
+            'duplicate repetition': {'run': original[1]['run']},
+            'unexpected cell': {'harness': 'unreported-cell'},
+            'unexpected task': {'task': 'unreported-task'},
+            'different seed': {'seed': provenance['seed'] + 1},
+            'out-of-range repetition': {'run': provenance['repetitions'] + 1},
+            'duplicate run id': {'run_id': original[1]['run_id']},
+        }
+        for name, replacement in replacements.items():
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as out:
+                rows = [dict(row) for row in original]
+                rows[0].update(replacement)
+                text = export_process_campaign.ledger_text(rows)
+                prov = {**provenance, 'ledger_sha256': hashlib.sha256(text.encode()).hexdigest()}
+                with open(os.path.join(out, 'attempts.jsonl'), 'w') as f:
+                    f.write(text)
+                with open(os.path.join(out, 'provenance.json'), 'w') as f:
+                    json.dump(prov, f)
+                with open(os.path.join(out, 'summary.json'), 'w') as f:
+                    json.dump(export_process_campaign.summarize(rows, prov['repetitions']), f)
+                with self.assertRaises(SystemExit):
+                    export_process_campaign.verify_one(out)
+
+    def test_export_requires_the_prespecified_task_list(self):
+        with tempfile.TemporaryDirectory() as root:
+            raw = os.path.join(root, 'results', 'demo')
+            os.makedirs(raw)
+            with open(os.path.join(raw, 'campaign.json'), 'w') as f:
+                json.dump({'cells': {'cell-a': {}}, 'seed': 0, 'repetitions': 1}, f)
+            with mock.patch.object(export_process_campaign, 'ROOT', root), \
+                    mock.patch.object(export_process_campaign, 'PUBLISHED', os.path.join(root, 'published')):
+                with self.assertRaisesRegex(SystemExit, 'tasks list'):
+                    export_process_campaign.export('demo')
+            self.assertFalse(os.path.exists(os.path.join(root, 'published')))
 
 
 class Documents(unittest.TestCase):

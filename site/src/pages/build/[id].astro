@@ -10,9 +10,10 @@ const desc = `${task.title}. A build-track task from Business Bench with seed da
   <h1>{task.title}</h1>
   <p class="meta mono" style="margin-top:12px;font-size:12.5px">{task.id}<span class="sep">·</span>{task.timeout_per_turn_s} s per turn<span class="sep">·</span><a href={`${REPO}/tree/main/tasks/build/${task.id}`} rel="noopener">source</a></p>
 
+  <div class="callout"><p><strong>Specification only.</strong> This task pack has no published completed acceptance evaluation. Checklist size describes the contract, not measured application quality.</p></div>
   <h2>The request</h2>
   <blockquote class="ask">{task.ask}</blockquote>
-  <p class="muted">Seed files the agent must import: <code>{task.seed.join("</code>, <code>")}</code>. The agent must leave a <code>RESULT.json</code> with a reachable URL, an admin login, and the named restricted login.</p>
+  <p class="muted">Seed files the agent must import: {task.seed.map((file, i) => <Fragment>{i > 0 && ", "}<code>{file}</code></Fragment>)}. The agent must leave a <code>RESULT.json</code> with a reachable URL, an admin login, and the named restricted login.</p>
 
   <h2>Acceptance checklist</h2>
   <p>{task.checklistItems} binary items. The first 14 are the <a href="/methods#build-baseline">enterprise baseline</a> shared by every build task (delivery, invitations, roles, server-side authorization, scoped live dashboard, exact lists and exports, audit metadata, validation, persistence); the rest are application-specific. Core items, which together define "first usable": {task.coreItems.join(", ")}.</p>
@@ -20,10 +21,10 @@ const desc = `${task.title}. A build-track task from Business Bench with seed da
     <thead><tr><th>Tag</th><th class="n">Items</th></tr></thead>
     <tbody>{Object.entries(task.tags).sort((a, b) => b[1] - a[1]).map(([k, n]) => <tr><td>{k}</td><td class="n">{n}</td></tr>)}</tbody>
   </table></div>
-  <p class="muted">The full checklist with per-item "how to check" instructions and expected figures is in <a href={`${REPO}/blob/main/tasks/build/${task.id}/checklist.md`} rel="noopener">checklist.md</a>. Testers see it; the agent never does.</p>
+  <p class="muted">The full checklist with per-item "how to check" instructions and expected figures is in <a href={`${REPO}/blob/main/tasks/build/${task.id}/checklist.md`} rel="noopener">checklist.md</a>. The runner withholds it from the task prompt. Because the repository is public, that does not establish that a model has never seen the checklist.</p>
 
   <h2>Change requests</h2>
-  <p class="muted">Each change is a new one-shot turn on the carried-forward workspace. Only the owner's text below is sent; the tester items are withheld. After each change the full checklist is rerun, so regressions count.</p>
+  <p class="muted">Each change is a new one-shot turn on the carried-forward workspace. Only the owner's text below is sent; the tester items are withheld. The acceptance protocol requires retesting earlier requirements after each change, so regressions count. A generated tester sheet is a record to complete, not proof that this review happened.</p>
   {task.changes.map((c) => (
     <section>
       <h3>Change {c.n} <span class="dim" style="font-weight:400">· {c.items} new checklist items</span></h3>

@@ -1,18 +1,20 @@
 \begin{table}[!htbp]
 \centering\small
 \setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}>{\hsize=0.54\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=1.46\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
+\begin{tabularx}{\linewidth}{@{}>{\hsize=1.1\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X>{\hsize=0.95\hsize\linewidth=\hsize\RaggedRight\arraybackslash}X@{}}
 \toprule
-\textbf{Record} & \textbf{Required content} \\
+\textbf{Measure} & \textbf{Proto + DeepSeek} & \textbf{Codex + Sol} \\
 \midrule
-Workload & Task identifiers, task/input hashes, repetition mapping \\
-Agent environment & Runtime revision, image digest, model route, tools and skills \\
-Sampling and budget & Reasoning setting, temperature where controllable, timeout, CPU and memory \\
-Scoring & Frozen package digest, original and primary verdicts, grader errors \\
-Evidence & Original result hash, output hashes, private artifact retention location \\
-Accounting & Captured usage, price assumptions, durations, missing observations \\
+Input tokens & 823,587,929 & 165,959,457 \\
+Cached input & 775,672,448 & 150,329,088 \\
+Uncached input & 47,915,481 & 15,630,369 \\
+Output tokens & 20,910,907 & 4,823,643 \\
+Estimated model cost (USD) & 22.06 & 219.13 \\
+Median task duration (s) & 124.9 & 135.2 \\
+p90 task duration (s) & 455.6 & 403.3 \\
+Summed task duration (s) & 113,460.1 & 111,218.8 \\
 \bottomrule
 \end{tabularx}
-\caption{Minimum record for a new campaign. Missing fields must be disclosed rather than inferred from a successful result. These are prospective requirements, not a claim that every historical environment detail is reconstructible.}
+\caption{Resources for all 561 attempts per system. Costs are captured-usage API-equivalent estimates at the recorded price table, not subscription invoices or reconciled provider bills. Summed durations are occupied task time, not elapsed campaign time under concurrency.}
 \label{tab:8}
 \end{table}

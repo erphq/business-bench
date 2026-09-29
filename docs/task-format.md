@@ -10,6 +10,7 @@ tasks/desk/<id>/
   gen.py           # deterministic generator: `python gen.py` rebuilds workspace/ and reference/
   workspace/       # exactly what the harness sees, copied fresh for every run
   reference/       # ground truth for the grader; never mounted for the harness
+  reference_solution/ # required positive control: the requested deliverables
   check.py         # optional custom grader (type: custom)
 ```
 
@@ -23,7 +24,7 @@ title: Match bank payments to open invoices
 ask: |
   One or two sentences, exactly as a non-technical owner would type them.
   Name the output files you expect.
-followup: null                 # optional second-turn prompt, sent on the same session (not run in v0)
+followup: null                 # reserved metadata; the current desk runner does not execute it
 timeout_s: 1200
 traps:                         # authoring notes only, never shown to the harness
   - partial payment on INV-2026-0417
@@ -41,7 +42,12 @@ Rules for authors:
 - Inputs are messy on purpose: merged header rows, currency strings, mixed date formats, duplicates, requirement buried in an email thread.
 - Where the ask cannot be answered from the files, the correct deliverable says so; guessing fails.
 - `gen.py` takes an optional `--seed` so entity names and amounts can be re-rolled for a sealed variant.
-- Every check must pass on the reference solution. Run `python bench/grade.py tasks/desk/<id> tasks/desk/<id>/reference_solution` if you keep one.
+- Every released desk task must include a reference solution that passes all required checks and an untouched workspace that fails. Run `python bench/grade.py tasks/desk/<id> tasks/desk/<id>/reference_solution`, then `python bench/validate_tasks.py --strict <id>`. The first command uses the current grader, not the historical frozen scorer.
+
+Required checks are conjunctive; `required: false` marks a diagnostic check. State
+all tolerance and coverage thresholds explicitly: all required predicates passing
+does not imply every row or semantic property is correct. Predicate counts are not
+comparable units of business difficulty, especially when custom checks bundle rules.
 
 ## Check types (bench/grade.py)
 

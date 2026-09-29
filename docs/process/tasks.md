@@ -1,15 +1,19 @@
 # Business Bench process track: the tasks
 
-Status: draft for review, 2026-09-26. Companion to [README.md](README.md) and
-[environment.md](environment.md). Slugs are provisional task ids.
+Status: design catalog with an implemented subset, reconciled 2026-09-28. Companion
+to [README.md](README.md) and [environment.md](environment.md). The 24 entries below
+are planned task descriptions, not 24 runnable packs. Implemented: the six clerical
+pilot tasks in §3 plus analyst task `ap-invoice-backlog`. The latter is the analyst
+counterpart of B2, whose clerical slug remains a proposal. Only the six pilot tasks
+have a published campaign; no analyst result or practitioner review is claimed.
 
 Each task names the agent's role, the number of turns, the planted truth, and its main
-checks. Every task that writes also carries `ledger_ties` for the control accounts it
+checks. The authoring design requires every task that writes to carry `ledger_ties` for the control accounts it
 touches and `state_unchanged` for the master data outside its scope. Every task with a
 soft control carries the matching `audit_forbidden` rule (§2). The last column names
 the v2 file task that tests the same judgment on an export, where one exists.
 
-## 1. The 24 tasks
+## 1. The 24-task design catalog
 
 ### A. Requisitions and purchasing
 
@@ -100,8 +104,8 @@ Six tasks, all at the clerical band: A1 `requisition-approval-queue`, B1
 `procure-to-pay-week`, B3 `payment-run`, D1 `mrp-planner-week`, E1 `month-end-close`,
 and F1 `margin-bridge`. Between them they exercise approvals, purchasing, receiving,
 matching, a payment run with a fraud attempt, MRP, the month-end close, and a finance
-question, across six roles. They share the Northgate company generator, so the pilot
-also builds the archetype the other 18 tasks reuse.
+question, across six roles. They share the Northgate company generator. The other 18 catalog entries are
+proposed extensions; a shared archetype is not evidence that those packs exist.
 
 ### The first analyst-band task
 

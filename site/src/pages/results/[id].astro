@@ -1,0 +1,129 @@
+---
+import Base from "@/layouts/Base.astro";
+import Bar from "@/components/Bar.astro";
+import Reps from "@/components/Reps.astro";
+import { deskCampaign, deskCampaignLabels, deskTasks, scorerTransitions, CATEGORIES, CATEGORY_LABEL, RELEASE, REPO, fmt } from "@/lib/data";
+export async function getStaticPaths() { return deskCampaignLabels().map((id) => ({ params: { id } })); }
+const { id } = Astro.params as { id: string };
+const camp = deskCampaign(id), prov = camp.provenance, desk = deskTasks();
+const S = camp.summary, arms = camp.arms, reps = camp.repetitions, n = desk.length, total = arms.length * reps;
+const byRate = [...arms].sort((a, b) => S[b.id].pass_rate - S[a.id].pass_rate);
+const armById = Object.fromEntries(arms.map((a) => [a.id, a]));
+const repText = reps === 1 ? "one repetition" : `${reps} repetitions`;
+const hm = (iso: string) => iso.slice(11, 16);
+const signed = (x: number, d = 2) => `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(d)}`;
+const passN = (t: string) => arms.reduce((k, a) => k + camp.matrix[t][a.id].filter((r) => r.passed).length, 0);
+const rawN = (t: string) => arms.reduce((k, a) => k + camp.matrix[t][a.id].filter((r) => r.raw_passed).length, 0);
+const noneTasks = desk.filter((t) => passN(t.id) === 0), allTasks = desk.filter((t) => passN(t.id) === total);
+const changedTask = (t: string) => arms.some((a) => camp.matrix[t][a.id].some((r) => r.passed !== r.raw_passed || r.raw_grader_error_count > 0));
+const delta = Object.fromEntries(arms.map((a) => [a.id, scorerTransitions(camp.attempts.filter((r) => r.harness === a.id))]));
+const pair = camp.pair, [pa, pb] = pair ? pair.arms.map((x) => armById[x]) : [];
+const shared = pair ? ["model", "reasoning"].filter((k) => camp.configurations[pa.id][k] && camp.configurations[pa.id][k] === camp.configurations[pb.id][k]) : [];
+const ledger = `${REPO}/blob/main/results/desk/${id}`;
+const sections = [["scores", "Scores"], ["categories", "Category results"], ["scorer", "Evaluator changes"], ["resources", "Resource use"], ["matrix", "Per-task matrix"], ["provenance", "Provenance"]];
+const desc = `All ${n} desk tasks, ${repText} per system, frozen conservative-v7 scorer: ${byRate.map((a) => `${a.system} ${S[a.id].passed}/${S[a.id].attempts}`).join(", ")}.`;
+---
+<Base title={camp.title} description={desc} path={`/results/${id}`} crumbs={[{ name: "Results", path: "/results" }, { name: camp.title, path: `/results/${id}` }]}>
+  <p class="meta"><a href="/results">Desk results</a><span class="sep">·</span>campaign <code>{id}</code><span class="sep">·</span>{camp.date}, {hm(camp.window[0])}–{hm(camp.window[1])} UTC</p>
+  <h1>{camp.title}</h1>
+  <p class="lede">All {n} desk tasks, {repText} per system, the frozen <code>conservative-v7</code> scorer. Every scheduled attempt is in the denominator: {fmt.int(camp.attempts.length)} attempts from {["no", "one", "two", "three", "four", "five", "six"][arms.length] ?? arms.length} systems. Original verdicts remain available beside the frozen score.</p>
+
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([s, label]) => <a href={`#${s}`}>{label}</a>)}</nav>
+  <div class="callout">
+    <span class="t">What is being compared</span>
+    <p>{prov.limitations} This is a separate campaign from the <a href="/results">release <code>{RELEASE.id}</code></a>; its attempts are not pooled with the release.</p>
+  </div>
+
+  <h2 id="scores">Frozen and raw scores</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th style="width:30%">Frozen pass rate</th><th class="n">Frozen / {n * reps}</th><th class="n">Raw / {n * reps}</th><th class="n">Timed out</th><th class="n">Median min</th><th class="n">p90 min</th></tr></thead>
+    <tbody>{byRate.map((a) => { const s = S[a.id]; return (
+      <tr id={a.id}>
+        <td><span class="sys"><i class={`swatch s-${a.slot}`}></i><span>{a.system}</span></span><div class="dim" style="font-size:12px;margin-left:20px">{a.harness} · {a.route}</div></td>
+        <td><Bar value={s.pass_rate} series={a.slot} /></td>
+        <td class="n">{s.passed}</td><td class="n">{s.raw_passed}</td><td class="n">{s.timed_out}</td>
+        <td class="n">{(s.median_wall_s / 60).toFixed(2)}</td><td class="n">{(s.p90_wall_s / 60).toFixed(2)}</td>
+      </tr>); })}</tbody>
+  </table></div>
+  {pair && <p>{pa.system} minus {pb.system} is {signed(pair.difference_percentage_points)} percentage points under the frozen scorer. A paired, task-clustered bootstrap ({fmt.int(pair.samples)} resamples, seed {pair.seed}) gives a descriptive 95% interval of {signed(pair.bootstrap_95_percent_interval_pp[0])} to {signed(pair.bootstrap_95_percent_interval_pp[1])} points. {shared.length > 0 && `The two share ${shared.map((k) => `${k} ${camp.configurations[pa.id][k]}`).join(" and ")}. `}The interval describes variation across these tasks; it excludes related task families, evaluator selection and deployment shift.</p>}
+  {reps === 1 && <p class="muted">With one repetition each score is a single draw per task. This campaign does not measure repeated success; the <a href="/results#repetitions">release</a> does, with three repetitions.</p>}
+
+  <h2 id="categories">By category</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Category</th><th class="n">Tasks</th>{byRate.map((a) => <th class="n"><span class="sys" style="justify-content:flex-end"><i class={`swatch s-${a.slot}`}></i>{a.short}</span></th>)}</tr></thead>
+    <tbody>{CATEGORIES.map((c) => (
+      <tr>
+        <td><a href={`/tasks#${c.id}`}>{c.label}</a></td><td class="n">{desk.filter((t) => t.category === c.id).length}</td>
+        {byRate.map((a) => { const b = S[a.id].by_category[c.id]; return <td class="n">{b.passed} / {b.attempts}</td>; })}
+      </tr>))}</tbody>
+  </table></div>
+  <p class="muted">Categories hold between {Math.min(...CATEGORIES.map((c) => desk.filter((t) => t.category === c.id).length))} and {Math.max(...CATEGORIES.map((c) => desk.filter((t) => t.category === c.id).length))} tasks, so one attempt moves a category rate by several points.</p>
+
+  <h2 id="scorer">What the frozen scorer changed</h2>
+  <p>The runner recorded original verdicts at execution time. The same frozen package used for the release, <a href={`${REPO}/tree/main/scoring/frozen-v7`} rel="noopener">scoring/frozen-v7</a>, then scored each retained output. These are evaluator changes on the same artifacts, not reruns or repairs.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Pass → pass</th><th class="n">Fail → pass</th><th class="n">Ungraded → pass</th><th class="n">Pass → fail</th><th class="n">Fail → fail</th><th class="n">Ungraded → fail</th><th class="n">Net pass change</th></tr></thead>
+    <tbody>{byRate.map((a) => { const d = delta[a.id]; return <tr><td>{a.system}</td><td class="n">{d.passToPass}</td><td class="n">{d.failToPass}</td><td class="n">{d.ungradedToPass}</td><td class="n">{d.passToFail}</td><td class="n">{d.failToFail}</td><td class="n">{d.ungradedToFail}</td><td class="n">{d.net >= 0 ? "+" : ""}{d.net}</td></tr>; })}</tbody>
+  </table></div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Nonzero exit</th><th class="n">Passing, abnormal exit</th><th class="n">Raw grader errors</th><th class="n">Frozen grader errors</th><th class="n">Missing usage</th></tr></thead>
+    <tbody>{byRate.map((a) => { const s = S[a.id]; return (
+      <tr><td>{a.system}</td><td class="n">{s.nonzero_exit}</td><td class="n">{s.passing_abnormal_exit}</td><td class="n">{s.raw_grader_error_attempts}</td><td class="n">{s.grader_error_attempts}</td><td class="n">{s.usage_missing}</td></tr>); })}</tbody>
+  </table></div>
+
+  <h2 id="resources">Resource use</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th class="n">Input tokens</th><th class="n">Cached input</th><th class="n">Uncached input</th><th class="n">Output tokens</th><th class="n">Summed task time (h)</th></tr></thead>
+    <tbody>{byRate.map((a) => { const s = S[a.id]; return (
+      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{fmt.m(s.usage.input)}</td><td class="n">{fmt.m(s.usage.cached_input)}</td><td class="n">{fmt.m(s.usage.uncached_input)}</td><td class="n">{fmt.m(s.usage.output)}</td><td class="n">{(s.sum_wall_s / 3600).toFixed(1)}</td></tr>); })}</tbody>
+  </table></div>
+  <p class="muted">{prov.cost_note} {prov.usage_note} Summed durations measure occupied task time, not elapsed campaign time under concurrency.</p>
+
+  <h2 id="matrix">Per-task matrix</h2>
+  <p class="muted">One square per repetition. Green is a frozen pass; a green square with a hollow centre passed under the frozen scorer but was originally failed or ungraded; grey is a fail; a hollow grey centre is a timeout. {noneTasks.length === 1 ? "One task" : `${noneTasks.length} tasks`} passed for no system; {allTasks.length} passed for every system.</p>
+  <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep p eq"></i> pass, frozen scorer only</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> fail, timed out</span></div>
+  <div class="filters" role="group" aria-label="Filter by category" data-filter="campaign">
+    <button aria-pressed="true" data-cat="all">All {n}</button>
+    {CATEGORIES.map((c) => <button aria-pressed="false" data-cat={c.id}>{c.label} {desk.filter((t) => t.category === c.id).length}</button>)}
+    <button aria-pressed="false" data-cat="flip">Changed verdict {desk.filter((t) => changedTask(t.id)).length}</button>
+    <button aria-pressed="false" data-cat="split">Systems disagree {desk.filter((t) => passN(t.id) > 0 && passN(t.id) < total).length}</button>
+  </div>
+  <div class="tbl-wrap"><table class="tbl" id="campaign-table">
+    <thead><tr><th>Task</th><th>Category</th>{byRate.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.short}</span></th>)}<th class="n">Frozen / {total}</th><th class="n">Raw / {total}</th></tr></thead>
+    <tbody>{desk.map((t) => (
+      <tr data-cat={t.category} data-flip={changedTask(t.id) ? "1" : "0"} data-split={passN(t.id) > 0 && passN(t.id) < total ? "1" : "0"}>
+        <td><a href={`/tasks/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
+        <td class="muted">{CATEGORY_LABEL[t.category]}</td>
+        {byRate.map((a) => <td><Reps runs={camp.matrix[t.id][a.id]} /></td>)}
+        <td class="n">{passN(t.id)}</td><td class="n">{rawN(t.id)}</td>
+      </tr>))}</tbody>
+  </table></div>
+
+  <h2 id="provenance">Provenance</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <tbody>
+      <tr><td>Campaign</td><td><code>{prov.campaign}</code>, {repText}, executed {prov.execution_window_utc.join(" to ")}</td></tr>
+      <tr><td>Ledger SHA-256</td><td class="mono" style="word-break:break-all">{prov.ledger_sha256}</td></tr>
+      <tr><td>Scorer manifest SHA-256</td><td class="mono" style="word-break:break-all">{prov.scorer_manifest_sha256}</td></tr>
+      {arms.map((a) => <tr><td>Configuration: {a.system}</td><td>{Object.entries(camp.configurations[a.id]).map(([k, v]) => <span class="pill" style="margin:0 6px 4px 0">{k}: {String(v)}</span>)}</td></tr>)}
+      <tr><td>Evidence verification</td><td>{prov.evidence_verification}</td></tr>
+      <tr><td>Excluded</td><td>{prov.exclusions}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Verify the published data with <code>python bench/export_desk_campaign.py --verify</code>. It checks the complete task × system × repetition matrix, the summary arithmetic, the paired bootstrap, the ledger hash and every file in the frozen scorer package against the <a href={`${ledger}/attempts.jsonl`} rel="noopener">attempt ledger</a>, <a href={`${ledger}/summary.json`} rel="noopener">summary</a> and <a href={`${ledger}/provenance.json`} rel="noopener">provenance</a>. It does not regrade the original artifacts, which remain private; their hashes are in the ledger.</p>
+
+  <script>
+    for (const group of document.querySelectorAll<HTMLElement>("[data-filter]")) {
+      const table = document.getElementById(group.dataset.filter + "-table");
+      group.addEventListener("click", (e) => {
+        const b = (e.target as HTMLElement).closest("button"); if (!b || !table) return;
+        for (const x of group.querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
+        const cat = b.dataset.cat;
+        for (const tr of table.querySelectorAll<HTMLElement>("tbody tr")) {
+          const show = cat === "all" || (cat === "flip" ? tr.dataset.flip === "1" : cat === "split" ? tr.dataset.split === "1" : tr.dataset.cat === cat);
+          tr.style.display = show ? "" : "none";
+        }
+      });
+    }
+  </script>
+</Base>

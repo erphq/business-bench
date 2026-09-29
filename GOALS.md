@@ -1,54 +1,56 @@
-# Goals
+# Research goals
 
-The benchmark's job: answer, for a stated operating environment and budget,
-how reliably a configured agent system delivers business work that satisfies
-the owner's requirements. Reviewable by design; the release states its own gaps.
+Measure, for a stated workload and operating environment, how often a configured
+system delivers work accepted by an explicit contract. Establish separately whether
+those contracts capture business requirements and how results transfer to new work.
+[STATUS.md](STATUS.md) records current evidence; checkmarks below mean repository
+artifacts or published records exist, not that external validity has been established.
 
-## Milestones
+## Released foundation
 
-- [x] Desk track: 187 tasks with generators, checks, references, strict validation
-- [x] Build track: 20 packs with seed data, enterprise baseline checklist, 3 changes
-- [x] Runner, grader, native workbook recalculation, release manifest, ledger export
-- [x] Complete desk comparison: two systems, 1,122 attempts, one frozen scorer, raw verdicts retained
-- [x] Per-attempt receipts: original result hash, artifact hashes, scorer manifest hash
-- [x] Specification and paper (SPEC.md, PDF)
-- [x] v1.0.0 public release, MIT
-- [x] businessbench.org: results, task pages, methods, paper, reproduce, self-audit
-- [ ] Independent review of the frozen scorer's equivalence graders
-- [ ] Independent 50-task audit with committed verdicts
-- [ ] False-negative estimate from failed artifacts; plausible-wrong negative controls
-- [ ] Contemporaneous rerun: five repetitions per cell; matched same-model harness control pair
-- [ ] Proto on ERP.AI platform cell published as its own campaign
-- [ ] Container digest and runtime revision recorded per attempt by the runner
-- [ ] First complete build arm with human acceptance; publish build measures
-- [ ] Human completability baseline on the audited sample
-- [ ] External review request (Epoch AI Benchmark Reviews) once the above land
+- [x] 187 desk tasks with generators, references, checks and validation tooling.
+- [x] 20 build packs with seed data, acceptance checklists and three changes each.
+- [x] Complete desk comparison: two systems, 1,122 attempts, shared frozen scorer,
+  original verdicts retained, and per-attempt evidence hashes.
+- [x] Research paper, executable evidence verification, public wiki and MIT license.
+- [x] Process kernel, local runner, checks, and oracle/negative-control validator.
+- [x] Six clerical process tasks and one analyst task, `ap-invoice-backlog`.
+- [x] Six-task local process pilot, five repetitions per cell, published separately.
 
-## v2 (spec in docs/v2)
+## Highest-priority validation
 
-- [x] Thesis and capability axes agreed; 100 tasks listed with planted truth and checks
-- [x] Human baseline protocol and budget approved
-- [x] Check types `plan_feasible`, `forecast_error`, `not_fooled` in grade.py with validator rules (v1.1.0)
-- [x] Generator library: event-log emitter, constraint-checker scaffold, adversarial injector (v1.1.0)
-- [ ] Axes 4, 6, 7 authored (42 tasks, three bands each)
-- [ ] Axes 3 and 5, then 1 and 2
-- [ ] Human baseline run on 20 v1 pilot + 50 v2 tasks, raw sheets published
-- [ ] First v2 campaign: five repetitions, sealed variant for the top system, difficulty curve
-- [ ] Proto reference-harness page with attempt traces
-- [ ] Environment release (generators as RL environment) after the benchmark is established
+- [ ] Independent artifact adjudication on a declared stratified sample of accepted
+  and rejected attempts; publish reviewer agreement, disputes, and both error types.
+- [ ] Independent review of the seven frozen equivalence graders, including plausible
+  invalid artifacts and valid alternative representations.
+- [ ] Practitioner review of process rules and planted exceptions; record changes
+  before evaluating the revised tasks.
+- [ ] Prospective campaign with frozen scorer, explicit configuration and workload,
+  retained evidence, and controlled same-model comparisons where appropriate.
+- [ ] Separate results for fresh seeded instances and held-out templates; repeated
+  exposed fixtures are not a substitute for either experiment.
+- [ ] Human completability baseline and complete build acceptance campaign, including
+  direct authorization requests, actual restart persistence and change regressions.
+- [ ] Effective container digest, runtime, dependency and authorized skill inventory
+  captured per attempt; verified process isolation beyond local mode.
 
-## Process track (spec in docs/process)
+## Proposed v2 research program
 
-- [ ] Spec reviewed and the five open decisions settled (docs/process/README.md section 14)
-- [x] bb-erp kernel: lifecycles, hard controls, audit log, clock, reports, HTTP API, `erp` command
-- [x] Counterparty simulator, scenario format, twelve-month history generation
-- [x] Runner, the six process check types and audit rules, `validate_process.py`
-- [x] Pilot: six tasks with oracles and negative controls passing validation
-- [ ] Practitioner review of the pilot (AP lead, production planner, controller)
-- [x] Pilot campaign: five repetitions per cell, published under its own label (`pilot-process-2026-09-27`, local mode)
-- [ ] The pilot campaign repeated in containers
-- [ ] Remaining 18 tasks, then the analyst and controller bands
-- [ ] Browser interface and human baseline on the pilot
+- [x] Seven-axis, 100-task design catalog and proposed difficulty bands documented.
+- [x] Human baseline protocol and budget estimate documented; no completed baseline
+  or commissioned participant cohort is claimed.
+- [x] `plan_feasible`, `forecast_error`, `not_fooled` and generator helpers implemented.
+- [ ] Author and review the v2 task packs, beginning with axes 4, 6 and 7 (42 proposed
+  tasks). A catalog entry is not an implemented generator or validated task.
+- [ ] Run the proposed 20-task v1 human pilot, then a stratified 50-task v2 baseline;
+  distinguish unaided and AI-assisted work in the published record.
+- [ ] Evaluate five repetitions per declared cell and report per-band results,
+  predicate granularity, instance/template exposure and measured resource limits.
+
+The [v2 specification](docs/v2/README.md) and [process specification](docs/process/README.md)
+describe the hypotheses and acceptance conditions for this work. Process catalog
+expansion, browser/MCP interfaces, additional company archetypes and training-environment
+use remain proposals, not evidence of current performance.
 
 ## Measurement science and grader integrity (docs/measurement-science.md)
 
@@ -69,6 +71,10 @@ the owner's requirements. Reviewable by design; the release states its own gaps.
 
 ## Non-goals
 
-- A single combined score across the desk, build, and process tracks.
-- Claims of universal business competence or unattended production readiness.
-- Weakening a task to improve any participant's score.
+- Combining desk, build and process scores into one rank.
+- Claiming universal competence, causal model/harness superiority, or unattended
+  production readiness from the current observations.
+- Weakening a task to improve a participant's score, or silently revising a released
+  evaluator, fixture or result ledger.
+- Treating hashes, generated truth, or model-assisted review as substitutes for
+  independent validation of the acceptance contract.

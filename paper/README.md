@@ -6,7 +6,7 @@ The distributed PDF is compiled by **XeLaTeX**, with `latexmk` managing BibTeX a
 
 - `main.tex`: document class, typography, geometry, front matter and native LaTeX document assembly.
 - `figures/headline.tex`: vector PGFPlots figure, reading the generated score macros and repetition data.
-- `equations.tex`: numbered mathematical definitions of the reported metrics.
+- Mathematical definitions live in `benchmark.md`, using explicit TeX delimiters, and render in both the PDF and website.
 - `references.bib`: bibliographic records verified against the papers' arXiv pages.
 - `benchmark.md`: shared narrative source, retained so the repository specification and website use the same prose.
 - `generated/`: complete, tracked TeX body, abstract, booktabs tables, score macros and chart data. These are generated, not manually maintained.
@@ -30,6 +30,13 @@ On macOS, MacTeX supplies the TeX toolchain; install Pandoc separately. A normal
 
 The canonical output is `docs/business-harness-bench-spec.pdf`. Compilation logs, bibliography intermediates and the working PDF stay under ignored `tmp/latex/`.
 
+A successful canonical build also writes `paper/build-receipt.json`, binding the
+published PDF to its manuscript, TeX, bundled fonts, result data and generation
+scripts. Run `python docs/paper_artifact.py --verify` to detect stale or changed
+inputs/artifacts. CI verifies this receipt before regenerating or compiling anything;
+an alternate `--output` build does not replace it. This avoids assuming identical PDF
+bytes across TeX versions and does not replace visual or substantive review.
+
 To regenerate TeX/data only:
 
 ```bash
@@ -44,4 +51,4 @@ latexmk -xelatex -interaction=nonstopmode -halt-on-error \
   -outdir=../tmp/latex main.tex
 ```
 
-Create the output directory first when using the direct command. All body fonts are supplied under their SIL Open Font License in `docs/assets/fonts/`; mathematical and monospaced fonts come from TeX Live. Headline values and tables are generated from the verified frozen-score snapshot, not manually typed into the figure.
+Create the output directory first when using the direct command. All body fonts are supplied under their SIL Open Font License in `docs/assets/fonts/`; mathematical and monospaced fonts come from TeX Live. Headline values and tables are generated from the verified frozen-score snapshot, not manually typed into the figure. The website renders the corresponding figure from the same released summary. Mathematical definitions are shared with the website rather than appended only to the PDF.

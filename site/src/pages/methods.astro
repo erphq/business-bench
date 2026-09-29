@@ -1,79 +1,104 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { ARMS, deskTasks, provenance, readRepoFile, scorer, REPO } from "@/lib/data";
+import { ARMS, REPS, SUMMARY_BY_ID, deskTasks, buildTasks, provenance, readRepoFile, scorer, REPO } from "@/lib/data";
 import { renderMarkdown } from "@/lib/markdown";
-const desk = deskTasks(), prov = provenance(), sc = scorer();
+const desk = deskTasks(), build = buildTasks(), prov = provenance(), sc = scorer();
 const checkCounts: Record<string, number> = {};
 for (const t of desk) for (const c of t.checks) checkCounts[c.type] = (checkCounts[c.type] ?? 0) + 1;
-// pull the check-type table out of docs/task-format.md so the definitions stay single-sourced
 const fmtDoc = readRepoFile("docs/task-format.md");
 const tableMd = fmtDoc.slice(fmtDoc.indexOf("| type |"), fmtDoc.indexOf("Paths are globs"));
 const checkTable = renderMarkdown(tableMd).html;
 const baselineMd = readRepoFile("docs/build-baseline.md");
 const baselineItems = renderMarkdown(baselineMd.slice(baselineMd.indexOf("\n1. "), baselineMd.lastIndexOf("---"))).html;
-const desc = "How Business Bench runs and scores agents: the agent boundary, desk and build protocols, the deterministic grader and its check types, metrics, and the evaluated cells.";
+const sections = [["unit", "What is compared"], ["boundary", "Execution boundary"], ["desk", "Desk protocol"], ["grading", "Acceptance and scoring"], ["metrics", "Metrics and uncertainty"], ["validation", "Task validation"], ["cells", "Recorded configurations"], ["build", "Build acceptance"], ["process", "Process track"]];
+const desc = "Business Bench methods: configured-system comparisons, declared acceptance tests, fixed-input repetition, retrospective frozen scoring, metric denominators, and evidence limits.";
 ---
 <Base title="Methods" description={desc} path="/methods">
-  <p class="meta">Methods<span class="sep">·</span>desk and build protocols, grading, metrics<span class="sep">·</span>the process track is described <a href="/process">on its own page</a></p>
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</nav>
+  <p class="meta">Methods<span class="sep">·</span>desk release <code>{prov.campaign}</code></p>
   <h1>Methods</h1>
-  <p class="lede">How an attempt is run and judged. The <a href="/paper">paper</a> is the normative text; where this page and the paper differ, the paper holds.</p>
+  <p class="lede">A pass means that an output satisfies the required tests in a declared evaluation contract. Repetition, execution status, resource use, and the validity of those tests answer separate questions.</p>
+  <p>The <a href="/paper">paper</a> develops the measurement argument. The <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">campaign provenance</a> records what was compared; the <a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">frozen scorer</a> defines the primary historical verdict. Current runner code describes how to launch a new experiment.</p>
 
-  <div class="prose">
-    <h2 id="unit">The unit of comparison is the configured system</h2>
-    <p>A model does not act alone. Its harness decides how it reads files, invokes tools, manages context, recovers from errors, and delivers artifacts. Each experimental cell is therefore identified by harness, model configuration, provider route, tools, and substrate, and results describe the system that ran. An end-to-end gap between two cells does not, by itself, isolate a harness or a model effect; that needs matched controls.</p>
-
-    <h2 id="boundary">Agent boundary</h2>
-    <p>The runner copies only the task workspace into an opaque temporary directory, writes the ask to a prompt file, and calls a harness adapter with three arguments: workspace, prompt file, output directory. In Docker mode the agent sees <code>/run/ws</code> and a per-run copy of its home; the task tree, reference answers, checks, and traps stay on the host. Containers run as the host user with CPU, memory, and process limits. Network access is available for model calls and permitted tooling, so an agent could in principle find the published tasks online.</p>
-    <p>The adapter contract is one shell script per cell, with the model pinned inside it: <a href={`${REPO}/blob/main/harnesses/contract.md`} rel="noopener">harnesses/contract.md</a>.</p>
-
-    <h2 id="desk">Desk protocol</h2>
-    <ul>
-      <li>Fresh workspace per repetition; three repetitions per task; single turn.</li>
-      <li>Time budget from the task, 1,200 seconds by default, with 2 CPUs and 6 GB per attempt.</li>
-      <li>A complete arm has exactly one record per task and repetition. Missing records are a runner error, not a silent gap.</li>
-      <li>Execution status (exit code, timeout) is recorded separately from the artifact verdict.</li>
-    </ul>
-
-    <h2 id="grading">Desk grading</h2>
-    <p>Two verdicts exist for every released attempt. The <strong>raw</strong> verdict is what the runner's grader recorded at run time. The <strong>frozen</strong> verdict, the primary score, comes from the immutable <code>conservative-v7</code> package under <a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">{sc.dir}</a>: its own copy of the base grader and task definitions, plus equivalence graders for {sc.equivalenceTasks.length} tasks whose deliverables have more than one valid layout. Each frozen verdict is bound by a receipt to the original result hash, the output-file hashes, and the scorer manifest ({sc.fileCount} hashed files). Run it on any workspace with <code>python scoring/frozen-v7/scorer.py TASK_ID WORKSPACE</code>.</p>
-    <p>An attempt passes when every required check passes. Checks are declared in <code>task.yaml</code> and evaluated by <a href={`${REPO}/blob/main/bench/grade.py`} rel="noopener">bench/grade.py</a>; tasks with rules the built-in types cannot express add a <code>check.py</code>. Workbooks are graded after stripping cached values and recalculating natively in LibreOffice, so a formula that only looks right in the file's cache does not pass. Text checks work at sentence level where scattered phrase matches could pass on the wrong sentence or on a negation.</p>
-    <h3 id="checks">Check types in use</h3>
-    <div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th>Type</th><th class="n">Uses across 187 tasks</th></tr></thead>
-      <tbody>{Object.entries(checkCounts).sort((a, b) => b[1] - a[1]).map(([k, n]) => <tr><td><code>{k}</code></td><td class="n">{n}</td></tr>)}</tbody>
-    </table></div>
-    <details><summary>Definitions, from docs/task-format.md</summary><div class="tbl-wrap" set:html={checkTable} /></details>
-
-    <h2 id="validation">Task validation</h2>
-    <p>Before release every desk task passed a strict validator: the reference solution passes its checks, the untouched workspace fails them, and repeated generation is byte-deterministic. Value pins that an agent could satisfy by pasting a figure from the inputs are rejected unless the task declares why the figure legitimately appears there. Twenty-eight tasks' supplied fixtures differ from freshly regenerated bytes; the supplied bytes are the release inputs and the difference is documented in <a href={`${REPO}/blob/main/docs/validation.md`} rel="noopener">docs/validation.md</a> rather than patched away.</p>
-
-    <h2 id="build">Build protocol</h2>
-    <p>The initial requirement is followed by up to three change requests. Each turn is a new one-shot invocation on the carried-forward workspace. Only the owner's text of a change is sent. The agent must leave <code>RESULT.json</code> with a reachable URL, an admin login, and the named restricted login, and the restricted identity must stay consistent across changes.</p>
-    <h3 id="build-baseline">Enterprise baseline, items 1 to 14</h3>
-    <p>Every build checklist opens with these, with placeholders filled from the task's reference counts. A tester works the list with the URL and <code>RESULT.json</code> and nothing else.</p>
-    <div set:html={baselineItems} />
-    <p>Application-specific items follow. Score the initial checklist, each change's new items, and regressions separately; there is no combined desk and build score.</p>
-
-    <h2 id="metrics">Metrics</h2>
-    <ul>
-      <li><strong>Attempt pass rate:</strong> passing artifacts over every scheduled attempt in a complete arm (561 per arm here).</li>
-      <li><strong>All-three success:</strong> tasks passing in all three repetitions, over 187. Intervals for both measures are on the <a href="/results#figure-intervals">results page</a>.</li>
-      <li><strong>Resources:</strong> median wall time, recorded token usage with cached input priced separately, estimated cost from the bundled price table, with missing observations stated.</li>
-      <li><strong>Build measures:</strong> accepted baseline items, core delivery criteria, new change requirements, regressions, time and cost across the sequence.</li>
-    </ul>
-
-    <h2 id="cells">Cells in the complete desk comparison</h2>
-  </div>
+  <h2 id="unit">What is compared</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Cell</th><th>Harness</th><th>Model and route</th><th>Recorded configuration</th><th>Source cohorts</th></tr></thead>
-    <tbody>{ARMS.map((a) => <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i><code>{a.id}</code></span></td><td>{a.harness}</td><td><span class="mono">{a.model}</span><div class="dim" style="font-size:12px">{a.route}</div></td><td>{Object.entries(prov.configurations[a.id]).map(([k, v]) => <span class="pill" style="margin:0 6px 4px 0">{k}: {String(v)}</span>)}</td><td class="mono" style="font-size:12px">{(prov.source_cohorts[a.id] as string[]).join("; ")}</td></tr>)}</tbody>
+    <thead><tr><th>Unit</th><th>Meaning in this release</th><th>Interpretation boundary</th></tr></thead>
+    <tbody>
+      <tr><td>Configured system</td><td>A model, harness, provider route, tools, skills, execution environment, and budgets.</td><td>Different models and harnesses vary together. Their observed gap does not identify either factor's separate causal effect.</td></tr>
+      <tr><td>Task and fixture</td><td>One authored request and its supplied input files, with a declared set of tests.</td><td>The {desk.length} desk tasks are a designed workload, not a probability sample of business demand.</td></tr>
+      <tr><td>Attempt</td><td>One execution of a configured system on a fresh copy of a task's supplied workspace.</td><td>The {REPS} repetitions reuse the released inputs. They measure execution repeatability on those inputs, not performance on new seeds or unseen task templates.</td></tr>
+      <tr><td>Required check</td><td>A predicate over an output, potentially combining several rules or allowing a tolerance.</td><td>One failed check need not mean one business mistake; one passing check need not establish every property of the artifact.</td></tr>
+    </tbody>
   </table></div>
-  <div class="prose">
-    <p>Proto cells use builtin skills only and a per-run copy of a bare home, so memory and skills never leak between attempts. The Codex cell uses a benchmark-owned <code>CODEX_HOME</code> and a fake <code>HOME</code> that hides personal skills. The two cohorts were not run at the same time and their sampling controls differ; the comparison is between configured systems, not between models or harnesses in isolation.</p>
-    <p>Further adapters ship without published results in this release: Proto on GLM-5.3 Flash and Qwen 3.8 Flash (recorded in an earlier snapshot in the repository history under the original grader), Proto on GPT-5.6 tiers through a subscription route, and Proto with access to the ERP.AI application platform. A platform-backed cell is a declared experimental condition and will be reported as its own labelled campaign.</p>
-  </div>
-  <div class="prose">
-    <h2 id="process">Process track</h2>
-    <p>The process track runs an agent in a role inside an ERP over several turns on a business clock, with a simulator acting for vendors, approvers and the bank between turns. It is graded on projections of the final system state, rules over the audit log of every request, and control-account ties. Its protocol, grading and validation are on the <a href="/process">process track page</a> and in its <a href="/process/spec">specification</a>.</p>
-  </div>
+
+  <h2 id="boundary">Execution boundary</h2>
+  <p><a href={`${REPO}/blob/main/bench/run.py`} rel="noopener">The desk runner</a> copies the supplied workspace to an opaque temporary directory and invokes an adapter with workspace, prompt-file, and output-directory arguments. In Docker mode, it mounts the run directory and read-only adapters; the repository's task answers and grader stay outside those mounts. Network access remains available, so container isolation does not prevent discovery of public task material online.</p>
+  <p>Local-process mode does not isolate reference answers or unrelated host files. A benchmark-owned home and declared skill inventory reduce uncontrolled context, but do not prove absence of exposure. The released ledger does not contain a complete per-attempt image and environment record; current container defaults must not be substituted for missing historical evidence.</p>
+  <details><summary>Adapter and home behavior</summary>
+    <p>The <a href={`${REPO}/blob/main/harnesses/contract.md`} rel="noopener">adapter contract</a> declares the three arguments. The current runner copies a Proto home template per attempt. The Codex adapter uses a benchmark-owned <code>CODEX_HOME</code>; in Docker mode that directory is shared by the cell's attempts. A fake home is conditional on the configured directory existing. Neither mechanism establishes that all historical authenticated skills are reconstructible. Inspect <a href={`${REPO}/blob/main/harnesses/codex-sol.sh`} rel="noopener">the Codex adapter</a> and record the environment for each new campaign.</p>
+  </details>
+
+  <h2 id="desk">Desk protocol</h2>
+  <ul>
+    <li>The published comparison contains {desk.length} tasks × {REPS} repetitions per system. The exporter rejects an incomplete release matrix; a missing record is not silently counted as an ordinary task failure.</li>
+    <li>Each attempt receives the task's request in a fresh workspace. Repetition identifiers are bookkeeping labels, not matched random seeds or simultaneous trials.</li>
+    <li>The current runner defaults to one repetition unless <code>--runs</code> is supplied. Its task timeout defaults to 1,200 seconds; Docker resource defaults are 2 CPUs and 6 GB. Task metadata can change the timeout; command-line options can override timeout and resource limits.</li>
+    <li>Timeout, exit status, grader error, and artifact acceptance are recorded separately. Completing a process normally does not establish acceptable work; a failed process does not by itself explain which acceptance condition failed.</li>
+  </ul>
+  <p>Use the <a href="/reproduce">reproduction guide</a> to verify the published accounting or launch an explicitly named new experiment.</p>
+
+  <h2 id="grading">Acceptance and scoring</h2>
+  <p>An attempt is accepted when <strong>every required check passes</strong>. The boundary is the declared contract, including its tolerances and coverage thresholds. Optional checks can remain diagnostic. Passing all tests does not prove that the contract includes every business requirement; see the <a href="/paper#5-worked-example-payment-reconciliation">payment-reconciliation example</a>.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Verdict</th><th>Source</th><th>What to preserve</th></tr></thead>
+    <tbody>
+      <tr><td>Original / raw</td><td><a href={`${REPO}/blob/main/bench/grade.py`} rel="noopener">The runner's grader</a>, using the task definitions supplied at execution.</td><td>Original verdict and grader errors. An ungraded attempt is distinct from an ordinary failed check.</td></tr>
+      <tr><td>Frozen / primary</td><td><a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener"><code>conservative-v7</code></a>, applied retrospectively to retained outputs, with its own copied definitions and equivalence rules for {sc.equivalenceTasks.length} tasks.</td><td>Both verdicts, scorer identity, receipt hash, and output hashes. Scoring the same outputs again is not a new agent run.</td></tr>
+    </tbody>
+  </table></div>
+  <p>The frozen scorer was assembled by the benchmark authors after outputs existed. Its {sc.fileCount}-file fingerprint makes a version inspectable; it does not establish independent authorship or prospective registration. The <a href="/audit#grading-validity">audit</a> separates observed verdict changes from unknown false-positive and false-negative rates.</p>
+  <p>Workbook checks remove cached values and use native LibreOffice recalculation where required. Sentence-level text checks guard specific combinations of facts and qualifiers. These mechanisms test stated properties; they do not provide exhaustive semantic or visual review.</p>
+  <details id="checks"><summary>Check types and current task-format definitions</summary>
+    <p>Counts below come from current task metadata. For the historical primary score, inspect the definitions inside the frozen package.</p>
+    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Type</th><th class="n">Declared uses</th></tr></thead><tbody>{Object.entries(checkCounts).sort((a, b) => b[1] - a[1]).map(([k, n]) => <tr><td><code>{k}</code></td><td class="n">{n}</td></tr>)}</tbody></table></div>
+    <div class="tbl-wrap" set:html={checkTable} />
+    <p><a href={`${REPO}/blob/main/docs/task-format.md`} rel="noopener">Source: task-format specification</a>.</p>
+  </details>
+
+  <h2 id="metrics">Metrics and uncertainty</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Measure</th><th>Denominator / weighting</th><th>What it answers</th></tr></thead>
+    <tbody>
+      <tr><td>Attempt acceptance (pass@1)</td><td>Accepted attempts / all attempts in the complete matrix; {SUMMARY_BY_ID[ARMS[0].id].attempts} per system here.</td><td>How often did this configuration meet the full contract across recorded executions?</td></tr>
+      <tr><td>All-{REPS} acceptance (pass^{REPS})</td><td>Tasks with all {REPS} attempts accepted / {desk.length} tasks.</td><td>Which supplied fixtures succeeded every time observed? This is an observed joint outcome, not the aggregate pass rate raised to a power.</td></tr>
+      <tr><td>At-least-once acceptance</td><td>Tasks with at least one accepted attempt / all tasks.</td><td>Whether a success existed in hindsight. Selecting a successful output without the grader is a separate problem.</td></tr>
+      <tr><td>Mean within-attempt check fraction</td><td>Average each attempt's fraction of required checks passed, giving each attempt equal weight.</td><td>Diagnostic distance from the declared contract. It cannot turn a missing required property into acceptable work.</td></tr>
+      <tr><td>Pooled required-check rate</td><td>All passed required checks / all required checks across attempts.</td><td>Weights attempts with more predicates more heavily. Splitting a rule into several checks can change this value without changing acceptance.</td></tr>
+      <tr><td>Resources and cost per accepted output</td><td>Captured token usage and price assumptions; observed durations; total captured model cost / accepted attempts.</td><td>Campaign accounting. Missing usage is unknown; cost excludes review and repair labor. The ratio is not an expected retry-until-success cost.</td></tr>
+    </tbody>
+  </table></div>
+  <p>The reported paired bootstrap resamples <strong>task identifiers</strong>, retaining all {REPS} repetitions for both systems within each sampled task. It describes variation under that empirical resampling scheme. Related task families, development exposure, scorer selection, and a different deployment workload are outside its uncertainty estimate. Categories inherit their task counts in the aggregate; different business workload weights can change the ranking. See <a href="/results#figure-intervals">results</a> and <a href="/analysis">findings</a>.</p>
+
+  <h2 id="validation">Task validation and its limits</h2>
+  <p>The <a href={`${REPO}/blob/main/docs/validation.md`} rel="noopener">release notice</a> reports reference-solution passes, untouched-workspace failures, and repeated deterministic generation under the validation environment. These are useful positive and negative controls. They do not estimate agreement with independent practitioner judgments or failure rates on plausible wrong outputs.</p>
+  <p>The <a href={`${REPO}/blob/main/bench/validate_tasks.py`} rel="noopener">strict validator</a> also checks declared structure and selected value-pin hazards, with explicit legacy-task exceptions. It reported 28 tasks whose supplied fixture bytes differ from regenerated bytes despite repeatable regeneration. The supplied bytes define the release; regenerating inputs creates a different experimental condition rather than repairing the published record.</p>
+
+  <h2 id="cells">Recorded configurations</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>System</th><th>Harness</th><th>Model and route</th><th>Recorded configuration</th><th>Source cohorts</th></tr></thead>
+    <tbody>{ARMS.map((a) => <tr><td>{a.short}</td><td>{a.harness}</td><td><code>{a.model}</code><div class="dim">{a.route}</div></td><td>{Object.entries(prov.configurations[a.id]).map(([k, v]) => <div><strong>{k}:</strong> {String(v)}</div>)}</td><td>{(prov.source_cohorts[a.id] as string[]).join("; ")}</td></tr>)}</tbody>
+  </table></div>
+  <p>These cohorts were not contemporaneous and their sampling controls differ. The <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">provenance</a> records their scope and exclusions. An adapter in the repository establishes an available integration, not a published evaluation result.</p>
+
+  <h2 id="build">Build acceptance</h2>
+  <p>The {build.length} released build tasks contain an initial requirement followed by three change requests. Each turn starts a new invocation on the carried-forward workspace. Acceptance requires observing the delivered application: working logins, permissions, direct-request authorization, data integrity, persistence, and the task's rules.</p>
+  <p><code>RESULT.json</code>, a responding URL, or a generated tester sheet are evidence to inspect, not a completed acceptance result. Record observed passes, observed failures, and untested items; recheck earlier requirements after each change. Initial success, new change requirements, regressions, reachability, time, and cost remain separate. No completed build leaderboard is published in this release.</p>
+  <details id="build-baseline"><summary>Enterprise baseline: the 14 acceptance items</summary>
+    <p>Rendered from <a href={`${REPO}/blob/main/docs/build-baseline.md`} rel="noopener">docs/build-baseline.md</a>. Task checklists supply the expected counts and role-specific placeholders; consult the full source for setup and test-state handling.</p>
+    <div set:html={baselineItems} />
+  </details>
+
+  <h2 id="process">Process track</h2>
+  <p>Process attempts retain ERP state across fresh agent turns while simulated counterparties act between business dates. Declared checks inspect final state, audit events, control-account relationships, and requested outputs. The pilot is reported separately because its tasks, scorer, repetitions, and local execution conditions differ from the desk release.</p>
+  <p>See the <a href="/process">published pilot and its conditions</a>, <a href="/process/spec">working specification</a>, and <a href="/reproduce#process-experiment">process execution guide</a>. Repeating one scenario seed tests execution repeatability; evaluating additional seeds and unseen templates requires separate evidence.</p>
 </Base>

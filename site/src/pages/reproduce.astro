@@ -1,17 +1,75 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { readRepoFile, REPO } from "@/lib/data";
+import { readRepoFile, REPO, processCampaign, PROCESS_PILOT } from "@/lib/data";
 import { renderMarkdown } from "@/lib/markdown";
 const readme = readRepoFile("README.md");
 const body = readme.slice(readme.indexOf("## Requirements"));
-const { html, toc } = renderMarkdown(body, { linkBase: `${REPO}/blob/main/` });
-const desc = "Install, verify, and run Business Bench: no-model verification, the Codex desk run, optional Proto adapters, the build track, and how to publish a new campaign.";
+const { html } = renderMarkdown(body, { linkBase: `${REPO}/blob/main/` });
+const pilot = processCampaign(PROCESS_PILOT);
+const sections = [["choose-evidence", "Choose an evidence level"], ["public-accounting", "Verify public accounting"], ["fresh-experiment", "Run a new desk experiment"], ["score-workspace", "Score an output workspace"], ["process-experiment", "Process experiments"], ["historical-record", "Historical reproducibility"], ["repository-instructions", "Full repository instructions"]];
+const desc = "Verify Business Bench's public score accounting without a model, run an explicitly new experiment, or score retained outputs; understand which historical artifacts are not distributed.";
 ---
 <Base title="Reproduce" description={desc} path="/reproduce">
-  <p class="meta">Reproduce<span class="sep">·</span>rendered from the repository README</p>
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</nav>
+  <p class="meta">Reproduction and evidence<span class="sep">·</span><a href={`${REPO}/blob/main/docs/reproducibility.md`} rel="noopener">repository guide</a></p>
   <h1>Reproduce</h1>
-  <p class="lede">Everything below runs without a model until you choose to spend credits. Linux with Docker is required for official runs; local-process mode exists for development and is not an isolation boundary.</p>
-  <div class="callout"><p>Add a cell by writing one adapter script that follows the <a href={`${REPO}/blob/main/harnesses/contract.md`} rel="noopener">harness contract</a>, then run with a fresh label. Report a new configuration as a new cell; do not present it as a reproduction of the historical campaign.</p></div>
-  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{toc.map((t) => <a href={`#${t.id}`} class={`d${t.depth}`}>{t.text}</a>)}</nav>
-  <article class="prose" set:html={html} />
+  <p class="lede">Start by checking the released accounting without calling a model. Running a new agent and regrading a historical output are separate experiments, with different requirements and evidence.</p>
+
+  <h2 id="choose-evidence">Choose the evidence you need</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Goal</th><th>Needed</th><th>What success establishes</th></tr></thead>
+    <tbody>
+      <tr><td><a href="#public-accounting">Verify the public release</a></td><td>Repository and Python dependencies; no model access.</td><td>Published ledgers, summaries, and declared fingerprints agree.</td></tr>
+      <tr><td><a href="#fresh-experiment">Run a new configured system</a></td><td>Authorized model access, an adapter, declared tools/settings, and an evaluation host.</td><td>A new observation under the configuration and conditions you recorded.</td></tr>
+      <tr><td><a href="#score-workspace">Regrade an output</a></td><td>That output workspace, the chosen scorer, and native recalculation where required.</td><td>The chosen evaluator's verdict on those bytes.</td></tr>
+      <tr><td><a href="#historical-record">Replay the exact historical campaign</a></td><td>Historical outputs and a complete original environment.</td><td>This is not supported by the public clone alone; those materials are not fully distributed.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="public-accounting">1. Verify public accounting without a model</h2>
+  <p>Use Python 3.11 or 3.12. These commands install dependencies and inspect the public data; neither verifier calls an agent or regenerates task inputs.</p>
+  <pre><code>{`git clone https://github.com/erphq/business-bench.git
+cd business-bench
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python bench/export_campaign.py --verify
+python bench/export_desk_campaign.py --verify
+python bench/export_process_campaign.py --verify`}</code></pre>
+  <p>The desk verifier recomputes the summary from the complete ledger and checks the recorded ledger and frozen-scorer fingerprints. The later desk campaigns under <code>results/desk</code> are checked the same way, including each declared paired bootstrap. The process verifier checks each published campaign's declared matrix, ledger hash, and recomputed summary. Neither command regrades the private original artifacts or establishes that the tests measure every business requirement.</p>
+  <details><summary>Validate the task packages and runner behavior</summary>
+    <p>The <a href="#repository-instructions">full instructions</a> include unit tests, build-task validation, and strict desk validation with native workbook recalculation. These use reference solutions and deterministic test adapters, without spending model credits. Their positive and negative controls check specified behavior; they are not a human acceptance study. Consult the <a href={`${REPO}/blob/main/docs/validation.md`} rel="noopener">release validation notice</a> for fixture differences and exceptions.</p>
+    <p>Keep the supplied release inputs intact. A deterministic generator rerun can differ from the published bytes; version regenerated inputs as a new experimental condition.</p>
+  </details>
+
+  <h2 id="fresh-experiment">2. Run a new desk experiment</h2>
+  <p>Follow <a href="#run-the-desk-track-with-codex">the Codex setup and run commands</a> or <a href="#optional-proto-adapters">the optional Proto adapter instructions</a>. These runs use your authorized model access and may incur charges. Linux and Docker are the documented route for containerized desk evaluation; local-process mode does not isolate benchmark answers from the agent.</p>
+  <ol>
+    <li>Declare the repository/task versions, model and provider route, harness version, image digest, skills, sampling controls, budgets, task list, and repetitions before launch.</li>
+    <li>Use a dedicated benchmark home, perform a one-task smoke run, then use a fresh label for the full campaign. The runner rejects existing labels and incomplete result matrices.</li>
+    <li>Keep execution status, original grades, output artifacts, usage, and any later frozen-scorer grades separately. Record unavailable fields as unknown.</li>
+  </ol>
+  <p>The published desk comparison uses three repetitions of each supplied fixture. <code>bench/run.py</code> defaults to one unless <code>--runs</code> is explicit. Repetition labels do not select new input seeds. New CLI versions, models, skill inventories, or fixtures define a new configuration; a successful current run does not reconstruct missing historical settings.</p>
+
+  <h2 id="score-workspace">3. Score an output workspace</h2>
+  <p>With an output workspace you already hold, configure native recalculation as in the installation instructions and call the frozen scorer directly:</p>
+  <pre><code>python scoring/frozen-v7/scorer.py TASK_ID WORKSPACE</code></pre>
+  <p>The command prints JSON. Inspect its <code>passed</code>, check results, and errors: the CLI does not use a failing verdict as its process exit code. Preserve the scorer fingerprint and workspace identity alongside the result. The standard runner's original grade and the frozen verdict are distinct fields.</p>
+  <p>This can reproduce a verdict only when the relevant output bytes and grading dependencies are available. Published hashes identify retained artifacts; they cannot reconstruct them. Regrading the same bytes measures evaluator sensitivity, not improvement in the agent.</p>
+
+  <h2 id="process-experiment">4. Validate and run process experiments</h2>
+  <p>Start with the process validator, which uses the reference policy, an inactive agent, and declared negative controls. For example:</p>
+  <pre><code>python bench/validate_process.py --task procure-to-pay-week --seeds 0,1 --strict</code></pre>
+  <p>It checks the specified controls, repeatable final state under each seed, and cited handbook clauses. The default seed is 0; more seeds must be explicit. These checks establish properties of the implemented contract, not independent practitioner agreement.</p>
+  <p><a href="#run-the-process-track">The process-run instructions</a> distinguish the no-model oracle run from a paid agent run. The current runner starts local processes and has no container isolation mode. Use a separate checkout for validation or scenario regeneration while a campaign is active, because scenario caches are shared within a checkout.</p>
+  <p>The published pilot covers {pilot.tasks.length} tasks at seed {pilot.seed}, each repeated {pilot.repetitions} times per system. Those repetitions are the same scenario, not {pilot.repetitions} seed draws. Running <code>--task all</code> uses the currently implemented inventory, which can exceed the historical pilot. Declare an exact task list and seed for a comparable new campaign, and report changed conditions.</p>
+  <p>Exporting results is separate from execution. Follow the <a href={`${REPO}/blob/main/docs/reproducibility.md#publishing-a-new-process-campaign`} rel="noopener">campaign declaration and publication checklist</a>; do not substitute a new run for the released snapshot.</p>
+
+  <h2 id="historical-record">5. What the historical record cannot reproduce alone</h2>
+  <p>The public release distributes ledger records, task packs, the frozen scorer, and provenance. It does not fully distribute the raw historical workspaces, traces, authenticated skill environment, private runtime binaries, or per-attempt container identities. The export process checked original result and receipt hashes against private source records; a public clone can verify the exported accounting, but cannot repeat that source comparison without access to those records.</p>
+  <p>Current runner defaults and a bare authenticated login are not replacements for a missing historical environment. The <a href="/audit#reviewability">evidence audit</a> states the resulting limits; <a href="/methods">methods</a> defines the quantities a new campaign should report.</p>
+
+  <h2 id="repository-instructions">Full repository instructions</h2>
+  <p>The following installation, adapter, build, process, and publication commands are rendered directly from <a href={`${REPO}/blob/main/README.md#requirements`} rel="noopener">README.md</a>. Steps that invoke agents require model access; optional model-assisted auditing also calls a provider unless <code>--dry-run</code> is supplied.</p>
+  <details open><summary>Installation and track-specific commands</summary><article class="prose" set:html={html} /></details>
 </Base>

@@ -10,6 +10,7 @@ homes/
 results/*
 !results/latest/
 !results/process/
+!results/desk/
 tmp/
 output/
 node_modules/

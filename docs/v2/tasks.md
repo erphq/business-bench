@@ -1,13 +1,18 @@
 # Business Bench v2: the 100 tasks
 
-Agreed list, 2026-09-18. Companion to [README.md](README.md), which holds the thesis, axes, grading vocabulary, difficulty bands, and order of work. Slugs are provisional task ids. Each task will be authored at three bands from one generator.
+Proposed catalog recorded 2026-09-18, status clarified 2026-09-28. Companion to
+[README.md](README.md). These 100 rows are design proposals, not implemented or
+validated task packs. Slugs and three-band authoring are provisional; no v2 campaign
+or baseline is reported.
 
-Reader: AI engineers and researchers. Claim: business work is the one large economic
-domain where inputs are messy and long-horizon but the deliverable has an exact ground
-truth, so it can measure conjunctive correctness, reliability, and self-verification
-without rubrics or LLM judges. Every task below is a generator with a seed and a
-planted truth, graded by executable checks. "Planted" means the generator knows the
-answer because it created the situation.
+Reader: AI engineers and researchers. The proposed tasks combine heterogeneous
+business inputs with declared output properties that could be tested mechanically.
+"Planted truth" means a generator would construct a known situation; it does not
+establish that the policy is realistic, complete, or unambiguous. Each authored task
+will need reviewed rules, a reference solution, positive/negative controls and valid
+alternatives. Legal, accounting and tax examples must supply a versioned rule set;
+they are synthetic rule-application exercises, not professional advice or claims of
+universal legal correctness.
 
 Grading vocabulary: `set` (exact identifier set), `keyed` (per-key values within
 tolerance), `pin` (recalculated workbook figure), `rule` (per-entity rule outcome),

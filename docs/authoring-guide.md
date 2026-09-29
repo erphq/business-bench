@@ -1,6 +1,8 @@
 # Authoring guide for desk tasks
 
-This is the contract every task in `tasks/desk/` follows. The validator enforces the mechanical parts
+These are authoring requirements for new desk tasks; released task definitions remain authoritative.
+The current inventory includes three to twelve required predicates per task, so the suggested check
+counts below are not an assertion about every historical pack. The validator enforces mechanical parts
 (`bench/validate_tasks.py --strict <id>`); the rest is judgment, and the trajectory reviewer will read
 your task's runs with these rules in hand.
 
@@ -42,7 +44,8 @@ before writing your first task.
    not `task17`). `category` is one of `spreadsheet | reports | extraction | drafting | reformatting |
    bookkeeping | tooling`. `title` is a short owner's phrase.
 2. **The ask** is one to three sentences in an owner's words. It names the output files. It never states
-   column lists, formulas, or the traps. It may point to a message or note in the folder that carries the
+   a solution procedure or hidden traps. An output schema may be specified when the destination or
+   business request requires it. It may point to a message or note in the folder that carries the
    rules ("Priya's email has the rules"). Write the ask as the last thing, after you know what the data says.
 3. **The workspace** has two to six files with realistic names (`orders_export_2026-08.csv`, not `data.csv`).
    At least one file is messy in a way that changes the answer if handled naively. Include a distractor file
@@ -68,13 +71,14 @@ before writing your first task.
 8. **Determinism.** `python gen.py` twice gives byte-identical output; `--seed N` re-rolls entities and
    amounts while keeping the trap structure. Fixed document properties, fixed zip timestamps, no clock.
    If a check pins seed-dependent values (an id list), `gen.py` writes `task.yaml` itself.
-9. **Difficulty.** A competent office worker with Excel finishes in 20 to 60 minutes. `timeout_s` is 1200,
+9. **Difficulty target.** Aim for 20 to 60 minutes for a practitioner with ordinary tools; this is an
+   authoring target pending human calibration, not a measured property of the suite. `timeout_s` is 1200,
    or 1800 for tasks with more than four input files or any OCR. No task requires the web or a login.
 10. **Distinctness.** Different business, different data shape, different deliverable, different trap set
     from every other task in the repo, including the ones your batchmates are writing. Reusing the library
     is expected; reusing a trap list is not. Two tasks may not share an output schema unless the plan says so.
-11. **Neutral formats only.** CSV, XLSX, PDF, TXT, MD, SQLite, HTML, ICS. Nothing one harness reads better
-    than another.
+11. **Interoperable formats.** CSV, XLSX, PDF, TXT, MD, SQLite, HTML, ICS. Give each compared system the
+    same files and declare its tools. Standard formats do not imply equal parsing capability or cost.
 12. **Honesty.** Do not tune a task to a harness you know. Do not hint at tools. Do not put the answer in a
     file name.
 
@@ -112,3 +116,9 @@ before writing your first task.
 Also grade a deliberately naive solution once (the plain sum, the first-row dedupe) and confirm at least one
 check fails; note which in the trap line. When your batch is done, report per task: id, category, files in
 the workspace, number of checks and traps, validator line, and one sentence on the hardest trap.
+
+Before claiming a validated business contract, also review valid alternative representations and
+plausible invalid deliverables, with independent practitioner judgment where available. Reference-pass
+and untouched-workspace-fail controls alone do not estimate false acceptance or false rejection.
+Keep fixtures fixed during campaigns; regenerate only in a separate authoring checkout and publish
+changes under a new task/scorer version. New seeds test instances of known templates, not unseen task types.

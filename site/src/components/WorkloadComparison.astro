@@ -1,0 +1,68 @@
+---
+import { deskComparison, fmt } from "@/lib/data";
+const comparison = deskComparison();
+const gap = (rate: number) => `${rate >= 0 ? "+" : "−"}${Math.abs(rate * 100).toFixed(2)} pp`;
+---
+<div class="workload-tool" data-workload>
+  <p>Change category weights to inspect the ranking's dependence on workload composition. Weights are relative: 2 gives a category twice the weight of 1. The released mix gives each task equal weight.</p>
+  <fieldset disabled>
+    <legend>Category weights</legend>
+    <div class="actions"><button class="btn" type="button" data-preset="released">Released mix</button><button class="btn" type="button" data-preset="equal">Equal categories</button></div>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Category</th><th class="n">Weight</th><th class="n">Share</th><th class="n">Proto observed</th><th class="n">Codex observed</th></tr></thead>
+      <tbody>{comparison.categories.map((category) => <tr>
+        <td><label for={`weight-${category.id}`}>{category.label}</label></td>
+        <td class="n"><input id={`weight-${category.id}`} type="number" min="0" step="any" value={category.tasks} data-weight data-proto={category.leftRate} data-codex={category.rightRate} /></td>
+        <td class="n" data-share>{fmt.pct(comparison.released.weights[category.id])}</td>
+        <td class="n">{fmt.pct(category.leftRate, 2)}</td><td class="n">{fmt.pct(category.rightRate, 2)}</td>
+      </tr>)}</tbody>
+    </table></div>
+  </fieldset>
+  <div class="weighted-result" aria-live="polite" aria-atomic="true">
+    <p data-weight-error hidden>Enter nonnegative finite weights, with at least one positive weight.</p>
+    <p data-weight-result><b>Weighted observed acceptance:</b> Proto + DeepSeek <strong data-proto-result>{fmt.pct(comparison.released.rates[comparison.left], 2)}</strong>; Codex + Sol <strong data-codex-result>{fmt.pct(comparison.released.rates[comparison.right], 2)}</strong>. Difference, Proto minus Codex: <strong data-gap-result>{gap(comparison.released.difference)}</strong>.</p>
+  </div>
+  <noscript><p class="muted">JavaScript is needed to change weights. The table and result above show the released workload mix.</p></noscript>
+  <p class="muted">This calculation holds each observed category rate fixed and changes only its weight. It supplies no new-task prediction, confidence interval, failure-severity weighting, or estimate of business demand.</p>
+</div>
+<style>
+  fieldset { border: 0; padding: 0; margin: 16px 0; min-width: 0; }
+  legend { font-size: 14px; font-weight: 600; }
+  input { width: 78px; max-width: 100%; padding: 7px 8px; color: var(--ink); background: var(--bg); border: 1px solid var(--line-2); border-radius: 2px; font: inherit; font-variant-numeric: tabular-nums; text-align: right; }
+  .actions { margin: 10px 0 16px; }
+  .weighted-result { margin: 18px 0; }
+  .weighted-result p { margin: 0; }
+  [data-weight-error] { color: var(--bad); }
+</style>
+<script>
+  for (const tool of document.querySelectorAll<HTMLElement>("[data-workload]")) {
+    const inputs = [...tool.querySelectorAll<HTMLInputElement>("[data-weight]")];
+    const result = tool.querySelector<HTMLElement>("[data-weight-result]")!;
+    const error = tool.querySelector<HTMLElement>("[data-weight-error]")!;
+    const pct = (rate: number) => `${(rate * 100).toFixed(2)}%`;
+    const update = () => {
+      const weights = inputs.map((input) => input.valueAsNumber);
+      const total = weights.reduce((sum, value) => sum + value, 0);
+      const valid = weights.every((value) => Number.isFinite(value) && value >= 0) && Number.isFinite(total) && total > 0;
+      result.hidden = !valid; error.hidden = valid;
+      for (const [index, input] of inputs.entries()) {
+        input.closest("tr")!.querySelector("[data-share]")!.textContent = valid ? `${(weights[index] / total * 100).toFixed(1)}%` : "—";
+        input.setAttribute("aria-invalid", String(!Number.isFinite(weights[index]) || weights[index] < 0));
+      }
+      if (!valid) return;
+      const rate = (key: "proto" | "codex") => inputs.reduce((sum, input, index) => sum + weights[index] / total * Number(input.dataset[key]), 0);
+      const proto = rate("proto"), codex = rate("codex"), difference = proto - codex;
+      tool.querySelector("[data-proto-result]")!.textContent = pct(proto);
+      tool.querySelector("[data-codex-result]")!.textContent = pct(codex);
+      tool.querySelector("[data-gap-result]")!.textContent = `${difference >= 0 ? "+" : "−"}${Math.abs(difference * 100).toFixed(2)} pp`;
+    };
+    tool.querySelector("fieldset")!.disabled = false;
+    for (const input of inputs) input.addEventListener("input", update);
+    for (const button of tool.querySelectorAll<HTMLButtonElement>("[data-preset]")) {
+      button.addEventListener("click", () => {
+        for (const input of inputs) input.value = button.dataset.preset === "equal" ? "1" : input.defaultValue;
+        update();
+      });
+    }
+  }
+</script>

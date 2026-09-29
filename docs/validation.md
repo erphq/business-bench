@@ -1,11 +1,15 @@
 # Release verification
 
-## Verified scope
+## Historical release verification
+
+These are the recorded release checks, not a claim that every command below was
+rerun during a documentation update. Current executable verification and its limits
+are described in [reproducibility.md](reproducibility.md).
 
 - All 187 desk tasks passed the supplied strict validator: the reference solution passes, the untouched workspace fails, and repeated generation is deterministic under the validation environment. Native spreadsheet recalculation used LibreOffice in Docker.
 - All 20 build task packs passed seed regeneration, checklist structure, referenced-file, and expected-number validation. This validates the task packages, **not any agent-built applications**.
 - Unit checks cover inventory completeness, ledger arithmetic, rejection of an incomplete arm, a real subprocess runner smoke, refusal to overwrite an attempt, and a reference/empty grading pair.
-- The Docker agent image built from the release recipe, reported Codex CLI 0.154.0, and passed the five unit/smoke tests inside the clean container. No model login or paid model call was needed for these checks.
+- The historical Docker image build reported Codex CLI 0.154.0 and passed the then-current five unit/smoke tests. The current test suite has grown; rebuilding a recipe that installs changing external packages need not reproduce that historical environment. No model login or paid model call was needed for those checks.
 - The corrected ledger contains exactly 1,122 distinct attempts across two complete 187-by-three cohorts. All original-result hashes and frozen-receipt identities were verified during export. Every receipt points to the same frozen scorer manifest, whose complete file fingerprint is verified locally. The primary totals are 507/561 and 473/561.
 
 ## Fixture regeneration notices
@@ -17,3 +21,20 @@ The affected tasks are bank-statement-pdf, business-cards-scanned, card-statemen
 ## What was not verified by packaging
 
 This correction did not run a new paid campaign or regrade the 1,122 original output workspaces. It exports the completed shared-frozen-scorer comparison and checks its result and receipt hashes. The frozen package is included unchanged. Independent human agreement and completed build acceptance are not established. A portable installation does not reconstruct undistributed historical runtime binaries, authenticated skill inventories, or the private raw artifacts.
+
+## Process-control completion correction
+
+The process validator now checks both oracle verdicts and requires every oracle,
+null and negative-control policy to finish all expected turns with known zero exit
+codes, no timeout, and no runner or grader error before interpreting its checks.
+Previously a negative policy could crash and still be accepted as a useful negative
+control if the resulting state failed its targeted check.
+
+This exposed a crash in `month-end-close`'s `neg:use_admin_token`: the deliberately
+misused administrator token could not approve a journal above its approval limit.
+The control now handles that specific denial, leaves the submitted journal for the
+authorized controller, and continues the preparer's work. A regression test confirms
+normal completion and failure of only the declared foreign-credential audit rule.
+ERP permissions and acceptance rules are unchanged. These are prospective validation
+and control-policy corrections; no historical agent artifacts were regraded, and the
+published ledgers and frozen desk scorer remain unchanged.

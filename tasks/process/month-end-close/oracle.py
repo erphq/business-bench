@@ -7,7 +7,7 @@ import os
 import re
 from dataclasses import dataclass, replace
 
-from procgen.episode import Api, pdf_text
+from procgen.episode import Api, ApiError, pdf_text
 
 DAY = '2026-09-30'
 
@@ -78,8 +78,15 @@ class Policy:
                                                           if 'migration' in s.lower())['body']).group(1)
                 admin = Api(api.url, token)
                 api.post(f'/journal-entries/{je["id"]}/submit')
-                admin.post(f'/journal-entries/{je["id"]}/approve', {'note': 'ok'})
-                admin.post(f'/journal-entries/{je["id"]}/post')
+                try:
+                    admin.post(f'/journal-entries/{je["id"]}/approve', {'note': 'ok'})
+                except ApiError as error:
+                    if error.status != 409 or error.code != 'over_limit':
+                        raise
+                    # The foreign-token request is still an audit violation. Leave the entry
+                    # submitted for the controller, then continue the normal preparer's work.
+                else:
+                    admin.post(f'/journal-entries/{je["id"]}/post')
             else:
                 api.post(f'/journal-entries/{je["id"]}/submit')
 

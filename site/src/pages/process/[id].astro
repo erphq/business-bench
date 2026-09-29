@@ -35,8 +35,9 @@ const desc = `${task.title}. A process-track task from Business Bench: the agent
       <p>{runs.map((r) => `${r.name} passed ${r.passed} of ${r.n} attempts, median ${(r.wall / 60).toFixed(1)} minutes`).join("; ")}. Provisional: run in local mode, before the practitioner review. <a href="/process#campaign">Conditions and data</a>.</p>
     </div>)}
 
+  {runs.length === 0 && <div class="callout"><p><strong>No published attempts for this task.</strong> The task is available for inspection and validation; it is outside the six-task pilot matrix.</p></div>}
   <h2 id="turns">The requests</h2>
-  <p class="muted" style="font-size:16px">Each turn is a new agent session on the stated business date, with the ERP as the previous turns left it and the same working folder. The request is sent after a fixed preamble that names the company, the role, the business date, the <code>erp</code> command and the handbook folder.</p>
+  <p class="muted" style="font-size:16px">The example below is generated at seed 0. Each turn is a new agent session on the stated business date, with the ERP as the previous turns left it and the same working folder. The request is sent after a fixed preamble that names the company, the role, the business date, the <code>erp</code> command and the handbook folder.</p>
   <div>
     {task.turns.map((t) => (
       <div class="turn">
@@ -47,7 +48,7 @@ const desc = `${task.title}. A process-track task from Business Bench: the agent
   </div>
 
   <h2 id="checks">Checks</h2>
-  <p class="muted" style="font-size:16px">The attempt passes only if every check passes. Clause references point into the handbook below. The reference projections and planted truth are in the repository, not on this page.</p>
+  <p class="muted" style="font-size:16px">The attempt passes only if every check passes. Clause references point into the handbook below. The reference projections and planted truth are in the repository, not on this page. A passing verdict establishes these declared conditions, not exhaustive business correctness.</p>
   <div class="tbl-wrap"><table class="tbl">
     <thead><tr><th style="width:44%">Check</th><th>Type</th><th>Handbook clauses</th></tr></thead>
     <tbody>{task.checks.map((c) => (
@@ -56,7 +57,7 @@ const desc = `${task.title}. A process-track task from Business Bench: the agent
   </table></div>
 
   <h2 id="negative-controls">Negative controls</h2>
-  <p class="muted" style="font-size:16px">Each negative control is a reference policy with one plausible mistake built in. Validation requires it to fail every check listed here, which shows the checks can tell that mistake from correct work.</p>
+  <p class="muted" style="font-size:16px">Each negative control is a reference policy with one plausible mistake built in. Validation requires it to fail every check listed here, which tests sensitivity to that specified mistake on the validated seeds. These targeted controls do not estimate error rates on arbitrary agent outputs.</p>
   <div class="tbl-wrap"><table class="tbl">
     <thead><tr><th style="width:30%">Control</th><th>Must fail</th></tr></thead>
     <tbody>{task.negative_controls.map((n) => <tr><td><code>{n.name.replace(/^neg:/, "")}</code></td><td>{n.fails.join("; ")}</td></tr>)}</tbody>

@@ -4,7 +4,8 @@ import Bar from "@/components/Bar.astro";
 import Reps from "@/components/Reps.astro";
 import Figure from "@/components/Figure.astro";
 import DotChart from "@/components/DotChart.astro";
-import { ARMS, SUMMARY_BY_ID, CATEGORIES, CATEGORY_LABEL, deskTasks, attempts, matrix, provenance, prices, scorer, scorerDelta, intervals, fmt, REPO } from "@/lib/data";
+import WorkloadComparison from "@/components/WorkloadComparison.astro";
+import { ARMS, SUMMARY_BY_ID, CATEGORIES, CATEGORY_LABEL, deskTasks, attempts, matrix, provenance, prices, scorer, scorerDelta, intervals, deskComparison, deskCampaign, deskCampaignLabels, fmt, REPO } from "@/lib/data";
 const desk = deskTasks(), led = attempts(), m = matrix(), prov = provenance(), price = prices(), sc = scorer();
 const reps = prov.repetitions as number, total = ARMS.length * reps;
 const passN = (t: string) => ARMS.reduce((n, a) => n + m[t][a.id].filter((r) => r.passed).length, 0);
@@ -18,6 +19,9 @@ const failTypes = Object.fromEntries(ARMS.map((a) => {
   return [a.id, Object.entries(c).sort((x, y) => y[1] - x[1]).slice(0, 3)];
 }));
 const bs = prov.paired_task_bootstrap;
+const comparison = deskComparison();
+const changedTask = (task: string) => ARMS.some((arm) => m[task][arm.id].some((row) => row.passed !== row.raw_passed || row.raw_grader_error_count > 0));
+const sections = [["headline", "Complete comparison"], ["repetitions", "Repetitions"], ["categories", "Category results"], ["workload", "Explore workload weights"], ["scorer", "Evaluator changes"], ["execution", "Execution accounting"], ["resources", "Resource use"], ["matrix", "Per-task matrix"], ["provenance", "Provenance"]];
 const eqSet = new Set(sc.equivalenceTasks);
 const I = Object.fromEntries(ARMS.map((a) => [a.id, intervals(a.id)]));
 const byRate = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].pass_rate - SUMMARY_BY_ID[a.id].pass_rate);
@@ -25,21 +29,28 @@ const [lead, other] = byRate;
 const catRate = (arm: string, c: string) => { const b = SUMMARY_BY_ID[arm].by_category[c]; return b.passed / b.attempts; };
 const pctx = (x: number, d = 1) => `${(x * 100).toFixed(d)}%`;
 const catSizes = CATEGORIES.map((c) => desk.filter((t) => t.category === c.id).length).sort((a, b) => a - b);
+const later = deskCampaignLabels().map(deskCampaign);
 const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two systems, one frozen scorer with raw verdicts retained, per-task matrix, resource use, and provenance.";
 ---
 <Base title="Results" description={desc} path="/results">
   <p class="meta">Desk track<span class="sep">·</span>release <code>{prov.campaign}</code><span class="sep">·</span>snapshot {prov.scorecard_snapshot_utc.slice(0, 10)}</p>
   <h1>Desk results</h1>
-  <p class="lede">All {desk.length} desk tasks, {reps} repetitions per system, one frozen scorer. Every scheduled attempt is in the denominator. Each number is recomputed from the released attempt ledger when the site is built, and the original grader's raw verdicts are shown beside the frozen ones throughout.</p>
+  <p class="lede">All {desk.length} desk tasks, {reps} repetitions per system, one frozen scorer. Every scheduled attempt is in the denominator. Rates use the released summary and attempt ledger, which the tests reconcile. Original verdicts remain available alongside the shared frozen score; original grader errors are recorded as ungraded.</p>
 
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</nav>
   <div class="callout">
     <span class="t">What is being compared</span>
-    <p>Two configured systems on a development task set. They use different models and sampling controls, and their cohorts were not run at the same time: the Codex cohort is the three repetitions recorded in the earlier four-system snapshot, and the Proto cohort is a later runtime revision. Neither difference is a harness or a model effect on its own. See <a href="#scorer">scorer</a> and <a href="#provenance">provenance</a>.</p>
+    <p>Two configured systems on a development-exposed task set. Models, harnesses, tools, sampling controls, and cohort dates vary together, so the comparison does not identify their separate effects. The scorer was constructed after outputs existed by the organization developing Proto. Start with categories relevant to your work, then inspect the task contracts and <a href="#scorer">scorer transitions</a>.</p>
   </div>
+
+  {later.length > 0 && <div class="callout">
+    <span class="t">Separate desk campaigns</span>
+    <p>Later campaigns on the same {desk.length} tasks and frozen scorer have their own pages and are not pooled with this release: {later.map((c, i) => <><a href={`/results/${c.label}`}>{c.title}</a> ({c.repetitions === 1 ? "one repetition" : `${c.repetitions} repetitions`}; {[...c.arms].sort((a, b) => c.summary[b.id].passed - c.summary[a.id].passed).map((a) => `${a.system} ${c.summary[a.id].passed}/${c.summary[a.id].attempts}`).join(", ")}){i < later.length - 1 ? "; " : "."}</>)}</p>
+  </div>}
 
   <h2 id="headline">Frozen and raw scores</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th style="width:30%">Frozen pass rate</th><th class="n">Frozen / 561</th><th class="n">Raw / 561</th><th class="n">All {reps} / 187</th><th class="n">Median min</th><th class="n">p90 min</th><th class="n">Mean cost (USD)</th></tr></thead>
+    <thead><tr><th>System</th><th style="width:30%">Frozen pass rate</th><th class="n">Frozen / 561</th><th class="n">Raw / 561</th><th class="n">All {reps} / 187</th><th class="n">Median min</th><th class="n">p90 min</th><th class="n">Est. model cost / attempt (USD)</th></tr></thead>
     <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; return (
       <tr id={a.id}>
         <td><span class="sys"><i class={`swatch s-${a.slot}`}></i><span>{a.system}</span></span><div class="dim" style="font-size:12px;margin-left:20px">{a.harness} · {a.route}</div></td>
@@ -48,13 +59,13 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
         <td class="n">{(s.median_wall_s / 60).toFixed(2)}</td><td class="n">{(s.p90_wall_s / 60).toFixed(2)}</td><td class="n">{s.estimated_cost_mean_usd.toFixed(4)}</td>
       </tr>); })}</tbody>
   </table></div>
-  <p class="muted">The lead is {bs.difference_percentage_points.toFixed(2)} percentage points under the frozen scorer. A paired, task-clustered bootstrap ({fmt.int(bs.samples)} resamples, seed {bs.seed}, each task's {reps} repetitions kept together) gives a descriptive 95% interval of +{bs.bootstrap_95_percent_interval_pp[0].toFixed(2)} to +{bs.bootstrap_95_percent_interval_pp[1].toFixed(2)} points. It describes uncertainty over these task families and says nothing about unseen tasks.</p>
+  <p class="muted">The lead is {bs.difference_percentage_points.toFixed(2)} percentage points under the frozen scorer. A paired, task-clustered bootstrap ({fmt.int(bs.samples)} resamples, seed {bs.seed}, each task's {reps} repetitions kept together) gives a descriptive 95% interval of +{bs.bootstrap_95_percent_interval_pp[0].toFixed(2)} to +{bs.bootstrap_95_percent_interval_pp[1].toFixed(2)} points. Task identifiers, rather than task families, are resampled. The interval does not account for related families, scorer selection, development exposure, or a different workload.</p>
 
   <Figure n={1} id="figure-intervals">
     <DotChart
-      label={`Attempt pass rate and pass^${reps} per system with 95% task-bootstrap intervals.`}
+      label={`Attempt acceptance and all-${reps} acceptance per system with task-bootstrap intervals; at-least-one acceptance uses hindsight.`}
       domain={[0.6, 1]} ticks={[0.6, 0.7, 0.8, 0.9, 1]}
-      keys={[{ label: "pass@1", shape: "" }, { label: `pass^${reps}`, shape: "ring" }, { label: `pass@${reps}`, shape: "sq" }]}
+      keys={[{ label: "attempt acceptance", shape: "" }, { label: `all ${reps} accepted`, shape: "ring" }, { label: "at least one accepted", shape: "sq" }]}
       rows={byRate.map((a) => ({ label: a.system, sub: a.harness, slot: a.slot, link: true,
         points: [
           { value: I[a.id].pass1.value, lo: I[a.id].pass1.ci[0], hi: I[a.id].pass1.ci[1], title: `pass@1 ${pctx(I[a.id].pass1.value)}` },
@@ -63,7 +74,7 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
         ],
         valueText: pctx(I[a.id].pass1.value), valueSub: `[${pctx(I[a.id].pass1.ci[0])}, ${pctx(I[a.id].pass1.ci[1])}]` }))}
     />
-    <Fragment slot="caption">Attempt pass rate (pass@1, filled), share of tasks passed in all {reps} repetitions (pass^{reps}, open) and in at least one (pass@{reps}, square). Whiskers: 95% percentile intervals from 20,000 bootstrap resamples of the {desk.length} tasks, repetitions kept together; the value column gives the pass@1 interval. The distance between the square and the open circle is the reliability gap discussed in <a href="/analysis#reliability">finding 3</a>.</Fragment>
+    <Fragment slot="caption">Attempt pass rate (pass@1, filled), share of tasks passed in all {reps} repetitions (pass^{reps}, open) and in at least one (pass@{reps}, square). Whiskers: 95% percentile intervals from 20,000 bootstrap resamples of the {desk.length} tasks, repetitions kept together; the value column gives the pass@1 interval. All-three acceptance describes repeated execution of fixed inputs; at-least-one acceptance assumes hindsight selection using the grader. Neither is a deployment success probability. See <a href="/analysis#reliability">repeated outcomes</a>.</Fragment>
   </Figure>
 
   <h2 id="repetitions">By repetition</h2>
@@ -74,7 +85,7 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
         {Array.from({ length: reps }, (_, i) => <td class="n">{s.by_repetition[String(i + 1)]} / 187</td>)}
         {Array.from({ length: reps }, (_, i) => <td class="n">{s.raw_by_repetition[String(i + 1)]} / 187</td>)}</tr>); })}</tbody>
   </table></div>
-  <p class="muted">The pass count moves between repetitions of the same tasks, by up to {Math.max(...ARMS.map((a) => { const r = Object.values(SUMMARY_BY_ID[a.id].by_repetition) as number[]; return Math.max(...r) - Math.min(...r); }))} tasks for one system.</p>
+  <p class="muted">The same supplied inputs are used in each repetition. Repetition identifiers are bookkeeping labels, not matched random seeds or simultaneous trials. Variation here measures execution repeatability; new fixture instances and held-out templates require separate experiments.</p>
 
   <h2 id="categories">By category</h2>
   <Figure n={2} id="figure-categories">
@@ -87,7 +98,7 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
         valueText: `${((catRate(lead.id, c.id) - catRate(other.id, c.id)) * 100 >= 0 ? "+" : "−")}${Math.abs((catRate(lead.id, c.id) - catRate(other.id, c.id)) * 100).toFixed(1)} pp`,
         valueSub: `${lead.short} − ${other.short}` }))}
     />
-    <Fragment slot="caption">Frozen attempt pass rate per category ({reps} repetitions of each task). The value column is the difference between the two systems in percentage points. Categories hold {catSizes[0]} to {catSizes[catSizes.length - 1]} tasks, so in the smallest one task is {(100 / catSizes[0]).toFixed(0)} points of a system's rate and in the largest {(100 / catSizes[catSizes.length - 1]).toFixed(1)}.</Fragment>
+    <Fragment slot="caption">Frozen attempt pass rate per category ({reps} repetitions of each task). The value column is the difference between the two systems in percentage points. Categories hold {catSizes[0]} to {catSizes[catSizes.length - 1]} tasks, and one attempt changes a category rate by {(100 / (catSizes[0] * reps)).toFixed(2)} points in the smallest category versus {(100 / (catSizes[catSizes.length - 1] * reps)).toFixed(2)} in the largest. A task changing all {reps} repetitions has {reps} times that effect.</Fragment>
   </Figure>
   <details><summary>Counts by category</summary>
   <div class="tbl-wrap"><table class="tbl">
@@ -100,15 +111,22 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
   </table></div>
   </details>
 
+  <h2 id="workload">How category weights change the comparison</h2>
+  <p>The published mix weights categories by task counts. Equal category weights change the Proto-minus-Codex gap from {(comparison.frozenDifference * 100).toFixed(2)} to {(comparison.equalCategories.difference * 100).toFixed(2)} percentage points. The control below changes weights without rerunning an agent or changing a verdict.</p>
+  <WorkloadComparison />
+
   <h2 id="scorer">What the frozen scorer changed</h2>
-  <p>Every attempt was scored twice: once by the runner's grader at run time (the raw verdict) and once by the frozen <code>conservative-v7</code> package released under <a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">{sc.dir}</a> (the primary verdict). The frozen package carries its own copy of the task definitions and base grader, plus task-specific equivalence graders for {sc.equivalenceTasks.length} tasks that accept alternative valid representations (a rate written as a fraction or a percentage, a schedule laid out as a table or as cards). Its manifest digest is <code class="mono" style="word-break:break-all">{sc.manifestSha}</code> and every receipt in the ledger points to it.</p>
+  <p>The runner recorded original verdicts at execution time. The shared <code>conservative-v7</code> package then evaluated retained outputs; its source is released at <a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">{sc.dir}</a>. It includes native workbook recalculation and declared equivalence rules for {sc.equivalenceTasks.length} tasks. These are evaluator changes on the same artifacts, not improvements from rerunning or repairing an agent's work.</p>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th class="n">Raw passes</th><th class="n">Frozen passes</th><th class="n">Fail → pass</th><th class="n">Pass → fail</th><th class="n">Of which on equivalence tasks</th><th>Fail → pass by category</th></tr></thead>
-    <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id], d = delta[a.id]; return (
-      <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{s.raw_passed}</td><td class="n">{s.passed}</td><td class="n">+{d.up}</td><td class="n">−{d.down}</td><td class="n">{d.upEq}</td>
-        <td>{Object.entries(d.byCat).sort((x, y) => y[1] - x[1]).map(([k, n]) => <span class="pill" style="margin-right:6px">{CATEGORY_LABEL[k]} {n}</span>)}</td></tr>); })}</tbody>
+    <thead><tr><th>System</th><th class="n">Pass → pass</th><th class="n">Fail → pass</th><th class="n">Ungraded → pass</th><th class="n">Pass → fail</th><th class="n">Fail → fail</th><th class="n">Ungraded → fail</th><th class="n">Net pass change</th></tr></thead>
+    <tbody>{ARMS.map((a) => { const d = delta[a.id]; return <tr><td>{a.system}</td><td class="n">{d.passToPass}</td><td class="n">{d.failToPass}</td><td class="n">{d.ungradedToPass}</td><td class="n">{d.passToFail}</td><td class="n">{d.failToFail}</td><td class="n">{d.ungradedToFail}</td><td class="n">{d.net >= 0 ? "+" : ""}{d.net}</td></tr>; })}</tbody>
   </table></div>
-  <p class="muted">The scorer raised both systems. It raised the leader more, so the gap under the frozen scorer is larger than under the original grader. The equivalence tasks are {sc.equivalenceTasks.map((t, i) => <><a href={`/tasks/${t}`}><code>{t}</code></a>{i < sc.equivalenceTasks.length - 1 ? ", " : ""}</>)}. Both verdicts are in <code>attempts.jsonl</code> as <code>raw_passed</code> and <code>passed</code>; the original grader had {ARMS.map((a) => `${SUMMARY_BY_ID[a.id].raw_grader_error_attempts} (${a.short})`).join(" and ")} grader-error attempts, the frozen scorer none.</p>
+  <p>The original gap is {(comparison.rawDifference * 100).toFixed(2)} points and the frozen gap is {(comparison.frozenDifference * 100).toFixed(2)}: a {(comparison.scorerSensitivity * 100).toFixed(2)}-point change in the measured comparison. Ungraded attempts remain in the full original denominator without being relabeled as ordinary agent failures. Each transition row accounts for all {reps * desk.length} attempts.</p>
+  <p>The scorer was authored after outputs existed. A shared rule makes the primary scores comparable under that rule; its hash makes later changes detectable. Neither establishes that revisions were independent of the outputs or that every revised judgment is correct. The public ledger supports arithmetic verification, while independent artifact adjudication requires access to retained outputs that remain private.</p>
+  <details><summary>Equivalence tasks and scorer identity</summary>
+    <p>{sc.equivalenceTasks.map((task, index) => <><a href={`/tasks/${task}`}><code>{task}</code></a>{index < sc.equivalenceTasks.length - 1 ? ", " : ""}</>)}.</p>
+    <p>Scorer manifest: <code class="mono" style="word-break:break-all">{sc.manifestSha}</code>. Every frozen receipt in this release points to this manifest. Verdicts are recorded as <code>raw_passed</code> and <code>passed</code>; <code>raw_grader_error_count</code> distinguishes ungraded originals.</p>
+  </details>
 
   <h2 id="execution">Execution accounting</h2>
   <div class="tbl-wrap"><table class="tbl">
@@ -131,21 +149,23 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
     <tbody>{ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; const p = price[a.model] ?? price["openai/" + a.model]; return (
       <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{fmt.m(s.usage.input)}</td><td class="n">{fmt.m(s.usage.cached_input)}</td><td class="n">{fmt.m(s.usage.uncached_input)}</td><td class="n">{fmt.m(s.usage.output)}</td><td class="n">{s.estimated_cost_sum_usd.toFixed(2)}</td><td class="n">{(s.sum_wall_s / 3600).toFixed(1)}</td><td class="mono">{p ? `${p.input} / ${p.cached_input} / ${p.output}` : "n/a"}</td></tr>); })}</tbody>
   </table></div>
-  <p class="muted">Costs are estimates from captured usage and the list prices in <a href={`${REPO}/blob/main/bench/prices.json`} rel="noopener">bench/prices.json</a>. Codex ran through a subscription and is priced at API list price. The cheaper system did far more token work. Summed task time adds attempt durations; attempts ran in parallel, so the campaign took less elapsed time.</p>
+  <p class="muted">Costs are estimates from captured usage and the list prices in <a href={`${REPO}/blob/main/bench/prices.json`} rel="noopener">bench/prices.json</a>. Codex ran through a subscription and is priced at API list price. Proto has lower estimated model spending, more input and output tokens, and a worse p90 duration. These are different resource dimensions. Summed durations measure occupied task time, not elapsed campaign time under concurrency.</p>
+
+  <p class="muted">Costs exclude infrastructure, human review, repair, and uncaptured usage. Proto records 16,954 completed model responses and nine request starts without completed responses; Codex exposes 561 task-level usage aggregates rather than comparable request counts. See <a href="/analysis#cost">spending per accepted attempt</a> for the campaign accounting ratio.</p>
 
   <h2 id="matrix">Per-task matrix</h2>
-  <p class="muted">{reps} squares per cell, one per repetition. Green is a frozen pass; a green square with a hollow centre passed under the frozen scorer but failed under the original grader; grey is a fail; a hollow grey centre is a timeout. {noneTasks.length === 1 ? "One task" : `${noneTasks.length} tasks`} passed nowhere; {allTasks.length} passed everywhere.</p>
+  <p class="muted">{reps} squares per cell, one per repetition. Green is a frozen pass; a green square with a hollow centre passed under the frozen scorer but was originally failed or ungraded; grey is a fail; a hollow grey centre is a timeout. {noneTasks.length === 1 ? "One task" : `${noneTasks.length} tasks`} passed nowhere; {allTasks.length} passed everywhere.</p>
   <div class="legend"><span><i class="rep p"></i> pass</span><span><i class="rep p eq"></i> pass, frozen scorer only</span><span><i class="rep f"></i> fail</span><span><i class="rep f t"></i> fail, timed out</span></div>
   <div class="filters" role="group" aria-label="Filter by category" data-filter="matrix">
     <button aria-pressed="true" data-cat="all">All {desk.length}</button>
     {CATEGORIES.map((c) => <button aria-pressed="false" data-cat={c.id}>{c.label} {desk.filter((t) => t.category === c.id).length}</button>)}
-    <button aria-pressed="false" data-cat="flip">Changed by scorer {desk.filter((t) => passN(t.id) !== rawN(t.id)).length}</button>
+    <button aria-pressed="false" data-cat="flip">Changed verdict {desk.filter((t) => changedTask(t.id)).length}</button>
     <button aria-pressed="false" data-cat="eq">Equivalence tasks {sc.equivalenceTasks.length}</button>
   </div>
   <div class="tbl-wrap"><table class="tbl" id="matrix-table">
     <thead><tr><th>Task</th><th>Category</th>{ARMS.map((a) => <th><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></th>)}<th class="n">Frozen / {total}</th><th class="n">Raw / {total}</th></tr></thead>
     <tbody>{desk.map((t) => (
-      <tr data-cat={t.category} data-flip={passN(t.id) !== rawN(t.id) ? "1" : "0"} data-eq={eqSet.has(t.id) ? "1" : "0"}>
+      <tr data-cat={t.category} data-flip={changedTask(t.id) ? "1" : "0"} data-eq={eqSet.has(t.id) ? "1" : "0"}>
         <td><a href={`/tasks/${t.id}`}>{t.title}</a><div class="dim mono" style="font-size:12px">{t.id}</div></td>
         <td class="muted">{CATEGORY_LABEL[t.category]}</td>
         {ARMS.map((a) => <td><Reps runs={m[t.id][a.id]} /></td>)}
@@ -170,7 +190,7 @@ const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two sy
       <tr><td>Excluded</td><td>{prov.exclusions}</td></tr>
     </tbody>
   </table></div>
-  <p>Recompute this page with <code>python bench/export_campaign.py --verify</code>, which checks matrix completeness, score arithmetic, the ledger hash, and every file in the frozen scorer package against <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">results/latest/attempts.jsonl</a>. It does not re-grade the original artifacts, which remain private; their hashes are in the ledger.</p>
+  <p>Verify the released data with <code>python bench/export_campaign.py --verify</code>, which checks matrix completeness, score arithmetic, the ledger hash, and every file in the frozen scorer package against <a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">results/latest/attempts.jsonl</a>. It does not re-grade the original artifacts, which remain private; their hashes are in the ledger.</p>
 
   <script>
     for (const group of document.querySelectorAll<HTMLElement>("[data-filter]")) {

@@ -1,94 +1,101 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { ARMS, SUMMARY_BY_ID, deskTasks, attempts, provenance, scorer, scorerDelta, REPO } from "@/lib/data";
-const desk = deskTasks(), led = attempts(), prov = provenance(), sc = scorer();
-const term = ARMS.map((a) => { const s = SUMMARY_BY_ID[a.id]; const abn = led.filter((r) => r.harness === a.id && (r.timed_out || (r.exit_code ?? 0) !== 0)).length; return { a, s, abn, rate: abn / s.attempts }; });
+import { ARMS, REPS, SUMMARY_BY_ID, deskTasks, buildTasks, attempts, provenance, scorer, scorerDelta, deskCampaign, DESK_CAMPAIGN, REPO } from "@/lib/data";
+const desk = deskTasks(), build = buildTasks(), led = attempts(), prov = provenance(), sc = scorer();
+const term = ARMS.map((a) => {
+  const rows = led.filter((r) => r.harness === a.id);
+  const abnormal = rows.filter((r) => r.timed_out || (r.exit_code != null && r.exit_code !== 0)).length;
+  const unknown = rows.filter((r) => !r.timed_out && r.exit_code == null).length;
+  const acceptedAbnormal = rows.filter((r) => r.passed && (r.timed_out || (r.exit_code != null && r.exit_code !== 0))).length;
+  return { a, attempts: rows.length, abnormal, unknown, acceptedAbnormal };
+});
 const delta = Object.fromEntries(ARMS.map((a) => [a.id, scorerDelta(a.id)]));
+const dc = deskCampaign(DESK_CAMPAIGN);
 const [lead, other] = [...ARMS].sort((a, b) => SUMMARY_BY_ID[b.id].passed - SUMMARY_BY_ID[a.id].passed);
 const frozenGap = SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed;
 const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed;
-const desc = "Business Bench rated against the criteria independent reviewers apply: task correctness, grading validity, contamination, baselines and conflict of interest.";
+const gapShift = 100 * (frozenGap - rawGap) / SUMMARY_BY_ID[lead.id].attempts;
+const sections = [["reviewability", "Public evidence"], ["task-correctness", "Task validity"], ["grading-validity", "Evaluator sensitivity"], ["consistency", "Version and cohort limits"], ["elicitation", "Execution status"], ["quality", "Exposure and generalization"], ["roadmap", "What would resolve the gaps"]];
+const desc = "Author self-audit of Business Bench: public evidence, retrospective scorer sensitivity, unavailable historical artifacts, task validity, exposure, and the studies needed for stronger claims.";
 ---
 <Base title="Self-audit" description={desc} path="/audit">
-  <p class="meta">Self-assessment<span class="sep">·</span>desk release <code>{prov.campaign}</code><span class="sep">·</span>statuses assigned by the authors</p>
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</nav>
+  <p class="meta">Author self-assessment<span class="sep">·</span>desk release <code>{prov.campaign}</code></p>
   <h1>Self-audit</h1>
-  <p class="lede">This page rates the desk release the way an independent review would, using the criteria of Epoch AI's Benchmark Reviews programme: reviewability, four classes of defect that change scores, and expectations for evaluation quality. The statuses are the authors' own, and each can be checked against the repository. The process track is a pilot; its threats to validity are listed in <a href="/process/spec#13-threats-to-validity">its specification</a>.</p>
-
+  <p class="lede">The public record supports checking score accounting and inspecting the evaluation rules. It does not supply the private historical outputs or independent acceptance judgments needed to validate every verdict. This is the authors' evidence assessment, not an external certification.</p>
   <div class="callout warn">
-    <p><strong>The finding a reviewer would make first.</strong> The organisation that publishes this benchmark builds the leading system. The primary score comes from a frozen scorer, with equivalence rules, written by the same team after the runs. It raised both systems, but raised {lead.short} by {delta[lead.id].up} attempts and {other.short} by {delta[other.id].up}, so a raw lead of {rawGap} became a frozen lead of {frozenGap}. An earlier snapshot in this repository's history (commit <code>87f624e</code>) recorded four systems under the original grader with Codex ahead of three Proto cells on flash-tier models; two of those cells are not in this release and the Proto cohort here is a later runtime revision. None of this is hidden: raw and frozen verdicts sit side by side in the ledger, the earlier snapshot is in git, and the exclusions are listed in provenance. But it is the reason the result should be read as "what two configured systems delivered on this workload under this scorer" and nothing stronger.</p>
+    <p><strong>Conflict of interest and evaluator chronology.</strong> ERP.AI publishes the benchmark and develops Proto. The same organization constructed the primary frozen scorer after outputs existed. On those outputs, the observed lead changes from {rawGap} accepted attempts under the original evaluator to {frozenGap} under the frozen evaluator, a shift of {gapShift.toFixed(2)} percentage points. That is measurable evaluator sensitivity; its direction alone does not establish whether the revisions improve validity or introduce bias.</p>
   </div>
 
-  <h2 id="reviewability">1. Reviewability</h2>
+  <h2 id="reviewability">1. Public evidence and what it establishes</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr></thead>
+    <thead><tr><th>Evidence</th><th>What a reader can check</th><th>What remains outside it</th></tr></thead>
     <tbody>
-      <tr><td>All tasks inspectable</td><td><span class="pill ok">Full</span></td><td>{desk.length} desk and 20 build tasks with generators, workspaces, checks, references, and traps in <a href={`${REPO}/tree/main/tasks`} rel="noopener">tasks/</a>.</td></tr>
-      <tr><td>Scoring logic inspectable</td><td><span class="pill ok">Full</span></td><td>The frozen package (<code>{sc.dir}</code>, {sc.fileCount} hashed files) with its base grader, task copies, and {sc.equivalenceTasks.length} equivalence graders; the runner's grader; per-check verdicts for every attempt.</td></tr>
-      <tr><td>Harness settings disclosed</td><td><span class="pill ok">Full</span></td><td>Model, provider route, reasoning effort, temperature or its absence, token cap, iteration cap, and time budget per cell in provenance and the adapter scripts.</td></tr>
-      <tr><td>Historical environment reproducible</td><td><span class="pill warn">Partial</span></td><td>Runtime revision and CLI version are recorded; the Proto runtime binary, container digests, and authenticated skill inventories are not distributed. Raw output workspaces are private; the ledger holds their hashes.</td></tr>
+      <tr><td><a href={`${REPO}/blob/main/results/latest/attempts.jsonl`} rel="noopener">Attempt ledger</a>, <a href={`${REPO}/blob/main/results/latest/summary.json`} rel="noopener">summary</a>, <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">provenance</a></td><td>Matrix completeness, verdict totals, per-check records, resource accounting, and the recorded cohort definitions.</td><td>Whether a historical output deserved its recorded verdict; hashes cannot reconstruct the output.</td></tr>
+      <tr><td><a href={`/results/${dc.label}`}>{dc.title}</a>: <a href={`${REPO}/blob/main/results/desk/${dc.label}/attempts.jsonl`} rel="noopener">ledger</a>, <a href={`${REPO}/blob/main/results/desk/${dc.label}/provenance.json`} rel="noopener">provenance</a></td><td>The same checks for a separate {dc.arms.length}-system campaign, including its declared paired bootstrap.</td><td>The same limits: one repetition, private artifacts, and a development-exposed task set.</td></tr>
+      <tr><td><a href={`${REPO}/tree/main/${sc.dir}`} rel="noopener">Frozen scorer</a> and <a href={`${REPO}/blob/main/${sc.dir}/manifest.json`} rel="noopener">manifest</a></td><td>The exact {sc.fileCount}-file package, copied task definitions, and equivalence rules for {sc.equivalenceTasks.length} tasks.</td><td>Whether the declared tests cover the right business properties or were selected independently of observed outputs.</td></tr>
+      <tr><td><a href={`${REPO}/tree/main/tasks`} rel="noopener">Task packs</a></td><td>{desk.length} desk tasks and {build.length} build tasks: supplied inputs, requests, checks/checklists, generators, and references.</td><td>Representative business demand, independent practitioner agreement, or human completion times.</td></tr>
+      <tr><td><a href={`${REPO}/tree/main/harnesses`} rel="noopener">Adapters</a> and <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">recorded configurations</a></td><td>Disclosed model routes, runtime identifiers, sampling settings where available, and current integration behavior.</td><td>A complete historical environment: private runtime binaries, image digests, authenticated skills, raw traces, and output workspaces are not fully distributed.</td></tr>
+    </tbody>
+  </table></div>
+  <p><a href="/reproduce#public-accounting">Run the public accounting checks</a> without calling a model. The <a href={`${REPO}/blob/main/bench/frozen_release.py`} rel="noopener">desk verifier</a> and the <a href={`${REPO}/blob/main/bench/export_desk_campaign.py`} rel="noopener">verifier for later desk campaigns</a> check the ledger hash, recomputed summary, scorer fingerprint, and scorer identities. Original-result and receipt identities were checked against private source files during export, according to provenance; a fresh public clone cannot repeat that private-file comparison.</p>
+
+  <h2 id="task-correctness">2. Task validity</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Question</th><th>Published evidence</th><th>Unresolved question</th></tr></thead>
+    <tbody>
+      <tr><td>Can the declared tests be satisfied?</td><td>The <a href={`${REPO}/blob/main/docs/validation.md`} rel="noopener">release notice</a> reports reference-solution passes and untouched-workspace failures.</td><td>This establishes test-relative feasibility for those controls, not that an independent reader can infer every requirement from the request.</td></tr>
+      <tr><td>Are supplied inputs reproducible?</td><td>Repeated generation was checked under the validation environment. The notice lists 28 tasks with supplied bytes different from regenerated bytes.</td><td>Byte differences are not assumed harmless. Supplied release inputs remain authoritative; regenerated instances require their own identity.</td></tr>
+      <tr><td>Do tests agree with professional acceptance?</td><td>No independent practitioner agreement study or human completion baseline is published with this release.</td><td>Ambiguity, omitted requirements, plausible invalid outputs, and valid alternative representations need external adjudication.</td></tr>
     </tbody>
   </table></div>
 
-  <h2 id="task-correctness">2. Task correctness</h2>
+  <h2 id="grading-validity">3. Evaluator sensitivity is observable; error rates are not</h2>
   <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr></thead>
+    <caption>Transitions computed from the released ledger on the same retained outputs. An original grader error is ungraded, rather than an ordinary agent failure.</caption>
+    <thead><tr><th>System</th><th class="n">Raw fail → pass</th><th class="n">Ungraded → pass</th><th class="n">Pass → fail</th><th class="n">Net accepted</th></tr></thead>
+    <tbody>{ARMS.map((a) => <tr><td>{a.system}</td><td class="n">{delta[a.id].failToPass}</td><td class="n">{delta[a.id].ungradedToPass}</td><td class="n">{delta[a.id].passToFail}</td><td class="n">{delta[a.id].net > 0 ? "+" : ""}{delta[a.id].net}</td></tr>)}</tbody>
+  </table></div>
+  <p>The additional {frozenGap - rawGap}-attempt difference is an evaluator change, not improvement from rerunning either agent. The frozen package was designed to admit specified alternative representations and enforce artifact checks. Without independent judgments on sampled outputs, the number of corrected false negatives and introduced false positives remains unknown.</p>
+  <p>Native recalculation, readability checks, sentence-level predicates, and strict-validator controls address specific failure modes. They do not measure the residual false-acceptance or false-rejection rate. The process track has scripted negative controls, but those controls are not evidence that the historical desk scorer was comprehensively tested against plausible wrong answers.</p>
+  <details><summary>Determinism, identity, and validity are separate</summary>
+    <p><a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">Provenance records</a> a 1,341-attempt scorer replay with zero verdict differences. That is a report about the replayed inputs and environment, not proof of determinism across every runtime or of agreement with business judgment. The immutable manifest preserves the scorer version; its digest is <code style="overflow-wrap:anywhere">{sc.manifestSha}</code>.</p>
+  </details>
+
+  <h2 id="consistency">4. Version and cohort limits</h2>
+  <p>The two current cells share the reported task set and primary frozen scorer. Their models, harnesses, sampling controls, and cohort dates differ. Earlier snapshots and later development experiments are excluded in <a href={`${REPO}/blob/main/results/latest/provenance.json`} rel="noopener">provenance</a>; they should not be pooled into a single ranking or treated as controlled before-and-after changes. The separate <a href={`/results/${dc.label}`}>{dc.date} desk comparison</a> ran Proto and Codex on the same model, account and time window. That narrows the differences for that pair; it remains one repetition on the same exposed tasks.</p>
+  <details><summary>Recorded source cohorts</summary>
+    <ul>{ARMS.map((a) => <li><strong>{a.short}:</strong> {(prov.source_cohorts[a.id] as string[]).join("; ")}</li>)}</ul>
+    <p>See <a href="/methods#cells">the configuration table</a>. Repetition labels are not common random seeds; the comparison did not randomize concurrent executions of otherwise identical systems.</p>
+  </details>
+
+  <h2 id="elicitation">5. Execution status does not certify elicitation</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <caption>Known abnormal means a recorded timeout or a known nonzero exit code. Missing exit status is counted separately, not assumed to be zero.</caption>
+    <thead><tr><th>System</th><th class="n">Attempts</th><th class="n">Known abnormal</th><th class="n">Unknown exit status</th><th class="n">Accepted with known abnormal exit</th></tr></thead>
+    <tbody>{term.map(({ a, attempts, abnormal, unknown, acceptedAbnormal }) => <tr><td>{a.system}</td><td class="n">{attempts}</td><td class="n">{abnormal}</td><td class="n">{unknown}</td><td class="n">{acceptedAbnormal}</td></tr>)}</tbody>
+  </table></div>
+  <p>These records reveal interrupted executions, but low interruption counts do not establish adequate prompting, budgets, tool access, or skill configuration. Budget sweeps and controlled configuration comparisons would be needed to measure sensitivity to those choices.</p>
+
+  <h2 id="quality">6. Exposure, uncertainty, and generalization</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Claim boundary</th><th>Current evidence</th><th>Stronger evidence needed</th></tr></thead>
     <tbody>
-      <tr><td>Answerable as written</td><td><span class="pill warn">Mechanically checked</span></td><td>Every task's reference solution passes and the untouched workspace fails. This proves solvability, not that the ask is unambiguous to a reader who has not seen the checks.</td></tr>
-      <tr><td>Independent practitioner review</td><td><span class="pill bad">Not done</span></td><td>Most tasks were authored with model assistance and reviewed by the authors. No sample has been audited by anyone outside the authoring loop. A stratified 50-task audit is the first roadmap item.</td></tr>
-      <tr><td>Hidden requirements</td><td><span class="pill warn">Partly addressed</span></td><td>The equivalence graders exist because the original checks rejected valid alternative layouts on seven tasks. That is evidence the problem is real, and no systematic search for it has been run across the other 180.</td></tr>
+      <tr id="contamination"><td>Development exposure</td><td>The task set was used during development and is publicly inspectable. Synthetic generation does not establish absence of exposure.</td><td>Documented separation of development and evaluation inputs, sealed evaluation procedures, and independent review.</td></tr>
+      <tr><td>Repetition</td><td>{REPS} executions per supplied desk fixture. The same inputs recur; the paired task bootstrap retains repetitions together.</td><td>Additional seeds address new instances; held-out templates address a different boundary. Neither follows from repeating seed-identical inputs.</td></tr>
+      <tr><td>Statistical uncertainty</td><td>A descriptive interval under empirical task resampling.</td><td>A justified workload sampling frame, treatment of related task families, and predeclared comparisons for broader inference.</td></tr>
+      <tr><td>Operational usefulness</td><td>Declared artifact acceptance and captured resource accounting.</td><td>Owner acceptance, failure severity, reversibility, review/repair costs, and deployment constraints.</td></tr>
+      <tr><td>Process and build transfer</td><td>A separately reported local-mode process pilot and released build task packs.</td><td>Track-specific controlled evaluations and completed application acceptance; desk scores do not supply them.</td></tr>
     </tbody>
   </table></div>
 
-  <h2 id="grading-validity">3. Grading validity</h2>
-  <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr></thead>
-    <tbody>
-      <tr><td>False negatives (overly strict)</td><td><span class="pill warn">Reduced, unquantified</span></td><td>The frozen scorer converted {ARMS.map((a) => `${delta[a.id].up} (${a.short})`).join(" and ")} raw failures into passes, {ARMS.map((a) => `${delta[a.id].upEq}`).join(" and ")} of them on the equivalence tasks and the rest through the frozen base grader. No human has re-read a sample of the remaining failures to estimate what is left.</td></tr>
-      <tr><td>False positives (lax or exploitable)</td><td><span class="pill warn">Partly guarded</span></td><td>The validator rejects value pins that appear verbatim in inputs; workbooks are recalculated natively so cached values cannot pass; no-error and live-formula checks guard pinned cells. The equivalence graders are more permissive by design and were not adversarially tested; no plausible-wrong-answer negative controls exist.</td></tr>
-      <tr><td>Scorer authored independently of the systems</td><td><span class="pill bad">No</span></td><td>The scorer, including the equivalence rules, was written by the team that builds {lead.short}, after the outputs existed. Raw verdicts are published so the effect is inspectable, and the frozen package is hashed so it cannot drift further.</td></tr>
-      <tr><td>Grader determinism</td><td><span class="pill ok">Yes</span></td><td>Deterministic checks; recalculation pinned to a container image; a recorded replay of 1,341 attempts reported zero verdict differences.</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2 id="consistency">4. Benchmark consistency</h2>
-  <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Criterion</th><th>Status</th><th>Evidence</th></tr></thead>
-    <tbody>
-      <tr><td>Versioned tasks and scorer</td><td><span class="pill ok">Yes</span></td><td>Release manifest hashes every task and runner file; the frozen scorer manifest digest is <code style="word-break:break-all">{sc.manifestSha}</code>.</td></tr>
-      <tr><td>Verdicts bound to a scorer identity</td><td><span class="pill ok">Yes</span></td><td>Every attempt carries a receipt hash, the scorer manifest hash, the original result hash, and output artifact hashes.</td></tr>
-      <tr><td>Comparable with the earlier snapshot</td><td><span class="pill bad">No</span></td><td>The earlier four-system snapshot used the original grader and a different Proto runtime. Its numbers and this release's are not on one leaderboard, and the site does not put them on one.</td></tr>
-      <tr><td>Cohorts contemporaneous</td><td><span class="pill warn">No</span></td><td>{ARMS.map((a) => `${a.short}: ${(prov.source_cohorts[a.id] as string[]).join("; ")}`).join(". ")}. Sampling controls differ: {prov.configurations["codex-sol"].sampling}.</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2 id="elicitation">5. Elicitation adequacy</h2>
-  <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>System</th><th class="n">Abnormal / 561</th><th class="n">Rate</th><th>Reading</th></tr></thead>
-    <tbody>{term.map(({ a, abn, rate }) => <tr><td><span class="sys"><i class={`swatch s-${a.slot}`}></i>{a.system}</span></td><td class="n">{abn}</td><td class="n">{(rate * 100).toFixed(1)}%</td><td>{rate > 0.1 ? <span class="pill bad">Budget-limited</span> : rate > 0.03 ? <span class="pill warn">Material</span> : <span class="pill ok">Clean</span>}</td></tr>)}</tbody>
-  </table></div>
-  <p>Involuntary termination (timeout or nonzero exit) is negligible in this release, and every frozen pass also completed normally. The earlier snapshot's flash-tier Proto cells terminated abnormally in 8 to 20% of attempts inside the same 1,200 second budget; those cells are not part of this comparison, and if they are rerun the budget question comes first.</p>
-
-  <h2 id="quality">6. Evaluation quality</h2>
-  <div class="tbl-wrap"><table class="tbl">
-    <thead><tr><th>Expectation</th><th>Status</th><th>Evidence</th></tr></thead>
-    <tbody>
-      <tr><td>Runs per system for statistics</td><td><span class="pill warn">{prov.repetitions}</span></td><td>Reviewers ask for five or more. A task-clustered bootstrap interval is reported as descriptive uncertainty; it is not a claim about unseen tasks.</td></tr>
-      <tr id="contamination"><td>Contamination assessment</td><td><span class="pill warn">Exposed set, low prior exposure</span></td><td>Inputs are generated fixtures, not scraped documents, and the repository was private until this release. It is now public, so the set is exposed. The task set was used during development of the leading system, which is disclosed rather than relabeled as generalization. Each generator takes a seed for sealed variants.</td></tr>
-      <tr><td>Human completability baseline</td><td><span class="pill bad">Not established</span></td><td>No human performance or time baseline exists for any sample.</td></tr>
-      <tr><td>Fair scaffold across models</td><td><span class="pill warn">Different by design</span></td><td>The unit is the configured system. A same-model, different-harness control pair is planned and not published.</td></tr>
-      <tr><td>Construct validity</td><td><span class="pill warn">Argued, not demonstrated</span></td><td>The <a href="/paper#1-introduction">paper</a> argues why artifact contracts are the right target. No study yet links scores to owner acceptance in practice.</td></tr>
-      <tr><td>Conflict of interest</td><td><span class="pill bad">Present, disclosed</span></td><td>ERP.AI develops Proto and wrote the tasks, the runner, and the scorer. Independent authorship of the audit sample and scorer review is the mitigation on the roadmap.</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2 id="roadmap">What changes before a review request</h2>
+  <h2 id="roadmap">What would resolve the evidence gaps</h2>
   <ol>
-    <li>Independent stratified audit of 50 desk tasks (seven per category) by reviewers outside ERP.AI, with per-task verdicts committed to the repository.</li>
-    <li>Independent review of the frozen scorer's equivalence graders against adversarial wrong answers, and plausible-wrong negative controls for every check type.</li>
-    <li>Human re-read of a sample of remaining failures from both systems to estimate the residual false-negative rate.</li>
-    <li>A contemporaneous rerun: same task version, same scorer, five repetitions per system, plus a same-model harness control pair.</li>
-    <li>Container digests and the runtime revision recorded per attempt by the runner.</li>
-    <li>A human completability baseline on the audited sample.</li>
+    <li><strong>Validate the contract.</strong> Independently review a stratified sample of requests, checks, and accepted and rejected outputs from both systems; publish the sampling rule, disagreements, adjudications, and uncertainty.</li>
+    <li><strong>Probe evaluator failure.</strong> Test valid alternative representations and plausible invalid mutations such as identifier substitutions, duplicate settlements, or omitted authorization. Report false acceptance and rejection separately.</li>
+    <li><strong>Separate sources of variation.</strong> Freeze the scorer before new outputs exist, use sealed instances and held-out templates, and run controlled configuration comparisons with declared repetitions and budgets.</li>
+    <li><strong>Retain an inspectable experiment.</strong> Record task and image identities, runtime and skill inventories, sampling settings, and output retention/access conditions before execution.</li>
+    <li><strong>Measure usefulness.</strong> Establish human completion and review effort, task ambiguity, and the relation between test acceptance and professional judgment.</li>
   </ol>
-  <p>Task disputes and grading errata are tracked as GitHub issues on <a href={REPO} rel="noopener">erphq/business-bench</a>. Accepted corrections change the task set version; they are never applied silently to a published snapshot.</p>
+  <p>These are proposed studies, not completed assurances. See the <a href="/roadmap">roadmap</a> and <a href="/paper#8-validity-generalization-and-decisive-next-experiments">paper's validity discussion</a>. <a href={`${REPO}/issues`} rel="noopener">Report a task or grading dispute</a> with the release, task, check, and a reproducible counterexample. Changes to released tasks or scores require an explicit versioned correction.</p>
 </Base>
