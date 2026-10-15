@@ -2979,7 +2979,7 @@
   "tasks/desk/zendesk-users-import/workspace/zendesk_import_rules.txt": "fc98c9ba873af3deacf41ca6b731bd6898080ba1bfee44b82cdf5a35da036683",
   "tasks/desk/zendesk-users-import/workspace/zendesk_organizations_export.csv": "f1dea6bba3fb3b96d174468297400f7a8dd17223de0b206029c6c28606464ecc",
   "tasks/desk/zendesk-users-import/workspace/zendesk_user_import_template.csv": "7a8f2879b232d211cb7888d2bbe766d6c13b3873dbbf9cdabf44fab1078e031e",
-  "tasks/lib/bizgen/__init__.py": "9015ef1f1f32814aad1db4e7fd5c59447e6f7121fefa1c5ba6f4deac3faa6c50",
+  "tasks/lib/bizgen/__init__.py": "7069e3852e6f5b5974dea2455a007bb1584a727605b04e1e8f5577417e94cc74",
   "tasks/lib/bizgen/adversarial.py": "9f7a5a747f2c5e2a934ee048da96051a3dd7219ced25524d0c14528be073d214",
   "tasks/lib/bizgen/eventlog.py": "c6097cdf48afc615b61bdf5dd772a01737e9f39eefc4d05c2e528eee2c8a2327",
   "tasks/lib/bizgen/knobs.py": "c1688d725957e118a6aab670df265819f6e6758cd1a30db5aea5966f3da996ed",

@@ -1,4 +1,4 @@
-"""bizgen: shared, deterministic generators for Business Harness Bench tasks.
+"""bizgen: shared, deterministic generators for Business Bench tasks.
 
 Import from a task's gen.py with:
 
