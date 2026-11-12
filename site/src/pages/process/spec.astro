@@ -27,9 +27,9 @@ const toc = [
   { depth: 2, id: "the-environment", text: "The environment" }, ...env.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
   { depth: 2, id: "the-tasks", text: "The tasks" }, ...tasks.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
 ];
-const desc = "Working specification of the Business Bench process track, with implemented components, the published fixed-seed pilot, and planned capabilities distinguished.";
+const desc = "Read the ERP process benchmark specification: agent roles, business workflows, grading, implemented components, pilot evidence and planned capabilities.";
 ---
-<Base title="Process track specification" description={desc} path="/process/spec" crumbs={[{ name: "Process track", path: "/process" }, { name: "Specification", path: "/process/spec" }]}>
+<Base title="ERP Process Benchmark Specification" description={desc} path="/process/spec" crumbs={[{ name: "Process track", path: "/process" }, { name: "Specification", path: "/process/spec" }]}>
   <p class="meta"><a href="/process">Process track</a><span class="sep">·</span>specification<span class="sep">·</span>rendered from <a href={`${REPO}/tree/main/docs/process`} rel="noopener">docs/process</a></p>
   <h1>Process track specification</h1>
   <p class="lede">The track design, the ERP the agent operates, and the planned task catalogue. Read the design requirements alongside the implemented inventory and recorded campaign conditions below.</p>

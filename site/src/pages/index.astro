@@ -11,7 +11,7 @@ const attemptsTotal = ARMS.reduce((n, a) => n + SUMMARY_BY_ID[a.id].attempts, 0)
 const dc = deskCampaign(DESK_CAMPAIGN), dcRank = [...dc.arms].sort((a, b) => dc.summary[b.id].passed - dc.summary[a.id].passed);
 const count = (k: number) => ["no", "one", "two", "three", "four", "five", "six"][k] ?? String(k);
 const dcPair = dc.pair ? dc.pair.arms.map((id) => dc.arms.find((a) => a.id === id)!) : [];
-const desc = `Business Bench tests AI agents on everyday business work: ${desk.length} public tasks such as reconciling spreadsheets, preparing imports and writing reports, each checked automatically.`;
+const desc = `Business Bench evaluates AI agents on ${desk.length} business tasks: spreadsheets, data imports and reports. Explore public tasks, results and automatic checks.`;
 // Latest results: per system, share of attempts accepted and share of tasks accepted every time, with 95% ranges over tasks.
 const latest = dcRank.map((a) => {
   const perTask = desk.map((t) => dc.matrix[t.id][a.id]);
@@ -31,7 +31,7 @@ const cite = `@misc{businessbench2026,
   note         = {Version ${RELEASE.version}}
 }`;
 const jsonld = [
-  { "@context": "https://schema.org", "@type": "WebSite", name: "Business Bench", url: SITE + "/", publisher: { "@type": "Organization", name: ORG.name, url: ORG.url } },
+  { "@context": "https://schema.org", "@type": "WebSite", "@id": SITE + "/#website", name: "Business Bench", alternateName: "BusinessBench", url: SITE + "/", publisher: { "@type": "Organization", name: ORG.name, url: ORG.url } },
   { "@context": "https://schema.org", "@type": "Dataset", name: "Business Bench desk comparison", url: SITE + "/results", description: desc,
     version: RELEASE.version, datePublished: RELEASE.date, isAccessibleForFree: true, license: `${REPO}/blob/main/LICENSE`,
     creator: [{ "@type": "Organization", name: ORG.name, url: ORG.url }],

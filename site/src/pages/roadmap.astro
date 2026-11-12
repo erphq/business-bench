@@ -13,9 +13,9 @@ const toc = [
   { depth: 2, id: "the-100-tasks", text: "The 100 tasks" }, ...tasks.toc.filter((t) => t.depth === 2).map((t) => ({ ...t, depth: 3 })),
   { depth: 2, id: "human-baseline-protocol", text: "Human baseline protocol" },
 ];
-const desc = "Business Bench research plan: proposed capability axes, task designs, difficulty bands, evaluator review, held-out work and a human baseline. Distinguishes specifications from completed evidence.";
+const desc = "Explore planned Business Bench research: harder business tasks, independent evaluator review, held-out tests and human baselines. Proposals are labeled.";
 ---
-<Base title="Roadmap" description={desc} path="/roadmap">
+<Base title="Business Task Benchmark Research Roadmap" description={desc} path="/roadmap">
   <p class="meta">Roadmap<span class="sep">·</span>desk track v2 research plan<span class="sep">·</span>proposals are not evaluation results<span class="sep">·</span>process track: <a href="/process#next">its own plan</a></p>
   <h1>Roadmap: Business Bench v2</h1>
   <p class="lede">A design programme for testing where current evaluation stops: unseen work, difficult decisions, evaluator validity and human completability. The 100-task catalogue and human-baseline protocol below are proposals; neither is a completed benchmark campaign. Rendered from <a href={base} rel="noopener">docs/v2</a> in the repository; disputes and suggestions are GitHub issues.</p>

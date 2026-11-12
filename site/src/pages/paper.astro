@@ -7,9 +7,9 @@ import "katex/dist/katex.min.css";
 const { html, toc } = renderMarkdown(readRepoFile("SPEC.md"), { stripFirstH1: true, linkBase: `${REPO}/blob/main/`, math: true });
 const sections = html.split("<!-- headline-figure -->");
 if (sections.length !== 2) throw new Error("The paper must contain exactly one headline-figure marker.");
-const desc = "Business Bench: Evaluating Agents on Business Deliverables. The full paper: design, evaluation protocol, frozen scoring, results, resource use, validity, and how to run and audit the benchmark.";
+const desc = "Read the Business Bench research paper on evaluating AI agents: business tasks, scoring methods, results, resource use and benchmark limitations.";
 ---
-<Base title="Paper" description={desc} path="/paper" ogType="article" jsonld={[{
+<Base title="Research Paper: Evaluating AI Agents on Business Work" description={desc} path="/paper" ogType="article" jsonld={[{
   "@context": "https://schema.org", "@type": "ScholarlyArticle", headline: "Business Bench: Evaluating Agents on Business Deliverables",
   author: AUTHORS.map((a) => ({ "@type": "Person", name: a })), publisher: { "@type": "Organization", name: ORG.name, url: ORG.url },
   datePublished: "2026-09", dateModified: "2026-09-27", url: SITE + "/paper", isAccessibleForFree: true, license: `${REPO}/blob/main/LICENSE`,

@@ -3,7 +3,7 @@ import Base from "@/layouts/Base.astro";
 import { buildTasks, REPO, type BuildTask } from "@/lib/data";
 export async function getStaticPaths() { return buildTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
 const { task } = Astro.props as { task: BuildTask };
-const desc = `${task.title}. A build-track task from Business Bench with seed data, a ${task.checklistItems}-item acceptance checklist, and three change requests.`;
+const desc = `${task.title}: an AI app-building benchmark task with seed data, ${task.checklistItems} acceptance checks and three change requests. No published score yet.`;
 ---
 <Base title={task.title} description={desc} path={`/build/${task.id}`} crumbs={[{ name: "Tasks", path: "/tasks" }, { name: task.title, path: `/build/${task.id}` }]}>
   <p class="meta"><a href="/tasks">Tasks</a><span class="sep">·</span><a href="/tasks#build">build</a><span class="sep">·</span>{task.category}</p>

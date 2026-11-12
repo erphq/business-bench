@@ -16,9 +16,9 @@ const frozenGap = SUMMARY_BY_ID[lead.id].passed - SUMMARY_BY_ID[other.id].passed
 const rawGap = SUMMARY_BY_ID[lead.id].raw_passed - SUMMARY_BY_ID[other.id].raw_passed;
 const gapShift = 100 * (frozenGap - rawGap) / SUMMARY_BY_ID[lead.id].attempts;
 const sections = [["reviewability", "Public evidence"], ["task-correctness", "Task validity"], ["grading-validity", "Evaluator sensitivity"], ["consistency", "Version and cohort limits"], ["elicitation", "Execution status"], ["quality", "Exposure and generalization"], ["roadmap", "What would resolve the gaps"]];
-const desc = "Author self-audit of Business Bench: public evidence, retrospective scorer sensitivity, unavailable historical artifacts, task validity, exposure, and the studies needed for stronger claims.";
+const desc = "Review Business Bench evidence, scoring limits, task exposure and missing historical artifacts, with disclosures about ERP.AI and its Proto agent.";
 ---
-<Base title="Self-audit" description={desc} path="/audit">
+<Base title="Benchmark Evidence, Limitations and Self-Audit" description={desc} path="/audit">
   <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</nav>
   <p class="meta">Author self-assessment<span class="sep">·</span>desk release <code>{prov.campaign}</code></p>
   <h1>Self-audit</h1>

@@ -30,9 +30,9 @@ const catRate = (arm: string, c: string) => { const b = SUMMARY_BY_ID[arm].by_ca
 const pctx = (x: number, d = 1) => `${(x * 100).toFixed(d)}%`;
 const catSizes = CATEGORIES.map((c) => desk.filter((t) => t.category === c.id).length).sort((a, b) => a - b);
 const later = deskCampaignLabels().map(deskCampaign);
-const desc = "Complete desk comparison of Business Bench: 1,122 attempts, two systems, one frozen scorer with raw verdicts retained, per-task matrix, resource use, and provenance.";
+const desc = "Compare Proto and Codex across 187 business tasks and 1,122 attempts. Inspect pass rates, per-task results, resource use and the frozen scoring protocol.";
 ---
-<Base title="Results" description={desc} path="/results">
+<Base title="AI Agent Benchmark Results: September 16, 2026" description={desc} path="/results">
   <p class="meta">File tasks<span class="sep">·</span>results from 16 September 2026</p>
   <h1>Results, 16 September 2026</h1>
   <p class="lede">Two AI agent setups each did all {desk.length} file tasks {reps} times, and every answer was checked with the same rules. Proto (built by ERP.AI) used DeepSeek V4.1 Flash; Codex (OpenAI) used GPT-5.6 sol. Because the models differ, this compares complete setups, not the agents alone.</p>

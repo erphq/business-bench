@@ -21,9 +21,9 @@ const remainder = comparison.categories.filter((category) => !["reports", "draft
 const rest = { tasks: remainder.reduce((sum, c) => sum + c.tasks, 0), attempts: remainder.reduce((sum, c) => sum + c.attempts, 0),
   left: remainder.reduce((sum, c) => sum + c.leftPassed, 0), right: remainder.reduce((sum, c) => sum + c.rightPassed, 0) };
 const sections = [["definitions", "Reading the measures"], ["conjunctive-gap", "Checks and acceptance"], ["near-miss", "Single-check failures"], ["reliability", "Repeated outcomes"], ["divergence", "Workload composition"], ["cost", "Cost of accepted work"], ["scorer", "Evaluator sensitivity"], ["saturation", "Next experiments"]];
-const desc = "What the desk results establish: acceptance versus check completion, fixed-input repeatability, workload weighting, evaluator sensitivity, and the cost of accepted work.";
+const desc = "Explore AI agent reliability on business tasks: pass rates, repeated outcomes, scoring sensitivity, workload differences and the cost of accepted work.";
 ---
-<Base title="Findings" description={desc} path="/analysis">
+<Base title="AI Agent Reliability and Benchmark Findings" description={desc} path="/analysis">
   <p class="meta">Desk track<span class="sep">·</span>{fmt.int(attemptsTotal)} attempts<span class="sep">·</span>release <code>{prov.campaign}</code></p>
   <h1>What the desk results establish</h1>
   <p class="lede">The headline is a comparison of two configured systems on one authored workload. The analyses below explain what changes when the question is complete acceptance, repeatability, category mix, or evaluator choice. Use the <a href="/results">results page</a> to inspect individual tasks and the <a href="/paper">paper</a> for formal definitions.</p>

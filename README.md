@@ -209,3 +209,5 @@ The paper is compiled with **XeLaTeX**, using native booktabs tables, PGFPlots f
 ## Site
 
 The public site under `site/` is generated from this repository: task metadata via `python3 site/scripts/export_tasks.py`, results from `results/latest/`, `results/desk/` and `results/process/`, the process-track pages from `tasks/process/` and `docs/process/`, and the paper from `SPEC.md`. Build with `cd site && bun install && bun run build`; deploy with `bunx wrangler deploy` (Cloudflare account access required). The `Site` workflow checks the export is fresh, runs the site tests, and builds on every push.
+
+Submit `https://businessbench.org/sitemap-index.xml` in Google Search Console's Sitemaps report. Astro regenerates its child sitemaps on every build; `robots.txt` advertises the index and `/sitemap.xml` redirects to it. Only canonical, indexable pages belong in the sitemap. Modification dates are omitted until meaningful changes can be tracked per page. `bun run verify` checks sitemap coverage against every built HTML page, alongside canonical URLs, unique titles and descriptions, social metadata and the 404 page's `noindex` directive.

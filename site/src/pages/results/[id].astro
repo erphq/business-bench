@@ -22,9 +22,9 @@ const pair = camp.pair, [pa, pb] = pair ? pair.arms.map((x) => armById[x]) : [];
 const shared = pair ? ["model", "reasoning"].filter((k) => camp.configurations[pa.id][k] && camp.configurations[pa.id][k] === camp.configurations[pb.id][k]) : [];
 const ledger = `${REPO}/blob/main/results/desk/${id}`;
 const sections = [["scores", "Scores"], ["categories", "Category results"], ["scorer", "Evaluator changes"], ["resources", "Resource use"], ["matrix", "Per-task matrix"], ["provenance", "Provenance"]];
-const desc = `All ${n} desk tasks, ${repText} per system, frozen conservative-v7 scorer: ${byRate.map((a) => `${a.system} ${S[a.id].passed}/${S[a.id].attempts}`).join(", ")}.`;
+const desc = `Compare ${arms.length} AI agent setups across ${n} business tasks with ${repText} each. Explore pass rates, per-task outcomes and scoring for ${camp.date}.`;
 ---
-<Base title={camp.title} description={desc} path={`/results/${id}`} crumbs={[{ name: "Results", path: "/results" }, { name: camp.title, path: `/results/${id}` }]}>
+<Base title={`AI Agent Benchmark Results: ${camp.date}`} description={desc} path={`/results/${id}`} crumbs={[{ name: "Results", path: "/results" }, { name: camp.title, path: `/results/${id}` }]}>
   <p class="meta"><a href="/results">Results</a><span class="sep">·</span>{camp.date}, {hm(camp.window[0])}–{hm(camp.window[1])} UTC</p>
   <h1>{camp.title}</h1>
   <p class="lede">{words(arms.length).charAt(0).toUpperCase() + words(arms.length).slice(1)} AI agent setups each did all {n} file tasks {reps === 1 ? "once" : `${words(reps)} times`}, and every answer was checked with the same rules: {fmt.int(camp.attempts.length)} answers in total, none left out.</p>

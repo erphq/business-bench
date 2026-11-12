@@ -12,9 +12,9 @@ const schemaChanged = !sameCheckSchema(task.checks, frozenChecks);
 const med = (xs: number[]) => { const s = xs.filter((x) => x != null).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
 const mean = (xs: (number | null)[]) => { const s = xs.filter((x): x is number => x != null); return s.length ? s.reduce((a, b) => a + b, 0) / s.length : null; };
 const later = deskCampaignLabels().map(deskCampaign).filter((c) => c.matrix[task.id]);
-const desc = `${task.title}. A ${CATEGORY_LABEL[task.category].toLowerCase()} task from Business Bench: ${task.ask.slice(0, 140)}`;
 // Two tasks can share a title (a task and its variant); the page title then carries the id so each is distinct.
 const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ? `${task.title} (${task.id})` : task.title;
+const desc = `${pageTitle}. Explore this ${CATEGORY_LABEL[task.category].toLowerCase()} benchmark task for AI agents, with input files, required outputs and recorded acceptance checks.`;
 ---
 <Base title={pageTitle} description={desc} path={`/tasks/${task.id}`} crumbs={[{ name: "Tasks", path: "/tasks" }, { name: task.title, path: `/tasks/${task.id}` }]}>
   <p class="meta"><a href="/tasks">Tasks</a><span class="sep">·</span>desk<span class="sep">·</span><a href={`/tasks#${task.category}`}>{CATEGORY_LABEL[task.category]}</a></p>

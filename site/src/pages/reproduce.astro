@@ -7,9 +7,9 @@ const body = readme.slice(readme.indexOf("## Requirements"));
 const { html } = renderMarkdown(body, { linkBase: `${REPO}/blob/main/` });
 const pilot = processCampaign(PROCESS_PILOT);
 const sections = [["choose-evidence", "Choose an evidence level"], ["public-accounting", "Verify public accounting"], ["fresh-experiment", "Run a new desk experiment"], ["score-workspace", "Score an output workspace"], ["process-experiment", "Process experiments"], ["historical-record", "Historical reproducibility"], ["repository-instructions", "Full repository instructions"]];
-const desc = "Verify Business Bench's public score accounting without a model, run an explicitly new experiment, or score retained outputs; understand which historical artifacts are not distributed.";
+const desc = "Verify Business Bench scores from public records, run new AI agent experiments and score saved outputs. Includes commands and historical evidence limits.";
 ---
-<Base title="Reproduce" description={desc} path="/reproduce">
+<Base title="Reproduce and Verify AI Benchmark Results" description={desc} path="/reproduce">
   <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</nav>
   <p class="meta">Reproduction and evidence<span class="sep">·</span><a href={`${REPO}/blob/main/docs/reproducibility.md`} rel="noopener">repository guide</a></p>
   <h1>Reproduce</h1>

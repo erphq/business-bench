@@ -11,9 +11,9 @@ const checkTable = renderMarkdown(tableMd).html;
 const baselineMd = readRepoFile("docs/build-baseline.md");
 const baselineItems = renderMarkdown(baselineMd.slice(baselineMd.indexOf("\n1. "), baselineMd.lastIndexOf("---"))).html;
 const sections = [["unit", "What is compared"], ["boundary", "Execution boundary"], ["desk", "Desk protocol"], ["grading", "Acceptance and scoring"], ["metrics", "Metrics and uncertainty"], ["validation", "Task validation"], ["cells", "Recorded configurations"], ["build", "Build acceptance"], ["process", "Process track"]];
-const desc = "Business Bench methods: configured-system comparisons, declared acceptance tests, fixed-input repetition, retrospective frozen scoring, metric denominators, and evidence limits.";
+const desc = "Learn how Business Bench evaluates AI agents: task acceptance checks, repeated runs, frozen scoring, comparison methods and limits of the evidence.";
 ---
-<Base title="Methods" description={desc} path="/methods">
+<Base title="AI Agent Evaluation Methods and Scoring" description={desc} path="/methods">
   <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>{sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</nav>
   <p class="meta">Methods<span class="sep">·</span>desk release <code>{prov.campaign}</code></p>
   <h1>Methods</h1>

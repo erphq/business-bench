@@ -32,9 +32,9 @@ const pctf = (x: number) => `${Math.round(x * 100)}%`;
 const runDate = new Date("2026-09-27T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 const ledger = `${REPO}/blob/main/results/process/${camp.label}`;
 const [pa, pb] = cells;
-const desc = "Agents take a role inside an ERP for several business days and are graded on the final system state and the audit log. Design, grading, seven tasks and a pilot campaign.";
+const desc = `Explore ${tasks.length} ERP tasks for AI agents, from invoice processing to financial analysis. Review task rules, audit-log grading and provisional pilot results.`;
 ---
-<Base title="Process track" description={desc} path="/process" crumbs={[{ name: "Process track", path: "/process" }]}>
+<Base title="ERP Process Tasks and AI Agent Pilot Results" description={desc} path="/process" crumbs={[{ name: "Process track", path: "/process" }]}>
   <p class="meta">Track<span class="sep">·</span>pilot<span class="sep">·</span>{tasks.length} tasks, {checks} checks, {negs} negative controls<span class="sep">·</span>pilot campaign published, provisional</p>
   <h1>Process track</h1>
   <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span>
