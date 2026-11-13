@@ -1,0 +1,27 @@
+---
+import { taskExcerpt } from "@/lib/task-navigation";
+interface Props {
+  title: string;
+  tasks: { id: string; title: string; summary: string }[];
+  prefix: string;
+  browseHref: string;
+  browseLabel: string;
+}
+const { title, tasks, prefix, browseHref, browseLabel } = Astro.props;
+---
+<section class="related-tasks" aria-labelledby="related-tasks-title">
+  <h2 id="related-tasks-title">{title}</h2>
+  <ul>
+    {tasks.map((task) => <li>
+      <a data-related-task href={`${prefix}/${task.id}`}>{task.title}</a>
+      <p>{taskExcerpt(task.summary)}</p>
+    </li>)}
+  </ul>
+  <p><a href={browseHref}>{browseLabel}</a></p>
+</section>
+<style>
+  .related-tasks { border-top: 1px solid var(--line); margin-top: 36px; }
+  ul { padding-left: 22px; }
+  li { margin-block: 16px; }
+  li p { margin: 4px 0 0; color: var(--ink-2); font-size: 14px; }
+</style>

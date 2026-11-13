@@ -1,6 +1,8 @@
 ---
 import Base from "@/layouts/Base.astro";
 import Reps from "@/components/Reps.astro";
+import RelatedTasks from "@/components/RelatedTasks.astro";
+import { taskNeighbors } from "@/lib/task-navigation";
 import { recordedChecks, sameCheckSchema } from "@/lib/task-evidence";
 import { ARMS, CATEGORY_LABEL, deskTasks, matrix, scorer, deskCampaign, deskCampaignLabels, REPO, REPS, type DeskTask } from "@/lib/data";
 export async function getStaticPaths() { return deskTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
@@ -15,6 +17,7 @@ const later = deskCampaignLabels().map(deskCampaign).filter((c) => c.matrix[task
 // Two tasks can share a title (a task and its variant); the page title then carries the id so each is distinct.
 const pageTitle = deskTasks().filter((t) => t.title === task.title).length > 1 ? `${task.title} (${task.id})` : task.title;
 const desc = `${pageTitle}. Explore this ${CATEGORY_LABEL[task.category].toLowerCase()} benchmark task for AI agents, with input files, required outputs and recorded acceptance checks.`;
+const related = taskNeighbors(deskTasks().filter((t) => t.category === task.category), task.id);
 ---
 <Base title={pageTitle} description={desc} path={`/tasks/${task.id}`} crumbs={[{ name: "Tasks", path: "/tasks" }, { name: task.title, path: `/tasks/${task.id}` }]}>
   <p class="meta"><a href="/tasks">Tasks</a><span class="sep">·</span>desk<span class="sep">·</span><a href={`/tasks#${task.category}`}>{CATEGORY_LABEL[task.category]}</a></p>
@@ -22,13 +25,13 @@ const desc = `${pageTitle}. Explore this ${CATEGORY_LABEL[task.category].toLower
   <p class="meta mono" style="margin-top:12px;font-size:12.5px">{task.id}<span class="sep">·</span>time budget {task.timeout_s} s<span class="sep">·</span><a href={`${REPO}/tree/main/tasks/desk/${task.id}`} rel="noopener">source</a></p>
 
   <h2>The request</h2>
-  <p class="muted" style="font-size:16px">The task request supplied to the adapter, alongside the workspace below. Runtime instructions, authorized tools and skills also affect the system. Containerized runs withhold host-side references; local mode is not an isolation boundary.</p>
   <blockquote class="ask">{task.ask}</blockquote>
+  <p class="muted" style="font-size:16px">This is the request supplied to the agent with the input files below. <a href="/methods">Runtime and evaluation methods</a> describe the tools, instructions and isolation limits.</p>
 
   <div class="task-files">
     <section>
-      <h2 style="margin-top:0">Workspace</h2>
-      <ul class="filelist">{task.workspaceFiles.map((f) => <li>{f}</li>)}</ul>
+      <h2 style="margin-top:0">Input files</h2>
+      <ul class="filelist">{task.workspaceFiles.map((f) => <li><a data-input-file href={`${REPO}/blob/main/tasks/desk/${task.id}/workspace/${f.split("/").map(encodeURIComponent).join("/")}`}>{f}</a></li>)}</ul>
     </section>
     <section>
       <h2 style="margin-top:0">Expected deliverables</h2>
@@ -71,4 +74,7 @@ const desc = `${pageTitle}. Explore this ${CATEGORY_LABEL[task.category].toLower
       </table></div>
       <p class="muted">A separate campaign under the same frozen scorer, not pooled with the release. <a href={`/results/${c.label}`}>Conditions and data</a>.</p>
     </>); })}
+  <RelatedTasks title={`More ${CATEGORY_LABEL[task.category].toLowerCase()} tasks`}
+    tasks={related.map((t) => ({ ...t, summary: t.ask }))} prefix="/tasks"
+    browseHref={`/tasks#${task.category}`} browseLabel={`Browse all ${CATEGORY_LABEL[task.category].toLowerCase()} tasks`} />
 </Base>

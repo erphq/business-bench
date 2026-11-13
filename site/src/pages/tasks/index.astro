@@ -11,7 +11,7 @@ const searchText = (...parts: string[]) => parts.join(" ").toLocaleLowerCase();
   <p class="meta">Task inventory<span class="sep">·</span>{desk.length} desk<span class="sep">·</span>{build.length} build<span class="sep">·</span>{proc.length} process</p>
   <h1>Tasks and acceptance contracts</h1>
   <p class="lede">Start with the kind of work an agent must hand back. Each task page exposes the request, inputs, declared checks and available results. Task availability, structural validation and measured agent performance are separate facts.</p>
-  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span><a href="#desk">Desk tasks</a><a href="#build">Application tasks</a><a href="#process">Process tasks</a><a href="#authoring">Authoring and exposure</a></nav>
+  <nav slot="contents" class="toc" aria-label="On this page"><span class="toc-h">On this page</span><a href="#desk">Desk tasks</a>{CATEGORIES.map((category) => <a class="d3" href={`#${category.id}`}>{category.label}</a>)}<a href="#build">Application tasks</a><a href="#process">Process tasks</a><a href="#authoring">Authoring and exposure</a></nav>
 
   <div class="task-filter" hidden>
     <div><label for="task-query">Find a task</label><input id="task-query" type="search" placeholder="Search names, outputs, categories or roles" autocomplete="off" /></div>

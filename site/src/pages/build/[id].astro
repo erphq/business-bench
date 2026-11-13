@@ -1,9 +1,12 @@
 ---
 import Base from "@/layouts/Base.astro";
+import RelatedTasks from "@/components/RelatedTasks.astro";
+import { taskNeighbors } from "@/lib/task-navigation";
 import { buildTasks, REPO, type BuildTask } from "@/lib/data";
 export async function getStaticPaths() { return buildTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
 const { task } = Astro.props as { task: BuildTask };
 const desc = `${task.title}: an AI app-building benchmark task with seed data, ${task.checklistItems} acceptance checks and three change requests. No published score yet.`;
+const related = taskNeighbors(buildTasks(), task.id);
 ---
 <Base title={task.title} description={desc} path={`/build/${task.id}`} crumbs={[{ name: "Tasks", path: "/tasks" }, { name: task.title, path: `/build/${task.id}` }]}>
   <p class="meta"><a href="/tasks">Tasks</a><span class="sep">·</span><a href="/tasks#build">build</a><span class="sep">·</span>{task.category}</p>
@@ -13,7 +16,7 @@ const desc = `${task.title}: an AI app-building benchmark task with seed data, $
   <div class="callout"><p><strong>Specification only.</strong> This task pack has no published completed acceptance evaluation. Checklist size describes the contract, not measured application quality.</p></div>
   <h2>The request</h2>
   <blockquote class="ask">{task.ask}</blockquote>
-  <p class="muted">Seed files the agent must import: {task.seed.map((file, i) => <Fragment>{i > 0 && ", "}<code>{file}</code></Fragment>)}. The agent must leave a <code>RESULT.json</code> with a reachable URL, an admin login, and the named restricted login.</p>
+  <p class="muted">Seed files the agent must import: {task.seed.map((file, i) => <Fragment>{i > 0 && ", "}<a data-input-file href={`${REPO}/blob/main/tasks/build/${task.id}/seed/${file.split("/").map(encodeURIComponent).join("/")}`}><code>{file}</code></a></Fragment>)}. The agent must leave a <code>RESULT.json</code> with a reachable URL, an admin login, and the named restricted login.</p>
 
   <h2>Acceptance checklist</h2>
   <p>{task.checklistItems} binary items. The first 14 are the <a href="/methods#build-baseline">enterprise baseline</a> shared by every build task (delivery, invitations, roles, server-side authorization, scoped live dashboard, exact lists and exports, audit metadata, validation, persistence); the rest are application-specific. Core items, which together define "first usable": {task.coreItems.join(", ")}.</p>
@@ -32,4 +35,6 @@ const desc = `${task.title}: an AI app-building benchmark task with seed data, $
     </section>))}
 
   <div class="callout warn"><p><strong>No published score.</strong> Build runs need a human acceptance pass on a live URL, and no arm has completed one for the full set. Automated probes generate a tester sheet; they do not substitute for it. Results will be published as a separately labeled release when an arm completes.</p></div>
+  <RelatedTasks title="More app-building tasks" tasks={related.map((t) => ({ ...t, summary: t.ask }))}
+    prefix="/build" browseHref="/tasks#build" browseLabel="Browse all app-building tasks" />
 </Base>

@@ -2,8 +2,17 @@
 import Base from "@/layouts/Base.astro";
 import Figure from "@/components/Figure.astro";
 import DotChart from "@/components/DotChart.astro";
+import { taskExcerpt } from "@/lib/task-navigation";
 import { ARMS, SUMMARY_BY_ID, deskTasks, buildTasks, processTasks, processCampaign, PROCESS_PILOT, provenance, findings, intervals, deskComparison, deskCampaign, DESK_CAMPAIGN, REPO, SITE, ORG, AUTHORS, RELEASE, REPS, fmt, taskBootstrap } from "@/lib/data";
 const desk = deskTasks(), build = buildTasks(), proc = processTasks(), pilot = processCampaign(PROCESS_PILOT);
+const examples = [
+  ...["supplier-catalog-imperial", "bank-reconciliation", "weekly-kpi-dashboard"].map((id) => {
+    const task = desk.find((t) => t.id === id)!;
+    return { title: task.title, path: `/tasks/${id}`, summary: task.ask };
+  }),
+  ...build.filter((t) => t.id === "crm-sales-pipeline").map((t) => ({ title: t.title, path: `/build/${t.id}`, summary: t.ask })),
+  ...proc.filter((t) => t.id === "payment-run").map((t) => ({ title: t.title, path: `/process/${t.id}`, summary: t.summary })),
+];
 const F = Object.fromEntries(ARMS.map((a) => [a.id, findings(a.id)]));
 const I = Object.fromEntries(ARMS.map((a) => [a.id, intervals(a.id)]));
 const comparison = deskComparison(), bs = provenance().paired_task_bootstrap;
@@ -43,7 +52,7 @@ const jsonld = [
 <Base title="Business Bench" description={desc} path="/" jsonld={jsonld}>
   <nav slot="contents" class="toc" aria-label="On this page">
     <span class="toc-h">On this page</span>
-    <a href="#latest">Latest results</a><a href="#what">What is tested</a><a href="#how">How answers are checked</a>
+    <a href="#latest">Latest results</a><a href="#what">What is tested</a><a href="#examples">Example tasks</a><a href="#how">How answers are checked</a>
     <a href="#earlier">Earlier results</a><a href="#caveats">Keep in mind</a><a href="#evidence">Check it yourself</a><a href="#cite">Cite</a>
   </nav>
   <h1>Business Bench</h1>
@@ -85,6 +94,13 @@ const jsonld = [
     </tbody>
   </table></div>
 
+  <h2 id="examples">Explore example tasks</h2>
+  <p>Open a task to read the request, inspect its input files and see how its output is checked. File tasks include recorded results; app-building tasks are specifications, and ERP results are provisional.</p>
+  <ul class="task-examples">
+    {examples.map((example) => <li><a href={example.path}>{example.title}</a><p class="muted">{taskExcerpt(example.summary, 160)}</p></li>)}
+  </ul>
+  <p><a href="/tasks">Browse all {desk.length + build.length + proc.length} business tasks</a>.</p>
+
   <h2 id="how">How answers are checked</h2>
   <p>A report can look finished and still be wrong: a balanced workbook may leave out a customer, and a correct payment may break an approval rule. So each task lists exactly what a correct answer must contain, and a program checks it: the right rows, the right numbers, formulas that recalculate, and the facts a written summary has to mention. An answer is accepted only if every check passes. The tasks and the checks are public, so anyone can see what was asked and dispute a check.</p>
 
@@ -113,3 +129,8 @@ const jsonld = [
   <pre class="cite" aria-label="BibTeX citation">{cite}</pre>
   <p class="muted">Found a problem with a task or a check? <a href={`${REPO}/issues`} rel="noopener">Report it on GitHub</a> with the task name.</p>
 </Base>
+
+<style>
+  .task-examples li { margin-block: 16px; }
+  .task-examples p { margin: 4px 0 0; font-size: 14px; }
+</style>

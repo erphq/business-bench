@@ -1,9 +1,12 @@
 ---
 import Base from "@/layouts/Base.astro";
+import RelatedTasks from "@/components/RelatedTasks.astro";
+import { taskNeighbors } from "@/lib/task-navigation";
 import { processTasks, processCampaign, FAMILY_LABEL, PROCESS_PILOT, REPO, type ProcessTask } from "@/lib/data";
 import { renderMarkdown } from "@/lib/markdown";
 export async function getStaticPaths() { return processTasks().map((t) => ({ params: { id: t.id }, props: { task: t } })); }
 const { task } = Astro.props as { task: ProcessTask };
+const related = taskNeighbors(processTasks(), task.id);
 const day = (d: string) => new Date(d + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 const anchor = (c: string) => `clause-${c}`;
 const fileId = (f: string) => `handbook-${f.replace(/\.md$/, "")}`;
@@ -76,4 +79,6 @@ const desc = `${task.title}: an AI agent works as ${task.agent.title.toLowerCase
   <div class="prose handbook">
     {handbook.map((h) => <section id={fileId(h.file)}><h3>{h.title}</h3><div set:html={h.html} /></section>)}
   </div>
+  <RelatedTasks title="More ERP process tasks" tasks={related} prefix="/process"
+    browseHref="/process#tasks" browseLabel="Browse all ERP process tasks" />
 </Base>

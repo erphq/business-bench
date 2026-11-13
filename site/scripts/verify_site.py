@@ -21,6 +21,8 @@ class Page(HTMLParser):
         self.path = path
         self.ids = []
         self.links = []
+        self.related_tasks = []
+        self.input_files = []
         self.h1 = 0
         self.title = ''
         self.canonical = []
@@ -40,6 +42,10 @@ class Page(HTMLParser):
             self.ids.append(attrs['id'])
         if tag == 'h1':
             self.h1 += 1
+        if tag == 'a' and 'data-related-task' in attrs:
+            self.related_tasks.append(attrs.get('href', ''))
+        if tag == 'a' and 'data-input-file' in attrs:
+            self.input_files.append(attrs.get('href', ''))
         if tag == 'head':
             self.in_head = True
         if tag == 'title' and self.in_head:
@@ -95,6 +101,13 @@ def main():
     errors = []
     titles = Counter(p.title for p in pages.values())
     descriptions = Counter(p.description[0] for p in pages.values() if p.description)
+    task_data = json.loads((DIST.parent / 'src/data/tasks.json').read_text())
+    task_routes = {
+        f'/{prefix}/{task["id"]}'
+        for track, prefix in [('desk', 'tasks'), ('build', 'build'), ('process', 'process')]
+        for task in task_data[track]
+    }
+    incoming_related = Counter()
     for url, page in pages.items():
         failures = list(page.errors)
         failures += [f'duplicate id #{k}' for k, n in Counter(page.ids).items() if n > 1]
@@ -104,6 +117,15 @@ def main():
             failures.append('missing or duplicate page title')
         if page.canonical != [SITE + url]:
             failures.append(f'canonical does not match route {url}')
+        if url in task_routes:
+            related = page.related_tasks
+            if len(set(related)) != 4 or url in related or any(target not in task_routes for target in related):
+                failures.append('expected four distinct related task links without self-links')
+            incoming_related.update(set(related))
+        for link in page.input_files:
+            prefix = 'https://github.com/erphq/business-bench/blob/main/'
+            if not link.startswith(prefix) or not (DIST.parent.parent / unquote(link[len(prefix):])).is_file():
+                failures.append(f'input file link does not resolve in the repository: {link}')
         if len(page.description) != 1 or not page.description[0].strip():
             failures.append('missing or duplicate description')
         elif descriptions[page.description[0]] != 1:
@@ -131,6 +153,22 @@ def main():
             elif not (DIST / target.lstrip('/')).is_file():
                 failures.append(f'missing local target {link}')
         errors.extend(f'{url}: {f}' for f in failures)
+    errors.extend(f'{url}: no incoming related-task links' for url in sorted(task_routes) if not incoming_related[url])
+    # Every public page must be reachable through server-rendered links,
+    # without JavaScript or a sitemap.
+    visited = set()
+    pending = ['/']
+    while pending:
+        url = pending.pop()
+        if url in visited or url not in pages:
+            continue
+        visited.add(url)
+        for link in pages[url].links:
+            target = urlsplit(urljoin(SITE + url, link))
+            if target.netloc == urlsplit(SITE).netloc:
+                pending.append(unquote(target.path).rstrip('/') or '/')
+    errors.extend(f'{url}: unreachable from homepage links' for url, page in pages.items()
+                  if 'noindex' not in page.meta.get('robots', '') and url not in visited)
     # Check the generated XML against the complete built route inventory, rather
     # than assuming the sitemap integration discovered every dynamic task page.
     ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
@@ -160,7 +198,7 @@ def main():
     if errors:
         print('\n'.join(errors), file=sys.stderr)
         sys.exit(f'{len(errors)} site integrity error(s) in {len(pages)} pages')
-    print(f'Verified {len(pages)} pages: local routes, fragments, assets, unique titles/descriptions/IDs, headings, social metadata and sitemap coverage')
+    print(f'Verified {len(pages)} pages: links, input files, related tasks, homepage reachability, assets, metadata and sitemap coverage')
 
 if __name__ == '__main__':
     main()
